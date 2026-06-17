@@ -4,6 +4,11 @@
 
 本项目遵循 [AGENTS.md](/Users/phoenix/Assistant/NeuroScience/AGENTS.md) 中的研究助理规则：研究为主，学习服务于研究；强调证据等级、批判性判断、机制解释和结构化记录。
 
+## 项目主页
+
+- 本地主页：[index.html](/Users/phoenix/Assistant/NeuroScience/index.html)
+- GitHub Pages：部署后使用 `https://mingxiangbian.github.io/NeuroScience/`
+
 ## 如何使用
 
 优先把内容放到合适的位置：

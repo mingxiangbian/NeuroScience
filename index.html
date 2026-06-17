@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="NeuroScience x AI research workspace for brain mechanisms, neural computation, papers, questions, and knowledge notes."
+    />
+    <title>NeuroScience × AI Research Workspace</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #08090b;
+        --panel: rgba(17, 19, 23, 0.76);
+        --panel-strong: rgba(22, 24, 29, 0.92);
+        --line: rgba(235, 241, 245, 0.16);
+        --text: #f5f7fa;
+        --muted: #a7b0ba;
+        --cyan: #62d9ff;
+        --amber: #f4bd55;
+        --green: #76e0a0;
+        --rose: #ff7a90;
+        --shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        min-height: 100%;
+        background: var(--bg);
+      }
+
+      body {
+        margin: 0;
+        min-height: 100%;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 16% 12%, rgba(98, 217, 255, 0.1), transparent 24rem),
+          radial-gradient(circle at 82% 6%, rgba(244, 189, 85, 0.08), transparent 22rem),
+          linear-gradient(180deg, #08090b 0%, #101114 52%, #0a0b0d 100%);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .canvas-wrap {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      #brain-canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .page {
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero {
+        min-height: 92vh;
+        display: grid;
+        align-items: center;
+        padding: 32px clamp(18px, 4vw, 72px) 24px;
+      }
+
+      .hero-inner {
+        width: min(1120px, 100%);
+        margin: 0 auto;
+        display: grid;
+        gap: 32px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        width: fit-content;
+        align-items: center;
+        gap: 10px;
+        color: var(--green);
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--green);
+        box-shadow: 0 0 24px rgba(118, 224, 160, 0.85);
+      }
+
+      h1 {
+        max-width: 920px;
+        margin: 0;
+        font-size: clamp(3rem, 9vw, 8.8rem);
+        line-height: 0.94;
+        font-weight: 760;
+        letter-spacing: 0;
+      }
+
+      .hero-copy {
+        max-width: 720px;
+        margin: 0;
+        color: var(--muted);
+        font-size: clamp(1.02rem, 2vw, 1.28rem);
+        line-height: 1.72;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 0 16px;
+        background: rgba(245, 247, 250, 0.08);
+        color: var(--text);
+        font-weight: 700;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transition:
+          transform 160ms ease,
+          border-color 160ms ease,
+          background 160ms ease;
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+        border-color: rgba(98, 217, 255, 0.7);
+        background: rgba(98, 217, 255, 0.13);
+      }
+
+      .button.primary {
+        border-color: rgba(98, 217, 255, 0.62);
+        background: linear-gradient(135deg, rgba(98, 217, 255, 0.22), rgba(118, 224, 160, 0.14));
+      }
+
+      .status-strip {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1px;
+        width: min(880px, 100%);
+        border: 1px solid var(--line);
+        background: var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+
+      .status-item {
+        min-height: 96px;
+        padding: 18px;
+        background: rgba(10, 11, 13, 0.78);
+        backdrop-filter: blur(18px);
+      }
+
+      .status-item strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 1rem;
+      }
+
+      .status-item span {
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.5;
+      }
+
+      main {
+        background: rgba(8, 9, 11, 0.88);
+        border-top: 1px solid var(--line);
+      }
+
+      .section {
+        width: min(1120px, 100%);
+        margin: 0 auto;
+        padding: 72px clamp(18px, 4vw, 32px);
+      }
+
+      .section-header {
+        display: grid;
+        gap: 12px;
+        max-width: 760px;
+        margin-bottom: 28px;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: clamp(1.9rem, 4vw, 3rem);
+        letter-spacing: 0;
+      }
+
+      .section-header p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.72;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .tile {
+        min-height: 168px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 18px;
+        background: var(--panel);
+        transition:
+          transform 160ms ease,
+          border-color 160ms ease,
+          background 160ms ease;
+      }
+
+      .tile:hover {
+        transform: translateY(-3px);
+        border-color: rgba(244, 189, 85, 0.58);
+        background: rgba(27, 29, 33, 0.9);
+      }
+
+      .tile .label {
+        color: var(--amber);
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0;
+      }
+
+      .tile h3 {
+        margin: 18px 0 10px;
+        font-size: 1.16rem;
+        letter-spacing: 0;
+      }
+
+      .tile p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.58;
+      }
+
+      .workflow {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 28px;
+      }
+
+      .step {
+        min-height: 132px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 16px;
+        background: var(--panel-strong);
+      }
+
+      .step-number {
+        color: var(--rose);
+        font-weight: 800;
+        margin-bottom: 14px;
+      }
+
+      .step strong {
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .step span {
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.52;
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        padding: 28px clamp(18px, 4vw, 72px);
+        background: #08090b;
+      }
+
+      footer .inner {
+        width: min(1120px, 100%);
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+
+      @media (max-width: 860px) {
+        .hero {
+          min-height: auto;
+          padding-top: 72px;
+        }
+
+        .status-strip,
+        .grid,
+        .workflow {
+          grid-template-columns: 1fr;
+        }
+
+        .status-item {
+          min-height: auto;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="canvas-wrap" aria-hidden="true">
+      <canvas id="brain-canvas"></canvas>
+    </div>
+
+    <div class="page">
+      <section class="hero">
+        <div class="hero-inner">
+          <div class="eyebrow">Neural computation workspace</div>
+          <h1>NeuroScience × AI</h1>
+          <p class="hero-copy">
+            一个面向人脑机制、神经计算、AI 模型与脑启发系统的研究工作区。这里把问题、证据、论文、假设和知识沉淀成长期可追溯的结构化记录。
+          </p>
+          <div class="hero-actions" aria-label="Primary workspace links">
+            <a class="button primary" href="https://github.com/mingxiangbian/NeuroScience/blob/main/INDEX.md">Research Index</a>
+            <a class="button" href="https://github.com/mingxiangbian/NeuroScience/tree/main/knowledge">Knowledge Base</a>
+            <a class="button" href="https://github.com/mingxiangbian/NeuroScience/tree/main/papers">Papers</a>
+            <a class="button" href="https://github.com/mingxiangbian/NeuroScience/tree/main/projects">Projects</a>
+          </div>
+          <div class="status-strip" aria-label="Workspace focus">
+            <div class="status-item">
+              <strong>Brain Mechanisms</strong>
+              <span>从细胞、环路、系统和认知层级理解人脑工作机制。</span>
+            </div>
+            <div class="status-item">
+              <strong>AI Models</strong>
+              <span>分析架构、训练目标、表征、泛化和可解释性。</span>
+            </div>
+            <div class="status-item">
+              <strong>Evidence Records</strong>
+              <span>用证据强度、结论来源和开放问题管理研究判断。</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <main>
+        <section class="section" aria-labelledby="workspace-map">
+          <div class="section-header">
+            <h2 id="workspace-map">Workspace Map</h2>
+            <p>
+              首页负责导航，研究内容仍然保存在 Markdown 文件中。动效层表达神经网络和电信号，导航层保持克制，便于后续升级为 Three.js 3D 连接组场景。
+            </p>
+          </div>
+
+          <div class="grid">
+            <a class="tile" href="https://github.com/mingxiangbian/NeuroScience/blob/main/README.md">
+              <div>
+                <div class="label">Start</div>
+                <h3>README</h3>
+                <p>项目说明、目录用途和推荐使用流程。</p>
+              </div>
+            </a>
+            <a class="tile" href="https://github.com/mingxiangbian/NeuroScience/blob/main/INDEX.md">
+              <div>
+                <div class="label">Map</div>
+                <h3>Research Index</h3>
+                <p>活跃问题、研究项目、核心论文和知识库入口。</p>
+              </div>
+            </a>
+            <a class="tile" href="https://github.com/mingxiangbian/NeuroScience/tree/main/sources">
+              <div>
+                <div class="label">Evidence</div>
+                <h3>Sources</h3>
+                <p>数据库、论文入口、综述、教材和待核查来源。</p>
+              </div>
+            </a>
+            <a class="tile" href="https://github.com/mingxiangbian/NeuroScience/tree/main/questions">
+              <div>
+                <div class="label">Questions</div>
+                <h3>Open Questions</h3>
+                <p>尚未归入具体项目的开放问题和假设追踪。</p>
+              </div>
+            </a>
+            <a class="tile" href="https://github.com/mingxiangbian/NeuroScience/tree/main/templates">
+              <div>
+                <div class="label">Protocol</div>
+                <h3>Templates</h3>
+                <p>session、论文、研究问题、假设和文献地图模板。</p>
+              </div>
+            </a>
+            <a class="tile" href="https://github.com/mingxiangbian/NeuroScience/blob/main/AGENTS.md">
+              <div>
+                <div class="label">Rules</div>
+                <h3>AGENTS</h3>
+                <p>神经科学 × AI 研究助理的工作规则和证据标准。</p>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="workflow">
+          <div class="section-header">
+            <h2 id="workflow">Research Flow</h2>
+            <p>
+              这个工作区的目标不是堆资料，而是让研究问题不断经过证据、机制、反证和记录的循环。
+            </p>
+          </div>
+
+          <div class="workflow">
+            <div class="step">
+              <div class="step-number">01</div>
+              <strong>Question</strong>
+              <span>把大问题拆成可研究、可检索、可验证的小问题。</span>
+            </div>
+            <div class="step">
+              <div class="step-number">02</div>
+              <strong>Evidence</strong>
+              <span>区分共识、强证据、初步证据、争议和推测。</span>
+            </div>
+            <div class="step">
+              <div class="step-number">03</div>
+              <strong>Mechanism</strong>
+              <span>连接神经基础、计算功能、动态过程和行为认知。</span>
+            </div>
+            <div class="step">
+              <div class="step-number">04</div>
+              <strong>Hypothesis</strong>
+              <span>同时记录支持证据、反对证据和关键不确定性。</span>
+            </div>
+            <div class="step">
+              <div class="step-number">05</div>
+              <strong>Record</strong>
+              <span>把稳定知识沉淀到知识库，把开放问题继续追踪。</span>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <div class="inner">
+          <span>NeuroScience × AI Research Workspace</span>
+          <span>Canvas prototype now, Three.js-ready later.</span>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      const canvas = document.getElementById("brain-canvas");
+      const ctx = canvas.getContext("2d");
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      const nodes = [];
+      const links = [];
+      const pulses = [];
+      let width = 0;
+      let height = 0;
+      let brainScale = 1;
+      let centerX = 0;
+      let centerY = 0;
+      let animationFrame = 0;
+
+      const colors = {
+        cyan: "98, 217, 255",
+        amber: "244, 189, 85",
+        green: "118, 224, 160",
+        rose: "255, 122, 144",
+        white: "245, 247, 250",
+      };
+
+      function brainBoundary(theta) {
+        const base = 1 - 0.18 * Math.sin(theta) + 0.09 * Math.sin(2 * theta);
+        const frontal = 1 + 0.18 * Math.max(0, Math.cos(theta));
+        const occipital = 1 + 0.08 * Math.max(0, -Math.cos(theta));
+        const temporal = 1 + 0.18 * Math.max(0, Math.sin(theta));
+        return base * frontal * occipital * temporal;
+      }
+
+      function isInsideBrain(x, y) {
+        const theta = Math.atan2(y, x);
+        const radius = Math.hypot(x / 1.08, y / 0.78);
+        return radius < brainBoundary(theta) * 0.98;
+      }
+
+      function randomInsideBrain() {
+        for (let i = 0; i < 200; i += 1) {
+          const x = (Math.random() * 2 - 1) * 1.12;
+          const y = (Math.random() * 2 - 1) * 0.88;
+          if (isInsideBrain(x, y)) {
+            return { x, y };
+          }
+        }
+        return { x: 0, y: 0 };
+      }
+
+      function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        centerX = width * 0.58;
+        centerY = height * 0.44;
+        brainScale = Math.min(width * 0.36, height * 0.42, 420);
+        if (width < 860) {
+          centerX = width * 0.56;
+          centerY = height * 0.28;
+          brainScale = Math.min(width * 0.42, 280);
+        }
+      }
+
+      function seedNetwork() {
+        nodes.length = 0;
+        links.length = 0;
+        pulses.length = 0;
+
+        const nodeCount = 96;
+        for (let i = 0; i < nodeCount; i += 1) {
+          const point = randomInsideBrain();
+          nodes.push({
+            x: point.x,
+            y: point.y,
+            z: Math.random(),
+            r: 1.8 + Math.random() * 2.4,
+            phase: Math.random() * Math.PI * 2,
+            color: i % 9 === 0 ? colors.amber : i % 7 === 0 ? colors.green : colors.cyan,
+          });
+        }
+
+        for (let i = 0; i < nodes.length; i += 1) {
+          const distances = [];
+          for (let j = 0; j < nodes.length; j += 1) {
+            if (i === j) continue;
+            const dx = nodes[i].x - nodes[j].x;
+            const dy = nodes[i].y - nodes[j].y;
+            const d = Math.hypot(dx, dy);
+            if (d < 0.42) distances.push({ j, d });
+          }
+          distances
+            .sort((a, b) => a.d - b.d)
+            .slice(0, 3)
+            .forEach(({ j, d }) => {
+              if (!links.some((link) => link.a === j && link.b === i)) {
+                links.push({ a: i, b: j, d, phase: Math.random() * Math.PI * 2 });
+              }
+            });
+        }
+
+        for (let i = 0; i < 22; i += 1) {
+          const link = links[Math.floor(Math.random() * links.length)];
+          pulses.push({
+            link,
+            t: Math.random(),
+            speed: 0.0025 + Math.random() * 0.0045,
+            color: i % 4 === 0 ? colors.rose : i % 3 === 0 ? colors.amber : colors.cyan,
+          });
+        }
+      }
+
+      function toScreen(node, time) {
+        const drift = Math.sin(time * 0.00032 + node.phase) * 4;
+        const depth = 0.84 + node.z * 0.26;
+        return {
+          x: centerX + node.x * brainScale * depth + drift,
+          y: centerY + node.y * brainScale * depth + Math.cos(time * 0.00025 + node.phase) * 3,
+          depth,
+        };
+      }
+
+      function drawBrainOutline(time) {
+        ctx.save();
+        ctx.translate(centerX, centerY);
+        ctx.scale(brainScale * 1.08, brainScale * 0.78);
+        ctx.beginPath();
+        for (let i = 0; i <= 220; i += 1) {
+          const theta = (i / 220) * Math.PI * 2;
+          const r = brainBoundary(theta) * (1 + Math.sin(time * 0.0008 + theta * 5) * 0.008);
+          const x = Math.cos(theta) * r;
+          const y = Math.sin(theta) * r;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.strokeStyle = "rgba(245, 247, 250, 0.22)";
+        ctx.lineWidth = 0.004;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(-0.1, -0.88);
+        ctx.bezierCurveTo(-0.08, -0.45, -0.12, 0.08, -0.04, 0.86);
+        ctx.strokeStyle = "rgba(98, 217, 255, 0.22)";
+        ctx.lineWidth = 0.003;
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      function draw(time) {
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = "rgba(8, 9, 11, 0.46)";
+        ctx.fillRect(0, 0, width, height);
+
+        drawBrainOutline(time);
+
+        const projected = nodes.map((node) => toScreen(node, time));
+
+        links.forEach((link) => {
+          const a = projected[link.a];
+          const b = projected[link.b];
+          const activity = 0.35 + Math.sin(time * 0.0012 + link.phase) * 0.25;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = `rgba(${colors.white}, ${0.05 + activity * 0.08})`;
+          ctx.lineWidth = 0.6 + activity * 0.8;
+          ctx.stroke();
+        });
+
+        pulses.forEach((pulse) => {
+          pulse.t += prefersReducedMotion ? 0 : pulse.speed;
+          if (pulse.t > 1) {
+            pulse.t = 0;
+            pulse.link = links[Math.floor(Math.random() * links.length)];
+          }
+          const a = projected[pulse.link.a];
+          const b = projected[pulse.link.b];
+          const x = a.x + (b.x - a.x) * pulse.t;
+          const y = a.y + (b.y - a.y) * pulse.t;
+          const glow = ctx.createRadialGradient(x, y, 0, x, y, 18);
+          glow.addColorStop(0, `rgba(${pulse.color}, 0.86)`);
+          glow.addColorStop(1, `rgba(${pulse.color}, 0)`);
+          ctx.fillStyle = glow;
+          ctx.beginPath();
+          ctx.arc(x, y, 18, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = `rgba(${pulse.color}, 0.96)`;
+          ctx.beginPath();
+          ctx.arc(x, y, 2.4, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        nodes.forEach((node, index) => {
+          const p = projected[index];
+          const flicker = 0.48 + Math.sin(time * 0.002 + node.phase) * 0.28;
+          ctx.fillStyle = `rgba(${node.color}, ${0.38 + flicker * 0.38})`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, node.r * p.depth, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        if (!prefersReducedMotion) {
+          animationFrame = requestAnimationFrame(draw);
+        }
+      }
+
+      window.addEventListener("resize", resize);
+      resize();
+      seedNetwork();
+      draw(performance.now());
+
+      if (!prefersReducedMotion) {
+        animationFrame = requestAnimationFrame(draw);
+      }
+    </script>
+  </body>
+</html>
