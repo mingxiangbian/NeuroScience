@@ -3,21 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Interactive NeuroScience x AI homepage with a controllable 3D brain model."
-    />
+    <meta name="description" content="Local 3D brain model base for NeuroScience x AI." />
     <title>NeuroScience × AI</title>
     <style>
       :root {
         color-scheme: dark;
-        --ink: #f8f4ef;
-        --muted: rgba(248, 244, 239, 0.72);
-        --glass: rgba(255, 255, 255, 0.105);
-        --glass-line: rgba(255, 255, 255, 0.22);
-        --accent-a: #8ff3ff;
-        --accent-b: #ff8a8a;
-        --accent-c: #ffd36a;
+        --ink: #fff8f2;
+        --grid: rgba(255, 255, 255, 0.032);
+        --edge: rgba(255, 255, 255, 0.14);
       }
 
       * {
@@ -38,21 +31,37 @@
           "Segoe UI", sans-serif;
         color: var(--ink);
         background:
-          linear-gradient(145deg, rgba(7, 9, 13, 0.96), rgba(19, 17, 18, 0.94)),
-          linear-gradient(90deg, #11151c, #201716 52%, #0d1117);
+          radial-gradient(circle at 50% 44%, rgba(115, 226, 255, 0.12), transparent 32%),
+          radial-gradient(circle at 54% 52%, rgba(255, 116, 196, 0.08), transparent 37%),
+          radial-gradient(circle at 44% 58%, rgba(255, 203, 97, 0.06), transparent 42%),
+          linear-gradient(145deg, #06090d 0%, #0d1118 48%, #07090f 100%);
       }
 
-      body::before {
+      body::before,
+      body::after {
         position: fixed;
         inset: 0;
         content: "";
         pointer-events: none;
+      }
+
+      body::before {
         background:
-          linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.026) 1px, transparent 1px);
-        background-size: 62px 62px;
-        mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 78%, transparent 100%);
-        opacity: 0.46;
+          linear-gradient(var(--grid) 1px, transparent 1px),
+          linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+        background-size: 68px 68px;
+        mask-image: linear-gradient(to bottom, transparent 0%, black 16%, black 82%, transparent 100%);
+      }
+
+      body::after {
+        z-index: 4;
+        background:
+          linear-gradient(to bottom, rgba(0, 0, 0, 0.18), transparent 24%, transparent 76%, rgba(0, 0, 0, 0.46)),
+          linear-gradient(90deg, rgba(0, 0, 0, 0.42), transparent 22%, transparent 78%, rgba(0, 0, 0, 0.42));
+      }
+
+      [hidden] {
+        display: none !important;
       }
 
       #brain-stage {
@@ -61,29 +70,16 @@
         display: grid;
         place-items: center;
         overflow: hidden;
-        touch-action: none;
         isolation: isolate;
-      }
-
-      #brain-stage canvas {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        cursor: grab;
-        outline: none;
-      }
-
-      #brain-stage canvas:active {
-        cursor: grabbing;
+        touch-action: none;
       }
 
       .title-plane {
         position: absolute;
-        top: clamp(28px, 7vh, 72px);
+        top: clamp(24px, 6vh, 58px);
         left: 50%;
-        z-index: 2;
-        width: min(88vw, 1120px);
+        z-index: 3;
+        width: min(92vw, 1100px);
         transform: translateX(-50%);
         pointer-events: none;
         text-align: center;
@@ -92,640 +88,1712 @@
       h1 {
         margin: 0;
         white-space: nowrap;
-        font-size: clamp(2.1rem, 7.4vw, 7.8rem);
+        font-size: clamp(2.05rem, 6.15vw, 6.35rem);
         font-weight: 760;
-        line-height: 0.95;
+        line-height: 0.96;
         letter-spacing: 0;
         text-shadow:
-          0 1px 0 rgba(255, 255, 255, 0.26),
-          0 20px 58px rgba(0, 0, 0, 0.62),
-          0 0 34px rgba(143, 243, 255, 0.22);
+          0 1px 0 rgba(255, 255, 255, 0.28),
+          0 18px 62px rgba(0, 0, 0, 0.72),
+          0 0 34px rgba(112, 199, 226, 0.22);
       }
 
-      .glass-rim {
+      .title-rule {
         position: absolute;
+        top: calc(clamp(24px, 6vh, 58px) + clamp(2.8rem, 6.25vw, 6.7rem));
         left: 50%;
-        top: calc(clamp(28px, 7vh, 72px) + clamp(3.2rem, 8vw, 8.4rem));
-        z-index: 2;
-        width: min(54vw, 720px);
+        z-index: 3;
+        width: min(54vw, 700px);
         height: 1px;
         transform: translateX(-50%);
         pointer-events: none;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.54), transparent);
-        box-shadow: 0 0 26px rgba(143, 243, 255, 0.22);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.58), transparent);
+        box-shadow: 0 0 28px rgba(112, 199, 226, 0.22);
       }
 
-      .region-panel {
+      #brain-canvas-host,
+      #fallback-brain {
         position: absolute;
-        left: 50%;
-        bottom: clamp(28px, 6vh, 72px);
-        z-index: 2;
+        inset: 0;
+      }
+
+      #brain-canvas-host {
+        z-index: 1;
+      }
+
+      #brain-canvas-host canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        cursor: grab;
+        outline: none;
+      }
+
+      #brain-canvas-host canvas:active {
+        cursor: grabbing;
+      }
+
+      #fallback-brain {
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+        transition: opacity 260ms ease;
+      }
+
+      body.webgl-ready #fallback-brain {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      body.fallback-active #fallback-brain {
+        opacity: 1;
+      }
+
+      .module-layer {
+        position: absolute;
+        inset: 0;
+        z-index: 5;
+        pointer-events: none;
+      }
+
+      .module-label {
+        position: absolute;
+        left: var(--x);
+        top: var(--y);
         display: grid;
-        grid-template-columns: auto auto;
-        gap: 10px 18px;
-        align-items: center;
-        min-width: min(420px, calc(100vw - 32px));
-        padding: 16px 20px;
-        transform: translateX(-50%);
-        border: 1px solid var(--glass-line);
+        gap: 2px;
+        min-width: 138px;
+        padding: 9px 11px;
+        transform: translate(-50%, -50%) translateY(8px);
+        border: 1px solid rgba(255, 255, 255, 0.22);
         border-radius: 8px;
         color: var(--ink);
         background:
-          linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05)),
-          rgba(10, 12, 16, 0.36);
+          linear-gradient(135deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.045)),
+          rgba(7, 10, 14, 0.42);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.24),
-          0 26px 70px rgba(0, 0, 0, 0.4);
-        backdrop-filter: blur(22px) saturate(1.3);
+          inset 0 1px 0 rgba(255, 255, 255, 0.18),
+          0 18px 48px rgba(0, 0, 0, 0.36),
+          0 0 28px color-mix(in srgb, var(--module-color), transparent 55%);
+        opacity: 0;
+        pointer-events: none;
+        cursor: pointer;
+        backdrop-filter: blur(18px) saturate(1.2);
+        transition:
+          opacity 220ms ease,
+          transform 220ms ease,
+          border-color 220ms ease,
+          background 220ms ease;
       }
 
-      .region-panel::before {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
+      body.brain-expanded .module-label {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translate(-50%, -50%);
+      }
+
+      .module-label::before {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        width: 5px;
+        height: 38px;
         content: "";
-        background: linear-gradient(135deg, var(--accent-a), var(--accent-c), var(--accent-b));
-        box-shadow: 0 0 24px rgba(255, 211, 106, 0.58);
+        transform: translateY(-50%);
+        border-radius: 999px;
+        background: var(--module-color);
+        box-shadow: 0 0 18px var(--module-color);
       }
 
-      .region-panel strong,
-      .region-panel span {
+      .module-label strong,
+      .module-label span {
         display: block;
-        min-width: 0;
+        padding-left: 12px;
+        text-align: left;
+        white-space: nowrap;
       }
 
-      .region-panel strong {
-        font-size: clamp(1rem, 2.8vw, 1.28rem);
-        font-weight: 740;
-        line-height: 1;
-      }
-
-      .region-panel span {
-        grid-column: 2;
-        color: var(--muted);
-        font-size: 0.82rem;
+      .module-label strong {
+        font-size: 0.84rem;
+        font-weight: 760;
         line-height: 1.1;
       }
 
-      .vignette {
-        position: fixed;
-        inset: 0;
-        z-index: 1;
-        pointer-events: none;
+      .module-label span {
+        color: rgba(255, 248, 242, 0.64);
+        font-size: 0.68rem;
+        font-weight: 520;
+        line-height: 1.15;
+      }
+
+      .module-label:hover,
+      .module-label:focus-visible,
+      .module-label[aria-pressed="true"] {
+        border-color: color-mix(in srgb, var(--module-color), white 32%);
         background:
-          linear-gradient(to bottom, rgba(0, 0, 0, 0.18), transparent 26%, transparent 74%, rgba(0, 0, 0, 0.35)),
-          linear-gradient(90deg, rgba(0, 0, 0, 0.34), transparent 26%, transparent 74%, rgba(0, 0, 0, 0.34));
+          linear-gradient(135deg, color-mix(in srgb, var(--module-color), transparent 78%), rgba(255, 255, 255, 0.065)),
+          rgba(7, 10, 14, 0.56);
+        outline: none;
+        transform: translate(-50%, -50%) scale(1.035);
+      }
+
+      .module-panel {
+        position: absolute;
+        left: 50%;
+        bottom: clamp(20px, 4.5vh, 44px);
+        z-index: 5;
+        display: grid;
+        gap: 3px;
+        min-width: min(430px, calc(100vw - 32px));
+        padding: 12px 16px 13px;
+        transform: translateX(-50%) translateY(12px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 8px;
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)),
+          rgba(4, 7, 11, 0.5);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.16),
+          0 22px 58px rgba(0, 0, 0, 0.42);
+        opacity: 0;
+        pointer-events: none;
+        backdrop-filter: blur(20px) saturate(1.25);
+        transition:
+          opacity 220ms ease,
+          transform 220ms ease;
+      }
+
+      body.module-selected .module-panel {
+        opacity: 1;
+        transform: translateX(-50%);
+      }
+
+      .module-panel strong,
+      .module-panel span {
+        display: block;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .module-panel strong {
+        font-size: 0.98rem;
+        font-weight: 760;
+        line-height: 1.15;
+      }
+
+      .module-panel span {
+        color: rgba(255, 248, 242, 0.68);
+        font-size: 0.76rem;
+        line-height: 1.2;
       }
 
       @media (max-width: 720px) {
         .title-plane {
-          top: 34px;
-          width: 94vw;
+          top: 30px;
+          width: 96vw;
         }
 
         h1 {
-          font-size: clamp(1.85rem, 9.2vw, 3.4rem);
+          font-size: clamp(1.82rem, 8.7vw, 3.28rem);
         }
 
-        .glass-rim {
-          top: 86px;
+        .title-rule {
+          top: 82px;
           width: 78vw;
         }
 
-        .region-panel {
-          bottom: 24px;
-          grid-template-columns: auto 1fr;
-          padding: 13px 15px;
+        .module-label {
+          min-width: 118px;
+          padding: 8px 9px;
+        }
+
+        .module-label strong {
+          font-size: 0.74rem;
+        }
+
+        .module-label span {
+          font-size: 0.58rem;
+        }
+
+        .module-panel {
+          bottom: 16px;
+          padding: 10px 12px 11px;
         }
       }
 
       @media (prefers-reduced-motion: reduce) {
-        #brain-stage canvas {
-          cursor: default;
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
         }
       }
     </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.165.0/examples/jsm/"
+        }
+      }
+    </script>
   </head>
   <body>
-    <main id="brain-stage" data-region="cortex" aria-label="Interactive 3D brain model">
+    <main id="brain-stage" aria-label="Controllable 3D brain model">
       <div class="title-plane" aria-hidden="true">
         <h1>NeuroScience × AI</h1>
       </div>
-      <div class="glass-rim" aria-hidden="true"></div>
-      <div class="vignette" aria-hidden="true"></div>
-      <div class="region-panel" aria-live="polite">
-        <strong id="region-title">Cortex</strong>
-        <span id="region-target">Knowledge</span>
+      <div class="title-rule" aria-hidden="true"></div>
+      <div id="brain-canvas-host" aria-hidden="true"></div>
+      <div class="module-layer" aria-label="Research modules">
+        <button
+          class="module-label"
+          type="button"
+          data-module="association"
+          style="--x: 39%; --y: 29%; --module-color: #5ef5ff"
+          aria-pressed="false"
+        >
+          <strong>knowledge/</strong>
+          <span>Association Cortex</span>
+        </button>
+        <button
+          class="module-label"
+          type="button"
+          data-module="prefrontal"
+          style="--x: 72%; --y: 44%; --module-color: #ff7be8"
+          aria-pressed="false"
+        >
+          <strong>projects/</strong>
+          <span>Prefrontal Planning</span>
+        </button>
+        <button
+          class="module-label"
+          type="button"
+          data-module="parietal"
+          style="--x: 25%; --y: 35%; --module-color: #ffd35a"
+          aria-pressed="false"
+        >
+          <strong>sources/</strong>
+          <span>Parietal Integration</span>
+        </button>
+        <button
+          class="module-label"
+          type="button"
+          data-module="temporal"
+          style="--x: 31%; --y: 70%; --module-color: #6aff8f"
+          aria-pressed="false"
+        >
+          <strong>papers/</strong>
+          <span>Temporal Memory</span>
+        </button>
+        <button
+          class="module-label"
+          type="button"
+          data-module="cingulate"
+          style="--x: 58%; --y: 25%; --module-color: #8f8cff"
+          aria-pressed="false"
+        >
+          <strong>questions/</strong>
+          <span>Cingulate Projection</span>
+        </button>
+        <button
+          class="module-label"
+          type="button"
+          data-module="hippocampal"
+          style="--x: 67%; --y: 72%; --module-color: #ff9f5a"
+          aria-pressed="false"
+        >
+          <strong>sessions/</strong>
+          <span>Hippocampal Glow</span>
+        </button>
       </div>
+      <div class="module-panel" aria-live="polite">
+        <strong id="module-region">Association Cortex</strong>
+        <span id="module-folder">knowledge/</span>
+        <span id="module-sentence">Stable concepts and reusable research notes.</span>
+      </div>
+
+      <svg id="fallback-brain" aria-hidden="true" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <radialGradient id="fallback-tissue" cx="43%" cy="36%" r="68%">
+            <stop offset="0%" stop-color="#ffd4c5" stop-opacity="0.94" />
+            <stop offset="56%" stop-color="#d69282" stop-opacity="0.78" />
+            <stop offset="100%" stop-color="#6f3e3f" stop-opacity="0.58" />
+          </radialGradient>
+          <filter id="fallback-shadow" x="-25%" y="-25%" width="150%" height="150%">
+            <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#000000" flood-opacity="0.55" />
+          </filter>
+        </defs>
+        <g filter="url(#fallback-shadow)">
+          <path
+            d="M275 388 C226 338 232 268 295 218 C374 154 498 130 606 154 C696 119 828 154 905 223 C979 289 992 379 944 436 C905 483 836 503 758 493 C724 554 636 580 574 543 C515 586 423 562 390 497 C342 496 302 470 275 388 Z"
+            fill="url(#fallback-tissue)"
+            stroke="rgba(255,255,255,0.24)"
+            stroke-width="2"
+          />
+          <path
+            d="M602 165 C575 242 574 338 603 479"
+            fill="none"
+            stroke="rgba(47,25,29,0.64)"
+            stroke-width="11"
+            stroke-linecap="round"
+          />
+          <path
+            d="M301 337 C376 286 466 278 545 308 M315 404 C402 356 492 353 565 390 M365 249 C432 219 496 224 552 264 M398 474 C455 441 511 441 564 472 M655 302 C735 263 834 279 912 334 M636 393 C719 350 829 354 922 404 M673 233 C748 214 826 232 889 276 M648 470 C722 440 812 444 886 477"
+            fill="none"
+            stroke="rgba(78,45,48,0.54)"
+            stroke-width="8"
+            stroke-linecap="round"
+          />
+          <path
+            d="M727 535 C772 518 838 520 884 552 C861 587 792 599 728 575 C707 567 707 545 727 535 Z"
+            fill="rgba(128,73,65,0.78)"
+            stroke="rgba(255,255,255,0.12)"
+            stroke-width="2"
+          />
+          <path
+            d="M739 548 C782 536 827 539 870 558 M736 566 C785 553 829 558 861 576"
+            fill="none"
+            stroke="rgba(66,35,36,0.45)"
+            stroke-width="5"
+            stroke-linecap="round"
+          />
+        </g>
+      </svg>
     </main>
 
     <script type="module">
-      import * as THREE from "https://unpkg.com/three@0.165.0/build/three.module.js";
+      import * as THREE from "three";
+      import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
+      const MODEL_URL = "assets/brain-human.glb";
+      const host = document.getElementById("brain-canvas-host");
       const stage = document.getElementById("brain-stage");
-      const regionTitle = document.getElementById("region-title");
-      const regionTarget = document.getElementById("region-target");
+      const forceFallback = new URLSearchParams(window.location.search).has("fallback");
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      const scene = new THREE.Scene();
-      scene.fog = new THREE.FogExp2(0x0a0b0f, 0.035);
-
-      const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 100);
-      camera.position.set(0, 0.18, 7.2);
-
-      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.outputColorSpace = THREE.SRGBColorSpace;
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.03;
-      stage.prepend(renderer.domElement);
-
-      const hemiLight = new THREE.HemisphereLight(0xfff1e6, 0x141a24, 1.85);
-      scene.add(hemiLight);
-
-      const keyLight = new THREE.DirectionalLight(0xffdfc8, 3.1);
-      keyLight.position.set(-3.8, 4.6, 5.5);
-      scene.add(keyLight);
-
-      const rimLight = new THREE.DirectionalLight(0x9df8ff, 2.1);
-      rimLight.position.set(4.2, 2.3, -3.6);
-      scene.add(rimLight);
-
-      const brainGroup = new THREE.Group();
-      const coreGroup = new THREE.Group();
-      const cortexGroup = new THREE.Group();
-      const signalGroup = new THREE.Group();
-      brainGroup.add(coreGroup, cortexGroup, signalGroup);
-      brainGroup.rotation.set(-0.07, -0.22, 0);
-      scene.add(brainGroup);
-
-      const interactiveMeshes = [];
-      let selectedRegion = "cortex";
-      let hoveredRegion = null;
-      let selectionProgress = 0;
-      let targetSelectionProgress = 0;
-
-      const tissueMaterial = new THREE.MeshPhysicalMaterial({
-        color: 0xe8aa9d,
-        roughness: 0.62,
-        metalness: 0.015,
-        clearcoat: 0.34,
-        clearcoatRoughness: 0.52,
-        sheen: 0.42,
-        sheenColor: 0xffd8ca,
-        transmission: 0.01,
-        thickness: 0.45,
-      });
-
-      const lobeTintMaterial = new THREE.MeshPhysicalMaterial({
-        color: 0xf0b9aa,
-        roughness: 0.72,
-        transparent: true,
-        opacity: 0.26,
-        depthWrite: false,
-      });
-
-      const ridgeMaterial = new THREE.MeshPhysicalMaterial({
-        color: 0xf6c8bb,
-        roughness: 0.68,
-        clearcoat: 0.16,
-        sheen: 0.28,
-        sheenColor: 0xffeee7,
-      });
-
-      const sulcusMaterial = new THREE.MeshPhysicalMaterial({
-        color: 0x75413f,
-        roughness: 0.88,
-        metalness: 0,
-        transparent: true,
-        opacity: 0.72,
-      });
-
-      const deepSulcusMaterial = new THREE.MeshPhysicalMaterial({
-        color: 0x6e3d3e,
-        roughness: 0.9,
-        transparent: true,
-        opacity: 0.56,
-      });
-
-      const supportMaterial = new THREE.MeshPhysicalMaterial({
-        color: 0xb8756f,
-        roughness: 0.84,
-        transparent: true,
-        opacity: 0.78,
-      });
-
-      const lobeAnchors = {
-        frontal: new THREE.Vector2(-1.16, 0.22),
-        parietal: new THREE.Vector2(-0.1, 0.45),
-        temporal: new THREE.Vector2(-0.24, -0.45),
-        occipital: new THREE.Vector2(1.18, 0.08),
-      };
-
-      const envelopeSamples = [
-        [-1.62, -0.2, 0.18],
-        [-1.46, -0.36, 0.45],
-        [-1.12, -0.5, 0.78],
-        [-0.72, -0.66, 0.94],
-        [-0.18, -0.8, 1.0],
-        [0.46, -0.68, 0.9],
-        [1.02, -0.46, 0.72],
-        [1.46, -0.28, 0.36],
-        [1.62, -0.12, 0.02],
+      const INITIAL_ROTATION = { x: -0.08, y: -0.82, z: 0.02 };
+      const MODULES = [
+        {
+          id: "association",
+          region: "Association Cortex",
+          folder: "knowledge/",
+          sentence: "Stable concepts and reusable research notes.",
+          type: "surface",
+          color: 0x5ef5ff,
+          offset: [0, 0.48, 0.18],
+          min: [0.24, 0.5, 0],
+          max: [0.72, 1, 1],
+        },
+        {
+          id: "prefrontal",
+          region: "Prefrontal Planning Region",
+          folder: "projects/",
+          sentence: "Research plans and active investigations.",
+          type: "surface",
+          color: 0xff7be8,
+          offset: [0.68, 0.08, 0.24],
+          min: [0.56, 0.25, 0],
+          max: [1, 0.88, 1],
+        },
+        {
+          id: "parietal",
+          region: "Parietal Source Integration Region",
+          folder: "sources/",
+          sentence: "Source maps, datasets, and reference links.",
+          type: "surface",
+          color: 0xffd35a,
+          offset: [-0.62, 0.26, 0.18],
+          min: [0, 0.42, 0],
+          max: [0.43, 0.96, 1],
+        },
+        {
+          id: "temporal",
+          region: "Temporal Memory Region",
+          folder: "papers/",
+          sentence: "Paper notes and literature evidence.",
+          type: "surface",
+          color: 0x6aff8f,
+          offset: [-0.1, -0.58, 0.26],
+          min: [0.12, 0, 0],
+          max: [0.86, 0.48, 1],
+        },
+        {
+          id: "cingulate",
+          region: "Cingulate Question Region",
+          folder: "questions/",
+          sentence: "Open problems, conflicts, and hypotheses.",
+          type: "projected",
+          color: 0x8f8cff,
+          offset: [0.1, 0.82, 0.46],
+        },
+        {
+          id: "hippocampal",
+          region: "Hippocampal Session Region",
+          folder: "sessions/",
+          sentence: "Session traces and research context.",
+          type: "internal",
+          color: 0xff9f5a,
+          offset: [0.46, -0.64, 0.58],
+        },
       ];
 
-      function interpolateEnvelope(x) {
-        for (let i = 0; i < envelopeSamples.length - 1; i += 1) {
-          const left = envelopeSamples[i];
-          const right = envelopeSamples[i + 1];
-          if (x >= left[0] && x <= right[0]) {
-            const t = (x - left[0]) / (right[0] - left[0]);
-            const smooth = t * t * (3 - 2 * t);
-            return {
-              bottom: THREE.MathUtils.lerp(left[1], right[1], smooth),
-              top: THREE.MathUtils.lerp(left[2], right[2], smooth),
-            };
-          }
+      let app = null;
+
+      function activateFallback() {
+        document.body.classList.remove("webgl-ready");
+        document.body.classList.add("fallback-active");
+      }
+
+      function clamp(value, min, max) {
+        return Math.min(max, Math.max(min, value));
+      }
+
+      function createFoldedGeometry(THREE, detail = 88, amount = 0.026) {
+        const geometry = new THREE.SphereGeometry(1, detail, Math.floor(detail / 2));
+        const position = geometry.attributes.position;
+        const vector = new THREE.Vector3();
+
+        for (let index = 0; index < position.count; index += 1) {
+          vector.fromBufferAttribute(position, index);
+          const normal = vector.clone().normalize();
+          const fold =
+            Math.sin(normal.x * 18 + normal.z * 7) * 0.52 +
+            Math.sin(normal.y * 22 - normal.z * 10) * 0.34 +
+            Math.sin((normal.x + normal.y) * 27) * 0.18;
+          const scale = 1 + fold * amount;
+          position.setXYZ(index, vector.x * scale, vector.y * scale, vector.z * scale);
         }
-        const edge = x < envelopeSamples[0][0] ? envelopeSamples[0] : envelopeSamples[envelopeSamples.length - 1];
-        return { bottom: edge[1], top: edge[2] };
+
+        geometry.computeVertexNormals();
+        return geometry;
       }
 
-      function cortexPoint(x, y, lift = 0.5) {
-        const sideCurve = 0.1 * Math.cos((x + 0.2) * 1.8) + 0.04 * Math.sin(y * 4.5);
-        return new THREE.Vector3(x, y, lift + sideCurve);
-      }
-
-      function markCortex(mesh) {
-        mesh.userData.region = "cortex";
-        mesh.userData.title = "Cortex";
-        mesh.userData.target = "Knowledge";
-        interactiveMeshes.push(mesh);
-        return mesh;
-      }
-
-      function createBrainSilhouette() {
-        const shape = new THREE.Shape();
-        shape.moveTo(-1.62, -0.16);
-        shape.bezierCurveTo(-1.76, 0.08, -1.68, 0.38, -1.38, 0.58);
-        shape.bezierCurveTo(-1.05, 0.87, -0.54, 1.0, 0.02, 0.99);
-        shape.bezierCurveTo(0.62, 0.98, 1.18, 0.78, 1.48, 0.43);
-        shape.bezierCurveTo(1.76, 0.1, 1.68, -0.2, 1.42, -0.36);
-        shape.bezierCurveTo(1.08, -0.56, 0.58, -0.52, 0.28, -0.48);
-        shape.bezierCurveTo(0.08, -0.7, -0.16, -0.88, -0.46, -0.9);
-        shape.bezierCurveTo(-0.78, -0.92, -0.96, -0.72, -1.04, -0.5);
-        shape.bezierCurveTo(-1.34, -0.5, -1.54, -0.38, -1.62, -0.16);
-
-        const geometry = new THREE.ExtrudeGeometry(shape, {
-          depth: 0.82,
-          bevelEnabled: true,
-          bevelSegments: 18,
-          bevelSize: 0.12,
-          bevelThickness: 0.12,
-          curveSegments: 28,
+      function createMaterial(THREE, color, roughness = 0.7) {
+        return new THREE.MeshPhysicalMaterial({
+          color,
+          roughness,
+          metalness: 0,
+          clearcoat: 0.08,
+          clearcoatRoughness: 0.82,
+          sheen: 0.34,
+          sheenColor: new THREE.Color(0xffd9cc),
         });
-        geometry.center();
-        const mesh = markCortex(new THREE.Mesh(geometry, tissueMaterial));
-        mesh.position.set(0, 0.02, 0);
-        cortexGroup.add(mesh);
+      }
+
+      function createEllipsoid(THREE, geometry, material, position, scale, rotation = [0, 0, 0]) {
+        const mesh = new THREE.Mesh(geometry.clone(), material);
+        mesh.position.set(...position);
+        mesh.scale.set(...scale);
+        mesh.rotation.set(...rotation);
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
         return mesh;
       }
 
-      createBrainSilhouette();
+      function createHemisphere(THREE, side) {
+        const group = new THREE.Group();
+        const folded = createFoldedGeometry(THREE);
+        const tissue = createMaterial(THREE, side < 0 ? 0xdfaa98 : 0xd89c8e);
+        const upperTissue = createMaterial(THREE, 0xf0bca9, 0.76);
 
-      const bulgeGeometry = new THREE.SphereGeometry(1, 64, 32);
-
-      function addAnatomicalBulge(position, scale, material, group = cortexGroup, interactive = true) {
-        const mesh = new THREE.Mesh(bulgeGeometry, material);
-        mesh.position.copy(position);
-        mesh.scale.copy(scale);
-        if (interactive) {
-          markCortex(mesh);
-        }
-        group.add(mesh);
-        return mesh;
-      }
-
-      addAnatomicalBulge(new THREE.Vector3(lobeAnchors.frontal.x - 0.12, lobeAnchors.frontal.y - 0.02, -0.05), new THREE.Vector3(0.56, 0.5, 0.38), lobeTintMaterial);
-      addAnatomicalBulge(new THREE.Vector3(lobeAnchors.parietal.x + 0.08, lobeAnchors.parietal.y, -0.08), new THREE.Vector3(0.68, 0.42, 0.36), lobeTintMaterial);
-      addAnatomicalBulge(new THREE.Vector3(lobeAnchors.temporal.x, lobeAnchors.temporal.y - 0.02, -0.04), new THREE.Vector3(0.62, 0.28, 0.34), lobeTintMaterial);
-      addAnatomicalBulge(new THREE.Vector3(lobeAnchors.occipital.x - 0.04, lobeAnchors.occipital.y, -0.05), new THREE.Vector3(0.46, 0.34, 0.32), lobeTintMaterial);
-      addAnatomicalBulge(new THREE.Vector3(1.02, -0.66, -0.18), new THREE.Vector3(0.44, 0.28, 0.36), supportMaterial, coreGroup, false);
-
-      function addTube(points, radius, material, group = cortexGroup, region = "cortex", tubularSegments = 96) {
-        const curve = new THREE.CatmullRomCurve3(points);
-        const geometry = new THREE.TubeGeometry(curve, tubularSegments, radius, 8, false);
-        const mesh = new THREE.Mesh(geometry, material);
-        if (region === "cortex") {
-          markCortex(mesh);
-        }
-        group.add(mesh);
-        return { mesh, curve };
-      }
-
-      addTube(
-        [
-          new THREE.Vector3(1.06, -0.72, -0.12),
-          new THREE.Vector3(1.15, -0.98, -0.14),
-          new THREE.Vector3(1.05, -1.18, -0.18),
-        ],
-        0.13,
-        supportMaterial,
-        coreGroup,
-        "support",
-        36
-      );
-
-      const corticalFoldPaths = [];
-
-      function createCorticalFoldPath(ratio, phase, xStart = -1.42, xEnd = 1.48, segments = 18) {
-        const points = [];
-        for (let i = 0; i <= segments; i += 1) {
-          const t = i / segments;
-          const x = THREE.MathUtils.lerp(xStart, xEnd, t);
-          const envelope = interpolateEnvelope(x);
-          const margin = 0.08 + 0.04 * Math.sin(phase + t * Math.PI);
-          const available = Math.max(0.1, envelope.top - envelope.bottom - margin * 2);
-          const wave = Math.sin(t * Math.PI * 3.1 + phase) * 0.055 + Math.sin(t * Math.PI * 7.3 + phase * 0.7) * 0.025;
-          const y = THREE.MathUtils.clamp(envelope.bottom + margin + available * ratio + wave, envelope.bottom + 0.07, envelope.top - 0.07);
-          points.push(cortexPoint(x, y, 0.53 + 0.035 * Math.sin(t * Math.PI + phase)));
-        }
-        return points;
-      }
-
-      for (let i = 0; i < 24; i += 1) {
-        const ratio = 0.12 + (i % 12) * 0.067;
-        const rowShift = i < 12 ? -0.04 : 0.04;
-        const phase = i * 0.64;
-        const points = createCorticalFoldPath(THREE.MathUtils.clamp(ratio + rowShift, 0.08, 0.88), phase, -1.48 + (i % 4) * 0.035, 1.5 - (i % 5) * 0.03, 15);
-        const material = i % 3 === 0 ? ridgeMaterial : sulcusMaterial;
-        const radius = i % 3 === 0 ? 0.012 : 0.01;
-        corticalFoldPaths.push(addTube(points, radius, material, cortexGroup, "cortex", 70).curve);
-      }
-
-      for (const anchor of Object.values(lobeAnchors)) {
-        for (let ring = 0; ring < 4; ring += 1) {
-          const points = [];
-          const radiusX = 0.22 + ring * 0.085;
-          const radiusY = 0.12 + ring * 0.055;
-          for (let i = 0; i <= 13; i += 1) {
-            const t = i / 13;
-            const angle = -Math.PI * 0.88 + t * Math.PI * 1.76;
-            const x = anchor.x + Math.cos(angle) * radiusX + Math.sin(t * Math.PI * 3) * 0.025;
-            const envelope = interpolateEnvelope(x);
-            const y = THREE.MathUtils.clamp(anchor.y + Math.sin(angle) * radiusY, envelope.bottom + 0.08, envelope.top - 0.08);
-            points.push(cortexPoint(x, y, 0.58));
-          }
-          corticalFoldPaths.push(addTube(points, 0.009, ring % 2 === 0 ? deepSulcusMaterial : sulcusMaterial, cortexGroup, "cortex", 54).curve);
-        }
-      }
-
-      for (let i = 0; i < 14; i += 1) {
-        const points = [];
-        const yBase = -0.2 + (i % 7) * 0.105;
-        for (let step = 0; step <= 9; step += 1) {
-          const t = step / 9;
-          const x = THREE.MathUtils.lerp(0.58, 1.45, t);
-          const envelope = interpolateEnvelope(x);
-          const y = THREE.MathUtils.clamp(yBase + Math.sin(t * Math.PI * 1.8 + i * 0.6) * 0.045, envelope.bottom + 0.08, envelope.top - 0.08);
-          points.push(cortexPoint(x, y, 0.57));
-        }
-        corticalFoldPaths.push(addTube(points, i % 3 === 0 ? 0.011 : 0.0085, i % 3 === 0 ? ridgeMaterial : sulcusMaterial, cortexGroup, "cortex", 48).curve);
-      }
-
-      const majorSulci = [
-        [new THREE.Vector3(-0.72, 0.74, 0.66), new THREE.Vector3(-0.52, 0.2, 0.69), new THREE.Vector3(-0.42, -0.28, 0.62)],
-        [new THREE.Vector3(0.34, 0.85, 0.65), new THREE.Vector3(0.18, 0.36, 0.71), new THREE.Vector3(-0.02, -0.05, 0.66)],
-        [new THREE.Vector3(0.84, 0.58, 0.65), new THREE.Vector3(0.72, 0.18, 0.7), new THREE.Vector3(0.56, -0.24, 0.65)],
-        [new THREE.Vector3(-0.82, -0.44, 0.64), new THREE.Vector3(-0.2, -0.48, 0.68), new THREE.Vector3(0.42, -0.4, 0.64)],
-      ];
-
-      for (const points of majorSulci) {
-        corticalFoldPaths.push(addTube(points, 0.011, deepSulcusMaterial, cortexGroup, "cortex", 72).curve);
-      }
-
-      const cerebellumFoldMaterial = sulcusMaterial.clone();
-      cerebellumFoldMaterial.opacity = 0.62;
-      for (let i = 0; i < 7; i += 1) {
-        const y = -0.77 + i * 0.045;
-        addTube(
-          [
-            new THREE.Vector3(0.72, y, 0.22),
-            new THREE.Vector3(0.98, y + Math.sin(i) * 0.035, 0.32),
-            new THREE.Vector3(1.28, y - Math.cos(i) * 0.025, 0.22),
-          ],
-          0.008,
-          cerebellumFoldMaterial,
-          coreGroup,
-          "support",
-          40
+        group.add(
+          createEllipsoid(THREE, folded, tissue, [side * 0.48, 0.12, 0], [0.78, 0.66, 1.16], [0, side * 0.08, 0]),
+          createEllipsoid(THREE, folded, upperTissue, [side * 0.5, 0.36, 0.36], [0.72, 0.48, 0.8], [0.08, side * 0.12, 0]),
+          createEllipsoid(THREE, folded, tissue, [side * 0.52, 0.22, 0.92], [0.66, 0.5, 0.58], [0.05, side * -0.16, 0]),
+          createEllipsoid(THREE, folded, tissue, [side * 0.55, 0.08, -0.86], [0.62, 0.5, 0.62], [0, side * 0.12, 0]),
+          createEllipsoid(THREE, folded, tissue, [side * 0.54, -0.34, 0.12], [0.58, 0.34, 0.78], [0.08, side * 0.08, side * 0.02]),
         );
+
+        return group;
       }
 
-      const glowMaterial = new THREE.MeshBasicMaterial({
-        color: 0xffffff,
-        transparent: true,
-        opacity: 0.055,
-        blending: THREE.AdditiveBlending,
-        depthTest: false,
-        depthWrite: false,
-      });
-      const glow = new THREE.Mesh(new THREE.SphereGeometry(1, 64, 32), glowMaterial);
-      glow.scale.set(2.26, 1.35, 0.22);
-      glow.position.set(0.05, 0.12, 0.62);
-      signalGroup.add(glow);
+      function createCerebellum(THREE) {
+        const group = new THREE.Group();
+        const geometry = createFoldedGeometry(THREE, 72, 0.026);
+        const material = createMaterial(THREE, 0xa46b60, 0.82);
+        const body = createEllipsoid(THREE, geometry, material, [0, -0.58, -1.0], [0.82, 0.32, 0.48], [0.04, 0, 0]);
+        group.add(body);
 
-      const signalCurves = [];
-      const lineMaterials = [
-        new THREE.LineBasicMaterial({ color: 0x71f7ff, transparent: true, opacity: 0.42, depthTest: false }),
-        new THREE.LineBasicMaterial({ color: 0xff83bf, transparent: true, opacity: 0.4, depthTest: false }),
-        new THREE.LineBasicMaterial({ color: 0xffd86f, transparent: true, opacity: 0.38, depthTest: false }),
-        new THREE.LineBasicMaterial({ color: 0x9cff7e, transparent: true, opacity: 0.37, depthTest: false }),
-      ];
-
-      function addSignalCurve(points, materialIndex) {
-        const curve = new THREE.CatmullRomCurve3(points);
-        const geometry = new THREE.BufferGeometry().setFromPoints(curve.getPoints(112));
-        const line = new THREE.Line(geometry, lineMaterials[materialIndex % lineMaterials.length]);
-        signalGroup.add(line);
-        signalCurves.push(curve);
-      }
-
-      [
-        createCorticalFoldPath(0.22, 1.2, -1.34, 1.32, 16),
-        createCorticalFoldPath(0.44, 2.8, -1.42, 1.44, 18),
-        createCorticalFoldPath(0.62, 4.1, -1.24, 1.5, 17),
-        createCorticalFoldPath(0.78, 5.5, -1.1, 1.26, 15),
-      ].forEach((points, index) => addSignalCurve(points, index));
-
-      const particleGeometry = new THREE.SphereGeometry(0.03, 14, 10);
-      const signalParticles = [];
-      const focusPoint = new THREE.Vector3(0.18, 0.28, 1.08);
-
-      for (let i = 0; i < 72; i += 1) {
-        const material = new THREE.MeshBasicMaterial({
-          color: new THREE.Color().setHSL(i / 72, 0.92, 0.64),
-          transparent: true,
-          opacity: 0.86,
-          blending: THREE.NormalBlending,
-          depthTest: false,
-          depthWrite: false,
-          toneMapped: false,
+        const grooveMaterial = new THREE.MeshStandardMaterial({
+          color: 0x4f3031,
+          roughness: 0.95,
         });
-        const particle = new THREE.Mesh(particleGeometry, material);
-        particle.userData.curveIndex = i % signalCurves.length;
-        particle.userData.offset = i / 72;
-        particle.userData.speed = 0.052 + (i % 7) * 0.008;
-        particle.userData.phase = i * 0.37;
-        signalGroup.add(particle);
-        signalParticles.push(particle);
+
+        for (let index = 0; index < 7; index += 1) {
+          const y = -0.48 - index * 0.052;
+          const curve = new THREE.CatmullRomCurve3([
+            new THREE.Vector3(-0.56, y, -0.78 - index * 0.016),
+            new THREE.Vector3(-0.2, y + 0.025, -0.58),
+            new THREE.Vector3(0.22, y + 0.02, -0.58),
+            new THREE.Vector3(0.58, y, -0.78 - index * 0.016),
+          ]);
+          group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 28, 0.01, 6, false), grooveMaterial));
+        }
+
+        return group;
       }
 
-      const pointer = new THREE.Vector2();
-      const raycaster = new THREE.Raycaster();
-      const desiredRotation = new THREE.Vector2(brainGroup.rotation.x, brainGroup.rotation.y);
-      let isPointerDown = false;
-      let dragMoved = false;
-      let pendingRegion = null;
-      let startX = 0;
-      let startY = 0;
-      let lastX = 0;
-      let lastY = 0;
+      function createBrainStem(THREE) {
+        const group = new THREE.Group();
+        const material = createMaterial(THREE, 0x9f6e62, 0.78);
+        const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.21, 0.64, 28), material);
+        stem.position.set(0.06, -0.98, -0.5);
+        stem.rotation.set(-0.28, 0.1, -0.05);
+        stem.castShadow = true;
+        stem.receiveShadow = true;
 
-      function setPointerFromEvent(event) {
-        const rect = renderer.domElement.getBoundingClientRect();
-        pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-        pointer.y = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
+        const bulb = new THREE.Mesh(new THREE.SphereGeometry(1, 40, 20), material);
+        bulb.position.set(0.02, -0.66, -0.58);
+        bulb.scale.set(0.34, 0.24, 0.3);
+        bulb.castShadow = true;
+        bulb.receiveShadow = true;
+
+        group.add(stem, bulb);
+        return group;
       }
 
-      function hitTest(event) {
-        setPointerFromEvent(event);
-        raycaster.setFromCamera(pointer, camera);
-        const hits = raycaster.intersectObjects(interactiveMeshes, false);
-        return hits[0]?.object?.userData ?? null;
+      function createBrainModel(THREE) {
+        const model = new THREE.Group();
+        model.name = "procedural-brain-fallback";
+        model.add(createHemisphere(THREE, -1));
+        model.add(createHemisphere(THREE, 1));
+        model.add(createCerebellum(THREE));
+        model.add(createBrainStem(THREE));
+        model.rotation.set(INITIAL_ROTATION.x, INITIAL_ROTATION.y, INITIAL_ROTATION.z);
+        return model;
       }
 
-      function setRegionLabel(region) {
-        regionTitle.textContent = region?.title || "Cortex";
-        regionTarget.textContent = region?.target || "Knowledge";
+      function createGlassBrainMaterial() {
+        return new THREE.MeshPhysicalMaterial({
+          color: 0xbfeeff,
+          roughness: 0.18,
+          metalness: 0,
+          transparent: true,
+          opacity: 0.56,
+          transmission: 0.24,
+          thickness: 0.78,
+          ior: 1.36,
+          attenuationColor: new THREE.Color(0x8fdfff),
+          attenuationDistance: 2.6,
+          clearcoat: 0.82,
+          clearcoatRoughness: 0.12,
+          specularIntensity: 1,
+          specularColor: new THREE.Color(0xe5fbff),
+          sheen: 0.36,
+          sheenColor: new THREE.Color(0xb8f5ff),
+          emissive: new THREE.Color(0x0a2430),
+          emissiveIntensity: 0.16,
+          side: THREE.DoubleSide,
+        });
       }
 
-      function selectRegion(regionName = "cortex") {
-        selectedRegion = regionName;
-        targetSelectionProgress = regionName === "cortex" ? 1 : 0;
-        stage.dataset.region = selectedRegion;
-        setRegionLabel({ title: "Cortex", target: "Knowledge" });
+      function prepareLoadedBrainModel(root) {
+        const model = new THREE.Group();
+        model.name = "nih-detailed-brain-model";
+
+        const glassBrainMaterial = createGlassBrainMaterial();
+
+        root.traverse((object) => {
+          if (!object.isMesh) return;
+          object.castShadow = true;
+          object.receiveShadow = true;
+          if (object.geometry && !object.geometry.attributes.normal) {
+            object.geometry.computeVertexNormals();
+          }
+          object.material = glassBrainMaterial.clone();
+          object.renderOrder = 2;
+        });
+
+        const bounds = new THREE.Box3().setFromObject(root);
+        const center = bounds.getCenter(new THREE.Vector3());
+        const size = bounds.getSize(new THREE.Vector3());
+        const maxAxis = Math.max(size.x, size.y, size.z) || 1;
+        root.position.sub(center);
+        model.add(root);
+        model.scale.setScalar(3.15 / maxAxis);
+        model.rotation.set(INITIAL_ROTATION.x, INITIAL_ROTATION.y, INITIAL_ROTATION.z);
+        return model;
       }
 
-      renderer.domElement.addEventListener("pointerdown", (event) => {
-        isPointerDown = true;
-        dragMoved = false;
-        pendingRegion = hitTest(event)?.region || null;
-        startX = event.clientX;
-        startY = event.clientY;
-        lastX = event.clientX;
-        lastY = event.clientY;
-        renderer.domElement.setPointerCapture(event.pointerId);
-      });
+      async function loadBrainModel() {
+        try {
+          const loader = new GLTFLoader();
+          const gltf = await loader.loadAsync(MODEL_URL);
+          return prepareLoadedBrainModel(gltf.scene);
+        } catch (error) {
+          console.warn("High-detail GLB brain unavailable; procedural fallback displayed.", error);
+          return createBrainModel(THREE);
+        }
+      }
 
-      renderer.domElement.addEventListener("pointermove", (event) => {
-        if (isPointerDown) {
-          const dx = event.clientX - lastX;
-          const dy = event.clientY - lastY;
-          const totalDx = event.clientX - startX;
-          const totalDy = event.clientY - startY;
-          dragMoved = dragMoved || Math.hypot(totalDx, totalDy) > 5;
-          desiredRotation.y += dx * 0.0068;
-          desiredRotation.x += dy * 0.0032;
-          desiredRotation.x = THREE.MathUtils.clamp(desiredRotation.x, -0.5, 0.35);
-          lastX = event.clientX;
-          lastY = event.clientY;
+      function createModuleFragmentMaterial(THREE, module, bounds) {
+        return new THREE.ShaderMaterial({
+          uniforms: {
+            time: { value: 0 },
+            explodeProgress: { value: 0 },
+            selectionFocus: { value: 1 },
+            brainInverse: { value: new THREE.Matrix4() },
+            boundsMin: { value: bounds.min.clone() },
+            boundsSize: { value: bounds.getSize(new THREE.Vector3()) },
+            moduleOffset: { value: new THREE.Vector3(...module.offset) },
+            moduleMin: { value: new THREE.Vector3(...module.min) },
+            moduleMax: { value: new THREE.Vector3(...module.max) },
+            moduleColor: { value: new THREE.Color(module.color) },
+          },
+          vertexShader: `
+            varying vec3 vWorldPosition;
+            varying vec3 vNormalDirection;
+
+            void main() {
+              vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+              vWorldPosition = worldPosition.xyz;
+              vNormalDirection = normalize(normalMatrix * normal);
+              gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+          `,
+          fragmentShader: `
+            uniform float time;
+            uniform float explodeProgress;
+            uniform float selectionFocus;
+            uniform mat4 brainInverse;
+            uniform vec3 boundsMin;
+            uniform vec3 boundsSize;
+            uniform vec3 moduleOffset;
+            uniform vec3 moduleMin;
+            uniform vec3 moduleMax;
+            uniform vec3 moduleColor;
+            varying vec3 vWorldPosition;
+            varying vec3 vNormalDirection;
+
+            float boxMask(vec3 p, vec3 mn, vec3 mx) {
+              vec3 low = smoothstep(mn - vec3(0.035), mn + vec3(0.035), p);
+              vec3 high = 1.0 - smoothstep(mx - vec3(0.035), mx + vec3(0.035), p);
+              vec3 mask = low * high;
+              return min(mask.x, min(mask.y, mask.z));
+            }
+
+            float lane(float value, float width) {
+              return smoothstep(1.0 - width, 1.0, sin(value));
+            }
+
+            void main() {
+              vec3 localPosition = (brainInverse * vec4(vWorldPosition, 1.0)).xyz - moduleOffset * explodeProgress;
+              vec3 normalizedPosition = clamp((localPosition - boundsMin) / boundsSize, 0.0, 1.0);
+              float mask = boxMask(normalizedPosition, moduleMin, moduleMax);
+              if (mask < 0.11) discard;
+
+              float groove = pow(1.0 - abs(vNormalDirection.z), 1.18);
+              float movingSignal =
+                lane(localPosition.x * 7.2 + localPosition.y * 4.8 + time * 1.25, 0.38) * 0.58 +
+                lane(localPosition.y * 8.8 - localPosition.z * 4.4 - time * 1.05, 0.32) * 0.42;
+              float edge = smoothstep(0.11, 0.38, mask);
+              float reveal = smoothstep(0.04, 0.55, explodeProgress);
+              float alpha = (0.11 + groove * 0.22 + movingSignal * 0.1) * edge * reveal * selectionFocus;
+              vec3 glass = mix(vec3(0.62, 0.82, 0.9), moduleColor, 0.34 + groove * 0.14);
+              gl_FragColor = vec4(glass, alpha);
+            }
+          `,
+          transparent: true,
+          depthWrite: false,
+          depthTest: true,
+          polygonOffset: true,
+          polygonOffsetFactor: -2,
+          polygonOffsetUnits: -2,
+          blending: THREE.NormalBlending,
+          side: THREE.DoubleSide,
+        });
+      }
+
+      function cloneBrainFragment(THREE, brainModel, module, bounds) {
+        const fragment = brainModel.clone(true);
+        const materials = [];
+
+        fragment.name = `${module.id}-exploded-brain-fragment`;
+        fragment.traverse((object) => {
+          if (!object.isMesh) return;
+          const material = createModuleFragmentMaterial(THREE, module, bounds);
+          object.material = material;
+          object.castShadow = false;
+          object.receiveShadow = false;
+          object.renderOrder = 7;
+          materials.push(material);
+        });
+
+        return { fragment, materials };
+      }
+
+      function createProjectedModule(THREE, module) {
+        const group = new THREE.Group();
+        const color = new THREE.Color(module.color);
+        const material = new THREE.MeshBasicMaterial({
+          color,
+          transparent: true,
+          opacity: 0.72,
+          blending: THREE.AdditiveBlending,
+          depthWrite: false,
+          depthTest: true,
+        });
+        const glowMaterial = material.clone();
+        glowMaterial.opacity = 0.18;
+        material.userData.baseOpacity = material.opacity;
+        glowMaterial.userData.baseOpacity = glowMaterial.opacity;
+
+        if (module.type === "projected") {
+          const curve = new THREE.CatmullRomCurve3([
+            new THREE.Vector3(-0.52, 0.1, 0.52),
+            new THREE.Vector3(-0.22, 0.32, 0.7),
+            new THREE.Vector3(0.22, 0.38, 0.72),
+            new THREE.Vector3(0.58, 0.14, 0.52),
+          ]);
+          const rail = new THREE.Mesh(new THREE.TubeGeometry(curve, 54, 0.018, 10, false), material);
+          const glow = new THREE.Mesh(new THREE.TubeGeometry(curve, 54, 0.07, 12, false), glowMaterial);
+          rail.name = "cingulate-projected-arc";
+          glow.name = "cingulate-projected-glow";
+          group.add(glow, rail);
+        } else {
+          const curve = new THREE.CatmullRomCurve3([
+            new THREE.Vector3(-0.34, -0.24, 0.42),
+            new THREE.Vector3(-0.12, -0.38, 0.64),
+            new THREE.Vector3(0.28, -0.35, 0.68),
+            new THREE.Vector3(0.52, -0.18, 0.5),
+          ]);
+          const body = new THREE.Mesh(new THREE.TubeGeometry(curve, 58, 0.052, 14, false), material);
+          const glow = new THREE.Mesh(new THREE.TubeGeometry(curve, 58, 0.14, 14, false), glowMaterial);
+          body.name = "hippocampal-internal-body";
+          glow.name = "hippocampal-internal-glow";
+          group.add(glow, body);
+        }
+
+        group.name = `${module.id}-internal-projected-module`;
+        return { fragment: group, materials: [material, glowMaterial] };
+      }
+
+      function setBrainMaterialOpacity(brainModel, opacityFactor) {
+        brainModel.traverse((object) => {
+          if (!object.isMesh || !object.material) return;
+          const materials = Array.isArray(object.material) ? object.material : [object.material];
+          materials.forEach((material) => {
+            if (material.userData.baseOpacity === undefined) {
+              material.userData.baseOpacity = material.opacity ?? 1;
+            }
+            material.transparent = true;
+            material.opacity = material.userData.baseOpacity * opacityFactor;
+          });
+        });
+      }
+
+      function createExplodedResearchModules(THREE, brainModel) {
+        const group = new THREE.Group();
+        const bounds = new THREE.Box3().setFromObject(brainModel);
+        const inverseMatrix = new THREE.Matrix4();
+        const surfaceMaterials = [];
+        const moduleEntries = MODULES.map((module) => {
+          const entry = module.type === "surface"
+            ? cloneBrainFragment(THREE, brainModel, module, bounds)
+            : createProjectedModule(THREE, module);
+          const wrapper = new THREE.Group();
+          wrapper.name = `${module.id}-research-module`;
+          wrapper.userData.moduleId = module.id;
+          wrapper.userData.offset = new THREE.Vector3(...module.offset);
+          wrapper.visible = false;
+          wrapper.add(entry.fragment);
+          group.add(wrapper);
+          if (module.type === "surface") {
+            surfaceMaterials.push(...entry.materials);
+          }
+          return { module, wrapper, materials: entry.materials };
+        });
+        const state = {
+          expanded: false,
+          selected: null,
+          progress: 0,
+        };
+
+        group.name = "exploded-research-modules";
+        group.visible = true;
+
+        return {
+          group,
+          setExpanded(value) {
+            state.expanded = value;
+            if (value) {
+              moduleEntries.forEach((entry) => {
+                entry.wrapper.visible = true;
+              });
+            }
+          },
+          setSelected(id) {
+            state.selected = id;
+          },
+          getState() {
+            return state;
+          },
+          update(time, brainRoot, activityFlow) {
+            const target = state.expanded ? 1 : 0;
+            state.progress += (target - state.progress) * (prefersReducedMotion ? 1 : 0.08);
+            const eased = state.progress * state.progress * (3 - 2 * state.progress);
+            const mobile = window.innerWidth < 720;
+            const baseScale = mobile ? 0.78 : 1.16;
+            const baseY = mobile ? -0.18 : -0.12;
+            inverseMatrix.copy(brainRoot.matrixWorld).invert();
+
+            moduleEntries.forEach((entry) => {
+              const selectedFocus = !state.selected || state.selected === entry.module.id ? 1 : 0.28;
+              entry.wrapper.visible = eased > 0.015 || state.expanded;
+              entry.wrapper.position.copy(entry.wrapper.userData.offset).multiplyScalar(eased);
+              entry.wrapper.scale.setScalar(0.985 + eased * (state.selected === entry.module.id ? 0.075 : 0.02));
+              entry.materials.forEach((material) => {
+                material.opacity = (material.userData.baseOpacity ?? material.opacity ?? 1) * selectedFocus * eased;
+                if (material.uniforms) {
+                  material.uniforms.time.value = prefersReducedMotion ? 0 : time;
+                  material.uniforms.explodeProgress.value = eased;
+                  material.uniforms.selectionFocus.value = selectedFocus;
+                  material.uniforms.brainInverse.value.copy(inverseMatrix);
+                }
+              });
+            });
+
+            surfaceMaterials.forEach((material) => {
+              material.uniforms.explodeProgress.value = eased;
+            });
+            brainRoot.scale.setScalar(baseScale * (1 - eased * (mobile ? 0.12 : 0.24)));
+            brainRoot.position.y = baseY + eased * (mobile ? 0.03 : 0.02);
+            setBrainMaterialOpacity(brainModel, 1 - eased * 0.62);
+            activityFlow.visible = eased < 0.96;
+          },
+        };
+      }
+
+      function setupModuleUi(explodedView) {
+        const moduleRegion = document.getElementById("module-region");
+        const moduleFolder = document.getElementById("module-folder");
+        const moduleSentence = document.getElementById("module-sentence");
+        const moduleButtons = [...document.querySelectorAll(".module-label")];
+        const state = {
+          expanded: false,
+          selected: null,
+        };
+
+        function sync() {
+          document.body.classList.toggle("brain-expanded", state.expanded);
+          document.body.classList.toggle("module-selected", Boolean(state.selected));
+          moduleButtons.forEach((button) => {
+            button.setAttribute("aria-pressed", String(button.dataset.module === state.selected));
+          });
+          explodedView?.setExpanded(state.expanded);
+          explodedView?.setSelected(state.selected);
+        }
+
+        function selectModule(id) {
+          const module = MODULES.find((candidate) => candidate.id === id);
+          if (!module) return;
+          state.expanded = true;
+          state.selected = id;
+          moduleRegion.textContent = module.region;
+          moduleFolder.textContent = module.folder;
+          moduleSentence.textContent = module.sentence;
+          sync();
+        }
+
+        moduleButtons.forEach((button) => {
+          button.addEventListener("click", (event) => {
+            event.stopPropagation();
+            selectModule(button.dataset.module);
+          });
+        });
+
+        window.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") {
+            state.expanded = false;
+            state.selected = null;
+            sync();
+          }
+        });
+
+        sync();
+        return {
+          toggleExpanded() {
+            state.expanded = !state.expanded;
+            state.selected = null;
+            sync();
+          },
+          selectModule,
+          getState() {
+            return state;
+          },
+        };
+      }
+
+      function collectBrainSurfaceSamples(THREE, brainModel) {
+        const brainSurfaceSamples = [];
+        const maxSamples = 16000;
+        const worldPoint = new THREE.Vector3();
+        const worldNormal = new THREE.Vector3();
+        const normalMatrix = new THREE.Matrix3();
+
+        brainModel.updateMatrixWorld(true);
+        brainModel.traverse((object) => {
+          if (!object.isMesh || brainSurfaceSamples.length >= maxSamples) return;
+          const geometry = object.geometry;
+          const position = geometry?.attributes?.position;
+          if (!position) return;
+
+          if (!geometry.attributes.normal) {
+            geometry.computeVertexNormals();
+          }
+
+          const normal = geometry.attributes.normal;
+          const stride = Math.max(1, Math.ceil(position.count / 1400));
+          normalMatrix.getNormalMatrix(object.matrixWorld);
+
+          for (let index = 0; index < position.count && brainSurfaceSamples.length < maxSamples; index += stride) {
+            worldPoint.fromBufferAttribute(position, index).applyMatrix4(object.matrixWorld);
+            worldNormal.fromBufferAttribute(normal, index).applyMatrix3(normalMatrix).normalize();
+            brainSurfaceSamples.push({
+              point: worldPoint.clone(),
+              normal: worldNormal.clone(),
+              normalZ: worldNormal.z,
+            });
+          }
+        });
+
+        const bounds =
+          brainSurfaceSamples.length > 0
+            ? new THREE.Box3().setFromPoints(brainSurfaceSamples.map((sample) => sample.point))
+            : new THREE.Box3(new THREE.Vector3(-1.4, -0.9, -0.7), new THREE.Vector3(1.4, 0.9, 1.2));
+
+        const size = bounds.getSize(new THREE.Vector3());
+        const surfaceSampleGrid = {
+          cells: new Map(),
+          cellX: Math.max(size.x / 48, 0.001),
+          cellY: Math.max(size.y / 38, 0.001),
+        };
+
+        brainSurfaceSamples.forEach((sample) => {
+          const ix = Math.floor((sample.point.x - bounds.min.x) / surfaceSampleGrid.cellX);
+          const iy = Math.floor((sample.point.y - bounds.min.y) / surfaceSampleGrid.cellY);
+          const key = `${ix}:${iy}`;
+          const cell = surfaceSampleGrid.cells.get(key);
+          if (cell) {
+            cell.push(sample);
+          } else {
+            surfaceSampleGrid.cells.set(key, [sample]);
+          }
+        });
+
+        return { brainSurfaceSamples, surfaceSampleGrid, bounds };
+      }
+
+      function pickSulcalSurfacePoint(
+        THREE,
+        brainSurfaceSamples,
+        surfaceSampleGrid,
+        bounds,
+        x,
+        y,
+        expand = 1,
+        previousPoint = null,
+        depthBias = 0.08,
+      ) {
+        const size = bounds.getSize(new THREE.Vector3());
+        const xTolerance = size.x * 0.047 * expand;
+        const yTolerance = size.y * 0.054 * expand;
+        const visibleFront = bounds.min.z + size.z * 0.6;
+        const candidates = [];
+        const centerIx = Math.floor((x - bounds.min.x) / surfaceSampleGrid.cellX);
+        const centerIy = Math.floor((y - bounds.min.y) / surfaceSampleGrid.cellY);
+        const radiusX = Math.max(1, Math.ceil(xTolerance / surfaceSampleGrid.cellX));
+        const radiusY = Math.max(1, Math.ceil(yTolerance / surfaceSampleGrid.cellY));
+
+        for (let ix = centerIx - radiusX; ix <= centerIx + radiusX; ix += 1) {
+          for (let iy = centerIy - radiusY; iy <= centerIy + radiusY; iy += 1) {
+            const cell = surfaceSampleGrid.cells.get(`${ix}:${iy}`);
+            if (!cell) continue;
+            cell.forEach((sample) => {
+              const point = sample.point;
+              if (
+                point.z > visibleFront &&
+                Math.abs(point.x - x) <= xTolerance &&
+                Math.abs(point.y - y) <= yTolerance
+              ) {
+                candidates.push(sample);
+              }
+            });
+          }
+        }
+
+        if (candidates.length < 4 && expand < 3.2) {
+          return pickSulcalSurfacePoint(
+            THREE,
+            brainSurfaceSamples,
+            surfaceSampleGrid,
+            bounds,
+            x,
+            y,
+            expand + 0.45,
+            previousPoint,
+            depthBias,
+          );
+        }
+
+        if (candidates.length === 0) return null;
+
+        candidates.sort((a, b) => b.point.z - a.point.z);
+        const sidewallCandidates = candidates.filter((sample) => Math.abs(sample.normalZ) < 0.86);
+        const sulcalCandidates = sidewallCandidates.length >= 4 ? sidewallCandidates : candidates;
+        const depthTarget =
+          sulcalCandidates[Math.min(sulcalCandidates.length - 1, Math.floor(sulcalCandidates.length * depthBias))]
+            .point.z;
+
+        if (previousPoint) {
+          const maxStep = size.x * 0.18;
+          const continuousCandidates = sulcalCandidates.filter(
+            (sample) => sample.point.distanceTo(previousPoint) < maxStep,
+          );
+          const continuityPool = continuousCandidates.length >= 3 ? continuousCandidates : sulcalCandidates;
+          continuityPool.sort((a, b) => {
+            const aDistance = a.point.distanceTo(previousPoint);
+            const bDistance = b.point.distanceTo(previousPoint);
+            const aDepth = Math.abs(a.point.z - previousPoint.z);
+            const bDepth = Math.abs(b.point.z - previousPoint.z);
+            const aGroove = Math.abs(a.point.z - depthTarget);
+            const bGroove = Math.abs(b.point.z - depthTarget);
+            return aDistance + aDepth * 0.36 + aGroove * 0.76 - (1 - Math.abs(a.normalZ)) * 0.05
+              - (bDistance + bDepth * 0.36 + bGroove * 0.76 - (1 - Math.abs(b.normalZ)) * 0.05);
+          });
+          const continuous = continuityPool[0];
+          return continuous.point.clone().add(continuous.normal.clone().multiplyScalar(0.124));
+        }
+
+        const sulcalIndex = Math.min(
+          sulcalCandidates.length - 1,
+          Math.floor(sulcalCandidates.length * depthBias),
+        );
+        const selected = sulcalCandidates[sulcalIndex];
+
+        return selected.point.clone().add(selected.normal.clone().multiplyScalar(0.124));
+      }
+
+      function smoothSulcalFlowPath(THREE, points) {
+        let smoothed = points.map((point) => point.clone());
+        for (let pass = 0; pass < 2; pass += 1) {
+          smoothed = smoothed.map((point, index) => {
+            if (index === 0 || index === smoothed.length - 1) return point.clone();
+            return new THREE.Vector3()
+              .copy(smoothed[index - 1])
+              .add(point.clone().multiplyScalar(2.2))
+              .add(smoothed[index + 1])
+              .divideScalar(4.2);
+          });
+        }
+        return smoothed;
+      }
+
+      function createFallbackSulcalFlowPaths(THREE) {
+        const fallbackRows = [
+          0.58, 0.42, 0.27, 0.1, -0.06, -0.22, -0.38, -0.54,
+        ];
+        return fallbackRows.map((row, rowIndex) => {
+          const points = [];
+          for (let step = 0; step < 15; step += 1) {
+            const u = step / 14;
+            const x = -1.1 + u * 2.2;
+            const y = row + Math.sin(u * Math.PI * 2.2 + rowIndex * 0.7) * 0.045;
+            const z = 1.05 + Math.sin(u * Math.PI + rowIndex * 0.4) * 0.16;
+            points.push(new THREE.Vector3(x, y, z));
+          }
+          return points;
+        });
+      }
+
+      function buildSulcalFlowPaths(THREE, brainSurfaceSamples, surfaceSampleGrid, bounds) {
+        if (brainSurfaceSamples.length === 0) {
+          return createFallbackSulcalFlowPaths(THREE);
+        }
+
+        const size = bounds.getSize(new THREE.Vector3());
+        const xMin = bounds.min.x + size.x * 0.06;
+        const xMax = bounds.max.x - size.x * 0.06;
+        const yMin = bounds.min.y + size.y * 0.08;
+        const yMax = bounds.max.y - size.y * 0.08;
+        const sulcalFlowPaths = [];
+
+        for (let row = 0; row < 18; row += 1) {
+          const v = (row + 0.5) / 18;
+          const baseY = yMax + (yMin - yMax) * v;
+          const phase = row * 0.73;
+          const points = [];
+          let previousPoint = null;
+
+          for (let step = 0; step < 22; step += 1) {
+            const u = step / 21;
+            const x = xMin + (xMax - xMin) * u;
+            const longWave = Math.sin(u * Math.PI * 2.1 + phase) * size.y * 0.018;
+            const shortWave = Math.sin(u * Math.PI * 5.2 + phase * 0.6) * size.y * 0.006;
+            const point = pickSulcalSurfacePoint(
+              THREE,
+              brainSurfaceSamples,
+              surfaceSampleGrid,
+              bounds,
+              x,
+              baseY + longWave + shortWave,
+              1 + (row % 3) * 0.12,
+              previousPoint,
+              0.02 + (row % 4) * 0.024,
+            );
+            if (point) {
+              points.push(point);
+              previousPoint = point;
+            }
+          }
+
+          if (points.length >= 7) {
+            sulcalFlowPaths.push(smoothSulcalFlowPath(THREE, points));
+          }
+        }
+
+        for (let band = 0; band < 10; band += 1) {
+          const v = (band + 0.5) / 10;
+          const baseX = xMin + (xMax - xMin) * v;
+          const phase = band * 0.57;
+          const points = [];
+          let previousPoint = null;
+
+          for (let step = 0; step < 14; step += 1) {
+            const u = step / 13;
+            const y = yMax + (yMin - yMax) * u;
+            const x = baseX + Math.sin(u * Math.PI * 1.7 + phase) * size.x * 0.05;
+            const point = pickSulcalSurfacePoint(
+              THREE,
+              brainSurfaceSamples,
+              surfaceSampleGrid,
+              bounds,
+              x,
+              y,
+              1.08,
+              previousPoint,
+              0.02 + (band % 5) * 0.022,
+            );
+            if (point) {
+              points.push(point);
+              previousPoint = point;
+            }
+          }
+
+          if (points.length >= 6) {
+            sulcalFlowPaths.push(smoothSulcalFlowPath(THREE, points));
+          }
+        }
+
+        for (let cluster = 0; cluster < 14; cluster += 1) {
+          const cx = xMin + (xMax - xMin) * ((cluster % 6) + 0.5) / 6;
+          const cy = yMax + (yMin - yMax) * (Math.floor(cluster / 6) + 0.5) / 4;
+          const span = size.x * (0.12 + (cluster % 3) * 0.02);
+          const points = [];
+          let previousPoint = null;
+
+          for (let step = 0; step < 10; step += 1) {
+            const u = step / 9;
+            const x = cx + (u - 0.5) * span;
+            const y =
+              cy +
+              Math.sin(u * Math.PI * 1.4 + cluster * 0.45) * size.y * 0.035 +
+              (u - 0.5) * size.y * 0.04;
+            const point = pickSulcalSurfacePoint(
+              THREE,
+              brainSurfaceSamples,
+              surfaceSampleGrid,
+              bounds,
+              x,
+              y,
+              1.16,
+              previousPoint,
+              0.02 + (cluster % 4) * 0.024,
+            );
+            if (point) {
+              points.push(point);
+              previousPoint = point;
+            }
+          }
+
+          if (points.length >= 5) {
+            sulcalFlowPaths.push(smoothSulcalFlowPath(THREE, points));
+          }
+        }
+
+        return sulcalFlowPaths.length > 0 ? sulcalFlowPaths : createFallbackSulcalFlowPaths(THREE);
+      }
+
+      function createRibbonGeometry(THREE, curve, width, segments) {
+        const positions = [];
+        const uvs = [];
+        const indices = [];
+        const tangent = new THREE.Vector3();
+        const widthDirection = new THREE.Vector3();
+
+        for (let index = 0; index <= segments; index += 1) {
+          const t = index / segments;
+          const point = curve.getPointAt(t);
+          curve.getTangentAt(t, tangent).normalize();
+          widthDirection.set(-tangent.y, tangent.x, 0);
+          if (widthDirection.lengthSq() < 0.0001) {
+            widthDirection.set(1, 0, 0);
+          }
+          widthDirection.normalize().multiplyScalar(width * 0.5);
+
+          positions.push(
+            point.x - widthDirection.x,
+            point.y - widthDirection.y,
+            point.z - widthDirection.z,
+            point.x + widthDirection.x,
+            point.y + widthDirection.y,
+            point.z + widthDirection.z,
+          );
+          uvs.push(t, 0, t, 1);
+
+          if (index < segments) {
+            const base = index * 2;
+            indices.push(base, base + 1, base + 2, base + 1, base + 3, base + 2);
+          }
+        }
+
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+        geometry.setAttribute("uv", new THREE.Float32BufferAttribute(uvs, 2));
+        geometry.setIndex(indices);
+        geometry.computeVertexNormals();
+        return geometry;
+      }
+
+      function createFlowRibbonTexture(THREE, railColor, pulseColor) {
+        const canvas = document.createElement("canvas");
+        canvas.width = 320;
+        canvas.height = 24;
+        const context = canvas.getContext("2d");
+        const rail = new THREE.Color(railColor);
+        const pulse = new THREE.Color(pulseColor);
+        const toRgb = (color, alpha) =>
+          `rgba(${Math.round(color.r * 255)}, ${Math.round(color.g * 255)}, ${Math.round(color.b * 255)}, ${alpha})`;
+
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        for (let index = 0; index < 4; index += 1) {
+          const start = index * 84 - 34;
+          const gradient = context.createLinearGradient(start, 0, start + 118, 0);
+          gradient.addColorStop(0, toRgb(rail, 0));
+          gradient.addColorStop(0.22, toRgb(rail, 0.28));
+          gradient.addColorStop(0.5, toRgb(pulse, 0.94));
+          gradient.addColorStop(0.76, toRgb(rail, 0.24));
+          gradient.addColorStop(1, toRgb(rail, 0));
+          context.fillStyle = gradient;
+          context.fillRect(start, 0, 118, canvas.height);
+        }
+
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.colorSpace = THREE.SRGBColorSpace;
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.ClampToEdgeWrapping;
+        texture.repeat.set(1.8, 1);
+        texture.needsUpdate = true;
+        return texture;
+      }
+
+      function createSulcalSurfaceFlowSkin(THREE, brainModel) {
+        const skin = brainModel.clone(true);
+        const surfaceFlowMaterials = [];
+
+        skin.name = "sulcal-flow-surface-skin";
+        skin.scale.multiplyScalar(1.014);
+
+        skin.traverse((object) => {
+          if (!object.isMesh) return;
+
+          const material = new THREE.ShaderMaterial({
+            uniforms: {
+              time: { value: 0 },
+              cyan: { value: new THREE.Color(0x5ef5ff) },
+              magenta: { value: new THREE.Color(0xff4ce8) },
+              gold: { value: new THREE.Color(0xffd35a) },
+            },
+            vertexShader: `
+              varying vec3 vWorldPosition;
+              varying vec3 vNormalDirection;
+
+              void main() {
+                vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+                vWorldPosition = worldPosition.xyz;
+                vNormalDirection = normalize(normalMatrix * normal);
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+              }
+            `,
+            fragmentShader: `
+              uniform float time;
+              uniform vec3 cyan;
+              uniform vec3 magenta;
+              uniform vec3 gold;
+              varying vec3 vWorldPosition;
+              varying vec3 vNormalDirection;
+
+              float lane(float value, float width) {
+                return smoothstep(1.0 - width, 1.0, sin(value));
+              }
+
+              void main() {
+                vec3 p = vWorldPosition;
+                float grooveWall = pow(1.0 - abs(vNormalDirection.z), 1.16);
+                float lateralFade = smoothstep(-2.45, -1.86, p.x) * (1.0 - smoothstep(1.82, 2.42, p.x));
+                float verticalFade = smoothstep(-1.58, -1.24, p.y) * (1.0 - smoothstep(1.14, 1.52, p.y));
+                float foldBias = 0.18 + grooveWall * 0.82;
+                float mask = foldBias * lateralFade * verticalFade;
+
+                float a = lane(p.x * 7.0 + p.y * 4.2 + sin(p.z * 5.2 + p.y * 1.3 + time * 0.82) + time * 1.5, 0.42);
+                float b = lane(p.x * -5.6 + p.y * 7.4 + cos(p.z * 4.8 - p.x * 1.1 - time * 0.68) - time * 1.08, 0.38);
+                float c = lane(p.y * 8.7 + p.z * 5.5 + sin(p.x * 3.0 + p.y * 0.9 + time) + time * 1.25, 0.34);
+                float fine = lane(p.x * 11.8 - p.y * 6.2 + sin(p.z * 7.2 + time * 1.35), 0.26);
+                float flow = max(max(a, b * 0.92), max(c * 0.78, fine * 0.48));
+                float alpha = flow * mask * 0.66;
+
+                vec3 color = mix(cyan, magenta, b);
+                color = mix(color, gold, c * 0.72);
+                gl_FragColor = vec4(color, alpha);
+              }
+            `,
+            transparent: true,
+            depthWrite: false,
+            depthTest: true,
+            polygonOffset: true,
+            polygonOffsetFactor: -3,
+            polygonOffsetUnits: -3,
+            blending: THREE.AdditiveBlending,
+            side: THREE.FrontSide,
+          });
+
+          object.material = material;
+          object.castShadow = false;
+          object.receiveShadow = false;
+          object.renderOrder = 3;
+          surfaceFlowMaterials.push(material);
+        });
+
+        return { skin, surfaceFlowMaterials };
+      }
+
+      function createSulcalActivityFlow(THREE, brainModel) {
+        const group = new THREE.Group();
+        group.name = "activity-flow";
+
+        const flowPalette = [
+          { rail: 0x35f6ff, pulse: 0x58fbff, glow: 0x39f0ff },
+          { rail: 0xff43ec, pulse: 0xff76f2, glow: 0xff45d8 },
+          { rail: 0xffc142, pulse: 0xffdf63, glow: 0xffb23d },
+          { rail: 0x90ff5e, pulse: 0xb8ff78, glow: 0x72ff73 },
+        ];
+
+        const { brainSurfaceSamples, surfaceSampleGrid, bounds } = collectBrainSurfaceSamples(THREE, brainModel);
+        const sulcalFlowPaths = buildSulcalFlowPaths(THREE, brainSurfaceSamples, surfaceSampleGrid, bounds);
+
+        const createFlowMaterial = (color, opacity, additive = true) =>
+          new THREE.MeshBasicMaterial({
+            color,
+            transparent: true,
+            opacity,
+            blending: additive ? THREE.AdditiveBlending : THREE.NormalBlending,
+            depthWrite: false,
+            depthTest: true,
+          });
+
+        const { skin: sulcalFlowSkin, surfaceFlowMaterials } = createSulcalSurfaceFlowSkin(THREE, brainModel);
+        group.add(sulcalFlowSkin);
+
+        const pulseGeometry = new THREE.SphereGeometry(0.018, 12, 8);
+        const glowGeometry = new THREE.SphereGeometry(0.052, 14, 8);
+        const flowPulses = [];
+        const flowTextures = [];
+
+        sulcalFlowPaths.forEach((points, pathIndex) => {
+          const curve = new THREE.CatmullRomCurve3(
+            points,
+            false,
+            "catmullrom",
+            0.38,
+          );
+          const color = flowPalette[pathIndex % flowPalette.length];
+          const ribbonTexture = createFlowRibbonTexture(THREE, color.rail, color.pulse);
+          const ribbonMaterial = new THREE.MeshBasicMaterial({
+            map: ribbonTexture,
+            color: 0xffffff,
+            transparent: true,
+            opacity: prefersReducedMotion ? 0.035 : 0.055,
+            blending: THREE.NormalBlending,
+            depthWrite: false,
+            depthTest: true,
+            side: THREE.DoubleSide,
+          });
+          const coreMaterial = createFlowMaterial(color.pulse, prefersReducedMotion ? 0.012 : 0.02);
+          const pulseMaterial = createFlowMaterial(color.pulse, 0.24);
+          const glowMaterial = createFlowMaterial(color.glow, 0.035);
+          const ribbon = new THREE.Mesh(createRibbonGeometry(THREE, curve, 0.036, 52), ribbonMaterial);
+          const rail = new THREE.Mesh(new THREE.TubeGeometry(curve, 52, 0.0028, 5, false), coreMaterial);
+          ribbon.name = "sulcal-flow-ribbon";
+          rail.name = "sulcal-flow-ribbon-core";
+          ribbon.renderOrder = 4;
+          rail.renderOrder = 4;
+          group.add(ribbon, rail);
+          flowTextures.push({
+            texture: ribbonTexture,
+            phase: (pathIndex * 0.19) % 1,
+            speed: 0.045 + (pathIndex % 5) * 0.007,
+          });
+
+          const pulseCount = pathIndex % 5 === 0 ? 1 : 0;
+          for (let pulseIndex = 0; pulseIndex < pulseCount; pulseIndex += 1) {
+            const marker = new THREE.Group();
+            const glow = new THREE.Mesh(glowGeometry, glowMaterial.clone());
+            const pulse = new THREE.Mesh(pulseGeometry, pulseMaterial.clone());
+            marker.add(glow, pulse);
+            marker.renderOrder = 5;
+            group.add(marker);
+
+            flowPulses.push({
+              marker,
+              curve,
+              phase: (pulseIndex / pulseCount + pathIndex * 0.071) % 1,
+              speed: 0.022 + (pathIndex % 7) * 0.0036,
+              glow,
+              pulse,
+            });
+          }
+        });
+
+        group.userData.brainSurfaceSamples = brainSurfaceSamples.length;
+        group.userData.sulcalFlowPaths = sulcalFlowPaths.length;
+        group.userData.surfaceFlowMaterials = surfaceFlowMaterials;
+        group.userData.flowTextures = flowTextures;
+        group.userData.flowPulses = flowPulses;
+        group.userData.update = (time) => {
+          surfaceFlowMaterials.forEach((material) => {
+            material.uniforms.time.value = prefersReducedMotion ? 0 : time;
+          });
+          flowTextures.forEach((item) => {
+            item.texture.offset.x = prefersReducedMotion ? item.phase : (item.phase - time * item.speed) % 1;
+          });
+          flowPulses.forEach((item, index) => {
+            const t = prefersReducedMotion ? item.phase : (item.phase + time * item.speed) % 1;
+            const point = item.curve.getPointAt(t);
+            const shimmer = 0.68 + Math.sin(time * 4.6 + index * 1.37) * 0.22;
+            item.marker.position.copy(point);
+            item.marker.scale.setScalar(0.62 + shimmer * 0.22);
+            item.glow.material.opacity = (prefersReducedMotion ? 0.025 : 0.06) * shimmer;
+            item.pulse.material.opacity = (prefersReducedMotion ? 0.16 : 0.34) * shimmer;
+          });
+        };
+
+        return group;
+      }
+
+      function createScene(THREE) {
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x07080b, 0.038);
+
+        const camera = new THREE.PerspectiveCamera(38, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.set(0, 0.2, 6.7);
+
+        const renderer = new THREE.WebGLRenderer({
+          antialias: true,
+          alpha: true,
+          powerPreference: "high-performance",
+        });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.08;
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        host.appendChild(renderer.domElement);
+
+        const ambient = new THREE.HemisphereLight(0xdffbff, 0x101525, 1.25);
+        const key = new THREE.DirectionalLight(0xe7fbff, 3.35);
+        key.position.set(-3.8, 4.5, 4.4);
+        key.castShadow = true;
+        key.shadow.mapSize.width = 1024;
+        key.shadow.mapSize.height = 1024;
+
+        const rim = new THREE.DirectionalLight(0x76eaff, 2.15);
+        rim.position.set(4.2, 2.1, -3.4);
+
+        const fill = new THREE.PointLight(0xff72d0, 1.65, 8);
+        fill.position.set(0, -1.8, 3.8);
+
+        const warmEdge = new THREE.PointLight(0xffd277, 1.05, 7);
+        warmEdge.position.set(-2.4, 0.8, 2.5);
+        scene.add(ambient, key, rim, fill, warmEdge);
+
+        const brain = new THREE.Group();
+        brain.name = "brain-control-root";
+        scene.add(brain);
+
+        const shellGeometry = new THREE.SphereGeometry(2.34, 80, 40);
+        const shellMaterial = new THREE.MeshBasicMaterial({
+          color: 0xbdefff,
+          transparent: true,
+          opacity: 0.06,
+          depthWrite: false,
+          side: THREE.BackSide,
+        });
+        const shell = new THREE.Mesh(shellGeometry, shellMaterial);
+        shell.scale.set(1.28, 0.82, 0.9);
+        shell.position.set(0, 0.02, -0.04);
+        scene.add(shell);
+
+        return { scene, camera, renderer, brain, shell };
+      }
+
+      function setupControls(view, onBrainTap, getInteractionState = () => ({ expanded: false })) {
+        const rotation = {
+          x: view.brain.rotation.x,
+          y: view.brain.rotation.y,
+          targetX: view.brain.rotation.x,
+          targetY: view.brain.rotation.y,
+        };
+        let cameraZ = view.camera.position.z;
+        let targetCameraZ = cameraZ;
+        let dragging = false;
+        let previousX = 0;
+        let previousY = 0;
+        let dragDistance = 0;
+
+        const canvas = view.renderer.domElement;
+
+        canvas.addEventListener("pointerdown", (event) => {
+          dragging = true;
+          previousX = event.clientX;
+          previousY = event.clientY;
+          dragDistance = 0;
+          canvas.setPointerCapture(event.pointerId);
+        });
+
+        canvas.addEventListener("pointermove", (event) => {
+          if (!dragging) return;
+          const dx = event.clientX - previousX;
+          const dy = event.clientY - previousY;
+          previousX = event.clientX;
+          previousY = event.clientY;
+          dragDistance += Math.abs(dx) + Math.abs(dy);
+          rotation.targetY += dx * 0.006;
+          rotation.targetX = clamp(rotation.targetX + dy * 0.0045, -0.72, 0.48);
+        });
+
+        canvas.addEventListener("pointerup", (event) => {
+          dragging = false;
+          if (canvas.hasPointerCapture(event.pointerId)) {
+            canvas.releasePointerCapture(event.pointerId);
+          }
+          if (dragDistance < 9) {
+            onBrainTap?.();
+          }
+        });
+
+        canvas.addEventListener("pointercancel", () => {
+          dragging = false;
+        });
+
+        canvas.addEventListener(
+          "wheel",
+          (event) => {
+            event.preventDefault();
+            targetCameraZ = clamp(targetCameraZ + event.deltaY * 0.004, 4.8, 8.2);
+          },
+          { passive: false },
+        );
+
+        window.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" || event.key.toLowerCase() === "r") {
+            rotation.targetX = INITIAL_ROTATION.x;
+            rotation.targetY = INITIAL_ROTATION.y;
+            targetCameraZ = window.innerWidth < 720 ? 7.8 : 6.7;
+          }
+        });
+
+        return {
+          update() {
+            if (!prefersReducedMotion && !dragging && !getInteractionState().expanded) {
+              rotation.targetY += 0.0012;
+            }
+            rotation.x += (rotation.targetX - rotation.x) * 0.09;
+            rotation.y += (rotation.targetY - rotation.y) * 0.09;
+            cameraZ += (targetCameraZ - cameraZ) * 0.08;
+            view.brain.rotation.x = rotation.x;
+            view.brain.rotation.y = rotation.y;
+            view.camera.position.z = cameraZ;
+          },
+          resize() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const mobile = width < 720;
+            view.camera.aspect = width / height;
+            view.camera.position.z = mobile ? 7.8 : 6.7;
+            targetCameraZ = view.camera.position.z;
+            cameraZ = view.camera.position.z;
+            view.camera.updateProjectionMatrix();
+            view.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+            view.renderer.setSize(width, height);
+            view.brain.scale.setScalar(mobile ? 0.78 : 1.16);
+            view.brain.position.y = mobile ? -0.18 : -0.12;
+            view.shell.scale.set(mobile ? 1.07 : 1.28, mobile ? 0.72 : 0.82, mobile ? 0.76 : 0.9);
+          },
+        };
+      }
+
+      async function boot() {
+        if (forceFallback) {
+          const fallbackUi = setupModuleUi(null);
+          fallbackUi.toggleExpanded();
+          activateFallback();
           return;
         }
 
-        const hit = hitTest(event);
-        hoveredRegion = hit?.region || null;
-        renderer.domElement.style.cursor = hoveredRegion ? "pointer" : "grab";
-        if (hit) {
-          setRegionLabel(hit);
-        }
-      });
+        try {
+          const view = createScene(THREE);
+          const brainModel = await loadBrainModel();
+          const activityFlow = createSulcalActivityFlow(THREE, brainModel);
+          const explodedView = createExplodedResearchModules(THREE, brainModel);
+          const moduleUi = setupModuleUi(explodedView);
+          view.brain.clear();
+          view.brain.add(brainModel, activityFlow, explodedView.group);
+          const controls = setupControls(view, moduleUi.toggleExpanded, moduleUi.getState);
+          controls.resize();
+          document.body.classList.add("webgl-ready");
+          document.body.classList.remove("fallback-active");
 
-      renderer.domElement.addEventListener("pointerup", (event) => {
-        if (!dragMoved && pendingRegion) {
-          selectRegion(pendingRegion);
-        }
-        isPointerDown = false;
-        pendingRegion = null;
-        if (renderer.domElement.hasPointerCapture(event.pointerId)) {
-          renderer.domElement.releasePointerCapture(event.pointerId);
-        }
-      });
+          const clock = new THREE.Clock();
 
-      renderer.domElement.addEventListener("pointerleave", () => {
-        hoveredRegion = null;
-        renderer.domElement.style.cursor = "grab";
-      });
+          function render() {
+            const elapsed = clock.getElapsedTime();
+            controls.update();
+            activityFlow.userData.update(elapsed);
+            explodedView.update(elapsed, view.brain, activityFlow);
+            view.shell.rotation.y += prefersReducedMotion ? 0 : 0.0007;
+            view.renderer.render(view.scene, view.camera);
+            app = requestAnimationFrame(render);
+          }
 
-      function resize() {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        camera.aspect = width / height;
-        camera.position.z = width < 720 ? 14.2 : 7.2;
-        camera.updateProjectionMatrix();
-        renderer.setSize(width, height);
-      }
-
-      window.addEventListener("resize", resize);
-      resize();
-      setRegionLabel({ title: "Cortex", target: "Knowledge" });
-
-      const clock = new THREE.Clock();
-
-      function animate() {
-        const elapsed = clock.getElapsedTime();
-        const delta = clock.getDelta();
-        const autoDrift = prefersReducedMotion || isPointerDown ? 0 : Math.sin(elapsed * 0.22) * 0.0018;
-
-        desiredRotation.y += autoDrift;
-        brainGroup.rotation.x = THREE.MathUtils.lerp(brainGroup.rotation.x, desiredRotation.x, 0.08);
-        brainGroup.rotation.y = THREE.MathUtils.lerp(brainGroup.rotation.y, desiredRotation.y, 0.08);
-
-        selectionProgress = THREE.MathUtils.lerp(selectionProgress, targetSelectionProgress, 0.08);
-        const hoverLift = hoveredRegion === "cortex" ? 0.055 : 0;
-        cortexGroup.position.z = THREE.MathUtils.lerp(cortexGroup.position.z, 0.28 * selectionProgress + hoverLift, 0.08);
-        cortexGroup.scale.setScalar(1 + 0.035 * selectionProgress + (hoveredRegion ? 0.012 : 0));
-        coreGroup.scale.setScalar(1 - 0.035 * selectionProgress);
-        coreGroup.position.z = THREE.MathUtils.lerp(coreGroup.position.z, -0.1 * selectionProgress, 0.08);
-
-        glow.material.opacity = 0.055 + Math.sin(elapsed * 1.7) * 0.018 + selectionProgress * 0.038;
-        glow.scale.set(2.12 + selectionProgress * 0.08, 1.38 + selectionProgress * 0.06, 0.3);
-
-        for (const particle of signalParticles) {
-          const data = particle.userData;
-          const curve = signalCurves[data.curveIndex];
-          const t = (elapsed * data.speed + data.offset) % 1;
-          const pathPoint = curve.getPoint(t);
-          const pulse = (Math.sin(elapsed * 3.2 + data.phase) + 1) * 0.5;
-          const target = pathPoint.clone().lerp(focusPoint, selectionProgress * (0.55 + pulse * 0.22));
-          particle.position.copy(target);
-          particle.scale.setScalar(0.86 + pulse * 0.6 + selectionProgress * 0.22);
-          particle.material.color.setHSL((t + data.offset + elapsed * 0.04) % 1, 0.9, 0.56);
-          particle.material.opacity = 0.62 + pulse * 0.24;
-        }
-
-        signalGroup.rotation.y = Math.sin(elapsed * 0.22) * 0.05;
-        brainGroup.position.y = Math.sin(elapsed * 0.9) * 0.025;
-
-        renderer.render(scene, camera);
-
-        if (!prefersReducedMotion || delta < 1) {
-          requestAnimationFrame(animate);
+          window.addEventListener("resize", controls.resize);
+          render();
+        } catch (error) {
+          console.warn("3D brain model unavailable; fallback brain displayed.", error);
+          if (app) cancelAnimationFrame(app);
+          activateFallback();
         }
       }
 
-      animate();
+      boot();
     </script>
   </body>
 </html>
