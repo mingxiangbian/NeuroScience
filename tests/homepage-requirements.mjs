@@ -98,6 +98,11 @@ assert.match(body, /chip-display-module/, "project modules should render as disp
 assert.match(body, /project-display-screen/, "display modules should include a visible screen surface");
 assert.match(body, /project-display-screen-text/, "display modules should render selected project information inside the screen");
 assert.match(body, /fitDisplayFont/, "display text should fit long project titles inside the screen");
+assert.match(body, /DISPLAY_TYPEWRITER_CHARS_PER_SECOND = 42/, "selected display text should reveal with a screen-like typewriter cadence");
+assert.match(body, /getSelectedDisplayCharacterCount/, "display animation should know the full selected-project text length");
+assert.match(body, /sliceDisplayText/, "display animation should progressively reveal selected text instead of drawing it at once");
+assert.match(body, /paintDisplayTexture\(display, module, mode, revealCharacters = Infinity\)/, "display painting should accept a reveal progress");
+assert.match(body, /revealStartedAt/, "display modules should restart the text reveal when entering selected state");
 assert.match(body, /760 48px Inter/, "expanded display labels should use larger readable typography");
 assert.match(body, /560 35px Inter/, "selected display sentences should use larger readable typography");
 assert.match(body, /selected === entry\.module\.id \? 0\.18 : 0\.03/, "selected display modules should enlarge enough to read screen details");
@@ -105,6 +110,12 @@ assert.match(body, /display-module-pin/, "display modules should expose multiple
 assert.doesNotMatch(body, /display-module-pin-pad/, "display modules should not keep unused top or bottom pin pads");
 assert.match(body, /setDisplayModuleState/, "display modules should react to expanded and selected project state");
 assert.match(body, /paintDisplayTexture/, "display modules should draw folder and selected project information onto the screen texture");
+assert.match(body, /getModuleHomepageUrl\(module\)/, "module folder destinations should be generated from the same homepage helper");
+assert.match(body, /group\.userData\.moduleUrl = getModuleHomepageUrl\(module\)/, "each display module should store its matching project homepage URL");
+assert.match(body, /getDisplayTargets\(\)/, "GPU pedestal should expose display targets for click navigation");
+assert.match(body, /findDisplayModuleFromObject/, "screen clicks should resolve the display module from a raycast hit");
+assert.match(body, /raycaster\.intersectObjects\(displayTargets, true\)/, "screen click detection should raycast against display modules");
+assert.match(body, /window\.location\.assign\(moduleTarget\.userData\.moduleUrl\)/, "clicking a display should enter the matching project homepage");
 assert.doesNotMatch(body, /memory-array|layered-evidence-stack|control-core|uncertainty-gate|ring-buffer|io-port/, "old abstract chip symbols should not remain after switching to display modules");
 assert.match(body, /view\.scene\.add\(gpuPedestal\.group\)/, "GPU pedestal should be added without replacing the brain group");
 assert.match(body, /gpuPedestal\.update\(elapsed, moduleUi\.getState\(\)\)/, "GPU pedestal should follow the existing expanded and selected module state");
@@ -125,7 +136,7 @@ assert.match(body, /questions\//, "Cingulate Question Region should map to quest
 assert.match(body, /sessions\//, "Hippocampal Session Region should map to sessions/");
 assert.match(body, /sources\//, "Parietal Source Integration Region should map to sources/");
 assert.match(body, /GITHUB_FOLDER_BASE = "https:\/\/github\.com\/mingxiangbian\/NeuroScience\/tree\/main\/"/, "module info panel should link folders to the GitHub repository");
-assert.match(body, /moduleFolder\.href = `\$\{GITHUB_FOLDER_BASE\}\$\{module\.folder\}`/, "selected module folder path should update to its GitHub folder link");
+assert.match(body, /moduleFolder\.href = getModuleHomepageUrl\(module\)/, "selected module folder path should update to its GitHub folder link");
 assert.match(body, /id="module-folder"[^>]+href="https:\/\/github\.com\/mingxiangbian\/NeuroScience\/tree\/main\/knowledge\/"/, "default module folder path should be a GitHub link");
 assert.match(prefrontalModule, /offset:\s*\[0\.68,\s*0\.08,\s*0\.24\]/, "Prefrontal/projects should expand from the visible anterior side");
 assert.match(prefrontalModule, /min:\s*\[0\.56,\s*0\.25,\s*0\]/, "Prefrontal/projects should use the anterior-lateral surface range");

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Local 3D brain model base for NeuroScience x AI." />
     <title>NeuroScience × AI</title>
+    <link rel="icon" href="data:," />
     <style>
       :root {
         color-scheme: dark;
@@ -650,6 +651,10 @@
         },
       ];
 
+      function getModuleHomepageUrl(module) {
+        return `${GITHUB_FOLDER_BASE}${module.folder}`;
+      }
+
       let app = null;
 
       function activateFallback() {
@@ -1104,7 +1109,7 @@
           state.selected = id;
           moduleRegion.textContent = module.region;
           moduleFolder.textContent = module.folder;
-          moduleFolder.href = `${GITHUB_FOLDER_BASE}${module.folder}`;
+          moduleFolder.href = getModuleHomepageUrl(module);
           moduleSentence.textContent = module.sentence;
           sync();
         }
@@ -1750,6 +1755,7 @@
       ];
       const CHIP_DISPLAY_MODULE_SCALE = 1.32;
       const DISPLAY_PIN_OFFSETS = [-0.18, 0, 0.18];
+      const DISPLAY_TYPEWRITER_CHARS_PER_SECOND = 42;
 
       function createChipMaterial(THREE, color, opacity, emissiveIntensity = 0.08) {
         const material = new THREE.MeshPhysicalMaterial({
@@ -1933,10 +1939,20 @@
         return minSize;
       }
 
-      function paintDisplayTexture(display, module, mode) {
+      function getSelectedDisplayCharacterCount(module) {
+        return module.region.length + module.folder.length + module.sentence.length;
+      }
+
+      function sliceDisplayText(text, revealCharacters) {
+        if (!Number.isFinite(revealCharacters)) return text;
+        return text.slice(0, clamp(Math.floor(revealCharacters), 0, text.length));
+      }
+
+      function paintDisplayTexture(display, module, mode, revealCharacters = Infinity) {
         const { canvas, texture } = display;
         const context = canvas.getContext("2d");
         const accent = getModuleColorCss(module);
+        const selectedReveal = mode === "selected" ? revealCharacters : Infinity;
         context.clearRect(0, 0, canvas.width, canvas.height);
 
         const active = mode !== "idle";
@@ -1962,14 +1978,27 @@
         context.textBaseline = "top";
 
         if (selected) {
+          const regionReveal = selectedReveal;
+          const folderReveal = selectedReveal - module.region.length;
+          const sentenceReveal = folderReveal - module.folder.length;
+          const regionText = sliceDisplayText(module.region, regionReveal);
+          const folderText = sliceDisplayText(module.folder, folderReveal);
+          const sentenceText = sliceDisplayText(module.sentence, sentenceReveal);
+          const typing = selectedReveal < getSelectedDisplayCharacterCount(module);
           fitDisplayFont(context, module.region, "760", 54, 38, canvas.width - 94);
-          context.fillText(module.region, 56, 36);
+          context.fillText(regionText, 56, 36);
           context.font = "680 40px Inter, Arial, sans-serif";
           context.fillStyle = accent;
-          context.fillText(module.folder, 56, 108);
+          context.fillText(folderText, 56, 108);
           context.font = "560 35px Inter, Arial, sans-serif";
           context.fillStyle = "rgba(231, 245, 248, 0.86)";
-          drawWrappedDisplayLine(context, module.sentence, 56, 164, canvas.width - 92, 44, 3);
+          drawWrappedDisplayLine(context, sentenceText, 56, 164, canvas.width - 92, 44, 3);
+          if (typing) {
+            context.fillStyle = accent;
+            context.globalAlpha = 0.74 + Math.sin(performance.now() * 0.012) * 0.18;
+            context.fillRect(56 + Math.min(context.measureText(sentenceText).width, canvas.width - 130), 304, 18, 7);
+            context.globalAlpha = 1;
+          }
         } else if (active) {
           context.font = "760 48px Inter, Arial, sans-serif";
           context.fillText(module.folder, 56, 66);
@@ -2005,16 +2034,30 @@
           depthTest: true,
         });
         material.userData.baseOpacity = 0.46;
-        const display = { canvas, texture, material, mode: "" };
+        const display = { canvas, texture, material, mode: "", lastPaintKey: "", revealStartedAt: 0 };
         paintDisplayTexture(display, module, "idle");
         return display;
       }
 
-      function setDisplayModuleState(component, module, expanded, selected, dimmed) {
+      function setDisplayModuleState(component, module, expanded, selected, dimmed, time = 0) {
         const mode = selected ? "selected" : expanded ? "expanded" : "idle";
         const display = component.userData.display;
-        if (display && display.mode !== mode) {
-          paintDisplayTexture(display, module, mode);
+        if (display) {
+          const enteringSelected = display.mode !== "selected" && mode === "selected";
+          if (enteringSelected) {
+            display.revealStartedAt = time;
+          }
+          const selectedCharacters = getSelectedDisplayCharacterCount(module);
+          const revealCharacters = mode === "selected"
+            ? prefersReducedMotion
+              ? selectedCharacters
+              : Math.min(selectedCharacters, Math.max(0, (time - display.revealStartedAt) * DISPLAY_TYPEWRITER_CHARS_PER_SECOND))
+            : Infinity;
+          const paintKey = `${mode}:${Math.floor(revealCharacters)}`;
+          if (display.mode !== mode || display.lastPaintKey !== paintKey) {
+            paintDisplayTexture(display, module, mode, revealCharacters);
+            display.lastPaintKey = paintKey;
+          }
           display.mode = mode;
         }
         if (display?.material) {
@@ -2038,6 +2081,7 @@
         group.name = `${module.id}-chip-display-module`;
         group.userData.moduleId = module.id;
         group.userData.componentType = layout.component;
+        group.userData.moduleUrl = getModuleHomepageUrl(module);
 
         const body = addComponentBox(THREE, group, baseMaterial, 0, 0, 1.18, 0.68, 0.052);
         const bezel = addComponentBox(THREE, group, bezelMaterial, 0, 0, 1.04, 0.54, 0.058);
@@ -2062,8 +2106,8 @@
         group.add(edge);
 
         group.userData.display = display;
-        group.userData.setDisplayState = (expanded, selected, dimmed) => {
-          setDisplayModuleState(group, module, expanded, selected, dimmed);
+        group.userData.setDisplayState = (expanded, selected, dimmed, time) => {
+          setDisplayModuleState(group, module, expanded, selected, dimmed, time);
         };
         group.userData.materials = [baseMaterial, bezelMaterial, screenMaterial, pinMaterial, edgeMaterial];
         return group;
@@ -2146,6 +2190,9 @@
 
         return {
           group,
+          getDisplayTargets() {
+            return channels.map((entry) => entry.component);
+          },
           resize() {
             const mobile = window.innerWidth < 720;
             group.position.set(0, mobile ? -0.14 : -0.08, -1.48);
@@ -2178,6 +2225,7 @@
                 expanded,
                 selected === entry.module.id,
                 Boolean(selected && selected !== entry.module.id),
+                time,
               );
 
               entry.route.materials.forEach((material) => {
@@ -2268,7 +2316,24 @@
         return { scene, camera, renderer, brain, shell };
       }
 
-      function setupControls(view, onBrainTap, getInteractionState = () => ({ expanded: false })) {
+      function findDisplayModuleFromObject(object) {
+        let current = object;
+        while (current) {
+          if (current.userData?.componentType === "project-display" && current.userData?.moduleUrl) {
+            return current;
+          }
+          current = current.parent;
+        }
+        return null;
+      }
+
+      function setupControls(
+        view,
+        onBrainTap,
+        getInteractionState = () => ({ expanded: false }),
+        displayTargets = [],
+        onDisplayTap = null,
+      ) {
         const rotation = {
           x: view.brain.rotation.x,
           y: view.brain.rotation.y,
@@ -2283,17 +2348,34 @@
         let dragDistance = 0;
 
         const canvas = view.renderer.domElement;
+        const raycaster = new THREE.Raycaster();
+        const pointer = new THREE.Vector2();
+
+        function pickDisplayModule(event) {
+          if (!getInteractionState().expanded || displayTargets.length === 0) return null;
+          const rect = canvas.getBoundingClientRect();
+          pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+          pointer.y = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
+          raycaster.setFromCamera(pointer, view.camera);
+          const hits = raycaster.intersectObjects(displayTargets, true);
+          if (hits.length === 0) return null;
+          return findDisplayModuleFromObject(hits[0].object);
+        }
 
         canvas.addEventListener("pointerdown", (event) => {
           dragging = true;
           previousX = event.clientX;
           previousY = event.clientY;
           dragDistance = 0;
+          canvas.style.cursor = "grabbing";
           canvas.setPointerCapture(event.pointerId);
         });
 
         canvas.addEventListener("pointermove", (event) => {
-          if (!dragging) return;
+          if (!dragging) {
+            canvas.style.cursor = pickDisplayModule(event) ? "pointer" : "grab";
+            return;
+          }
           const dx = event.clientX - previousX;
           const dy = event.clientY - previousY;
           previousX = event.clientX;
@@ -2309,12 +2391,20 @@
             canvas.releasePointerCapture(event.pointerId);
           }
           if (dragDistance < 9) {
+            const displayModule = pickDisplayModule(event);
+            if (displayModule) {
+              onDisplayTap?.(displayModule);
+              canvas.style.cursor = "pointer";
+              return;
+            }
             onBrainTap?.();
           }
+          canvas.style.cursor = pickDisplayModule(event) ? "pointer" : "grab";
         });
 
         canvas.addEventListener("pointercancel", () => {
           dragging = false;
+          canvas.style.cursor = "grab";
         });
 
         canvas.addEventListener(
@@ -2382,7 +2472,15 @@
           view.brain.clear();
           view.scene.add(gpuPedestal.group);
           view.brain.add(brainModel, activityFlow, explodedView.group);
-          const controls = setupControls(view, moduleUi.toggleExpanded, moduleUi.getState);
+          const controls = setupControls(
+            view,
+            moduleUi.toggleExpanded,
+            moduleUi.getState,
+            gpuPedestal.getDisplayTargets(),
+            (moduleTarget) => {
+              window.location.assign(moduleTarget.userData.moduleUrl);
+            },
+          );
           controls.resize();
           gpuPedestal.resize();
           document.body.classList.add("webgl-ready");
