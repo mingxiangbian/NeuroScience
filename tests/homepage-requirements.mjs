@@ -159,7 +159,7 @@ assert.match(body, /display-pin-route/, "each route should include visible ortho
 assert.match(body, /display-pin-terminal/, "each route should terminate on display pin terminals");
 assert.match(body, /getConnectorOutwardDirection/, "display fanout should know which side of the screen its pins occupy");
 assert.match(body, /createOrthogonalPinFanout/, "display fanout should be built by a dedicated orthogonal routing helper");
-assert.match(body, /const fanoutOrigin = getConnectorFanoutOrigin\(routeEnd,\s*pins,\s*connectorSide\)/, "display fanout should be computed from the active route endpoint and active scaled pin positions");
+assert.match(body, /const fanoutOrigin = getConnectorFanoutOrigin\(routeEnd,\s*pins,\s*connectorSide,\s*displayAvoidanceBox\)/, "display fanout should be computed from the active route endpoint, active scaled pins, and screen avoidance box");
 assert.match(body, /const middlePin = pins\[Math\.floor\(pins\.length \/ 2\)\]/, "display fanout should anchor to the middle active pin rather than a fixed frame coordinate");
 assert.match(body, /connectorSide === "left" \? -1 : connectorSide === "right" \? 1/, "left and right screen pins should route outward from their actual side");
 assert.match(body, /connectorSide === "top" \? 1 : connectorSide === "bottom" \? -1/, "top and bottom screen pins should route outward from their actual side");
@@ -172,7 +172,7 @@ assert.doesNotMatch(body, /segmentPairs\.push\(\[fanoutOrigin\.clone\(\),\s*pin\
 assert.doesNotMatch(body, /bridgeSegments/, "display connector geometry should not add a corrective bridge that makes the route visibly fold back");
 assert.doesNotMatch(body, /segmentPairs\.push\(\[busStart,\s*busEnd,\s*0\.022\]\)/, "display connector geometry should not draw an extra bus segment that makes the route look like it back-connects");
 assert.doesNotMatch(body, /segmentPairs\.push\(\[routeEnd,\s*branch,\s*0\.018\]\);\s*segmentPairs\.push\(\[branch,\s*pin,\s*0\.018\]\);/, "pin routing should not connect one branch at a time from routeEnd and then back-connect");
-assert.match(body, /const fanoutOrigin = getConnectorFanoutOrigin\(routeEnd,\s*pins,\s*connectorSide\)/, "selected particle flow should split from one shared dynamic fanout origin before reaching all display pins");
+assert.match(body, /const fanoutOrigin = getConnectorFanoutOrigin\(routeEnd,\s*pins,\s*connectorSide,\s*displayAvoidanceBox\)/, "selected particle flow should split from one shared dynamic fanout origin before reaching all display pins");
 assert.doesNotMatch(body, /\[fanoutOrigin\.clone\(\),\s*pin\.clone\(\)\]/, "selected particle flow should not jump diagonally from fanout origin to pins");
 assert.doesNotMatch(body, /\[routeEnd\.clone\(\),\s*busPoint\.clone\(\)\],\s*\[busPoint\.clone\(\),\s*pin\.clone\(\)\]/, "selected particle flow should not travel along the connector bus before reaching individual pins");
 assert.match(body, /circuit-flow-particle/, "selected routes should use moving particles instead of flashing the whole wire");
@@ -186,7 +186,15 @@ assert.doesNotMatch(body, /\(\(\(progress % 1\) \+ 1\) % 1\)/, "route sampling s
 assert.doesNotMatch(body, /Math\.sin\(time \* 5\.8\) \* 0\.045/, "route animation should not be implemented as whole-wire opacity flicker");
 assert.match(body, /getConnectorPinPoints/, "display modules should expose their active connector pin positions");
 assert.match(body, /pin\.position\.clone\(\)\.multiplyScalar\(component\.scale\.x\)\.add\(component\.position\)/, "route endpoints should be computed from the display-module-pin positions, not from frame coordinates");
-assert.match(body, /entry\.route\.userData\.setCircuitRoute\?\.\(routePoints,\s*connectorSide,\s*pinPoints\)/, "responsive routes should be rebuilt from the active display pins");
+assert.match(body, /getDisplayAvoidanceBox/, "display modules should expose their active screen avoidance box so PCB routes do not overlap the display body");
+assert.match(body, /DISPLAY_AVOIDANCE_CLEARANCE/, "PCB routing should define a fixed clearance around display screens");
+assert.match(body, /const displayAvoidanceBox = entry\.component\.userData\.getDisplayAvoidanceBox\?\.\(\)/, "responsive routing should read the active scaled display avoidance box");
+assert.match(body, /entry\.route\.userData\.setCircuitRoute\?\.\(routePoints,\s*connectorSide,\s*pinPoints,\s*displayAvoidanceBox\)/, "responsive routes should be rebuilt from the active display pins and display avoidance box");
+assert.match(body, /getConnectorFanoutOrigin\(routeEnd,\s*pins,\s*connectorSide,\s*displayAvoidanceBox\)/, "display fanout should be placed outside the screen avoidance box, not only outside the pin coordinate");
+assert.match(body, /avoidanceBox\.left - DISPLAY_AVOIDANCE_CLEARANCE/, "left-side display routes should terminate outside the left edge of the display avoidance box");
+assert.match(body, /avoidanceBox\.right \+ DISPLAY_AVOIDANCE_CLEARANCE/, "right-side display routes should terminate outside the right edge of the display avoidance box");
+assert.match(body, /avoidanceBox\.top \+ DISPLAY_AVOIDANCE_CLEARANCE/, "top display routes should terminate above the display avoidance box");
+assert.match(body, /avoidanceBox\.bottom - DISPLAY_AVOIDANCE_CLEARANCE/, "bottom display routes should terminate below the display avoidance box");
 assert.match(body, /document\.body\.dataset\.selectedModule = state\.selected \?\? ""/, "selected module state should remain available to page-level styling");
 assert.doesNotMatch(body, /id="ink-route-layer"/, "project routes should no longer use the ink route layer");
 assert.doesNotMatch(body, /ink-calligraphy-path/, "project routes should not use calligraphy path styling");
