@@ -29,6 +29,7 @@ assert.match(body, /paintInkPaperDisplayBackground[\s\S]*rgba\(250,\s*247,\s*238
 assert.doesNotMatch(body, /paintInkPaperDisplayBackground[\s\S]*rgba\(14,\s*17,\s*15,\s*0\.96\)/, "project display screens should no longer use a black selected state");
 assert.match(body, /NeuroScience × AI/, "homepage should keep the project title");
 assert.doesNotMatch(visibleBody, /[\u4e00-\u9fff]/, "visible body should not include Chinese text");
+assert.match(html, /h1\s*\{[\s\S]*?font-family:\s*"Songti SC",\s*"STSong",\s*"Noto Serif SC",\s*Georgia,\s*serif/, "Cyber Ink title should use a sharper serif/Songti title stack instead of inheriting the body sans font");
 
 assert.match(html, /three@/, "homepage should load Three.js for the primary model");
 assert.match(body, /GLTFLoader/, "homepage should use GLTFLoader for the high-detail brain asset");
@@ -80,6 +81,7 @@ assert.match(body, /const SULCAL_SURFACE_FLOW_ALPHA = 0\.88/, "surface activity 
 assert.match(body, /const SULCAL_RIBBON_OPACITY = prefersReducedMotion \? 0\.07 : 0\.15/, "sulcal ribbons should be visible on the rice-paper background instead of disappearing as faint texture");
 assert.match(body, /mix\(color,\s*cinnabar,\s*b \* 0\.72\)/, "cinnabar accents should be strong enough to register as deliberate flow highlights");
 assert.match(body, /paintInkPaperDisplayBackground/, "project display screens should render as ink-paper displays");
+assert.match(body, /paintInkBleedDisplayEdge/, "project display screens should add a subtle ink-bleed edge so panels feel embedded in paper");
 assert.doesNotMatch(html, /#brain-stage::before/, "Cyber Ink paper mode should remove the large central gray wash behind the brain");
 assert.doesNotMatch(html, /cyber-ink-breathing-wash/, "Cyber Ink paper mode should not animate the removed central gray wash");
 assert.match(body, /createInkContourSkin/, "Cyber Ink v2 should add a dedicated ink contour skin on the brain surface");
@@ -125,6 +127,8 @@ assert.doesNotMatch(body, /BoxGeometry\(10\.8,\s*6\.3,\s*0\.035\)/, "paper mode 
 assert.doesNotMatch(body, /gpu-chip-background-circuit-field/, "GPU background should not keep unrelated decorative circuit fields");
 assert.doesNotMatch(body, /gpu-chip-background-trace/, "GPU background should not keep unconnected edge-to-center circuit traces");
 assert.match(body, /gpu-chip-substrate/, "GPU pedestal should include a substrate");
+assert.match(body, /const boardMaterial = createChipMaterial\(THREE, 0x5a5244, 0\.42, 0\.006\)/, "bottom pedestal should use translucent ink-gray material instead of a hard black slab");
+assert.match(body, /setChipMaterialState\(boardMaterial, 0\.36 \+ eased \* 0\.12, 0\.006 \+ eased \* 0\.018\)/, "bottom pedestal should stay visually light as it activates");
 assert.match(body, /compute-pedestal-core/, "GPU pedestal should include a central compute core");
 assert.doesNotMatch(body, /createPassiveComponentField/, "GPU pedestal should remove the ambiguous passive component field");
 assert.doesNotMatch(body, /central-passive-component-field|chip-passive-|passive-power-rail|passive-inline-trace|passive-terminal-pad/, "GPU pedestal should not keep resistor, diode, or capacitor fragments");
