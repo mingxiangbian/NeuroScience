@@ -41,8 +41,8 @@ assert.match(html, /#fallback-brain\s*\{[\s\S]*?opacity:\s*0/, "fallback brain s
 assert.match(html, /body\.fallback-active #fallback-brain\s*\{[\s\S]*?opacity:\s*1/, "fallback brain should appear only when fallback mode is active");
 assert.match(html, /prefers-reduced-motion/, "homepage should respect reduced motion preferences");
 assert.match(html, /overflow:\s*hidden/, "homepage should be a non-scrolling single screen");
-assert.match(html, /\.module-panel\s*\{[\s\S]*?display:\s*none/, "selected module panel should stay hidden because project details now live in the screens");
-assert.doesNotMatch(html, /body\.module-selected \.module-panel\s*\{[\s\S]*?opacity:\s*1/, "selecting a module should not show the old bottom caption");
+assert.doesNotMatch(html, /class="module-panel"/, "old hidden bottom module panel should be removed now that project details live in display screens");
+assert.doesNotMatch(html, /id="module-(region|folder|sentence)"/, "old bottom caption fields should not remain as hidden DOM");
 assert.match(body, /data-module="cingulate"[\s\S]*?<span>Cingulate<\/span>/, "questions label should use a short cingulate subtitle that does not crowd the frame");
 assert.doesNotMatch(visibleBody, /Cingulate Projection/, "visible module labels should not use the long Cingulate Projection subtitle");
 assert.match(body, /data-module="prefrontal"[\s\S]*?<span>Planning<\/span>/, "projects label should use a short subtitle so it does not crowd the selected display");
@@ -130,7 +130,7 @@ assert.doesNotMatch(body, /createPassiveComponentField/, "GPU pedestal should re
 assert.doesNotMatch(body, /central-passive-component-field|chip-passive-|passive-power-rail|passive-inline-trace|passive-terminal-pad/, "GPU pedestal should not keep resistor, diode, or capacitor fragments");
 assert.doesNotMatch(body, /id="fallback-passive-components"/, "fallback mode should not keep passive component symbols");
 assert.match(body, /id="fallback-display-modules"/, "fallback mode should represent the six modules as display screens");
-assert.match(body, /board\.position\.y = -1\.56/, "central chip pedestal should remain under the brain, not at the screen center");
+assert.match(body, /const initialCoreY = CHIP_CORE_Y_BY_LAYOUT\.desktop[\s\S]*?board\.position\.y = initialCoreY/, "central chip pedestal should initialize from the desktop core position instead of duplicating a raw coordinate");
 assert.match(body, /CHIP_CORE_Y_BY_LAYOUT = \{[\s\S]*?desktop: -1\.56,[\s\S]*?portrait: -1\.18,[\s\S]*?compact: -1\.06/, "control pedestal should move upward in portrait and phone layouts");
 assert.match(body, /getViewportLayout/, "homepage should classify viewport shape for responsive 3D composition");
 assert.match(body, /const isPortrait = height > width \* 1\.08/, "portrait detection should be based on aspect ratio, not only width");
@@ -195,7 +195,7 @@ assert.match(body, /avoidanceBox\.left - DISPLAY_AVOIDANCE_CLEARANCE/, "left-sid
 assert.match(body, /avoidanceBox\.right \+ DISPLAY_AVOIDANCE_CLEARANCE/, "right-side display routes should terminate outside the right edge of the display avoidance box");
 assert.match(body, /avoidanceBox\.top \+ DISPLAY_AVOIDANCE_CLEARANCE/, "top display routes should terminate above the display avoidance box");
 assert.match(body, /avoidanceBox\.bottom - DISPLAY_AVOIDANCE_CLEARANCE/, "bottom display routes should terminate below the display avoidance box");
-assert.match(body, /document\.body\.dataset\.selectedModule = state\.selected \?\? ""/, "selected module state should remain available to page-level styling");
+assert.doesNotMatch(body, /module-selected|selectedModule/, "old page-level selected module styling state should not remain unused");
 assert.doesNotMatch(body, /id="ink-route-layer"/, "project routes should no longer use the ink route layer");
 assert.doesNotMatch(body, /ink-calligraphy-path/, "project routes should not use calligraphy path styling");
 assert.doesNotMatch(body, /ink-route-watermark/, "project routes should not keep the old ink watermark groups");
@@ -227,6 +227,7 @@ assert.match(body, /project-display-screen-text/, "display modules should render
 assert.match(body, /fitDisplayFont/, "display text should fit long project titles inside the screen");
 assert.match(body, /const DISPLAY_TEXTURE_SCALE = 2/, "display screen text should render on a high-resolution texture for crisp readability");
 assert.match(body, /DISPLAY_FONT_STACK = '"Songti SC", "STSong", "Georgia", serif'/, "display screens should use a clearer paper-reading font stack");
+assert.doesNotMatch(body, /DISPLAY_TEXT_FONT_STACK/, "display typography should not keep duplicate font constants with the same value");
 assert.match(body, /DISPLAY_TYPEWRITER_CHARS_PER_SECOND = 42/, "selected display text should reveal with a screen-like typewriter cadence");
 assert.match(body, /getSelectedDisplayCharacterCount/, "display animation should know the full selected-project text length");
 assert.match(body, /sliceDisplayText/, "display animation should progressively reveal selected text instead of drawing it at once");
@@ -237,7 +238,7 @@ assert.match(body, /const DISPLAY_EXPANDED_FOLDER_FONT_SIZE = 66/, "expanded dis
 assert.match(body, /const DISPLAY_SELECTED_SENTENCE_FONT_SIZE = 50/, "selected display sentences should be large enough to read inside the paper screen");
 assert.match(body, /const DISPLAY_IDLE_FOLDER_FONT_SIZE = 108/, "idle display screens should prioritize a large readable folder label in portrait views");
 assert.match(body, /760 \$\{DISPLAY_EXPANDED_FOLDER_FONT_SIZE\}px \$\{DISPLAY_FONT_STACK\}/, "expanded display labels should use the larger readable brush-style typography constant");
-assert.match(body, /560 \$\{DISPLAY_SELECTED_SENTENCE_FONT_SIZE\}px \$\{DISPLAY_TEXT_FONT_STACK\}/, "selected display sentences should use the larger readable paper-screen typography constant");
+assert.match(body, /560 \$\{DISPLAY_SELECTED_SENTENCE_FONT_SIZE\}px \$\{DISPLAY_FONT_STACK\}/, "selected display sentences should use the shared readable paper-screen typography constant");
 assert.match(body, /selected === entry\.module\.id \? 0\.32 : 0\.03/, "selected display modules should enlarge enough to read screen details");
 assert.match(body, /display-module-pin/, "display modules should expose multiple pins");
 assert.doesNotMatch(body, /display-module-pin-pad/, "display modules should not keep unused top or bottom pin pads");
@@ -245,6 +246,7 @@ assert.match(body, /setDisplayModuleState/, "display modules should react to exp
 assert.match(body, /paintDisplayTexture/, "display modules should draw folder and selected project information onto the screen texture");
 assert.match(body, /getModuleHomepageUrl\(module\)/, "module folder destinations should be generated from the same homepage helper");
 assert.match(body, /group\.userData\.moduleUrl = getModuleHomepageUrl\(module\)/, "each display module should store its matching project homepage URL");
+assert.doesNotMatch(chipLayout, /component:\s*"project-display"/, "chip layout should not repeat the same project-display component type on every module");
 assert.match(body, /getDisplayTargets\(\)/, "GPU pedestal should expose display targets for click navigation");
 assert.match(body, /findDisplayModuleFromObject/, "screen clicks should resolve the display module from a raycast hit");
 assert.match(body, /raycaster\.intersectObjects\(displayTargets, true\)/, "screen click detection should raycast against display modules");
@@ -268,9 +270,7 @@ assert.match(body, /projects\//, "Prefrontal Planning Region should map to proje
 assert.match(body, /questions\//, "Cingulate Question Region should map to questions/");
 assert.match(body, /sessions\//, "Hippocampal Session Region should map to sessions/");
 assert.match(body, /sources\//, "Parietal Source Integration Region should map to sources/");
-assert.match(body, /GITHUB_FOLDER_BASE = "https:\/\/github\.com\/mingxiangbian\/NeuroScience\/tree\/main\/"/, "module info panel should link folders to the GitHub repository");
-assert.match(body, /moduleFolder\.href = getModuleHomepageUrl\(module\)/, "selected module folder path should update to its GitHub folder link");
-assert.match(body, /id="module-folder"[^>]+href="https:\/\/github\.com\/mingxiangbian\/NeuroScience\/tree\/main\/knowledge\/"/, "default module folder path should be a GitHub link");
+assert.match(body, /GITHUB_FOLDER_BASE = "https:\/\/github\.com\/mingxiangbian\/NeuroScience\/tree\/main\/"/, "display modules should link folders to the GitHub repository");
 assert.match(prefrontalModule, /offset:\s*\[0\.68,\s*0\.08,\s*0\.24\]/, "Prefrontal/projects should expand from the visible anterior side");
 assert.match(prefrontalModule, /min:\s*\[0\.56,\s*0\.25,\s*0\]/, "Prefrontal/projects should use the anterior-lateral surface range");
 assert.match(parietalModule, /offset:\s*\[-0\.62,\s*0\.26,\s*0\.18\]/, "Parietal/sources should expand from the posterior-upper side");

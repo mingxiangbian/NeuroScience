@@ -425,68 +425,6 @@
         }
       }
 
-      .module-panel {
-        position: absolute;
-        left: 50%;
-        bottom: clamp(20px, 4.5vh, 44px);
-        z-index: 5;
-        display: none;
-        gap: 3px;
-        min-width: min(430px, calc(100vw - 32px));
-        padding: 12px 16px 13px;
-        transform: translateX(-50%) translateY(12px);
-        border: 1px solid rgba(241, 236, 223, 0.18);
-        border-radius: 3px;
-        background:
-          linear-gradient(135deg, rgba(241, 236, 223, 0.1), rgba(241, 236, 223, 0.03)),
-          rgba(4, 6, 5, 0.56);
-        box-shadow:
-          inset 0 1px 0 rgba(241, 236, 223, 0.12),
-          0 22px 58px rgba(0, 0, 0, 0.42);
-        opacity: 0;
-        pointer-events: none;
-        backdrop-filter: blur(20px) saturate(1.25);
-        transition:
-          opacity 220ms ease,
-          transform 220ms ease;
-      }
-
-      .module-panel strong,
-      .module-panel span,
-      .module-panel a {
-        display: block;
-        min-width: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .module-panel strong {
-        font-size: 0.98rem;
-        font-weight: 760;
-        line-height: 1.15;
-      }
-
-      .module-panel span,
-      .module-panel a {
-        color: var(--ink-muted);
-        font-size: 0.76rem;
-        line-height: 1.2;
-      }
-
-      .module-panel a {
-        pointer-events: auto;
-        text-decoration: none;
-      }
-
-      .module-panel a:hover,
-      .module-panel a:focus-visible {
-        color: var(--ink);
-        text-decoration: underline;
-        text-underline-offset: 3px;
-        outline: none;
-      }
-
       @media (max-width: 720px) {
         .title-plane {
           top: 30px;
@@ -515,10 +453,6 @@
           font-size: 0.58rem;
         }
 
-        .module-panel {
-          bottom: 16px;
-          padding: 10px 12px 11px;
-        }
       }
 
       @media (orientation: portrait) and (max-width: 520px) {
@@ -648,12 +582,6 @@
           <span>Hippocampal Glow</span>
         </button>
       </div>
-      <div class="module-panel" aria-live="polite">
-        <strong id="module-region">Association Cortex</strong>
-        <a id="module-folder" href="https://github.com/mingxiangbian/NeuroScience/tree/main/knowledge/" target="_blank" rel="noopener">knowledge/</a>
-        <span id="module-sentence">Stable concepts and reusable research notes.</span>
-      </div>
-
       <svg id="fallback-brain" aria-hidden="true" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid slice">
         <defs>
           <radialGradient id="fallback-tissue" cx="43%" cy="36%" r="68%">
@@ -1316,9 +1244,6 @@
       }
 
       function setupModuleUi(explodedView) {
-        const moduleRegion = document.getElementById("module-region");
-        const moduleFolder = document.getElementById("module-folder");
-        const moduleSentence = document.getElementById("module-sentence");
         const moduleButtons = [...document.querySelectorAll(".module-label")];
         const state = {
           expanded: false,
@@ -1327,8 +1252,6 @@
 
         function sync() {
           document.body.classList.toggle("brain-expanded", state.expanded);
-          document.body.classList.toggle("module-selected", Boolean(state.selected));
-          document.body.dataset.selectedModule = state.selected ?? "";
           moduleButtons.forEach((button) => {
             button.setAttribute("aria-pressed", String(button.dataset.module === state.selected));
           });
@@ -1341,10 +1264,6 @@
           if (!module) return;
           state.expanded = true;
           state.selected = id;
-          moduleRegion.textContent = module.region;
-          moduleFolder.textContent = module.folder;
-          moduleFolder.href = getModuleHomepageUrl(module);
-          moduleSentence.textContent = module.sentence;
           sync();
         }
 
@@ -2049,7 +1968,6 @@
       const CHIP_LAYOUT = [
         {
           id: "association",
-          component: "project-display",
           position: [-3.45, 1.36, 0.12],
           portraitPosition: [-2.32, 3, 0.12],
           compactPosition: [-1.68, 3.02, 0.12],
@@ -2060,7 +1978,6 @@
         },
         {
           id: "prefrontal",
-          component: "project-display",
           position: [3.45, 0, 0.12],
           portraitPosition: [2.32, 3, 0.12],
           compactPosition: [1.68, 3.02, 0.12],
@@ -2071,7 +1988,6 @@
         },
         {
           id: "parietal",
-          component: "project-display",
           position: [-3.45, 0, 0.12],
           portraitPosition: [0, -2.82, 0.12],
           compactPosition: [0, -2.72, 0.12],
@@ -2084,7 +2000,6 @@
         },
         {
           id: "temporal",
-          component: "project-display",
           position: [-3.45, -1.36, 0.12],
           portraitPosition: [-2.32, -2.82, 0.12],
           compactPosition: [-1.68, -2.72, 0.12],
@@ -2095,7 +2010,6 @@
         },
         {
           id: "cingulate",
-          component: "project-display",
           position: [3.45, 1.36, 0.12],
           portraitPosition: [0, 3, 0.12],
           compactPosition: [0, 3.02, 0.12],
@@ -2108,7 +2022,6 @@
         },
         {
           id: "hippocampal",
-          component: "project-display",
           position: [3.45, -1.36, 0.12],
           portraitPosition: [2.32, -2.82, 0.12],
           compactPosition: [1.68, -2.72, 0.12],
@@ -2133,7 +2046,6 @@
       const DISPLAY_TEXTURE_WIDTH = 768;
       const DISPLAY_TEXTURE_HEIGHT = 360;
       const DISPLAY_FONT_STACK = '"Songti SC", "STSong", "Georgia", serif';
-      const DISPLAY_TEXT_FONT_STACK = '"Songti SC", "STSong", "Georgia", serif';
       const DISPLAY_TEXT_INK_STRONG = "rgba(18, 23, 21, 0.98)";
       const DISPLAY_TEXT_INK = "rgba(18, 23, 21, 0.94)";
       const DISPLAY_TEXT_INK_MUTED = "rgba(18, 23, 21, 0.82)";
@@ -2347,7 +2259,7 @@
           context.font = `680 ${DISPLAY_SELECTED_FOLDER_FONT_SIZE}px ${DISPLAY_FONT_STACK}`;
           context.fillStyle = accent;
           context.fillText(folderText, 56, 118);
-          context.font = `560 ${DISPLAY_SELECTED_SENTENCE_FONT_SIZE}px ${DISPLAY_TEXT_FONT_STACK}`;
+          context.font = `560 ${DISPLAY_SELECTED_SENTENCE_FONT_SIZE}px ${DISPLAY_FONT_STACK}`;
           context.fillStyle = DISPLAY_TEXT_INK_MUTED;
           drawWrappedDisplayLine(context, sentenceText, 56, 186, DISPLAY_TEXTURE_WIDTH - 92, 54, 3);
           if (typing) {
@@ -2366,7 +2278,7 @@
           fitDisplayFont(context, module.folder, "760", DISPLAY_IDLE_FOLDER_FONT_SIZE, 50, DISPLAY_TEXTURE_WIDTH - 94);
           context.fillStyle = DISPLAY_TEXT_INK;
           context.fillText(module.folder, 56, 82);
-          context.font = `560 ${DISPLAY_IDLE_STATE_FONT_SIZE}px ${DISPLAY_TEXT_FONT_STACK}`;
+          context.font = `560 ${DISPLAY_IDLE_STATE_FONT_SIZE}px ${DISPLAY_FONT_STACK}`;
           context.fillStyle = "rgba(18, 23, 21, 0.68)";
           context.fillText("STANDBY", 56, 226);
         }
@@ -2444,7 +2356,7 @@
 
         group.name = `${module.id}-chip-display-module`;
         group.userData.moduleId = module.id;
-        group.userData.componentType = layout.component;
+        group.userData.componentType = "project-display";
         group.userData.moduleUrl = getModuleHomepageUrl(module);
 
         const body = addComponentBox(THREE, group, baseMaterial, 0, 0, 1.18, 0.68, 0.052);
@@ -2854,15 +2766,16 @@
         const boardEdge = new THREE.Mesh(new THREE.BoxGeometry(3.5, 1.02, 0.018), boardEdgeMaterial);
         const computeCore = new THREE.Group();
         const inductionField = createInductionField(THREE);
+        const initialCoreY = CHIP_CORE_Y_BY_LAYOUT.desktop;
 
         group.name = "gpu-chip-pedestal";
         board.name = "gpu-chip-substrate";
         boardEdge.name = "gpu-chip-edge-glow";
-        board.position.y = -1.56;
-        boardEdge.position.set(0, -1.56, 0.048);
+        board.position.y = initialCoreY;
+        boardEdge.position.set(0, initialCoreY, 0.048);
         computeCore.name = "compute-pedestal-core";
-        computeCore.position.y = -1.56;
-        inductionField.position.y = -1.56;
+        computeCore.position.y = initialCoreY;
+        inductionField.position.y = initialCoreY;
 
         const coreBase = new THREE.Mesh(new THREE.BoxGeometry(0.46, 0.32, 0.058), coreMaterial);
         const coreInset = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.16, 0.066), coreLightMaterial);
