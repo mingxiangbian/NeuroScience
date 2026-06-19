@@ -6,11 +6,11 @@ status: draft
 project: brain-memory-for-ai-agents
 tags: [memory, neuroscience, learning-route, ai-agent]
 related:
-  - README.md
-  - research-roadmap.md
-  - open-questions.md
-  - hypotheses.md
-  - mechanism-to-agent-design.md
+  - ../../projects/brain-memory-for-ai-agents/README.md
+  - ../../projects/brain-memory-for-ai-agents/research-roadmap.md
+  - ../../questions/brain-memory-for-ai-agents/open-questions.md
+  - ../../projects/brain-memory-for-ai-agents/hypotheses.md
+  - ../../projects/brain-memory-for-ai-agents/mechanism-to-agent-design.md
 ---
 
 ## Purpose
@@ -19,10 +19,10 @@ related:
 
 当前对应项目阶段：
 
-- `research-roadmap.md` Phase 1: Concept Map。
-- `research-roadmap.md` Phase 2: Neuroscience Mechanisms。
-- `open-questions.md` Q1-Q4：retrieval、hippocampal indexing、forgetting、reconsolidation。
-- `open-questions.md` Q10-Q12：memory、world model、cognitive memory、persistent agent 的边界问题。
+- `../../projects/brain-memory-for-ai-agents/research-roadmap.md` Phase 1: Concept Map。
+- `../../projects/brain-memory-for-ai-agents/research-roadmap.md` Phase 2: Neuroscience Mechanisms。
+- `../../questions/brain-memory-for-ai-agents/open-questions.md` Q1-Q4：retrieval、hippocampal indexing、forgetting、reconsolidation。
+- `../../questions/brain-memory-for-ai-agents/open-questions.md` Q10-Q12：memory、world model、cognitive memory、persistent agent 的边界问题。
 
 ## Boundaries
 

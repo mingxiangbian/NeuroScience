@@ -67,7 +67,7 @@ sources:
 
 - `../projects/brain-memory-for-ai-agents/README.md`
 - `../projects/brain-memory-for-ai-agents/research-roadmap.md`
-- `../projects/brain-memory-for-ai-agents/open-questions.md`
+- `../questions/brain-memory-for-ai-agents/open-questions.md`
 - `../projects/brain-memory-for-ai-agents/hypotheses.md`
 - `../projects/brain-memory-for-ai-agents/mechanism-to-agent-design.md`
 - `../sources/brain-memory-and-agent-memory-sources.md`

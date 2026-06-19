@@ -68,9 +68,11 @@ sources:
 ## Core Files
 
 - `research-roadmap.md`: 分阶段研究路线。
-- `open-questions.md`: 开放问题和拆解。
+- `../../questions/brain-memory-for-ai-agents/open-questions.md`: 开放问题和拆解。
 - `hypotheses.md`: 当前假设库。
 - `mechanism-to-agent-design.md`: 大脑机制到 Agent memory 设计的映射表。
+- `../../papers/brain-memory-for-ai-agents/neuroscience-memory-learning-route.md`: 神经科学记忆机制学习路线。
+- `../../sources/neuroscience-memory-learning-sources.md`: 神经科学记忆机制文献学习来源地图。
 - `../../sessions/2026-06-18-memory-retrieval-mechanism.md`: seed session。
 - `../../sources/brain-memory-and-agent-memory-sources.md`: 来源地图。
 

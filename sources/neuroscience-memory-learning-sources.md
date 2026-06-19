@@ -7,9 +7,9 @@ project: brain-memory-for-ai-agents
 scope: neuroscience memory mechanisms before agent architecture
 tags: [memory, neuroscience, sources, learning-route]
 related:
-  - ../projects/brain-memory-for-ai-agents/neuroscience-memory-learning-route.md
-  - ../projects/brain-memory-for-ai-agents/open-questions.md
-  - ../sources/brain-memory-and-agent-memory-sources.md
+  - ../papers/brain-memory-for-ai-agents/neuroscience-memory-learning-route.md
+  - ../questions/brain-memory-for-ai-agents/open-questions.md
+  - brain-memory-and-agent-memory-sources.md
 ---
 
 ## Purpose
@@ -30,7 +30,7 @@ related:
 - emotional / motivated memory。
 - computational neuroscience models。
 
-当前阶段只做来源地图，不把这些来源结论晋升到 `knowledge/`。每篇论文只有在后续读完并完成质量检查后，才进入 `papers/` 或稳定知识笔记。
+当前阶段只做来源地图，不把这些来源结论晋升到 `knowledge/`。每篇论文只有在后续读完并完成质量检查后，才进入单篇论文笔记或稳定知识笔记。
 
 ## How to Use
 

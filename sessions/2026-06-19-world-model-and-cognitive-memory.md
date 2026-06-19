@@ -120,5 +120,5 @@ Frozen reasoning model
 
 ## Files Updated
 
-- `../projects/brain-memory-for-ai-agents/open-questions.md`
+- `../questions/brain-memory-for-ai-agents/open-questions.md`
 - `../projects/brain-memory-for-ai-agents/hypotheses.md`

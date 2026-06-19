@@ -4,6 +4,7 @@
 date: 2026-06-18
 status: active
 tags: [memory, open-questions, ai-agent]
+project: brain-memory-for-ai-agents
 sources:
   - ../../sources/brain-memory-and-agent-memory-sources.md
 ---

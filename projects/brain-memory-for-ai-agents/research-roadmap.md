@@ -29,7 +29,7 @@ brain mechanism -> computational principle -> agent memory design -> evidence st
 产物：
 
 - `README.md`
-- `open-questions.md`
+- `../../questions/brain-memory-for-ai-agents/open-questions.md`
 - `hypotheses.md`
 - `mechanism-to-agent-design.md`
 - `../../sessions/2026-06-18-memory-retrieval-mechanism.md`
