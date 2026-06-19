@@ -8,10 +8,17 @@
     <link rel="icon" href="data:," />
     <style>
       :root {
-        color-scheme: dark;
-        --ink: #fff8f2;
-        --grid: rgba(255, 255, 255, 0.032);
-        --edge: rgba(255, 255, 255, 0.14);
+        color-scheme: light;
+        --ink: #1f2724;
+        --ink-muted: rgba(31, 39, 36, 0.64);
+        --paper-base: #f4efe3;
+        --paper-soft: #fbf8ef;
+        --paper-warm: #e8dcc8;
+        --flower-blue: #2e6f77;
+        --cinnabar: #b24338;
+        --grid: rgba(31, 39, 36, 0.055);
+        --edge: rgba(31, 39, 36, 0.18);
+        --rice-paper-fiber: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='700' viewBox='0 0 900 700'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .035' numOctaves='4' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 0.58 0 0 0 0 0.50 0 0 0 0 0.38 0 0 0 .18 0'/%3E%3C/filter%3E%3Crect width='900' height='700' filter='url(%23paper)'/%3E%3C/svg%3E");
       }
 
       * {
@@ -32,12 +39,9 @@
           "Segoe UI", sans-serif;
         color: var(--ink);
         background:
-          radial-gradient(circle at 50% 48%, rgba(92, 238, 255, 0.16), transparent 30%),
-          radial-gradient(circle at 76% 38%, rgba(255, 119, 214, 0.08), transparent 34%),
-          radial-gradient(circle at 24% 68%, rgba(255, 210, 112, 0.07), transparent 32%),
-          linear-gradient(90deg, transparent 0 11.5%, rgba(118, 240, 255, 0.05) 11.5% 11.8%, transparent 11.8% 27%),
-          linear-gradient(0deg, transparent 0 13%, rgba(118, 240, 255, 0.042) 13% 13.28%, transparent 13.28% 31%),
-          linear-gradient(145deg, #071319 0%, #0a1820 46%, #071018 100%);
+          radial-gradient(ellipse at 52% 47%, rgba(255, 252, 244, 0.98), rgba(244, 239, 227, 0.62) 46%, transparent 70%),
+          linear-gradient(145deg, var(--paper-soft) 0%, var(--paper-base) 52%, var(--paper-warm) 100%),
+          var(--paper-base);
       }
 
       body::before,
@@ -50,27 +54,25 @@
 
       body::before {
         background:
-          radial-gradient(circle at 12% 68%, rgba(255, 211, 90, 0.13) 0 2px, transparent 3px),
-          radial-gradient(circle at 84% 74%, rgba(255, 123, 232, 0.12) 0 2px, transparent 3px),
-          radial-gradient(circle at 28% 40%, rgba(94, 245, 255, 0.11) 0 2px, transparent 3px),
-          radial-gradient(circle at 72% 28%, rgba(143, 140, 255, 0.1) 0 2px, transparent 3px),
+          var(--rice-paper-fiber),
           linear-gradient(var(--grid) 1px, transparent 1px),
           linear-gradient(90deg, var(--grid) 1px, transparent 1px);
         background-size:
-          420px 280px,
-          460px 300px,
-          380px 260px,
-          440px 320px,
-          68px 68px,
-          68px 68px;
-        mask-image: linear-gradient(to bottom, transparent 0%, black 16%, black 82%, transparent 100%);
+          cover,
+          72px 72px,
+          72px 72px;
+        opacity: 0.64;
+        mix-blend-mode: multiply;
+        mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
       }
 
       body::after {
         z-index: 4;
         background:
-          linear-gradient(to bottom, rgba(1, 10, 14, 0.12), transparent 24%, transparent 76%, rgba(1, 10, 14, 0.36)),
-          linear-gradient(90deg, rgba(1, 10, 14, 0.28), transparent 22%, transparent 78%, rgba(1, 10, 14, 0.28));
+          linear-gradient(to bottom, rgba(244, 239, 227, 0.16), transparent 24%, transparent 76%, rgba(130, 112, 82, 0.16)),
+          linear-gradient(90deg, rgba(130, 112, 82, 0.12), transparent 22%, transparent 78%, rgba(130, 112, 82, 0.12)),
+          radial-gradient(ellipse at 50% 48%, transparent 42%, rgba(86, 70, 48, 0.14) 100%);
+        mix-blend-mode: multiply;
       }
 
       [hidden] {
@@ -106,9 +108,9 @@
         line-height: 0.96;
         letter-spacing: 0;
         text-shadow:
-          0 1px 0 rgba(255, 255, 255, 0.28),
-          0 18px 62px rgba(0, 0, 0, 0.72),
-          0 0 34px rgba(112, 199, 226, 0.22);
+          0 1px 0 rgba(255, 252, 240, 0.24),
+          0 12px 32px rgba(91, 74, 48, 0.24),
+          0 0 1px rgba(31, 39, 36, 0.28);
       }
 
       .title-rule {
@@ -120,8 +122,107 @@
         height: 1px;
         transform: translateX(-50%);
         pointer-events: none;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.58), transparent);
-        box-shadow: 0 0 28px rgba(112, 199, 226, 0.22);
+        background: linear-gradient(90deg, transparent, rgba(31, 39, 36, 0.26), rgba(178, 67, 56, 0.4), rgba(31, 39, 36, 0.22), transparent);
+        box-shadow: 0 0 18px rgba(46, 111, 119, 0.12);
+      }
+
+      .ink-interface-frame {
+        position: absolute;
+        inset: clamp(22px, 4.4vh, 48px) clamp(22px, 5vw, 72px);
+        z-index: 2;
+        pointer-events: none;
+        opacity: 0.72;
+      }
+
+      .ink-frame-line,
+      .ink-corner-mark {
+        position: absolute;
+        pointer-events: none;
+      }
+
+      .ink-frame-line--top,
+      .ink-frame-line--bottom {
+        left: 10%;
+        width: 80%;
+        height: 1px;
+        background:
+          linear-gradient(90deg, transparent, rgba(31, 39, 36, 0.2) 14%, rgba(46, 111, 119, 0.34), rgba(31, 39, 36, 0.16) 86%, transparent),
+          repeating-linear-gradient(90deg, transparent 0 38px, rgba(31, 39, 36, 0.12) 38px 39px, transparent 39px 76px);
+        box-shadow: 0 0 16px rgba(46, 111, 119, 0.1);
+      }
+
+      .ink-frame-line--top {
+        top: clamp(96px, 15vh, 132px);
+      }
+
+      .ink-frame-line--bottom {
+        bottom: clamp(34px, 7vh, 68px);
+        opacity: 0.7;
+      }
+
+      .ink-frame-line--left,
+      .ink-frame-line--right {
+        top: clamp(150px, 23vh, 190px);
+        width: 1px;
+        height: min(48vh, 420px);
+        background:
+          linear-gradient(180deg, transparent, rgba(31, 39, 36, 0.14), rgba(46, 111, 119, 0.22), rgba(31, 39, 36, 0.12), transparent),
+          repeating-linear-gradient(180deg, transparent 0 28px, rgba(31, 39, 36, 0.16) 28px 29px, transparent 29px 56px);
+      }
+
+      .ink-frame-line--left {
+        left: 0;
+      }
+
+      .ink-frame-line--right {
+        right: 0;
+      }
+
+      .ink-corner-mark {
+        width: clamp(58px, 8vw, 108px);
+        height: clamp(58px, 8vw, 108px);
+        border-color: rgba(31, 39, 36, 0.28);
+        filter: drop-shadow(0 0 12px rgba(46, 111, 119, 0.12));
+      }
+
+      .ink-corner-mark::before,
+      .ink-corner-mark::after {
+        position: absolute;
+        content: "";
+        background: linear-gradient(90deg, rgba(31, 39, 36, 0.08), rgba(31, 39, 36, 0.34), rgba(46, 111, 119, 0.24));
+      }
+
+      .ink-corner-mark::before {
+        width: 100%;
+        height: 1px;
+      }
+
+      .ink-corner-mark::after {
+        width: 1px;
+        height: 100%;
+      }
+
+      .ink-corner-mark--tl {
+        top: 0;
+        left: 0;
+      }
+
+      .ink-corner-mark--tr {
+        top: 0;
+        right: 0;
+        transform: scaleX(-1);
+      }
+
+      .ink-corner-mark--bl {
+        bottom: 0;
+        left: 0;
+        transform: scaleY(-1);
+      }
+
+      .ink-corner-mark--br {
+        right: 0;
+        bottom: 0;
+        transform: scale(-1);
       }
 
       #brain-canvas-host,
@@ -183,20 +284,20 @@
         min-height: 44px;
         padding: 9px 11px;
         transform: translate(-50%, -50%) translateY(8px);
-        border: 1px solid rgba(255, 255, 255, 0.22);
-        border-radius: 8px;
+        border: 1px solid rgba(31, 39, 36, 0.24);
+        border-radius: 3px;
         color: var(--ink);
         background:
-          linear-gradient(135deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.045)),
-          rgba(7, 10, 14, 0.42);
+          linear-gradient(135deg, rgba(255, 252, 244, 0.86), rgba(232, 220, 200, 0.42)),
+          rgba(244, 239, 227, 0.7);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.18),
-          0 18px 48px rgba(0, 0, 0, 0.36),
-          0 0 28px color-mix(in srgb, var(--module-color), transparent 55%);
+          inset 0 1px 0 rgba(255, 252, 244, 0.7),
+          0 18px 44px rgba(91, 74, 48, 0.18),
+          0 0 18px color-mix(in srgb, var(--module-color), transparent 72%);
         opacity: 0;
         pointer-events: none;
         cursor: pointer;
-        backdrop-filter: blur(18px) saturate(1.2);
+        backdrop-filter: blur(14px) saturate(0.95);
         transition:
           opacity 220ms ease,
           transform 220ms ease,
@@ -220,7 +321,21 @@
         transform: translateY(-50%);
         border-radius: 999px;
         background: var(--module-color);
-        box-shadow: 0 0 18px var(--module-color);
+        box-shadow: 0 0 14px color-mix(in srgb, var(--module-color), transparent 22%);
+      }
+
+      .module-label::after {
+        position: absolute;
+        inset: 5px;
+        content: "";
+        pointer-events: none;
+        border-top: 1px solid rgba(31, 39, 36, 0.18);
+        border-right: 1px solid color-mix(in srgb, var(--module-color), transparent 68%);
+        border-bottom: 1px solid rgba(31, 39, 36, 0.1);
+        background:
+          linear-gradient(90deg, color-mix(in srgb, var(--module-color), transparent 72%) 0 1px, transparent 1px calc(100% - 1px), rgba(31, 39, 36, 0.12) calc(100% - 1px)),
+          linear-gradient(180deg, rgba(255, 252, 244, 0.34), transparent 40%, rgba(31, 39, 36, 0.07));
+        opacity: 0.58;
       }
 
       .module-label strong,
@@ -238,7 +353,10 @@
       }
 
       .module-label span {
-        color: rgba(255, 248, 242, 0.64);
+        max-width: 112px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: var(--ink-muted);
         font-size: 0.68rem;
         font-weight: 520;
         line-height: 1.15;
@@ -249,8 +367,8 @@
       .module-label[aria-pressed="true"] {
         border-color: color-mix(in srgb, var(--module-color), white 32%);
         background:
-          linear-gradient(135deg, color-mix(in srgb, var(--module-color), transparent 78%), rgba(255, 255, 255, 0.065)),
-          rgba(7, 10, 14, 0.56);
+          linear-gradient(135deg, color-mix(in srgb, var(--module-color), transparent 82%), rgba(255, 252, 244, 0.72)),
+          rgba(244, 239, 227, 0.86);
         outline: none;
         transform: translate(-50%, -50%) scale(1.035);
       }
@@ -317,13 +435,13 @@
         min-width: min(430px, calc(100vw - 32px));
         padding: 12px 16px 13px;
         transform: translateX(-50%) translateY(12px);
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        border-radius: 8px;
+        border: 1px solid rgba(241, 236, 223, 0.18);
+        border-radius: 3px;
         background:
-          linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)),
-          rgba(4, 7, 11, 0.5);
+          linear-gradient(135deg, rgba(241, 236, 223, 0.1), rgba(241, 236, 223, 0.03)),
+          rgba(4, 6, 5, 0.56);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.16),
+          inset 0 1px 0 rgba(241, 236, 223, 0.12),
           0 22px 58px rgba(0, 0, 0, 0.42);
         opacity: 0;
         pointer-events: none;
@@ -351,7 +469,7 @@
 
       .module-panel span,
       .module-panel a {
-        color: rgba(255, 248, 242, 0.68);
+        color: var(--ink-muted);
         font-size: 0.76rem;
         line-height: 1.2;
       }
@@ -407,7 +525,7 @@
         .module-label {
           min-width: 86px;
           max-width: 100px;
-          min-height: 38px;
+          min-height: 44px;
           padding: 7px 8px;
         }
 
@@ -451,19 +569,29 @@
       }
     </script>
   </head>
-  <body>
+  <body data-visual-style="cyber-ink-paper">
     <main id="brain-stage" aria-label="Controllable 3D brain model">
       <div class="title-plane" aria-hidden="true">
         <h1>NeuroScience × AI</h1>
       </div>
       <div class="title-rule" aria-hidden="true"></div>
+      <div class="ink-interface-frame" aria-hidden="true">
+        <span class="ink-frame-line ink-frame-line--top"></span>
+        <span class="ink-frame-line ink-frame-line--bottom"></span>
+        <span class="ink-frame-line ink-frame-line--left"></span>
+        <span class="ink-frame-line ink-frame-line--right"></span>
+        <span class="ink-corner-mark ink-corner-mark--tl"></span>
+        <span class="ink-corner-mark ink-corner-mark--tr"></span>
+        <span class="ink-corner-mark ink-corner-mark--bl"></span>
+        <span class="ink-corner-mark ink-corner-mark--br"></span>
+      </div>
       <div id="brain-canvas-host" aria-hidden="true"></div>
       <div class="module-layer" aria-label="Research modules">
         <button
           class="module-label"
           type="button"
           data-module="association"
-          style="--x: 39%; --y: 29%; --module-color: #5ef5ff"
+          style="--x: 37%; --y: 31%; --module-color: #6faaa8"
           aria-pressed="false"
         >
           <strong>knowledge/</strong>
@@ -473,17 +601,17 @@
           class="module-label"
           type="button"
           data-module="prefrontal"
-          style="--x: 72%; --y: 44%; --module-color: #ff7be8"
+          style="--x: 69%; --y: 46%; --module-color: #c84a3f"
           aria-pressed="false"
         >
           <strong>projects/</strong>
-          <span>Prefrontal Planning</span>
+          <span>Planning</span>
         </button>
         <button
           class="module-label"
           type="button"
           data-module="parietal"
-          style="--x: 25%; --y: 35%; --module-color: #ffd35a"
+          style="--x: 29%; --y: 47%; --module-color: #b99855"
           aria-pressed="false"
         >
           <strong>sources/</strong>
@@ -493,7 +621,7 @@
           class="module-label"
           type="button"
           data-module="temporal"
-          style="--x: 31%; --y: 70%; --module-color: #6aff8f"
+          style="--x: 36%; --y: 67%; --module-color: #72a980"
           aria-pressed="false"
         >
           <strong>papers/</strong>
@@ -503,17 +631,17 @@
           class="module-label"
           type="button"
           data-module="cingulate"
-          style="--x: 58%; --y: 25%; --module-color: #8f8cff"
+          style="--x: 63%; --y: 30%; --module-color: #8581aa"
           aria-pressed="false"
         >
           <strong>questions/</strong>
-          <span>Cingulate Projection</span>
+          <span>Cingulate</span>
         </button>
         <button
           class="module-label"
           type="button"
           data-module="hippocampal"
-          style="--x: 67%; --y: 72%; --module-color: #ff9f5a"
+          style="--x: 67%; --y: 67%; --module-color: #bd7653"
           aria-pressed="false"
         >
           <strong>sessions/</strong>
@@ -529,9 +657,9 @@
       <svg id="fallback-brain" aria-hidden="true" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid slice">
         <defs>
           <radialGradient id="fallback-tissue" cx="43%" cy="36%" r="68%">
-            <stop offset="0%" stop-color="#ffd4c5" stop-opacity="0.94" />
-            <stop offset="56%" stop-color="#d69282" stop-opacity="0.78" />
-            <stop offset="100%" stop-color="#6f3e3f" stop-opacity="0.58" />
+            <stop offset="0%" stop-color="#f1ecdf" stop-opacity="0.82" />
+            <stop offset="56%" stop-color="#8d9188" stop-opacity="0.66" />
+            <stop offset="100%" stop-color="#292d2a" stop-opacity="0.54" />
           </radialGradient>
           <filter id="fallback-shadow" x="-25%" y="-25%" width="150%" height="150%">
             <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#000000" flood-opacity="0.55" />
@@ -541,33 +669,33 @@
           <path
             d="M275 388 C226 338 232 268 295 218 C374 154 498 130 606 154 C696 119 828 154 905 223 C979 289 992 379 944 436 C905 483 836 503 758 493 C724 554 636 580 574 543 C515 586 423 562 390 497 C342 496 302 470 275 388 Z"
             fill="url(#fallback-tissue)"
-            stroke="rgba(255,255,255,0.24)"
+            stroke="rgba(241,236,223,0.22)"
             stroke-width="2"
           />
           <path
             d="M602 165 C575 242 574 338 603 479"
             fill="none"
-            stroke="rgba(47,25,29,0.64)"
+            stroke="rgba(19,22,20,0.68)"
             stroke-width="11"
             stroke-linecap="round"
           />
           <path
             d="M301 337 C376 286 466 278 545 308 M315 404 C402 356 492 353 565 390 M365 249 C432 219 496 224 552 264 M398 474 C455 441 511 441 564 472 M655 302 C735 263 834 279 912 334 M636 393 C719 350 829 354 922 404 M673 233 C748 214 826 232 889 276 M648 470 C722 440 812 444 886 477"
             fill="none"
-            stroke="rgba(78,45,48,0.54)"
+            stroke="rgba(30,34,31,0.56)"
             stroke-width="8"
             stroke-linecap="round"
           />
           <path
             d="M727 535 C772 518 838 520 884 552 C861 587 792 599 728 575 C707 567 707 545 727 535 Z"
-            fill="rgba(128,73,65,0.78)"
-            stroke="rgba(255,255,255,0.12)"
+            fill="rgba(75,78,72,0.74)"
+            stroke="rgba(241,236,223,0.12)"
             stroke-width="2"
           />
           <path
             d="M739 548 C782 536 827 539 870 558 M736 566 C785 553 829 558 861 576"
             fill="none"
-            stroke="rgba(66,35,36,0.45)"
+            stroke="rgba(23,27,24,0.48)"
             stroke-width="5"
             stroke-linecap="round"
           />
@@ -579,17 +707,17 @@
             width="1280"
             height="310"
             rx="34"
-            fill="rgba(6,13,22,0.48)"
-            stroke="rgba(116,239,255,0.16)"
+            fill="rgba(5,7,6,0.5)"
+            stroke="rgba(241,236,223,0.14)"
             stroke-width="2"
           />
           <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" opacity="0.58">
-            <path d="M72 588 H284 V544 H428" stroke="#5ef5ff" />
-            <path d="M1114 596 H916 V554 H764" stroke="#ff7be8" />
-            <path d="M108 674 H314 V704 H520" stroke="#ffd35a" />
-            <path d="M1090 682 H912 V718 H706" stroke="#ff9f5a" />
-            <path d="M204 736 H418 V666 H548" stroke="#6aff8f" />
-            <path d="M1010 526 H812 V618 H662" stroke="#8f8cff" />
+            <path d="M72 588 H284 V544 H428" stroke="#6faaa8" />
+            <path d="M1114 596 H916 V554 H764" stroke="#c84a3f" />
+            <path d="M108 674 H314 V704 H520" stroke="#b99855" />
+            <path d="M1090 682 H912 V718 H706" stroke="#bd7653" />
+            <path d="M204 736 H418 V666 H548" stroke="#72a980" />
+            <path d="M1010 526 H812 V618 H662" stroke="#8581aa" />
           </g>
           <rect
             x="318"
@@ -597,8 +725,8 @@
             width="564"
             height="102"
             rx="20"
-            fill="rgba(8,16,24,0.84)"
-            stroke="rgba(147,238,255,0.28)"
+            fill="rgba(9,12,11,0.84)"
+            stroke="rgba(241,236,223,0.24)"
             stroke-width="2"
           />
           <rect
@@ -607,48 +735,48 @@
             width="104"
             height="40"
             rx="8"
-            fill="rgba(70,244,255,0.1)"
-            stroke="rgba(136,248,255,0.48)"
+            fill="rgba(79,135,145,0.14)"
+            stroke="rgba(111,170,168,0.48)"
             stroke-width="2"
           />
           <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
-            <path d="M600 666 H430 V549 H304" stroke="#5ef5ff" />
-            <path d="M600 666 H770 V549 H896" stroke="#8f8cff" />
-            <path d="M600 666 H430 V631 H304" stroke="#ffd35a" />
-            <path d="M600 666 H770 V631 H896" stroke="#ff7be8" />
-            <path d="M600 666 H430 V713 H304" stroke="#6aff8f" />
-            <path d="M600 666 H770 V713 H896" stroke="#ff9f5a" />
+            <path d="M600 666 H430 V549 H304" stroke="#6faaa8" />
+            <path d="M600 666 H770 V549 H896" stroke="#8581aa" />
+            <path d="M600 666 H430 V631 H304" stroke="#b99855" />
+            <path d="M600 666 H770 V631 H896" stroke="#c84a3f" />
+            <path d="M600 666 H430 V713 H304" stroke="#72a980" />
+            <path d="M600 666 H770 V713 H896" stroke="#bd7653" />
           </g>
-          <g id="fallback-display-modules" fill="rgba(8,18,25,0.82)" stroke="rgba(255,255,255,0.34)" stroke-width="2">
+          <g id="fallback-display-modules" fill="rgba(7,10,9,0.82)" stroke="rgba(241,236,223,0.34)" stroke-width="2">
             <g>
               <rect x="92" y="520" width="178" height="58" rx="7" />
-              <rect x="108" y="534" width="140" height="30" rx="4" fill="rgba(94,245,255,0.12)" stroke="#5ef5ff" />
-              <path d="M270 536 h34 M270 549 h34 M270 562 h34" stroke="#5ef5ff" />
+              <rect x="108" y="534" width="140" height="30" rx="4" fill="rgba(111,170,168,0.12)" stroke="#6faaa8" />
+              <path d="M270 536 h34 M270 549 h34 M270 562 h34" stroke="#6faaa8" />
             </g>
             <g>
               <rect x="930" y="520" width="178" height="58" rx="7" />
-              <rect x="952" y="534" width="140" height="30" rx="4" fill="rgba(143,140,255,0.12)" stroke="#8f8cff" />
-              <path d="M896 536 h34 M896 549 h34 M896 562 h34" stroke="#8f8cff" />
+              <rect x="952" y="534" width="140" height="30" rx="4" fill="rgba(133,129,170,0.12)" stroke="#8581aa" />
+              <path d="M896 536 h34 M896 549 h34 M896 562 h34" stroke="#8581aa" />
             </g>
             <g>
               <rect x="92" y="602" width="178" height="58" rx="7" />
-              <rect x="108" y="616" width="140" height="30" rx="4" fill="rgba(255,211,90,0.12)" stroke="#ffd35a" />
-              <path d="M270 618 h34 M270 631 h34 M270 644 h34" stroke="#ffd35a" />
+              <rect x="108" y="616" width="140" height="30" rx="4" fill="rgba(185,152,85,0.12)" stroke="#b99855" />
+              <path d="M270 618 h34 M270 631 h34 M270 644 h34" stroke="#b99855" />
             </g>
             <g>
               <rect x="930" y="602" width="178" height="58" rx="7" />
-              <rect x="952" y="616" width="140" height="30" rx="4" fill="rgba(255,123,232,0.12)" stroke="#ff7be8" />
-              <path d="M896 618 h34 M896 631 h34 M896 644 h34" stroke="#ff7be8" />
+              <rect x="952" y="616" width="140" height="30" rx="4" fill="rgba(200,74,63,0.12)" stroke="#c84a3f" />
+              <path d="M896 618 h34 M896 631 h34 M896 644 h34" stroke="#c84a3f" />
             </g>
             <g>
               <rect x="92" y="684" width="178" height="58" rx="7" />
-              <rect x="108" y="698" width="140" height="30" rx="4" fill="rgba(106,255,143,0.12)" stroke="#6aff8f" />
-              <path d="M270 700 h34 M270 713 h34 M270 726 h34" stroke="#6aff8f" />
+              <rect x="108" y="698" width="140" height="30" rx="4" fill="rgba(114,169,128,0.12)" stroke="#72a980" />
+              <path d="M270 700 h34 M270 713 h34 M270 726 h34" stroke="#72a980" />
             </g>
             <g>
               <rect x="930" y="684" width="178" height="58" rx="7" />
-              <rect x="952" y="698" width="140" height="30" rx="4" fill="rgba(255,159,90,0.12)" stroke="#ff9f5a" />
-              <path d="M896 700 h34 M896 713 h34 M896 726 h34" stroke="#ff9f5a" />
+              <rect x="952" y="698" width="140" height="30" rx="4" fill="rgba(189,118,83,0.12)" stroke="#bd7653" />
+              <path d="M896 700 h34 M896 713 h34 M896 726 h34" stroke="#bd7653" />
             </g>
           </g>
         </g>
@@ -666,6 +794,23 @@
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const GITHUB_FOLDER_BASE = "https://github.com/mingxiangbian/NeuroScience/tree/main/";
       const INITIAL_ROTATION = { x: -0.08, y: -0.82, z: 0.02 };
+      const CYBER_INK_PALETTE = {
+        paperBase: 0xf4efe3,
+        paperWhite: 0xded6c7,
+        inkWhite: 0xe6dece,
+        paleInk: 0x9d9b90,
+        inkWash: 0x686d66,
+        deepInk: 0x1f2724,
+        flowerBlue: 0x2e6f77,
+        cinnabar: 0xb24338,
+        mineralGold: 0xb99855,
+        pineGreen: 0x4f8a66,
+        duskViolet: 0x6e6a96,
+        warmOchre: 0xa86b4d,
+      };
+      const SULCAL_SURFACE_FLOW_ALPHA = 0.88;
+      const SULCAL_RIBBON_OPACITY = prefersReducedMotion ? 0.07 : 0.15;
+      const SULCAL_RIBBON_WIDTH = 0.064;
       const MODULES = [
         {
           id: "association",
@@ -673,7 +818,7 @@
           folder: "knowledge/",
           sentence: "Stable concepts and reusable research notes.",
           type: "surface",
-          color: 0x5ef5ff,
+          color: CYBER_INK_PALETTE.flowerBlue,
           offset: [0, 0.48, 0.18],
           min: [0.24, 0.5, 0],
           max: [0.72, 1, 1],
@@ -684,7 +829,7 @@
           folder: "projects/",
           sentence: "Research plans and active investigations.",
           type: "surface",
-          color: 0xff7be8,
+          color: CYBER_INK_PALETTE.cinnabar,
           offset: [0.68, 0.08, 0.24],
           min: [0.56, 0.25, 0],
           max: [1, 0.88, 1],
@@ -695,7 +840,7 @@
           folder: "sources/",
           sentence: "Source maps, datasets, and reference links.",
           type: "surface",
-          color: 0xffd35a,
+          color: CYBER_INK_PALETTE.mineralGold,
           offset: [-0.62, 0.26, 0.18],
           min: [0, 0.42, 0],
           max: [0.43, 0.96, 1],
@@ -706,7 +851,7 @@
           folder: "papers/",
           sentence: "Paper notes and literature evidence.",
           type: "surface",
-          color: 0x6aff8f,
+          color: CYBER_INK_PALETTE.pineGreen,
           offset: [-0.1, -0.58, 0.26],
           min: [0.12, 0, 0],
           max: [0.86, 0.48, 1],
@@ -717,7 +862,7 @@
           folder: "questions/",
           sentence: "Open problems, conflicts, and hypotheses.",
           type: "projected",
-          color: 0x8f8cff,
+          color: CYBER_INK_PALETTE.duskViolet,
           offset: [0.1, 0.82, 0.46],
         },
         {
@@ -726,7 +871,7 @@
           folder: "sessions/",
           sentence: "Session traces and research context.",
           type: "internal",
-          color: 0xff9f5a,
+          color: CYBER_INK_PALETTE.warmOchre,
           offset: [0.46, -0.64, 0.58],
         },
       ];
@@ -779,10 +924,10 @@
           color,
           roughness,
           metalness: 0,
-          clearcoat: 0.08,
-          clearcoatRoughness: 0.82,
-          sheen: 0.34,
-          sheenColor: new THREE.Color(0xffd9cc),
+          clearcoat: 0.12,
+          clearcoatRoughness: 0.7,
+          sheen: 0.22,
+          sheenColor: new THREE.Color(CYBER_INK_PALETTE.paperWhite),
         });
       }
 
@@ -799,8 +944,8 @@
       function createHemisphere(THREE, side) {
         const group = new THREE.Group();
         const folded = createFoldedGeometry(THREE);
-        const tissue = createMaterial(THREE, side < 0 ? 0xdfaa98 : 0xd89c8e);
-        const upperTissue = createMaterial(THREE, 0xf0bca9, 0.76);
+        const tissue = createMaterial(THREE, side < 0 ? 0x8d9188 : 0x7d837b);
+        const upperTissue = createMaterial(THREE, CYBER_INK_PALETTE.paleInk, 0.76);
 
         group.add(
           createEllipsoid(THREE, folded, tissue, [side * 0.48, 0.12, 0], [0.78, 0.66, 1.16], [0, side * 0.08, 0]),
@@ -816,12 +961,12 @@
       function createCerebellum(THREE) {
         const group = new THREE.Group();
         const geometry = createFoldedGeometry(THREE, 72, 0.026);
-        const material = createMaterial(THREE, 0xa46b60, 0.82);
+        const material = createMaterial(THREE, 0x5f635d, 0.82);
         const body = createEllipsoid(THREE, geometry, material, [0, -0.58, -1.0], [0.82, 0.32, 0.48], [0.04, 0, 0]);
         group.add(body);
 
         const grooveMaterial = new THREE.MeshStandardMaterial({
-          color: 0x4f3031,
+          color: 0x202421,
           roughness: 0.95,
         });
 
@@ -841,7 +986,7 @@
 
       function createBrainStem(THREE) {
         const group = new THREE.Group();
-        const material = createMaterial(THREE, 0x9f6e62, 0.78);
+        const material = createMaterial(THREE, 0x66685f, 0.78);
         const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.21, 0.64, 28), material);
         stem.position.set(0.06, -0.98, -0.5);
         stem.rotation.set(-0.28, 0.1, -0.05);
@@ -871,24 +1016,24 @@
 
       function createGlassBrainMaterial() {
         return new THREE.MeshPhysicalMaterial({
-          color: 0xbfeeff,
-          roughness: 0.18,
+          color: CYBER_INK_PALETTE.paperWhite,
+          roughness: 0.32,
           metalness: 0,
           transparent: true,
-          opacity: 0.56,
-          transmission: 0.24,
-          thickness: 0.78,
+          opacity: 0.58,
+          transmission: 0.12,
+          thickness: 0.86,
           ior: 1.36,
-          attenuationColor: new THREE.Color(0x8fdfff),
-          attenuationDistance: 2.6,
-          clearcoat: 0.82,
-          clearcoatRoughness: 0.12,
-          specularIntensity: 1,
-          specularColor: new THREE.Color(0xe5fbff),
-          sheen: 0.36,
-          sheenColor: new THREE.Color(0xb8f5ff),
-          emissive: new THREE.Color(0x0a2430),
-          emissiveIntensity: 0.16,
+          attenuationColor: new THREE.Color(CYBER_INK_PALETTE.inkWash),
+          attenuationDistance: 2.4,
+          clearcoat: 0.74,
+          clearcoatRoughness: 0.24,
+          specularIntensity: 0.82,
+          specularColor: new THREE.Color(CYBER_INK_PALETTE.inkWhite),
+          sheen: 0.28,
+          sheenColor: new THREE.Color(CYBER_INK_PALETTE.flowerBlue),
+          emissive: new THREE.Color(CYBER_INK_PALETTE.deepInk),
+          emissiveIntensity: 0.08,
           side: THREE.DoubleSide,
         });
       }
@@ -995,7 +1140,7 @@
               float edge = smoothstep(0.11, 0.38, mask);
               float reveal = smoothstep(0.04, 0.55, explodeProgress);
               float alpha = (0.11 + groove * 0.22 + movingSignal * 0.1) * edge * reveal * selectionFocus;
-              vec3 glass = mix(vec3(0.62, 0.82, 0.9), moduleColor, 0.34 + groove * 0.14);
+              vec3 glass = mix(vec3(0.74, 0.72, 0.66), moduleColor, 0.2 + groove * 0.1);
               gl_FragColor = vec4(glass, alpha);
             }
           `,
@@ -1183,6 +1328,7 @@
         function sync() {
           document.body.classList.toggle("brain-expanded", state.expanded);
           document.body.classList.toggle("module-selected", Boolean(state.selected));
+          document.body.dataset.selectedModule = state.selected ?? "";
           moduleButtons.forEach((button) => {
             button.setAttribute("aria-pressed", String(button.dataset.module === state.selected));
           });
@@ -1595,6 +1741,24 @@
           context.fillRect(start, 0, 118, canvas.height);
         }
 
+        const inkStrokeFeather = 9;
+        for (let y = 0; y < canvas.height; y += 1) {
+          const distanceFromCenter = Math.abs(y - canvas.height * 0.5) / (canvas.height * 0.5);
+          const featherAlpha = Math.max(0, distanceFromCenter - 0.42) * 0.14;
+          context.fillStyle = toRgb(rail, featherAlpha);
+          context.fillRect(0, y, canvas.width, 1);
+        }
+        context.globalAlpha = 0.42;
+        for (let index = 0; index < 22; index += 1) {
+          const x = (index * 41 + 13) % canvas.width;
+          const y = 5 + ((index * inkStrokeFeather) % 14);
+          context.fillStyle = toRgb(index % 3 === 0 ? pulse : rail, index % 3 === 0 ? 0.26 : 0.16);
+          context.beginPath();
+          context.ellipse(x, y, 10 + (index % 4) * 4, 1.4 + (index % 3), (index % 5) * 0.42, 0, Math.PI * 2);
+          context.fill();
+        }
+        context.globalAlpha = 1;
+
         const texture = new THREE.CanvasTexture(canvas);
         texture.colorSpace = THREE.SRGBColorSpace;
         texture.wrapS = THREE.RepeatWrapping;
@@ -1602,6 +1766,82 @@
         texture.repeat.set(1.8, 1);
         texture.needsUpdate = true;
         return texture;
+      }
+
+      function createInkContourSkin(THREE, brainModel) {
+        const skin = brainModel.clone(true);
+        const inkContourMaterials = [];
+
+        skin.name = "cyber-ink-contour-skin";
+        skin.scale.multiplyScalar(1.019);
+
+        skin.traverse((object) => {
+          if (!object.isMesh) return;
+
+          const material = new THREE.ShaderMaterial({
+            uniforms: {
+              time: { value: 0 },
+              deepInk: { value: new THREE.Color(CYBER_INK_PALETTE.deepInk) },
+              inkWhite: { value: new THREE.Color(CYBER_INK_PALETTE.inkWhite) },
+              flowerBlue: { value: new THREE.Color(CYBER_INK_PALETTE.flowerBlue) },
+            },
+            vertexShader: `
+              varying vec3 vWorldPosition;
+              varying vec3 vNormalDirection;
+
+              void main() {
+                vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+                vWorldPosition = worldPosition.xyz;
+                vNormalDirection = normalize(mat3(modelMatrix) * normal);
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+              }
+            `,
+            fragmentShader: `
+              uniform float time;
+              uniform vec3 deepInk;
+              uniform vec3 inkWhite;
+              uniform vec3 flowerBlue;
+              varying vec3 vWorldPosition;
+              varying vec3 vNormalDirection;
+
+              float grain(vec2 point) {
+                return fract(sin(dot(point, vec2(127.1, 311.7))) * 43758.5453123);
+              }
+
+              void main() {
+                vec3 p = vWorldPosition;
+                vec3 viewDirection = normalize(cameraPosition - p);
+                float edge = pow(1.0 - max(dot(normalize(vNormalDirection), viewDirection), 0.0), 2.25);
+                float foldTrace = abs(sin(p.x * 10.5 + p.y * 7.6 + sin(p.z * 6.8) * 1.8));
+                float crossTrace = abs(sin(p.x * -6.4 + p.y * 11.2 + p.z * 3.1));
+                float contour = smoothstep(0.925, 1.0, max(foldTrace, crossTrace * 0.82));
+                float paperGrain = grain(p.xy * 42.0 + time * 0.03);
+                float verticalFade = smoothstep(-1.56, -1.18, p.y) * (1.0 - smoothstep(1.18, 1.56, p.y));
+                float lateralFade = smoothstep(-2.5, -2.05, p.x) * (1.0 - smoothstep(2.05, 2.5, p.x));
+                float alpha = (edge * 0.085 + contour * 0.043 + paperGrain * 0.018) * verticalFade * lateralFade;
+                vec3 color = mix(deepInk, inkWhite, contour * 0.18 + paperGrain * 0.08);
+                color = mix(color, flowerBlue, edge * 0.22);
+                gl_FragColor = vec4(color, alpha);
+              }
+            `,
+            transparent: true,
+            depthWrite: false,
+            depthTest: true,
+            polygonOffset: true,
+            polygonOffsetFactor: -2,
+            polygonOffsetUnits: -2,
+            blending: THREE.NormalBlending,
+            side: THREE.FrontSide,
+          });
+
+          object.material = material;
+          object.castShadow = false;
+          object.receiveShadow = false;
+          object.renderOrder = 2.8;
+          inkContourMaterials.push(material);
+        });
+
+        return { skin, inkContourMaterials };
       }
 
       function createSulcalSurfaceFlowSkin(THREE, brainModel) {
@@ -1617,9 +1857,10 @@
           const material = new THREE.ShaderMaterial({
             uniforms: {
               time: { value: 0 },
-              cyan: { value: new THREE.Color(0x5ef5ff) },
-              magenta: { value: new THREE.Color(0xff4ce8) },
-              gold: { value: new THREE.Color(0xffd35a) },
+              inkWhite: { value: new THREE.Color(CYBER_INK_PALETTE.inkWhite) },
+              flowerBlue: { value: new THREE.Color(CYBER_INK_PALETTE.flowerBlue) },
+              cinnabar: { value: new THREE.Color(CYBER_INK_PALETTE.cinnabar) },
+              inkWash: { value: new THREE.Color(CYBER_INK_PALETTE.inkWash) },
             },
             vertexShader: `
               varying vec3 vWorldPosition;
@@ -1634,9 +1875,10 @@
             `,
             fragmentShader: `
               uniform float time;
-              uniform vec3 cyan;
-              uniform vec3 magenta;
-              uniform vec3 gold;
+              uniform vec3 inkWhite;
+              uniform vec3 flowerBlue;
+              uniform vec3 cinnabar;
+              uniform vec3 inkWash;
               varying vec3 vWorldPosition;
               varying vec3 vNormalDirection;
 
@@ -1657,10 +1899,12 @@
                 float c = lane(p.y * 8.7 + p.z * 5.5 + sin(p.x * 3.0 + p.y * 0.9 + time) + time * 1.25, 0.34);
                 float fine = lane(p.x * 11.8 - p.y * 6.2 + sin(p.z * 7.2 + time * 1.35), 0.26);
                 float flow = max(max(a, b * 0.92), max(c * 0.78, fine * 0.48));
-                float alpha = flow * mask * 0.66;
+                float cyberInkSpread = smoothstep(0.12, 0.92, flow) * (0.58 + grooveWall * 0.42);
+                float alpha = cyberInkSpread * mask * ${SULCAL_SURFACE_FLOW_ALPHA.toFixed(2)};
 
-                vec3 color = mix(cyan, magenta, b);
-                color = mix(color, gold, c * 0.72);
+                vec3 color = mix(inkWhite, flowerBlue, a * 0.9);
+                color = mix(color, cinnabar, b * 0.72);
+                color = mix(color, inkWash, (1.0 - cyberInkSpread) * 0.18);
                 gl_FragColor = vec4(color, alpha);
               }
             `,
@@ -1670,7 +1914,7 @@
             polygonOffset: true,
             polygonOffsetFactor: -3,
             polygonOffsetUnits: -3,
-            blending: THREE.AdditiveBlending,
+            blending: THREE.NormalBlending,
             side: THREE.FrontSide,
           });
 
@@ -1689,10 +1933,10 @@
         group.name = "activity-flow";
 
         const flowPalette = [
-          { rail: 0x35f6ff, pulse: 0x58fbff, glow: 0x39f0ff },
-          { rail: 0xff43ec, pulse: 0xff76f2, glow: 0xff45d8 },
-          { rail: 0xffc142, pulse: 0xffdf63, glow: 0xffb23d },
-          { rail: 0x90ff5e, pulse: 0xb8ff78, glow: 0x72ff73 },
+          { rail: CYBER_INK_PALETTE.inkWhite, pulse: CYBER_INK_PALETTE.flowerBlue, glow: CYBER_INK_PALETTE.flowerBlue },
+          { rail: CYBER_INK_PALETTE.paleInk, pulse: CYBER_INK_PALETTE.cinnabar, glow: CYBER_INK_PALETTE.cinnabar },
+          { rail: CYBER_INK_PALETTE.inkWash, pulse: CYBER_INK_PALETTE.mineralGold, glow: CYBER_INK_PALETTE.mineralGold },
+          { rail: CYBER_INK_PALETTE.paleInk, pulse: CYBER_INK_PALETTE.inkWhite, glow: CYBER_INK_PALETTE.flowerBlue },
         ];
 
         const { brainSurfaceSamples, surfaceSampleGrid, bounds } = collectBrainSurfaceSamples(THREE, brainModel);
@@ -1708,8 +1952,9 @@
             depthTest: true,
           });
 
+        const { skin: inkContourSkin, inkContourMaterials } = createInkContourSkin(THREE, brainModel);
         const { skin: sulcalFlowSkin, surfaceFlowMaterials } = createSulcalSurfaceFlowSkin(THREE, brainModel);
-        group.add(sulcalFlowSkin);
+        group.add(inkContourSkin, sulcalFlowSkin);
 
         const pulseGeometry = new THREE.SphereGeometry(0.018, 12, 8);
         const glowGeometry = new THREE.SphereGeometry(0.052, 14, 8);
@@ -1729,17 +1974,17 @@
             map: ribbonTexture,
             color: 0xffffff,
             transparent: true,
-            opacity: prefersReducedMotion ? 0.035 : 0.055,
+            opacity: SULCAL_RIBBON_OPACITY,
             blending: THREE.NormalBlending,
             depthWrite: false,
             depthTest: true,
             side: THREE.DoubleSide,
           });
-          const coreMaterial = createFlowMaterial(color.pulse, prefersReducedMotion ? 0.012 : 0.02);
-          const pulseMaterial = createFlowMaterial(color.pulse, 0.24);
-          const glowMaterial = createFlowMaterial(color.glow, 0.035);
-          const ribbon = new THREE.Mesh(createRibbonGeometry(THREE, curve, 0.036, 52), ribbonMaterial);
-          const rail = new THREE.Mesh(new THREE.TubeGeometry(curve, 52, 0.0028, 5, false), coreMaterial);
+          const coreMaterial = createFlowMaterial(color.pulse, prefersReducedMotion ? 0.018 : 0.038);
+          const pulseMaterial = createFlowMaterial(color.pulse, 0.34);
+          const glowMaterial = createFlowMaterial(color.glow, 0.058);
+          const ribbon = new THREE.Mesh(createRibbonGeometry(THREE, curve, SULCAL_RIBBON_WIDTH, 52), ribbonMaterial);
+          const rail = new THREE.Mesh(new THREE.TubeGeometry(curve, 52, 0.0036, 5, false), coreMaterial);
           ribbon.name = "sulcal-flow-ribbon";
           rail.name = "sulcal-flow-ribbon-core";
           ribbon.renderOrder = 4;
@@ -1773,10 +2018,14 @@
 
         group.userData.brainSurfaceSamples = brainSurfaceSamples.length;
         group.userData.sulcalFlowPaths = sulcalFlowPaths.length;
+        group.userData.inkContourMaterials = inkContourMaterials;
         group.userData.surfaceFlowMaterials = surfaceFlowMaterials;
         group.userData.flowTextures = flowTextures;
         group.userData.flowPulses = flowPulses;
         group.userData.update = (time) => {
+          inkContourMaterials.forEach((material) => {
+            material.uniforms.time.value = prefersReducedMotion ? 0 : time;
+          });
           surfaceFlowMaterials.forEach((material) => {
             material.uniforms.time.value = prefersReducedMotion ? 0 : time;
           });
@@ -1877,6 +2126,22 @@
       const CHIP_DISPLAY_MODULE_SCALE = 1.32;
       const DISPLAY_PIN_OFFSETS = [-0.18, 0, 0.18];
       const DISPLAY_TYPEWRITER_CHARS_PER_SECOND = 42;
+      const DISPLAY_TEXTURE_SCALE = 2;
+      const DISPLAY_TEXTURE_WIDTH = 768;
+      const DISPLAY_TEXTURE_HEIGHT = 360;
+      const DISPLAY_FONT_STACK = '"Songti SC", "STSong", "Georgia", serif';
+      const DISPLAY_TEXT_FONT_STACK = '"Songti SC", "STSong", "Georgia", serif';
+      const DISPLAY_TEXT_INK_STRONG = "rgba(18, 23, 21, 0.98)";
+      const DISPLAY_TEXT_INK = "rgba(18, 23, 21, 0.94)";
+      const DISPLAY_TEXT_INK_MUTED = "rgba(18, 23, 21, 0.82)";
+      const DISPLAY_TEXT_INK_IDLE = "rgba(18, 23, 21, 0.76)";
+      const DISPLAY_SELECTED_REGION_FONT_SIZE = 78;
+      const DISPLAY_SELECTED_FOLDER_FONT_SIZE = 58;
+      const DISPLAY_SELECTED_SENTENCE_FONT_SIZE = 50;
+      const DISPLAY_EXPANDED_FOLDER_FONT_SIZE = 66;
+      const DISPLAY_EXPANDED_REGION_FONT_SIZE = 43;
+      const DISPLAY_IDLE_FOLDER_FONT_SIZE = 108;
+      const DISPLAY_IDLE_STATE_FONT_SIZE = 35;
 
       function createChipMaterial(THREE, color, opacity, emissiveIntensity = 0.08) {
         const material = new THREE.MeshPhysicalMaterial({
@@ -1915,117 +2180,6 @@
         }
       }
 
-      function createTraceSegment(THREE, from, to, width, material, name = "pcb-routing-channel") {
-        const dx = to.x - from.x;
-        const dy = to.y - from.y;
-        const horizontal = Math.abs(dx) >= Math.abs(dy);
-        const length = Math.max(Math.abs(horizontal ? dx : dy), 0.001);
-        const geometry = new THREE.BoxGeometry(horizontal ? length : width, horizontal ? width : length, 0.018);
-        const segment = new THREE.Mesh(geometry, material);
-        segment.name = name;
-        segment.position.set((from.x + to.x) / 2, (from.y + to.y) / 2, from.z);
-        return segment;
-      }
-
-      function createRoutePath(THREE, route) {
-        const path = new THREE.CurvePath();
-        const points = route.map(([x, y, z]) => new THREE.Vector3(x, y, z));
-        for (let index = 1; index < points.length; index += 1) {
-          path.add(new THREE.LineCurve3(points[index - 1], points[index]));
-        }
-        return { path, points };
-      }
-
-      function addRoutedBusSegment(THREE, group, from, to, material) {
-        group.add(createTraceSegment(THREE, from, to, 0.028, material, "pcb-routing-channel"));
-      }
-
-      function addDisplayConnectorFanout(THREE, group, endpoint, connectorSide, traceMaterial, viaMaterial, padMaterial) {
-        const pinOffsets = DISPLAY_PIN_OFFSETS;
-        const verticalConnector = connectorSide === "top" || connectorSide === "bottom";
-        const busStart = verticalConnector
-          ? endpoint.clone().add(new THREE.Vector3(pinOffsets[0] - 0.026, 0, 0))
-          : endpoint.clone().add(new THREE.Vector3(0, pinOffsets[0] - 0.026, 0));
-        const busEnd = verticalConnector
-          ? endpoint.clone().add(new THREE.Vector3(pinOffsets[pinOffsets.length - 1] + 0.026, 0, 0))
-          : endpoint.clone().add(new THREE.Vector3(0, pinOffsets[pinOffsets.length - 1] + 0.026, 0));
-        group.add(createTraceSegment(THREE, busStart, busEnd, 0.018, traceMaterial, "display-connector-bus"));
-
-        const via = new THREE.Mesh(new THREE.TorusGeometry(0.036, 0.004, 8, 22), viaMaterial);
-        via.name = "display-connector-via";
-        via.position.copy(endpoint);
-        group.add(via);
-
-        pinOffsets.forEach((offset) => {
-          const inward = verticalConnector
-            ? connectorSide === "top" ? -1 : 1
-            : connectorSide === "left" ? 1 : -1;
-          const busPoint = verticalConnector
-            ? endpoint.clone().add(new THREE.Vector3(offset, 0, 0))
-            : endpoint.clone().add(new THREE.Vector3(0, offset, 0));
-          const pinPoint = verticalConnector
-            ? busPoint.clone().add(new THREE.Vector3(0, inward * 0.18, 0))
-            : busPoint.clone().add(new THREE.Vector3(inward * 0.18, 0, 0));
-          group.add(createTraceSegment(THREE, busPoint, pinPoint, 0.012, traceMaterial, "display-pin-fanout-trace"));
-
-          const pad = new THREE.Mesh(new THREE.BoxGeometry(verticalConnector ? 0.024 : 0.05, verticalConnector ? 0.05 : 0.024, 0.02), padMaterial);
-          pad.name = "display-terminating-pad";
-          pad.position.copy(pinPoint);
-          group.add(pad);
-        });
-      }
-
-      function createPcbRoutingChannel(THREE, module, layout) {
-        const group = new THREE.Group();
-        const color = new THREE.Color(module.color);
-        const traceMaterial = createLightMaterial(THREE, color, 0.075);
-        const viaMaterial = createLightMaterial(THREE, color, 0.13);
-        const padMaterial = createLightMaterial(THREE, color, 0.16);
-        const pulseMaterial = createLightMaterial(THREE, color, 0.62);
-        const pulseGlowMaterial = createLightMaterial(THREE, color, 0.16);
-        const { path, points } = createRoutePath(THREE, layout.route);
-
-        group.name = `${module.id}-pcb-routing-channel`;
-        group.userData.moduleId = module.id;
-        group.userData.componentType = layout.component;
-
-        for (let index = 1; index < points.length; index += 1) {
-          addRoutedBusSegment(THREE, group, points[index - 1], points[index], traceMaterial);
-        }
-
-        points.slice(1, -1).forEach((point) => {
-          const via = new THREE.Mesh(new THREE.TorusGeometry(0.034, 0.0045, 8, 22), viaMaterial);
-          via.name = "pcb-routing-via";
-          via.position.copy(point);
-          group.add(via);
-        });
-
-        const endpoint = points[points.length - 1];
-        const pad = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.08, 0.022), padMaterial);
-        pad.name = "pcb-routing-pad";
-        pad.position.copy(endpoint);
-        group.add(pad);
-        addDisplayConnectorFanout(THREE, group, endpoint, layout.connectorSide, traceMaterial, viaMaterial, padMaterial);
-
-        const pulse = new THREE.Group();
-        pulse.name = "chip-signal-pulse";
-        const glow = new THREE.Mesh(new THREE.SphereGeometry(0.054, 16, 10), pulseGlowMaterial);
-        const core = new THREE.Mesh(new THREE.SphereGeometry(0.017, 12, 8), pulseMaterial);
-        pulse.add(glow, core);
-        pulse.visible = false;
-        group.add(pulse);
-
-        return {
-          group,
-          path,
-          pulse,
-          materials: [traceMaterial, viaMaterial, padMaterial],
-          pulseMaterials: [pulseMaterial, pulseGlowMaterial],
-          phase: (CHIP_LAYOUT.findIndex((candidate) => candidate.id === module.id) * 0.17) % 1,
-          speed: 0.08 + (CHIP_LAYOUT.findIndex((candidate) => candidate.id === module.id) % 3) * 0.018,
-        };
-      }
-
       function addComponentBox(THREE, group, material, x, y, width, height, depth = 0.036, rotation = 0) {
         const mesh = new THREE.Mesh(new THREE.BoxGeometry(width, height, depth), material);
         mesh.position.set(x, y, 0.04);
@@ -2036,6 +2190,86 @@
 
       function getModuleColorCss(module) {
         return `#${module.color.toString(16).padStart(6, "0")}`;
+      }
+
+      function paintInkPaperDisplayBackground(context, canvas, active, selected, accent) {
+        const width = DISPLAY_TEXTURE_WIDTH;
+        const height = DISPLAY_TEXTURE_HEIGHT;
+        const base = selected ? "rgba(250, 247, 238, 0.96)" : active ? "rgba(252, 248, 238, 0.96)" : "rgba(247, 241, 226, 0.94)";
+        context.fillStyle = base;
+        context.fillRect(0, 0, width, height);
+
+        context.globalAlpha = selected ? 0.18 : active ? 0.12 : 0.07;
+        context.strokeStyle = "rgba(63, 54, 39, 0.12)";
+        context.lineWidth = 1;
+        for (let y = 18; y < height; y += 19) {
+          context.beginPath();
+          context.moveTo(18, y + Math.sin(y * 0.08) * 2);
+          context.bezierCurveTo(
+            width * 0.28,
+            y - 7,
+            width * 0.62,
+            y + 7,
+            width - 18,
+            y + Math.cos(y * 0.05) * 2,
+          );
+          context.stroke();
+        }
+
+        context.globalAlpha = selected ? 0.32 : active ? 0.22 : 0.14;
+        context.strokeStyle = accent;
+        context.lineWidth = selected ? 3 : 2;
+        context.strokeRect(22, 22, width - 44, height - 44);
+
+        context.globalAlpha = selected ? 0.28 : active ? 0.18 : 0.12;
+        context.fillStyle = accent;
+        context.fillRect(34, 34, 7, height - 68);
+        context.globalAlpha = selected ? 0.12 : active ? 0.08 : 0.05;
+        context.fillStyle = "rgba(76, 58, 34, 0.28)";
+        context.fillRect(0, 0, width, 4);
+        context.fillRect(0, height - 4, width, 4);
+        context.globalAlpha = 1;
+      }
+
+      function paintInkDisplayFrame(context, canvas, active, selected, accent) {
+        const width = DISPLAY_TEXTURE_WIDTH;
+        const height = DISPLAY_TEXTURE_HEIGHT;
+        const outer = selected ? 24 : 26;
+        const inner = selected ? 38 : 42;
+        const cornerLength = selected ? 68 : active ? 54 : 42;
+
+        context.save();
+        context.globalAlpha = selected ? 0.9 : active ? 0.64 : 0.38;
+        context.strokeStyle = selected ? accent : "rgba(37, 31, 22, 0.24)";
+        context.lineWidth = selected ? 4 : active ? 3 : 2;
+        context.strokeRect(outer, outer, width - outer * 2, height - outer * 2);
+
+        context.globalAlpha = selected ? 0.42 : active ? 0.28 : 0.16;
+        context.strokeStyle = "rgba(37, 31, 22, 0.38)";
+        context.lineWidth = 1.5;
+        context.strokeRect(inner, inner, width - inner * 2, height - inner * 2);
+
+        context.globalAlpha = selected ? 0.78 : active ? 0.5 : 0.28;
+        context.strokeStyle = accent;
+        context.lineWidth = selected ? 5 : 3;
+        [
+          [outer, outer, 1, 1],
+          [width - outer, outer, -1, 1],
+          [outer, height - outer, 1, -1],
+          [width - outer, height - outer, -1, -1],
+        ].forEach(([x, y, sx, sy]) => {
+          context.beginPath();
+          context.moveTo(x, y + sy * cornerLength);
+          context.lineTo(x, y);
+          context.lineTo(x + sx * cornerLength, y);
+          context.stroke();
+        });
+
+        context.globalAlpha = selected ? 0.22 : active ? 0.13 : 0.07;
+        context.fillStyle = accent;
+        context.fillRect(inner + 8, inner + 8, width - (inner + 8) * 2, 2);
+        context.fillRect(inner + 8, height - inner - 10, width - (inner + 8) * 2, 2);
+        context.restore();
       }
 
       function drawWrappedDisplayLine(context, text, x, y, maxWidth, lineHeight, maxLines) {
@@ -2063,11 +2297,11 @@
       function fitDisplayFont(context, text, weight, preferredSize, minSize, maxWidth) {
         let size = preferredSize;
         do {
-          context.font = `${weight} ${size}px Inter, Arial, sans-serif`;
+          context.font = `${weight} ${size}px ${DISPLAY_FONT_STACK}`;
           if (context.measureText(text).width <= maxWidth) return size;
           size -= 1;
         } while (size >= minSize);
-        context.font = `${weight} ${minSize}px Inter, Arial, sans-serif`;
+        context.font = `${weight} ${minSize}px ${DISPLAY_FONT_STACK}`;
         return minSize;
       }
 
@@ -2085,28 +2319,16 @@
         const context = canvas.getContext("2d");
         const accent = getModuleColorCss(module);
         const selectedReveal = mode === "selected" ? revealCharacters : Infinity;
+        context.setTransform(1, 0, 0, 1, 0, 0);
         context.clearRect(0, 0, canvas.width, canvas.height);
+        context.setTransform(DISPLAY_TEXTURE_SCALE, 0, 0, DISPLAY_TEXTURE_SCALE, 0, 0);
 
         const active = mode !== "idle";
         const selected = mode === "selected";
-        context.fillStyle = active ? "rgba(5, 15, 22, 0.96)" : "rgba(3, 9, 13, 0.92)";
-        context.fillRect(0, 0, canvas.width, canvas.height);
+        paintInkPaperDisplayBackground(context, canvas, active, selected, accent);
+        paintInkDisplayFrame(context, canvas, active, selected, accent);
 
-        context.strokeStyle = active ? "rgba(130, 246, 255, 0.22)" : "rgba(130, 246, 255, 0.09)";
-        context.lineWidth = 2;
-        for (let y = 22; y < canvas.height; y += 28) {
-          context.beginPath();
-          context.moveTo(22, y);
-          context.lineTo(canvas.width - 22, y);
-          context.stroke();
-        }
-
-        context.fillStyle = accent;
-        context.globalAlpha = selected ? 0.9 : active ? 0.58 : 0.22;
-        context.fillRect(24, 24, 10, canvas.height - 48);
-        context.globalAlpha = 1;
-
-        context.fillStyle = selected ? "rgba(248, 254, 255, 0.94)" : active ? "rgba(238, 252, 255, 0.82)" : "rgba(238, 252, 255, 0.32)";
+        context.fillStyle = selected ? DISPLAY_TEXT_INK_STRONG : active ? DISPLAY_TEXT_INK : DISPLAY_TEXT_INK_IDLE;
         context.textBaseline = "top";
 
         if (selected) {
@@ -2117,55 +2339,60 @@
           const folderText = sliceDisplayText(module.folder, folderReveal);
           const sentenceText = sliceDisplayText(module.sentence, sentenceReveal);
           const typing = selectedReveal < getSelectedDisplayCharacterCount(module);
-          fitDisplayFont(context, module.region, "760", 54, 38, canvas.width - 94);
-          context.fillText(regionText, 56, 36);
-          context.font = "680 40px Inter, Arial, sans-serif";
+          fitDisplayFont(context, module.region, "760", DISPLAY_SELECTED_REGION_FONT_SIZE, 42, DISPLAY_TEXTURE_WIDTH - 94);
+          context.fillText(regionText, 56, 28);
+          context.font = `680 ${DISPLAY_SELECTED_FOLDER_FONT_SIZE}px ${DISPLAY_FONT_STACK}`;
           context.fillStyle = accent;
-          context.fillText(folderText, 56, 108);
-          context.font = "560 35px Inter, Arial, sans-serif";
-          context.fillStyle = "rgba(231, 245, 248, 0.86)";
-          drawWrappedDisplayLine(context, sentenceText, 56, 164, canvas.width - 92, 44, 3);
+          context.fillText(folderText, 56, 118);
+          context.font = `560 ${DISPLAY_SELECTED_SENTENCE_FONT_SIZE}px ${DISPLAY_TEXT_FONT_STACK}`;
+          context.fillStyle = DISPLAY_TEXT_INK_MUTED;
+          drawWrappedDisplayLine(context, sentenceText, 56, 186, DISPLAY_TEXTURE_WIDTH - 92, 54, 3);
           if (typing) {
             context.fillStyle = accent;
             context.globalAlpha = 0.74 + Math.sin(performance.now() * 0.012) * 0.18;
-            context.fillRect(56 + Math.min(context.measureText(sentenceText).width, canvas.width - 130), 304, 18, 7);
+            context.fillRect(56 + Math.min(context.measureText(sentenceText).width, DISPLAY_TEXTURE_WIDTH - 130), 322, 20, 8);
             context.globalAlpha = 1;
           }
         } else if (active) {
-          context.font = "760 48px Inter, Arial, sans-serif";
-          context.fillText(module.folder, 56, 66);
-          fitDisplayFont(context, module.region.replace(" Region", ""), "560", 31, 24, canvas.width - 94);
-          context.fillStyle = "rgba(231, 245, 248, 0.7)";
-          context.fillText(module.region.replace(" Region", ""), 56, 140);
+          context.font = `760 ${DISPLAY_EXPANDED_FOLDER_FONT_SIZE}px ${DISPLAY_FONT_STACK}`;
+          context.fillText(module.folder, 56, 58);
+          fitDisplayFont(context, module.region.replace(" Region", ""), "560", DISPLAY_EXPANDED_REGION_FONT_SIZE, 28, DISPLAY_TEXTURE_WIDTH - 94);
+          context.fillStyle = DISPLAY_TEXT_INK_MUTED;
+          context.fillText(module.region.replace(" Region", ""), 56, 142);
         } else {
-          context.font = "680 31px Inter, Arial, sans-serif";
-          context.fillText(module.folder, 56, 78);
-          context.font = "560 25px Inter, Arial, sans-serif";
-          context.fillStyle = "rgba(231, 245, 248, 0.3)";
-          context.fillText("STANDBY", 56, 132);
+          fitDisplayFont(context, module.folder, "760", DISPLAY_IDLE_FOLDER_FONT_SIZE, 50, DISPLAY_TEXTURE_WIDTH - 94);
+          context.fillStyle = DISPLAY_TEXT_INK;
+          context.fillText(module.folder, 56, 82);
+          context.font = `560 ${DISPLAY_IDLE_STATE_FONT_SIZE}px ${DISPLAY_TEXT_FONT_STACK}`;
+          context.fillStyle = "rgba(18, 23, 21, 0.68)";
+          context.fillText("STANDBY", 56, 226);
         }
 
-        context.strokeStyle = selected ? accent : "rgba(133, 247, 255, 0.28)";
+        context.strokeStyle = selected ? accent : "rgba(37, 31, 22, 0.22)";
         context.lineWidth = selected ? 5 : 3;
-        context.strokeRect(16, 16, canvas.width - 32, canvas.height - 32);
+        context.strokeRect(16, 16, DISPLAY_TEXTURE_WIDTH - 32, DISPLAY_TEXTURE_HEIGHT - 32);
+        context.setTransform(1, 0, 0, 1, 0, 0);
         texture.needsUpdate = true;
       }
 
       function createDisplayTexture(THREE, module) {
         const canvas = document.createElement("canvas");
-        canvas.width = 768;
-        canvas.height = 360;
+        canvas.width = DISPLAY_TEXTURE_WIDTH * DISPLAY_TEXTURE_SCALE;
+        canvas.height = DISPLAY_TEXTURE_HEIGHT * DISPLAY_TEXTURE_SCALE;
         const texture = new THREE.CanvasTexture(canvas);
         texture.colorSpace = THREE.SRGBColorSpace;
-        texture.anisotropy = 4;
+        texture.anisotropy = 8;
+        texture.generateMipmaps = false;
+        texture.minFilter = THREE.LinearFilter;
+        texture.magFilter = THREE.LinearFilter;
         const material = new THREE.MeshBasicMaterial({
           map: texture,
           transparent: true,
-          opacity: 0.46,
+          opacity: 1,
           depthWrite: false,
           depthTest: true,
         });
-        material.userData.baseOpacity = 0.46;
+        material.userData.baseOpacity = 1;
         const display = { canvas, texture, material, mode: "", lastPaintKey: "", revealStartedAt: 0 };
         paintDisplayTexture(display, module, "idle");
         return display;
@@ -2193,22 +2420,24 @@
           display.mode = mode;
         }
         if (display?.material) {
-          const targetOpacity = selected ? 0.94 : expanded ? 0.68 : 0.34;
-          display.material.opacity = targetOpacity * (dimmed ? 0.46 : 1);
+          const targetOpacity = selected ? 1 : expanded ? 1 : 0.96;
+          display.material.opacity = targetOpacity * (dimmed ? 0.62 : 1);
         }
       }
 
       function createChipModuleComponent(THREE, module, layout) {
         const group = new THREE.Group();
+        const component = group;
         const color = new THREE.Color(module.color);
-        const baseMaterial = createChipMaterial(THREE, 0x101a24, 0.68, 0.035);
-        const bezelMaterial = createChipMaterial(THREE, 0x1a2733, 0.72, 0.045);
+        const baseMaterial = createChipMaterial(THREE, 0xcfc3ad, 0.72, 0.018);
+        const bezelMaterial = createChipMaterial(THREE, 0xeee5d5, 0.78, 0.022);
         const screenMaterial = createChipMaterial(THREE, color, 0.2, 0.18);
         const pinMaterial = createLightMaterial(THREE, color, 0.28);
         const edgeMaterial = createLightMaterial(THREE, color, 0.18);
         const display = createDisplayTexture(THREE, module);
         const moduleScale = layout.scale ?? CHIP_DISPLAY_MODULE_SCALE;
         const pinMeshes = [];
+        let currentConnectorSide = layout.connectorSide;
 
         group.name = `${module.id}-chip-display-module`;
         group.userData.moduleId = module.id;
@@ -2222,7 +2451,7 @@
         bezel.name = "project-display-module-bezel";
         glass.name = "project-display-screen";
 
-        const textPlane = new THREE.Mesh(new THREE.PlaneGeometry(0.88, 0.395), display.material);
+        const textPlane = new THREE.Mesh(new THREE.PlaneGeometry(0.94, 0.43), display.material);
         textPlane.name = "project-display-screen-text";
         textPlane.position.set(0, 0, 0.088);
         group.add(textPlane);
@@ -2235,6 +2464,7 @@
         });
 
         function setConnectorSide(connectorSide) {
+          currentConnectorSide = connectorSide;
           const verticalConnector = connectorSide === "top" || connectorSide === "bottom";
           pinMeshes.forEach((pin) => {
             const offset = pin.userData.offset / moduleScale;
@@ -2259,6 +2489,10 @@
           setDisplayModuleState(group, module, expanded, selected, dimmed, time);
         };
         group.userData.setConnectorSide = setConnectorSide;
+        group.userData.getConnectorSide = () => currentConnectorSide;
+        group.userData.getConnectorPinPoints = () => pinMeshes.map((pin) => (
+          pin.position.clone().multiplyScalar(component.scale.x).add(component.position)
+        ));
         group.userData.materials = [baseMaterial, bezelMaterial, screenMaterial, pinMaterial, edgeMaterial];
         return group;
       }
@@ -2269,7 +2503,7 @@
 
         group.name = "induction-field";
         for (let index = 0; index < 3; index += 1) {
-          const material = createLightMaterial(THREE, index === 1 ? 0xff7be8 : 0x5ef5ff, 0.035);
+          const material = createLightMaterial(THREE, index === 1 ? CYBER_INK_PALETTE.cinnabar : CYBER_INK_PALETTE.flowerBlue, 0.026);
           const ring = new THREE.Mesh(new THREE.TorusGeometry(0.28 + index * 0.24, 0.006, 8, 74), material);
           ring.name = "induction-field-ring";
           ring.position.set(0, 0.42 + index * 0.18, 0.07);
@@ -2278,7 +2512,7 @@
           materials.push(material);
         }
 
-        const columnMaterial = createLightMaterial(THREE, 0x80f5ff, 0.028);
+        const columnMaterial = createLightMaterial(THREE, CYBER_INK_PALETTE.inkWhite, 0.022);
         const column = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.3, 0.92, 36, 1, true), columnMaterial);
         column.name = "induction-field-column";
         column.position.set(0, 0.42, 0.04);
@@ -2301,23 +2535,298 @@
         return layout.connectorSide;
       }
 
+      function getResponsiveRoutePoints(layout, mode) {
+        if (mode === "compact") return layout.compactRoute ?? layout.route;
+        if (mode === "portrait") return layout.portraitRoute ?? layout.route;
+        return layout.route;
+      }
+
+      function setCircuitSegmentEndpoints(mesh, start, end, width) {
+        const dx = end.x - start.x;
+        const dy = end.y - start.y;
+        const length = Math.hypot(dx, dy);
+        if (length < 0.001) {
+          mesh.visible = false;
+          return;
+        }
+        mesh.visible = true;
+        mesh.position.set((start.x + end.x) / 2, (start.y + end.y) / 2, (start.z + end.z) / 2);
+        mesh.rotation.z = Math.atan2(dy, dx);
+        mesh.scale.set(length, width, 1);
+      }
+
+      function createCircuitSegmentMesh(THREE, material, name) {
+        const mesh = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 0.022), material);
+        mesh.name = name;
+        mesh.visible = false;
+        return mesh;
+      }
+
+      function createCircuitTerminalMesh(THREE, material, name) {
+        const mesh = new THREE.Mesh(new THREE.BoxGeometry(0.105, 0.052, 0.026), material);
+        mesh.name = name;
+        mesh.visible = false;
+        return mesh;
+      }
+
+      function sampleCircuitRoutePath(segmentPairs, progress) {
+        if (!segmentPairs.length) {
+          return null;
+        }
+
+        if (progress < 0 || progress > 1) {
+          return null;
+        }
+
+        const lengths = segmentPairs.map(([start, end]) => start.distanceTo(end));
+        const totalLength = lengths.reduce((sum, length) => sum + length, 0);
+        if (totalLength <= 0.001) {
+          return segmentPairs[0][0].clone();
+        }
+
+        let targetDistance = progress * totalLength;
+        for (let index = 0; index < segmentPairs.length; index += 1) {
+          const length = lengths[index];
+          if (targetDistance <= length) {
+            const ratio = length <= 0.001 ? 0 : targetDistance / length;
+            return segmentPairs[index][0].clone().lerp(segmentPairs[index][1], ratio);
+          }
+          targetDistance -= length;
+        }
+
+        return segmentPairs.at(-1)[1].clone();
+      }
+
+      function getConnectorOutwardDirection(connectorSide) {
+        return {
+          x: connectorSide === "left" ? -1 : connectorSide === "right" ? 1 : 0,
+          y: connectorSide === "top" ? 1 : connectorSide === "bottom" ? -1 : 0,
+        };
+      }
+
+      function getConnectorFanoutOrigin(routeEnd, pins, connectorSide) {
+        const middlePin = pins[Math.floor(pins.length / 2)];
+        if (!middlePin) {
+          return routeEnd.clone();
+        }
+
+        const direction = getConnectorOutwardDirection(connectorSide);
+        const clearance = 0.26;
+        if (direction.x) {
+          return new THREE.Vector3(middlePin.x + direction.x * clearance, routeEnd.y, routeEnd.z);
+        }
+        return new THREE.Vector3(routeEnd.x, middlePin.y + direction.y * clearance, routeEnd.z);
+      }
+
+      function addCircuitPair(pairs, start, end, width) {
+        if (start.distanceTo(end) < 0.001) {
+          return null;
+        }
+
+        const pair = [start.clone(), end.clone(), width];
+        pairs.push(pair);
+        return pair;
+      }
+
+      function clampRouteInteriorToFanout(points, fanoutOrigin, connectorSide) {
+        points.forEach((point, index) => {
+          if (index === 0 || index === points.length - 1) {
+            return;
+          }
+
+          if (connectorSide === "left" && point.x > fanoutOrigin.x) {
+            point.x = fanoutOrigin.x;
+          }
+          if (connectorSide === "right" && point.x < fanoutOrigin.x) {
+            point.x = fanoutOrigin.x;
+          }
+          if (connectorSide === "top" && point.y < fanoutOrigin.y) {
+            point.y = fanoutOrigin.y;
+          }
+          if (connectorSide === "bottom" && point.y > fanoutOrigin.y) {
+            point.y = fanoutOrigin.y;
+          }
+        });
+      }
+
+      function createOrthogonalPinFanout(THREE, routeEnd, pins, connectorSide) {
+        const fanoutOrigin = routeEnd.clone();
+        const verticalConnector = connectorSide === "top" || connectorSide === "bottom";
+        const branchSegments = [];
+        const branchFlowPaths = [];
+
+        pins.forEach((pin) => {
+          const pinBranchSegments = [];
+          const elbow = verticalConnector
+            ? new THREE.Vector3(pin.x, fanoutOrigin.y, fanoutOrigin.z)
+            : new THREE.Vector3(fanoutOrigin.x, pin.y, fanoutOrigin.z);
+
+          addCircuitPair(pinBranchSegments, fanoutOrigin, elbow, 0.018);
+          addCircuitPair(pinBranchSegments, elbow, pin, 0.018);
+          branchSegments.push(...pinBranchSegments);
+          branchFlowPaths.push(pinBranchSegments.map(([start, end]) => [start.clone(), end.clone()]));
+        });
+
+        return { fanoutOrigin, branchSegments, branchFlowPaths };
+      }
+
+      function createCircuitRouteChannel(THREE, module) {
+        const group = new THREE.Group();
+        const traceMaterial = createLightMaterial(THREE, module.color, 0.14);
+        const terminalMaterial = createLightMaterial(THREE, module.color, 0.2);
+        const particleMaterial = createLightMaterial(THREE, module.color, 0.72);
+        const segments = [];
+        const nodes = [];
+        const terminals = [];
+        const particles = [];
+        let currentSegmentPairs = [];
+        let currentFlowPaths = [];
+
+        group.name = `${module.id}-pcb-routing-channel`;
+        for (let index = 0; index < 10; index += 1) {
+          const segment = createCircuitSegmentMesh(
+            THREE,
+            traceMaterial,
+            index < 4 ? "pcb-routing-channel" : "display-pin-route",
+          );
+          segments.push(segment);
+          group.add(segment);
+        }
+
+        for (let index = 0; index < 5; index += 1) {
+          const node = createCircuitTerminalMesh(THREE, terminalMaterial, "pcb-routing-via");
+          nodes.push(node);
+          group.add(node);
+        }
+
+        for (let index = 0; index < 3; index += 1) {
+          const terminal = createCircuitTerminalMesh(THREE, terminalMaterial, "display-pin-terminal");
+          terminals.push(terminal);
+          group.add(terminal);
+        }
+
+        for (let index = 0; index < 5; index += 1) {
+          const particle = new THREE.Mesh(new THREE.SphereGeometry(0.035, 10, 8), particleMaterial);
+          particle.name = "circuit-flow-particle";
+          particle.visible = false;
+          particle.userData.phase = index / 5;
+          particles.push(particle);
+          group.add(particle);
+        }
+
+        group.userData.materials = [traceMaterial, terminalMaterial, particleMaterial];
+        group.userData.setCircuitRoute = (routePoints, connectorSide, pinPoints) => {
+          const points = routePoints.map(([x, y, z]) => new THREE.Vector3(x, y, z + 0.035));
+          const routeEnd = points.at(-1);
+          const segmentPairs = [];
+          const routePairs = [];
+          const flowPaths = [];
+
+          const pins = pinPoints.map((pinPoint) => {
+            const pin = pinPoint.clone();
+            pin.z += 0.035;
+            return pin;
+          });
+          const fanoutOrigin = getConnectorFanoutOrigin(routeEnd, pins, connectorSide);
+          points[points.length - 1] = fanoutOrigin;
+          clampRouteInteriorToFanout(points, fanoutOrigin, connectorSide);
+
+          for (let index = 1; index < points.length; index += 1) {
+            const pair = [points[index - 1], points[index], 0.032];
+            routePairs.push(pair);
+            segmentPairs.push(pair);
+          }
+
+          const fanout = createOrthogonalPinFanout(THREE, fanoutOrigin, pins, connectorSide);
+
+          segmentPairs.push(...fanout.branchSegments);
+          fanout.branchFlowPaths.forEach((pinFlowPath) => {
+            flowPaths.push([
+              ...routePairs,
+              ...pinFlowPath,
+            ].map(([start, end]) => [start.clone(), end.clone()]));
+          });
+
+          segments.forEach((segment, index) => {
+            const pair = segmentPairs[index];
+            if (!pair) {
+              segment.visible = false;
+              return;
+            }
+            setCircuitSegmentEndpoints(segment, pair[0], pair[1], pair[2]);
+          });
+
+          nodes.forEach((node, index) => {
+            const point = points[index + 1];
+            if (!point) {
+              node.visible = false;
+              return;
+            }
+            node.visible = true;
+            node.position.copy(point);
+            node.rotation.z = 0;
+          });
+
+          terminals.forEach((terminal, index) => {
+            const point = pinPoints[index];
+            if (!point) {
+              terminal.visible = false;
+              return;
+            }
+            terminal.visible = true;
+            terminal.position.set(point.x, point.y, point.z + 0.035);
+            terminal.rotation.z = connectorSide === "top" || connectorSide === "bottom" ? Math.PI / 2 : 0;
+          });
+
+          currentSegmentPairs = segmentPairs.map(([start, end]) => [start.clone(), end.clone()]);
+          currentFlowPaths = flowPaths.length ? flowPaths : [currentSegmentPairs];
+        };
+
+        group.userData.setCircuitState = (expanded, selected, dimmed, time) => {
+          const traceOpacity = expanded ? selected ? 0.34 : dimmed ? 0.055 : 0.13 : 0;
+          const terminalOpacity = expanded ? selected ? 0.5 : dimmed ? 0.07 : 0.17 : 0;
+          const particleOpacity = expanded ? selected ? 0.78 : dimmed ? 0 : 0.28 : 0;
+          traceMaterial.opacity = traceOpacity;
+          terminalMaterial.opacity = terminalOpacity;
+          particleMaterial.opacity = particleOpacity;
+          const flowCycleLength = 1.35;
+
+          particles.forEach((particle, index) => {
+            const path = currentFlowPaths[index % currentFlowPaths.length];
+            const progress = prefersReducedMotion
+              ? particle.userData.phase * 0.86
+              : (time * 0.22 + particle.userData.phase * flowCycleLength) % flowCycleLength;
+            const point = particleOpacity > 0.05 && progress <= 1 && path
+              ? sampleCircuitRoutePath(path, progress)
+              : null;
+            if (!point || progress > 1) {
+              particle.visible = false;
+              return;
+            }
+            particle.visible = true;
+            particle.position.copy(point);
+          });
+
+          group.visible = traceOpacity > 0.01 || terminalOpacity > 0.01 || particleOpacity > 0.01;
+        };
+
+        group.userData.setCircuitState(false, false, false, 0);
+        return group;
+      }
+
       function createGpuChipPedestal(THREE) {
         const group = new THREE.Group();
         const state = { active: 0 };
-        const backgroundBoardMaterial = createChipMaterial(THREE, 0x081922, 0.34, 0.018);
-        const boardMaterial = createChipMaterial(THREE, 0x111923, 0.72, 0.025);
-        const boardEdgeMaterial = createLightMaterial(THREE, 0x74efff, 0.09);
-        const coreMaterial = createChipMaterial(THREE, 0x1b2b3a, 0.66, 0.08);
-        const coreLightMaterial = createLightMaterial(THREE, 0x73f6ff, 0.18);
-        const backgroundBoard = new THREE.Mesh(new THREE.BoxGeometry(10.8, 6.3, 0.035), backgroundBoardMaterial);
+        const boardMaterial = createChipMaterial(THREE, 0x10130f, 0.72, 0.018);
+        const boardEdgeMaterial = createLightMaterial(THREE, CYBER_INK_PALETTE.inkWhite, 0.06);
+        const coreMaterial = createChipMaterial(THREE, 0x1a1c17, 0.66, 0.05);
+        const coreLightMaterial = createLightMaterial(THREE, CYBER_INK_PALETTE.flowerBlue, 0.14);
         const board = new THREE.Mesh(new THREE.BoxGeometry(3.72, 1.24, 0.075), boardMaterial);
         const boardEdge = new THREE.Mesh(new THREE.BoxGeometry(3.5, 1.02, 0.018), boardEdgeMaterial);
         const computeCore = new THREE.Group();
         const inductionField = createInductionField(THREE);
 
         group.name = "gpu-chip-pedestal";
-        backgroundBoard.name = "gpu-chip-background-substrate";
-        backgroundBoard.position.set(0, 0, -0.035);
         board.name = "gpu-chip-substrate";
         boardEdge.name = "gpu-chip-edge-glow";
         board.position.y = -1.56;
@@ -2334,33 +2843,27 @@
         coreInset.position.z = 0.12;
         computeCore.add(coreBase, coreInset);
 
-        group.add(backgroundBoard, board, boardEdge, computeCore, inductionField);
+        group.add(board, boardEdge, computeCore, inductionField);
 
         const channels = CHIP_LAYOUT.map((layout) => {
           const module = MODULES.find((candidate) => candidate.id === layout.id);
-          const routeLayouts = {
-            desktop: layout,
-            portrait: { ...layout, route: layout.portraitRoute, connectorSide: getResponsiveConnectorSide(layout, "portrait") },
-            compact: { ...layout, route: layout.compactRoute, connectorSide: getResponsiveConnectorSide(layout, "compact") },
-          };
-          const routes = Object.fromEntries(
-            Object.entries(routeLayouts).map(([mode, routeLayout]) => [mode, createPcbRoutingChannel(THREE, module, routeLayout)]),
-          );
           const component = createChipModuleComponent(THREE, module, layout);
+          const route = createCircuitRouteChannel(THREE, module);
           component.position.set(...layout.position);
           component.userData.baseScale = layout.scale ?? CHIP_DISPLAY_MODULE_SCALE;
           component.scale.setScalar(component.userData.baseScale);
-          Object.values(routes).forEach((route) => {
-            route.group.visible = false;
-            group.add(route.group);
-          });
-          group.add(component);
-          return { module, layout, routes, route: routes.desktop, component };
+          group.add(route, component);
+          return { module, layout, component, route };
         });
 
-        const allCoreMaterials = [boardEdgeMaterial, coreLightMaterial, ...inductionField.userData.materials];
-        const backgroundMaterials = [backgroundBoardMaterial];
+        function syncCircuitRoute(entry, mode) {
+          const routePoints = getResponsiveRoutePoints(entry.layout, mode);
+          const connectorSide = getResponsiveConnectorSide(entry.layout, mode);
+          const pinPoints = entry.component.userData.getConnectorPinPoints?.() ?? [];
+          entry.route.userData.setCircuitRoute?.(routePoints, connectorSide, pinPoints);
+        }
 
+        const allCoreMaterials = [boardEdgeMaterial, coreLightMaterial, ...inductionField.userData.materials];
         return {
           group,
           getDisplayTargets() {
@@ -2384,34 +2887,27 @@
                   ? entry.layout.portraitPosition
                   : entry.layout.position;
               entry.component.position.set(...position);
-              Object.entries(entry.routes).forEach(([routeMode, route]) => {
-                route.group.visible = routeMode === mode;
-              });
               entry.component.userData.setConnectorSide?.(getResponsiveConnectorSide(entry.layout, mode));
-              entry.route = entry.routes[mode];
+              syncCircuitRoute(entry, mode);
             });
           },
           update(time, interactionState) {
             const expanded = Boolean(interactionState?.expanded);
             const selected = interactionState?.selected ?? null;
+            const mode = getChipLayoutMode();
             const target = expanded ? 1 : 0;
             state.active += (target - state.active) * (prefersReducedMotion ? 1 : 0.075);
             const eased = state.active * state.active * (3 - 2 * state.active);
 
             setChipMaterialState(boardMaterial, 0.62 + eased * 0.12, 0.025 + eased * 0.025);
-            setChipMaterialState(backgroundBoardMaterial, 0.3 + eased * 0.1, 0.016 + eased * 0.016);
-            backgroundMaterials.slice(1).forEach((material) => {
-              setChipMaterialState(material, (material.userData.baseOpacity ?? 0.03) * (1 + eased * 1.3));
-            });
             allCoreMaterials.forEach((material) => {
               setChipMaterialState(material, (material.userData.baseOpacity ?? 0.08) * (1 + eased * 2.1));
             });
             computeCore.scale.setScalar(1 + eased * 0.06 + (selected ? 0.03 : 0));
 
-            channels.forEach((entry, index) => {
+            channels.forEach((entry) => {
               const selectedFocus = !selected || selected === entry.module.id ? 1 : 0.22;
-              const routeOpacity = (0.08 + eased * (selected === entry.module.id ? 0.55 : 0.22)) * selectedFocus;
-              const componentOpacity = (0.26 + eased * (selected === entry.module.id ? 0.46 : 0.2)) * selectedFocus;
+              const componentOpacity = (0.32 + eased * (selected === entry.module.id ? 0.52 : 0.26)) * selectedFocus;
               const componentGlow = 0.08 + eased * (selected === entry.module.id ? 0.34 : 0.12);
               entry.component.userData.setDisplayState?.(
                 expanded,
@@ -2420,9 +2916,6 @@
                 time,
               );
 
-              entry.route.materials.forEach((material) => {
-                setChipMaterialState(material, routeOpacity * (material.userData.baseOpacity ?? 0.1) * 7.2);
-              });
               entry.component.userData.materials.forEach((material) => {
                 setChipMaterialState(
                   material,
@@ -2432,19 +2925,14 @@
               });
 
               const baseScale = entry.component.userData.baseScale ?? 1;
-              entry.component.scale.setScalar(baseScale * (1 + eased * (selected === entry.module.id ? 0.18 : 0.03)));
-              entry.route.pulse.visible = eased > 0.05 && (!selected || selected === entry.module.id);
-              if (entry.route.pulse.visible) {
-                const t = prefersReducedMotion ? entry.route.phase : (entry.route.phase + time * entry.route.speed) % 1;
-                const point = entry.route.path.getPointAt(t);
-                const shimmer = 0.74 + Math.sin(time * 5.2 + index * 1.1) * 0.2;
-                entry.route.pulse.position.copy(point);
-                entry.route.pulse.scale.setScalar(0.75 + shimmer * 0.24);
-                entry.route.pulseMaterials.forEach((material, materialIndex) => {
-                  const base = materialIndex === 0 ? 0.54 : 0.13;
-                  setChipMaterialState(material, base * shimmer * eased * selectedFocus);
-                });
-              }
+              entry.component.scale.setScalar(baseScale * (1 + eased * (selected === entry.module.id ? 0.32 : 0.03)));
+              syncCircuitRoute(entry, mode);
+              entry.route.userData.setCircuitState?.(
+                expanded,
+                selected === entry.module.id,
+                Boolean(selected && selected !== entry.module.id),
+                time,
+              );
             });
           },
         };
@@ -2452,7 +2940,7 @@
 
       function createScene(THREE) {
         const scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2(0x07080b, 0.038);
+        scene.fog = new THREE.FogExp2(CYBER_INK_PALETTE.paperBase, 0.022);
 
         const camera = new THREE.PerspectiveCamera(38, window.innerWidth / window.innerHeight, 0.1, 100);
         camera.position.set(0, 0.2, 6.7);
@@ -2466,25 +2954,25 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.outputColorSpace = THREE.SRGBColorSpace;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.08;
+        renderer.toneMappingExposure = 0.94;
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         host.appendChild(renderer.domElement);
 
-        const ambient = new THREE.HemisphereLight(0xdffbff, 0x101525, 1.25);
-        const key = new THREE.DirectionalLight(0xe7fbff, 3.35);
+        const ambient = new THREE.HemisphereLight(CYBER_INK_PALETTE.paperBase, 0x4e554d, 1.24);
+        const key = new THREE.DirectionalLight(CYBER_INK_PALETTE.inkWhite, 2.6);
         key.position.set(-3.8, 4.5, 4.4);
         key.castShadow = true;
         key.shadow.mapSize.width = 1024;
         key.shadow.mapSize.height = 1024;
 
-        const rim = new THREE.DirectionalLight(0x76eaff, 2.15);
+        const rim = new THREE.DirectionalLight(CYBER_INK_PALETTE.flowerBlue, 1.65);
         rim.position.set(4.2, 2.1, -3.4);
 
-        const fill = new THREE.PointLight(0xff72d0, 1.65, 8);
+        const fill = new THREE.PointLight(CYBER_INK_PALETTE.cinnabar, 0.95, 8);
         fill.position.set(0, -1.8, 3.8);
 
-        const warmEdge = new THREE.PointLight(0xffd277, 1.05, 7);
+        const warmEdge = new THREE.PointLight(CYBER_INK_PALETTE.mineralGold, 0.82, 7);
         warmEdge.position.set(-2.4, 0.8, 2.5);
         scene.add(ambient, key, rim, fill, warmEdge);
 
@@ -2494,9 +2982,9 @@
 
         const shellGeometry = new THREE.SphereGeometry(2.34, 80, 40);
         const shellMaterial = new THREE.MeshBasicMaterial({
-          color: 0xbdefff,
+          color: CYBER_INK_PALETTE.paperWhite,
           transparent: true,
-          opacity: 0.06,
+          opacity: 0.045,
           depthWrite: false,
           side: THREE.BackSide,
         });
