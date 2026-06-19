@@ -30,6 +30,14 @@ assert.doesNotMatch(body, /paintInkPaperDisplayBackground[\s\S]*rgba\(14,\s*17,\
 assert.match(body, /NeuroScience × AI/, "homepage should keep the project title");
 assert.doesNotMatch(visibleBody, /[\u4e00-\u9fff]/, "visible body should not include Chinese text");
 assert.match(html, /h1\s*\{[\s\S]*?font-family:\s*"Songti SC",\s*"STSong",\s*"Noto Serif SC",\s*Georgia,\s*serif/, "Cyber Ink title should use a sharper serif/Songti title stack instead of inheriting the body sans font");
+assert.match(html, /<link rel="icon" href="data:image\/svg\+xml,[^"]*1f2724/, "favicon should use a simplified deep-ink version of the twin-arc X mark");
+assert.match(body, /<h1 aria-label="NeuroScience × AI">[\s\S]*class="title-word">NeuroScience/, "visual title should keep the semantic NeuroScience x AI label while splitting visible text around the logo");
+assert.doesNotMatch(body, /<h1>NeuroScience × AI<\/h1>/, "visual title should replace the literal x character with the twin-arc logo");
+assert.match(body, /class="title-x-mark"[\s\S]*viewBox="0 0 96 96"/, "title should include an inline scalable SVG logo mark");
+assert.match(body, /title-x-left-bleed/, "logo should include an organic left ink-bleed layer for the neuroscience side");
+assert.match(body, /title-x-right-core/, "logo should include a cleaner right arc for the AI side");
+assert.match(html, /\.title-x-mark\s*\{[\s\S]*?width:\s*0\.82em[\s\S]*?height:\s*0\.68em/, "inline logo should scale like a compact title glyph");
+assert.match(html, /h1:hover \.title-x-left-bleed[\s\S]*?filter:\s*blur\(0\.035em\)/, "hover should only create a subtle ink-bleed expansion on the organic arc");
 
 assert.match(html, /three@/, "homepage should load Three.js for the primary model");
 assert.match(body, /GLTFLoader/, "homepage should use GLTFLoader for the high-detail brain asset");
