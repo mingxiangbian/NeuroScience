@@ -255,6 +255,58 @@
         transform: translate(-50%, -50%) scale(1.035);
       }
 
+      @media (orientation: portrait) {
+        .module-label {
+          min-width: clamp(104px, 17vw, 132px);
+          max-width: 132px;
+          padding: 8px 10px;
+          transform: translateY(-50%) translateY(8px);
+        }
+
+        body.brain-expanded .module-label {
+          transform: translateY(-50%);
+        }
+
+        .module-label:hover,
+        .module-label:focus-visible,
+        .module-label[aria-pressed="true"] {
+          transform: translateY(-50%) scale(1.035);
+        }
+
+        .module-label[data-module="association"] {
+          left: clamp(14px, 3.4vw, 34px);
+          top: 33%;
+        }
+
+        .module-label[data-module="parietal"] {
+          left: clamp(14px, 3.4vw, 34px);
+          top: 43%;
+        }
+
+        .module-label[data-module="temporal"] {
+          left: clamp(14px, 3.4vw, 34px);
+          top: 53%;
+        }
+
+        .module-label[data-module="cingulate"] {
+          right: clamp(14px, 3.4vw, 34px);
+          left: auto;
+          top: 33%;
+        }
+
+        .module-label[data-module="prefrontal"] {
+          right: clamp(14px, 3.4vw, 34px);
+          left: auto;
+          top: 43%;
+        }
+
+        .module-label[data-module="hippocampal"] {
+          right: clamp(14px, 3.4vw, 34px);
+          left: auto;
+          top: 53%;
+        }
+      }
+
       .module-panel {
         position: absolute;
         left: 50%;
@@ -348,6 +400,34 @@
         .module-panel {
           bottom: 16px;
           padding: 10px 12px 11px;
+        }
+      }
+
+      @media (orientation: portrait) and (max-width: 520px) {
+        .module-label {
+          min-width: 86px;
+          max-width: 100px;
+          min-height: 38px;
+          padding: 7px 8px;
+        }
+
+        .module-label::before {
+          left: 8px;
+          width: 4px;
+          height: 28px;
+        }
+
+        .module-label strong,
+        .module-label span {
+          padding-left: 10px;
+        }
+
+        .module-label strong {
+          font-size: 0.68rem;
+        }
+
+        .module-label span {
+          display: none;
         }
       }
 
@@ -664,6 +744,14 @@
 
       function clamp(value, min, max) {
         return Math.min(max, Math.max(min, value));
+      }
+
+      function getViewportLayout() {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const isMobile = width < 720;
+        const isPortrait = height > width * 1.08;
+        return { width, height, isMobile, isPortrait };
       }
 
       function createFoldedGeometry(THREE, detail = 88, amount = 0.026) {
@@ -1050,9 +1138,9 @@
             const target = state.expanded ? 1 : 0;
             state.progress += (target - state.progress) * (prefersReducedMotion ? 1 : 0.08);
             const eased = state.progress * state.progress * (3 - 2 * state.progress);
-            const mobile = window.innerWidth < 720;
-            const baseScale = mobile ? 0.78 : 1.16;
-            const baseY = mobile ? -0.18 : -0.12;
+            const { isMobile, isPortrait } = getViewportLayout();
+            const baseScale = isMobile ? 0.7 : isPortrait ? 0.82 : 1.16;
+            const baseY = isMobile ? -0.08 : isPortrait ? -0.02 : -0.12;
             inverseMatrix.copy(brainRoot.matrixWorld).invert();
 
             moduleEntries.forEach((entry) => {
@@ -1074,8 +1162,8 @@
             surfaceMaterials.forEach((material) => {
               material.uniforms.explodeProgress.value = eased;
             });
-            brainRoot.scale.setScalar(baseScale * (1 - eased * (mobile ? 0.12 : 0.24)));
-            brainRoot.position.y = baseY + eased * (mobile ? 0.03 : 0.02);
+            brainRoot.scale.setScalar(baseScale * (1 - eased * (isMobile ? 0.08 : isPortrait ? 0.14 : 0.24)));
+            brainRoot.position.y = baseY + eased * (isMobile ? 0.02 : isPortrait ? 0.015 : 0.02);
             setBrainMaterialOpacity(brainModel, 1 - eased * 0.62);
             activityFlow.visible = eased < 0.96;
           },
@@ -1714,45 +1802,78 @@
           id: "association",
           component: "project-display",
           position: [-3.45, 1.36, 0.12],
+          portraitPosition: [-2.32, 3, 0.12],
+          compactPosition: [-1.68, 3.02, 0.12],
           connectorSide: "right",
           route: [[0, -1.56, 0.12], [-0.78, -1.56, 0.12], [-0.78, 1.36, 0.12], [-2.35, 1.36, 0.12]],
+          portraitRoute: [[0, -1.18, 0.12], [-0.76, -1.18, 0.12], [-0.76, 3, 0.12], [-1.24, 3, 0.12]],
+          compactRoute: [[0, -1.06, 0.12], [-0.52, -1.06, 0.12], [-0.52, 3.02, 0.12], [-0.6, 3.02, 0.12]],
         },
         {
           id: "prefrontal",
           component: "project-display",
           position: [3.45, 0, 0.12],
+          portraitPosition: [2.32, 3, 0.12],
+          compactPosition: [1.68, 3.02, 0.12],
           connectorSide: "left",
           route: [[0, -1.56, 0.12], [1.08, -1.56, 0.12], [1.08, 0, 0.12], [2.35, 0, 0.12]],
+          portraitRoute: [[0, -1.18, 0.12], [0.76, -1.18, 0.12], [0.76, 3, 0.12], [1.24, 3, 0.12]],
+          compactRoute: [[0, -1.06, 0.12], [0.52, -1.06, 0.12], [0.52, 3.02, 0.12], [0.6, 3.02, 0.12]],
         },
         {
           id: "parietal",
           component: "project-display",
           position: [-3.45, 0, 0.12],
+          portraitPosition: [0, -2.82, 0.12],
+          compactPosition: [0, -2.72, 0.12],
           connectorSide: "right",
+          portraitConnectorSide: "top",
+          compactConnectorSide: "top",
           route: [[0, -1.56, 0.12], [-1.08, -1.56, 0.12], [-1.08, 0, 0.12], [-2.35, 0, 0.12]],
+          portraitRoute: [[0, -1.18, 0.12], [0, -1.68, 0.12], [0, -2.07, 0.12]],
+          compactRoute: [[0, -1.06, 0.12], [0, -1.55, 0.12], [0, -1.97, 0.12]],
         },
         {
           id: "temporal",
           component: "project-display",
           position: [-3.45, -1.36, 0.12],
+          portraitPosition: [-2.32, -2.82, 0.12],
+          compactPosition: [-1.68, -2.72, 0.12],
           connectorSide: "right",
           route: [[0, -1.56, 0.12], [-0.52, -1.56, 0.12], [-0.52, -1.36, 0.12], [-2.35, -1.36, 0.12]],
+          portraitRoute: [[0, -1.18, 0.12], [-0.76, -1.18, 0.12], [-0.76, -2.82, 0.12], [-1.24, -2.82, 0.12]],
+          compactRoute: [[0, -1.06, 0.12], [-0.52, -1.06, 0.12], [-0.52, -2.72, 0.12], [-0.6, -2.72, 0.12]],
         },
         {
           id: "cingulate",
           component: "project-display",
           position: [3.45, 1.36, 0.12],
+          portraitPosition: [0, 3, 0.12],
+          compactPosition: [0, 3.02, 0.12],
           connectorSide: "left",
+          portraitConnectorSide: "bottom",
+          compactConnectorSide: "bottom",
           route: [[0, -1.56, 0.12], [0.78, -1.56, 0.12], [0.78, 1.36, 0.12], [2.35, 1.36, 0.12]],
+          portraitRoute: [[0, -1.18, 0.12], [0, 1.84, 0.12], [0, 2.25, 0.12]],
+          compactRoute: [[0, -1.06, 0.12], [0, 1.86, 0.12], [0, 2.27, 0.12]],
         },
         {
           id: "hippocampal",
           component: "project-display",
           position: [3.45, -1.36, 0.12],
+          portraitPosition: [2.32, -2.82, 0.12],
+          compactPosition: [1.68, -2.72, 0.12],
           connectorSide: "left",
           route: [[0, -1.56, 0.12], [0.52, -1.56, 0.12], [0.52, -1.36, 0.12], [2.35, -1.36, 0.12]],
+          portraitRoute: [[0, -1.18, 0.12], [0.76, -1.18, 0.12], [0.76, -2.82, 0.12], [1.24, -2.82, 0.12]],
+          compactRoute: [[0, -1.06, 0.12], [0.52, -1.06, 0.12], [0.52, -2.72, 0.12], [0.6, -2.72, 0.12]],
         },
       ];
+      const CHIP_CORE_Y_BY_LAYOUT = {
+        desktop: -1.56,
+        portrait: -1.18,
+        compact: -1.06,
+      };
       const CHIP_DISPLAY_MODULE_SCALE = 1.32;
       const DISPLAY_PIN_OFFSETS = [-0.18, 0, 0.18];
       const DISPLAY_TYPEWRITER_CHARS_PER_SECOND = 42;
@@ -1821,9 +1942,13 @@
 
       function addDisplayConnectorFanout(THREE, group, endpoint, connectorSide, traceMaterial, viaMaterial, padMaterial) {
         const pinOffsets = DISPLAY_PIN_OFFSETS;
-        const inward = connectorSide === "left" ? 1 : -1;
-        const busStart = endpoint.clone().add(new THREE.Vector3(0, pinOffsets[0] - 0.026, 0));
-        const busEnd = endpoint.clone().add(new THREE.Vector3(0, pinOffsets[pinOffsets.length - 1] + 0.026, 0));
+        const verticalConnector = connectorSide === "top" || connectorSide === "bottom";
+        const busStart = verticalConnector
+          ? endpoint.clone().add(new THREE.Vector3(pinOffsets[0] - 0.026, 0, 0))
+          : endpoint.clone().add(new THREE.Vector3(0, pinOffsets[0] - 0.026, 0));
+        const busEnd = verticalConnector
+          ? endpoint.clone().add(new THREE.Vector3(pinOffsets[pinOffsets.length - 1] + 0.026, 0, 0))
+          : endpoint.clone().add(new THREE.Vector3(0, pinOffsets[pinOffsets.length - 1] + 0.026, 0));
         group.add(createTraceSegment(THREE, busStart, busEnd, 0.018, traceMaterial, "display-connector-bus"));
 
         const via = new THREE.Mesh(new THREE.TorusGeometry(0.036, 0.004, 8, 22), viaMaterial);
@@ -1832,11 +1957,18 @@
         group.add(via);
 
         pinOffsets.forEach((offset) => {
-          const busPoint = endpoint.clone().add(new THREE.Vector3(0, offset, 0));
-          const pinPoint = busPoint.clone().add(new THREE.Vector3(inward * 0.18, 0, 0));
+          const inward = verticalConnector
+            ? connectorSide === "top" ? -1 : 1
+            : connectorSide === "left" ? 1 : -1;
+          const busPoint = verticalConnector
+            ? endpoint.clone().add(new THREE.Vector3(offset, 0, 0))
+            : endpoint.clone().add(new THREE.Vector3(0, offset, 0));
+          const pinPoint = verticalConnector
+            ? busPoint.clone().add(new THREE.Vector3(0, inward * 0.18, 0))
+            : busPoint.clone().add(new THREE.Vector3(inward * 0.18, 0, 0));
           group.add(createTraceSegment(THREE, busPoint, pinPoint, 0.012, traceMaterial, "display-pin-fanout-trace"));
 
-          const pad = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.024, 0.02), padMaterial);
+          const pad = new THREE.Mesh(new THREE.BoxGeometry(verticalConnector ? 0.024 : 0.05, verticalConnector ? 0.05 : 0.024, 0.02), padMaterial);
           pad.name = "display-terminating-pad";
           pad.position.copy(pinPoint);
           group.add(pad);
@@ -2076,7 +2208,7 @@
         const edgeMaterial = createLightMaterial(THREE, color, 0.18);
         const display = createDisplayTexture(THREE, module);
         const moduleScale = layout.scale ?? CHIP_DISPLAY_MODULE_SCALE;
-        const pinX = layout.connectorSide === "left" ? -0.7 : 0.7;
+        const pinMeshes = [];
 
         group.name = `${module.id}-chip-display-module`;
         group.userData.moduleId = module.id;
@@ -2095,10 +2227,27 @@
         textPlane.position.set(0, 0, 0.088);
         group.add(textPlane);
 
-        DISPLAY_PIN_OFFSETS.forEach((y) => {
-          const pin = addComponentBox(THREE, group, pinMaterial, pinX, y / moduleScale, 0.07, 0.024, 0.018);
+        DISPLAY_PIN_OFFSETS.forEach((offset) => {
+          const pin = addComponentBox(THREE, group, pinMaterial, 0, 0, 0.07, 0.024, 0.018);
           pin.name = "display-module-pin";
+          pin.userData.offset = offset;
+          pinMeshes.push(pin);
         });
+
+        function setConnectorSide(connectorSide) {
+          const verticalConnector = connectorSide === "top" || connectorSide === "bottom";
+          pinMeshes.forEach((pin) => {
+            const offset = pin.userData.offset / moduleScale;
+            pin.rotation.z = verticalConnector ? Math.PI / 2 : 0;
+            if (verticalConnector) {
+              pin.position.set(offset, connectorSide === "top" ? 0.43 : -0.43, 0.04);
+            } else {
+              pin.position.set(connectorSide === "left" ? -0.7 : 0.7, offset, 0.04);
+            }
+          });
+        }
+
+        setConnectorSide(layout.connectorSide);
 
         const edge = new THREE.Mesh(new THREE.BoxGeometry(1.24, 0.74, 0.012), edgeMaterial);
         edge.name = "project-display-edge-glow";
@@ -2109,6 +2258,7 @@
         group.userData.setDisplayState = (expanded, selected, dimmed, time) => {
           setDisplayModuleState(group, module, expanded, selected, dimmed, time);
         };
+        group.userData.setConnectorSide = setConnectorSide;
         group.userData.materials = [baseMaterial, bezelMaterial, screenMaterial, pinMaterial, edgeMaterial];
         return group;
       }
@@ -2137,6 +2287,18 @@
 
         group.userData.materials = materials;
         return group;
+      }
+
+      function getChipLayoutMode() {
+        const { isMobile, isPortrait } = getViewportLayout();
+        if (isMobile) return "compact";
+        return isPortrait ? "portrait" : "desktop";
+      }
+
+      function getResponsiveConnectorSide(layout, mode) {
+        if (mode === "compact") return layout.compactConnectorSide ?? layout.connectorSide;
+        if (mode === "portrait") return layout.portraitConnectorSide ?? layout.connectorSide;
+        return layout.connectorSide;
       }
 
       function createGpuChipPedestal(THREE) {
@@ -2176,13 +2338,24 @@
 
         const channels = CHIP_LAYOUT.map((layout) => {
           const module = MODULES.find((candidate) => candidate.id === layout.id);
-          const route = createPcbRoutingChannel(THREE, module, layout);
+          const routeLayouts = {
+            desktop: layout,
+            portrait: { ...layout, route: layout.portraitRoute, connectorSide: getResponsiveConnectorSide(layout, "portrait") },
+            compact: { ...layout, route: layout.compactRoute, connectorSide: getResponsiveConnectorSide(layout, "compact") },
+          };
+          const routes = Object.fromEntries(
+            Object.entries(routeLayouts).map(([mode, routeLayout]) => [mode, createPcbRoutingChannel(THREE, module, routeLayout)]),
+          );
           const component = createChipModuleComponent(THREE, module, layout);
           component.position.set(...layout.position);
           component.userData.baseScale = layout.scale ?? CHIP_DISPLAY_MODULE_SCALE;
           component.scale.setScalar(component.userData.baseScale);
-          group.add(route.group, component);
-          return { module, route, component };
+          Object.values(routes).forEach((route) => {
+            route.group.visible = false;
+            group.add(route.group);
+          });
+          group.add(component);
+          return { module, layout, routes, route: routes.desktop, component };
         });
 
         const allCoreMaterials = [boardEdgeMaterial, coreLightMaterial, ...inductionField.userData.materials];
@@ -2194,10 +2367,29 @@
             return channels.map((entry) => entry.component);
           },
           resize() {
-            const mobile = window.innerWidth < 720;
-            group.position.set(0, mobile ? -0.14 : -0.08, -1.48);
-            group.scale.setScalar(mobile ? 0.72 : 1.02);
-            group.rotation.x = mobile ? -0.01 : -0.018;
+            const { isMobile, isPortrait } = getViewportLayout();
+            const mode = getChipLayoutMode();
+            const coreY = CHIP_CORE_Y_BY_LAYOUT[mode];
+            group.position.set(0, isMobile ? -0.04 : isPortrait ? -0.02 : -0.08, -1.48);
+            group.scale.setScalar(isMobile ? 0.64 : isPortrait ? 0.76 : 1.02);
+            group.rotation.x = isMobile ? -0.01 : isPortrait ? -0.012 : -0.018;
+            board.position.y = coreY;
+            boardEdge.position.y = coreY;
+            computeCore.position.y = coreY;
+            inductionField.position.y = coreY;
+            channels.forEach((entry) => {
+              const position = mode === "compact"
+                ? entry.layout.compactPosition
+                : mode === "portrait"
+                  ? entry.layout.portraitPosition
+                  : entry.layout.position;
+              entry.component.position.set(...position);
+              Object.entries(entry.routes).forEach(([routeMode, route]) => {
+                route.group.visible = routeMode === mode;
+              });
+              entry.component.userData.setConnectorSide?.(getResponsiveConnectorSide(entry.layout, mode));
+              entry.route = entry.routes[mode];
+            });
           },
           update(time, interactionState) {
             const expanded = Boolean(interactionState?.expanded);
@@ -2411,7 +2603,7 @@
           "wheel",
           (event) => {
             event.preventDefault();
-            targetCameraZ = clamp(targetCameraZ + event.deltaY * 0.004, 4.8, 8.2);
+            targetCameraZ = clamp(targetCameraZ + event.deltaY * 0.004, 4.8, 9.4);
           },
           { passive: false },
         );
@@ -2420,7 +2612,8 @@
           if (event.key === "Escape" || event.key.toLowerCase() === "r") {
             rotation.targetX = INITIAL_ROTATION.x;
             rotation.targetY = INITIAL_ROTATION.y;
-            targetCameraZ = window.innerWidth < 720 ? 7.8 : 6.7;
+            const { isMobile, isPortrait } = getViewportLayout();
+            targetCameraZ = isMobile ? 8.9 : isPortrait ? 8.45 : 6.7;
           }
         });
 
@@ -2437,19 +2630,21 @@
             view.camera.position.z = cameraZ;
           },
           resize() {
-            const width = window.innerWidth;
-            const height = window.innerHeight;
-            const mobile = width < 720;
+            const { width, height, isMobile, isPortrait } = getViewportLayout();
             view.camera.aspect = width / height;
-            view.camera.position.z = mobile ? 7.8 : 6.7;
+            view.camera.position.z = isMobile ? 8.9 : isPortrait ? 8.45 : 6.7;
             targetCameraZ = view.camera.position.z;
             cameraZ = view.camera.position.z;
             view.camera.updateProjectionMatrix();
             view.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
             view.renderer.setSize(width, height);
-            view.brain.scale.setScalar(mobile ? 0.78 : 1.16);
-            view.brain.position.y = mobile ? -0.18 : -0.12;
-            view.shell.scale.set(mobile ? 1.07 : 1.28, mobile ? 0.72 : 0.82, mobile ? 0.76 : 0.9);
+            view.brain.scale.setScalar(isMobile ? 0.7 : isPortrait ? 0.82 : 1.16);
+            view.brain.position.y = isMobile ? -0.08 : isPortrait ? -0.02 : -0.12;
+            view.shell.scale.set(
+              isMobile ? 0.98 : isPortrait ? 1.08 : 1.28,
+              isMobile ? 0.66 : isPortrait ? 0.7 : 0.82,
+              isMobile ? 0.7 : isPortrait ? 0.76 : 0.9,
+            );
           },
         };
       }
