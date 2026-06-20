@@ -840,6 +840,7 @@
           id: "temporal",
           region: "Temporal Memory Region",
           folder: "papers/",
+          homepagePath: "papers/",
           sentence: "Paper notes and literature evidence.",
           type: "surface",
           color: CYBER_INK_PALETTE.pineGreen,
@@ -868,7 +869,7 @@
       ];
 
       function getModuleHomepageUrl(module) {
-        return `${GITHUB_FOLDER_BASE}${module.folder}`;
+        return module.homepagePath ?? `${GITHUB_FOLDER_BASE}${module.folder}`;
       }
 
       let app = null;

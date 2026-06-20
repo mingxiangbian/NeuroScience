@@ -278,6 +278,7 @@ assert.match(body, /data-module="cingulate"/, "exploded view should expose the p
 assert.match(body, /data-module="hippocampal"/, "exploded view should expose the internal Hippocampal module");
 assert.match(body, /knowledge\//, "Association Cortex should map to knowledge/");
 assert.match(body, /papers\//, "Temporal Memory Region should map to papers/");
+assert.match(body, /folder: "papers\/"[\s\S]*homepagePath: "papers\/"/, "Temporal Memory Region should enter the local static papers workbench instead of the GitHub folder listing");
 assert.match(body, /projects\//, "Prefrontal Planning Region should map to projects/");
 assert.match(body, /questions\//, "Cingulate Question Region should map to questions/");
 assert.match(body, /sessions\//, "Hippocampal Session Region should map to sessions/");
