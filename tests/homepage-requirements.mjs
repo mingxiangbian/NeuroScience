@@ -257,12 +257,14 @@ assert.doesNotMatch(body, /display-module-pin-pad/, "display modules should not 
 assert.match(body, /setDisplayModuleState/, "display modules should react to expanded and selected project state");
 assert.match(body, /paintDisplayTexture/, "display modules should draw folder and selected project information onto the screen texture");
 assert.match(body, /getModuleHomepageUrl\(module\)/, "module folder destinations should be generated from the same homepage helper");
+assert.match(body, /function navigateToModuleHomepage\(module\)[\s\S]*window\.location\.assign\(getModuleHomepageUrl\(module\)\)/, "module labels should reuse the same homepage helper when navigating");
 assert.match(body, /group\.userData\.moduleUrl = getModuleHomepageUrl\(module\)/, "each display module should store its matching project homepage URL");
 assert.doesNotMatch(chipLayout, /component:\s*"project-display"/, "chip layout should not repeat the same project-display component type on every module");
 assert.match(body, /getDisplayTargets\(\)/, "GPU pedestal should expose display targets for click navigation");
 assert.match(body, /findDisplayModuleFromObject/, "screen clicks should resolve the display module from a raycast hit");
 assert.match(body, /raycaster\.intersectObjects\(displayTargets, true\)/, "screen click detection should raycast against display modules");
 assert.match(body, /window\.location\.assign\(moduleTarget\.userData\.moduleUrl\)/, "clicking a display should enter the matching project homepage");
+assert.match(body, /state\.expanded && state\.selected === button\.dataset\.module[\s\S]*navigateToModuleHomepage\(module\)/, "clicking an already-selected module label should enter that module page");
 assert.doesNotMatch(body, /memory-array|layered-evidence-stack|control-core|uncertainty-gate|ring-buffer|io-port/, "old abstract chip symbols should not remain after switching to display modules");
 assert.match(body, /view\.scene\.add\(gpuPedestal\.group\)/, "GPU pedestal should be added without replacing the brain group");
 assert.match(body, /gpuPedestal\.update\(elapsed, moduleUi\.getState\(\)\)/, "GPU pedestal should follow the existing expanded and selected module state");

@@ -872,6 +872,10 @@
         return module.homepagePath ?? `${GITHUB_FOLDER_BASE}${module.folder}`;
       }
 
+      function navigateToModuleHomepage(module) {
+        window.location.assign(getModuleHomepageUrl(module));
+      }
+
       let app = null;
 
       function activateFallback() {
@@ -1334,7 +1338,13 @@
         moduleButtons.forEach((button) => {
           button.addEventListener("click", (event) => {
             event.stopPropagation();
-            selectModule(button.dataset.module);
+            const module = MODULES.find((candidate) => candidate.id === button.dataset.module);
+            if (!module) return;
+            if (state.expanded && state.selected === button.dataset.module) {
+              navigateToModuleHomepage(module);
+              return;
+            }
+            selectModule(module.id);
           });
         });
 
