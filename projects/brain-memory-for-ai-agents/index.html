@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Brain Memory for AI Agents | NeuroScience x AI</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='20' fill='%23f4efe3'/%3E%3Cpath fill='%231f2724' d='M39 12C22 21 14 34 14 49c0 16 9 29 25 35-8-13-10-25-5-36-5-10-3-22 5-36Z'/%3E%3Cpath fill='%231f2724' d='M57 12c17 9 25 22 25 37 0 16-9 29-25 35 8-13 10-25 5-36 5-10 3-22-5-36Z'/%3E%3C/svg%3E" />
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #1f2724;
+        --ink-muted: rgba(31, 39, 36, 0.66);
+        --paper: #f4efe3;
+        --paper-soft: #fbf8ef;
+        --paper-warm: #e8dcc8;
+        --edge: rgba(31, 39, 36, 0.18);
+        --edge-strong: rgba(31, 39, 36, 0.3);
+        --blue: #2e6f77;
+        --green: #517c57;
+        --cinnabar: #b24338;
+        --shadow: rgba(42, 35, 25, 0.12);
+        font-family:
+          "Inter", "SF Pro Display", "PingFang SC", "Noto Sans SC", system-ui,
+          sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--ink);
+        background:
+          linear-gradient(rgba(31, 39, 36, 0.045) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(31, 39, 36, 0.04) 1px, transparent 1px),
+          linear-gradient(145deg, var(--paper-soft) 0%, var(--paper) 58%, var(--paper-warm) 100%);
+        background-size:
+          68px 68px,
+          68px 68px,
+          auto;
+      }
+
+      body::before {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        content: "";
+        pointer-events: none;
+        background:
+          repeating-linear-gradient(9deg, transparent 0 18px, rgba(107, 86, 52, 0.035) 18px 19px),
+          repeating-linear-gradient(91deg, transparent 0 32px, rgba(31, 39, 36, 0.026) 32px 33px);
+        mix-blend-mode: multiply;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .shell {
+        width: min(1120px, calc(100vw - 32px));
+        margin: 0 auto;
+        padding: clamp(22px, 5vw, 56px) 0 52px;
+      }
+
+      .back-link {
+        display: inline-flex;
+        width: fit-content;
+        margin-bottom: 30px;
+        border-bottom: 1px solid rgba(31, 39, 36, 0.26);
+        color: var(--ink-muted);
+        font-size: 14px;
+        text-decoration: none;
+      }
+
+      .back-link:hover {
+        color: var(--blue);
+      }
+
+      .back-link:focus-visible,
+      .topic-link:focus-visible {
+        outline: 2px solid rgba(46, 111, 119, 0.58);
+        outline-offset: 4px;
+      }
+
+      h1 {
+        max-width: 980px;
+        margin: 0 0 28px;
+        font-family: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
+        font-size: clamp(48px, 9vw, 104px);
+        font-weight: 760;
+        letter-spacing: 0;
+        line-height: 0.98;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+
+      .summary {
+        max-width: 760px;
+        margin: 0 0 36px;
+        color: var(--ink-muted);
+        font-size: 18px;
+        line-height: 1.75;
+      }
+
+      .topic-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+        gap: 12px;
+      }
+
+      .topic-link {
+        display: grid;
+        min-height: 118px;
+        align-content: end;
+        border: 1px solid var(--edge);
+        border-radius: 8px;
+        background: rgba(251, 248, 239, 0.72);
+        padding: 16px;
+        text-decoration: none;
+        box-shadow:
+          inset 0 0 0 1px rgba(255, 252, 244, 0.54),
+          0 16px 36px var(--shadow);
+        transition:
+          transform 160ms ease,
+          border-color 160ms ease,
+          background 160ms ease;
+      }
+
+      .topic-link:hover {
+        border-color: rgba(46, 111, 119, 0.42);
+        background: rgba(251, 248, 239, 0.86);
+        transform: translateY(-2px);
+      }
+
+      .topic-link strong {
+        font-family: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
+        font-size: 24px;
+        font-weight: 650;
+        letter-spacing: 0;
+        line-height: 1.12;
+      }
+
+      @media (max-width: 720px) {
+        .shell {
+          width: calc(100vw - 24px);
+          padding-top: 18px;
+        }
+
+        .summary {
+          font-size: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body data-page="project-topic">
+    <main class="shell">
+      <a class="back-link" href="../index.html">Research Projects</a>
+      <h1>Brain Memory for AI Agents</h1>
+      <p class="summary">
+        人脑记忆机制如何约束 AI Agent 的长期 memory 设计：从 encoding、retrieval、consolidation 到 forgetting。
+      </p>
+
+      <section class="topic-grid" aria-label="Project files">
+        <a class="topic-link" href="README.md"><strong>Project README</strong></a>
+        <a class="topic-link" href="research-roadmap.md"><strong>Research Roadmap</strong></a>
+        <a class="topic-link" href="hypotheses.md"><strong>Hypotheses</strong></a>
+        <a class="topic-link" href="mechanism-to-agent-design.md"><strong>Mechanism Mapping</strong></a>
+        <a class="topic-link" href="../../papers/brain-memory-for-ai-agents/"><strong>Paper Topic</strong></a>
+      </section>
+    </main>
+  </body>
+</html>

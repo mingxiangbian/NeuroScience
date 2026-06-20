@@ -51,6 +51,7 @@ for (const [index, project] of manifest.entries()) {
   assert.equal(typeof project.folder, "string", `project record ${project.id} should include a project folder`);
   assert.match(project.folder, /^[a-z0-9]+(?:-[a-z0-9]+)*\/$/, `project record ${project.id} folder should be a relative project directory`);
   assert.equal(existsSync(new URL(`../papers/${project.folder}`, import.meta.url)), true, `project record ${project.id} folder should exist under papers/`);
+  assert.equal(existsSync(new URL(`../papers/${project.folder}index.html`, import.meta.url)), true, `project record ${project.id} folder should expose a static topic page`);
   assert.equal(typeof project.summary, "string", `project record ${project.id} should include a summary`);
   assert.ok(project.summary.trim().length > 0, `project record ${project.id} summary should not be blank`);
   assert.equal(allowedStatuses.has(project.status), true, `project record ${project.id} should use an allowed status`);

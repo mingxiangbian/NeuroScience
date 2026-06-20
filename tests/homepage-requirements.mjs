@@ -282,6 +282,7 @@ assert.match(body, /knowledge\//, "Association Cortex should map to knowledge/")
 assert.match(body, /papers\//, "Temporal Memory Region should map to papers/");
 assert.match(body, /folder: "papers\/"[\s\S]*homepagePath: "papers\/"/, "Temporal Memory Region should enter the local static papers workbench instead of the GitHub folder listing");
 assert.match(body, /projects\//, "Prefrontal Planning Region should map to projects/");
+assert.match(body, /folder: "projects\/"[\s\S]*homepagePath: "projects\/"/, "Prefrontal Planning Region should enter the local static projects page instead of the GitHub folder listing");
 assert.match(body, /questions\//, "Cingulate Question Region should map to questions/");
 assert.match(body, /sessions\//, "Hippocampal Session Region should map to sessions/");
 assert.match(body, /sources\//, "Parietal Source Integration Region should map to sources/");
