@@ -6,6 +6,22 @@
     <title>文献阁 | NeuroScience x AI</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='20' fill='%23f4efe3'/%3E%3Cpath fill='%231f2724' d='M39 12C22 21 14 34 14 49c0 16 9 29 25 35-8-13-10-25-5-36-5-10-3-22 5-36Z'/%3E%3Cpath fill='%231f2724' d='M57 12c17 9 25 22 25 37 0 16-9 29-25 35 8-13 10-25 5-36 5-10 3-22-5-36Z'/%3E%3C/svg%3E" />
     <style>
+      @font-face {
+        font-family: "WenXianGe Title";
+        src: url("../assets/fonts/MaShanZheng-WenXianGe.woff2") format("woff2");
+        font-display: swap;
+        font-style: normal;
+        font-weight: 400;
+      }
+
+      @font-face {
+        font-family: "WenXianGe Bookmark";
+        src: url("../assets/fonts/ZhiMangXing-Bookmark.woff2") format("woff2");
+        font-display: swap;
+        font-style: normal;
+        font-weight: 400;
+      }
+
       :root {
         color-scheme: light;
         --ink: #1f2724;
@@ -26,6 +42,13 @@
         --seal-red: #b24338;
         --gold: #a47c38;
         --ink-shadow: rgba(42, 35, 25, 0.14);
+        --title-calligraphy-font:
+          "WenXianGe Title", "Ma Shan Zheng", "HanziPen SC", "Hannotate SC",
+          "Kaiti SC", "STKaiti", "KaiTi", "Songti SC", serif;
+        --bookmark-calligraphy-font:
+          "WenXianGe Bookmark", "Zhi Mang Xing", "HanziPen SC",
+          "Hannotate SC", "Kaiti SC", "STKaiti", "KaiTi", "Songti SC",
+          serif;
         --brush-font:
           "HanziPen SC", "Hannotate SC", "Xingkai SC", "STXingkai",
           "Kaiti SC", "STKaiti", "KaiTi", "FZKai-Z03", "Noto Serif CJK SC",
@@ -185,13 +208,16 @@
         max-width: none;
         max-height: min(70vh, 620px);
         margin: 0;
-        font-family: var(--brush-font);
+        font-family: var(--title-calligraphy-font);
         font-size: clamp(66px, 8vw, 116px);
-        font-weight: 600;
+        font-weight: 400;
         font-synthesis-weight: none;
         letter-spacing: 0;
         line-height: 0.94;
-        text-shadow: 0 0 0.5px rgba(31, 39, 36, 0.24);
+        text-shadow:
+          0 0 0.5px rgba(31, 39, 36, 0.34),
+          0 6px 20px rgba(31, 39, 36, 0.08);
+        filter: drop-shadow(0 0 0.45px rgba(31, 39, 36, 0.42));
         writing-mode: vertical-rl;
         text-orientation: upright;
         white-space: nowrap;
@@ -211,6 +237,7 @@
       }
 
       .project-card {
+        --card-lift: 0px;
         position: relative;
         isolation: isolate;
         display: grid;
@@ -243,6 +270,7 @@
           transform 160ms ease,
           background 160ms ease,
           box-shadow 160ms ease;
+        transform: translateY(var(--card-lift));
       }
 
       .project-card::before {
@@ -272,12 +300,14 @@
         pointer-events: none;
         background:
           radial-gradient(circle at 50% 24px, rgba(31, 39, 36, 0.2) 0 3px, rgba(255, 255, 255, 0.7) 3.8px 7.5px, rgba(24, 60, 73, 0.12) 8px 9px, transparent 9.5px),
-          linear-gradient(90deg, transparent calc(50% - 0.65px), rgba(112, 38, 34, 0.4) calc(50% - 0.65px) calc(50% + 0.65px), transparent calc(50% + 0.65px)),
+          radial-gradient(circle at 50% 42px, rgba(112, 38, 34, 0.5) 0 2.5px, rgba(255, 255, 255, 0.26) 2.6px 4px, transparent 4.2px),
+          linear-gradient(90deg, transparent calc(50% - 0.65px), rgba(112, 38, 34, 0.42) calc(50% - 0.65px) calc(50% + 0.65px), transparent calc(50% + 0.65px)),
           linear-gradient(90deg, rgba(255, 255, 255, 0.2), transparent 16% 82%, rgba(255, 255, 255, 0.15)),
-          linear-gradient(90deg, transparent 0 48%, rgba(24, 60, 73, 0.09) 49% 51%, transparent 52% 100%),
+          linear-gradient(90deg, transparent 0 47%, rgba(24, 60, 73, 0.035) 49.6% 50.4%, transparent 53% 100%),
           repeating-linear-gradient(12deg, transparent 0 16px, rgba(109, 88, 53, 0.026) 16px 17px),
           radial-gradient(circle at 50% 44%, rgba(255, 255, 255, 0.34), transparent 58%);
         background-repeat:
+          no-repeat,
           no-repeat,
           no-repeat,
           repeat,
@@ -286,20 +316,30 @@
           no-repeat;
         background-size:
           auto,
-          100% 48px,
           auto,
-          100% 100%,
+          100% 54px,
+          auto,
+          100% calc(100% - 120px),
           auto,
           auto;
         background-position:
           center top,
           center top,
+          center top,
           center center,
-          center center,
+          center 74px,
           center center,
           center center;
         mix-blend-mode: multiply;
         opacity: 0.7;
+      }
+
+      .project-card:nth-child(3n + 2) {
+        --card-lift: -18px;
+      }
+
+      .project-card:nth-child(3n) {
+        --card-lift: 14px;
       }
 
       .project-card:hover {
@@ -316,7 +356,7 @@
           inset -10px 0 22px rgba(24, 60, 73, 0.055),
           0 42px 112px rgba(42, 35, 25, 0.18),
           0 14px 38px rgba(24, 60, 73, 0.12);
-        transform: translateY(-3px);
+        transform: translateY(calc(var(--card-lift) - 3px));
       }
 
       .project-card h2 {
@@ -327,9 +367,9 @@
         max-height: calc(100% - 28px);
         margin: 0;
         color: var(--dai-blue);
-        font-family: var(--brush-font);
+        font-family: var(--bookmark-calligraphy-font);
         font-size: clamp(25px, 2.4vw, 34px);
-        font-weight: 600;
+        font-weight: 400;
         font-synthesis-weight: none;
         letter-spacing: 0;
         line-height: 1;
@@ -451,6 +491,11 @@
           width: clamp(108px, 32vw, 132px);
           height: clamp(360px, 58vh, 440px);
           padding-top: 96px;
+        }
+
+        .project-card:nth-child(3n + 2),
+        .project-card:nth-child(3n) {
+          --card-lift: 0px;
         }
 
         .project-card h2 {
