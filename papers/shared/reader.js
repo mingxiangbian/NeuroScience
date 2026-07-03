@@ -196,9 +196,8 @@ function markSectionNeighbors(activeIndex) {
   });
 }
 
-function renderPaperHeader(reading) {
-  const paperData = reading?.paperData ?? state.currentPaper;
-  const actions = [
+function renderPaperLinks(paperData) {
+  return [
     paperData.sourceFile || state.currentPaper.localFile
       ? `<a href="${escapeHtml(paperData.sourceFile ?? state.currentPaper.localFile)}">原文</a>`
       : "",
@@ -209,6 +208,10 @@ function renderPaperHeader(reading) {
       ? `<a href="${escapeHtml(paperData.source ?? state.currentPaper.source)}">来源</a>`
       : ""
   ].filter(Boolean).join("");
+}
+
+function renderPaperHeader(reading) {
+  const paperData = reading?.paperData ?? state.currentPaper;
   const sections = (paperData.sections ?? [])
     .map((section) => `<button class="section-chip" type="button" data-section-id="${escapeHtml(section.id)}">${escapeHtml(section.title)}</button>`)
     .join("");
@@ -219,7 +222,7 @@ function renderPaperHeader(reading) {
     <p class="paper-meta">${escapeHtml([paperData.authors, paperData.year].filter(Boolean).join(" · "))}</p>
     ${paperData.relation ? `<p class="paper-meta">${escapeHtml(paperData.relation)}</p>` : ""}
     ${paperData.description ? `<p class="paper-meta">${escapeHtml(paperData.description)}</p>` : ""}
-    <div class="paper-actions">${actions}</div>
+    <div class="paper-actions"></div>
     <div class="section-chips">${sections}</div>
   `;
 
@@ -233,6 +236,11 @@ function renderPaperHeader(reading) {
 
 function renderNoChunkPaper() {
   renderPaperHeader(null);
+  const actions = els.paperHeader.querySelector(".paper-actions");
+  if (actions) {
+    actions.classList.add("is-fallback-only");
+    actions.innerHTML = renderPaperLinks(state.currentPaper);
+  }
   els.chunkList.innerHTML = `
     <article class="status-panel">
       <h2>${escapeHtml(state.currentPaper.shortTitle ?? state.currentPaper.title)}</h2>
@@ -328,16 +336,24 @@ function renderChunks(reading) {
   observeChunks(reading);
 }
 
+function renderNoteSurface(surface, note) {
+  surface.textContent = note ?? "";
+  surface.classList.remove("is-changing");
+}
+
 function updateNoteSurface(chunkId, note) {
   const label = chunkId ? `Parallel note · ${chunkId}` : "Parallel note";
   els.noteLabel.textContent = label;
   els.mobileNoteLabel.textContent = label;
   for (const surface of [els.noteSurface, els.mobileNoteSurface]) {
     surface.classList.add("is-changing");
-    setTimeout(() => {
-      surface.textContent = note ?? "";
-      surface.classList.remove("is-changing");
-    }, 90);
+    window.setTimeout(() => renderNoteSurface(surface, note), 90);
+  }
+}
+
+function updateActiveSectionRail(sectionId) {
+  for (const line of els.sectionLines.children) {
+    line.classList.toggle("is-active", line.dataset.sectionId === sectionId);
   }
 }
 
@@ -347,9 +363,7 @@ function setActiveChunk(reading, chunkId) {
   const chunk = reading.chunks.find((entry) => entry.id === chunkId);
   const note = reading.notes.get(chunkId) ?? "";
   updateNoteSurface(chunkId, note);
-  for (const line of els.sectionLines.children) {
-    line.classList.toggle("is-active", line.dataset.sectionId === chunk?.sectionId);
-  }
+  updateActiveSectionRail(chunk?.sectionId);
 }
 
 function observeChunks(reading) {
@@ -371,6 +385,7 @@ async function openPaper(paperId) {
   const paper = getPaperById(paperId);
   if (!paper) return;
   state.currentPaper = paper;
+  state.activeChunkId = null;
   renderPaperNav();
   const reading = await loadReadingPackage(paper);
   state.currentReading = reading;
@@ -428,15 +443,17 @@ function runSearch(query) {
 }
 
 function bindControls() {
+  syncResponsiveState();
   els.toggleLeft.addEventListener("click", () => {
-    if (window.matchMedia("(max-width: 760px)").matches) {
+    if (window.matchMedia("(max-width: 860px)").matches) {
       els.shell.classList.toggle("is-mobile-left-open");
+      els.shell.classList.remove("is-left-collapsed");
       return;
     }
     els.shell.classList.toggle("is-left-collapsed");
   });
   els.toggleNote.addEventListener("click", () => {
-    if (window.matchMedia("(max-width: 760px)").matches) {
+    if (window.matchMedia("(max-width: 860px)").matches) {
       els.shell.classList.toggle("is-mobile-note-open");
       return;
     }
@@ -454,9 +471,19 @@ function bindControls() {
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
       els.searchResults.hidden = true;
-      els.shell.classList.remove("is-searching", "is-mobile-note-open");
+      els.shell.classList.remove("is-searching", "is-mobile-left-open", "is-mobile-note-open");
     }
   });
+  window.addEventListener("resize", syncResponsiveState);
+}
+
+function syncResponsiveState() {
+  const narrow = window.matchMedia("(max-width: 1100px)").matches;
+  const mobile = window.matchMedia("(max-width: 860px)").matches;
+  els.shell.classList.toggle("is-note-collapsed", narrow && !mobile);
+  if (!mobile) {
+    els.shell.classList.remove("is-mobile-left-open", "is-mobile-note-open");
+  }
 }
 
 async function initReader() {

@@ -33,6 +33,8 @@ assert.match(html, /id="reader-main"/, "reader should include the center chunk r
 assert.match(html, /id="note-panel"/, "reader should include the right continuous note panel");
 assert.match(html, /id="mobile-note-drawer"/, "reader should include the mobile note drawer");
 assert.match(html, /id="global-search"/, "reader should include a centered global search input");
+assert.match(html, /placeholder="Searching\.\.\."/,
+  "reader search placeholder should be concise and international");
 assert.match(html, /id="toggle-left"/, "reader should include a left directory collapse control");
 assert.match(html, /id="toggle-note"/, "reader should include a right note panel collapse control");
 assert.match(html, /id="toggle-theme"/, "reader should include a night mode toggle");
@@ -40,8 +42,16 @@ assert.doesNotMatch(html, /id="paper-list"|class="paper-list"|本地 paper 列�
 
 assert.match(css, /data-theme="dark"/, "reader CSS should support night mode");
 assert.match(css, /backdrop-filter:\s*blur\(/, "reader CSS should use glass surfaces");
+assert.match(css, /--toolbar-offset/, "reader CSS should define a toolbar offset for fixed reader panels");
+assert.match(css, /--reader-glass-highlight/, "reader CSS should define a glass edge highlight token");
+assert.match(css, /--reader-glass-edge/, "reader CSS should define a glass border token");
 assert.match(css, /\.reader-shell\s*\{[\s\S]*grid-template-columns:/, "reader CSS should define a desktop three-column reader layout");
-assert.match(css, /@media \(max-width:\s*760px\)/, "reader CSS should define a narrow/mobile reader layout");
+assert.match(css, /\.reader-sidebar\s*\{[\s\S]*position:\s*sticky/, "paper directory should stay fixed in the viewport through sticky positioning");
+assert.match(css, /\.note-panel\s*\{[\s\S]*position:\s*sticky/, "parallel note panel should stay fixed in the viewport through sticky positioning");
+assert.match(css, /\.reader-shell\.is-left-collapsed \.section-rail\s*\{[\s\S]*display:\s*flex/, "section rail should only appear when the desktop left panel is collapsed");
+assert.match(css, /@media \(max-width:\s*1100px\)[\s\S]*is-note-collapsed/, "reader CSS should prioritize the main reader on narrow desktop widths");
+assert.match(css, /@media \(max-width:\s*860px\)/, "reader CSS should define a portrait/mobile reader layout");
+assert.match(css, /@media \(max-width:\s*860px\)[\s\S]*\.section-rail[\s\S]*display:\s*none/, "mobile layout should hide the collapsed section rail");
 assert.match(css, /\.paper-nav-item\[aria-current="true"\]/, "expanded paper directory should show selected rows with a pressed state");
 assert.match(css, /\.section-line:hover/, "collapsed section index should support hover line focus");
 assert.match(css, /\.section-line\.is-neighbor/, "collapsed section index should support adjacent line wave by length");
@@ -53,6 +63,9 @@ assert.match(css, /\.code-block/, "reader CSS should style code blocks");
 assert.match(css, /\.table-block/, "reader CSS should style table blocks");
 assert.match(css, /\.figure-frame/, "reader CSS should style figure references with constrained dimensions");
 assert.match(css, /\.search-results\s+\.result-item\s*\+ \.result-item/, "search results should use line separators");
+assert.match(css, /\.paper-actions\.is-fallback-only/, "source links should be available only in the no-chunk fallback state");
+assert.match(css, /\.section-chip[\s\S]*background:\s*transparent/, "section anchors should be quiet ghost controls");
+assert.doesNotMatch(css, /border-radius:\s*24px|border-radius:\s*28px/, "reader shell should avoid oversized card radii");
 assert.doesNotMatch(css, /emoji/i, "reader style should not depend on emoji as the main visual language");
 
 assert.match(js, /const PROJECT_ID = "brain-memory-for-ai-agents"/, "reader JS should bind the current project id for this project instance");
@@ -63,6 +76,12 @@ assert.match(js, /readings\/\$\{paper\.id\}\/notes\.json/, "reader should load p
 assert.match(js, /readings\/\$\{paper\.id\}\/embeddings\.json/, "reader should load per-paper embeddings.json data");
 assert.match(js, /readings\/\$\{paper\.id\}\/figures\.json/, "reader should attempt optional figures.json data");
 assert.match(js, /IntersectionObserver/, "reader should keep the note panel aligned to the visible chunk");
+assert.match(js, /function renderPaperLinks/, "reader should isolate source links for fallback metadata only");
+assert.match(js, /<div class="paper-actions"><\/div>/, "normal chunked paper headers should not render source action links");
+assert.match(js, /actions\.classList\.add\("is-fallback-only"\)/, "no-chunk fallback should mark source links as fallback-only");
+assert.match(js, /function renderNoteSurface/, "note panel should render through a stable root surface");
+assert.match(js, /function syncResponsiveState/, "reader should synchronize desktop and mobile shell state by breakpoint");
+assert.match(js, /function updateActiveSectionRail/, "section rail active state should be updated independently from hover state");
 assert.match(js, /cosineSimilarity/, "reader should perform local vector ranking");
 assert.match(js, /sourceText[\s\S]*zhExplanation/, "reader search should use sourceText and zhExplanation");
 assert.match(js, /no found/, "reader should show no found for empty search results");
@@ -70,6 +89,7 @@ assert.match(js, /renderMathBlock/, "reader should render math blocks");
 assert.match(js, /renderCodeBlock/, "reader should render code blocks");
 assert.match(js, /renderTableBlock/, "reader should render table blocks");
 assert.match(js, /figureRefs/, "reader should resolve cross-page figure references");
+assert.match(js, /hasFile \?[\s\S]*<img[\s\S]*: `[\s\S]*figure-placeholder/, "reader should not render broken images for figures without files");
 assert.match(js, /renderNoChunkPaper/, "reader should render real metadata for papers without chunk packages");
 assert.doesNotMatch(js, /\/api\/|localhost|127\.0\.0\.1|openai|anthropic|generateAnswer|chatCompletion|SurrealDB/i, "reader should stay static without backend, provider keys, AI answers, or hard SurrealDB dependency");
 

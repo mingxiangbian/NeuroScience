@@ -9,6 +9,10 @@
   --reader-line-strong: rgba(31, 39, 36, 0.32);
   --reader-glass: rgba(252, 249, 239, 0.58);
   --reader-glass-strong: rgba(252, 249, 239, 0.78);
+  --reader-glass-highlight: rgba(255, 255, 255, 0.72);
+  --reader-glass-edge: rgba(255, 255, 255, 0.46);
+  --reader-panel-blur: blur(30px) saturate(1.24);
+  --toolbar-offset: 86px;
   --reader-blue: #183c49;
   --reader-red: #a64338;
   --reader-shadow: rgba(42, 35, 25, 0.14);
@@ -31,6 +35,8 @@
   --reader-line-strong: rgba(238, 240, 231, 0.34);
   --reader-glass: rgba(24, 31, 29, 0.62);
   --reader-glass-strong: rgba(29, 37, 35, 0.82);
+  --reader-glass-highlight: rgba(255, 255, 255, 0.18);
+  --reader-glass-edge: rgba(255, 255, 255, 0.16);
   --reader-blue: #9cc9cf;
   --reader-red: #ca6a60;
   --reader-shadow: rgba(0, 0, 0, 0.32);
@@ -99,25 +105,26 @@ input {
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr;
-  grid-template-columns: minmax(210px, 250px) minmax(0, 1fr) minmax(230px, 300px);
+  grid-template-columns: minmax(198px, 238px) minmax(0, 1fr) minmax(230px, 290px);
   grid-template-areas:
     "toolbar toolbar toolbar"
     "directory main notes";
-  gap: 14px;
-  padding: 14px;
+  column-gap: clamp(8px, 1.2vw, 14px);
+  row-gap: 10px;
+  padding: 10px clamp(8px, 1.4vw, 16px) 0;
   transition: grid-template-columns 180ms ease;
 }
 
 .reader-shell.is-left-collapsed {
-  grid-template-columns: 58px minmax(0, 1fr) minmax(230px, 300px);
+  grid-template-columns: 52px minmax(0, 1fr) minmax(230px, 290px);
 }
 
 .reader-shell.is-note-collapsed {
-  grid-template-columns: minmax(210px, 250px) minmax(0, 1fr) 0;
+  grid-template-columns: minmax(198px, 238px) minmax(0, 1fr) 0;
 }
 
 .reader-shell.is-left-collapsed.is-note-collapsed {
-  grid-template-columns: 58px minmax(0, 1fr) 0;
+  grid-template-columns: 52px minmax(0, 1fr) 0;
 }
 
 .reader-toolbar {
@@ -129,15 +136,16 @@ input {
   grid-template-columns: auto minmax(260px, 0.58fr) auto;
   gap: 14px;
   align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.52);
+  border: 1px solid var(--reader-glass-edge);
   border-radius: 14px;
   background: var(--reader-glass);
   padding: 10px 12px;
-  backdrop-filter: blur(24px) saturate(1.16);
-  -webkit-backdrop-filter: blur(24px) saturate(1.16);
+  backdrop-filter: var(--reader-panel-blur);
+  -webkit-backdrop-filter: var(--reader-panel-blur);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.68),
-    0 18px 46px rgba(42, 35, 25, 0.12);
+    inset 0 1px 0 var(--reader-glass-highlight),
+    inset 0 0 24px rgba(255, 255, 255, 0.1),
+    0 18px 48px var(--reader-shadow);
 }
 
 .toolbar-left,
@@ -192,7 +200,7 @@ input {
 .toolbar-search {
   position: relative;
   justify-self: center;
-  width: min(620px, 100%);
+  width: min(520px, 100%);
 }
 
 .toolbar-search input {
@@ -216,9 +224,9 @@ input {
   z-index: 20;
   opacity: 0;
   pointer-events: none;
-  background: rgba(244, 239, 227, 0.26);
-  backdrop-filter: blur(10px) saturate(1.08);
-  -webkit-backdrop-filter: blur(10px) saturate(1.08);
+  background: rgba(244, 239, 227, 0.32);
+  backdrop-filter: blur(16px) saturate(1.12);
+  -webkit-backdrop-filter: blur(16px) saturate(1.12);
   transition: opacity 140ms ease;
 }
 
@@ -271,21 +279,27 @@ input {
 
 .reader-sidebar {
   grid-area: directory;
+  position: sticky;
+  top: var(--toolbar-offset);
+  align-self: start;
   min-width: 0;
+  height: calc(100vh - var(--toolbar-offset) - 12px);
 }
 
 .directory-surface,
-.note-panel {
-  height: calc(100vh - 96px);
+.note-panel,
+.section-rail {
+  height: calc(100vh - var(--toolbar-offset) - 12px);
   overflow: auto;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--reader-glass-edge);
   border-radius: 16px;
   background: var(--reader-glass);
-  backdrop-filter: blur(24px) saturate(1.16);
-  -webkit-backdrop-filter: blur(24px) saturate(1.16);
+  backdrop-filter: var(--reader-panel-blur);
+  -webkit-backdrop-filter: var(--reader-panel-blur);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.66),
-    0 18px 48px rgba(42, 35, 25, 0.1);
+    inset 0 1px 0 var(--reader-glass-highlight),
+    inset 0 0 24px rgba(255, 255, 255, 0.1),
+    0 18px 48px var(--reader-shadow);
 }
 
 .directory-surface {
@@ -331,13 +345,8 @@ input {
 
 .section-rail {
   display: none;
-  height: calc(100vh - 96px);
   align-items: center;
   justify-content: center;
-  border-radius: 16px;
-  background: var(--reader-glass);
-  backdrop-filter: blur(24px) saturate(1.16);
-  -webkit-backdrop-filter: blur(24px) saturate(1.16);
 }
 
 .section-lines {
@@ -406,12 +415,12 @@ input {
 .reader-main {
   grid-area: main;
   min-width: 0;
-  padding: 4px 0 60px;
+  padding: 6px 0 72px;
 }
 
 .paper-header {
-  margin: 6px auto 24px;
-  max-width: 900px;
+  margin: 6px auto 22px;
+  max-width: min(920px, calc(100vw - 40px));
 }
 
 .paper-kicker {
@@ -423,16 +432,20 @@ input {
 .paper-title {
   margin: 0;
   font-family: var(--reader-serif);
-  font-size: clamp(34px, 5vw, 72px);
-  line-height: 1.04;
+  font-size: clamp(30px, 4.2vw, 58px);
+  line-height: 1.08;
   overflow-wrap: anywhere;
   word-break: break-word;
 }
 
 .paper-meta {
   margin: 16px 0 0;
-  color: var(--reader-ink-muted);
+  color: rgba(31, 39, 36, 0.74);
   line-height: 1.7;
+}
+
+[data-theme="dark"] .paper-meta {
+  color: rgba(238, 240, 231, 0.78);
 }
 
 .paper-actions {
@@ -440,6 +453,14 @@ input {
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 14px;
+}
+
+.paper-actions.is-fallback-only {
+  display: flex;
+}
+
+.paper-actions:empty {
+  display: none;
 }
 
 .paper-actions a {
@@ -458,9 +479,10 @@ input {
 .section-chip {
   border: 1px solid var(--reader-line);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.22);
+  background: transparent;
   color: var(--reader-ink-muted);
-  padding: 7px 10px;
+  padding: 5px 8px;
+  font-size: 12px;
   cursor: pointer;
 }
 
@@ -468,7 +490,7 @@ input {
   display: grid;
   gap: 28px;
   min-width: 0;
-  max-width: 900px;
+  max-width: min(920px, calc(100vw - 40px));
   margin: 0 auto;
 }
 
@@ -499,12 +521,12 @@ input {
   min-width: 0;
   max-width: 100%;
   border: 1px solid var(--reader-line);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.34);
-  padding: clamp(18px, 3vw, 26px);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.26);
+  padding: clamp(16px, 2.4vw, 24px);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.62),
-    0 14px 34px rgba(42, 35, 25, 0.08);
+    inset 0 1px 0 rgba(255, 255, 255, 0.52),
+    0 10px 24px rgba(42, 35, 25, 0.055);
 }
 
 .source-paragraph {
@@ -627,7 +649,8 @@ input {
 .note-panel {
   grid-area: notes;
   position: sticky;
-  top: 96px;
+  top: var(--toolbar-offset);
+  align-self: start;
   padding: 16px;
   transition:
     opacity 160ms ease,
@@ -648,7 +671,7 @@ input {
 
 .note-surface {
   min-height: calc(100vh - 160px);
-  border: 1px solid rgba(255, 255, 255, 0.44);
+  border: 1px solid var(--reader-glass-edge);
   border-radius: 14px;
   background:
     linear-gradient(90deg, rgba(255, 255, 255, 0.25), transparent),
@@ -689,19 +712,37 @@ input {
   display: none !important;
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1100px) {
   .reader-shell {
-    grid-template-columns: minmax(190px, 220px) minmax(0, 1fr) minmax(210px, 250px);
+    grid-template-columns: minmax(184px, 210px) minmax(0, 1fr) minmax(210px, 250px);
+  }
+
+  .reader-shell.is-note-collapsed {
+    grid-template-columns: minmax(184px, 210px) minmax(0, 1fr) 0;
+  }
+
+  .reader-shell.is-left-collapsed {
+    grid-template-columns: 52px minmax(0, 1fr) minmax(210px, 250px);
+  }
+
+  .reader-shell.is-left-collapsed.is-note-collapsed {
+    grid-template-columns: 52px minmax(0, 1fr) 0;
+  }
+
+  .reader-shell.is-note-collapsed .note-panel {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(10px);
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 860px) {
   .reader-shell,
   .reader-shell.is-left-collapsed,
   .reader-shell.is-note-collapsed,
   .reader-shell.is-left-collapsed.is-note-collapsed {
     display: block;
-    padding: 10px;
+    padding: 8px;
   }
 
   .reader-toolbar {
@@ -717,19 +758,30 @@ input {
   }
 
   .reader-sidebar,
-  .note-panel {
+  .note-panel,
+  .section-rail,
+  .reader-shell.is-left-collapsed .section-rail {
     display: none;
   }
 
   .reader-shell.is-mobile-left-open .reader-sidebar {
     display: block;
-    margin-top: 12px;
+    position: fixed;
+    left: 8px;
+    right: 8px;
+    top: 72px;
+    z-index: 45;
+    height: min(68vh, 560px);
+    margin-top: 0;
   }
 
-  .directory-surface,
-  .section-rail {
+  .reader-shell.is-mobile-left-open .directory-surface {
+    height: 100%;
+    max-height: none;
+  }
+
+  .directory-surface {
     height: auto;
-    max-height: 62vh;
   }
 
   .reader-main {
@@ -737,7 +789,7 @@ input {
   }
 
   .paper-title {
-    font-size: clamp(34px, 12vw, 54px);
+    font-size: clamp(31px, 11vw, 48px);
   }
 
   .mobile-note-drawer {
@@ -749,13 +801,15 @@ input {
     display: block;
     max-height: 56vh;
     overflow: auto;
-    border: 1px solid rgba(255, 255, 255, 0.52);
+    border: 1px solid var(--reader-glass-edge);
     border-radius: 16px;
     background: var(--reader-glass-strong);
     padding: 14px;
-    backdrop-filter: blur(26px) saturate(1.16);
-    -webkit-backdrop-filter: blur(26px) saturate(1.16);
-    box-shadow: 0 22px 58px var(--reader-shadow);
+    backdrop-filter: var(--reader-panel-blur);
+    -webkit-backdrop-filter: var(--reader-panel-blur);
+    box-shadow:
+      inset 0 1px 0 var(--reader-glass-highlight),
+      0 22px 58px var(--reader-shadow);
     transform: translateY(calc(100% + 18px));
     transition: transform 180ms ease;
   }
