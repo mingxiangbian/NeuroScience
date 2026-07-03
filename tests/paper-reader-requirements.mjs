@@ -45,9 +45,14 @@ assert.match(css, /backdrop-filter:\s*blur\(/, "reader CSS should use glass surf
 assert.match(css, /--toolbar-offset/, "reader CSS should define a toolbar offset for fixed reader panels");
 assert.match(css, /--reader-glass-highlight/, "reader CSS should define a glass edge highlight token");
 assert.match(css, /--reader-glass-edge/, "reader CSS should define a glass border token");
+assert.match(css, /--reader-glass:\s*rgba\(238,\s*247,\s*242,\s*0\.42\)/, "reader glass should use a cool white-green translucent base in light mode");
+assert.match(css, /--reader-glass-strong:\s*rgba\(244,\s*249,\s*245,\s*0\.56\)/, "strong reader glass should stay cool and translucent");
+assert.match(css, /--reader-glass-low:\s*rgba\(244,\s*249,\s*245,\s*0\.2\)/, "reader CSS should define a low-opacity glass wash for linear notes");
+assert.match(css, /--reader-glass-shadow:\s*rgba\(19,\s*45,\s*42,\s*0\.16\)/, "glass shadow should use a cool ink wash instead of warm card shadow");
 assert.match(css, /\.reader-shell\s*\{[\s\S]*grid-template-columns:/, "reader CSS should define a desktop three-column reader layout");
 assert.match(css, /\.reader-sidebar\s*\{[\s\S]*position:\s*sticky/, "paper directory should stay fixed in the viewport through sticky positioning");
 assert.match(css, /\.note-panel\s*\{[\s\S]*position:\s*sticky/, "parallel note panel should stay fixed in the viewport through sticky positioning");
+assert.match(css, /\.directory-surface,\s*\.section-rail\s*\{[\s\S]*border:\s*1px solid var\(--reader-glass-edge\)/, "directory and section rail should keep glass panel borders");
 assert.match(css, /\.reader-shell\.is-left-collapsed \.section-rail\s*\{[\s\S]*display:\s*flex/, "section rail should only appear when the desktop left panel is collapsed");
 assert.match(css, /@media \(max-width:\s*1100px\)[\s\S]*is-note-collapsed/, "reader CSS should prioritize the main reader on narrow desktop widths");
 assert.match(css, /@media \(max-width:\s*860px\)/, "reader CSS should define a portrait/mobile reader layout");
@@ -67,6 +72,15 @@ assert.match(css, /\.paper-actions\.is-fallback-only/, "source links should be a
 assert.match(css, /\.section-chip[\s\S]*background:\s*transparent/, "section anchors should be quiet ghost controls");
 assert.doesNotMatch(css, /border-radius:\s*24px|border-radius:\s*28px/, "reader shell should avoid oversized card radii");
 assert.doesNotMatch(css, /emoji/i, "reader style should not depend on emoji as the main visual language");
+
+const notePanelRule = css.match(/\.note-panel\s*\{(?<body>[\s\S]*?)\n\}/)?.groups?.body ?? "";
+const noteSurfaceRule = css.match(/\.note-surface\s*\{(?<body>[\s\S]*?)\n\}/)?.groups?.body ?? "";
+assert.match(notePanelRule, /border-left:\s*1px solid var\(--reader-note-rule\)/, "note panel should use a left rule instead of a full card border");
+assert.doesNotMatch(notePanelRule, /\bborder:\s*1px solid var\(--reader-glass-edge\)/, "note panel should not render as a full glass card");
+assert.match(noteSurfaceRule, /border:\s*0/, "note surface should not be an inner card");
+assert.match(noteSurfaceRule, /background:\s*transparent/, "note surface should stay visually continuous");
+assert.match(css, /\.note-surface p \+ p\s*\{[\s\S]*border-top:\s*1px solid var\(--reader-note-rule\)/, "parallel notes should be separated by quiet horizontal rules");
+assert.match(css, /@media \(max-width:\s*860px\)[\s\S]*\.note-panel[\s\S]*display:\s*none/, "mobile layout should keep the desktop note line hidden by default");
 
 assert.match(js, /const PROJECT_ID = "brain-memory-for-ai-agents"/, "reader JS should bind the current project id for this project instance");
 assert.match(js, /fetchJson\("\.\.\/manifest\.json"\)/, "reader should load the parent papers manifest");
