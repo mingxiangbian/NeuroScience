@@ -38,7 +38,7 @@ const els = {
   mobileNoteLabel: document.querySelector("#mobile-note-label"),
   searchInput: document.querySelector("#global-search"),
   searchResults: document.querySelector("#search-results"),
-  toggleLeft: document.querySelector("#toggle-left"),
+  toggleLeftControls: document.querySelectorAll("[data-toggle-left]"),
   toggleNote: document.querySelector("#toggle-note"),
   toggleTheme: document.querySelector("#toggle-theme")
 };
@@ -444,14 +444,15 @@ function runSearch(query) {
 
 function bindControls() {
   syncResponsiveState();
-  els.toggleLeft.addEventListener("click", () => {
+  const toggleLeftPanel = () => {
     if (window.matchMedia("(max-width: 860px)").matches) {
       els.shell.classList.toggle("is-mobile-left-open");
       els.shell.classList.remove("is-left-collapsed");
       return;
     }
     els.shell.classList.toggle("is-left-collapsed");
-  });
+  };
+  els.toggleLeftControls.forEach((control) => control.addEventListener("click", toggleLeftPanel));
   els.toggleNote.addEventListener("click", () => {
     if (window.matchMedia("(max-width: 860px)").matches) {
       els.shell.classList.toggle("is-mobile-note-open");
@@ -469,6 +470,11 @@ function bindControls() {
     if (els.searchInput.value.trim()) els.shell.classList.add("is-searching");
   });
   document.addEventListener("keydown", (event) => {
+    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+      event.preventDefault();
+      els.searchInput.focus();
+      els.searchInput.select();
+    }
     if (event.key === "Escape") {
       els.searchResults.hidden = true;
       els.shell.classList.remove("is-searching", "is-mobile-left-open", "is-mobile-note-open");

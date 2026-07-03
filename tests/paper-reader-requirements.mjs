@@ -33,10 +33,17 @@ assert.match(html, /id="reader-main"/, "reader should include the center chunk r
 assert.match(html, /id="note-panel"/, "reader should include the right continuous note panel");
 assert.match(html, /id="mobile-note-drawer"/, "reader should include the mobile note drawer");
 assert.match(html, /id="global-search"/, "reader should include a global search input");
-assert.match(html, /placeholder="Searching\.\.\."/,
-  "reader search placeholder should be concise and international");
-assert.match(html, /<div class="toolbar-right">[\s\S]*<div class="toolbar-search">[\s\S]*id="global-search"[\s\S]*id="toggle-theme"/, "search should live inside the right modular toolbar group");
+assert.match(html, /placeholder="Search"/,
+  "reader search placeholder should be the concise label Search");
+assert.match(html, /class="search-icon"[\s\S]*id="global-search"[\s\S]*class="search-shortcut">⌘ K<\/kbd>/, "search should include a magnifying glass icon and keyboard hint");
+assert.match(html, /<div class="toolbar-right">[\s\S]*<div class="toolbar-search">[\s\S]*<\/div>\s*<div class="toolbar-controls">[\s\S]*id="toggle-theme"[\s\S]*id="toggle-note"/, "search should be visually decoupled from the right toolbar controls");
 assert.doesNotMatch(html, /<\/div>\s*<div class="toolbar-search">[\s\S]*<\/div>\s*<div class="toolbar-right">/, "search should no longer be a center toolbar column");
+const toolbarLeftMarkup = html.match(/<div class="toolbar-left">(?<body>[\s\S]*?)<\/div>/)?.groups?.body ?? "";
+assert.doesNotMatch(toolbarLeftMarkup, /id="toggle-left"/, "paper directory collapse control should not live in the top-left toolbar island");
+assert.match(html, /<div class="directory-header">[\s\S]*class="directory-title">记忆与智能体[\s\S]*id="toggle-left"/, "paper directory collapse control should live next to the project title");
+assert.match(html, /class="icon-button directory-toggle"[\s\S]*id="toggle-left"[\s\S]*data-toggle-left/, "primary directory collapse control should use the shared left-toggle binding");
+assert.match(html, /class="icon-button rail-toggle"[\s\S]*data-toggle-left/, "collapsed section rail should include a local restore control");
+assert.equal((html.match(/id="toggle-left"/g) ?? []).length, 1, "reader should keep one primary left-toggle id");
 assert.match(html, /id="toggle-left"/, "reader should include a left directory collapse control");
 assert.match(html, /id="toggle-note"/, "reader should include a right note panel collapse control");
 assert.match(html, /id="toggle-theme"/, "reader should include a night mode toggle");
@@ -54,8 +61,13 @@ assert.match(css, /--reader-glass-shadow:\s*rgba\(19,\s*45,\s*42,\s*0\.16\)/, "g
 assert.match(css, /\.reader-shell\s*\{[\s\S]*grid-template-columns:/, "reader CSS should define a desktop three-column reader layout");
 assert.match(css, /\.reader-toolbar\s*\{[\s\S]*display:\s*flex/, "toolbar should be a modular flex container, not a three-column monolithic bar");
 assert.match(css, /\.reader-toolbar\s*\{[\s\S]*background:\s*transparent/, "toolbar container should not render as one full-width glass bar");
-assert.match(css, /\.toolbar-left,\s*\.toolbar-right\s*\{[\s\S]*backdrop-filter:\s*var\(--reader-panel-blur\)/, "toolbar groups should render as independent glass islands");
-assert.match(css, /\.toolbar-search\s*\{[\s\S]*width:\s*clamp\(180px,\s*18vw,\s*260px\)/, "search should be a compact right-side tool");
+assert.match(css, /\.toolbar-controls\s*\{[\s\S]*backdrop-filter:\s*var\(--reader-panel-blur\)/, "toolbar control group should render as an independent glass island");
+assert.match(css, /\.toolbar-right\s*\{[\s\S]*background:\s*transparent/, "right toolbar wrapper should not merge search and controls into one glass island");
+assert.match(css, /\.toolbar-controls\s*\{[\s\S]*backdrop-filter:\s*var\(--reader-panel-blur\)/, "right toolbar buttons should keep their own glass control island");
+assert.match(css, /\.toolbar-search\s*\{[\s\S]*width:\s*clamp\(190px,\s*20vw,\s*280px\)/, "search should be a compact right-side tool");
+assert.match(css, /\.toolbar-search\s*\{[\s\S]*backdrop-filter:\s*var\(--reader-panel-blur\)/, "search should render as its own glass input component");
+assert.match(css, /\.search-icon\s*\{[\s\S]*width:\s*16px/, "search input should include a compact magnifying glass icon");
+assert.match(css, /\.search-shortcut\s*\{[\s\S]*font-size:\s*11px/, "search input should include a quiet keyboard shortcut hint");
 assert.match(css, /\.reader-sidebar\s*\{[\s\S]*position:\s*sticky/, "paper directory should stay fixed in the viewport through sticky positioning");
 assert.match(css, /\.reader-sidebar\s*\{[\s\S]*top:\s*calc\(var\(--toolbar-offset\) \+ 5vh\)/, "paper directory should stick as a floating card below the toolbar");
 assert.match(css, /\.reader-sidebar\s*\{[\s\S]*height:\s*auto/, "paper directory wrapper should not be full-height");
@@ -67,8 +79,12 @@ assert.match(css, /\.reader-shell\.is-left-collapsed \.section-rail\s*\{[\s\S]*d
 assert.match(css, /@media \(max-width:\s*1100px\)[\s\S]*is-note-collapsed/, "reader CSS should prioritize the main reader on narrow desktop widths");
 assert.match(css, /@media \(max-width:\s*860px\)/, "reader CSS should define a portrait/mobile reader layout");
 assert.match(css, /@media \(max-width:\s*860px\)[\s\S]*\.section-rail[\s\S]*display:\s*none/, "mobile layout should hide the collapsed section rail");
+assert.match(css, /\.directory-header\s*\{[\s\S]*display:\s*flex/, "directory title and collapse action should share a local header row");
+assert.match(css, /\.directory-title\s*\{[\s\S]*font-size:\s*16px[\s\S]*font-weight:\s*760/, "directory title should read as the parent category");
+assert.match(css, /\.paper-nav-item\s*\{[\s\S]*font-size:\s*13px/, "paper titles should read as children under the project category");
 assert.match(css, /\.paper-nav-item\[aria-current="true"\]/, "expanded paper directory should show selected rows with a pressed state");
 assert.match(css, /\.paper-nav-item\[aria-current="true"\]::before\s*\{[\s\S]*background:\s*var\(--reader-red\)/, "active paper should use a dark red left accent");
+assert.match(css, /\.project-mark\s*\{[\s\S]*background:\s*transparent[\s\S]*box-shadow:\s*none/, "project logo should use a flat treatment without glass chrome");
 assert.match(css, /\.section-line:hover/, "collapsed section index should support hover line focus");
 assert.match(css, /\.section-line\.is-neighbor/, "collapsed section index should support adjacent line wave by length");
 assert.match(css, /\.chunk-source-card/, "English source text should render in a light chunk card");
@@ -109,6 +125,7 @@ assert.match(js, /actions\.classList\.add\("is-fallback-only"\)/, "no-chunk fall
 assert.match(js, /function renderNoteSurface/, "note panel should render through a stable root surface");
 assert.match(js, /function syncResponsiveState/, "reader should synchronize desktop and mobile shell state by breakpoint");
 assert.match(js, /function updateActiveSectionRail/, "section rail active state should be updated independently from hover state");
+assert.match(js, /querySelectorAll\("\[data-toggle-left\]"\)/, "reader should bind all local left-directory controls");
 assert.match(js, /cosineSimilarity/, "reader should perform local vector ranking");
 assert.match(js, /sourceText[\s\S]*zhExplanation/, "reader search should use sourceText and zhExplanation");
 assert.match(js, /no found/, "reader should show no found for empty search results");

@@ -148,9 +148,29 @@ input {
 }
 
 .toolbar-left,
-.toolbar-right {
+.toolbar-right,
+.toolbar-controls {
   display: flex;
   align-items: center;
+  pointer-events: auto;
+}
+
+.toolbar-left {
+  gap: 8px;
+}
+
+.toolbar-right {
+  justify-content: flex-end;
+  gap: 10px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+}
+
+.toolbar-controls {
   gap: 8px;
   border: 1px solid var(--reader-glass-edge);
   border-radius: 16px;
@@ -163,11 +183,6 @@ input {
     inset 0 -1px 0 rgba(19, 45, 42, 0.05),
     inset 0 0 26px rgba(255, 255, 255, 0.12),
     0 14px 40px var(--reader-glass-shadow);
-  pointer-events: auto;
-}
-
-.toolbar-right {
-  justify-content: flex-end;
 }
 
 .project-mark,
@@ -185,11 +200,24 @@ input {
   cursor: pointer;
 }
 
-.project-mark:hover,
 .icon-button:hover,
 .icon-button[aria-pressed="true"] {
   border-color: var(--reader-line);
   background: rgba(255, 255, 255, 0.32);
+}
+
+.project-mark {
+  background: transparent;
+  box-shadow: none;
+  transition:
+    color 140ms ease,
+    opacity 140ms ease;
+}
+
+.project-mark:hover {
+  border-color: transparent;
+  background: transparent;
+  opacity: 0.72;
 }
 
 .title-x-mark {
@@ -210,22 +238,57 @@ input {
 
 .toolbar-search {
   position: relative;
-  width: clamp(180px, 18vw, 260px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: clamp(190px, 20vw, 280px);
+  border: 1px solid var(--reader-glass-edge);
+  border-radius: 999px;
+  background: var(--reader-glass);
+  padding: 7px 10px;
+  backdrop-filter: var(--reader-panel-blur);
+  -webkit-backdrop-filter: var(--reader-panel-blur);
+  box-shadow:
+    inset 0 1px 0 var(--reader-glass-highlight),
+    0 14px 40px var(--reader-glass-shadow);
+  pointer-events: auto;
+}
+
+.toolbar-search:focus-within {
+  border-color: rgba(24, 60, 73, 0.42);
+  background: var(--reader-glass-strong);
+}
+
+.search-icon {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  color: var(--reader-ink-muted);
 }
 
 .toolbar-search input {
-  width: 100%;
-  border: 1px solid var(--reader-line);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.38);
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  background: transparent;
   color: var(--reader-ink);
-  padding: 9px 14px;
+  padding: 2px 0;
   outline: none;
 }
 
 .toolbar-search input:focus {
-  border-color: rgba(24, 60, 73, 0.42);
-  background: rgba(255, 255, 255, 0.62);
+  background: transparent;
+}
+
+.search-shortcut {
+  flex: 0 0 auto;
+  border: 1px solid var(--reader-line);
+  border-radius: 6px;
+  color: var(--reader-ink-muted);
+  padding: 1px 5px;
+  font-family: var(--reader-font);
+  font-size: 11px;
+  line-height: 1.35;
 }
 
 .search-focus-layer {
@@ -318,10 +381,25 @@ input {
   padding: 14px;
 }
 
+.directory-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
 .directory-title {
-  margin: 0 0 12px;
-  color: var(--reader-ink-muted);
-  font-size: 13px;
+  margin: 0;
+  color: var(--reader-ink);
+  font-size: 16px;
+  font-weight: 760;
+  line-height: 1.25;
+}
+
+.directory-toggle {
+  width: 32px;
+  height: 32px;
 }
 
 .paper-nav {
@@ -337,6 +415,7 @@ input {
   background: transparent;
   color: var(--reader-ink);
   padding: 11px 12px;
+  font-size: 13px;
   text-align: left;
   cursor: pointer;
 }
@@ -374,6 +453,15 @@ input {
   height: min(58vh, calc(100vh - var(--toolbar-offset) - 70px));
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  gap: 14px;
+  padding: 10px 6px;
+}
+
+.rail-toggle {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
 }
 
 .section-lines {
@@ -791,14 +879,26 @@ input {
     top: 8px;
   }
 
-  .toolbar-left,
+  .toolbar-left {
+    gap: 6px;
+  }
+
   .toolbar-right {
+    gap: 8px;
+  }
+
+  .toolbar-controls {
     gap: 6px;
     padding: 5px;
   }
 
   .toolbar-search {
-    width: clamp(132px, 38vw, 190px);
+    width: clamp(142px, 40vw, 190px);
+    padding: 6px 9px;
+  }
+
+  .search-shortcut {
+    display: none;
   }
 
   .project-mark,
