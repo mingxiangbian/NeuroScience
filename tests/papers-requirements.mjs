@@ -125,5 +125,8 @@ for (const [index, project] of manifest.entries()) {
     assert.match(paper.id, /^[a-z0-9]+(?:-[a-z0-9]+)*$/, `paper ${paper.id} in ${project.id} should use a stable slug id`);
     assert.equal(typeof paper.title, "string", `paper ${paper.id} in ${project.id} should include a title`);
     assert.ok(paper.title.trim().length > 0, `paper ${paper.id} in ${project.id} title should not be blank`);
+    assert.equal(typeof paper.shortTitle, "string", `paper ${paper.id} in ${project.id} should include a shortTitle for project reader navigation`);
+    assert.ok(paper.shortTitle.trim().length > 0, `paper ${paper.id} in ${project.id} shortTitle should not be blank`);
+    assert.ok(paper.shortTitle.length <= 42, `paper ${paper.id} in ${project.id} shortTitle should stay compact for the left directory`);
   }
 }

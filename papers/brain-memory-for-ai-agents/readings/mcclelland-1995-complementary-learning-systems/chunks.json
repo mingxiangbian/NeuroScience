@@ -1,0 +1,97 @@
+{
+  "paperId": "mcclelland-1995-complementary-learning-systems",
+  "chunks": [
+    {
+      "id": "ch-001",
+      "sectionId": "sec-1",
+      "order": 1,
+      "sourceText": "The paper frames memory as a stability-plasticity tradeoff. A system must learn new episodes quickly without catastrophically overwriting older structured knowledge.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The paper frames memory as a stability-plasticity tradeoff. A system must learn new episodes quickly without catastrophically overwriting older structured knowledge."
+        },
+        {
+          "type": "math",
+          "display": true,
+          "latex": "\\Delta W = \\eta \\; x y^{\\top}",
+          "label": "Fast associative update"
+        }
+      ],
+      "zhExplanation": "这一段提出核心计算问题：系统既要快速记住新事件，又不能因为新事件破坏已经形成的知识结构。公式是阅读器用来表达快速联想更新的简化形式，不等同于论文的完整模型。",
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": ["stability-plasticity", "catastrophic interference", "fast learning"]
+    },
+    {
+      "id": "ch-002",
+      "sectionId": "sec-2",
+      "order": 2,
+      "sourceText": "The complementary learning systems account assigns rapid, sparse episode encoding to the hippocampal formation and gradual structure extraction to neocortical networks.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The complementary learning systems account assigns rapid, sparse episode encoding to the hippocampal formation and gradual structure extraction to neocortical networks."
+        },
+        {
+          "type": "table",
+          "label": "Table A",
+          "caption": "Simplified CLS roles",
+          "columns": ["System", "Learning role"],
+          "rows": [
+            ["Hippocampus", "Fast sparse episode indexing"],
+            ["Neocortex", "Slow distributed integration"]
+          ]
+        }
+      ],
+      "zhExplanation": "这是 CLS 的中心主张：海马更适合快速记录具体 episode，新皮层更适合慢慢抽取统计结构。对 AI agent 来说，这对应 episodic memory 与长期 semantic/world knowledge 的分工。",
+      "figureRefs": [],
+      "keywords": ["hippocampus", "neocortex", "episodic memory", "semantic integration"]
+    },
+    {
+      "id": "ch-003",
+      "sectionId": "sec-2",
+      "order": 3,
+      "sourceText": "The theory links sparse hippocampal coding with reduced interference. Distinct episodes can be stored separately, then replay or interleaved learning can support slower cortical consolidation.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The theory links sparse hippocampal coding with reduced interference. Distinct episodes can be stored separately, then replay or interleaved learning can support slower cortical consolidation."
+        },
+        {
+          "type": "code",
+          "language": "python",
+          "caption": "Interleaved consolidation sketch",
+          "code": "for episode in sample_replay(buffer):\n    cortex.update(episode, learning_rate='slow')"
+        }
+      ],
+      "zhExplanation": "这里解释为什么需要两个学习系统：稀疏 episode index 降低相互干扰，而 replay 或交错学习让慢系统逐渐吸收结构。代码块只是把这个思想映射成 agent memory 的工程伪代码。",
+      "figureRefs": [
+        {
+          "id": "fig-002",
+          "relation": "deferred"
+        }
+      ],
+      "keywords": ["sparse coding", "replay", "consolidation", "interference"]
+    },
+    {
+      "id": "ch-004",
+      "sectionId": "sec-3",
+      "order": 4,
+      "sourceText": "For artificial agents, the CLS idea suggests that raw experience logs and distilled long-term knowledge should not be collapsed into one undifferentiated memory store.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "For artificial agents, the CLS idea suggests that raw experience logs and distilled long-term knowledge should not be collapsed into one undifferentiated memory store."
+        }
+      ],
+      "zhExplanation": "这一段是本项目的桥接点。助手的综合判断是：CLS 不直接等于某个 AI 架构，但它提供一个设计原则，即 episode 存储、重放、抽象知识和当前工作上下文应有不同角色。",
+      "figureRefs": [],
+      "keywords": ["agent memory", "experience log", "distillation", "memory store"]
+    }
+  ]
+}

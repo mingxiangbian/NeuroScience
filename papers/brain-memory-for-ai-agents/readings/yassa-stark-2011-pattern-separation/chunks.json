@@ -1,0 +1,97 @@
+{
+  "paperId": "yassa-stark-2011-pattern-separation",
+  "chunks": [
+    {
+      "id": "ch-001",
+      "sectionId": "sec-1",
+      "order": 1,
+      "sourceText": "Pattern separation describes the transformation of similar or overlapping inputs into more distinct representations. This helps memory systems avoid confusing events that share many features.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Pattern separation describes the transformation of similar or overlapping inputs into more distinct representations. This helps memory systems avoid confusing events that share many features."
+        },
+        {
+          "type": "math",
+          "display": true,
+          "latex": "d(f(x_a), f(x_b)) > d(x_a, x_b)",
+          "label": "Separation intuition"
+        }
+      ],
+      "zhExplanation": "这一段定义 pattern separation：相似输入经过编码后变得更可区分。公式表达的是直觉，不是论文原始公式；它帮助说明为什么记忆系统需要主动拉开相近事件的表征距离。",
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": ["pattern separation", "overlap", "distinct representation", "interference"]
+    },
+    {
+      "id": "ch-002",
+      "sectionId": "sec-2",
+      "order": 2,
+      "sourceText": "The dentate gyrus is often discussed as a circuit well suited for sparse coding and separation, while CA3 is linked to associative retrieval and completion of stored patterns.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The dentate gyrus is often discussed as a circuit well suited for sparse coding and separation, while CA3 is linked to associative retrieval and completion of stored patterns."
+        },
+        {
+          "type": "table",
+          "label": "Table A",
+          "caption": "Simplified hippocampal subregion roles",
+          "columns": ["Subregion", "Computation"],
+          "rows": [
+            ["Dentate gyrus", "Sparse separation"],
+            ["CA3", "Associative completion"]
+          ]
+        }
+      ],
+      "zhExplanation": "这里把 pattern separation 放到海马子区功能里：齿状回常被视为稀疏化和分离的关键环节，CA3 则更常和联想补全联系。证据来源包括行为、成像和动物研究，但不同方法能支持的因果强度不同。",
+      "figureRefs": [],
+      "keywords": ["dentate gyrus", "CA3", "sparse coding", "pattern completion"]
+    },
+    {
+      "id": "ch-003",
+      "sectionId": "sec-3",
+      "order": 3,
+      "sourceText": "Behavioral tasks often test pattern separation by asking whether subjects can discriminate similar lures from previously seen items. Better separation predicts less false recognition of similar events.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Behavioral tasks often test pattern separation by asking whether subjects can discriminate similar lures from previously seen items. Better separation predicts less false recognition of similar events."
+        },
+        {
+          "type": "code",
+          "language": "python",
+          "caption": "Memory collision check",
+          "code": "if similarity(new_event, stored_event) > threshold:\n    require_more_specific_index(new_event)"
+        }
+      ],
+      "zhExplanation": "这一段说明 pattern separation 如何被行为任务测量：相似诱饵越容易被误认为旧项目，说明分离不足。伪代码把它映射到 agent memory：当新经验和旧经验太像时，应建立更具体的索引。",
+      "figureRefs": [
+        {
+          "id": "fig-002",
+          "relation": "deferred"
+        }
+      ],
+      "keywords": ["mnemonic discrimination", "lure", "false recognition", "index specificity"]
+    },
+    {
+      "id": "ch-004",
+      "sectionId": "sec-3",
+      "order": 4,
+      "sourceText": "For agent memory, pattern separation is a useful analogy for reducing retrieval collisions. It suggests that similar episodes should not always be compressed into a single semantic summary too early.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "For agent memory, pattern separation is a useful analogy for reducing retrieval collisions. It suggests that similar episodes should not always be compressed into a single semantic summary too early."
+        }
+      ],
+      "zhExplanation": "这是助手综合判断，而不是论文直接主张：pattern separation 给 agent memory 的启发是避免过早合并相似事件。对于长期 agent，保留足够具体的 episode 区分可能比单纯摘要更重要。",
+      "figureRefs": [],
+      "keywords": ["agent memory", "retrieval collision", "episode indexing", "summary"]
+    }
+  ]
+}

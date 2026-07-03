@@ -1,0 +1,98 @@
+{
+  "paperId": "zhang-2024-memory-mechanism-llm-agents",
+  "chunks": [
+    {
+      "id": "ch-001",
+      "sectionId": "sec-1",
+      "order": 1,
+      "sourceText": "The survey treats memory as a core infrastructure layer for LLM-based agents. Memory is not only a larger prompt context; it includes how experience is stored, organized, retrieved, and reused when an agent plans or acts over time.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The survey treats memory as a core infrastructure layer for LLM-based agents. Memory is not only a larger prompt context; it includes how experience is stored, organized, retrieved, and reused when an agent plans or acts over time."
+        }
+      ],
+      "zhExplanation": "这一段的作用是把 memory 从“上下文长度”提升为智能体架构问题。作者关注的是 agent 如何把过去经验变成可检索、可更新、可用于规划的结构，而不是简单把更多文本塞进 prompt。",
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": ["LLM agent", "memory architecture", "long-term memory", "retrieval"]
+    },
+    {
+      "id": "ch-002",
+      "sectionId": "sec-2",
+      "order": 2,
+      "sourceText": "A practical memory mechanism usually separates writing from reading. The agent first converts observations, tool results, or conversations into memory records, then later retrieves a small set of relevant records to condition a decision.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "A practical memory mechanism usually separates writing from reading. The agent first converts observations, tool results, or conversations into memory records, then later retrieves a small set of relevant records to condition a decision."
+        },
+        {
+          "type": "code",
+          "language": "python",
+          "caption": "Minimal retrieval sketch",
+          "code": "query = embed(current_goal)\nrecords = top_k(memory_store, query, k=8)\ncontext = compose_prompt(records, current_goal)"
+        }
+      ],
+      "zhExplanation": "这里对应工程系统里的写入和读取分离。写入阶段决定什么经验值得保存；读取阶段决定当前任务最相关的少量记忆是什么。代码块只是阅读器中的伪代码展示，不代表论文提供了该实现。",
+      "figureRefs": [],
+      "keywords": ["write memory", "read memory", "top-k retrieval", "agent context"]
+    },
+    {
+      "id": "ch-003",
+      "sectionId": "sec-2",
+      "order": 3,
+      "sourceText": "Embedding-based retrieval is often described as similarity search between the current query and stored memory chunks. The retrieved records are then merged with instructions, goals, and recent context.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Embedding-based retrieval is often described as similarity search between the current query and stored memory chunks. The retrieved records are then merged with instructions, goals, and recent context."
+        },
+        {
+          "type": "math",
+          "display": true,
+          "latex": "\\operatorname{score}(q, m_i)=\\frac{q\\cdot m_i}{\\lVert q\\rVert\\lVert m_i\\rVert}",
+          "label": "Cosine retrieval"
+        }
+      ],
+      "zhExplanation": "这一段说明 embedding 在 memory 系统里的位置：它不是数据库本身，而是把 query 和 memory chunk 放到可比较的语义空间。公式表达的是常见余弦相似度，用来选择与当前问题最接近的记忆。",
+      "figureRefs": [],
+      "keywords": ["embedding", "semantic retrieval", "cosine similarity", "memory chunk"]
+    },
+    {
+      "id": "ch-004",
+      "sectionId": "sec-3",
+      "order": 4,
+      "sourceText": "The survey highlights that memory quality cannot be judged only by whether an agent stores more information. A useful memory system should improve downstream behavior, avoid irrelevant recall, and maintain useful information over longer interaction horizons.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The survey highlights that memory quality cannot be judged only by whether an agent stores more information. A useful memory system should improve downstream behavior, avoid irrelevant recall, and maintain useful information over longer interaction horizons."
+        },
+        {
+          "type": "table",
+          "label": "Table A",
+          "caption": "Reader-side evaluation framing",
+          "columns": ["Criterion", "Meaning"],
+          "rows": [
+            ["Relevance", "Does retrieval help the current task?"],
+            ["Persistence", "Does useful information survive across sessions?"],
+            ["Noise control", "Does memory avoid distracting recall?"]
+          ]
+        }
+      ],
+      "zhExplanation": "这一段是评价标准的提醒：记忆系统不是存得越多越好。真正要看它是否提升行为、是否能跨时间保持有用信息，以及是否会把无关记忆召回到当前任务里。",
+      "figureRefs": [
+        {
+          "id": "fig-002",
+          "relation": "deferred"
+        }
+      ],
+      "keywords": ["memory evaluation", "behavior", "noise", "long horizon"]
+    }
+  ]
+}
