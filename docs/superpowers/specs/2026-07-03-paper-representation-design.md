@@ -108,15 +108,33 @@ Chunk rendering:
 
 - Each chunk is a reading unit.
 - English source text appears inside a light framed card with a subtle shadow.
+- If a chunk contains formulas, algorithms, or code, render the richer `blocks` sequence instead of flattening everything into one paragraph.
 - Chinese explanation appears outside the card below it.
 - A faint horizontal divider separates the English card from the Chinese explanation area.
 - The Chinese explanation is not wrapped in another card.
 - If a chunk has no Chinese explanation, leave the area visually quiet and do not show an empty-state message.
 - Secondary headings may use minimal icons or colored marks instead of numeric labels. Avoid emoji as the main visual language.
 
+Math and code:
+
+- `sourceText` remains the plain-text source passage used for reading fallback and semantic indexing.
+- Rich rendering uses optional chunk `blocks` in source order.
+- Supported block types are `paragraph`, `math`, `code`, `table`, and `figure`.
+- Display math stores raw LaTeX and renders with a static client renderer such as KaTeX or MathJax. Prefer self-hosted static assets or vendored files over remote CDN dependencies.
+- If math rendering fails, show the original LaTeX source in a readable fallback block.
+- Inline math can stay inside paragraph text using `$...$` or be normalized into explicit `math` blocks when extraction is uncertain.
+- Long formulas must not overflow the reader. Use horizontal scroll or responsive line wrapping inside the formula block.
+- Code blocks store `language`, optional `caption`, and raw `code`.
+- Code blocks are display-only in the first version. They are not executed.
+- Code blocks use a quiet monospace surface with horizontal overflow for long lines. Syntax highlighting is optional; readable plain code is the baseline requirement.
+- Structured tables can use `table` blocks with columns and rows. Tables that cannot be reliably extracted as structured data should be treated as figure assets and referenced through `figureRefs`.
+
 Figures:
 
 - Figures are referenced by chunk data.
+- Figure metadata is stored outside the chunk body so a figure can be referenced by multiple chunks, including chunks that appear before or after the figure's source page.
+- Chunks reference figures with `figureRefs`, not by duplicating image paths inline.
+- A figure can be marked as `near`, `supporting`, or `deferred` for the current chunk. `near` appears inline near the chunk; `supporting` appears in a compact figure strip; `deferred` appears as a lightweight recall link that can expand without disrupting reading.
 - The UI enforces consistent max width, max height, and object fitting so extracted figures do not appear as mismatched screenshots.
 - Figure captions are stored separately from the image file.
 - The first implementation may keep figure support in the schema without extracting figures immediately.
@@ -151,6 +169,7 @@ papers/<project-id>/readings/<paper-id>/
   chunks.json
   notes.json
   embeddings.json
+  figures.json
   figures/
 ```
 
@@ -186,13 +205,67 @@ Stores the source text, Chinese explanation, and figure references.
       "sectionId": "sec-1",
       "order": 1,
       "sourceText": "English source passage...",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "English source passage..."
+        },
+        {
+          "type": "math",
+          "display": true,
+          "latex": "L = -\\sum_i y_i \\log p_i",
+          "label": "Eq. 1"
+        },
+        {
+          "type": "code",
+          "language": "python",
+          "caption": "Memory retrieval sketch",
+          "code": "scores = cosine_similarity(query, chunk_embeddings)"
+        },
+        {
+          "type": "table",
+          "label": "Table 1",
+          "caption": "Memory module comparison.",
+          "columns": ["Module", "Role"],
+          "rows": [["Recall", "Retrieve relevant chunks"]]
+        }
+      ],
       "zhExplanation": "中文解释，不做逐字全文翻译。",
-      "figures": [],
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "supporting"
+        }
+      ],
       "keywords": ["hippocampus", "neocortex", "complementary learning systems"]
     }
   ]
 }
 ```
+
+`blocks` is optional. If it is absent, the reader renders `sourceText` as a plain paragraph. `sourceText` should remain a readable plain-text representation of the chunk, even when `blocks` contains richer math or code rendering.
+
+### figures.json
+
+Stores figure metadata separately from chunk text so cross-page references remain stable.
+
+```json
+{
+  "paperId": "mcclelland-1995-complementary-learning-systems",
+  "figures": [
+    {
+      "id": "fig-001",
+      "label": "Figure 1",
+      "file": "figures/fig-001.png",
+      "caption": "Complementary learning systems schematic.",
+      "sourcePage": 4,
+      "canonicalSectionId": "sec-2"
+    }
+  ]
+}
+```
+
+If a chunk cites a figure whose image appears on a different page or later in the paper, the chunk still references that figure through `figureRefs`. The frontend decides whether to show it inline, in a compact supporting strip, or as an expandable recall link based on the relation value.
 
 ### notes.json
 
@@ -268,6 +341,20 @@ Chunking:
 - Do not break one core claim across arbitrary chunks.
 - Split very long paragraphs only when the reasoning still remains coherent.
 - Use stable chunk ids such as `ch-001`, `ch-002`.
+- When a paragraph depends on a formula, algorithm, code block, table, or figure, keep the explanatory text and the referenced object connected through `blocks`, table blocks, or `figureRefs` even if the original PDF places them on different pages.
+- Do not duplicate the same figure or table image into multiple chunks. Reference it by id.
+- If a figure supports multiple chunks, assign it to the most canonical section in `figures.json` and reference it from each relevant chunk.
+- If a figure appears after the text that cites it, still attach the figure reference to the citing chunk. Do not wait until the visual appears in page order.
+
+Math and code:
+
+- Preserve important LaTeX formulas as `math` blocks rather than rewriting them only as prose.
+- Keep display equations as display math and inline formulas as inline math when extraction quality is reliable.
+- Give important equations a `label` when the source paper labels them.
+- Keep code snippets as `code` blocks with a language when known.
+- Do not execute code in the reader. Code is a reading artifact only.
+- Keep reliably extracted tables as `table` blocks. If table structure is unreliable, store the table image as a figure and reference it through `figureRefs`.
+- For formula-heavy or code-heavy chunks, ensure `sourceText` still contains a readable plain-text summary, and put the explanatory meaning in `zhExplanation` so semantic search remains useful.
 
 Chinese explanation:
 
@@ -276,6 +363,7 @@ Chinese explanation:
 - Separate author claims, evidence, mechanism implications, and relation to AI agent memory when relevant.
 - Do not present the agent's own synthesis as the author's conclusion.
 - State uncertainty plainly when the evidence is insufficient.
+- Explain what important formulas, algorithm blocks, or code snippets are doing when they are central to the chunk.
 - Keep the writing concise and useful for reading.
 
 Notes:
@@ -287,8 +375,11 @@ Notes:
 Figures:
 
 - Store extracted images in `figures/`.
-- Reference figures by id from chunks.
-- Store captions separately.
+- Store figure metadata in `figures.json`.
+- Reference figures by id from chunks through `figureRefs`.
+- Store captions separately from image files.
+- Mark each chunk-figure relationship as `near`, `supporting`, or `deferred`.
+- Use `deferred` when the text cites a figure that appears on another page or later in the source.
 - Use consistent display constraints in the UI.
 
 ## Testing And Acceptance
@@ -315,7 +406,9 @@ Reader behavior:
 Data checks:
 
 - Chunked papers include `paper.json`, `chunks.json`, `notes.json`, and `embeddings.json`.
+- Papers that reference figures include `figures.json` and stable `figureRefs`.
 - `shortTitle` is available for paper directory display.
+- Chunk rendering supports paragraph, math, code, table, and figure blocks without flattening formulas, code, or structured tables into plain prose.
 - Embeddings index `sourceText + zhExplanation`.
 - Notes are not indexed.
 
@@ -326,4 +419,3 @@ Deployment constraints:
 - No localhost dependency.
 - No OpenAI, Anthropic, or other provider key in the browser.
 - No AI-generated answer feature in the first version.
-
