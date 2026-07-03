@@ -23,7 +23,8 @@ const state = {
   allReadings: new Map(),
   searchItems: [],
   activeChunkId: null,
-  observer: null
+  observer: null,
+  scrollSpyHandler: null
 };
 
 const els = {
@@ -36,6 +37,7 @@ const els = {
   mobileNoteSurface: document.querySelector("#mobile-note-surface"),
   noteLabel: document.querySelector("#note-label"),
   mobileNoteLabel: document.querySelector("#mobile-note-label"),
+  searchOverlay: document.querySelector("#search-overlay"),
   searchInput: document.querySelector("#global-search"),
   searchResults: document.querySelector("#search-results"),
   toggleLeftControls: document.querySelectorAll("[data-toggle-left]"),
@@ -63,6 +65,10 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+}
+
+function escapeRegExp(value) {
+  return String(value ?? "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 function normalizeVector(vector) {
@@ -366,19 +372,53 @@ function setActiveChunk(reading, chunkId) {
   updateActiveSectionRail(chunk?.sectionId);
 }
 
+function getActiveChunkByViewport() {
+  const chunks = [...document.querySelectorAll(".chunk")];
+  const viewportCenter = window.innerHeight / 2;
+  let best = null;
+  let bestDistance = Number.POSITIVE_INFINITY;
+  let fallback = null;
+
+  for (const chunk of chunks) {
+    const rect = chunk.getBoundingClientRect();
+    if (rect.top <= viewportCenter) fallback = chunk;
+    if (rect.bottom < 0 || rect.top > window.innerHeight) continue;
+
+    const distance = rect.top <= viewportCenter && rect.bottom >= viewportCenter
+      ? 0
+      : Math.min(Math.abs(rect.top - viewportCenter), Math.abs(rect.bottom - viewportCenter));
+
+    if (distance < bestDistance) {
+      best = chunk;
+      bestDistance = distance;
+    }
+  }
+
+  return best?.dataset.chunkId ?? fallback?.dataset.chunkId ?? chunks[0]?.dataset.chunkId;
+}
+
+function updateActiveChunkFromViewport(reading) {
+  const chunkId = getActiveChunkByViewport();
+  if (chunkId) setActiveChunk(reading, chunkId);
+}
+
 function observeChunks(reading) {
   state.observer?.disconnect();
-  state.observer = new IntersectionObserver((entries) => {
-    const visible = entries
-      .filter((entry) => entry.isIntersecting)
-      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-    if (visible) setActiveChunk(reading, visible.target.dataset.chunkId);
+  if (state.scrollSpyHandler) {
+    window.removeEventListener("scroll", state.scrollSpyHandler);
+    window.removeEventListener("resize", state.scrollSpyHandler);
+  }
+  state.scrollSpyHandler = () => updateActiveChunkFromViewport(reading);
+  state.observer = new IntersectionObserver(() => {
+    updateActiveChunkFromViewport(reading);
   }, {
-    rootMargin: "-18% 0px -62% 0px",
-    threshold: [0.15, 0.35, 0.6]
+    rootMargin: "-10% 0px -10% 0px",
+    threshold: [0, 0.2, 0.5, 0.8]
   });
   document.querySelectorAll(".chunk").forEach((chunk) => state.observer.observe(chunk));
-  setActiveChunk(reading, reading.chunks[0]?.id);
+  window.addEventListener("scroll", state.scrollSpyHandler, { passive: true });
+  window.addEventListener("resize", state.scrollSpyHandler);
+  updateActiveChunkFromViewport(reading);
 }
 
 async function openPaper(paperId) {
@@ -401,9 +441,49 @@ async function openPaper(paperId) {
   renderChunks(reading);
 }
 
+function openSearchModal() {
+  els.shell.classList.add("is-searching");
+}
+
+function closeSearchModal() {
+  els.searchResults.hidden = true;
+  els.shell.classList.remove("is-searching");
+}
+
+function getSearchTerms(query) {
+  return query.trim().split(/\s+/).filter(Boolean);
+}
+
+function getSearchSnippet(item, query) {
+  const fields = [item.chunk.zhExplanation, item.chunk.sourceText].filter(Boolean);
+  const terms = getSearchTerms(query);
+  for (const field of fields) {
+    const lowerField = field.toLowerCase();
+    const matchedTerm = terms.find((term) => lowerField.includes(term.toLowerCase()));
+    if (!matchedTerm) continue;
+    const index = lowerField.indexOf(matchedTerm.toLowerCase());
+    const start = Math.max(0, index - 60);
+    const end = Math.min(field.length, index + matchedTerm.length + 120);
+    return `${start > 0 ? "..." : ""}${field.slice(start, end)}${end < field.length ? "..." : ""}`;
+  }
+  return fields[0]?.slice(0, 180) ?? "";
+}
+
+function highlightSearchTerms(text, query) {
+  const terms = getSearchTerms(query).map(escapeRegExp);
+  if (terms.length === 0) return escapeHtml(text);
+  const pattern = new RegExp(`(${terms.join("|")})`, "gi");
+  const exactPattern = new RegExp(`^(${terms.join("|")})$`, "i");
+  return String(text ?? "")
+    .split(pattern)
+    .map((part) => exactPattern.test(part)
+      ? `<mark class="result-highlight">${escapeHtml(part)}</mark>`
+      : escapeHtml(part))
+    .join("");
+}
+
 function runSearch(query) {
   const trimmed = query.trim();
-  els.shell.classList.toggle("is-searching", Boolean(trimmed));
   if (!trimmed) {
     els.searchResults.hidden = true;
     els.searchResults.innerHTML = "";
@@ -418,17 +498,17 @@ function runSearch(query) {
 
   els.searchResults.hidden = false;
   if (results.length === 0) {
-    els.searchResults.innerHTML = `<div class="result-item"><span class="result-title">no found</span></div>`;
+    els.searchResults.innerHTML = `<div class="result-empty">No results found</div>`;
     return;
   }
   els.searchResults.innerHTML = results.map((item) => {
     const current = item.paper.id === state.currentPaper?.id;
     const title = current ? getSectionTitle(item.reading, item.chunk.sectionId) : item.paper.shortTitle;
-    const snippet = item.chunk.zhExplanation || item.chunk.sourceText;
+    const snippet = getSearchSnippet(item, trimmed);
     return `
       <button class="result-item" type="button" data-paper-id="${escapeHtml(item.paper.id)}" data-chunk-id="${escapeHtml(item.chunk.id)}">
-        <span class="result-title">${escapeHtml(title)}</span>
-        <span class="result-snippet">${escapeHtml(snippet.slice(0, 180))}</span>
+        <span class="result-title">${highlightSearchTerms(title, trimmed)}</span>
+        <span class="result-snippet">${highlightSearchTerms(snippet, trimmed)}</span>
       </button>
     `;
   }).join("");
@@ -436,8 +516,7 @@ function runSearch(query) {
     button.addEventListener("click", async () => {
       await openPaper(button.dataset.paperId);
       document.getElementById(button.dataset.chunkId)?.scrollIntoView({ behavior: "smooth", block: "start" });
-      els.searchResults.hidden = true;
-      els.shell.classList.remove("is-searching");
+      closeSearchModal();
     });
   });
 }
@@ -467,19 +546,22 @@ function bindControls() {
   });
   els.searchInput.addEventListener("input", () => runSearch(els.searchInput.value));
   els.searchInput.addEventListener("focus", () => {
-    if (els.searchInput.value.trim()) els.shell.classList.add("is-searching");
+    openSearchModal();
+    if (els.searchInput.value.trim()) runSearch(els.searchInput.value);
   });
+  els.searchOverlay.addEventListener("click", () => closeSearchModal());
   document.addEventListener("keydown", (event) => {
     if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
       event.preventDefault();
+      openSearchModal();
       els.searchInput.focus();
       els.searchInput.select();
     }
     if (event.key === "Escape") {
-      els.searchResults.hidden = true;
-      els.shell.classList.remove("is-searching", "is-mobile-left-open", "is-mobile-note-open");
+      closeSearchModal();
+      els.shell.classList.remove("is-mobile-left-open", "is-mobile-note-open");
     }
-  });
+  }, { capture: true });
   window.addEventListener("resize", syncResponsiveState);
 }
 

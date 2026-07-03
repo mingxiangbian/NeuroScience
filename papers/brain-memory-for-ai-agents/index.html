@@ -9,7 +9,7 @@
   </head>
   <body data-page="paper-project-reader" data-theme="light">
     <div class="reader-shell" id="reader-shell">
-      <div class="search-focus-layer" aria-hidden="true"></div>
+      <div class="search-focus-layer" id="search-overlay" aria-hidden="true"></div>
 
       <header class="reader-toolbar" id="reader-toolbar">
         <div class="toolbar-left">
@@ -29,7 +29,6 @@
             </svg>
             <input id="global-search" type="search" autocomplete="off" placeholder="Search" aria-label="全局语义搜索" />
             <kbd class="search-shortcut">⌘ K</kbd>
-            <div class="search-results" id="search-results" hidden></div>
           </div>
           <div class="toolbar-controls">
             <button class="icon-button" id="toggle-theme" type="button" aria-label="切换夜间模式" aria-pressed="false">
@@ -43,6 +42,7 @@
               </svg>
             </button>
           </div>
+          <div class="search-results" id="search-results" hidden></div>
         </div>
       </header>
 
