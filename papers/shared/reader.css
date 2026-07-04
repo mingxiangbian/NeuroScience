@@ -638,7 +638,14 @@ input {
 }
 
 .section-line:hover {
+  width: 36px;
+  height: 3px;
   background: var(--reader-section-line-hover);
+}
+
+.section-line:hover + .section-line,
+.section-line:has(+ .section-line:hover) {
+  width: 28px;
 }
 
 .section-line.is-active {
