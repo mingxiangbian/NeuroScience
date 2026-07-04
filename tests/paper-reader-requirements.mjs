@@ -42,6 +42,7 @@ assert.match(html, /<div class="toolbar-right">[\s\S]*<div class="toolbar-search
 assert.doesNotMatch(html, /<\/div>\s*<div class="toolbar-search">[\s\S]*<\/div>\s*<div class="toolbar-right">/, "search should no longer be a center toolbar column");
 const toolbarLeftMarkup = html.match(/<div class="toolbar-left">(?<body>[\s\S]*?)<\/div>/)?.groups?.body ?? "";
 assert.doesNotMatch(toolbarLeftMarkup, /id="toggle-left"/, "paper directory collapse control should not live in the top-left toolbar island");
+assert.match(toolbarLeftMarkup, /class="icon-button mobile-directory-toggle"[\s\S]*data-toggle-left/, "mobile layout should expose a visible toolbar control for opening the paper directory");
 assert.match(html, /<div class="directory-header">[\s\S]*class="directory-title">记忆与智能体[\s\S]*id="toggle-left"/, "paper directory collapse control should live next to the project title");
 assert.match(html, /class="icon-button directory-toggle"[\s\S]*id="toggle-left"[\s\S]*data-toggle-left/, "primary directory collapse control should use the shared left-toggle binding");
 assert.match(html, /class="icon-button rail-toggle"[\s\S]*data-toggle-left/, "collapsed section rail should include a local restore control");
@@ -62,6 +63,7 @@ assert.match(css, /--reader-glass-low:\s*rgba\(244,\s*249,\s*245,\s*0\.2\)/, "re
 assert.match(css, /--reader-glass-shadow:\s*rgba\(19,\s*45,\s*42,\s*0\.16\)/, "glass shadow should use a cool ink wash instead of warm card shadow");
 assert.match(css, /--toolbar-control-size:\s*42px/, "toolbar controls should share a common height token");
 assert.match(css, /\.reader-shell\s*\{[\s\S]*grid-template-columns:/, "reader CSS should define a desktop three-column reader layout");
+assert.match(css, /\.reader-shell\s*\{[\s\S]*align-items:\s*start/, "reader grid should align side panels to the start so sticky positioning is not defeated by stretching");
 assert.match(css, /\.reader-toolbar\s*\{[\s\S]*display:\s*flex/, "toolbar should be a modular flex container, not a three-column monolithic bar");
 assert.match(css, /\.reader-toolbar\s*\{[\s\S]*background:\s*transparent/, "toolbar container should not render as one full-width glass bar");
 assert.match(css, /\.toolbar-controls\s*\{[\s\S]*backdrop-filter:\s*var\(--reader-panel-blur\)/, "toolbar control group should render as an independent glass island");
@@ -103,6 +105,8 @@ assert.match(css, /\.paper-nav-item\s*\{[\s\S]*font-size:\s*13px/, "paper titles
 assert.match(css, /\.paper-nav-item\[aria-current="true"\]/, "expanded paper directory should show selected rows with a pressed state");
 assert.match(css, /\.paper-nav-item\[aria-current="true"\]::before\s*\{[\s\S]*background:\s*var\(--reader-red\)/, "active paper should use a dark red left accent");
 assert.match(css, /\.project-mark\s*\{[\s\S]*background:\s*transparent[\s\S]*box-shadow:\s*none/, "project logo should use a flat treatment without glass chrome");
+assert.match(css, /\.mobile-directory-toggle\s*\{[\s\S]*display:\s*none/, "mobile directory opener should stay hidden on desktop");
+assert.match(css, /@media \(max-width:\s*860px\)[\s\S]*\.mobile-directory-toggle\s*\{[\s\S]*display:\s*inline-flex/, "mobile layout should show a directory opener in the toolbar");
 assert.match(css, /\.section-line:hover/, "collapsed section index should support hover line focus");
 assert.match(css, /\.section-line:hover\s*\+\s*\.section-line/, "collapsed section index should lengthen the next adjacent line on hover");
 assert.match(css, /\.section-line:has\(\+\s*\.section-line:hover\)/, "collapsed section index should lengthen the previous adjacent line on hover");
@@ -170,6 +174,7 @@ assert.match(js, /readings\/\$\{paper\.id\}\/chunks\.json/, "reader should load 
 assert.match(js, /readings\/\$\{paper\.id\}\/notes\.json/, "reader should load per-paper notes.json data");
 assert.match(js, /readings\/\$\{paper\.id\}\/embeddings\.json/, "reader should load per-paper embeddings.json data");
 assert.match(js, /readings\/\$\{paper\.id\}\/figures\.json/, "reader should attempt optional figures.json data");
+assert.match(js, /assetBasePath:\s*`readings\/\$\{paper\.id\}\/`/, "reader should store each reading package base path for local assets");
 assert.match(js, /IntersectionObserver/, "reader should keep the note panel aligned to the visible chunk");
 assert.match(js, /function renderPaperLinks/, "reader should isolate source links for fallback metadata only");
 assert.match(js, /<div class="paper-actions"><\/div>/, "normal chunked paper headers should not render source action links");
@@ -208,6 +213,7 @@ assert.match(js, /if \(!trimmed\)[\s\S]*searchResults\.innerHTML = ""/, "empty m
 assert.match(js, /renderMathBlock/, "reader should render math blocks");
 assert.match(js, /renderCodeBlock/, "reader should render code blocks");
 assert.match(js, /renderTableBlock/, "reader should render table blocks");
+assert.match(js, /function resolveReadingAssetPath\(path,\s*reading\)/, "reader should resolve figure assets relative to the active reading package");
 assert.match(js, /figureRefs/, "reader should resolve cross-page figure references");
 assert.match(js, /if \(!figure\?\.file\) return ""/, "reader should skip missing figure files instead of rendering empty placeholders");
 assert.match(js, /renderNoChunkPaper/, "reader should render real metadata for papers without chunk packages");

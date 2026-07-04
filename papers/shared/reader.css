@@ -139,6 +139,7 @@ input {
   grid-template-areas:
     "toolbar toolbar toolbar"
     "directory main notes";
+  align-items: start;
   column-gap: clamp(8px, 1.2vw, 14px);
   row-gap: 10px;
   padding: 10px clamp(8px, 1.4vw, 16px) 0;
@@ -248,6 +249,10 @@ input {
   border-color: transparent;
   background: transparent;
   opacity: 0.72;
+}
+
+.mobile-directory-toggle {
+  display: none;
 }
 
 .title-x-mark {
@@ -1137,6 +1142,10 @@ input {
   .icon-button {
     width: 36px;
     height: 36px;
+  }
+
+  .mobile-directory-toggle {
+    display: inline-flex;
   }
 
   .reader-sidebar,

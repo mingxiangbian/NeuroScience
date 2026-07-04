@@ -133,6 +133,7 @@ async function loadReadingPackage(paper) {
     const reading = {
       paper,
       paperData,
+      assetBasePath: `readings/${paper.id}/`,
       chunks: chunksData.chunks ?? [],
       notes: new Map((notesData.notes ?? []).map((note) => [note.chunkId, note.note ?? ""])),
       embeddings: embeddingsData.items ?? [],
@@ -308,14 +309,20 @@ function renderTableBlock(block) {
 
 function renderFigureBlock(block, reading) {
   const figure = reading.figures.get(block.id) ?? block;
-  return renderFigure(figure, block.relation);
+  return renderFigure(figure, block.relation, reading);
 }
 
-function renderFigure(figure, relation = "supporting") {
+function resolveReadingAssetPath(path, reading) {
+  const value = String(path ?? "");
+  if (/^(?:[a-z]+:|\/)/i.test(value)) return value;
+  return `${reading?.assetBasePath ?? ""}${value}`;
+}
+
+function renderFigure(figure, relation = "supporting", reading = null) {
   if (!figure?.file) return "";
   return `
     <figure class="figure-frame" data-relation="${escapeHtml(relation)}">
-      <img src="${escapeHtml(figure.file)}" alt="${escapeHtml(figure.label ?? "Figure")}">
+      <img src="${escapeHtml(resolveReadingAssetPath(figure.file, reading))}" alt="${escapeHtml(figure.label ?? "Figure")}">
       <figcaption class="figure-caption">${escapeHtml(figure.caption ?? "")}</figcaption>
     </figure>
   `;
@@ -332,7 +339,7 @@ function renderChunk(chunk, reading) {
     .map((block) => block.id));
   const supportingFigures = (chunk.figureRefs ?? [])
     .filter((ref) => !inlineFigureIds.has(ref.id))
-    .map((ref) => renderFigure(reading.figures.get(ref.id), ref.relation))
+    .map((ref) => renderFigure(reading.figures.get(ref.id), ref.relation, reading))
     .join("");
   return `
     <article class="chunk" id="${escapeHtml(chunk.id)}" data-chunk-id="${escapeHtml(chunk.id)}" data-section-id="${escapeHtml(chunk.sectionId)}">
