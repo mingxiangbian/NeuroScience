@@ -131,6 +131,9 @@ assert.match(sectionActiveRule, /background:\s*var\(--reader-section-line-active
 assert.doesNotMatch(sectionActiveRule, /width:|height:/, "active section should not lengthen in the static state");
 assert.match(css, /\.chunk-source-card/, "English source text should render in a light chunk card");
 assert.match(css, /\.chunk-explanation/, "Chinese explanation should render outside the source card");
+assert.match(css, /\.chunk-title/, "reader CSS should style chunk short titles");
+assert.match(css, /\.chunk-translation/, "reader CSS should style Chinese translation separately from explanation");
+assert.match(css, /\.reading-focus/, "reader CSS should style Chinese reading focus metadata");
 assert.match(css, /\.paper-header\s*\{[\s\S]*max-width:\s*min\(75ch,\s*calc\(100vw - 40px\)\)/, "paper header should use a readable ch-based width");
 assert.match(css, /\.chunk-list\s*\{[\s\S]*max-width:\s*min\(75ch,\s*calc\(100vw - 40px\)\)/, "chunk list should use a readable ch-based width");
 assert.match(css, /\.note-surface\s*\{[\s\S]*min-height:/, "note panel should stay as a continuous blank surface");
@@ -181,7 +184,10 @@ assert.match(js, /addEventListener\("scroll"[\s\S]*updateActiveChunkFromViewport
 assert.doesNotMatch(js, /markSectionNeighbors|is-neighbor/, "section rail should not store hover wave state in JS because stale classes can fake scroll progress");
 assert.match(js, /querySelectorAll\("\[data-toggle-left\]"\)/, "reader should bind all local left-directory controls");
 assert.match(js, /cosineSimilarity/, "reader should perform local vector ranking");
-assert.match(js, /sourceText[\s\S]*zhExplanation/, "reader search should use sourceText and zhExplanation");
+assert.match(js, /sourceText[\s\S]*zhTranslation[\s\S]*zhExplanation/, "reader search should use sourceText, zhTranslation, and zhExplanation");
+assert.match(js, /chunk\.zhTranslation/, "reader should render Chinese translations from chunk data");
+assert.match(js, /paperData\.categoryZh/, "reader should prefer Chinese paper category metadata");
+assert.match(js, /paperData\.readingFocus/, "reader should render Chinese reading focus metadata");
 assert.match(js, /function openSearchModal/, "reader should isolate opening the search modal");
 assert.match(js, /function closeSearchModal/, "reader should isolate closing the search modal");
 assert.match(js, /function getSearchSnippet/, "reader should build search snippets around query terms");
@@ -203,7 +209,7 @@ assert.match(js, /renderMathBlock/, "reader should render math blocks");
 assert.match(js, /renderCodeBlock/, "reader should render code blocks");
 assert.match(js, /renderTableBlock/, "reader should render table blocks");
 assert.match(js, /figureRefs/, "reader should resolve cross-page figure references");
-assert.match(js, /hasFile \?[\s\S]*<img[\s\S]*: `[\s\S]*figure-placeholder/, "reader should not render broken images for figures without files");
+assert.match(js, /if \(!figure\?\.file\) return ""/, "reader should skip missing figure files instead of rendering empty placeholders");
 assert.match(js, /renderNoChunkPaper/, "reader should render real metadata for papers without chunk packages");
 assert.doesNotMatch(js, /\/api\/|localhost|127\.0\.0\.1|openai|anthropic|generateAnswer|chatCompletion|SurrealDB/i, "reader should stay static without backend, provider keys, AI answers, or hard SurrealDB dependency");
 
@@ -241,7 +247,7 @@ for (const paperId of readingPaperIds) {
   assert.ok(Array.isArray(chunkData.chunks) && chunkData.chunks.length >= 4, `${paperId} should include at least four chunks`);
   assert.equal(notesData.paperId, paperId, `${paperId} notes.json should use the paper id`);
   assert.equal(embeddingsData.paperId, paperId, `${paperId} embeddings.json should use the paper id`);
-  assert.deepEqual(embeddingsData.indexedFields, ["sourceText", "zhExplanation"], `${paperId} embeddings should index sourceText and zhExplanation`);
+  assert.deepEqual(embeddingsData.indexedFields, ["sourceText", "zhTranslation", "zhExplanation"], `${paperId} embeddings should index sourceText, zhTranslation, and zhExplanation`);
   assert.equal(figuresData.paperId, paperId, `${paperId} figures.json should use the paper id`);
   assert.ok(Array.isArray(figuresData.figures), `${paperId} figures.json should include a figures array`);
 
@@ -256,6 +262,8 @@ for (const paperId of readingPaperIds) {
     chunkIds.add(chunk.id);
     assert.equal(typeof chunk.sourceText, "string", `${paperId} ${chunk.id} should include sourceText`);
     assert.ok(chunk.sourceText.trim().length > 40, `${paperId} ${chunk.id} sourceText should be substantive`);
+    assert.equal(typeof chunk.zhTranslation, "string", `${paperId} ${chunk.id} should include zhTranslation`);
+    assert.ok(chunk.zhTranslation.trim().length > 20, `${paperId} ${chunk.id} zhTranslation should be substantive`);
     assert.equal(typeof chunk.zhExplanation, "string", `${paperId} ${chunk.id} should include zhExplanation`);
     assert.ok(chunk.zhExplanation.trim().length > 20, `${paperId} ${chunk.id} zhExplanation should be substantive`);
     assert.equal(noteChunkIds.has(chunk.id), true, `${paperId} ${chunk.id} should have a parallel note entry, even if blank`);
@@ -286,6 +294,32 @@ for (const paperId of readingPaperIds) {
     assert.ok(item.vector.every((value) => typeof value === "number" && Number.isFinite(value)), `${paperId} embedding vectors should contain finite numbers`);
   }
 }
+
+const zhangBase = new URL(`../papers/${projectId}/readings/zhang-2024-memory-mechanism-llm-agents/`, import.meta.url);
+const zhangPaper = JSON.parse(readFileSync(new URL("paper.json", zhangBase), "utf8"));
+const zhangChunks = JSON.parse(readFileSync(new URL("chunks.json", zhangBase), "utf8")).chunks;
+const zhangFigures = JSON.parse(readFileSync(new URL("figures.json", zhangBase), "utf8")).figures;
+
+assert.ok(zhangChunks.length >= 18, "Zhang 2024 should be expanded beyond the demo chunk set");
+assert.equal(typeof zhangPaper.categoryZh, "string", "Zhang 2024 should include Chinese category metadata");
+assert.equal(typeof zhangPaper.relationZh, "string", "Zhang 2024 should include Chinese relation metadata");
+assert.equal(typeof zhangPaper.descriptionZh, "string", "Zhang 2024 should include Chinese description metadata");
+assert.ok(Array.isArray(zhangPaper.readingFocus) && zhangPaper.readingFocus.length >= 3, "Zhang 2024 should include Chinese reading focus items");
+
+for (const chunk of zhangChunks) {
+  assert.equal(typeof chunk.title, "string", `Zhang 2024 ${chunk.id} should include a Chinese short title`);
+  assert.ok(chunk.title.trim().length >= 4, `Zhang 2024 ${chunk.id} title should be meaningful`);
+  assert.ok(chunk.zhTranslation.trim().length > 40, `Zhang 2024 ${chunk.id} zhTranslation should be substantive`);
+}
+
+const zhangRenderedFigures = zhangFigures.filter((figure) => figure.file);
+assert.ok(zhangRenderedFigures.length >= 2, "Zhang 2024 should render at least two real local figures");
+for (const figure of zhangRenderedFigures) {
+  assert.equal(existsSync(new URL(figure.file, zhangBase)), true, `Zhang 2024 figure file ${figure.file} should exist`);
+}
+
+assert.ok(zhangChunks.some((chunk) => chunk.blocks?.some((block) => block.type === "table")), "Zhang 2024 should include at least one table block");
+assert.ok(zhangChunks.some((chunk) => chunk.blocks?.some((block) => block.type === "math")), "Zhang 2024 should include at least one math block");
 
 assert.equal(existsSync(new URL(`../papers/${projectId}/readings/park-2023-generative-agents/`, import.meta.url)), false, "non-first-batch papers should not need fake chunk packages");
 

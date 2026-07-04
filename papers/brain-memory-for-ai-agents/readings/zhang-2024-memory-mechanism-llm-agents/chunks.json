@@ -3,96 +3,701 @@
   "chunks": [
     {
       "id": "ch-001",
-      "sectionId": "sec-1",
+      "sectionId": "sec-abstract",
       "order": 1,
-      "sourceText": "The survey treats memory as a core infrastructure layer for LLM-based agents. Memory is not only a larger prompt context; it includes how experience is stored, organized, retrieved, and reused when an agent plans or acts over time.",
+      "title": "记忆作为智能体能力",
+      "sourceText": "The survey begins from a practical observation: LLM-based agents need memory in order to use previous interactions when they plan, act, and adapt. Memory is treated as a key module for agent-environment interaction rather than as a passive archive.",
+      "zhTranslation": "这篇综述从一个很实际的观察出发：基于大语言模型的智能体如果要规划、行动和适应环境，就必须能够利用过去的交互经验。作者把记忆视为智能体与环境交互中的关键模块，而不是一个被动的资料仓库。",
+      "zhExplanation": "开头要抓住“memory 是 agent 能力的一部分”这个定位。它不是单纯保存文本，而是让过去经验重新进入当前决策。",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "The survey treats memory as a core infrastructure layer for LLM-based agents. Memory is not only a larger prompt context; it includes how experience is stored, organized, retrieved, and reused when an agent plans or acts over time."
+          "text": "The survey begins from a practical observation: LLM-based agents need memory in order to use previous interactions when they plan, act, and adapt."
+        },
+        {
+          "type": "paragraph",
+          "text": "Memory is treated as a key module for agent-environment interaction rather than as a passive archive."
         }
       ],
-      "zhExplanation": "这一段的作用是把 memory 从“上下文长度”提升为智能体架构问题。作者关注的是 agent 如何把过去经验变成可检索、可更新、可用于规划的结构，而不是简单把更多文本塞进 prompt。",
+      "figureRefs": [],
+      "keywords": [
+        "agent",
+        "interaction",
+        "memory module",
+        "adaptation"
+      ]
+    },
+    {
+      "id": "ch-002",
+      "sectionId": "sec-intro",
+      "order": 2,
+      "title": "从上下文到自我演化",
+      "sourceText": "The introduction links memory with the goal of building autonomous agents. Large language models can follow instructions and call tools, but the agent also needs a mechanism for using historical experience across tasks and conversations.",
+      "zhTranslation": "引言把记忆和自主智能体的目标连接起来。大语言模型可以执行指令、调用工具，但如果智能体要跨任务、跨对话地利用历史经验，就需要一个明确的记忆机制。",
+      "zhExplanation": "这里说明为什么长上下文不够：agent 的问题不是一次性读完更多文本，而是如何把多次交互沉淀成可复用经验。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The introduction links memory with the goal of building autonomous agents. Large language models can follow instructions and call tools, but the agent also needs a mechanism for using historical experience across tasks and conversations."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "autonomous agent",
+        "historical experience",
+        "context window"
+      ]
+    },
+    {
+      "id": "ch-003",
+      "sectionId": "sec-intro",
+      "order": 3,
+      "title": "智能体与原始 LLM 的差异",
+      "sourceText": "The paper repeatedly separates an original LLM from an LLM-based agent. The difference is that the agent contains additional modules, especially memory, that support planning, interaction, and adaptation over time.",
+      "zhTranslation": "文章反复区分原始的大语言模型和基于大语言模型的智能体。两者的差异在于，智能体包含额外模块，尤其是记忆模块，用来支持长期规划、交互和适应。",
+      "zhExplanation": "对这个项目来说，这一句很关键：记忆不是模型参数本身的同义词，而是智能体架构中围绕 LLM 外挂或内化的一组机制。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The paper repeatedly separates an original LLM from an LLM-based agent. The difference is that the agent contains additional modules, especially memory, that support planning, interaction, and adaptation over time."
+        },
+        {
+          "type": "figure",
+          "id": "fig-001",
+          "relation": "nearby"
+        }
+      ],
       "figureRefs": [
         {
           "id": "fig-001",
           "relation": "supporting"
         }
       ],
-      "keywords": ["LLM agent", "memory architecture", "long-term memory", "retrieval"]
+      "keywords": [
+        "LLM-based agent",
+        "module",
+        "planning",
+        "adaptation"
+      ]
     },
     {
-      "id": "ch-002",
-      "sectionId": "sec-2",
-      "order": 2,
-      "sourceText": "A practical memory mechanism usually separates writing from reading. The agent first converts observations, tool results, or conversations into memory records, then later retrieves a small set of relevant records to condition a decision.",
+      "id": "ch-004",
+      "sectionId": "sec-intro",
+      "order": 4,
+      "title": "综述的三个问题",
+      "sourceText": "The survey organizes its contribution around three questions: what the memory mechanism is, why it is needed, and how it is implemented and evaluated in LLM-based agents.",
+      "zhTranslation": "综述围绕三个问题组织：记忆机制是什么、为什么需要记忆机制，以及在基于大语言模型的智能体中如何实现和评价记忆机制。",
+      "zhExplanation": "这三个问题可以直接变成阅读路线。先定义对象，再解释必要性，最后进入实现和评价。",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "A practical memory mechanism usually separates writing from reading. The agent first converts observations, tool results, or conversations into memory records, then later retrieves a small set of relevant records to condition a decision."
+          "text": "The survey organizes its contribution around three questions: what the memory mechanism is, why it is needed, and how it is implemented and evaluated in LLM-based agents."
+        },
+        {
+          "type": "table",
+          "caption": "Reader-side map of the survey questions",
+          "columns": [
+            "Question",
+            "Reader use"
+          ],
+          "rows": [
+            [
+              "What is memory?",
+              "Define the component we are reading about."
+            ],
+            [
+              "Why memory?",
+              "Explain what agent capability it supports."
+            ],
+            [
+              "How to implement/evaluate?",
+              "Connect paper reading to system design."
+            ]
+          ]
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "survey",
+        "definition",
+        "implementation",
+        "evaluation"
+      ]
+    },
+    {
+      "id": "ch-005",
+      "sectionId": "sec-related",
+      "order": 5,
+      "title": "相关综述中的定位",
+      "sourceText": "The paper positions itself against existing surveys on LLM agents, tool use, and agent applications. Its narrower focus is the memory mechanism itself: the structures and operations that let an agent preserve and reuse experience.",
+      "zhTranslation": "文章把自己放在已有的 LLM 智能体、工具使用和应用类综述旁边，并强调自己的焦点更窄：专门讨论记忆机制，也就是让智能体保存并复用经验的结构与操作。",
+      "zhExplanation": "这能帮你判断这篇的用途：它不是最完整的 agent 综述，而是 memory 子系统综述。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The paper positions itself against existing surveys on LLM agents, tool use, and agent applications."
+        },
+        {
+          "type": "paragraph",
+          "text": "Its narrower focus is the memory mechanism itself: the structures and operations that let an agent preserve and reuse experience."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "related survey",
+        "memory mechanism",
+        "agent application"
+      ]
+    },
+    {
+      "id": "ch-006",
+      "sectionId": "sec-definition",
+      "order": 6,
+      "title": "交互的时间结构",
+      "sourceText": "The survey describes interaction between an agent and its environment through a task, a trial, and a sequence of steps. Memory becomes meaningful because the agent observes, acts, and then uses past steps to influence later steps.",
+      "zhTranslation": "文章用任务、试次和步骤来描述智能体与环境的交互。记忆之所以有意义，是因为智能体会观察、行动，并让过去步骤影响后续步骤。",
+      "zhExplanation": "这里把 memory 放进时间结构里：如果没有多步、多轮和跨试次交互，记忆机制的重要性就不明显。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The survey describes interaction between an agent and its environment through a task, a trial, and a sequence of steps."
+        },
+        {
+          "type": "paragraph",
+          "text": "Memory becomes meaningful because the agent observes, acts, and then uses past steps to influence later steps."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "task",
+        "trial",
+        "step",
+        "interaction"
+      ]
+    },
+    {
+      "id": "ch-007",
+      "sectionId": "sec-definition",
+      "order": 7,
+      "title": "任务、环境、试次与步骤",
+      "sourceText": "A task defines the objective, the environment defines the external state and feedback, a trial is one attempt to complete the task, and a step is one action-observation unit inside that trial.",
+      "zhTranslation": "任务定义目标，环境定义外部状态和反馈，试次是完成任务的一次尝试，步骤则是该试次中的一个行动—观察单元。",
+      "zhExplanation": "这些定义很朴素，但对后面的 chunk 划分有用：写入 memory 的最小材料常常来自 action、observation、tool result 或 conversation turn。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "A task defines the objective, the environment defines the external state and feedback, a trial is one attempt to complete the task, and a step is one action-observation unit inside that trial."
+        },
+        {
+          "type": "table",
+          "caption": "Interaction vocabulary",
+          "columns": [
+            "Term",
+            "Meaning"
+          ],
+          "rows": [
+            [
+              "Task",
+              "The target objective."
+            ],
+            [
+              "Environment",
+              "The state and feedback source."
+            ],
+            [
+              "Trial",
+              "One attempt at a task."
+            ],
+            [
+              "Step",
+              "One action-observation unit."
+            ]
+          ]
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "task",
+        "environment",
+        "trial",
+        "step"
+      ]
+    },
+    {
+      "id": "ch-008",
+      "sectionId": "sec-definition",
+      "order": 8,
+      "title": "狭义记忆定义",
+      "sourceText": "Under the narrow definition, memory is the information generated during interaction that can later be written, managed, read, and used by the agent. This focuses on the agent's own experience rather than all possible knowledge.",
+      "zhTranslation": "在狭义定义下，记忆是交互过程中产生的信息，并且这些信息之后可以被智能体写入、管理、读取和使用。这个定义强调智能体自己的经验，而不是所有可能的知识。",
+      "zhExplanation": "狭义定义适合做阅读器和 chunk 系统：每个 chunk 都像一次可保存、可检索的经验记录。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Under the narrow definition, memory is the information generated during interaction that can later be written, managed, read, and used by the agent."
+        },
+        {
+          "type": "paragraph",
+          "text": "This focuses on the agent's own experience rather than all possible knowledge."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "narrow memory",
+        "experience",
+        "write",
+        "read"
+      ]
+    },
+    {
+      "id": "ch-009",
+      "sectionId": "sec-definition",
+      "order": 9,
+      "title": "广义记忆定义",
+      "sourceText": "The broad definition also includes outside knowledge that can support an agent's decision-making. This means memory may contain both experience generated by the agent and external information retrieved from sources beyond the current interaction.",
+      "zhTranslation": "广义定义还包括能够支持智能体决策的外部知识。因此，记忆既可以包含智能体自己产生的经验，也可以包含从当前交互之外的来源检索到的外部信息。",
+      "zhExplanation": "这解释了为什么 RAG、知识库和历史交互记录会在工程上混在一起：它们都可能进入 agent 的可用记忆。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The broad definition also includes outside knowledge that can support an agent's decision-making."
+        },
+        {
+          "type": "paragraph",
+          "text": "This means memory may contain both experience generated by the agent and external information retrieved from sources beyond the current interaction."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "broad memory",
+        "external knowledge",
+        "RAG",
+        "knowledge source"
+      ]
+    },
+    {
+      "id": "ch-010",
+      "sectionId": "sec-definition",
+      "order": 10,
+      "title": "写入、管理与读取",
+      "sourceText": "The mechanism is decomposed into writing, management, and reading. Writing converts actions and observations into memory items; management updates the memory store; reading retrieves memory according to the next context.",
+      "zhTranslation": "作者把记忆机制分解为写入、管理和读取。写入把行动和观察转成记忆项；管理更新记忆库；读取则根据下一步上下文检索相关记忆。",
+      "zhExplanation": "这是全篇最适合转成系统设计的地方。它对应后续的 chunk 写入标准、embedding 检索、笔记关联和阅读器同步。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The mechanism is decomposed into writing, management, and reading. Writing converts actions and observations into memory items; management updates the memory store; reading retrieves memory according to the next context."
+        },
+        {
+          "type": "math",
+          "latex": "m_t^k = W(\\{a_t^k, o_t^k\\})",
+          "label": "Writing operation"
+        },
+        {
+          "type": "math",
+          "latex": "M_t^k = P(M_{t-1}^k, m_t^k)",
+          "label": "Management operation"
+        },
+        {
+          "type": "math",
+          "latex": "\\hat{M}_t^k = R(M_t^k, c_{t+1}^k)",
+          "label": "Reading operation"
+        },
+        {
+          "type": "figure",
+          "id": "fig-003",
+          "relation": "nearby"
+        }
+      ],
+      "figureRefs": [
+        {
+          "id": "fig-003",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "writing",
+        "management",
+        "reading",
+        "formula",
+        "retrieval"
+      ]
+    },
+    {
+      "id": "ch-011",
+      "sectionId": "sec-why",
+      "order": 11,
+      "title": "认知心理学动机",
+      "sourceText": "The paper uses cognitive psychology as one motivation: memory is central to human intelligence because previous experience influences later reasoning and behavior. Agent memory borrows this broad functional idea without proving a biological equivalence.",
+      "zhTranslation": "文章用认知心理学作为一个动机：在人类智能中，记忆很核心，因为过去经验会影响之后的推理和行为。智能体记忆借用了这种功能层面的想法，但这并不等于证明它和生物记忆机制相同。",
+      "zhExplanation": "这里要避免过度类比。它是工程启发，不是“LLM agent 像大脑”的证据。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The paper uses cognitive psychology as one motivation: memory is central to human intelligence because previous experience influences later reasoning and behavior."
+        },
+        {
+          "type": "paragraph",
+          "text": "Agent memory borrows this broad functional idea without proving a biological equivalence."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "cognitive psychology",
+        "human intelligence",
+        "biological analogy"
+      ]
+    },
+    {
+      "id": "ch-012",
+      "sectionId": "sec-why",
+      "order": 12,
+      "title": "自我演化与应用需求",
+      "sourceText": "Memory is also motivated by self-evolution and application needs. An agent that remembers can adapt from repeated interaction, reuse past solutions, and maintain continuity across complex application scenarios.",
+      "zhTranslation": "记忆的另一个动机来自自我演化和应用需求。能够记忆的智能体可以从重复交互中适应，复用过去的解决方案，并在复杂应用场景中保持连续性。",
+      "zhExplanation": "这解释了为什么实际产品会需要 session memory、user preference memory 和 task memory。没有这些，agent 很难长期服务同一个人或项目。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Memory is also motivated by self-evolution and application needs. An agent that remembers can adapt from repeated interaction, reuse past solutions, and maintain continuity across complex application scenarios."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "self-evolution",
+        "application",
+        "continuity",
+        "preference memory"
+      ]
+    },
+    {
+      "id": "ch-013",
+      "sectionId": "sec-implementation",
+      "order": 13,
+      "title": "记忆来源",
+      "sourceText": "The implementation section first asks where memory comes from. Sources include information generated inside a trial, experience accumulated across trials, and external knowledge that the agent can call when needed.",
+      "zhTranslation": "实现部分首先问记忆来自哪里。来源包括单个试次内部产生的信息、跨试次积累的经验，以及智能体在需要时可以调用的外部知识。",
+      "zhExplanation": "这部分可以直接指导导入规范：每个 chunk 都应该标明来源类型，否则后面很难判断它是交互经验、长期知识，还是外部材料。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The implementation section first asks where memory comes from. Sources include information generated inside a trial, experience accumulated across trials, and external knowledge that the agent can call when needed."
+        },
+        {
+          "type": "figure",
+          "id": "fig-004",
+          "relation": "nearby"
+        }
+      ],
+      "figureRefs": [
+        {
+          "id": "fig-004",
+          "relation": "deferred"
+        }
+      ],
+      "keywords": [
+        "memory source",
+        "inside-trial",
+        "cross-trial",
+        "external knowledge"
+      ]
+    },
+    {
+      "id": "ch-014",
+      "sectionId": "sec-implementation",
+      "order": 14,
+      "title": "试次内、跨试次与外部知识",
+      "sourceText": "Inside-trial memory preserves context within one ongoing attempt. Cross-trial memory stores experience from previous attempts. External knowledge supplies information that is useful for the task but not necessarily produced by the agent itself.",
+      "zhTranslation": "试次内记忆保存当前尝试中的上下文；跨试次记忆保存之前尝试得到的经验；外部知识则提供对任务有用但不一定由智能体自身产生的信息。",
+      "zhExplanation": "这三个来源可以对应你阅读器里的三类材料：当前论文 chunk、项目长期笔记、外部论文或网页。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Inside-trial memory preserves context within one ongoing attempt. Cross-trial memory stores experience from previous attempts. External knowledge supplies information that is useful for the task but not necessarily produced by the agent itself."
+        },
+        {
+          "type": "table",
+          "caption": "Memory sources as reader data",
+          "columns": [
+            "Source type",
+            "Reader analogy"
+          ],
+          "rows": [
+            [
+              "Inside-trial",
+              "Current chunk and local context"
+            ],
+            [
+              "Cross-trial",
+              "Project notes and previous readings"
+            ],
+            [
+              "External knowledge",
+              "Linked papers, PDFs, and webpages"
+            ]
+          ]
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "inside-trial",
+        "cross-trial",
+        "external",
+        "reader data"
+      ]
+    },
+    {
+      "id": "ch-015",
+      "sectionId": "sec-implementation",
+      "order": 15,
+      "title": "文本记忆形式",
+      "sourceText": "For textual memory, the survey distinguishes forms such as complete history, recent history, retrieved history, and external information. The design choice affects cost, relevance, and how much irrelevant context is injected back into the model.",
+      "zhTranslation": "对于文本记忆，综述区分了完整历史、近期历史、检索历史和外部信息等形式。不同选择会影响成本、相关性，以及有多少无关上下文被重新塞回模型。",
+      "zhExplanation": "这和你的阅读器很相关：中间正文不应该只堆全部内容，也要能通过目录和搜索把相关段落取出来。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "For textual memory, the survey distinguishes forms such as complete history, recent history, retrieved history, and external information."
+        },
+        {
+          "type": "paragraph",
+          "text": "The design choice affects cost, relevance, and how much irrelevant context is injected back into the model."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "textual memory",
+        "history",
+        "retrieved history",
+        "context injection"
+      ]
+    },
+    {
+      "id": "ch-016",
+      "sectionId": "sec-implementation",
+      "order": 16,
+      "title": "检索与 embedding",
+      "sourceText": "Retrieved memory usually depends on a query. A system can encode the current context and stored memory into comparable representations, then select records with high similarity before composing the next prompt.",
+      "zhTranslation": "检索式记忆通常依赖一个查询。系统可以把当前上下文和已存记忆编码成可比较的表示，再选择相似度高的记录，最后组合进下一次提示中。",
+      "zhExplanation": "这就是 embedding 在这里的作用：它不是数据库，而是让 query 和 chunk 能够按语义相似度比较。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Retrieved memory usually depends on a query. A system can encode the current context and stored memory into comparable representations, then select records with high similarity before composing the next prompt."
         },
         {
           "type": "code",
           "language": "python",
-          "caption": "Minimal retrieval sketch",
-          "code": "query = embed(current_goal)\nrecords = top_k(memory_store, query, k=8)\ncontext = compose_prompt(records, current_goal)"
-        }
-      ],
-      "zhExplanation": "这里对应工程系统里的写入和读取分离。写入阶段决定什么经验值得保存；读取阶段决定当前任务最相关的少量记忆是什么。代码块只是阅读器中的伪代码展示，不代表论文提供了该实现。",
-      "figureRefs": [],
-      "keywords": ["write memory", "read memory", "top-k retrieval", "agent context"]
-    },
-    {
-      "id": "ch-003",
-      "sectionId": "sec-2",
-      "order": 3,
-      "sourceText": "Embedding-based retrieval is often described as similarity search between the current query and stored memory chunks. The retrieved records are then merged with instructions, goals, and recent context.",
-      "blocks": [
-        {
-          "type": "paragraph",
-          "text": "Embedding-based retrieval is often described as similarity search between the current query and stored memory chunks. The retrieved records are then merged with instructions, goals, and recent context."
+          "caption": "Reader-side retrieval sketch",
+          "code": "query_vector = embed(current_question)\nrecords = top_k(memory_chunks, query_vector, k=8)\ncontext = compose_prompt(records, current_question)"
         },
         {
           "type": "math",
-          "display": true,
-          "latex": "\\operatorname{score}(q, m_i)=\\frac{q\\cdot m_i}{\\lVert q\\rVert\\lVert m_i\\rVert}",
+          "latex": "score(q,m_i)=\\frac{q\\cdot m_i}{\\lVert q\\rVert\\lVert m_i\\rVert}",
           "label": "Cosine retrieval"
         }
       ],
-      "zhExplanation": "这一段说明 embedding 在 memory 系统里的位置：它不是数据库本身，而是把 query 和 memory chunk 放到可比较的语义空间。公式表达的是常见余弦相似度，用来选择与当前问题最接近的记忆。",
       "figureRefs": [],
-      "keywords": ["embedding", "semantic retrieval", "cosine similarity", "memory chunk"]
+      "keywords": [
+        "retrieval",
+        "embedding",
+        "query",
+        "cosine",
+        "semantic search"
+      ]
     },
     {
-      "id": "ch-004",
-      "sectionId": "sec-3",
-      "order": 4,
-      "sourceText": "The survey highlights that memory quality cannot be judged only by whether an agent stores more information. A useful memory system should improve downstream behavior, avoid irrelevant recall, and maintain useful information over longer interaction horizons.",
+      "id": "ch-017",
+      "sectionId": "sec-implementation",
+      "order": 17,
+      "title": "参数化记忆",
+      "sourceText": "The survey also discusses parametric memory, where knowledge is stored in or modified through model parameters. Fine-tuning and memory editing can change what the model contains, but they raise issues of cost, controllability, and unintended side effects.",
+      "zhTranslation": "综述也讨论了参数化记忆，也就是知识存储在模型参数中，或通过修改模型参数来改变。微调和记忆编辑可以改变模型包含的知识，但会带来成本、可控性和副作用问题。",
+      "zhExplanation": "这提醒我们不要把所有记忆都做成模型内部更新。对个人阅读器来说，外部 chunk 和笔记更可控，也更容易追溯。",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "The survey highlights that memory quality cannot be judged only by whether an agent stores more information. A useful memory system should improve downstream behavior, avoid irrelevant recall, and maintain useful information over longer interaction horizons."
+          "text": "The survey also discusses parametric memory, where knowledge is stored in or modified through model parameters."
+        },
+        {
+          "type": "paragraph",
+          "text": "Fine-tuning and memory editing can change what the model contains, but they raise issues of cost, controllability, and unintended side effects."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "parametric memory",
+        "fine-tuning",
+        "memory editing",
+        "controllability"
+      ]
+    },
+    {
+      "id": "ch-018",
+      "sectionId": "sec-implementation",
+      "order": 18,
+      "title": "记忆操作流水线",
+      "sourceText": "The implementation taxonomy connects sources and forms to operations. Memory has to be written, organized, updated, and then read in a way that matches the current state, goal, and available context.",
+      "zhTranslation": "实现分类把记忆来源、记忆形式和操作连接起来。记忆必须被写入、组织、更新，并且要以匹配当前状态、目标和可用上下文的方式读取。",
+      "zhExplanation": "这正是后续导入标准要解决的问题：每次写入 chunk 时，必须有统一字段记录来源、标题、原文、中文翻译、解释、图表和笔记。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The implementation taxonomy connects sources and forms to operations. Memory has to be written, organized, updated, and then read in a way that matches the current state, goal, and available context."
         },
         {
           "type": "table",
-          "label": "Table A",
-          "caption": "Reader-side evaluation framing",
-          "columns": ["Criterion", "Meaning"],
+          "caption": "Minimum reader fields for future chunk import",
+          "columns": [
+            "Field",
+            "Purpose"
+          ],
           "rows": [
-            ["Relevance", "Does retrieval help the current task?"],
-            ["Persistence", "Does useful information survive across sessions?"],
-            ["Noise control", "Does memory avoid distracting recall?"]
+            [
+              "sourceText",
+              "Original paper passage"
+            ],
+            [
+              "zhTranslation",
+              "Line-by-line Chinese reading"
+            ],
+            [
+              "zhExplanation",
+              "Interpretation for the project"
+            ],
+            [
+              "figureRefs",
+              "Nearby or deferred visual context"
+            ],
+            [
+              "note",
+              "Parallel personal note"
+            ]
           ]
         }
       ],
-      "zhExplanation": "这一段是评价标准的提醒：记忆系统不是存得越多越好。真正要看它是否提升行为、是否能跨时间保持有用信息，以及是否会把无关记忆召回到当前任务里。",
-      "figureRefs": [
+      "figureRefs": [],
+      "keywords": [
+        "writing standard",
+        "chunk import",
+        "reader fields",
+        "context"
+      ]
+    },
+    {
+      "id": "ch-019",
+      "sectionId": "sec-evaluation",
+      "order": 19,
+      "title": "直接评价",
+      "sourceText": "The evaluation section separates direct evaluation from downstream task evaluation. Direct evaluation can ask whether the memory content itself is correct, complete, or aligned with a reference answer.",
+      "zhTranslation": "评价部分区分直接评价和下游任务评价。直接评价会询问记忆内容本身是否正确、完整，或者是否与参考答案一致。",
+      "zhExplanation": "这对阅读器也有启发：chunk 不是越多越好，关键是原文、翻译、解释和笔记是否能被验证。",
+      "blocks": [
         {
-          "id": "fig-002",
-          "relation": "deferred"
+          "type": "paragraph",
+          "text": "The evaluation section separates direct evaluation from downstream task evaluation. Direct evaluation can ask whether the memory content itself is correct, complete, or aligned with a reference answer."
+        },
+        {
+          "type": "math",
+          "latex": "Correctness = \\frac{\\#\\;correct\\;memory\\;items}{\\#\\;all\\;evaluated\\;items}",
+          "label": "Direct evaluation intuition"
         }
       ],
-      "keywords": ["memory evaluation", "behavior", "noise", "long horizon"]
+      "figureRefs": [],
+      "keywords": [
+        "direct evaluation",
+        "correctness",
+        "reference answer",
+        "quality"
+      ]
+    },
+    {
+      "id": "ch-020",
+      "sectionId": "sec-evaluation",
+      "order": 20,
+      "title": "间接评价",
+      "sourceText": "Indirect evaluation measures whether memory improves the agent's behavior in tasks such as conversation, question answering, long-context reasoning, or other application benchmarks.",
+      "zhTranslation": "间接评价衡量记忆是否提升智能体在对话、问答、长上下文推理或其他应用基准中的行为表现。",
+      "zhExplanation": "这能避免一个误区：检索命中看起来很准，不代表最终 agent 表现一定更好。最终还要看任务结果。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Indirect evaluation measures whether memory improves the agent's behavior in tasks such as conversation, question answering, long-context reasoning, or other application benchmarks."
+        },
+        {
+          "type": "table",
+          "caption": "Evaluation distinction",
+          "columns": [
+            "Evaluation type",
+            "Question"
+          ],
+          "rows": [
+            [
+              "Direct",
+              "Is the stored or retrieved memory itself good?"
+            ],
+            [
+              "Indirect",
+              "Does memory improve agent behavior?"
+            ]
+          ]
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "indirect evaluation",
+        "benchmark",
+        "conversation",
+        "QA"
+      ]
+    },
+    {
+      "id": "ch-021",
+      "sectionId": "sec-future",
+      "order": 21,
+      "title": "未来方向",
+      "sourceText": "The survey highlights future directions including advances in parametric memory, multi-agent applications, lifelong learning, and humanoid agents. These directions all require memory to remain useful across longer time horizons.",
+      "zhTranslation": "综述提出的未来方向包括参数化记忆、多智能体应用、终身学习和类人智能体。这些方向共同要求记忆能在更长时间尺度上保持有用。",
+      "zhExplanation": "这些方向可以作为本项目后续分支：多 agent 记忆共享、长期用户偏好、跨任务经验迁移、以及脑启发记忆机制。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The survey highlights future directions including advances in parametric memory, multi-agent applications, lifelong learning, and humanoid agents."
+        },
+        {
+          "type": "paragraph",
+          "text": "These directions all require memory to remain useful across longer time horizons."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "future directions",
+        "multi-agent",
+        "lifelong learning",
+        "humanoid agent"
+      ]
+    },
+    {
+      "id": "ch-022",
+      "sectionId": "sec-conclusion",
+      "order": 22,
+      "title": "阅读 takeaway",
+      "sourceText": "The conclusion reinforces the survey's central framing: memory is a necessary component for LLM-based agents that need continuity, adaptation, and reuse of prior experience across interactions.",
+      "zhTranslation": "结论再次强调文章的中心框架：对于需要连续性、适应能力和跨交互复用经验的 LLM 智能体来说，记忆是必要组件。",
+      "zhExplanation": "最终 takeaway：这篇适合当作工程记忆系统的地图，而不是神经科学记忆机制的强证据。它帮助我们定义 agent memory 的模块和接口。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The conclusion reinforces the survey's central framing: memory is a necessary component for LLM-based agents that need continuity, adaptation, and reuse of prior experience across interactions."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "takeaway",
+        "continuity",
+        "adaptation",
+        "reuse"
+      ]
     }
   ]
 }

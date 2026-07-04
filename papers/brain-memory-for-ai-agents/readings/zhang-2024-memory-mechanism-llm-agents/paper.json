@@ -5,23 +5,65 @@
   "authors": "Zhang et al.",
   "year": 2024,
   "category": "AI agent memory",
+  "categoryZh": "AI 智能体记忆机制综述",
   "relation": "Maps engineering memory modules to agent capabilities and later neuroscience-inspired design questions.",
+  "relationZh": "这篇综述把智能体记忆拆成写入、管理、读取、评价等工程模块，适合作为本项目理解 AI agent memory 的入口。",
   "description": "A survey framing memory in LLM-based agents as structured storage, retrieval, update, and reflection rather than only longer context windows.",
+  "descriptionZh": "文章的核心不是把上下文窗口拉长，而是讨论智能体怎样把交互经验保存成可检索、可更新、可用于后续决策的记忆结构。",
+  "readingFocus": [
+    "先抓住作者给出的 memory 定义：它服务于 agent 与环境的多轮交互，而不是普通文本缓存。",
+    "重点看 memory 的三个操作：writing、management、reading；这会直接影响后续检索、RAG 和笔记系统设计。",
+    "评价部分要区分直接评价和间接任务表现，避免把“存得多”误认为“记忆好”。"
+  ],
   "source": "https://arxiv.org/abs/2404.13501",
+  "license": "CC BY 4.0",
   "sourceFile": "../../pdfs/2024-zhang-survey-memory-llm-agents.pdf",
   "noteFile": "../../notes-cn/reading-packet-cn.md#1-zhang-et-al-2024-a-survey-on-the-memory-mechanism-of-large-language-model-based-agents",
   "sections": [
     {
-      "id": "sec-1",
-      "title": "Memory as agent infrastructure"
+      "id": "sec-abstract",
+      "title": "Abstract",
+      "titleZh": "摘要"
     },
     {
-      "id": "sec-2",
-      "title": "Storage, retrieval, and update"
+      "id": "sec-intro",
+      "title": "Introduction",
+      "titleZh": "引言"
     },
     {
-      "id": "sec-3",
-      "title": "Evaluation and open limits"
+      "id": "sec-related",
+      "title": "Related surveys",
+      "titleZh": "相关综述定位"
+    },
+    {
+      "id": "sec-definition",
+      "title": "Memory definition",
+      "titleZh": "记忆定义"
+    },
+    {
+      "id": "sec-why",
+      "title": "Why memory matters",
+      "titleZh": "为什么需要记忆"
+    },
+    {
+      "id": "sec-implementation",
+      "title": "Implementation",
+      "titleZh": "实现机制"
+    },
+    {
+      "id": "sec-evaluation",
+      "title": "Evaluation",
+      "titleZh": "评价方法"
+    },
+    {
+      "id": "sec-future",
+      "title": "Future directions",
+      "titleZh": "未来方向"
+    },
+    {
+      "id": "sec-conclusion",
+      "title": "Conclusion",
+      "titleZh": "结论"
     }
   ]
 }

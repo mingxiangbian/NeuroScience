@@ -25,7 +25,13 @@
           "relation": "supporting"
         }
       ],
-      "keywords": ["pattern separation", "overlap", "distinct representation", "interference"]
+      "keywords": [
+        "pattern separation",
+        "overlap",
+        "distinct representation",
+        "interference"
+      ],
+      "zhTranslation": "模式分离指的是把相似或重叠的输入转换成更有区分度的表征。这样可以帮助记忆系统避免混淆拥有许多共同特征的事件。"
     },
     {
       "id": "ch-002",
@@ -41,16 +47,31 @@
           "type": "table",
           "label": "Table A",
           "caption": "Simplified hippocampal subregion roles",
-          "columns": ["Subregion", "Computation"],
+          "columns": [
+            "Subregion",
+            "Computation"
+          ],
           "rows": [
-            ["Dentate gyrus", "Sparse separation"],
-            ["CA3", "Associative completion"]
+            [
+              "Dentate gyrus",
+              "Sparse separation"
+            ],
+            [
+              "CA3",
+              "Associative completion"
+            ]
           ]
         }
       ],
       "zhExplanation": "这里把 pattern separation 放到海马子区功能里：齿状回常被视为稀疏化和分离的关键环节，CA3 则更常和联想补全联系。证据来源包括行为、成像和动物研究，但不同方法能支持的因果强度不同。",
       "figureRefs": [],
-      "keywords": ["dentate gyrus", "CA3", "sparse coding", "pattern completion"]
+      "keywords": [
+        "dentate gyrus",
+        "CA3",
+        "sparse coding",
+        "pattern completion"
+      ],
+      "zhTranslation": "齿状回常被讨论为适合稀疏编码和分离的环路，而 CA3 则更多与联想检索和已存模式的补全相关。"
     },
     {
       "id": "ch-003",
@@ -76,7 +97,13 @@
           "relation": "deferred"
         }
       ],
-      "keywords": ["mnemonic discrimination", "lure", "false recognition", "index specificity"]
+      "keywords": [
+        "mnemonic discrimination",
+        "lure",
+        "false recognition",
+        "index specificity"
+      ],
+      "zhTranslation": "行为任务通常通过让被试区分相似诱饵和之前见过的项目来测试模式分离。分离能力越好，对相似事件的错误再认越少。"
     },
     {
       "id": "ch-004",
@@ -91,7 +118,13 @@
       ],
       "zhExplanation": "这是助手综合判断，而不是论文直接主张：pattern separation 给 agent memory 的启发是避免过早合并相似事件。对于长期 agent，保留足够具体的 episode 区分可能比单纯摘要更重要。",
       "figureRefs": [],
-      "keywords": ["agent memory", "retrieval collision", "episode indexing", "summary"]
+      "keywords": [
+        "agent memory",
+        "retrieval collision",
+        "episode indexing",
+        "summary"
+      ],
+      "zhTranslation": "对于智能体记忆，模式分离是减少检索碰撞的有用类比。它提示我们，相似情节不应过早压缩成同一个语义摘要。"
     }
   ]
 }

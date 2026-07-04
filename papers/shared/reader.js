@@ -112,7 +112,8 @@ function getPaperById(paperId) {
 }
 
 function getSectionTitle(reading, sectionId) {
-  return reading?.paperData.sections.find((section) => section.id === sectionId)?.title ?? "Section";
+  const section = reading?.paperData.sections.find((entry) => entry.id === sectionId);
+  return section?.titleZh ?? section?.title ?? "Section";
 }
 
 async function loadReadingPackage(paper) {
@@ -159,7 +160,7 @@ async function loadAllSearchItems() {
         reading,
         chunk,
         vector: item.vector,
-        searchText: `${chunk.sourceText ?? ""}\n${chunk.zhExplanation ?? ""}`
+        searchText: `${chunk.sourceText ?? ""}\n${chunk.zhTranslation ?? ""}\n${chunk.zhExplanation ?? ""}`
       });
     }
   }
@@ -214,15 +215,22 @@ function renderPaperLinks(paperData) {
 function renderPaperHeader(reading) {
   const paperData = reading?.paperData ?? state.currentPaper;
   const sections = (paperData.sections ?? [])
-    .map((section) => `<button class="section-chip" type="button" data-section-id="${escapeHtml(section.id)}">${escapeHtml(section.title)}</button>`)
+    .map((section) => `<button class="section-chip" type="button" data-section-id="${escapeHtml(section.id)}">${escapeHtml(section.titleZh ?? section.title)}</button>`)
     .join("");
+  const category = paperData.categoryZh ?? paperData.category ?? "Paper";
+  const relation = paperData.relationZh ?? paperData.relation;
+  const description = paperData.descriptionZh ?? paperData.description;
+  const readingFocus = Array.isArray(paperData.readingFocus)
+    ? paperData.readingFocus.map((item) => `<li>${escapeHtml(item)}</li>`).join("")
+    : "";
 
   els.paperHeader.innerHTML = `
-    <p class="paper-kicker">${escapeHtml(paperData.category ?? "Paper")}</p>
+    <p class="paper-kicker">${escapeHtml(category)}</p>
     <h1 class="paper-title">${escapeHtml(paperData.title ?? state.currentPaper.title)}</h1>
     <p class="paper-meta">${escapeHtml([paperData.authors, paperData.year].filter(Boolean).join(" · "))}</p>
-    ${paperData.relation ? `<p class="paper-meta">${escapeHtml(paperData.relation)}</p>` : ""}
-    ${paperData.description ? `<p class="paper-meta">${escapeHtml(paperData.description)}</p>` : ""}
+    ${relation ? `<p class="paper-meta">${escapeHtml(relation)}</p>` : ""}
+    ${description ? `<p class="paper-meta">${escapeHtml(description)}</p>` : ""}
+    ${readingFocus ? `<ul class="reading-focus">${readingFocus}</ul>` : ""}
     <div class="paper-actions"></div>
     <div class="section-chips">${sections}</div>
   `;
@@ -304,11 +312,10 @@ function renderFigureBlock(block, reading) {
 }
 
 function renderFigure(figure, relation = "supporting") {
-  if (!figure) return "";
-  const hasFile = Boolean(figure.file);
+  if (!figure?.file) return "";
   return `
     <figure class="figure-frame" data-relation="${escapeHtml(relation)}">
-      ${hasFile ? `<img src="${escapeHtml(figure.file)}" alt="${escapeHtml(figure.label ?? "Figure")}">` : `<div class="figure-placeholder">${escapeHtml(figure.label ?? "Figure pending extraction")}</div>`}
+      <img src="${escapeHtml(figure.file)}" alt="${escapeHtml(figure.label ?? "Figure")}">
       <figcaption class="figure-caption">${escapeHtml(figure.caption ?? "")}</figcaption>
     </figure>
   `;
@@ -316,18 +323,25 @@ function renderFigure(figure, relation = "supporting") {
 
 function renderChunk(chunk, reading) {
   const sectionTitle = getSectionTitle(reading, chunk.sectionId);
+  const chunkTitle = chunk.title ? `<h2 class="chunk-title">${escapeHtml(chunk.title)}</h2>` : "";
   const blocks = chunk.blocks?.length
     ? chunk.blocks.map((block) => renderBlock(block, reading)).join("")
     : `<p class="source-paragraph">${escapeHtml(chunk.sourceText)}</p>`;
+  const inlineFigureIds = new Set((chunk.blocks ?? [])
+    .filter((block) => block.type === "figure")
+    .map((block) => block.id));
   const supportingFigures = (chunk.figureRefs ?? [])
+    .filter((ref) => !inlineFigureIds.has(ref.id))
     .map((ref) => renderFigure(reading.figures.get(ref.id), ref.relation))
     .join("");
   return `
     <article class="chunk" id="${escapeHtml(chunk.id)}" data-chunk-id="${escapeHtml(chunk.id)}" data-section-id="${escapeHtml(chunk.sectionId)}">
+      ${chunkTitle}
       <p class="chunk-heading">${escapeHtml(sectionTitle)} · ${escapeHtml(chunk.id)}</p>
       <div class="chunk-source-card">${blocks}${supportingFigures}</div>
       <div class="chunk-divider"></div>
-      <div class="chunk-explanation">${chunk.zhExplanation ? `<p>${escapeHtml(chunk.zhExplanation)}</p>` : ""}</div>
+      <div class="chunk-translation">${chunk.zhTranslation ? `<p>${escapeHtml(chunk.zhTranslation)}</p>` : ""}</div>
+      <div class="chunk-explanation chunk-explanation-note">${chunk.zhExplanation ? `<p>${escapeHtml(chunk.zhExplanation)}</p>` : ""}</div>
     </article>
   `;
 }
@@ -471,7 +485,7 @@ function getSearchTerms(query) {
 }
 
 function getSearchSnippet(item, query) {
-  const fields = [item.chunk.zhExplanation, item.chunk.sourceText].filter(Boolean);
+  const fields = [item.chunk.zhTranslation, item.chunk.zhExplanation, item.chunk.sourceText].filter(Boolean);
   const terms = getSearchTerms(query);
   for (const field of fields) {
     const lowerField = field.toLowerCase();
@@ -506,6 +520,7 @@ function getLexicalScore(item, query) {
     [item.paper.shortTitle, 5],
     [sectionTitle, 4],
     [item.chunk.sourceText, 2],
+    [item.chunk.zhTranslation, 2],
     [item.chunk.zhExplanation, 2],
     [(item.chunk.keywords ?? []).join(" "), 3]
   ];

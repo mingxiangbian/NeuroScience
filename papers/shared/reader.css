@@ -63,11 +63,13 @@
 
 html {
   min-height: 100%;
+  overflow-x: hidden;
 }
 
 body {
   min-height: 100vh;
   margin: 0;
+  overflow-x: hidden;
   color: var(--reader-ink);
   background:
     radial-gradient(circle at 16% 12%, rgba(164, 124, 56, 0.045), transparent 22%),
@@ -719,6 +721,32 @@ input {
   color: rgba(238, 240, 231, 0.78);
 }
 
+.reading-focus {
+  display: grid;
+  gap: 8px;
+  margin: 18px 0 0;
+  padding: 0;
+  color: var(--reader-ink);
+  list-style: none;
+  line-height: 1.72;
+}
+
+.reading-focus li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.reading-focus li::before {
+  position: absolute;
+  left: 0;
+  top: 0.75em;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--reader-red);
+  content: "";
+}
+
 .paper-actions {
   display: flex;
   flex-wrap: wrap;
@@ -771,6 +799,16 @@ input {
   scroll-margin-top: 110px;
 }
 
+.chunk-title {
+  margin: 0 0 8px;
+  font-family: var(--reader-serif);
+  color: var(--reader-ink);
+  font-size: clamp(21px, 2vw, 30px);
+  line-height: 1.22;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+
 .chunk-heading {
   display: flex;
   align-items: center;
@@ -812,15 +850,24 @@ input {
 .source-paragraph + .math-block,
 .source-paragraph + .code-block,
 .source-paragraph + .table-block,
+.source-paragraph + .figure-frame,
 .math-block + .source-paragraph,
 .code-block + .source-paragraph,
-.table-block + .source-paragraph {
+.table-block + .source-paragraph,
+.figure-frame + .source-paragraph,
+.math-block + .figure-frame,
+.code-block + .figure-frame,
+.table-block + .figure-frame,
+.figure-frame + .math-block,
+.figure-frame + .code-block,
+.figure-frame + .table-block {
   margin-top: 16px;
 }
 
 .math-block,
 .code-block,
-.table-block {
+.table-block,
+.figure-frame {
   max-width: 100%;
   overflow-x: auto;
   border: 1px solid var(--reader-line);
@@ -864,6 +911,7 @@ input {
 
 .table-block table {
   width: 100%;
+  min-width: 520px;
   border-collapse: collapse;
 }
 
@@ -875,18 +923,16 @@ input {
 }
 
 .figure-frame {
-  max-width: 100%;
-  border: 1px solid var(--reader-line);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.28);
   padding: 12px;
 }
 
 .figure-frame img {
   display: block;
   width: 100%;
-  max-height: 380px;
+  height: clamp(240px, 42vw, 440px);
   object-fit: contain;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.18);
 }
 
 .figure-placeholder {
@@ -906,14 +952,36 @@ input {
 }
 
 .chunk-explanation {
-  color: var(--reader-ink);
-  font-size: 16px;
-  line-height: 1.86;
+  color: var(--reader-ink-muted);
+  font-size: 15px;
+  line-height: 1.82;
   overflow-wrap: anywhere;
   word-break: break-word;
 }
 
+.chunk-translation {
+  color: var(--reader-ink);
+  font-size: 17px;
+  font-weight: 620;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.chunk-translation + .chunk-explanation {
+  margin-top: 10px;
+}
+
+.chunk-explanation-note {
+  border-left: 2px solid rgba(166, 67, 56, 0.28);
+  padding-left: 12px;
+}
+
 .chunk-explanation p {
+  margin: 0;
+}
+
+.chunk-translation p {
   margin: 0;
 }
 
@@ -1027,12 +1095,17 @@ input {
   .reader-shell.is-note-collapsed,
   .reader-shell.is-left-collapsed.is-note-collapsed {
     display: block;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
     padding: 8px;
   }
 
   .reader-toolbar {
     gap: 8px;
     top: 8px;
+    width: 100%;
+    max-width: 100%;
   }
 
   .toolbar-left {
@@ -1040,16 +1113,19 @@ input {
   }
 
   .toolbar-right {
+    min-width: 0;
+    flex: 1;
     gap: 8px;
   }
 
   .toolbar-controls {
     gap: 6px;
-    padding: 5px;
+    padding: 4px;
   }
 
   .toolbar-search {
-    width: clamp(142px, 40vw, 190px);
+    width: clamp(112px, 30vw, 132px);
+    min-width: 0;
     padding: 6px 9px;
   }
 
@@ -1092,10 +1168,18 @@ input {
 
   .reader-main {
     padding-top: 18px;
+    overflow: hidden;
+  }
+
+  .paper-header,
+  .chunk-list {
+    max-width: 100%;
+    padding-right: 12px;
+    padding-left: 12px;
   }
 
   .paper-title {
-    font-size: clamp(30px, 10vw, 44px);
+    font-size: clamp(25px, 7vw, 31px);
   }
 
   .mobile-note-drawer {

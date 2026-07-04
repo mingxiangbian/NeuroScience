@@ -25,7 +25,12 @@
           "relation": "supporting"
         }
       ],
-      "keywords": ["stability-plasticity", "catastrophic interference", "fast learning"]
+      "keywords": [
+        "stability-plasticity",
+        "catastrophic interference",
+        "fast learning"
+      ],
+      "zhTranslation": "这篇论文把记忆问题表述为稳定性与可塑性的权衡。一个系统必须能够快速学习新的情节，同时不能灾难性地覆盖旧的结构化知识。"
     },
     {
       "id": "ch-002",
@@ -41,16 +46,31 @@
           "type": "table",
           "label": "Table A",
           "caption": "Simplified CLS roles",
-          "columns": ["System", "Learning role"],
+          "columns": [
+            "System",
+            "Learning role"
+          ],
           "rows": [
-            ["Hippocampus", "Fast sparse episode indexing"],
-            ["Neocortex", "Slow distributed integration"]
+            [
+              "Hippocampus",
+              "Fast sparse episode indexing"
+            ],
+            [
+              "Neocortex",
+              "Slow distributed integration"
+            ]
           ]
         }
       ],
       "zhExplanation": "这是 CLS 的中心主张：海马更适合快速记录具体 episode，新皮层更适合慢慢抽取统计结构。对 AI agent 来说，这对应 episodic memory 与长期 semantic/world knowledge 的分工。",
       "figureRefs": [],
-      "keywords": ["hippocampus", "neocortex", "episodic memory", "semantic integration"]
+      "keywords": [
+        "hippocampus",
+        "neocortex",
+        "episodic memory",
+        "semantic integration"
+      ],
+      "zhTranslation": "互补学习系统理论认为，海马结构负责快速、稀疏的情节编码，新皮层网络负责逐渐抽取更稳定的统计结构。"
     },
     {
       "id": "ch-003",
@@ -76,7 +96,13 @@
           "relation": "deferred"
         }
       ],
-      "keywords": ["sparse coding", "replay", "consolidation", "interference"]
+      "keywords": [
+        "sparse coding",
+        "replay",
+        "consolidation",
+        "interference"
+      ],
+      "zhTranslation": "该理论把稀疏的海马编码和干扰降低联系起来。不同情节可以分开保存，之后再通过重放或交错学习支持较慢的新皮层巩固。"
     },
     {
       "id": "ch-004",
@@ -91,7 +117,13 @@
       ],
       "zhExplanation": "这一段是本项目的桥接点。助手的综合判断是：CLS 不直接等于某个 AI 架构，但它提供一个设计原则，即 episode 存储、重放、抽象知识和当前工作上下文应有不同角色。",
       "figureRefs": [],
-      "keywords": ["agent memory", "experience log", "distillation", "memory store"]
+      "keywords": [
+        "agent memory",
+        "experience log",
+        "distillation",
+        "memory store"
+      ],
+      "zhTranslation": "对于人工智能体，CLS 的启发是原始经验日志和提炼后的长期知识不应该被压成一个没有区分的记忆库。"
     }
   ]
 }
