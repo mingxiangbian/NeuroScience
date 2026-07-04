@@ -62,13 +62,16 @@
 }
 
 html {
+  height: 100%;
   min-height: 100%;
   overflow-x: hidden;
 }
 
 body {
+  height: 100vh;
   min-height: 100vh;
   margin: 0;
+  overflow: hidden;
   overflow-x: hidden;
   color: var(--reader-ink);
   background:
@@ -132,9 +135,12 @@ input {
 }
 
 .reader-shell {
-  min-height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  max-height: 100dvh;
+  overflow: hidden;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto minmax(0, 1fr);
   grid-template-columns: minmax(198px, 238px) minmax(0, 1fr) minmax(230px, 290px);
   grid-template-areas:
     "toolbar toolbar toolbar"
@@ -503,16 +509,15 @@ input {
 
 .reader-sidebar {
   grid-area: directory;
-  position: sticky;
-  top: calc(var(--toolbar-offset) + 5vh);
   align-self: start;
   min-width: 0;
-  height: auto;
+  height: calc(100dvh - var(--toolbar-offset) - 12px);
+  min-height: 0;
 }
 
 .directory-surface {
-  height: auto;
-  max-height: min(76vh, calc(100vh - var(--toolbar-offset) - 36px));
+  height: 100%;
+  max-height: 100%;
   overflow: auto;
   border: 1px solid var(--reader-glass-edge);
   border-radius: 16px;
@@ -551,20 +556,6 @@ input {
 .paper-nav {
   display: grid;
   gap: 7px;
-}
-
-.chunk-nav {
-  display: grid;
-  gap: 5px;
-  max-height: min(34vh, 320px);
-  overflow: auto;
-  border-top: 1px solid var(--reader-line);
-  margin-top: 13px;
-  padding-top: 12px;
-}
-
-.chunk-nav:empty {
-  display: none;
 }
 
 .paper-nav-item {
@@ -606,31 +597,6 @@ input {
   border-radius: 999px;
   background: var(--reader-red);
   content: "";
-}
-
-.chunk-nav-item {
-  min-width: 0;
-  border: 0;
-  border-radius: 8px;
-  background: transparent;
-  color: var(--reader-ink-muted);
-  padding: 7px 9px;
-  text-align: left;
-  cursor: pointer;
-}
-
-.chunk-nav-item span {
-  display: block;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font-size: 12px;
-}
-
-.chunk-nav-item[aria-current="true"] {
-  background: rgba(255, 255, 255, 0.25);
-  color: var(--reader-ink);
-  box-shadow: inset 2px 0 0 var(--reader-red);
 }
 
 .section-rail {
@@ -732,7 +698,12 @@ input {
 .reader-main {
   grid-area: main;
   min-width: 0;
+  height: calc(100dvh - var(--toolbar-offset) - 12px);
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 6px 0 72px;
+  scroll-padding-top: 28px;
 }
 
 .paper-header {
@@ -1031,10 +1002,9 @@ input {
 
 .note-panel {
   grid-area: notes;
-  position: sticky;
-  top: var(--toolbar-offset);
   align-self: start;
-  height: calc(100vh - var(--toolbar-offset) - 12px);
+  height: calc(100dvh - var(--toolbar-offset) - 12px);
+  min-height: 0;
   overflow: auto;
   border-left: 1px solid var(--reader-note-rule);
   background:
@@ -1067,41 +1037,9 @@ input {
   transition: opacity 140ms ease;
 }
 
-.note-item {
-  min-height: 58px;
-  padding: 0 0 15px;
-  color: var(--reader-ink);
-  transition:
-    color 140ms ease,
-    opacity 140ms ease;
-}
-
-.note-item + .note-item {
-  border-top: 1px solid var(--reader-note-rule);
-  margin-top: 15px;
-  padding-top: 15px;
-}
-
-.note-item.is-active {
-  color: var(--reader-ink);
-}
-
-.note-item.is-active .note-item-label {
-  color: var(--reader-red);
-}
-
-.note-item-label {
-  margin: 0 0 7px;
-  color: var(--reader-ink-muted);
-  font-size: 12px;
-}
-
 .note-surface p {
   margin: 0;
-}
-
-.note-item-body {
-  line-height: 1.82;
+  padding: 0 0 15px;
 }
 
 .note-surface.is-changing {
@@ -1241,8 +1179,9 @@ input {
   }
 
   .reader-main {
+    height: calc(100dvh - 62px);
     padding-top: 18px;
-    overflow: hidden;
+    overflow-y: auto;
   }
 
   .paper-header,

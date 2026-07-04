@@ -32,8 +32,8 @@ const state = {
 
 const els = {
   shell: document.querySelector("#reader-shell"),
+  main: document.querySelector("#reader-main"),
   nav: document.querySelector("#paper-nav"),
-  chunkNav: document.querySelector("#chunk-nav"),
   sectionLines: document.querySelector("#section-lines"),
   paperHeader: document.querySelector("#paper-header"),
   chunkList: document.querySelector("#chunk-list"),
@@ -200,23 +200,6 @@ function renderSectionRail(reading) {
   });
 }
 
-function renderChunkNav(reading) {
-  els.chunkNav.innerHTML = "";
-  const chunks = reading?.chunks ?? [];
-  for (const chunk of chunks) {
-    const button = document.createElement("button");
-    button.className = "chunk-nav-item";
-    button.type = "button";
-    button.dataset.chunkNavId = chunk.id;
-    button.setAttribute("aria-current", "false");
-    button.innerHTML = `<span>${escapeHtml(chunk.id)} · ${escapeHtml(chunk.title ?? getSectionTitle(reading, chunk.sectionId))}</span>`;
-    button.addEventListener("click", () => {
-      document.getElementById(chunk.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-    els.chunkNav.append(button);
-  }
-}
-
 function renderPaperLinks(paperData) {
   return [
     paperData.sourceFile || state.currentPaper.localFile
@@ -277,9 +260,7 @@ function renderNoChunkPaper() {
     </article>
   `;
   renderSectionRail(null);
-  renderChunkNav(null);
-  renderNoteSurfaces(null);
-  syncSidebarsToChunk("");
+  updateNoteSurface("", "");
 }
 
 function renderBlock(block, reading) {
@@ -375,50 +356,21 @@ function renderChunk(chunk, reading) {
 
 function renderChunks(reading) {
   els.chunkList.innerHTML = reading.chunks.map((chunk) => renderChunk(chunk, reading)).join("");
-  renderNoteSurfaces(reading);
   observeChunks(reading);
 }
 
-function renderNoteSurface(surface, reading) {
-  if (!reading) {
-    surface.innerHTML = "";
-    surface.classList.remove("is-changing");
-    return;
-  }
-  surface.innerHTML = reading.chunks.map((chunk) => {
-    const note = reading.notes.get(chunk.id) ?? "";
-    return `
-      <article class="note-item" data-note-chunk-id="${escapeHtml(chunk.id)}">
-        <p class="note-item-label">${escapeHtml(chunk.id)}</p>
-        ${note ? `<p class="note-item-body">${escapeHtml(note)}</p>` : ""}
-      </article>
-    `;
-  }).join("");
+function renderNoteSurface(surface, note) {
+  surface.textContent = note ?? "";
   surface.classList.remove("is-changing");
 }
 
-function renderNoteSurfaces(reading) {
-  for (const surface of [els.noteSurface, els.mobileNoteSurface]) {
-    surface.classList.add("is-changing");
-    renderNoteSurface(surface, reading);
-  }
-}
-
-function syncSidebarsToChunk(chunkId) {
+function updateNoteSurface(chunkId, note) {
   const label = chunkId ? `Parallel note · ${chunkId}` : "Parallel note";
   els.noteLabel.textContent = label;
   els.mobileNoteLabel.textContent = label;
-
-  for (const item of els.chunkNav.querySelectorAll("[data-chunk-nav-id]")) {
-    const active = item.dataset.chunkNavId === chunkId;
-    item.setAttribute("aria-current", String(active));
-    if (active) item.scrollIntoView({ block: "nearest" });
-  }
-
-  for (const item of document.querySelectorAll("[data-note-chunk-id]")) {
-    const active = item.dataset.noteChunkId === chunkId;
-    item.classList.toggle("is-active", active);
-    if (active) item.scrollIntoView({ block: "nearest" });
+  for (const surface of [els.noteSurface, els.mobileNoteSurface]) {
+    surface.classList.add("is-changing");
+    window.setTimeout(() => renderNoteSurface(surface, note), 90);
   }
 }
 
@@ -432,13 +384,15 @@ function setActiveChunk(reading, chunkId) {
   if (!chunkId || state.activeChunkId === chunkId) return;
   state.activeChunkId = chunkId;
   const chunk = reading.chunks.find((entry) => entry.id === chunkId);
+  const note = reading.notes.get(chunkId) ?? "";
+  updateNoteSurface(chunkId, note);
   updateActiveSectionRail(chunk?.sectionId);
-  syncSidebarsToChunk(chunkId);
 }
 
 function getActiveChunkByViewport() {
   const chunks = [...document.querySelectorAll(".chunk")];
-  const viewportCenter = window.innerHeight / 2;
+  const viewportRect = els.main.getBoundingClientRect();
+  const viewportCenter = viewportRect.top + viewportRect.height / 2;
   let best = null;
   let bestDistance = Number.POSITIVE_INFINITY;
   let fallback = null;
@@ -446,7 +400,7 @@ function getActiveChunkByViewport() {
   for (const chunk of chunks) {
     const rect = chunk.getBoundingClientRect();
     if (rect.top <= viewportCenter) fallback = chunk;
-    if (rect.bottom < 0 || rect.top > window.innerHeight) continue;
+    if (rect.bottom < viewportRect.top || rect.top > viewportRect.bottom) continue;
 
     const distance = rect.top <= viewportCenter && rect.bottom >= viewportCenter
       ? 0
@@ -471,16 +425,18 @@ function observeChunks(reading) {
   if (state.scrollSpyHandler) {
     window.removeEventListener("scroll", state.scrollSpyHandler);
     window.removeEventListener("resize", state.scrollSpyHandler);
+    els.main.removeEventListener("scroll", state.scrollSpyHandler);
   }
   state.scrollSpyHandler = () => updateActiveChunkFromViewport(reading);
   state.observer = new IntersectionObserver(() => {
     updateActiveChunkFromViewport(reading);
   }, {
+    root: els.main,
     rootMargin: "-10% 0px -10% 0px",
     threshold: [0, 0.2, 0.5, 0.8]
   });
   document.querySelectorAll(".chunk").forEach((chunk) => state.observer.observe(chunk));
-  window.addEventListener("scroll", state.scrollSpyHandler, { passive: true });
+  els.main.addEventListener("scroll", state.scrollSpyHandler, { passive: true });
   window.addEventListener("resize", state.scrollSpyHandler);
   updateActiveChunkFromViewport(reading);
 }
@@ -502,7 +458,6 @@ async function openPaper(paperId) {
   }
   renderPaperHeader(reading);
   renderSectionRail(reading);
-  renderChunkNav(reading);
   renderChunks(reading);
 }
 
