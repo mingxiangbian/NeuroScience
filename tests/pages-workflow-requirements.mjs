@@ -1,0 +1,25 @@
+import assert from "node:assert/strict";
+import { existsSync, readFileSync } from "node:fs";
+
+const workflowUrl = new URL("../.github/workflows/pages.yml", import.meta.url);
+const workflowExists = existsSync(workflowUrl);
+const workflow = workflowExists ? readFileSync(workflowUrl, "utf8") : "";
+
+assert.equal(workflowExists, true, "GitHub Pages should use a repository-owned workflow instead of the legacy Pages job");
+assert.match(workflow, /name:\s*Deploy GitHub Pages/, "Pages workflow should have a clear deploy name");
+assert.match(workflow, /push:\s*\n\s*branches:\s*\["main"\]/, "Pages workflow should deploy from main pushes");
+assert.match(workflow, /workflow_dispatch:/, "Pages workflow should allow manual redeploys");
+assert.match(workflow, /contents:\s*read/, "Pages workflow should have read-only repository permissions");
+assert.match(workflow, /pages:\s*write/, "Pages workflow should be allowed to publish Pages");
+assert.match(workflow, /id-token:\s*write/, "Pages workflow should be allowed to request the Pages deployment token");
+assert.match(workflow, /environment:\s*\n\s*name:\s*github-pages/, "Pages workflow should publish through the github-pages environment");
+assert.match(workflow, /uses:\s*actions\/checkout@v7\b/, "Pages workflow should use checkout v7, which runs on Node 24");
+assert.match(workflow, /uses:\s*actions\/configure-pages@v6\b/, "Pages workflow should use configure-pages v6, which runs on Node 24");
+assert.match(workflow, /uses:\s*actions\/upload-pages-artifact@v5\b/, "Pages workflow should use upload-pages-artifact v5");
+assert.match(workflow, /uses:\s*actions\/deploy-pages@v5\b/, "Pages workflow should use deploy-pages v5, which runs on Node 24");
+assert.match(workflow, /path:\s*\./, "Pages artifact should publish the static repository root");
+assert.match(workflow, /include-hidden-files:\s*true/, "Pages artifact should include .nojekyll while upload-pages-artifact still excludes .git and .github");
+assert.doesNotMatch(workflow, /uses:\s*actions\/checkout@v4\b/, "Pages workflow should not use checkout v4, which triggers the Node 20 warning");
+assert.doesNotMatch(workflow, /uses:\s*actions\/upload-artifact@v4\b/, "Pages workflow should not directly use upload-artifact v4, which triggers the Node 20 warning");
+assert.doesNotMatch(workflow, /uses:\s*actions\/upload-pages-artifact@v4\b/, "Pages workflow should not use the older Pages artifact wrapper");
+assert.doesNotMatch(workflow, /npm\s+(?:install|ci|run)|pnpm|yarn|vite|jekyll/i, "Static Pages deploy should not introduce a build step or package manager dependency");
