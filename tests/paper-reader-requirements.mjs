@@ -36,6 +36,7 @@ assert.match(html, /id="global-search"/, "reader should include a global search 
 assert.match(html, /id="search-overlay"/, "reader should expose a stable search overlay click target");
 assert.match(html, /placeholder="Search"/,
   "reader search placeholder should be the concise label Search");
+assert.match(html, /class="search-spinner"[\s\S]*aria-hidden="true"/, "search should include a tiny loading spinner");
 assert.match(html, /class="search-icon"[\s\S]*id="global-search"[\s\S]*class="search-shortcut">⌘ K<\/kbd>/, "search should include a magnifying glass icon and keyboard hint");
 assert.match(html, /<div class="toolbar-right">[\s\S]*<div class="toolbar-search">[\s\S]*<\/div>\s*<div class="toolbar-controls">[\s\S]*id="toggle-theme"[\s\S]*id="toggle-note"/, "search should be visually decoupled from the right toolbar controls");
 assert.doesNotMatch(html, /<\/div>\s*<div class="toolbar-search">[\s\S]*<\/div>\s*<div class="toolbar-right">/, "search should no longer be a center toolbar column");
@@ -59,6 +60,7 @@ assert.match(css, /--reader-glass:\s*rgba\(238,\s*247,\s*242,\s*0\.42\)/, "reade
 assert.match(css, /--reader-glass-strong:\s*rgba\(244,\s*249,\s*245,\s*0\.56\)/, "strong reader glass should stay cool and translucent");
 assert.match(css, /--reader-glass-low:\s*rgba\(244,\s*249,\s*245,\s*0\.2\)/, "reader CSS should define a low-opacity glass wash for linear notes");
 assert.match(css, /--reader-glass-shadow:\s*rgba\(19,\s*45,\s*42,\s*0\.16\)/, "glass shadow should use a cool ink wash instead of warm card shadow");
+assert.match(css, /--toolbar-control-size:\s*42px/, "toolbar controls should share a common height token");
 assert.match(css, /\.reader-shell\s*\{[\s\S]*grid-template-columns:/, "reader CSS should define a desktop three-column reader layout");
 assert.match(css, /\.reader-toolbar\s*\{[\s\S]*display:\s*flex/, "toolbar should be a modular flex container, not a three-column monolithic bar");
 assert.match(css, /\.reader-toolbar\s*\{[\s\S]*background:\s*transparent/, "toolbar container should not render as one full-width glass bar");
@@ -66,16 +68,25 @@ assert.match(css, /\.toolbar-controls\s*\{[\s\S]*backdrop-filter:\s*var\(--reade
 assert.match(css, /\.toolbar-right\s*\{[\s\S]*background:\s*transparent/, "right toolbar wrapper should not merge search and controls into one glass island");
 assert.match(css, /\.toolbar-controls\s*\{[\s\S]*backdrop-filter:\s*var\(--reader-panel-blur\)/, "right toolbar buttons should keep their own glass control island");
 assert.match(css, /\.toolbar-search\s*\{[\s\S]*width:\s*clamp\(190px,\s*20vw,\s*280px\)/, "search should be a compact right-side tool");
+assert.match(css, /\.toolbar-search\s*\{[\s\S]*height:\s*var\(--toolbar-control-size\)/, "search should use the shared toolbar height");
 assert.match(css, /\.toolbar-search\s*\{[\s\S]*backdrop-filter:\s*var\(--reader-panel-blur\)/, "search should render as its own glass input component");
+assert.match(css, /\.toolbar-controls\s*\{[\s\S]*height:\s*var\(--toolbar-control-size\)/, "toolbar control island should use the shared toolbar height");
+assert.match(css, /\.toolbar-controls \.icon-button\s*\{[\s\S]*width:\s*calc\(var\(--toolbar-control-size\) - 10px\)[\s\S]*height:\s*calc\(var\(--toolbar-control-size\) - 10px\)/, "toolbar buttons should align to the search height");
 assert.match(css, /\.search-icon\s*\{[\s\S]*width:\s*16px/, "search input should include a compact magnifying glass icon");
 assert.match(css, /\.search-shortcut\s*\{[\s\S]*font-size:\s*11px/, "search input should include a quiet keyboard shortcut hint");
+assert.match(css, /\.search-spinner\s*\{[\s\S]*width:\s*14px[\s\S]*height:\s*14px/, "search spinner should stay tiny");
+assert.match(css, /\.reader-shell\.is-search-loading \.search-spinner\s*\{[\s\S]*opacity:\s*1/, "search loading should reveal the spinner");
 assert.match(css, /\.reader-shell\.is-searching \.search-focus-layer\s*\{[\s\S]*pointer-events:\s*auto/, "search overlay should accept outside-click dismissal");
 assert.match(css, /\.reader-shell\.is-searching \.toolbar-search\s*\{[\s\S]*position:\s*fixed[\s\S]*width:\s*min\(760px,\s*calc\(100vw - 48px\)\)/, "active search should become a centered modal input");
 assert.match(css, /\.reader-shell\.is-searching \.search-results\s*\{[\s\S]*position:\s*fixed[\s\S]*width:\s*min\(760px,\s*calc\(100vw - 48px\)\)/, "active search results should align with the modal search width");
-assert.match(css, /\.result-item\s*\{[\s\S]*border-radius:\s*18px/, "search results should render as unified rounded rows");
+assert.match(css, /\.reader-shell\.is-searching \.search-results\s*\{[\s\S]*border:\s*1px solid var\(--reader-glass-edge\)[\s\S]*box-shadow:\s*0 26px 64px var\(--reader-glass-shadow\)/, "search results should be one unified glass list");
+assert.match(css, /\.result-item\s*\{[\s\S]*min-width:\s*0[\s\S]*grid-template-columns:\s*24px minmax\(0,\s*1fr\)/, "result rows should reserve icon space without horizontal overflow");
 assert.match(css, /\.result-title,\s*\.result-snippet\s*\{[\s\S]*overflow:\s*hidden[\s\S]*text-overflow:\s*ellipsis/, "search result title and snippet should be clamped");
+assert.match(css, /\.result-copy\s*\{[\s\S]*min-width:\s*0/, "result copy should be allowed to shrink inside rows");
+assert.match(css, /\.result-icon\s*\{[\s\S]*width:\s*18px[\s\S]*height:\s*18px/, "result rows should include leading icons");
 assert.match(css, /\.result-highlight\s*\{[\s\S]*background:\s*rgba\(166,\s*67,\s*56,\s*0\.16\)/, "search keyword highlights should be subtle");
 assert.match(css, /\.result-empty\s*\{[\s\S]*font-size:\s*13px/, "empty search results should stay quiet");
+assert.match(css, /body,\s*\.toolbar-search,\s*\.toolbar-controls,\s*\.search-results[\s\S]*transition:[\s\S]*color 240ms ease[\s\S]*background 240ms ease[\s\S]*border-color 240ms ease/, "theme changes should transition color, background, and borders");
 assert.match(css, /\.reader-sidebar\s*\{[\s\S]*position:\s*sticky/, "paper directory should stay fixed in the viewport through sticky positioning");
 assert.match(css, /\.reader-sidebar\s*\{[\s\S]*top:\s*calc\(var\(--toolbar-offset\) \+ 5vh\)/, "paper directory should stick as a floating card below the toolbar");
 assert.match(css, /\.reader-sidebar\s*\{[\s\S]*height:\s*auto/, "paper directory wrapper should not be full-height");
@@ -127,6 +138,8 @@ assert.doesNotMatch(css, /emoji/i, "reader style should not depend on emoji as t
 
 const notePanelRule = css.match(/\.note-panel\s*\{(?<body>[\s\S]*?)\n\}/)?.groups?.body ?? "";
 const noteSurfaceRule = css.match(/\.note-surface\s*\{(?<body>[\s\S]*?)\n\}/)?.groups?.body ?? "";
+const resultItemRule = css.match(/\.result-item\s*\{(?<body>[\s\S]*?)\n\}/)?.groups?.body ?? "";
+assert.doesNotMatch(resultItemRule, /box-shadow:/, "result rows should not have a persistent card shadow");
 assert.match(notePanelRule, /border-left:\s*1px solid var\(--reader-note-rule\)/, "note panel should use a left rule instead of a full card border");
 assert.doesNotMatch(notePanelRule, /\bborder:\s*1px solid var\(--reader-glass-edge\)/, "note panel should not render as a full glass card");
 assert.match(noteSurfaceRule, /border:\s*0/, "note surface should not be an inner card");
@@ -135,6 +148,9 @@ assert.match(css, /\.note-surface p \+ p\s*\{[\s\S]*border-top:\s*1px solid var\
 assert.match(css, /@media \(max-width:\s*860px\)[\s\S]*\.note-panel[\s\S]*display:\s*none/, "mobile layout should keep the desktop note line hidden by default");
 
 assert.match(js, /const PROJECT_ID = "brain-memory-for-ai-agents"/, "reader JS should bind the current project id for this project instance");
+assert.match(js, /const SEARCH_DEBOUNCE_MS = 260/, "search debounce duration should stay lightweight");
+assert.match(js, /const SEMANTIC_SCORE_THRESHOLD = 0\.42/, "semantic-only results should use a hard threshold");
+assert.match(js, /searchDebounceTimer:\s*null/, "reader state should track the search debounce timer");
 assert.match(js, /searchOverlay:\s*document\.querySelector\("#search-overlay"\)/, "reader should bind the search overlay for outside-click dismissal");
 assert.match(js, /fetchJson\("\.\.\/manifest\.json"\)/, "reader should load the parent papers manifest");
 assert.match(js, /readings\/\$\{paper\.id\}\/paper\.json/, "reader should load per-paper paper.json data");
@@ -160,6 +176,14 @@ assert.match(js, /function openSearchModal/, "reader should isolate opening the 
 assert.match(js, /function closeSearchModal/, "reader should isolate closing the search modal");
 assert.match(js, /function getSearchSnippet/, "reader should build search snippets around query terms");
 assert.match(js, /function highlightSearchTerms/, "reader should highlight matched search terms");
+assert.match(js, /function setSearchLoading/, "reader should expose a small loading state");
+assert.match(js, /function scheduleSearch/, "reader should debounce search input");
+assert.match(js, /function getLexicalScore/, "reader should calculate lexical search scores");
+assert.match(js, /function getSemanticScore/, "reader should isolate semantic score calculation");
+assert.match(js, /function getHybridSearchResults/, "reader should combine lexical and semantic scores");
+assert.match(js, /lexicalScore > 0 \|\| semanticScore >= SEMANTIC_SCORE_THRESHOLD/, "reader should filter low-relevance results");
+assert.match(js, /lexicalScore \* 10 \+ semanticScore/, "reader should prioritize lexical matches in ranking");
+assert.match(js, /result-icon result-icon--/, "search results should render typed leading icons");
 assert.match(js, /class="result-title"[\s\S]*class="result-snippet"/, "search results should use a two-line result structure");
 assert.match(js, /No results found/, "reader should use the requested no-result wording");
 assert.doesNotMatch(js, /no found/, "reader should remove the old broken no found copy");

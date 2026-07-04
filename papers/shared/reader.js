@@ -1,4 +1,6 @@
 const PROJECT_ID = "brain-memory-for-ai-agents";
+const SEARCH_DEBOUNCE_MS = 260;
+const SEMANTIC_SCORE_THRESHOLD = 0.42;
 
 const DOMAIN_DIMS = [
   ["agent", ["agent", "agents", "智能体", "llm", "memory architecture", "prompt", "tool"]],
@@ -24,7 +26,8 @@ const state = {
   searchItems: [],
   activeChunkId: null,
   observer: null,
-  scrollSpyHandler: null
+  scrollSpyHandler: null,
+  searchDebounceTimer: null
 };
 
 const els = {
@@ -446,8 +449,29 @@ function openSearchModal() {
 }
 
 function closeSearchModal() {
+  window.clearTimeout(state.searchDebounceTimer);
+  setSearchLoading(false);
   els.searchResults.hidden = true;
   els.shell.classList.remove("is-searching");
+}
+
+function setSearchLoading(loading) {
+  els.shell.classList.toggle("is-search-loading", loading);
+}
+
+function scheduleSearch(query) {
+  window.clearTimeout(state.searchDebounceTimer);
+  const trimmed = query.trim();
+  if (!trimmed) {
+    setSearchLoading(false);
+    runSearch("");
+    return;
+  }
+  setSearchLoading(true);
+  state.searchDebounceTimer = window.setTimeout(() => {
+    runSearch(trimmed);
+    setSearchLoading(false);
+  }, SEARCH_DEBOUNCE_MS);
 }
 
 function getSearchTerms(query) {
@@ -482,6 +506,76 @@ function highlightSearchTerms(text, query) {
     .join("");
 }
 
+function getLexicalScore(item, query) {
+  const terms = getSearchTerms(query).map((term) => term.toLowerCase());
+  const sectionTitle = getSectionTitle(item.reading, item.chunk.sectionId);
+  const weightedFields = [
+    [item.paper.title, 5],
+    [item.paper.shortTitle, 5],
+    [sectionTitle, 4],
+    [item.chunk.sourceText, 2],
+    [item.chunk.zhExplanation, 2],
+    [(item.chunk.keywords ?? []).join(" "), 3]
+  ];
+  let score = 0;
+  for (const [field, weight] of weightedFields) {
+    const lower = String(field ?? "").toLowerCase();
+    for (const term of terms) {
+      if (term && lower.includes(term)) score += weight;
+    }
+  }
+  return score;
+}
+
+function getSemanticScore(item, queryVector) {
+  return cosineSimilarity(queryVector, item.vector);
+}
+
+function hasSemanticSignal(query) {
+  const lower = query.toLowerCase();
+  return DOMAIN_DIMS.some(([, terms]) => terms.some((term) => lower.includes(term.toLowerCase())));
+}
+
+function getHybridSearchResults(query) {
+  const queryVector = embedQuery(query);
+  const allowSemanticOnly = hasSemanticSignal(query);
+  return state.searchItems
+    .map((item) => {
+      const lexicalScore = getLexicalScore(item, query);
+      const semanticScore = getSemanticScore(item, queryVector);
+      const score = lexicalScore * 10 + semanticScore;
+      return {
+        ...item,
+        lexicalScore,
+        semanticScore,
+        score,
+        resultType: item.paper.id === state.currentPaper?.id ? "chunk" : "paper"
+      };
+    })
+    .filter(({ lexicalScore, semanticScore }) => {
+      const passesRelevanceThreshold = lexicalScore > 0 || semanticScore >= SEMANTIC_SCORE_THRESHOLD;
+      return passesRelevanceThreshold && (lexicalScore > 0 || allowSemanticOnly);
+    })
+    .sort((left, right) => right.score - left.score)
+    .slice(0, 8);
+}
+
+function renderResultIcon(type) {
+  if (type === "paper") {
+    return `
+      <svg class="result-icon result-icon--paper" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M7 3h7l4 4v14H7V3Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" />
+        <path d="M14 3v5h4M9.5 12h5M9.5 16h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+      </svg>
+    `;
+  }
+  return `
+    <svg class="result-icon result-icon--chunk" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M5 6h14M5 11h14M5 16h9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+    </svg>
+  `;
+}
+
 function runSearch(query) {
   const trimmed = query.trim();
   if (!trimmed) {
@@ -489,12 +583,7 @@ function runSearch(query) {
     els.searchResults.innerHTML = "";
     return;
   }
-  const queryVector = embedQuery(trimmed);
-  const results = state.searchItems
-    .map((item) => ({ ...item, score: cosineSimilarity(queryVector, item.vector) }))
-    .sort((left, right) => right.score - left.score)
-    .slice(0, 8)
-    .filter((item) => item.score > 0.08);
+  const results = getHybridSearchResults(trimmed);
 
   els.searchResults.hidden = false;
   if (results.length === 0) {
@@ -507,8 +596,11 @@ function runSearch(query) {
     const snippet = getSearchSnippet(item, trimmed);
     return `
       <button class="result-item" type="button" data-paper-id="${escapeHtml(item.paper.id)}" data-chunk-id="${escapeHtml(item.chunk.id)}">
-        <span class="result-title">${highlightSearchTerms(title, trimmed)}</span>
-        <span class="result-snippet">${highlightSearchTerms(snippet, trimmed)}</span>
+        ${renderResultIcon(item.resultType)}
+        <span class="result-copy">
+          <span class="result-title">${highlightSearchTerms(title, trimmed)}</span>
+          <span class="result-snippet">${highlightSearchTerms(snippet, trimmed)}</span>
+        </span>
       </button>
     `;
   }).join("");
@@ -544,10 +636,10 @@ function bindControls() {
     document.body.dataset.theme = dark ? "dark" : "light";
     els.toggleTheme.setAttribute("aria-pressed", String(dark));
   });
-  els.searchInput.addEventListener("input", () => runSearch(els.searchInput.value));
+  els.searchInput.addEventListener("input", () => scheduleSearch(els.searchInput.value));
   els.searchInput.addEventListener("focus", () => {
     openSearchModal();
-    if (els.searchInput.value.trim()) runSearch(els.searchInput.value);
+    if (els.searchInput.value.trim()) scheduleSearch(els.searchInput.value);
   });
   els.searchOverlay.addEventListener("click", () => closeSearchModal());
   document.addEventListener("keydown", (event) => {
