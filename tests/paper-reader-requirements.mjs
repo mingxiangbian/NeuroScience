@@ -105,10 +105,10 @@ assert.match(css, /\.paper-nav-item\[aria-current="true"\]::before\s*\{[\s\S]*ba
 assert.match(css, /\.project-mark\s*\{[\s\S]*background:\s*transparent[\s\S]*box-shadow:\s*none/, "project logo should use a flat treatment without glass chrome");
 assert.match(css, /\.section-line:hover/, "collapsed section index should support hover line focus");
 assert.match(css, /\.section-line\.is-neighbor/, "collapsed section index should support adjacent line wave by length");
-assert.match(css, /--reader-section-line:\s*rgba\(238,\s*240,\s*231,\s*0\.72\)/, "dark mode should raise collapsed section line contrast");
-assert.match(css, /--reader-section-line-hover:\s*rgba\(238,\s*240,\s*231,\s*0\.98\)/, "dark mode hover section line should be clearly visible");
-assert.match(css, /--reader-section-line-active:\s*rgba\(156,\s*201,\s*207,\s*0\.96\)/, "dark mode active section line should use a brighter theme color");
-assert.match(css, /--reader-section-line-glow:\s*rgba\(156,\s*201,\s*207,\s*0\.28\)/, "dark mode section lines should have a subtle visibility glow");
+assert.match(css, /--reader-section-line:\s*rgba\(255,\s*255,\s*255,\s*0\.88\)/, "dark mode collapsed section lines should use a white color");
+assert.match(css, /--reader-section-line-hover:\s*rgba\(255,\s*255,\s*255,\s*1\)/, "dark mode hover section line should be fully white");
+assert.match(css, /--reader-section-line-active:\s*rgba\(255,\s*255,\s*255,\s*1\)/, "dark mode active section line should be fully white");
+assert.match(css, /--reader-section-line-glow:\s*rgba\(255,\s*255,\s*255,\s*0\.34\)/, "dark mode section lines should have a white visibility glow");
 const sectionRailRule = css.match(/\.section-rail\s*\{(?<body>[\s\S]*?)\n\}/)?.groups?.body ?? "";
 const sectionLineRule = css.match(/\.section-line\s*\{(?<body>[\s\S]*?)\n\}/)?.groups?.body ?? "";
 const sectionLineHoverRule = css.match(/\.section-line:hover\s*\{(?<body>[\s\S]*?)\n\}/)?.groups?.body ?? "";
