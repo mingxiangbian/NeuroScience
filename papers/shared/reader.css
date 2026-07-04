@@ -553,6 +553,20 @@ input {
   gap: 7px;
 }
 
+.chunk-nav {
+  display: grid;
+  gap: 5px;
+  max-height: min(34vh, 320px);
+  overflow: auto;
+  border-top: 1px solid var(--reader-line);
+  margin-top: 13px;
+  padding-top: 12px;
+}
+
+.chunk-nav:empty {
+  display: none;
+}
+
 .paper-nav-item {
   position: relative;
   min-width: 0;
@@ -592,6 +606,31 @@ input {
   border-radius: 999px;
   background: var(--reader-red);
   content: "";
+}
+
+.chunk-nav-item {
+  min-width: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--reader-ink-muted);
+  padding: 7px 9px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.chunk-nav-item span {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 12px;
+}
+
+.chunk-nav-item[aria-current="true"] {
+  background: rgba(255, 255, 255, 0.25);
+  color: var(--reader-ink);
+  box-shadow: inset 2px 0 0 var(--reader-red);
 }
 
 .section-rail {
@@ -1028,15 +1067,41 @@ input {
   transition: opacity 140ms ease;
 }
 
-.note-surface p {
-  margin: 0;
+.note-item {
+  min-height: 58px;
   padding: 0 0 15px;
+  color: var(--reader-ink);
+  transition:
+    color 140ms ease,
+    opacity 140ms ease;
 }
 
-.note-surface p + p {
+.note-item + .note-item {
   border-top: 1px solid var(--reader-note-rule);
   margin-top: 15px;
   padding-top: 15px;
+}
+
+.note-item.is-active {
+  color: var(--reader-ink);
+}
+
+.note-item.is-active .note-item-label {
+  color: var(--reader-red);
+}
+
+.note-item-label {
+  margin: 0 0 7px;
+  color: var(--reader-ink-muted);
+  font-size: 12px;
+}
+
+.note-surface p {
+  margin: 0;
+}
+
+.note-item-body {
+  line-height: 1.82;
 }
 
 .note-surface.is-changing {

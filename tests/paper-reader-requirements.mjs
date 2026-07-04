@@ -1,6 +1,14 @@
 import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 
+function getPngSize(fileUrl) {
+  const buffer = readFileSync(fileUrl);
+  return {
+    width: buffer.readUInt32BE(16),
+    height: buffer.readUInt32BE(20)
+  };
+}
+
 const projectId = "brain-memory-for-ai-agents";
 const readerUrl = new URL(`../papers/${projectId}/index.html`, import.meta.url);
 const sharedCssUrl = new URL("../papers/shared/reader.css", import.meta.url);
@@ -28,6 +36,7 @@ assert.match(html, /href="\.\.\/shared\/reader\.css"/, "project reader should lo
 assert.match(html, /src="\.\.\/shared\/reader\.js"/, "project reader should load shared reader JS");
 assert.match(html, /id="reader-toolbar"/, "reader should include the top toolbar");
 assert.match(html, /id="paper-directory"/, "reader should include the left paper directory");
+assert.match(html, /id="chunk-nav"/, "reader should include a left-side chunk index that can sync with the main text");
 assert.match(html, /id="section-rail"/, "reader should include the collapsed section line index");
 assert.match(html, /id="reader-main"/, "reader should include the center chunk reader");
 assert.match(html, /id="note-panel"/, "reader should include the right continuous note panel");
@@ -104,6 +113,8 @@ assert.match(css, /\.directory-title\s*\{[\s\S]*font-size:\s*16px[\s\S]*font-wei
 assert.match(css, /\.paper-nav-item\s*\{[\s\S]*font-size:\s*13px/, "paper titles should read as children under the project category");
 assert.match(css, /\.paper-nav-item\[aria-current="true"\]/, "expanded paper directory should show selected rows with a pressed state");
 assert.match(css, /\.paper-nav-item\[aria-current="true"\]::before\s*\{[\s\S]*background:\s*var\(--reader-red\)/, "active paper should use a dark red left accent");
+assert.match(css, /\.chunk-nav\s*\{[\s\S]*max-height:/, "left chunk index should have its own scrollable region");
+assert.match(css, /\.chunk-nav-item\[aria-current="true"\]/, "left chunk index should highlight the active chunk");
 assert.match(css, /\.project-mark\s*\{[\s\S]*background:\s*transparent[\s\S]*box-shadow:\s*none/, "project logo should use a flat treatment without glass chrome");
 assert.match(css, /\.mobile-directory-toggle\s*\{[\s\S]*display:\s*none/, "mobile directory opener should stay hidden on desktop");
 assert.match(css, /@media \(max-width:\s*860px\)[\s\S]*\.mobile-directory-toggle\s*\{[\s\S]*display:\s*inline-flex/, "mobile layout should show a directory opener in the toolbar");
@@ -160,7 +171,9 @@ assert.match(notePanelRule, /border-left:\s*1px solid var\(--reader-note-rule\)/
 assert.doesNotMatch(notePanelRule, /\bborder:\s*1px solid var\(--reader-glass-edge\)/, "note panel should not render as a full glass card");
 assert.match(noteSurfaceRule, /border:\s*0/, "note surface should not be an inner card");
 assert.match(noteSurfaceRule, /background:\s*transparent/, "note surface should stay visually continuous");
-assert.match(css, /\.note-surface p \+ p\s*\{[\s\S]*border-top:\s*1px solid var\(--reader-note-rule\)/, "parallel notes should be separated by quiet horizontal rules");
+assert.match(css, /\.note-item\s*\{[\s\S]*min-height:/, "parallel note surface should render one stable note item per chunk");
+assert.match(css, /\.note-item\.is-active/, "parallel note surface should highlight the note for the active chunk");
+assert.match(css, /\.note-item \+ \.note-item\s*\{[\s\S]*border-top:\s*1px solid var\(--reader-note-rule\)/, "parallel notes should be separated by quiet horizontal rules");
 assert.match(css, /@media \(max-width:\s*860px\)[\s\S]*\.note-panel[\s\S]*display:\s*none/, "mobile layout should keep the desktop note line hidden by default");
 
 assert.match(js, /const PROJECT_ID = "brain-memory-for-ai-agents"/, "reader JS should bind the current project id for this project instance");
@@ -180,12 +193,18 @@ assert.match(js, /function renderPaperLinks/, "reader should isolate source link
 assert.match(js, /<div class="paper-actions"><\/div>/, "normal chunked paper headers should not render source action links");
 assert.match(js, /actions\.classList\.add\("is-fallback-only"\)/, "no-chunk fallback should mark source links as fallback-only");
 assert.match(js, /function renderNoteSurface/, "note panel should render through a stable root surface");
+assert.match(js, /function renderChunkNav/, "reader should render a left-side chunk index for the active paper");
+assert.match(js, /function renderNoteSurfaces/, "reader should render continuous parallel notes for every chunk");
+assert.match(js, /function syncSidebarsToChunk/, "reader should sync left and right sidebars to the active main chunk");
 assert.match(js, /function syncResponsiveState/, "reader should synchronize desktop and mobile shell state by breakpoint");
 assert.match(js, /function updateActiveSectionRail/, "section rail active state should be updated independently from hover state");
 assert.match(js, /function getActiveChunkByViewport/, "reader should compute active chunk from viewport geometry");
 assert.match(js, /getBoundingClientRect\(\)/, "scrollspy should measure chunk geometry");
 assert.match(js, /window\.innerHeight \/ 2/, "scrollspy should use the viewport center");
 assert.match(js, /addEventListener\("scroll"[\s\S]*updateActiveChunkFromViewport/, "scrollspy should update on scroll");
+assert.match(js, /data-note-chunk-id/, "parallel note items should carry chunk ids for synchronization");
+assert.match(js, /data-chunk-nav-id/, "left chunk index items should carry chunk ids for synchronization");
+assert.match(js, /scrollIntoView\(\{[\s\S]*block:\s*"nearest"/, "sidebars should keep the active item visible without taking over main scrolling");
 assert.doesNotMatch(js, /markSectionNeighbors|is-neighbor/, "section rail should not store hover wave state in JS because stale classes can fake scroll progress");
 assert.match(js, /querySelectorAll\("\[data-toggle-left\]"\)/, "reader should bind all local left-directory controls");
 assert.match(js, /cosineSimilarity/, "reader should perform local vector ranking");
@@ -322,6 +341,12 @@ const zhangRenderedFigures = zhangFigures.filter((figure) => figure.file);
 assert.ok(zhangRenderedFigures.length >= 2, "Zhang 2024 should render at least two real local figures");
 for (const figure of zhangRenderedFigures) {
   assert.equal(existsSync(new URL(figure.file, zhangBase)), true, `Zhang 2024 figure file ${figure.file} should exist`);
+  assert.equal(figure.cropMode, "semantic-crop", `Zhang 2024 ${figure.id} should use semantic-crop instead of page screenshot`);
+  assert.equal(figure.status, "cropped", `Zhang 2024 ${figure.id} should be marked cropped`);
+  assert.ok(figure.bbox && Number.isFinite(figure.bbox.x) && Number.isFinite(figure.bbox.y), `Zhang 2024 ${figure.id} should include crop bbox metadata`);
+  const size = getPngSize(new URL(figure.file, zhangBase));
+  assert.notDeepEqual(size, { width: 1020, height: 1320 }, `Zhang 2024 ${figure.id} should not be a full-page screenshot`);
+  assert.ok(size.height < 900, `Zhang 2024 ${figure.id} should be cropped to the relevant information`);
 }
 
 assert.ok(zhangChunks.some((chunk) => chunk.blocks?.some((block) => block.type === "table")), "Zhang 2024 should include at least one table block");

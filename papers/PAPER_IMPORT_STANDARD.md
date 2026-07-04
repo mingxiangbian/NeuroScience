@@ -258,7 +258,32 @@ chunk 边界优先级：
 
 - 重要图表宁可用 `figureRefs` 召回，也不要让读者只看到文字。
 - 图片资源必须统一视觉尺寸；前端会用固定高度和 `object-fit: contain` 控制显示。
-- 页面截图可以作为临时真实图像资源，但长期最好裁成单独图表。
+- 不要默认截取整页论文作为 figure。优先只截取当前 chunk 需要的图、表、框图、算法块或关键公式区域。
+- 页面截图只能作为临时 fallback；如果必须使用整页截图，必须标记为 `page-fallback`，后续导入 agent 要把它视为待裁剪资源。
+
+### Figure Crop Rules
+
+图像资源应按语义对象裁剪，而不是按 PDF 页面裁剪：
+
+- `semantic-crop`：推荐模式，只保留图表主体、caption 和少量边距。
+- `page-fallback`：临时模式，表示当前只能提供整页截图；不能作为长期合格图像。
+- `manual-redraw`：重绘模式，用于未来把复杂图表重画成更清晰的网页图。
+
+每个已裁剪图像应在 `figures.json` 中记录 `bbox`，用于让后续 agent 追溯裁剪来源：
+
+```json
+{
+  "cropMode": "semantic-crop",
+  "bbox": {
+    "x": 210,
+    "y": 820,
+    "width": 620,
+    "height": 380
+  }
+}
+```
+
+`bbox` 使用源图像或源 PDF 渲染图的像素坐标，字段必须包含 `x`、`y`、`width`、`height`。如果 `cropMode` 是 `page-fallback`，`bbox` 可以省略，但 `status` 不能写成 `cropped`。
 
 ## figures.json Contract
 
@@ -272,8 +297,15 @@ chunk 边界优先级：
       "file": "figures/figure-1-memory-module.png",
       "caption": "Memory-module overview.",
       "sourcePage": 1,
+      "cropMode": "semantic-crop",
+      "bbox": {
+        "x": 210,
+        "y": 820,
+        "width": 620,
+        "height": 380
+      },
       "canonicalSectionId": "sec-intro",
-      "status": "extracted-page"
+      "status": "cropped"
     }
   ]
 }
@@ -284,8 +316,10 @@ chunk 边界优先级：
 - `id` 使用稳定编号，例如 `fig-001`。
 - `file` 是相对 reading package 的路径。
 - `sourcePage` 记录 PDF 页码；HTML 来源可记录 `null`。
+- `cropMode` 使用 `semantic-crop`、`page-fallback` 或 `manual-redraw`。
+- `bbox` 记录裁剪区域；`semantic-crop` 图像必须提供。
 - `canonicalSectionId` 指向主要归属章节。
-- `status` 可使用 `extracted`, `extracted-page`, `cropped`, `redrawn`, `missing`。
+- `status` 可使用 `cropped`、`page-fallback`, `redrawn`, `missing`。
 
 ## notes.json Contract
 

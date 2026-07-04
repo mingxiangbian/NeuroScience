@@ -15,6 +15,9 @@ assert.match(standard, /zhTranslation[\s\S]*忠实翻译/, "standard should defi
 assert.match(standard, /zhExplanation[\s\S]*解释/, "standard should separate explanation from translation");
 assert.match(standard, /blocks[\s\S]*paragraph[\s\S]*math[\s\S]*code[\s\S]*table[\s\S]*figure/, "standard should define supported block types");
 assert.match(standard, /figureRefs[\s\S]*near[\s\S]*supporting[\s\S]*deferred/, "standard should define cross-page figure references");
+assert.match(standard, /semantic-crop[\s\S]*page-fallback[\s\S]*manual-redraw/, "standard should define figure crop modes");
+assert.match(standard, /不要默认截取整页|不能默认截取整页/, "standard should reject whole-page figure screenshots as the default");
+assert.match(standard, /bbox[\s\S]*x[\s\S]*y[\s\S]*width[\s\S]*height/, "standard should define crop bounding box metadata");
 assert.match(standard, /notes\.json[\s\S]*空字符串/, "standard should allow empty notes without visible placeholder text");
 assert.match(standard, /indexedFields[\s\S]*sourceText[\s\S]*zhTranslation[\s\S]*zhExplanation/, "standard should define searchable fields");
 assert.match(standard, /不引入[\s\S]*\/api\/[\s\S]*provider key[\s\S]*SurrealDB/, "standard should keep the reader static and backend-free");
