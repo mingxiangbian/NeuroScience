@@ -17,6 +17,7 @@
   --reader-section-line: rgba(31, 39, 36, 0.18);
   --reader-section-line-hover: rgba(31, 39, 36, 0.82);
   --reader-section-line-active: rgba(24, 60, 73, 0.62);
+  --reader-section-line-glow: transparent;
   --reader-panel-blur: blur(34px) saturate(1.3);
   --toolbar-offset: 86px;
   --toolbar-control-size: 42px;
@@ -47,9 +48,10 @@
   --reader-glass-edge: rgba(255, 255, 255, 0.16);
   --reader-glass-shadow: rgba(0, 0, 0, 0.36);
   --reader-note-rule: rgba(156, 201, 207, 0.2);
-  --reader-section-line: rgba(238, 240, 231, 0.44);
-  --reader-section-line-hover: rgba(238, 240, 231, 0.92);
-  --reader-section-line-active: rgba(156, 201, 207, 0.82);
+  --reader-section-line: rgba(238, 240, 231, 0.72);
+  --reader-section-line-hover: rgba(238, 240, 231, 0.98);
+  --reader-section-line-active: rgba(156, 201, 207, 0.96);
+  --reader-section-line-glow: rgba(156, 201, 207, 0.28);
   --reader-blue: #9cc9cf;
   --reader-red: #ca6a60;
   --reader-shadow: rgba(0, 0, 0, 0.32);
@@ -627,6 +629,7 @@ input {
   border: 0;
   justify-self: center;
   background: var(--reader-section-line);
+  box-shadow: 0 0 0 1px var(--reader-section-line-glow);
   cursor: pointer;
   transition:
     width 150ms ease,

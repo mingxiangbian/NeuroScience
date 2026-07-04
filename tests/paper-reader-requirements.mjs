@@ -105,9 +105,10 @@ assert.match(css, /\.paper-nav-item\[aria-current="true"\]::before\s*\{[\s\S]*ba
 assert.match(css, /\.project-mark\s*\{[\s\S]*background:\s*transparent[\s\S]*box-shadow:\s*none/, "project logo should use a flat treatment without glass chrome");
 assert.match(css, /\.section-line:hover/, "collapsed section index should support hover line focus");
 assert.match(css, /\.section-line\.is-neighbor/, "collapsed section index should support adjacent line wave by length");
-assert.match(css, /--reader-section-line:\s*rgba\(238,\s*240,\s*231,\s*0\.44\)/, "dark mode should raise collapsed section line contrast");
-assert.match(css, /--reader-section-line-hover:\s*rgba\(238,\s*240,\s*231,\s*0\.92\)/, "dark mode hover section line should be clearly visible");
-assert.match(css, /--reader-section-line-active:\s*rgba\(156,\s*201,\s*207,\s*0\.82\)/, "dark mode active section line should use a brighter theme color");
+assert.match(css, /--reader-section-line:\s*rgba\(238,\s*240,\s*231,\s*0\.72\)/, "dark mode should raise collapsed section line contrast");
+assert.match(css, /--reader-section-line-hover:\s*rgba\(238,\s*240,\s*231,\s*0\.98\)/, "dark mode hover section line should be clearly visible");
+assert.match(css, /--reader-section-line-active:\s*rgba\(156,\s*201,\s*207,\s*0\.96\)/, "dark mode active section line should use a brighter theme color");
+assert.match(css, /--reader-section-line-glow:\s*rgba\(156,\s*201,\s*207,\s*0\.28\)/, "dark mode section lines should have a subtle visibility glow");
 const sectionRailRule = css.match(/\.section-rail\s*\{(?<body>[\s\S]*?)\n\}/)?.groups?.body ?? "";
 const sectionLineRule = css.match(/\.section-line\s*\{(?<body>[\s\S]*?)\n\}/)?.groups?.body ?? "";
 const sectionLineHoverRule = css.match(/\.section-line:hover\s*\{(?<body>[\s\S]*?)\n\}/)?.groups?.body ?? "";
@@ -119,6 +120,7 @@ assert.doesNotMatch(sectionRailRule, /box-shadow:/, "collapsed section rail shou
 assert.match(sectionRailRule, /background:\s*transparent/, "collapsed section rail should use a transparent base");
 assert.match(sectionLineRule, /width:\s*18px/, "section lines should share a stable base length");
 assert.match(sectionLineRule, /background:\s*var\(--reader-section-line\)/, "section lines should use theme-aware contrast tokens");
+assert.match(sectionLineRule, /box-shadow:\s*0 0 0 1px var\(--reader-section-line-glow\)/, "section lines should use a subtle dark-mode visibility edge");
 assert.match(sectionLineHoverRule, /width:\s*36px/, "hovered section line should lengthen");
 assert.match(sectionLineHoverRule, /background:\s*var\(--reader-section-line-hover\)/, "hovered section line should use theme-aware contrast tokens");
 assert.match(sectionNeighborRule, /width:\s*28px/, "neighbor section lines should lengthen only on hover ripple");
