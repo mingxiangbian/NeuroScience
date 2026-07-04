@@ -105,6 +105,9 @@ assert.match(css, /\.paper-nav-item\[aria-current="true"\]::before\s*\{[\s\S]*ba
 assert.match(css, /\.project-mark\s*\{[\s\S]*background:\s*transparent[\s\S]*box-shadow:\s*none/, "project logo should use a flat treatment without glass chrome");
 assert.match(css, /\.section-line:hover/, "collapsed section index should support hover line focus");
 assert.match(css, /\.section-line\.is-neighbor/, "collapsed section index should support adjacent line wave by length");
+assert.match(css, /--reader-section-line:\s*rgba\(238,\s*240,\s*231,\s*0\.44\)/, "dark mode should raise collapsed section line contrast");
+assert.match(css, /--reader-section-line-hover:\s*rgba\(238,\s*240,\s*231,\s*0\.92\)/, "dark mode hover section line should be clearly visible");
+assert.match(css, /--reader-section-line-active:\s*rgba\(156,\s*201,\s*207,\s*0\.82\)/, "dark mode active section line should use a brighter theme color");
 const sectionRailRule = css.match(/\.section-rail\s*\{(?<body>[\s\S]*?)\n\}/)?.groups?.body ?? "";
 const sectionLineRule = css.match(/\.section-line\s*\{(?<body>[\s\S]*?)\n\}/)?.groups?.body ?? "";
 const sectionLineHoverRule = css.match(/\.section-line:hover\s*\{(?<body>[\s\S]*?)\n\}/)?.groups?.body ?? "";
@@ -115,10 +118,12 @@ assert.doesNotMatch(sectionRailRule, /background:\s*var\(--reader-glass\)/, "col
 assert.doesNotMatch(sectionRailRule, /box-shadow:/, "collapsed section rail should not render as a floating card");
 assert.match(sectionRailRule, /background:\s*transparent/, "collapsed section rail should use a transparent base");
 assert.match(sectionLineRule, /width:\s*18px/, "section lines should share a stable base length");
+assert.match(sectionLineRule, /background:\s*var\(--reader-section-line\)/, "section lines should use theme-aware contrast tokens");
 assert.match(sectionLineHoverRule, /width:\s*36px/, "hovered section line should lengthen");
+assert.match(sectionLineHoverRule, /background:\s*var\(--reader-section-line-hover\)/, "hovered section line should use theme-aware contrast tokens");
 assert.match(sectionNeighborRule, /width:\s*28px/, "neighbor section lines should lengthen only on hover ripple");
 assert.doesNotMatch(sectionNeighborRule, /background:/, "neighbor section lines should not darken");
-assert.match(sectionActiveRule, /background:\s*rgba\(24,\s*60,\s*73,\s*0\.62\)/, "active section should darken");
+assert.match(sectionActiveRule, /background:\s*var\(--reader-section-line-active\)/, "active section should use a theme-aware contrast token");
 assert.doesNotMatch(sectionActiveRule, /width:|height:/, "active section should not lengthen in the static state");
 assert.match(css, /\.chunk-source-card/, "English source text should render in a light chunk card");
 assert.match(css, /\.chunk-explanation/, "Chinese explanation should render outside the source card");
