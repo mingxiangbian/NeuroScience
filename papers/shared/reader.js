@@ -183,25 +183,17 @@ function renderPaperNav() {
 function renderSectionRail(reading) {
   els.sectionLines.innerHTML = "";
   const sections = reading?.paperData.sections ?? [];
-  sections.forEach((section, index) => {
+  sections.forEach((section) => {
     const button = document.createElement("button");
     button.className = "section-line";
     button.type = "button";
     button.dataset.sectionId = section.id;
     button.innerHTML = `<span class="section-tooltip">${escapeHtml(section.title)}</span>`;
-    button.addEventListener("mouseenter", () => markSectionNeighbors(index));
-    button.addEventListener("mouseleave", () => markSectionNeighbors(-1));
     button.addEventListener("click", () => {
       const firstChunk = document.querySelector(`.chunk[data-section-id="${CSS.escape(section.id)}"]`);
       firstChunk?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
     els.sectionLines.append(button);
-  });
-}
-
-function markSectionNeighbors(activeIndex) {
-  [...els.sectionLines.children].forEach((line, index) => {
-    line.classList.toggle("is-neighbor", Math.abs(index - activeIndex) === 1);
   });
 }
 

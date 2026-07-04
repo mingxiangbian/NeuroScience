@@ -104,7 +104,6 @@ assert.match(css, /\.paper-nav-item\[aria-current="true"\]/, "expanded paper dir
 assert.match(css, /\.paper-nav-item\[aria-current="true"\]::before\s*\{[\s\S]*background:\s*var\(--reader-red\)/, "active paper should use a dark red left accent");
 assert.match(css, /\.project-mark\s*\{[\s\S]*background:\s*transparent[\s\S]*box-shadow:\s*none/, "project logo should use a flat treatment without glass chrome");
 assert.match(css, /\.section-line:hover/, "collapsed section index should support hover line focus");
-assert.match(css, /\.section-line\.is-neighbor/, "collapsed section index should support adjacent line wave by length");
 assert.match(css, /--reader-section-line:\s*rgba\(255,\s*255,\s*255,\s*0\.88\)/, "dark mode collapsed section lines should use a white color");
 assert.match(css, /--reader-section-line-hover:\s*rgba\(255,\s*255,\s*255,\s*1\)/, "dark mode hover section line should be fully white");
 assert.match(css, /--reader-section-line-active:\s*rgba\(255,\s*255,\s*255,\s*1\)/, "dark mode active section line should be fully white");
@@ -112,7 +111,6 @@ assert.match(css, /--reader-section-line-glow:\s*rgba\(255,\s*255,\s*255,\s*0\.3
 const sectionRailRule = css.match(/\.section-rail\s*\{(?<body>[\s\S]*?)\n\}/)?.groups?.body ?? "";
 const sectionLineRule = css.match(/\.section-line\s*\{(?<body>[\s\S]*?)\n\}/)?.groups?.body ?? "";
 const sectionLineHoverRule = css.match(/\.section-line:hover\s*\{(?<body>[\s\S]*?)\n\}/)?.groups?.body ?? "";
-const sectionNeighborRule = css.match(/\.section-line\.is-neighbor\s*\{(?<body>[\s\S]*?)\n\}/)?.groups?.body ?? "";
 const sectionActiveRule = css.match(/\.section-line\.is-active\s*\{(?<body>[\s\S]*?)\n\}/)?.groups?.body ?? "";
 assert.doesNotMatch(sectionRailRule, /border:\s*1px solid var\(--reader-glass-edge\)/, "collapsed section rail should not keep a card border");
 assert.doesNotMatch(sectionRailRule, /background:\s*var\(--reader-glass\)/, "collapsed section rail should sit directly on the page canvas");
@@ -121,10 +119,8 @@ assert.match(sectionRailRule, /background:\s*transparent/, "collapsed section ra
 assert.match(sectionLineRule, /width:\s*18px/, "section lines should share a stable base length");
 assert.match(sectionLineRule, /background:\s*var\(--reader-section-line\)/, "section lines should use theme-aware contrast tokens");
 assert.match(sectionLineRule, /box-shadow:\s*0 0 0 1px var\(--reader-section-line-glow\)/, "section lines should use a subtle dark-mode visibility edge");
-assert.match(sectionLineHoverRule, /width:\s*36px/, "hovered section line should lengthen");
+assert.doesNotMatch(sectionLineHoverRule, /width:|height:/, "hovered section line should not fake scroll progress by changing length");
 assert.match(sectionLineHoverRule, /background:\s*var\(--reader-section-line-hover\)/, "hovered section line should use theme-aware contrast tokens");
-assert.match(sectionNeighborRule, /width:\s*28px/, "neighbor section lines should lengthen only on hover ripple");
-assert.doesNotMatch(sectionNeighborRule, /background:/, "neighbor section lines should not darken");
 assert.match(sectionActiveRule, /background:\s*var\(--reader-section-line-active\)/, "active section should use a theme-aware contrast token");
 assert.doesNotMatch(sectionActiveRule, /width:|height:/, "active section should not lengthen in the static state");
 assert.match(css, /\.chunk-source-card/, "English source text should render in a light chunk card");
@@ -176,6 +172,7 @@ assert.match(js, /function getActiveChunkByViewport/, "reader should compute act
 assert.match(js, /getBoundingClientRect\(\)/, "scrollspy should measure chunk geometry");
 assert.match(js, /window\.innerHeight \/ 2/, "scrollspy should use the viewport center");
 assert.match(js, /addEventListener\("scroll"[\s\S]*updateActiveChunkFromViewport/, "scrollspy should update on scroll");
+assert.doesNotMatch(js, /markSectionNeighbors|is-neighbor/, "section rail should not keep hover neighbor classes that can fake scroll progress");
 assert.match(js, /querySelectorAll\("\[data-toggle-left\]"\)/, "reader should bind all local left-directory controls");
 assert.match(js, /cosineSimilarity/, "reader should perform local vector ranking");
 assert.match(js, /sourceText[\s\S]*zhExplanation/, "reader search should use sourceText and zhExplanation");
