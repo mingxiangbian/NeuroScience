@@ -4,16 +4,26 @@ import { existsSync, readFileSync } from "node:fs";
 const projectsPageUrl = new URL("../projects/index.html", import.meta.url);
 const manifestUrl = new URL("../projects/manifest.json", import.meta.url);
 const topicPageUrl = new URL("../projects/brain-memory-for-ai-agents/index.html", import.meta.url);
+const foundationsPageUrl = new URL("../projects/foundations/index.html", import.meta.url);
+const foundationsReadmeUrl = new URL("../projects/foundations/README.md", import.meta.url);
+const foundationsPlannerUrl = new URL("../projects/foundations/multi-agent-planner.md", import.meta.url);
+const foundationsRoadmapUrl = new URL("../projects/foundations/llm-agent-engineer-roadmap.md", import.meta.url);
 const fontSourcesUrl = new URL("../assets/fonts/README.md", import.meta.url);
 
 assert.equal(existsSync(projectsPageUrl), true, "projects/ should expose a static project homepage");
 assert.equal(existsSync(manifestUrl), true, "projects/ should expose a manifest.json index for project modules");
 assert.equal(existsSync(topicPageUrl), true, "brain-memory-for-ai-agents should expose a static topic page");
+assert.equal(existsSync(foundationsPageUrl), true, "foundations should expose a static project page");
+assert.equal(existsSync(foundationsReadmeUrl), true, "foundations should include a README");
+assert.equal(existsSync(foundationsPlannerUrl), true, "foundations should include the reusable multi-agent planner");
+assert.equal(existsSync(foundationsRoadmapUrl), true, "foundations should include the LLM/Agent engineer roadmap");
 assert.equal(existsSync(fontSourcesUrl), true, "self-hosted font notes should exist");
 
 const projectsHtml = readFileSync(projectsPageUrl, "utf8");
 const manifest = JSON.parse(readFileSync(manifestUrl, "utf8"));
 const topicHtml = readFileSync(topicPageUrl, "utf8");
+const foundationsHtml = readFileSync(foundationsPageUrl, "utf8");
+const foundationsRoadmap = readFileSync(foundationsRoadmapUrl, "utf8");
 const fontSources = readFileSync(fontSourcesUrl, "utf8");
 
 assert.match(projectsHtml, /<title>项目 \| NeuroScience x AI<\/title>/, "projects page should use the Chinese project directory page title");
@@ -39,3 +49,8 @@ assert.match(topicHtml, /hypotheses\.md/, "topic page should link to the existin
 assert.match(topicHtml, /mechanism-to-agent-design\.md/, "topic page should link to the existing mechanism mapping");
 assert.match(topicHtml, /href="\.\.\/\.\.\/papers\/brain-memory-for-ai-agents\/"/, "topic page should link to the matching local paper topic page");
 assert.doesNotMatch(topicHtml, /github\.com\/mingxiangbian\/NeuroScience\/tree\/main\/projects/i, "topic page should not send users to the GitHub folder listing");
+
+assert.match(foundationsHtml, /href="README\.md"/, "foundations page should link to the project README");
+assert.match(foundationsHtml, /href="multi-agent-planner\.md"/, "foundations page should link to the reusable planner");
+assert.match(foundationsHtml, /href="llm-agent-engineer-roadmap\.md"/, "foundations page should link to the roadmap");
+assert.match(foundationsRoadmap, /Agent \/ LLM Systems Engineer/, "foundations roadmap should target Agent / LLM Systems Engineer interviews");

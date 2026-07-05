@@ -557,7 +557,7 @@ Build:
 - trace id
 - spans for model call, tool call, retrieval
 - latency and error fields
-- redaction placeholder policy
+- redaction policy
 
 Interview story:
 
