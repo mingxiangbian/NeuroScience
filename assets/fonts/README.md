@@ -11,13 +11,13 @@ These files are small `woff2` subsets for the `papers/` and `projects/` director
   - Source font: Zhi Mang Xing
   - Upstream: https://github.com/google/fonts/tree/main/ofl/zhimangxing
   - License: SIL Open Font License, Version 1.1
-  - Included text: `记忆与智能体`
+  - Included text: `记忆与智能体基石`
 
 Subset generation intent:
 
 ```sh
 pyftsubset MaShanZheng-Regular.ttf --text='文献阁项目' --flavor=woff2
-pyftsubset ZhiMangXing-Regular.ttf --text='记忆与智能体' --flavor=woff2
+pyftsubset ZhiMangXing-Regular.ttf --text='记忆与智能体基石' --flavor=woff2
 ```
 
 Do not commit the full upstream `.ttf` files here; keep only page-specific subsets.
