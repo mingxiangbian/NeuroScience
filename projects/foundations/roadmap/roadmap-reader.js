@@ -155,6 +155,93 @@ function renderAnnotationToolbar(context) {
   state.pendingAnnotation = context;
 }
 
+function createAnnotationId() {
+  return `foundation-ann-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function createAnnotationFromSelection(mode) {
+  const context = state.pendingAnnotation;
+  if (!context?.moduleId || !context?.noteId) return;
+  const now = new Date().toISOString();
+  const annotation = {
+    id: createAnnotationId(),
+    projectId: "foundations",
+    moduleId: context.moduleId,
+    noteId: context.noteId,
+    selectedText: context.selectedText,
+    matchIndex: context.matchIndex,
+    mode: mode === "note" ? "note" : "highlight",
+    note: "",
+    highlightActive: true,
+    createdAt: now,
+    updatedAt: now,
+  };
+  state.annotations.items.push(annotation);
+  saveAnnotations();
+  window.getSelection()?.removeAllRanges();
+  hideAnnotationToolbar();
+  applyHighlights();
+  renderContextualNotePanel(getKnowledgeNoteById(state.currentModule, context.noteId));
+}
+
+function updateAnnotationNote(annotationId, value) {
+  const annotation = state.annotations.items.find((item) => item.id === annotationId);
+  if (!annotation) return;
+  annotation.note = value;
+  annotation.updatedAt = new Date().toISOString();
+  saveAnnotations();
+}
+
+function deleteAnnotation(annotationId, behavior) {
+  const annotation = state.annotations.items.find((item) => item.id === annotationId);
+  if (!annotation) return;
+  if (behavior === "highlight-only" && annotation.mode === "note") {
+    annotation.highlightActive = false;
+    annotation.updatedAt = new Date().toISOString();
+  } else {
+    state.annotations.items = state.annotations.items.filter((item) => item.id !== annotationId);
+  }
+  saveAnnotations();
+  hideAnnotationDeletePopover();
+  applyHighlights();
+  renderContextualNotePanel(getKnowledgeNoteById(state.currentModule, annotation.noteId));
+}
+
+function hideAnnotationDeletePopover() {
+  state.annotationDeletePopover?.remove();
+  state.annotationDeletePopover = null;
+}
+
+function showAnnotationDeletePopover(annotationId, rect) {
+  hideAnnotationDeletePopover();
+  const annotation = state.annotations.items.find((item) => item.id === annotationId);
+  if (!annotation) return;
+  const popover = document.createElement("div");
+  popover.className = "annotation-delete-popover";
+  const keepButton = annotation.mode === "note"
+    ? `<button type="button" data-delete-behavior="highlight-only">只删除高亮，保留笔记</button>`
+    : "";
+  popover.innerHTML = `
+    ${keepButton}
+    <button type="button" data-delete-behavior="all">高亮和笔记一起删除</button>
+    <button type="button" data-delete-behavior="cancel">取消</button>
+  `;
+  popover.style.left = `${Math.max(12, rect.left)}px`;
+  popover.style.top = `${Math.max(12, rect.bottom + 8)}px`;
+  popover.querySelectorAll("[data-delete-behavior]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const behavior = button.dataset.deleteBehavior;
+      if (behavior === "cancel") {
+        hideAnnotationDeletePopover();
+        return;
+      }
+      deleteAnnotation(annotationId, behavior);
+    });
+  });
+  document.body.append(popover);
+  state.annotationDeletePopover = popover;
+}
+
 function getInitialModuleId() {
   const url = new URL(window.location.href);
   const fromQuery = url.searchParams.get("module");
