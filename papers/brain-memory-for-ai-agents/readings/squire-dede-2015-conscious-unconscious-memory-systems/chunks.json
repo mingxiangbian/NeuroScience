@@ -1,0 +1,263 @@
+{
+  "paperId": "squire-dede-2015-conscious-unconscious-memory-systems",
+  "chunks": [
+    {
+      "id": "ch-001",
+      "sectionId": "sec-frame",
+      "order": 1,
+      "title": "显性与隐性框架",
+      "sourceText": "The review distinguishes conscious memory systems from unconscious memory systems. Declarative memory is available to awareness, whereas nondeclarative memory is expressed through performance changes.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The review distinguishes conscious memory systems from unconscious memory systems. Declarative memory is available to awareness, whereas nondeclarative memory is expressed through performance changes."
+        }
+      ],
+      "zhTranslation": "这篇综述区分有意识记忆系统和无意识记忆系统。陈述性记忆可以进入意识，而非陈述性记忆通过表现变化来表达。",
+      "zhExplanation": "这能修正一个工程偏差：不是能被自然语言说出来的才叫 memory。",
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "conscious memory",
+        "unconscious memory",
+        "declarative"
+      ]
+    },
+    {
+      "id": "ch-002",
+      "sectionId": "sec-working",
+      "order": 2,
+      "title": "工作记忆不是长期记忆",
+      "sourceText": "Working memory keeps a limited amount of information active for current cognition. It should be separated from long-term memory systems that store knowledge, events, and learned behavioral tendencies.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Working memory keeps a limited amount of information active for current cognition. It should be separated from long-term memory systems that store knowledge, events, and learned behavioral tendencies."
+        }
+      ],
+      "zhTranslation": "工作记忆让有限信息在当前认知中保持活跃。它应当和保存知识、事件以及习得行为倾向的长期记忆系统分开。",
+      "zhExplanation": "这对应 agent 的当前上下文窗口，不应把它和长期用户记忆、项目笔记混成一层。",
+      "figureRefs": [],
+      "keywords": [
+        "working memory",
+        "context",
+        "long-term memory"
+      ]
+    },
+    {
+      "id": "ch-003",
+      "sectionId": "sec-declarative",
+      "order": 3,
+      "title": "陈述性记忆可灵活表达",
+      "sourceText": "Declarative memory can be brought to mind as facts and events and can be used flexibly in new contexts. This flexibility is one reason it has been central in studies of amnesia.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Declarative memory can be brought to mind as facts and events and can be used flexibly in new contexts. This flexibility is one reason it has been central in studies of amnesia."
+        }
+      ],
+      "zhTranslation": "陈述性记忆可以作为事实和事件被回忆，并能在新情境中灵活使用。这种灵活性是它在失忆症研究中居于核心位置的原因之一。",
+      "zhExplanation": "阅读论文时，source chunk、摘要和项目解释大多属于这种可陈述信息。",
+      "figureRefs": [],
+      "keywords": [
+        "declarative",
+        "facts",
+        "events"
+      ]
+    },
+    {
+      "id": "ch-004",
+      "sectionId": "sec-declarative",
+      "order": 4,
+      "title": "意识报告不是唯一证据",
+      "sourceText": "Although declarative memory is associated with conscious recollection, memory research also relies on objective performance and lesion patterns. Awareness reports alone are not enough to define a system.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Although declarative memory is associated with conscious recollection, memory research also relies on objective performance and lesion patterns. Awareness reports alone are not enough to define a system."
+        }
+      ],
+      "zhTranslation": "虽然陈述性记忆和有意识回忆相关，但记忆研究也依赖客观表现和损伤模式。单靠意识报告不足以定义一个系统。",
+      "zhExplanation": "这提醒我们不要把“用户能不能说出来”当作 agent memory 的唯一评价标准。",
+      "figureRefs": [],
+      "keywords": [
+        "awareness",
+        "lesion",
+        "evidence"
+      ]
+    },
+    {
+      "id": "ch-005",
+      "sectionId": "sec-implicit",
+      "order": 5,
+      "title": "隐性记忆通过表现出现",
+      "sourceText": "Nondeclarative memory includes skills, habits, priming, and conditioning. These forms are often revealed by improved performance, biased responses, or conditioned reactions rather than by verbal report.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Nondeclarative memory includes skills, habits, priming, and conditioning. These forms are often revealed by improved performance, biased responses, or conditioned reactions rather than by verbal report."
+        }
+      ],
+      "zhTranslation": "非陈述性记忆包括技能、习惯、启动效应和条件反射。这些形式通常通过表现提升、反应偏向或条件反应显现，而不是通过口头报告。",
+      "zhExplanation": "对 agent 来说，这更像策略、偏好、工具使用习惯和自动化行为倾向。",
+      "figureRefs": [
+        {
+          "id": "fig-002",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "implicit memory",
+        "skills",
+        "habits",
+        "priming"
+      ]
+    },
+    {
+      "id": "ch-006",
+      "sectionId": "sec-implicit",
+      "order": 6,
+      "title": "隐性系统可形式化为表现改变",
+      "sourceText": "A compact way to read implicit memory is to ask how prior experience changes future performance without requiring explicit recollection. The effect is measured in behavior, not only in stored content.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "A compact way to read implicit memory is to ask how prior experience changes future performance without requiring explicit recollection. The effect is measured in behavior, not only in stored content."
+        },
+        {
+          "type": "math",
+          "label": "Reader-side implicit effect",
+          "latex": "\\Delta performance = f(prior\\ experience) - f(no\\ prior\\ experience)"
+        }
+      ],
+      "zhTranslation": "阅读隐性记忆的一种简洁方式是询问：过去经验如何在不需要显性回忆的情况下改变未来表现。其效果通过行为测量，而不只是通过存储内容测量。",
+      "zhExplanation": "这个公式是阅读器侧抽象：agent 的隐性记忆也应以行为改变来评价。",
+      "figureRefs": [],
+      "keywords": [
+        "formula",
+        "performance",
+        "implicit"
+      ]
+    },
+    {
+      "id": "ch-007",
+      "sectionId": "sec-implicit",
+      "order": 7,
+      "title": "不同隐性记忆有不同脑基础",
+      "sourceText": "Different forms of nondeclarative memory depend on different systems: habits are linked to the striatum, emotional conditioning to the amygdala, skeletal conditioning to the cerebellum, and priming to neocortical changes.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Different forms of nondeclarative memory depend on different systems: habits are linked to the striatum, emotional conditioning to the amygdala, skeletal conditioning to the cerebellum, and priming to neocortical changes."
+        },
+        {
+          "type": "table",
+          "caption": "Reader-side implicit memory map",
+          "columns": [
+            "Memory form",
+            "Typical support"
+          ],
+          "rows": [
+            [
+              "Habits",
+              "Striatum"
+            ],
+            [
+              "Emotional conditioning",
+              "Amygdala"
+            ],
+            [
+              "Skeletal conditioning",
+              "Cerebellum"
+            ],
+            [
+              "Priming",
+              "Neocortex"
+            ]
+          ]
+        }
+      ],
+      "zhTranslation": "不同形式的非陈述性记忆依赖不同系统：习惯与纹状体相关，情绪条件反射与杏仁核相关，骨骼肌条件反射与小脑相关，启动效应与新皮层变化相关。",
+      "zhExplanation": "这进一步说明“隐性记忆”也不是一个单一盒子。",
+      "figureRefs": [
+        {
+          "id": "fig-002",
+          "relation": "deferred"
+        }
+      ],
+      "keywords": [
+        "striatum",
+        "amygdala",
+        "cerebellum",
+        "neocortex"
+      ]
+    },
+    {
+      "id": "ch-008",
+      "sectionId": "sec-interaction",
+      "order": 8,
+      "title": "系统会交互",
+      "sourceText": "The systems are separable but not isolated. A real task can involve working memory, declarative recall, habits, emotional modulation, and perceptual learning at the same time.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The systems are separable but not isolated. A real task can involve working memory, declarative recall, habits, emotional modulation, and perceptual learning at the same time."
+        }
+      ],
+      "zhTranslation": "这些系统可以被区分，但并非彼此隔离。一个真实任务可能同时涉及工作记忆、陈述性回忆、习惯、情绪调制和知觉学习。",
+      "zhExplanation": "这对阅读器设计也有启发：一篇论文的 notes、chunks、figures 和 search index 是分层的，但阅读时会同时被调用。",
+      "figureRefs": [],
+      "keywords": [
+        "interaction",
+        "systems",
+        "task"
+      ]
+    },
+    {
+      "id": "ch-009",
+      "sectionId": "sec-agent",
+      "order": 9,
+      "title": "显性资料库的边界",
+      "sourceText": "If an agent stores only explicit natural-language records, it can support recall and explanation but may miss learned tendencies that are expressed through action policies or tool-use routines.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "If an agent stores only explicit natural-language records, it can support recall and explanation but may miss learned tendencies that are expressed through action policies or tool-use routines."
+        }
+      ],
+      "zhTranslation": "如果智能体只保存显性的自然语言记录，它可以支持回忆和解释，但可能遗漏通过行动策略或工具使用常规表达的习得倾向。",
+      "zhExplanation": "这解释了为什么后续 agent memory 不能只有文档库，还需要技能、偏好和任务状态的结构。",
+      "figureRefs": [],
+      "keywords": [
+        "agent",
+        "explicit memory",
+        "tool use"
+      ]
+    },
+    {
+      "id": "ch-010",
+      "sectionId": "sec-agent",
+      "order": 10,
+      "title": "术语标准化",
+      "sourceText": "The paper is most useful as a terminology guardrail. It helps keep working memory, declarative memory, skills, habits, and priming from being collapsed into a single vague memory label.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The paper is most useful as a terminology guardrail. It helps keep working memory, declarative memory, skills, habits, and priming from being collapsed into a single vague memory label."
+        }
+      ],
+      "zhTranslation": "这篇论文最有用的地方是作为术语护栏。它帮助防止工作记忆、陈述性记忆、技能、习惯和启动效应被压扁成一个模糊的 memory 标签。",
+      "zhExplanation": "本项目后续所有 paper package 都应沿用这个边界。",
+      "figureRefs": [],
+      "keywords": [
+        "terminology",
+        "taxonomy",
+        "agent memory"
+      ]
+    }
+  ]
+}

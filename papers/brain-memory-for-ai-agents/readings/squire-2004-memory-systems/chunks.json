@@ -1,0 +1,263 @@
+{
+  "paperId": "squire-2004-memory-systems",
+  "chunks": [
+    {
+      "id": "ch-001",
+      "sectionId": "sec-history",
+      "order": 1,
+      "title": "记忆不是单一能力",
+      "sourceText": "The review presents memory as a collection of systems rather than one general faculty. The history of amnesia research made it clear that some forms of learning can be impaired while others remain available.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The review presents memory as a collection of systems rather than one general faculty. The history of amnesia research made it clear that some forms of learning can be impaired while others remain available."
+        }
+      ],
+      "zhTranslation": "这篇综述把记忆呈现为多个系统的集合，而不是一种通用能力。失忆症研究的历史表明，有些学习形式会受损，而另一些仍然保留。",
+      "zhExplanation": "这是整个项目的分类基础：如果不先区分 memory type，后续的检索、更新和遗忘都会混乱。",
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "memory systems",
+        "taxonomy",
+        "amnesia"
+      ]
+    },
+    {
+      "id": "ch-002",
+      "sectionId": "sec-history",
+      "order": 2,
+      "title": "H.M. 的关键作用",
+      "sourceText": "Cases such as H.M. showed that medial temporal lobe damage can severely impair the formation of new declarative memories while sparing many perceptual, intellectual, and motor abilities.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Cases such as H.M. showed that medial temporal lobe damage can severely impair the formation of new declarative memories while sparing many perceptual, intellectual, and motor abilities."
+        }
+      ],
+      "zhTranslation": "H.M. 等病例显示，内侧颞叶损伤会严重破坏新陈述性记忆的形成，但许多知觉、智力和运动能力仍可保留。",
+      "zhExplanation": "这不是单纯“记忆变差”，而是特定记忆系统受损。对于 agent，也应避免把所有失败都归因于一个 memory buffer。",
+      "figureRefs": [],
+      "keywords": [
+        "H.M.",
+        "medial temporal lobe",
+        "declarative"
+      ]
+    },
+    {
+      "id": "ch-003",
+      "sectionId": "sec-declarative",
+      "order": 3,
+      "title": "陈述性记忆",
+      "sourceText": "Declarative memory supports conscious recollection of facts and events. It is flexible, can be expressed in language, and depends critically on the hippocampus and related medial temporal lobe structures.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Declarative memory supports conscious recollection of facts and events. It is flexible, can be expressed in language, and depends critically on the hippocampus and related medial temporal lobe structures."
+        }
+      ],
+      "zhTranslation": "陈述性记忆支持对事实和事件的有意识回忆。它具有灵活性，可以用语言表达，并关键依赖海马及相关内侧颞叶结构。",
+      "zhExplanation": "这对应 agent 中最容易实现的记忆：事实、事件、用户说过的话、文献笔记。",
+      "figureRefs": [
+        {
+          "id": "fig-002",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "declarative memory",
+        "facts",
+        "events",
+        "hippocampus"
+      ]
+    },
+    {
+      "id": "ch-004",
+      "sectionId": "sec-declarative",
+      "order": 4,
+      "title": "情节与语义",
+      "sourceText": "Declarative memory is often divided into episodic memory for events and semantic memory for facts. The distinction is useful, but both forms can rely on relational representations supported by the medial temporal lobe.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Declarative memory is often divided into episodic memory for events and semantic memory for facts. The distinction is useful, but both forms can rely on relational representations supported by the medial temporal lobe."
+        }
+      ],
+      "zhTranslation": "陈述性记忆通常被分为事件情节记忆和事实语义记忆。这个区分有用，但两者都可能依赖内侧颞叶支持的关系性表征。",
+      "zhExplanation": "在 reading package 里，原文 chunk 更像 episodic trace，长期概念卡片更像 semantic/schema。",
+      "figureRefs": [],
+      "keywords": [
+        "episodic memory",
+        "semantic memory",
+        "relation"
+      ]
+    },
+    {
+      "id": "ch-005",
+      "sectionId": "sec-nondeclarative",
+      "order": 5,
+      "title": "非陈述性记忆",
+      "sourceText": "Nondeclarative memory is expressed through performance rather than conscious recollection. It includes skills, habits, priming, conditioning, and nonassociative learning.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Nondeclarative memory is expressed through performance rather than conscious recollection. It includes skills, habits, priming, conditioning, and nonassociative learning."
+        }
+      ],
+      "zhTranslation": "非陈述性记忆通过表现而不是有意识回忆来表达。它包括技能、习惯、启动效应、条件反射和非联想学习。",
+      "zhExplanation": "如果 agent 只有可检索文本库，就很难表达技能、策略倾向和隐式偏好，这些需要和知识库分开建模。",
+      "figureRefs": [],
+      "keywords": [
+        "nondeclarative memory",
+        "skills",
+        "habits"
+      ]
+    },
+    {
+      "id": "ch-006",
+      "sectionId": "sec-nondeclarative",
+      "order": 6,
+      "title": "分类不是集合口号",
+      "sourceText": "The broad memory taxonomy can be written as a decomposition of long-term memory, but each branch is supported by different evidence, tasks, and neural structures rather than by labels alone.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The broad memory taxonomy can be written as a decomposition of long-term memory, but each branch is supported by different evidence, tasks, and neural structures rather than by labels alone."
+        },
+        {
+          "type": "math",
+          "label": "Reader-side taxonomy shorthand",
+          "latex": "LTM = declarative \\cup nondeclarative"
+        }
+      ],
+      "zhTranslation": "广义记忆分类可以写成长时记忆的分解，但每个分支都由不同证据、任务和神经结构支持，而不只是名称标签。",
+      "zhExplanation": "这个公式是阅读器侧整理：它帮助把 taxonomy 可视化，但真正证据来自行为和脑损伤模式。",
+      "figureRefs": [],
+      "keywords": [
+        "formula",
+        "taxonomy",
+        "long-term memory"
+      ]
+    },
+    {
+      "id": "ch-007",
+      "sectionId": "sec-brain",
+      "order": 7,
+      "title": "不同脑区支持不同系统",
+      "sourceText": "Different memory systems are associated with different brain structures, including the medial temporal lobe for declarative memory, the striatum for habits, the amygdala for emotional learning, and the cerebellum for simple conditioning.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Different memory systems are associated with different brain structures, including the medial temporal lobe for declarative memory, the striatum for habits, the amygdala for emotional learning, and the cerebellum for simple conditioning."
+        },
+        {
+          "type": "table",
+          "caption": "Reader-side memory system map",
+          "columns": [
+            "System",
+            "Typical structure"
+          ],
+          "rows": [
+            [
+              "Declarative",
+              "Medial temporal lobe"
+            ],
+            [
+              "Habits",
+              "Striatum"
+            ],
+            [
+              "Emotional learning",
+              "Amygdala"
+            ],
+            [
+              "Conditioning",
+              "Cerebellum"
+            ]
+          ]
+        }
+      ],
+      "zhTranslation": "不同记忆系统关联不同脑结构，包括支持陈述性记忆的内侧颞叶、支持习惯的纹状体、支持情绪学习的杏仁核，以及支持简单条件反射的小脑。",
+      "zhExplanation": "这能防止粗暴脑区映射：不是一个脑区等于一个软件模块，而是不同任务需求约束了不同系统。",
+      "figureRefs": [
+        {
+          "id": "fig-002",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "brain systems",
+        "striatum",
+        "amygdala",
+        "cerebellum"
+      ]
+    },
+    {
+      "id": "ch-008",
+      "sectionId": "sec-framework",
+      "order": 8,
+      "title": "系统由证据定义",
+      "sourceText": "A memory system is not defined only by the material it stores. It is defined by operating characteristics, behavioral expression, neural substrates, and the pattern of spared and impaired learning.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "A memory system is not defined only by the material it stores. It is defined by operating characteristics, behavioral expression, neural substrates, and the pattern of spared and impaired learning."
+        }
+      ],
+      "zhTranslation": "一个记忆系统不只由它存储的材料定义。它还由操作特征、行为表达、神经基础，以及学习能力保留或受损的模式来定义。",
+      "zhExplanation": "这句话可以作为本项目的设计原则：一个 agent memory type 必须有写入、读取、更新和评价标准。",
+      "figureRefs": [],
+      "keywords": [
+        "system definition",
+        "evidence",
+        "behavior"
+      ]
+    },
+    {
+      "id": "ch-009",
+      "sectionId": "sec-framework",
+      "order": 9,
+      "title": "不是短期长期二分",
+      "sourceText": "The memory-systems view should not be reduced to a simple short-term versus long-term contrast. Different systems can operate over time in different ways and can contribute simultaneously to behavior.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The memory-systems view should not be reduced to a simple short-term versus long-term contrast. Different systems can operate over time in different ways and can contribute simultaneously to behavior."
+        }
+      ],
+      "zhTranslation": "记忆系统观点不能被简化成短期与长期的二分。不同系统可以以不同方式跨时间运作，并且同时影响行为。",
+      "zhExplanation": "这纠正一个常见误解：agent 里也不应只有 short-term memory 和 long-term memory 两个盒子。",
+      "figureRefs": [],
+      "keywords": [
+        "short-term",
+        "long-term",
+        "systems"
+      ]
+    },
+    {
+      "id": "ch-010",
+      "sectionId": "sec-agent",
+      "order": 10,
+      "title": "对智能体的分类启发",
+      "sourceText": "For agent design, the paper encourages separating factual records, episodic traces, procedural skills, preferences, and task state. These should not all be forced into the same retrieval interface.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "For agent design, the paper encourages separating factual records, episodic traces, procedural skills, preferences, and task state. These should not all be forced into the same retrieval interface."
+        }
+      ],
+      "zhTranslation": "对于智能体设计，这篇论文鼓励把事实记录、情节痕迹、程序性技能、偏好和任务状态分开。它们不应全部被塞进同一个检索接口。",
+      "zhExplanation": "这是后续所有 reading package 的底层术语表：先分类，再谈检索和巩固。",
+      "figureRefs": [],
+      "keywords": [
+        "agent",
+        "memory type",
+        "retrieval"
+      ]
+    }
+  ]
+}

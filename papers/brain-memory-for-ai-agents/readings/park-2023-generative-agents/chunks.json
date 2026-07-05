@@ -1,0 +1,259 @@
+{
+  "paperId": "park-2023-generative-agents",
+  "chunks": [
+    {
+      "id": "ch-001",
+      "sectionId": "sec-problem",
+      "order": 1,
+      "title": "可信行为的问题",
+      "sourceText": "The paper frames believable agents as systems that must remember past observations, reason about their implications, and convert those memories into plans and actions over an extended interactive setting.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The paper frames believable agents as systems that must remember past observations, reason about their implications, and convert those memories into plans and actions over an extended interactive setting."
+        }
+      ],
+      "zhTranslation": "论文把可信智能体定义为一种系统：它必须记住过去的观察，推理这些观察的含义，并在较长的互动环境中把记忆转成计划和行动。",
+      "zhExplanation": "这里的关键不是角色扮演文本本身，而是长期连续性。它给本项目提供了 AI 侧“记忆如何进入行为”的完整案例。",
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "agent",
+        "memory",
+        "planning"
+      ]
+    },
+    {
+      "id": "ch-002",
+      "sectionId": "sec-architecture",
+      "order": 2,
+      "title": "观察到行动循环",
+      "sourceText": "The architecture is organized as a loop in which an agent perceives its environment, stores observations in memory, retrieves relevant records, reflects on accumulated experiences, and uses the result to plan behavior.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The architecture is organized as a loop in which an agent perceives its environment, stores observations in memory, retrieves relevant records, reflects on accumulated experiences, and uses the result to plan behavior."
+        }
+      ],
+      "zhTranslation": "该架构被组织成一个循环：智能体感知环境，把观察存入记忆，检索相关记录，对累积经验进行反思，并用这些结果来规划行为。",
+      "zhExplanation": "这就是阅读器应该展示的主线：每个 chunk 不只是摘要，而要让观察、写入、检索、反思和行动之间的关系清楚可见。",
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "architecture",
+        "retrieval",
+        "reflection"
+      ]
+    },
+    {
+      "id": "ch-003",
+      "sectionId": "sec-memory",
+      "order": 3,
+      "title": "自然语言记忆流",
+      "sourceText": "The memory stream stores a large number of natural-language records about the agent’s experiences. Each record can include what happened, when it happened, and how important the event is judged to be.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The memory stream stores a large number of natural-language records about the agent’s experiences. Each record can include what happened, when it happened, and how important the event is judged to be."
+        }
+      ],
+      "zhTranslation": "记忆流保存大量关于智能体经历的自然语言记录。每条记录可以包含发生了什么、何时发生，以及该事件被判断为多重要。",
+      "zhExplanation": "自然语言记忆的优点是可读、可编辑、适合 LLM 调用；缺点是容易把“文本记录”误认为真正稳定的长期知识。",
+      "figureRefs": [],
+      "keywords": [
+        "memory stream",
+        "natural language",
+        "importance"
+      ]
+    },
+    {
+      "id": "ch-004",
+      "sectionId": "sec-memory",
+      "order": 4,
+      "title": "检索评分三要素",
+      "sourceText": "Retrieval is not a pure keyword lookup. The system scores memories by combining relevance to the current situation, an importance score assigned at writing time, and a recency term that favors more recent events.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Retrieval is not a pure keyword lookup. The system scores memories by combining relevance to the current situation, an importance score assigned at writing time, and a recency term that favors more recent events."
+        },
+        {
+          "type": "math",
+          "label": "Reader-side retrieval score",
+          "latex": "score(m)=\\alpha\\,rel(m,q)+\\beta\\,imp(m)+\\gamma\\,recency(m)"
+        }
+      ],
+      "zhTranslation": "检索不是单纯关键词查找。系统把与当前情境的相关性、写入时分配的重要性分数、以及偏向近期事件的新近性项结合起来给记忆打分。",
+      "zhExplanation": "这段可以直接和本阅读器的本地检索对照：关键词、向量相似度和人工重要性可以组合，而不是让 embedding 单独决定一切。",
+      "figureRefs": [
+        {
+          "id": "fig-002",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "retrieval",
+        "importance",
+        "recency",
+        "formula"
+      ]
+    },
+    {
+      "id": "ch-005",
+      "sectionId": "sec-reflection",
+      "order": 5,
+      "title": "反思生成高层记忆",
+      "sourceText": "Reflection produces higher-level inferences from many lower-level observations. Instead of using every raw event directly, the agent periodically asks what broader conclusions can be drawn from recent memories.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Reflection produces higher-level inferences from many lower-level observations. Instead of using every raw event directly, the agent periodically asks what broader conclusions can be drawn from recent memories."
+        }
+      ],
+      "zhTranslation": "反思会从许多低层观察中生成更高层的推断。智能体不是直接使用每一个原始事件，而是周期性地询问近期记忆能推出什么更广泛的结论。",
+      "zhExplanation": "这和 CLS 里的快慢学习有功能类比：具体事件可以被压缩成更稳定的关系、偏好或计划线索，但不能把这种摘要当成生物巩固证据。",
+      "figureRefs": [],
+      "keywords": [
+        "reflection",
+        "schema",
+        "consolidation"
+      ]
+    },
+    {
+      "id": "ch-006",
+      "sectionId": "sec-reflection",
+      "order": 6,
+      "title": "规划让记忆进入行为",
+      "sourceText": "Planning turns retrieved and reflected information into a sequence of future actions. The paper uses schedules and short-term action plans so that remembered intentions can shape what the agent does next.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Planning turns retrieved and reflected information into a sequence of future actions. The paper uses schedules and short-term action plans so that remembered intentions can shape what the agent does next."
+        }
+      ],
+      "zhTranslation": "规划把检索和反思得到的信息转成未来行动序列。论文使用日程和短期行动计划，让被记住的意图能影响智能体接下来做什么。",
+      "zhExplanation": "对阅读器而言，这提醒我们笔记不应只记录“这篇说了什么”，还要记录“它会如何改变后续设计”。",
+      "figureRefs": [],
+      "keywords": [
+        "planning",
+        "schedule",
+        "behavior"
+      ]
+    },
+    {
+      "id": "ch-007",
+      "sectionId": "sec-evaluation",
+      "order": 7,
+      "title": "社会行为展示",
+      "sourceText": "The sandbox evaluation emphasizes emergent social behavior, including agents communicating, coordinating, and responding to events in a small town simulation. These examples are used to show continuity over time.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The sandbox evaluation emphasizes emergent social behavior, including agents communicating, coordinating, and responding to events in a small town simulation. These examples are used to show continuity over time."
+        }
+      ],
+      "zhTranslation": "沙盒评估强调涌现的社会行为，包括智能体在小镇模拟中交流、协调并回应事件。这些例子用来展示跨时间的连续性。",
+      "zhExplanation": "这部分有示范价值，但证据强度主要来自行为展示和人工判断，不能当作严格机制证明。",
+      "figureRefs": [],
+      "keywords": [
+        "evaluation",
+        "social behavior",
+        "continuity"
+      ]
+    },
+    {
+      "id": "ch-008",
+      "sectionId": "sec-evaluation",
+      "order": 8,
+      "title": "消融暴露模块作用",
+      "sourceText": "Ablations compare agents with or without components such as observation, reflection, and planning. The results suggest that each component contributes to more believable behavior, but the measures remain tied to the simulation setup.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Ablations compare agents with or without components such as observation, reflection, and planning. The results suggest that each component contributes to more believable behavior, but the measures remain tied to the simulation setup."
+        },
+        {
+          "type": "table",
+          "caption": "Reader-side ablation map",
+          "columns": [
+            "Component",
+            "Observed role"
+          ],
+          "rows": [
+            [
+              "Observation",
+              "Supplies raw episodic records."
+            ],
+            [
+              "Reflection",
+              "Compresses events into higher-level inferences."
+            ],
+            [
+              "Planning",
+              "Turns memory into scheduled actions."
+            ]
+          ]
+        }
+      ],
+      "zhTranslation": "消融比较了有无观察、反思、规划等组件的智能体。结果说明这些组件都对更可信的行为有贡献，但评价仍然和模拟场景绑定。",
+      "zhExplanation": "这里适合用表格读：模块贡献是什么、证据是什么、局限在哪里。",
+      "figureRefs": [],
+      "keywords": [
+        "ablation",
+        "evaluation",
+        "table"
+      ]
+    },
+    {
+      "id": "ch-009",
+      "sectionId": "sec-limits",
+      "order": 9,
+      "title": "可信不等于真实心理",
+      "sourceText": "Believable behavior in a simulation does not prove that the agent has human-like memory. The system depends on LLM generations, prompt design, human judgments, and a constrained world model.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Believable behavior in a simulation does not prove that the agent has human-like memory. The system depends on LLM generations, prompt design, human judgments, and a constrained world model."
+        }
+      ],
+      "zhTranslation": "模拟中的可信行为并不证明智能体拥有人类式记忆。系统依赖 LLM 生成、提示设计、人工判断和受限的世界模型。",
+      "zhExplanation": "这是必须保留的边界：Generative Agents 是工程启发，不是神经机制证据。",
+      "figureRefs": [],
+      "keywords": [
+        "limits",
+        "simulation",
+        "human-like"
+      ]
+    },
+    {
+      "id": "ch-010",
+      "sectionId": "sec-limits",
+      "order": 10,
+      "title": "项目中的借鉴方式",
+      "sourceText": "For agent-memory design, the most reusable idea is the separation between raw episodic records, higher-level reflections, and plans. The separation makes memory inspectable and gives later systems places to update, compress, or forget information.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "For agent-memory design, the most reusable idea is the separation between raw episodic records, higher-level reflections, and plans. The separation makes memory inspectable and gives later systems places to update, compress, or forget information."
+        }
+      ],
+      "zhTranslation": "对于智能体记忆设计，最可复用的思想是把原始情节记录、高层反思和计划分开。这种分离让记忆可检查，也给后续系统提供更新、压缩或遗忘信息的位置。",
+      "zhExplanation": "本项目可以把它作为 AI 侧的基准架构，再用神经科学论文补充 pattern separation、consolidation 和 forgetting 的机制语言。",
+      "figureRefs": [],
+      "keywords": [
+        "agent",
+        "episode",
+        "reflection",
+        "forgetting"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "id": "packer-2023-memgpt",
+  "title": "MemGPT: Towards LLMs as Operating Systems",
+  "shortTitle": "MemGPT",
+  "authors": "Packer et al.",
+  "year": 2023,
+  "category": "Virtual context management",
+  "categoryZh": "虚拟上下文与长期记忆管理",
+  "relation": "Treats LLM memory as an operating-system style context-management problem.",
+  "relationZh": "这篇把 LLM 记忆问题转成上下文资源管理问题，适合和向量检索、长期存储、工作上下文区分一起读。",
+  "description": "MemGPT proposes explicit memory management around limited context windows, external storage, and model-mediated read-write operations.",
+  "descriptionZh": "文章的重点是：上下文窗口有限，智能体需要主动决定什么留在当前上下文，什么写入外部存储，什么时候再调回。",
+  "readingFocus": [
+    "先抓住 context window 被当成稀缺主存这一点。",
+    "重点看 core memory、archival memory 和 recall 的边界。",
+    "注意函数调用让 LLM 参与管理自己的记忆，但也带来控制和评估问题。",
+    "把 OS 类比当工程模型，不当脑机制证据。"
+  ],
+  "source": "https://arxiv.org/abs/2310.08560",
+  "license": "See source terms",
+  "sourceFile": "../../pdfs/2023-packer-memgpt.pdf",
+  "noteFile": "../../notes-cn/reading-packet-cn.md#3-packer-et-al-2023--2024-memgpt-towards-llms-as-operating-systems",
+  "sections": [
+    {
+      "id": "sec-problem",
+      "title": "Problem",
+      "titleZh": "问题设定"
+    },
+    {
+      "id": "sec-analogy",
+      "title": "OS analogy",
+      "titleZh": "操作系统类比"
+    },
+    {
+      "id": "sec-memory",
+      "title": "Memory tiers",
+      "titleZh": "记忆层级"
+    },
+    {
+      "id": "sec-control",
+      "title": "Control loop",
+      "titleZh": "控制循环"
+    },
+    {
+      "id": "sec-evaluation",
+      "title": "Evaluation",
+      "titleZh": "评估"
+    },
+    {
+      "id": "sec-limits",
+      "title": "Limits",
+      "titleZh": "局限与启发"
+    }
+  ]
+}

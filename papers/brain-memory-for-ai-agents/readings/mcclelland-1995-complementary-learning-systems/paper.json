@@ -5,23 +5,54 @@
   "authors": "McClelland, McNaughton, and O'Reilly",
   "year": 1995,
   "category": "Neuroscience memory theory",
+  "categoryZh": "互补学习系统与记忆巩固",
   "relation": "Provides a computational memory-system theory that can guide agent memory design.",
+  "relationZh": "这篇经典论文把海马快速学习与新皮层慢速整合解释为互补系统，是把神经科学记忆机制转成 agent memory 架构原则的核心入口。",
   "description": "A classic complementary learning systems account arguing that fast hippocampal learning and slow neocortical integration solve different memory problems.",
+  "descriptionZh": "阅读重点是理解为什么单一记忆系统难以同时做到快速写入和稳定整合，以及重激活、交错学习和系统巩固如何降低干扰。",
+  "readingFocus": [
+    "快速情节记忆和慢速结构学习为什么需要分层。",
+    "海马“概要草图”和重激活怎样支持新皮层整合。",
+    "把 CLS 映射到智能体时，只能迁移计算原则，不能把脑区和模块机械等同。"
+  ],
   "source": "https://stanford.edu/~jlmcc/papers/McCMcNaughtonOReilly95.pdf",
   "sourceFile": "../../pdfs/1995-mcclelland-mcnaughton-oreilly-complementary-learning-systems.pdf",
   "noteFile": "../../notes-cn/reading-packet-cn.md#4-mcclelland-mcnaughton--oreilly-1995-complementary-learning-systems",
   "sections": [
     {
-      "id": "sec-1",
-      "title": "The stability-plasticity problem"
+      "id": "sec-abstract",
+      "title": "Core claim",
+      "titleZh": "核心主张"
     },
     {
-      "id": "sec-2",
-      "title": "Fast hippocampus and slow cortex"
+      "id": "sec-evidence",
+      "title": "Hippocampal evidence",
+      "titleZh": "海马证据"
     },
     {
-      "id": "sec-3",
-      "title": "Agent-memory implications"
+      "id": "sec-neocortex",
+      "title": "Neocortical learning",
+      "titleZh": "新皮层学习"
+    },
+    {
+      "id": "sec-hippocampus",
+      "title": "Fast hippocampal indexing",
+      "titleZh": "快速海马索引"
+    },
+    {
+      "id": "sec-consolidation",
+      "title": "Consolidation through reinstatement",
+      "titleZh": "重激活与巩固"
+    },
+    {
+      "id": "sec-models",
+      "title": "Connectionist model lessons",
+      "titleZh": "连接主义模型教训"
+    },
+    {
+      "id": "sec-agent",
+      "title": "Agent-memory implications",
+      "titleZh": "对智能体记忆的启发"
     }
   ]
 }

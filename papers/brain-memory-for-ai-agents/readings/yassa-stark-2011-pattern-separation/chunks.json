@@ -3,22 +3,22 @@
   "chunks": [
     {
       "id": "ch-001",
-      "sectionId": "sec-1",
+      "sectionId": "sec-abstract",
       "order": 1,
-      "sourceText": "Pattern separation describes the transformation of similar or overlapping inputs into more distinct representations. This helps memory systems avoid confusing events that share many features.",
+      "title": "相似经验为什么会冲突",
+      "sourceText": "The review begins from a core problem in episodic memory: similar experiences must be discriminated rather than collapsed into one trace. Pattern separation is the transformation that makes overlapping inputs more distinct, reducing interference among memories that share many features.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "Pattern separation describes the transformation of similar or overlapping inputs into more distinct representations. This helps memory systems avoid confusing events that share many features."
+          "text": "The review begins from a core problem in episodic memory: similar experiences must be discriminated rather than collapsed into one trace."
         },
         {
-          "type": "math",
-          "display": true,
-          "latex": "d(f(x_a), f(x_b)) > d(x_a, x_b)",
-          "label": "Separation intuition"
+          "type": "paragraph",
+          "text": "Pattern separation is the transformation that makes overlapping inputs more distinct, reducing interference among memories that share many features."
         }
       ],
-      "zhExplanation": "这一段定义 pattern separation：相似输入经过编码后变得更可区分。公式表达的是直觉，不是论文原始公式；它帮助说明为什么记忆系统需要主动拉开相近事件的表征距离。",
+      "zhTranslation": "这篇综述从情节记忆中的一个核心问题出发：相似经验必须被区分，而不是塌缩成同一个痕迹。模式分离是一种把重叠输入变得更有区分度的转换，它可以减少那些共享许多特征的记忆之间的干扰。",
+      "zhExplanation": "这是阅读本篇的主线：海马不只是“存储记忆”，还要解决相似经验之间的可区分性问题。",
       "figureRefs": [
         {
           "id": "fig-001",
@@ -27,104 +27,393 @@
       ],
       "keywords": [
         "pattern separation",
-        "overlap",
-        "distinct representation",
+        "episodic memory",
         "interference"
-      ],
-      "zhTranslation": "模式分离指的是把相似或重叠的输入转换成更有区分度的表征。这样可以帮助记忆系统避免混淆拥有许多共同特征的事件。"
+      ]
     },
     {
       "id": "ch-002",
-      "sectionId": "sec-2",
+      "sectionId": "sec-computation",
       "order": 2,
-      "sourceText": "The dentate gyrus is often discussed as a circuit well suited for sparse coding and separation, while CA3 is linked to associative retrieval and completion of stored patterns.",
+      "title": "分离与补全是一对张力",
+      "sourceText": "Pattern completion moves a partial or noisy cue toward a stored representation, allowing generalization and recall from incomplete input. Pattern separation moves similar inputs away from each other, allowing similar events to be stored without overwriting or confusing one another.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "The dentate gyrus is often discussed as a circuit well suited for sparse coding and separation, while CA3 is linked to associative retrieval and completion of stored patterns."
+          "text": "Pattern completion moves a partial or noisy cue toward a stored representation, allowing generalization and recall from incomplete input."
+        },
+        {
+          "type": "paragraph",
+          "text": "Pattern separation moves similar inputs away from each other, allowing similar events to be stored without overwriting or confusing one another."
+        },
+        {
+          "type": "math",
+          "display": true,
+          "label": "Separation intuition",
+          "latex": "d(f(x_a), f(x_b)) > d(x_a, x_b)"
+        }
+      ],
+      "zhTranslation": "模式补全会把部分或有噪声的线索推向已存储的表征，使系统能够从不完整输入中泛化和回忆。模式分离则把相似输入彼此拉开，让相似事件可以被保存而不互相覆盖或混淆。",
+      "zhExplanation": "公式是阅读器侧的直觉表达：编码后的距离大于输入距离。它帮助把“分离”理解为表征空间里的转换，而不是简单标签。",
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "pattern completion",
+        "distance",
+        "representation"
+      ]
+    },
+    {
+      "id": "ch-003",
+      "sectionId": "sec-computation",
+      "order": 3,
+      "title": "不是所有回忆都需要分离",
+      "sourceText": "The review distinguishes pattern separation from broader constructs such as recollection. Recollection may require separation when overlapping memories compete, but two distinct memories with little shared content may be recalled without strong separation demands.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The review distinguishes pattern separation from broader constructs such as recollection."
+        },
+        {
+          "type": "paragraph",
+          "text": "Recollection may require separation when overlapping memories compete, but two distinct memories with little shared content may be recalled without strong separation demands."
+        }
+      ],
+      "zhTranslation": "综述把模式分离和回想等更宽泛的认知概念区分开来。当重叠记忆相互竞争时，回想可能需要分离；但如果两个记忆几乎没有共享内容，就不一定需要很强的分离需求。",
+      "zhExplanation": "这避免把 pattern separation 泛化成所有记忆过程。它是特定计算需求，不是“记得起来”的同义词。",
+      "figureRefs": [],
+      "keywords": [
+        "recollection",
+        "overlap",
+        "computational demand"
+      ]
+    },
+    {
+      "id": "ch-004",
+      "sectionId": "sec-circuit",
+      "order": 4,
+      "title": "齿状回的稀疏化作用",
+      "sourceText": "Computational models place special emphasis on the dentate gyrus. Sparse granule-cell coding can transform overlapping entorhinal inputs into more distinct outputs, which are then projected through mossy fibers to CA3.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Computational models place special emphasis on the dentate gyrus."
+        },
+        {
+          "type": "paragraph",
+          "text": "Sparse granule-cell coding can transform overlapping entorhinal inputs into more distinct outputs, which are then projected through mossy fibers to CA3."
+        }
+      ],
+      "zhTranslation": "计算模型特别强调齿状回。稀疏的颗粒细胞编码可以把重叠的内嗅皮层输入转换成更有区分度的输出，然后通过苔藓纤维投射到 CA3。",
+      "zhExplanation": "DG 的意义在于“先把相似输入拉开”，这可以启发 agent memory 的写入阶段：相似事件进入库前就要保持足够区分。",
+      "figureRefs": [
+        {
+          "id": "fig-002",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "dentate gyrus",
+        "sparse coding",
+        "entorhinal cortex"
+      ]
+    },
+    {
+      "id": "ch-005",
+      "sectionId": "sec-circuit",
+      "order": 5,
+      "title": "CA3 的自动联想网络",
+      "sourceText": "CA3 receives mossy fiber input from the dentate gyrus, direct perforant-path input from entorhinal cortex, and extensive recurrent collateral input from CA3 neurons. This anatomy motivates the idea that CA3 can support auto-associative completion while also receiving separated input for new learning.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "CA3 receives mossy fiber input from the dentate gyrus, direct perforant-path input from entorhinal cortex, and extensive recurrent collateral input from CA3 neurons."
+        },
+        {
+          "type": "paragraph",
+          "text": "This anatomy motivates the idea that CA3 can support auto-associative completion while also receiving separated input for new learning."
+        }
+      ],
+      "zhTranslation": "CA3 接收来自齿状回的苔藓纤维输入、来自内嗅皮层的直接穿通路输入，以及来自 CA3 神经元的大量循环侧支输入。这种解剖结构支持一种观点：CA3 可以支持自动联想式补全，同时也接收用于新学习的分离后输入。",
+      "zhExplanation": "CA3 不是只做补全或只做分离。它处在 DG 分离输入和自身循环吸引子动力学之间，功能取决于输入差异和任务状态。",
+      "figureRefs": [
+        {
+          "id": "fig-002",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "CA3",
+        "mossy fibers",
+        "recurrent collaterals",
+        "auto-association"
+      ]
+    },
+    {
+      "id": "ch-006",
+      "sectionId": "sec-circuit",
+      "order": 6,
+      "title": "编码和检索路径不同",
+      "sourceText": "The review describes a useful pathway distinction: DG input into CA3 is often linked to encoding and separation, whereas direct entorhinal input into CA3 can provide cues for recall. Lesion and inactivation studies support the idea that encoding and retrieval can depend on different parts of the circuit.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The review describes a useful pathway distinction: DG input into CA3 is often linked to encoding and separation, whereas direct entorhinal input into CA3 can provide cues for recall."
         },
         {
           "type": "table",
-          "label": "Table A",
-          "caption": "Simplified hippocampal subregion roles",
+          "caption": "Reader-side pathway summary",
           "columns": [
-            "Subregion",
-            "Computation"
+            "Pathway",
+            "Reading role"
           ],
           "rows": [
             [
-              "Dentate gyrus",
-              "Sparse separation"
+              "DG to CA3 mossy fibers",
+              "Biases new encoding toward separated representations."
             ],
             [
-              "CA3",
-              "Associative completion"
+              "Entorhinal cortex to CA3",
+              "Provides cues that can support recall."
+            ],
+            [
+              "CA3 recurrent collaterals",
+              "Supports associative completion dynamics."
             ]
           ]
         }
       ],
-      "zhExplanation": "这里把 pattern separation 放到海马子区功能里：齿状回常被视为稀疏化和分离的关键环节，CA3 则更常和联想补全联系。证据来源包括行为、成像和动物研究，但不同方法能支持的因果强度不同。",
+      "zhTranslation": "综述描述了一个有用的路径区分：DG 到 CA3 的输入常与编码和分离相关，而内嗅皮层直接到 CA3 的输入可以为回忆提供线索。损伤和失活研究支持这样一种观点：编码和检索可能依赖环路中的不同部分。",
+      "zhExplanation": "这可以映射到 agent memory 的写入/读取分离：写入时要避免混淆，读取时要允许部分线索召回。",
       "figureRefs": [],
       "keywords": [
-        "dentate gyrus",
-        "CA3",
-        "sparse coding",
-        "pattern completion"
-      ],
-      "zhTranslation": "齿状回常被讨论为适合稀疏编码和分离的环路，而 CA3 则更多与联想检索和已存模式的补全相关。"
+        "encoding",
+        "retrieval",
+        "perforant path",
+        "mossy fibers"
+      ]
     },
     {
-      "id": "ch-003",
-      "sectionId": "sec-3",
-      "order": 3,
-      "sourceText": "Behavioral tasks often test pattern separation by asking whether subjects can discriminate similar lures from previously seen items. Better separation predicts less false recognition of similar events.",
+      "id": "ch-007",
+      "sectionId": "sec-evidence",
+      "order": 7,
+      "title": "动物记录显示非线性转换",
+      "sourceText": "Electrophysiological recordings and immediate-early-gene imaging show that CA3 can display completion for small input changes and separation for larger changes. DG responses are often more sensitive to small changes, suggesting stronger separation earlier in the circuit.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "Behavioral tasks often test pattern separation by asking whether subjects can discriminate similar lures from previously seen items. Better separation predicts less false recognition of similar events."
+          "text": "Electrophysiological recordings and immediate-early-gene imaging show that CA3 can display completion for small input changes and separation for larger changes."
+        },
+        {
+          "type": "paragraph",
+          "text": "DG responses are often more sensitive to small changes, suggesting stronger separation earlier in the circuit."
+        }
+      ],
+      "zhTranslation": "电生理记录和即刻早期基因成像显示，CA3 可以在输入变化较小时表现出补全，而在变化较大时表现出分离。DG 对小变化通常更敏感，提示环路更早阶段可能存在更强分离。",
+      "zhExplanation": "这强调分离/补全不是二分开关，而是随输入相似度改变的非线性转换函数。",
+      "figureRefs": [
+        {
+          "id": "fig-003",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "electrophysiology",
+        "IEG imaging",
+        "nonlinear transformation"
+      ]
+    },
+    {
+      "id": "ch-008",
+      "sectionId": "sec-evidence",
+      "order": 8,
+      "title": "人类 fMRI 的 DG/CA3 证据",
+      "sourceText": "Human high-resolution fMRI studies used similar lures and repetition-related activity to infer whether hippocampal subregions treat a stimulus as old or new. DG/CA3 activity is reported to resemble first presentations even for similar lures, consistent with strong pattern separation.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Human high-resolution fMRI studies used similar lures and repetition-related activity to infer whether hippocampal subregions treat a stimulus as old or new."
+        },
+        {
+          "type": "paragraph",
+          "text": "DG/CA3 activity is reported to resemble first presentations even for similar lures, consistent with strong pattern separation."
+        }
+      ],
+      "zhTranslation": "人类高分辨率 fMRI 研究使用相似诱饵和重复相关活动，来推断海马子区是把刺激当作旧刺激还是新刺激。报告显示，即使面对相似诱饵，DG/CA3 活动也类似首次呈现，这与强模式分离一致。",
+      "zhExplanation": "这里的证据强度要谨慎：fMRI 不能像单细胞记录那样直接分辨机制，但它提供了跨物种的人类证据。",
+      "figureRefs": [
+        {
+          "id": "fig-003",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "fMRI",
+        "similar lures",
+        "DG/CA3"
+      ]
+    },
+    {
+      "id": "ch-009",
+      "sectionId": "sec-evidence",
+      "order": 9,
+      "title": "行为任务中的相似诱饵",
+      "sourceText": "Behavioral tests often measure separation by asking whether participants can distinguish studied items from similar lures. Better mnemonic discrimination means fewer false alarms to similar but novel items, which is taken as behavioral evidence that overlapping memories have been kept apart.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Behavioral tests often measure separation by asking whether participants can distinguish studied items from similar lures."
         },
         {
           "type": "code",
           "language": "python",
-          "caption": "Memory collision check",
-          "code": "if similarity(new_event, stored_event) > threshold:\n    require_more_specific_index(new_event)"
+          "caption": "Reader-side lure discrimination sketch, not original paper code",
+          "code": "if similarity(test_item, studied_item) > lure_threshold:\n    decision = discriminate_old_from_similar_lure(test_item)"
         }
       ],
-      "zhExplanation": "这一段说明 pattern separation 如何被行为任务测量：相似诱饵越容易被误认为旧项目，说明分离不足。伪代码把它映射到 agent memory：当新经验和旧经验太像时，应建立更具体的索引。",
+      "zhTranslation": "行为测试通常通过要求被试区分学过的项目和相似诱饵来测量分离能力。更好的记忆辨别意味着对相似但新颖项目的误报更少，这被视为重叠记忆保持区分的行为证据。",
+      "zhExplanation": "伪代码只是把行为任务的核心判断转成工程语言：相似不等于相同，检索系统要能处理“近似但不是同一个”的情况。",
+      "figureRefs": [],
+      "keywords": [
+        "mnemonic discrimination",
+        "lure",
+        "false alarm"
+      ]
+    },
+    {
+      "id": "ch-010",
+      "sectionId": "sec-evidence",
+      "order": 10,
+      "title": "老化与神经发生",
+      "sourceText": "The review connects pattern separation to aging and adult neurogenesis. Age-related changes in the DG/CA3 network are discussed as a possible source of episodic memory problems, while adult-born granule cells are considered a potential contributor to separation, though the exact mechanism remains debated.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The review connects pattern separation to aging and adult neurogenesis."
+        },
+        {
+          "type": "paragraph",
+          "text": "Age-related changes in the DG/CA3 network are discussed as a possible source of episodic memory problems, while adult-born granule cells are considered a potential contributor to separation, though the exact mechanism remains debated."
+        }
+      ],
+      "zhTranslation": "综述把模式分离与老化和成年神经发生联系起来。DG/CA3 网络的年龄相关变化被讨论为情节记忆问题的可能来源；成年新生颗粒细胞也被认为可能参与分离，尽管其确切机制仍有争议。",
+      "zhExplanation": "这部分提醒我们，pattern separation 不是抽象算法而已，它也受发育、老化、细胞状态和调制信号影响。",
+      "figureRefs": [],
+      "keywords": [
+        "aging",
+        "adult neurogenesis",
+        "DG/CA3"
+      ]
+    },
+    {
+      "id": "ch-011",
+      "sectionId": "sec-boundaries",
+      "order": 11,
+      "title": "fMRI 的分辨率限制",
+      "sourceText": "A major limitation is that high-resolution fMRI still has difficulty separating DG from CA3 signals. Some apparent human DG/CA3 effects may be driven more by one subfield than the other, so cross-species comparisons must be interpreted with caution.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "A major limitation is that high-resolution fMRI still has difficulty separating DG from CA3 signals."
+        },
+        {
+          "type": "paragraph",
+          "text": "Some apparent human DG/CA3 effects may be driven more by one subfield than the other, so cross-species comparisons must be interpreted with caution."
+        }
+      ],
+      "zhTranslation": "一个重要限制是，即使是高分辨率 fMRI，也仍难以把 DG 和 CA3 信号清楚分开。一些看似来自人类 DG/CA3 的效应，可能更多由其中某个子区驱动，因此跨物种比较必须谨慎解释。",
+      "zhExplanation": "这是方法限制：fMRI 看到的是相关活动模式，不等于直接证明某个子区完成了计算转换。",
+      "figureRefs": [],
+      "keywords": [
+        "method limitation",
+        "high-resolution fMRI",
+        "subfield resolution"
+      ]
+    },
+    {
+      "id": "ch-012",
+      "sectionId": "sec-boundaries",
+      "order": 12,
+      "title": "输入尺度不能随意假设",
+      "sourceText": "The review warns that environmental similarity is not always the same as neural input similarity. Studies manipulate rooms, cues, objects, or lures, but the internal representation may not change linearly with these external manipulations.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The review warns that environmental similarity is not always the same as neural input similarity."
+        },
+        {
+          "type": "paragraph",
+          "text": "Studies manipulate rooms, cues, objects, or lures, but the internal representation may not change linearly with these external manipulations."
+        }
+      ],
+      "zhTranslation": "综述提醒，环境相似度并不总等于神经输入相似度。研究会操纵房间、线索、物体或诱饵，但内部表征未必会随这些外部操纵线性变化。",
+      "zhExplanation": "这点对 embedding 检索也重要：文本相似度或向量距离不是天然等价于记忆混淆风险，需要任务定义来约束。",
+      "figureRefs": [],
+      "keywords": [
+        "input similarity",
+        "neural representation",
+        "measurement"
+      ]
+    },
+    {
+      "id": "ch-013",
+      "sectionId": "sec-agent",
+      "order": 13,
+      "title": "减少智能体检索碰撞",
+      "sourceText": "For agent memory, pattern separation is useful as a computational analogy for retrieval-collision control. Similar episodes should remain distinguishable when their differences matter for future decisions, rather than being merged immediately into a single semantic summary.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "For agent memory, pattern separation is useful as a computational analogy for retrieval-collision control."
+        },
+        {
+          "type": "paragraph",
+          "text": "Similar episodes should remain distinguishable when their differences matter for future decisions, rather than being merged immediately into a single semantic summary."
+        }
+      ],
+      "zhTranslation": "对于智能体记忆，模式分离可以作为控制检索碰撞的计算类比。当相似情节之间的差异会影响未来决策时，它们应该保持可区分，而不是立刻合并成一个语义摘要。",
+      "zhExplanation": "这是本项目最直接的连接：相似用户偏好、相似任务失败、相似论文 chunk 都需要保留差异，否则检索会“看起来相关但其实误导”。",
       "figureRefs": [
         {
-          "id": "fig-002",
+          "id": "fig-001",
           "relation": "deferred"
         }
       ],
       "keywords": [
-        "mnemonic discrimination",
-        "lure",
-        "false recognition",
-        "index specificity"
-      ],
-      "zhTranslation": "行为任务通常通过让被试区分相似诱饵和之前见过的项目来测试模式分离。分离能力越好，对相似事件的错误再认越少。"
+        "agent memory",
+        "retrieval collision",
+        "semantic summary"
+      ]
     },
     {
-      "id": "ch-004",
-      "sectionId": "sec-3",
-      "order": 4,
-      "sourceText": "For agent memory, pattern separation is a useful analogy for reducing retrieval collisions. It suggests that similar episodes should not always be compressed into a single semantic summary too early.",
+      "id": "ch-014",
+      "sectionId": "sec-agent",
+      "order": 14,
+      "title": "分离也需要调控",
+      "sourceText": "The review also notes that separation must be regulated. Too little separation causes interference, but too much separation can make recall and generalization difficult. A useful memory system needs a controllable balance between separating similar episodes and completing partial cues.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "For agent memory, pattern separation is a useful analogy for reducing retrieval collisions. It suggests that similar episodes should not always be compressed into a single semantic summary too early."
+          "text": "The review also notes that separation must be regulated."
+        },
+        {
+          "type": "paragraph",
+          "text": "Too little separation causes interference, but too much separation can make recall and generalization difficult. A useful memory system needs a controllable balance between separating similar episodes and completing partial cues."
         }
       ],
-      "zhExplanation": "这是助手综合判断，而不是论文直接主张：pattern separation 给 agent memory 的启发是避免过早合并相似事件。对于长期 agent，保留足够具体的 episode 区分可能比单纯摘要更重要。",
+      "zhTranslation": "综述还指出，分离本身也必须被调控。分离太少会导致干扰，但分离太多又会让回忆和泛化变困难。一个有用的记忆系统需要在区分相似情节和根据部分线索补全之间保持可控制的平衡。",
+      "zhExplanation": "这能约束后续设计：不是把所有 chunk 都切得越细越好，也不是所有相似内容都合并；关键是按任务需要控制粒度。",
       "figureRefs": [],
       "keywords": [
-        "agent memory",
-        "retrieval collision",
-        "episode indexing",
-        "summary"
-      ],
-      "zhTranslation": "对于智能体记忆，模式分离是减少检索碰撞的有用类比。它提示我们，相似情节不应过早压缩成同一个语义摘要。"
+        "regulation",
+        "generalization",
+        "completion",
+        "granularity"
+      ]
     }
   ]
 }

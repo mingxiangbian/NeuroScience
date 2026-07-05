@@ -235,15 +235,12 @@ assert.match(js, /if \(!figure\?\.file\) return ""/, "reader should skip missing
 assert.match(js, /renderNoChunkPaper/, "reader should render real metadata for papers without chunk packages");
 assert.doesNotMatch(js, /\/api\/|localhost|127\.0\.0\.1|openai|anthropic|generateAnswer|chatCompletion|SurrealDB/i, "reader should stay static without backend, provider keys, AI answers, or hard SurrealDB dependency");
 
-const readingPaperIds = [
-  "zhang-2024-memory-mechanism-llm-agents",
-  "mcclelland-1995-complementary-learning-systems",
-  "yassa-stark-2011-pattern-separation",
-];
+const readingPaperIds = project.papers.map((paper) => paper.id);
 
 for (const paper of project.papers) {
   assert.equal(typeof paper.shortTitle, "string", `paper ${paper.id} should include shortTitle`);
   assert.ok(paper.shortTitle.length > 0 && paper.shortTitle.length <= 42, `paper ${paper.id} shortTitle should stay compact`);
+  assert.equal(paper.hasReading, true, `paper ${paper.id} should expose a completed reading package`);
 }
 
 for (const paperId of readingPaperIds) {
@@ -266,7 +263,7 @@ for (const paperId of readingPaperIds) {
   assert.equal(typeof paperData.shortTitle, "string", `${paperId} paper.json should include shortTitle`);
   assert.ok(Array.isArray(paperData.sections) && paperData.sections.length >= 2, `${paperId} should include section metadata`);
   assert.equal(chunkData.paperId, paperId, `${paperId} chunks.json should use the paper id`);
-  assert.ok(Array.isArray(chunkData.chunks) && chunkData.chunks.length >= 4, `${paperId} should include at least four chunks`);
+  assert.ok(Array.isArray(chunkData.chunks) && chunkData.chunks.length >= 8, `${paperId} should include a substantive reading package`);
   assert.equal(notesData.paperId, paperId, `${paperId} notes.json should use the paper id`);
   assert.equal(embeddingsData.paperId, paperId, `${paperId} embeddings.json should use the paper id`);
   assert.deepEqual(embeddingsData.indexedFields, ["sourceText", "zhTranslation", "zhExplanation"], `${paperId} embeddings should index sourceText, zhTranslation, and zhExplanation`);
@@ -277,6 +274,12 @@ for (const paperId of readingPaperIds) {
   const noteChunkIds = new Set(notesData.notes.map((note) => note.chunkId));
   const embeddingChunkIds = new Set(embeddingsData.items.map((item) => item.chunkId));
   const figureIds = new Set(figuresData.figures.map((figure) => figure.id));
+
+  for (const figure of figuresData.figures.filter((item) => item.file)) {
+    assert.equal(existsSync(new URL(figure.file, readingBase)), true, `${paperId} figure file ${figure.file} should exist`);
+    assert.match(figure.cropMode, /^(semantic-crop|manual-redraw)$/, `${paperId} figure ${figure.id} should be cropped or redrawn, not a page fallback`);
+    assert.match(figure.status, /^(cropped|redrawn)$/, `${paperId} figure ${figure.id} should be marked ready for rendering`);
+  }
 
   for (const [index, chunk] of chunkData.chunks.entries()) {
     assert.match(chunk.id, /^ch-\d{3}$/, `${paperId} chunk ${index} should use stable ch-000 ids`);
@@ -349,10 +352,50 @@ for (const figure of zhangRenderedFigures) {
 assert.ok(zhangChunks.some((chunk) => chunk.blocks?.some((block) => block.type === "table")), "Zhang 2024 should include at least one table block");
 assert.ok(zhangChunks.some((chunk) => chunk.blocks?.some((block) => block.type === "math")), "Zhang 2024 should include at least one math block");
 
-assert.equal(existsSync(new URL(`../papers/${projectId}/readings/park-2023-generative-agents/`, import.meta.url)), false, "non-first-batch papers should not need fake chunk packages");
+const expandedReadingIds = [
+  {
+    id: "mcclelland-1995-complementary-learning-systems",
+    label: "McClelland 1995"
+  },
+  {
+    id: "yassa-stark-2011-pattern-separation",
+    label: "Yassa and Stark 2011"
+  }
+];
+
+for (const { id, label } of expandedReadingIds) {
+  const readingBase = new URL(`../papers/${projectId}/readings/${id}/`, import.meta.url);
+  const paperData = JSON.parse(readFileSync(new URL("paper.json", readingBase), "utf8"));
+  const chunkData = JSON.parse(readFileSync(new URL("chunks.json", readingBase), "utf8")).chunks;
+  const notesData = JSON.parse(readFileSync(new URL("notes.json", readingBase), "utf8")).notes;
+  const embeddingsData = JSON.parse(readFileSync(new URL("embeddings.json", readingBase), "utf8")).items;
+  const figuresData = JSON.parse(readFileSync(new URL("figures.json", readingBase), "utf8")).figures;
+
+  assert.ok(chunkData.length >= 12, `${label} should be expanded beyond the demo chunk set`);
+  assert.equal(typeof paperData.categoryZh, "string", `${label} should include Chinese category metadata`);
+  assert.equal(typeof paperData.relationZh, "string", `${label} should include Chinese relation metadata`);
+  assert.equal(typeof paperData.descriptionZh, "string", `${label} should include Chinese description metadata`);
+  assert.ok(Array.isArray(paperData.readingFocus) && paperData.readingFocus.length >= 3, `${label} should include Chinese reading focus items`);
+  assert.ok(paperData.sections.length >= 5, `${label} should include a useful section spine`);
+  assert.equal(notesData.length, chunkData.length, `${label} should keep one parallel note row per chunk`);
+  assert.equal(embeddingsData.length, chunkData.length, `${label} should keep one local search vector per chunk`);
+  assert.ok(figuresData.filter((figure) => figure.file).length >= 2, `${label} should include local figure assets or manual redraws`);
+
+  for (const figure of figuresData.filter((item) => item.file)) {
+    assert.equal(existsSync(new URL(figure.file, readingBase)), true, `${label} figure file ${figure.file} should exist`);
+    assert.match(figure.cropMode, /^(semantic-crop|manual-redraw)$/, `${label} figure ${figure.id} should be cropped or redrawn, not a page fallback`);
+    assert.match(figure.status, /^(cropped|redrawn)$/, `${label} figure ${figure.id} should be marked ready for rendering`);
+  }
+
+  for (const chunk of chunkData) {
+    assert.equal(typeof chunk.title, "string", `${label} ${chunk.id} should include a Chinese short title`);
+    assert.ok(chunk.title.trim().length >= 4, `${label} ${chunk.id} title should be meaningful`);
+    assert.ok(chunk.zhTranslation.trim().length > 40, `${label} ${chunk.id} zhTranslation should be substantive`);
+  }
+}
 
 const projectReadingDirs = readdirSync(new URL(`../papers/${projectId}/readings/`, import.meta.url), { withFileTypes: true })
   .filter((entry) => entry.isDirectory())
   .map((entry) => entry.name)
   .sort();
-assert.deepEqual(projectReadingDirs, readingPaperIds.slice().sort(), "first implementation should only create the confirmed three high-quality reading packages");
+assert.deepEqual(projectReadingDirs, readingPaperIds.slice().sort(), "every project paper should have a matching reading package");

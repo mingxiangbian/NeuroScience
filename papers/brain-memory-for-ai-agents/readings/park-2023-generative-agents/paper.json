@@ -1,0 +1,55 @@
+{
+  "id": "park-2023-generative-agents",
+  "title": "Generative Agents: Interactive Simulacra of Human Behavior",
+  "shortTitle": "Generative Agents",
+  "authors": "Park et al.",
+  "year": 2023,
+  "category": "LLM social simulation",
+  "categoryZh": "LLM 社会模拟与记忆架构",
+  "relation": "Shows a concrete memory-reflection-planning loop for believable long-horizon agents.",
+  "relationZh": "这篇论文提供了从观察写入、记忆检索、反思压缩到规划行动的完整 agent memory 案例。",
+  "description": "A generative-agent architecture that uses natural-language memories, reflection, and planning to support believable behavior in an interactive sandbox.",
+  "descriptionZh": "文章展示了如何让 LLM 角色在长时间社会模拟中保持连续行为：不是只靠 prompt，而是靠记忆流、重要性评分、反思和计划。",
+  "readingFocus": [
+    "先看 memory stream 如何把观察写成可检索记录。",
+    "重点比较 retrieval score 里的相关性、重要性和新近性。",
+    "把 reflection 看成从具体 episode 到高层 schema 的工程类比。",
+    "读 evaluation 时注意可信行为主要靠人工评分和消融支持。"
+  ],
+  "source": "https://arxiv.org/abs/2304.03442",
+  "license": "See source terms",
+  "sourceFile": "../../pdfs/2023-park-generative-agents.pdf",
+  "noteFile": "../../notes-cn/reading-packet-cn.md#2-park-et-al-2023-generative-agents-interactive-simulacra-of-human-behavior",
+  "sections": [
+    {
+      "id": "sec-problem",
+      "title": "Problem",
+      "titleZh": "问题设定"
+    },
+    {
+      "id": "sec-architecture",
+      "title": "Architecture",
+      "titleZh": "系统架构"
+    },
+    {
+      "id": "sec-memory",
+      "title": "Memory stream",
+      "titleZh": "记忆流"
+    },
+    {
+      "id": "sec-reflection",
+      "title": "Reflection and planning",
+      "titleZh": "反思与规划"
+    },
+    {
+      "id": "sec-evaluation",
+      "title": "Evaluation",
+      "titleZh": "评估"
+    },
+    {
+      "id": "sec-limits",
+      "title": "Limits",
+      "titleZh": "局限与启发"
+    }
+  ]
+}

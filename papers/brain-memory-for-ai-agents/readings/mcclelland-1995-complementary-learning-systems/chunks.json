@@ -3,22 +3,22 @@
   "chunks": [
     {
       "id": "ch-001",
-      "sectionId": "sec-1",
+      "sectionId": "sec-abstract",
       "order": 1,
-      "sourceText": "The paper frames memory as a stability-plasticity tradeoff. A system must learn new episodes quickly without catastrophically overwriting older structured knowledge.",
+      "title": "为什么需要互补系统",
+      "sourceText": "The paper frames memory around a basic computational tension: a learner must acquire new episodes quickly while also preserving the structured knowledge accumulated across many earlier experiences. The proposed answer is not one universal memory store, but two complementary learning systems with different learning speeds and representational roles.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "The paper frames memory as a stability-plasticity tradeoff. A system must learn new episodes quickly without catastrophically overwriting older structured knowledge."
+          "text": "The paper frames memory around a basic computational tension: a learner must acquire new episodes quickly while also preserving the structured knowledge accumulated across many earlier experiences."
         },
         {
-          "type": "math",
-          "display": true,
-          "latex": "\\Delta W = \\eta \\; x y^{\\top}",
-          "label": "Fast associative update"
+          "type": "paragraph",
+          "text": "The proposed answer is not one universal memory store, but two complementary learning systems with different learning speeds and representational roles."
         }
       ],
-      "zhExplanation": "这一段提出核心计算问题：系统既要快速记住新事件，又不能因为新事件破坏已经形成的知识结构。公式是阅读器用来表达快速联想更新的简化形式，不等同于论文的完整模型。",
+      "zhTranslation": "这篇论文把记忆问题放在一个基本的计算张力中：学习者既要快速获得新的情节经验，又要保存许多早期经验中积累出的结构化知识。作者提出的答案不是一个万能记忆库，而是两个学习速度和表征角色不同的互补学习系统。",
+      "zhExplanation": "这是 CLS 的入口：海马和新皮层不是简单分工为短期/长期，而是在解决快速写入与稳定整合之间的冲突。",
       "figureRefs": [
         {
           "id": "fig-001",
@@ -26,104 +26,396 @@
         }
       ],
       "keywords": [
-        "stability-plasticity",
-        "catastrophic interference",
-        "fast learning"
-      ],
-      "zhTranslation": "这篇论文把记忆问题表述为稳定性与可塑性的权衡。一个系统必须能够快速学习新的情节，同时不能灾难性地覆盖旧的结构化知识。"
+        "complementary learning systems",
+        "fast learning",
+        "structured knowledge"
+      ]
     },
     {
       "id": "ch-002",
-      "sectionId": "sec-2",
+      "sectionId": "sec-abstract",
       "order": 2,
-      "sourceText": "The complementary learning systems account assigns rapid, sparse episode encoding to the hippocampal formation and gradual structure extraction to neocortical networks.",
+      "title": "近期记忆与远期记忆",
+      "sourceText": "A central observation is that hippocampal damage strongly disrupts recent memory while remote memories can be relatively spared. The theory interprets this temporal gradient as evidence that recent memories initially depend on hippocampal reinstatement, whereas remote memories increasingly depend on accumulated neocortical changes.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "The complementary learning systems account assigns rapid, sparse episode encoding to the hippocampal formation and gradual structure extraction to neocortical networks."
+          "text": "A central observation is that hippocampal damage strongly disrupts recent memory while remote memories can be relatively spared."
+        },
+        {
+          "type": "paragraph",
+          "text": "The theory interprets this temporal gradient as evidence that recent memories initially depend on hippocampal reinstatement, whereas remote memories increasingly depend on accumulated neocortical changes."
+        }
+      ],
+      "zhTranslation": "一个中心观察是，海马损伤会严重破坏近期记忆，而远期记忆可能相对保留。该理论把这种时间梯度解释为：近期记忆起初依赖海马的重现或重激活，远期记忆则越来越依赖新皮层中逐渐积累的改变。",
+      "zhExplanation": "这里对应“系统巩固”：不是记忆从一个盒子搬到另一个盒子，而是海马反复帮助新皮层形成稳定结构。",
+      "figureRefs": [
+        {
+          "id": "fig-002",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "recent memory",
+        "remote memory",
+        "temporal gradient",
+        "systems consolidation"
+      ]
+    },
+    {
+      "id": "ch-003",
+      "sectionId": "sec-evidence",
+      "order": 3,
+      "title": "海马损伤的基本轮廓",
+      "sourceText": "The review of hippocampal-system lesions emphasizes a characteristic pattern: extensive damage can produce profound new-learning deficits while leaving other cognitive abilities and memories acquired long before the lesion comparatively intact. This pattern motivates a memory-system account rather than a single undifferentiated learning capacity.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The review of hippocampal-system lesions emphasizes a characteristic pattern: extensive damage can produce profound new-learning deficits while leaving other cognitive abilities and memories acquired long before the lesion comparatively intact."
+        }
+      ],
+      "zhTranslation": "论文对海马系统损伤的综述强调一种典型模式：广泛损伤会造成严重的新学习缺陷，但其他认知能力以及损伤很久以前获得的记忆可能相对完整。这种模式支持记忆系统理论，而不是把学习看成一种没有区分的单一能力。",
+      "zhExplanation": "这说明 CLS 不是凭空架构想象，而是从失忆症和动物实验的证据轮廓中抽象出的计算解释。",
+      "figureRefs": [],
+      "keywords": [
+        "lesion evidence",
+        "new learning",
+        "remote memory"
+      ]
+    },
+    {
+      "id": "ch-004",
+      "sectionId": "sec-evidence",
+      "order": 4,
+      "title": "单次经验与任意关联",
+      "sourceText": "The hippocampal system is especially important when a task requires learning arbitrary associations after a single or small number of experiences. Paired associates, contextual retrieval, and flexible use of newly acquired information all expose demands that are not well served by slow gradual cortical learning alone.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The hippocampal system is especially important when a task requires learning arbitrary associations after a single or small number of experiences."
         },
         {
           "type": "table",
-          "label": "Table A",
-          "caption": "Simplified CLS roles",
+          "caption": "Reader-side summary of hippocampal demands",
           "columns": [
-            "System",
-            "Learning role"
+            "Demand",
+            "Why hippocampus matters"
           ],
           "rows": [
             [
-              "Hippocampus",
-              "Fast sparse episode indexing"
+              "Single-trial learning",
+              "Rapidly stores a new episode."
             ],
             [
-              "Neocortex",
-              "Slow distributed integration"
+              "Arbitrary association",
+              "Links items that have no prior semantic structure."
+            ],
+            [
+              "Flexible retrieval",
+              "Lets a cue recover a context-specific pattern."
             ]
           ]
         }
       ],
-      "zhExplanation": "这是 CLS 的中心主张：海马更适合快速记录具体 episode，新皮层更适合慢慢抽取统计结构。对 AI agent 来说，这对应 episodic memory 与长期 semantic/world knowledge 的分工。",
+      "zhTranslation": "当任务要求在一次或少数几次经验后学习任意关联时，海马系统尤其重要。配对联想、情境性检索以及对新获得信息的灵活使用，都暴露出单靠缓慢的新皮层学习难以满足的需求。",
+      "zhExplanation": "对于 agent memory，这相当于“刚发生的一次交互也可能很重要”，不能等到长期统计足够后才形成记忆。",
       "figureRefs": [],
       "keywords": [
-        "hippocampus",
-        "neocortex",
-        "episodic memory",
-        "semantic integration"
-      ],
-      "zhTranslation": "互补学习系统理论认为，海马结构负责快速、稀疏的情节编码，新皮层网络负责逐渐抽取更稳定的统计结构。"
+        "single trial learning",
+        "paired associates",
+        "contextual retrieval"
+      ]
     },
     {
-      "id": "ch-003",
-      "sectionId": "sec-2",
-      "order": 3,
-      "sourceText": "The theory links sparse hippocampal coding with reduced interference. Distinct episodes can be stored separately, then replay or interleaved learning can support slower cortical consolidation.",
+      "id": "ch-005",
+      "sectionId": "sec-neocortex",
+      "order": 5,
+      "title": "新皮层学习结构",
+      "sourceText": "The neocortical processing system is described as a distributed network that gradually learns the structure present across many experiences. Small synaptic changes accumulated over many interleaved examples can support general knowledge, cognitive skills, and stable responses to familiar inputs.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "The theory links sparse hippocampal coding with reduced interference. Distinct episodes can be stored separately, then replay or interleaved learning can support slower cortical consolidation."
+          "text": "The neocortical processing system is described as a distributed network that gradually learns the structure present across many experiences."
+        },
+        {
+          "type": "paragraph",
+          "text": "Small synaptic changes accumulated over many interleaved examples can support general knowledge, cognitive skills, and stable responses to familiar inputs."
+        }
+      ],
+      "zhTranslation": "新皮层处理系统被描述为一种分布式网络，它会逐渐学习许多经验中共同存在的结构。许多交错样本上累积的小幅突触变化，可以支持一般知识、认知技能以及对熟悉输入的稳定反应。",
+      "zhExplanation": "这不是快速日志系统，而是慢速抽象系统。它强调“结构提取”而不是“事件原样保存”。",
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "neocortex",
+        "distributed representation",
+        "interleaved examples"
+      ]
+    },
+    {
+      "id": "ch-006",
+      "sectionId": "sec-neocortex",
+      "order": 6,
+      "title": "慢学习避免覆盖",
+      "sourceText": "Gradual learning in the cortex is useful because large abrupt changes can damage previously acquired structure. Interleaved exposure to old and new examples lets the system add information while preserving relations learned from earlier experience.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Gradual learning in the cortex is useful because large abrupt changes can damage previously acquired structure."
+        },
+        {
+          "type": "math",
+          "display": true,
+          "label": "Stability-plasticity sketch",
+          "latex": "\\Delta W_{cortex} = \\eta_{slow} \\nabla L(x_{new}, x_{replayed}),\\quad \\eta_{slow} \\ll 1"
+        }
+      ],
+      "zhTranslation": "新皮层的渐进学习之所以有用，是因为突然的大幅改变可能破坏先前获得的结构。把旧样本和新样本交错呈现，可以让系统加入新信息，同时保留早期经验中学到的关系。",
+      "zhExplanation": "公式是阅读器侧的简化表达：慢学习率加交错样本，用来说明稳定性与可塑性权衡，不是论文原始公式。",
+      "figureRefs": [],
+      "keywords": [
+        "slow learning",
+        "interleaving",
+        "stability-plasticity"
+      ]
+    },
+    {
+      "id": "ch-007",
+      "sectionId": "sec-hippocampus",
+      "order": 7,
+      "title": "海马保存概要草图",
+      "sourceText": "The hippocampal system is proposed to receive a compressed summary sketch of the current neocortical representation. This compressed pattern can rapidly bind the elements of an episode and later help reinstate the neocortical activity pattern associated with that episode.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The hippocampal system is proposed to receive a compressed summary sketch of the current neocortical representation."
+        },
+        {
+          "type": "paragraph",
+          "text": "This compressed pattern can rapidly bind the elements of an episode and later help reinstate the neocortical activity pattern associated with that episode."
+        }
+      ],
+      "zhTranslation": "作者提出，海马系统接收当前新皮层表征的压缩“概要草图”。这种压缩模式可以快速绑定一个情节中的各个元素，并在之后帮助重建与该情节相关的新皮层活动模式。",
+      "zhExplanation": "“summary sketch”很适合启发 agent memory：并不是把所有上下文复制进长期记忆，而是保存能重新召回上下文的索引。",
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "summary sketch",
+        "index",
+        "reinstatement"
+      ]
+    },
+    {
+      "id": "ch-008",
+      "sectionId": "sec-hippocampus",
+      "order": 8,
+      "title": "快速绑定但不负责全部知识",
+      "sourceText": "In this account, hippocampal learning can be rapid because it does not need to gradually tune the entire web of cortical knowledge. Its role is to store episode-specific bindings that can cue later reinstatement, while the cortex remains responsible for the distributed structure that supports general knowledge.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "In this account, hippocampal learning can be rapid because it does not need to gradually tune the entire web of cortical knowledge."
+        },
+        {
+          "type": "paragraph",
+          "text": "Its role is to store episode-specific bindings that can cue later reinstatement, while the cortex remains responsible for the distributed structure that supports general knowledge."
+        }
+      ],
+      "zhTranslation": "在这一理论中，海马学习之所以可以很快，是因为它不需要逐步调节整个皮层知识网络。它的角色是保存情节特异性的绑定关系，用来在之后提示重激活；而支持一般知识的分布式结构仍主要由新皮层承担。",
+      "zhExplanation": "这能避免一个常见误解：海马不是完整长期知识库，而更像快速索引和重激活触发器。",
+      "figureRefs": [],
+      "keywords": [
+        "episodic binding",
+        "general knowledge",
+        "rapid encoding"
+      ]
+    },
+    {
+      "id": "ch-009",
+      "sectionId": "sec-consolidation",
+      "order": 9,
+      "title": "重激活推动巩固",
+      "sourceText": "The consolidation story depends on repeated reinstatement. When a recent memory is reinstated, the neocortical pattern associated with the episode can be reactivated, and small cortical changes can accumulate across many such events until the memory depends less on the hippocampal system.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The consolidation story depends on repeated reinstatement."
+        },
+        {
+          "type": "paragraph",
+          "text": "When a recent memory is reinstated, the neocortical pattern associated with the episode can be reactivated, and small cortical changes can accumulate across many such events until the memory depends less on the hippocampal system."
+        }
+      ],
+      "zhTranslation": "巩固过程依赖反复的重现或重激活。当一个近期记忆被重激活时，与该情节相关的新皮层模式也会被重新激活；许多次这样的事件会累积小幅皮层改变，直到该记忆对海马系统的依赖降低。",
+      "zhExplanation": "这比“保存一次就结束”的记忆观更动态：长期记忆是多次重激活与重整合的产物。",
+      "figureRefs": [
+        {
+          "id": "fig-002",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "reinstatement",
+        "reactivation",
+        "systems consolidation"
+      ]
+    },
+    {
+      "id": "ch-010",
+      "sectionId": "sec-consolidation",
+      "order": 10,
+      "title": "交错学习与离线整理",
+      "sourceText": "A key computational point is that new material should be interleaved with older material during cortical learning. This prevents the network from fitting only the newest episode and helps the cortex integrate new information into a broader structure.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "A key computational point is that new material should be interleaved with older material during cortical learning."
         },
         {
           "type": "code",
           "language": "python",
-          "caption": "Interleaved consolidation sketch",
-          "code": "for episode in sample_replay(buffer):\n    cortex.update(episode, learning_rate='slow')"
+          "caption": "Reader-side consolidation sketch, not original paper code",
+          "code": "for episode in replay_buffer.sample_mix(new=True, old=True):\n    cortex.update(episode, rate='slow')\n    stable_schema = integrate(cortex.state)"
         }
       ],
-      "zhExplanation": "这里解释为什么需要两个学习系统：稀疏 episode index 降低相互干扰，而 replay 或交错学习让慢系统逐渐吸收结构。代码块只是把这个思想映射成 agent memory 的工程伪代码。",
+      "zhTranslation": "一个关键计算点是，在皮层学习期间，新材料应该和旧材料交错出现。这样可以避免网络只拟合最新情节，并帮助新皮层把新信息整合进更广泛的结构。",
+      "zhExplanation": "这里能连接到 agent 的离线整理：反思、摘要、重放不应只处理最新对话，也要和旧知识一起校准。",
+      "figureRefs": [],
+      "keywords": [
+        "interleaved learning",
+        "replay buffer",
+        "offline consolidation"
+      ]
+    },
+    {
+      "id": "ch-011",
+      "sectionId": "sec-models",
+      "order": 11,
+      "title": "连接主义模型的失败教训",
+      "sourceText": "The paper draws on connectionist models to show why a single network that learns everything quickly is vulnerable. Rapid learning of new arbitrary material can interfere with the weights that encode older structure, producing catastrophic interference.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The paper draws on connectionist models to show why a single network that learns everything quickly is vulnerable."
+        },
+        {
+          "type": "paragraph",
+          "text": "Rapid learning of new arbitrary material can interfere with the weights that encode older structure, producing catastrophic interference."
+        }
+      ],
+      "zhTranslation": "论文借助连接主义模型说明，为什么一个什么都快速学习的单一网络很脆弱。对新的任意材料进行快速学习，会干扰那些编码旧有结构的权重，从而产生灾难性干扰。",
+      "zhExplanation": "这是 CLS 和现代机器学习之间最直接的桥：灾难性遗忘/干扰不是工程偶然，而是稳定性与可塑性冲突的表现。",
+      "figureRefs": [],
+      "keywords": [
+        "connectionist model",
+        "catastrophic interference",
+        "fast weights"
+      ]
+    },
+    {
+      "id": "ch-012",
+      "sectionId": "sec-models",
+      "order": 12,
+      "title": "互补不是冗余",
+      "sourceText": "The two systems are complementary because each one handles a problem the other handles poorly. The hippocampal system supports rapid storage of particular events, while the neocortical system supports gradual extraction of shared structure. Combining them allows both fast memory and stable knowledge.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The two systems are complementary because each one handles a problem the other handles poorly."
+        },
+        {
+          "type": "table",
+          "caption": "Reader-side CLS contrast",
+          "columns": [
+            "System",
+            "Strength",
+            "Risk if used alone"
+          ],
+          "rows": [
+            [
+              "Hippocampal system",
+              "Fast episode-specific binding",
+              "Can remain fragmented and context-bound."
+            ],
+            [
+              "Neocortical system",
+              "Stable distributed structure",
+              "Learns new arbitrary events too slowly."
+            ]
+          ]
+        }
+      ],
+      "zhTranslation": "这两个系统之所以互补，是因为每个系统都处理了另一个系统不擅长的问题。海马系统支持对具体事件的快速保存，新皮层系统支持对共享结构的渐进抽取。把两者结合起来，系统才同时拥有快速记忆和稳定知识。",
+      "zhExplanation": "这张阅读器整理表把互补关系压缩成架构判断：不是谁更高级，而是解决不同失败模式。",
+      "figureRefs": [],
+      "keywords": [
+        "complementary roles",
+        "fast memory",
+        "stable knowledge"
+      ]
+    },
+    {
+      "id": "ch-013",
+      "sectionId": "sec-agent",
+      "order": 13,
+      "title": "对智能体的分层启发",
+      "sourceText": "For artificial agents, the CLS principle suggests separating raw episodic records from slowly consolidated knowledge. A memory architecture that collapses every observation, summary, preference, and rule into one store risks mixing materials that have different update speeds and evidential standards.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "For artificial agents, the CLS principle suggests separating raw episodic records from slowly consolidated knowledge."
+        },
+        {
+          "type": "paragraph",
+          "text": "A memory architecture that collapses every observation, summary, preference, and rule into one store risks mixing materials that have different update speeds and evidential standards."
+        }
+      ],
+      "zhTranslation": "对于人工智能体，CLS 原则提示我们应把原始情节记录和缓慢巩固的知识分开。若一个记忆架构把观察、摘要、偏好和规则全都压进同一个存储层，就会混合更新速度和证据标准不同的材料。",
+      "zhExplanation": "这是本项目的直接设计启发：episode log、reflection、semantic memory、preference memory 不应该只靠一个字段区分。",
       "figureRefs": [
         {
-          "id": "fig-002",
+          "id": "fig-001",
           "relation": "deferred"
         }
       ],
       "keywords": [
-        "sparse coding",
-        "replay",
-        "consolidation",
-        "interference"
-      ],
-      "zhTranslation": "该理论把稀疏的海马编码和干扰降低联系起来。不同情节可以分开保存，之后再通过重放或交错学习支持较慢的新皮层巩固。"
+        "agent memory",
+        "episodic records",
+        "semantic knowledge"
+      ]
     },
     {
-      "id": "ch-004",
-      "sectionId": "sec-3",
-      "order": 4,
-      "sourceText": "For artificial agents, the CLS idea suggests that raw experience logs and distilled long-term knowledge should not be collapsed into one undifferentiated memory store.",
+      "id": "ch-014",
+      "sectionId": "sec-agent",
+      "order": 14,
+      "title": "不能把类比当同构",
+      "sourceText": "The paper is best used as a computational principle for memory architecture, not as proof that an LLM agent has hippocampus-like mechanisms. The useful transfer is at the level of learning speed, interference control, replay, and abstraction, not at the level of biological implementation.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "For artificial agents, the CLS idea suggests that raw experience logs and distilled long-term knowledge should not be collapsed into one undifferentiated memory store."
+          "text": "The paper is best used as a computational principle for memory architecture, not as proof that an LLM agent has hippocampus-like mechanisms."
+        },
+        {
+          "type": "paragraph",
+          "text": "The useful transfer is at the level of learning speed, interference control, replay, and abstraction, not at the level of biological implementation."
         }
       ],
-      "zhExplanation": "这一段是本项目的桥接点。助手的综合判断是：CLS 不直接等于某个 AI 架构，但它提供一个设计原则，即 episode 存储、重放、抽象知识和当前工作上下文应有不同角色。",
+      "zhTranslation": "这篇论文最适合作为记忆架构的计算原则，而不是证明某个 LLM 智能体具有类似海马的机制。有用的迁移发生在学习速度、干扰控制、重放和抽象这些层面，而不是生物实现层面。",
+      "zhExplanation": "这里要保持研究严谨：CLS 能启发 agent memory，但不能直接说 agent 的向量库就是海马。",
       "figureRefs": [],
       "keywords": [
-        "agent memory",
-        "experience log",
-        "distillation",
-        "memory store"
-      ],
-      "zhTranslation": "对于人工智能体，CLS 的启发是原始经验日志和提炼后的长期知识不应该被压成一个没有区分的记忆库。"
+        "AI neuroscience analogy",
+        "computational principle",
+        "implementation level"
+      ]
     }
   ]
 }

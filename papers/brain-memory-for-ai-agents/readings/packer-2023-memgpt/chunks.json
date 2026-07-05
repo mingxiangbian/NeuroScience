@@ -1,0 +1,264 @@
+{
+  "paperId": "packer-2023-memgpt",
+  "chunks": [
+    {
+      "id": "ch-001",
+      "sectionId": "sec-problem",
+      "order": 1,
+      "title": "上下文窗口是瓶颈",
+      "sourceText": "The paper starts from the constraint that LLMs operate inside a finite context window. Long documents, long conversations, and persistent personalization cannot be handled by simply appending every prior token.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The paper starts from the constraint that LLMs operate inside a finite context window. Long documents, long conversations, and persistent personalization cannot be handled by simply appending every prior token."
+        }
+      ],
+      "zhTranslation": "论文从一个约束出发：LLM 只能在有限上下文窗口内工作。长文档、长对话和持续个性化，不能靠把所有历史 token 直接追加进去解决。",
+      "zhExplanation": "这是 MemGPT 的核心问题，也解释了为什么 agent memory 不是“多塞点上下文”这么简单。",
+      "figureRefs": [],
+      "keywords": [
+        "agent",
+        "context",
+        "memory"
+      ]
+    },
+    {
+      "id": "ch-002",
+      "sectionId": "sec-analogy",
+      "order": 2,
+      "title": "虚拟内存类比",
+      "sourceText": "MemGPT uses the operating-system idea of virtual memory as an analogy. The model treats the current context as scarce main memory and external stores as places where information can be saved and later paged back in.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "MemGPT uses the operating-system idea of virtual memory as an analogy. The model treats the current context as scarce main memory and external stores as places where information can be saved and later paged back in."
+        }
+      ],
+      "zhTranslation": "MemGPT 使用操作系统中的虚拟内存作为类比。模型把当前上下文看作稀缺主存，把外部存储看作可以保存信息、之后再调回的位置。",
+      "zhExplanation": "这个类比非常有用，但它是工程类比；语义正确性、冲突记忆和记忆价值仍需要额外机制。",
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "virtual memory",
+        "context",
+        "paging"
+      ]
+    },
+    {
+      "id": "ch-003",
+      "sectionId": "sec-memory",
+      "order": 3,
+      "title": "记忆层级分工",
+      "sourceText": "The system distinguishes information that should remain immediately available from information that can live in external memory. This creates a hierarchy between active context, stable persona or user facts, and searchable archival content.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The system distinguishes information that should remain immediately available from information that can live in external memory. This creates a hierarchy between active context, stable persona or user facts, and searchable archival content."
+        }
+      ],
+      "zhTranslation": "系统区分应立即可用的信息和可以留在外部记忆中的信息。这样形成了当前活跃上下文、稳定 persona 或用户事实、以及可搜索归档内容之间的层级。",
+      "zhExplanation": "这对本项目很关键：工作上下文、长期事实、原始记录和检索索引不应该混在一个字段里。",
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "core memory",
+        "archival memory",
+        "hierarchy"
+      ]
+    },
+    {
+      "id": "ch-004",
+      "sectionId": "sec-memory",
+      "order": 4,
+      "title": "上下文预算公式",
+      "sourceText": "A practical memory manager must keep the composed prompt within the model budget. Information is valuable only if it can be selected, compressed, or externalized before the active context exceeds the limit.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "A practical memory manager must keep the composed prompt within the model budget. Information is valuable only if it can be selected, compressed, or externalized before the active context exceeds the limit."
+        },
+        {
+          "type": "math",
+          "label": "Context budget",
+          "latex": "\\lvert system + memory + dialogue + task \\rvert \\le C_{context}"
+        }
+      ],
+      "zhTranslation": "实际的记忆管理器必须让组合后的 prompt 留在模型预算内。信息只有在能被选择、压缩或外移、从而避免当前上下文超限时，才真正可用。",
+      "zhExplanation": "这个公式不是论文的数学定理，而是阅读器侧把 MemGPT 问题形式化：记忆管理首先是预算管理。",
+      "figureRefs": [],
+      "keywords": [
+        "formula",
+        "context budget",
+        "compression"
+      ]
+    },
+    {
+      "id": "ch-005",
+      "sectionId": "sec-control",
+      "order": 5,
+      "title": "函数调用读写记忆",
+      "sourceText": "The model can call functions that edit memory or search external stores. Memory management is therefore exposed as an action space rather than hidden inside the model weights.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The model can call functions that edit memory or search external stores. Memory management is therefore exposed as an action space rather than hidden inside the model weights."
+        },
+        {
+          "type": "code",
+          "language": "python",
+          "caption": "Reader-side memory paging sketch",
+          "code": "if context_tokens > budget:\n    summary = compress(old_dialogue)\n    archival_store.write(summary)\n    context = keep_recent_turns(context)"
+        }
+      ],
+      "zhTranslation": "模型可以调用函数来编辑记忆或搜索外部存储。因此，记忆管理被暴露成一个动作空间，而不是隐藏在模型权重里。",
+      "zhExplanation": "这对个人阅读系统很实用：让记忆操作可审计，比让模型“自己记住”更可靠。",
+      "figureRefs": [
+        {
+          "id": "fig-002",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "function call",
+        "memory write",
+        "audit",
+        "code"
+      ]
+    },
+    {
+      "id": "ch-006",
+      "sectionId": "sec-control",
+      "order": 6,
+      "title": "系统提示维持控制",
+      "sourceText": "The design relies on system-level instructions, alerts, and memory operations to keep the agent aware of context pressure. The model is prompted to decide when to save, retrieve, or revise information.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The design relies on system-level instructions, alerts, and memory operations to keep the agent aware of context pressure. The model is prompted to decide when to save, retrieve, or revise information."
+        }
+      ],
+      "zhTranslation": "该设计依赖系统级指令、提醒和记忆操作，让智能体意识到上下文压力。模型被提示去决定何时保存、检索或修订信息。",
+      "zhExplanation": "这说明 memory policy 是系统设计的一部分，而不是单独接一个数据库就结束。",
+      "figureRefs": [],
+      "keywords": [
+        "policy",
+        "system prompt",
+        "control"
+      ]
+    },
+    {
+      "id": "ch-007",
+      "sectionId": "sec-evaluation",
+      "order": 7,
+      "title": "长文档任务",
+      "sourceText": "One evaluation direction uses long-document tasks where relevant evidence may fall outside the immediate context. The system must retrieve or reintroduce information at the right moment.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "One evaluation direction uses long-document tasks where relevant evidence may fall outside the immediate context. The system must retrieve or reintroduce information at the right moment."
+        }
+      ],
+      "zhTranslation": "一个评估方向是长文档任务，其中相关证据可能落在即时上下文之外。系统必须在合适时刻检索或重新引入信息。",
+      "zhExplanation": "这和论文阅读器非常接近：读到后文时，前文定义、图表和笔记需要被召回。",
+      "figureRefs": [],
+      "keywords": [
+        "evaluation",
+        "long document",
+        "retrieval"
+      ]
+    },
+    {
+      "id": "ch-008",
+      "sectionId": "sec-evaluation",
+      "order": 8,
+      "title": "长期对话任务",
+      "sourceText": "Another evaluation direction is persistent conversation, where user facts or preferences need to survive across sessions. The challenge is to retain useful facts without flooding the active prompt.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Another evaluation direction is persistent conversation, where user facts or preferences need to survive across sessions. The challenge is to retain useful facts without flooding the active prompt."
+        },
+        {
+          "type": "table",
+          "caption": "Reader-side evaluation frame",
+          "columns": [
+            "Criterion",
+            "Question"
+          ],
+          "rows": [
+            [
+              "Persistence",
+              "Does useful information survive across sessions?"
+            ],
+            [
+              "Relevance",
+              "Is the recalled information needed now?"
+            ],
+            [
+              "Noise control",
+              "Does memory avoid flooding the prompt?"
+            ]
+          ]
+        }
+      ],
+      "zhTranslation": "另一个评估方向是持续对话，其中用户事实或偏好需要跨 session 保留。挑战在于保留有用事实，同时不让当前 prompt 被淹没。",
+      "zhExplanation": "这可以转成 agent memory 的评价项：持久性、相关性、噪声控制和冲突更新。",
+      "figureRefs": [],
+      "keywords": [
+        "persistent memory",
+        "preference",
+        "evaluation"
+      ]
+    },
+    {
+      "id": "ch-009",
+      "sectionId": "sec-limits",
+      "order": 9,
+      "title": "类比的边界",
+      "sourceText": "The operating-system analogy clarifies memory movement, but it does not solve semantic correctness. Retrieved information can still be stale, contradictory, overcompressed, or misleading.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The operating-system analogy clarifies memory movement, but it does not solve semantic correctness. Retrieved information can still be stale, contradictory, overcompressed, or misleading."
+        }
+      ],
+      "zhTranslation": "操作系统类比澄清了信息移动问题，但没有解决语义正确性。被检索的信息仍可能过时、矛盾、过度压缩或误导。",
+      "zhExplanation": "这提醒后续不能只设计 paging，还要设计版本、冲突、置信度和遗忘。",
+      "figureRefs": [],
+      "keywords": [
+        "limits",
+        "stale memory",
+        "contradiction"
+      ]
+    },
+    {
+      "id": "ch-010",
+      "sectionId": "sec-limits",
+      "order": 10,
+      "title": "本项目中的位置",
+      "sourceText": "For this project, MemGPT is best read as an engineering pattern for separating working context from long-term stores. It complements neuroscience papers that explain why fast access, slow consolidation, and forgetting should be separated.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "For this project, MemGPT is best read as an engineering pattern for separating working context from long-term stores. It complements neuroscience papers that explain why fast access, slow consolidation, and forgetting should be separated."
+        }
+      ],
+      "zhTranslation": "在本项目中，MemGPT 最适合作为把工作上下文和长期存储分开的工程模式来读。它可以和神经科学论文互补，后者解释为什么快速访问、慢速巩固和遗忘应当分开。",
+      "zhExplanation": "这篇应和 CLS、sleep consolidation、engram lifecycle 一起读，形成 agent memory 的分层架构。",
+      "figureRefs": [],
+      "keywords": [
+        "agent",
+        "working context",
+        "consolidation"
+      ]
+    }
+  ]
+}

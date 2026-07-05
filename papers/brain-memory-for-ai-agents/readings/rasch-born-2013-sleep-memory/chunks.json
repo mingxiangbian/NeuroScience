@@ -1,0 +1,266 @@
+{
+  "paperId": "rasch-born-2013-sleep-memory",
+  "chunks": [
+    {
+      "id": "ch-001",
+      "sectionId": "sec-frame",
+      "order": 1,
+      "title": "睡眠参与记忆巩固",
+      "sourceText": "The review presents sleep as an active contributor to memory consolidation. Memories can be stabilized, transformed, and integrated with existing knowledge after initial encoding.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The review presents sleep as an active contributor to memory consolidation. Memories can be stabilized, transformed, and integrated with existing knowledge after initial encoding."
+        }
+      ],
+      "zhTranslation": "这篇综述把睡眠呈现为记忆巩固的主动参与者。记忆在初始编码之后，可以被稳定、转换，并整合进已有知识。",
+      "zhExplanation": "本项目应把它读成 offline consolidation 的生物学入口，而不是“睡觉让记忆变好”的泛泛结论。",
+      "figureRefs": [
+        {
+          "id": "fig-002",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "sleep",
+        "consolidation",
+        "memory"
+      ]
+    },
+    {
+      "id": "ch-002",
+      "sectionId": "sec-frame",
+      "order": 2,
+      "title": "主动系统巩固假说",
+      "sourceText": "The active system consolidation view proposes that newly encoded memories are repeatedly reactivated during sleep, allowing a gradual redistribution of memory representations toward long-term cortical networks.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The active system consolidation view proposes that newly encoded memories are repeatedly reactivated during sleep, allowing a gradual redistribution of memory representations toward long-term cortical networks."
+        }
+      ],
+      "zhTranslation": "主动系统巩固观点认为，新近编码的记忆会在睡眠中被反复重新激活，使记忆表征逐渐向长期皮层网络重新分布。",
+      "zhExplanation": "这和 CLS 直接相连：海马快速索引可以在离线期间帮助新皮层缓慢整合。",
+      "figureRefs": [],
+      "keywords": [
+        "active system consolidation",
+        "hippocampus",
+        "neocortex"
+      ]
+    },
+    {
+      "id": "ch-003",
+      "sectionId": "sec-mechanism",
+      "order": 3,
+      "title": "慢振荡与纺锤波",
+      "sourceText": "Slow oscillations organize windows of cortical excitability and are coordinated with sleep spindles. This timing is thought to provide a physiological frame for transferring or integrating memory information.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Slow oscillations organize windows of cortical excitability and are coordinated with sleep spindles. This timing is thought to provide a physiological frame for transferring or integrating memory information."
+        }
+      ],
+      "zhTranslation": "慢振荡组织皮层兴奋性的时间窗口，并与睡眠纺锤波协调。这种时间关系被认为为记忆信息转移或整合提供了生理框架。",
+      "zhExplanation": "这里的重点是时间协调：离线整理不是任意批处理，而是有节律和阶段约束。",
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "slow oscillation",
+        "spindle",
+        "timing"
+      ]
+    },
+    {
+      "id": "ch-004",
+      "sectionId": "sec-mechanism",
+      "order": 4,
+      "title": "海马 sharp-wave ripples",
+      "sourceText": "Hippocampal sharp-wave ripples are associated with replay of recent experience and can be coordinated with cortical sleep rhythms. They are often discussed as a mechanism for communicating hippocampal traces to neocortex.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Hippocampal sharp-wave ripples are associated with replay of recent experience and can be coordinated with cortical sleep rhythms. They are often discussed as a mechanism for communicating hippocampal traces to neocortex."
+        }
+      ],
+      "zhTranslation": "海马 sharp-wave ripples 与近期经验的重放有关，并可与皮层睡眠节律协调。它们常被讨论为把海马痕迹传递给新皮层的机制。",
+      "zhExplanation": "这提供了 agent offline replay 的生物学类比来源：不是所有记录都同等重放，重放有选择性和时间结构。",
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "hippocampus",
+        "ripple",
+        "replay"
+      ]
+    },
+    {
+      "id": "ch-005",
+      "sectionId": "sec-replay",
+      "order": 5,
+      "title": "重放不是复制粘贴",
+      "sourceText": "Replay can reinstate patterns related to prior experience, but consolidation may also transform memories, extract regularities, and integrate new traces with older knowledge.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Replay can reinstate patterns related to prior experience, but consolidation may also transform memories, extract regularities, and integrate new traces with older knowledge."
+        }
+      ],
+      "zhTranslation": "重放可以重现与先前经验相关的模式，但巩固也可能转换记忆、抽取规律，并把新痕迹整合进旧知识。",
+      "zhExplanation": "这对智能体很重要：离线整理不只是备份日志，还包括抽象、合并、冲突检测和降噪。",
+      "figureRefs": [],
+      "keywords": [
+        "replay",
+        "transformation",
+        "integration"
+      ]
+    },
+    {
+      "id": "ch-006",
+      "sectionId": "sec-replay",
+      "order": 6,
+      "title": "重放优先级",
+      "sourceText": "A reader-side formalization is to treat replay as selective rather than exhaustive. Salient, recent, or task-relevant traces are more likely to be reactivated than low-value noise.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "A reader-side formalization is to treat replay as selective rather than exhaustive. Salient, recent, or task-relevant traces are more likely to be reactivated than low-value noise."
+        },
+        {
+          "type": "math",
+          "label": "Reader-side replay priority",
+          "latex": "P(replay_i) \\propto salience_i \\times relevance_i \\times recency_i"
+        }
+      ],
+      "zhTranslation": "阅读器侧可以把重放形式化为选择性过程，而不是穷尽过程。显著、近期或任务相关的痕迹比低价值噪声更可能被重新激活。",
+      "zhExplanation": "这个公式用于工程转译：agent 的 consolidation job 应该有优先级，而不是平均处理所有历史。",
+      "figureRefs": [],
+      "keywords": [
+        "formula",
+        "replay",
+        "salience"
+      ]
+    },
+    {
+      "id": "ch-007",
+      "sectionId": "sec-types",
+      "order": 7,
+      "title": "不同记忆类型依赖不同睡眠过程",
+      "sourceText": "The review discusses evidence across declarative, procedural, and emotional memory. Sleep effects are not uniform; different tasks and memory types can show different dependencies on sleep stages and rhythms.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The review discusses evidence across declarative, procedural, and emotional memory. Sleep effects are not uniform; different tasks and memory types can show different dependencies on sleep stages and rhythms."
+        }
+      ],
+      "zhTranslation": "综述讨论了陈述性、程序性和情绪记忆的证据。睡眠效应并不统一；不同任务和记忆类型可能依赖不同睡眠阶段和节律。",
+      "zhExplanation": "这避免把“睡眠巩固”当成一个万能按钮。agent 的离线整理也应区分事实、技能、偏好和事件日志。",
+      "figureRefs": [],
+      "keywords": [
+        "declarative",
+        "procedural",
+        "emotional memory"
+      ]
+    },
+    {
+      "id": "ch-008",
+      "sectionId": "sec-types",
+      "order": 8,
+      "title": "靶向记忆再激活",
+      "sourceText": "Targeted memory reactivation studies use cues associated with prior learning and present them during sleep to bias which memories are reactivated. This provides causal evidence that reactivation can influence later memory.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Targeted memory reactivation studies use cues associated with prior learning and present them during sleep to bias which memories are reactivated. This provides causal evidence that reactivation can influence later memory."
+        },
+        {
+          "type": "table",
+          "caption": "Reader-side sleep-memory mechanisms",
+          "columns": [
+            "Mechanism",
+            "Engineering analogy"
+          ],
+          "rows": [
+            [
+              "Replay",
+              "Revisit selected records"
+            ],
+            [
+              "Cueing",
+              "Prioritize tagged material"
+            ],
+            [
+              "Integration",
+              "Merge into stable knowledge"
+            ],
+            [
+              "Down-selection",
+              "Reduce low-value traces"
+            ]
+          ]
+        }
+      ],
+      "zhTranslation": "靶向记忆再激活研究使用与先前学习相关的线索，并在睡眠中呈现这些线索，以偏置哪些记忆被重新激活。这为重激活影响后续记忆提供了因果证据。",
+      "zhExplanation": "这对 agent 设计很有启发：可以用标签、任务目标或用户当前项目作为离线整理的线索。",
+      "figureRefs": [],
+      "keywords": [
+        "targeted memory reactivation",
+        "cue",
+        "causal evidence"
+      ]
+    },
+    {
+      "id": "ch-009",
+      "sectionId": "sec-limits",
+      "order": 9,
+      "title": "睡眠效应有边界",
+      "sourceText": "Sleep-memory findings vary with task, timing, measurement, and prior learning strength. Not every memory benefits equally, and some changes may reflect transformation rather than simple strengthening.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Sleep-memory findings vary with task, timing, measurement, and prior learning strength. Not every memory benefits equally, and some changes may reflect transformation rather than simple strengthening."
+        }
+      ],
+      "zhTranslation": "睡眠-记忆发现会随任务、时间、测量和先前学习强度而变化。不是所有记忆都同等受益，有些变化可能反映转换，而不是简单增强。",
+      "zhExplanation": "这提醒我们不要把离线整理设计成无条件提高质量；它也可能引入错误合并或过度概括。",
+      "figureRefs": [],
+      "keywords": [
+        "limits",
+        "task",
+        "measurement"
+      ]
+    },
+    {
+      "id": "ch-010",
+      "sectionId": "sec-agent",
+      "order": 10,
+      "title": "离线整理的工程启发",
+      "sourceText": "For agent memory, the most useful translation is offline consolidation: after interaction, the system can replay important traces, summarize repeated patterns, detect conflicts, and down-weight stale information.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "For agent memory, the most useful translation is offline consolidation: after interaction, the system can replay important traces, summarize repeated patterns, detect conflicts, and down-weight stale information."
+        }
+      ],
+      "zhTranslation": "对智能体记忆来说，最有用的转译是离线巩固：交互之后，系统可以重放重要痕迹，总结重复模式，检测冲突，并降低过时信息权重。",
+      "zhExplanation": "这可以成为后续 reading package 和项目笔记的后台标准：不需要本地实时同步，也可以在导入或整理时做高质量巩固。",
+      "figureRefs": [
+        {
+          "id": "fig-002",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "agent",
+        "offline consolidation",
+        "forgetting"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,262 @@
+{
+  "paperId": "guskjolen-cembrowski-2023-engram-neurons",
+  "chunks": [
+    {
+      "id": "ch-001",
+      "sectionId": "sec-definition",
+      "order": 1,
+      "title": "engram 的现代定义",
+      "sourceText": "The review frames engram neurons as populations of cells that are activated during learning, undergo lasting changes, and can contribute to memory retrieval when reactivated.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The review frames engram neurons as populations of cells that are activated during learning, undergo lasting changes, and can contribute to memory retrieval when reactivated."
+        }
+      ],
+      "zhTranslation": "这篇综述把 engram neurons 定义为在学习期间被激活、发生持久改变，并在重新激活时能参与记忆提取的细胞群。",
+      "zhExplanation": "这让“记忆痕迹”从抽象概念变成可操作研究对象，但仍不能直接映射成软件数据库条目。",
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "engram",
+        "neurons",
+        "retrieval"
+      ]
+    },
+    {
+      "id": "ch-002",
+      "sectionId": "sec-definition",
+      "order": 2,
+      "title": "细胞集合而非单个位置",
+      "sourceText": "An engram is not simply a single storage location. It is better understood as a distributed and dynamic ensemble whose members and accessibility can change across time and brain regions.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "An engram is not simply a single storage location. It is better understood as a distributed and dynamic ensemble whose members and accessibility can change across time and brain regions."
+        }
+      ],
+      "zhTranslation": "engram 不是一个单一存储位置。它更适合被理解为分布式、动态的细胞集合，其成员和可访问性会随时间和脑区变化。",
+      "zhExplanation": "这对应 agent memory 的一个重要提醒：记忆不是写入后永远固定，索引、权重和可检索性都可能变化。",
+      "figureRefs": [
+        {
+          "id": "fig-002",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "distributed memory",
+        "accessibility",
+        "dynamic"
+      ]
+    },
+    {
+      "id": "ch-003",
+      "sectionId": "sec-encoding",
+      "order": 3,
+      "title": "编码与分配",
+      "sourceText": "During encoding, only a subset of neurons becomes part of a memory ensemble. Excitability, activity history, and local competition can influence which neurons are allocated to an engram.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "During encoding, only a subset of neurons becomes part of a memory ensemble. Excitability, activity history, and local competition can influence which neurons are allocated to an engram."
+        }
+      ],
+      "zhTranslation": "在编码期间，只有一部分神经元会成为某个记忆集合的一部分。兴奋性、活动历史和局部竞争会影响哪些神经元被分配进 engram。",
+      "zhExplanation": "这可以转译成 agent 写入策略：不是所有经验都同等进入长期记忆，写入资格本身需要规则。",
+      "figureRefs": [],
+      "keywords": [
+        "encoding",
+        "allocation",
+        "competition"
+      ]
+    },
+    {
+      "id": "ch-004",
+      "sectionId": "sec-encoding",
+      "order": 4,
+      "title": "写入不是只存内容",
+      "sourceText": "Engram formation involves changes that make a later cue capable of reactivating the ensemble. The important variable is not only content storage but also the future ability to access the trace.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Engram formation involves changes that make a later cue capable of reactivating the ensemble. The important variable is not only content storage but also the future ability to access the trace."
+        }
+      ],
+      "zhTranslation": "engram 形成涉及一些改变，使得后续线索能够重新激活该集合。关键变量不只是内容存储，还包括未来访问该痕迹的能力。",
+      "zhExplanation": "这对阅读器搜索也有启发：chunk 不只是文本，还要有关键词、向量和图示引用来增加可访问性。",
+      "figureRefs": [],
+      "keywords": [
+        "accessibility",
+        "cue",
+        "encoding"
+      ]
+    },
+    {
+      "id": "ch-005",
+      "sectionId": "sec-consolidation",
+      "order": 5,
+      "title": "巩固改变分布",
+      "sourceText": "Consolidation can stabilize memory traces and change their dependence on particular circuits. Cellular changes and systems-level redistribution both matter for how a memory persists over time.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Consolidation can stabilize memory traces and change their dependence on particular circuits. Cellular changes and systems-level redistribution both matter for how a memory persists over time."
+        }
+      ],
+      "zhTranslation": "巩固可以稳定记忆痕迹，并改变它们对特定环路的依赖。细胞变化和系统层面的重新分布都影响记忆如何跨时间保持。",
+      "zhExplanation": "这把 CLS 和 engram 联系起来：一个是计算层解释，一个是细胞和系统层证据语言。",
+      "figureRefs": [],
+      "keywords": [
+        "consolidation",
+        "systems",
+        "cellular"
+      ]
+    },
+    {
+      "id": "ch-006",
+      "sectionId": "sec-retrieval",
+      "order": 6,
+      "title": "提取是重新激活",
+      "sourceText": "Retrieval can be understood as cue-driven reactivation of an engram ensemble. Successful recall depends on whether the cue can access the relevant ensemble and whether competing traces are controlled.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Retrieval can be understood as cue-driven reactivation of an engram ensemble. Successful recall depends on whether the cue can access the relevant ensemble and whether competing traces are controlled."
+        }
+      ],
+      "zhTranslation": "提取可以理解为由线索驱动的 engram 集合重新激活。成功回忆取决于线索能否访问相关集合，以及竞争痕迹是否得到控制。",
+      "zhExplanation": "这和 pattern completion / separation 连接很强：线索既要补全目标记忆，也要避免相似记忆干扰。",
+      "figureRefs": [
+        {
+          "id": "fig-002",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "retrieval",
+        "reactivation",
+        "competition"
+      ]
+    },
+    {
+      "id": "ch-007",
+      "sectionId": "sec-retrieval",
+      "order": 7,
+      "title": "光遗传学带来的因果证据",
+      "sourceText": "Modern engram research uses techniques such as activity-dependent labeling and optogenetic manipulation to test whether reactivating selected cells can recover or influence memory-related behavior.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Modern engram research uses techniques such as activity-dependent labeling and optogenetic manipulation to test whether reactivating selected cells can recover or influence memory-related behavior."
+        },
+        {
+          "type": "table",
+          "caption": "Reader-side evidence ladder",
+          "columns": [
+            "Method",
+            "What it supports"
+          ],
+          "rows": [
+            [
+              "Labeling",
+              "Which cells were active during learning"
+            ],
+            [
+              "Reactivation",
+              "Whether those cells can drive recall-like behavior"
+            ],
+            [
+              "Silencing",
+              "Whether access depends on the ensemble"
+            ]
+          ]
+        }
+      ],
+      "zhTranslation": "现代 engram 研究使用活动依赖标记和光遗传学操控等技术，测试重新激活特定细胞是否能恢复或影响与记忆相关的行为。",
+      "zhExplanation": "这是证据强度更高的地方：不仅相关，还能通过操控测试因果贡献。",
+      "figureRefs": [],
+      "keywords": [
+        "optogenetics",
+        "causal evidence",
+        "behavior"
+      ]
+    },
+    {
+      "id": "ch-008",
+      "sectionId": "sec-forgetting",
+      "order": 8,
+      "title": "遗忘可能是访问失败",
+      "sourceText": "Forgetting does not always mean that a trace has been erased. A memory can become inaccessible, inhibited, overwritten by interference, or recoverable under the right cue or manipulation.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Forgetting does not always mean that a trace has been erased. A memory can become inaccessible, inhibited, overwritten by interference, or recoverable under the right cue or manipulation."
+        }
+      ],
+      "zhTranslation": "遗忘并不总是意味着痕迹被擦除。记忆可能变得不可访问、被抑制、受到干扰覆盖，或者在合适线索或操控下可以恢复。",
+      "zhExplanation": "这对 agent memory 非常关键：遗忘可以是删除，也可以是降权、隐藏、隔离或检索阈值提高。",
+      "figureRefs": [
+        {
+          "id": "fig-002",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": [
+        "forgetting",
+        "accessibility",
+        "interference"
+      ]
+    },
+    {
+      "id": "ch-009",
+      "sectionId": "sec-forgetting",
+      "order": 9,
+      "title": "可访问性函数",
+      "sourceText": "A useful abstraction is to separate stored trace strength from retrieval accessibility. A trace can have biological or informational persistence while failing to influence behavior because access is low.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "A useful abstraction is to separate stored trace strength from retrieval accessibility. A trace can have biological or informational persistence while failing to influence behavior because access is low."
+        },
+        {
+          "type": "math",
+          "label": "Reader-side accessibility",
+          "latex": "influence_i = trace\\_strength_i \\times accessibility_i(cue)"
+        }
+      ],
+      "zhTranslation": "一个有用的抽象是区分已存痕迹强度和检索可访问性。一个痕迹可以在生物或信息层面仍然存在，但由于访问性低而不能影响行为。",
+      "zhExplanation": "这个公式适合工程转译：记忆是否影响 agent，不只取决于是否存在，还取决于当前检索门控。",
+      "figureRefs": [],
+      "keywords": [
+        "formula",
+        "accessibility",
+        "retrieval"
+      ]
+    },
+    {
+      "id": "ch-010",
+      "sectionId": "sec-agent",
+      "order": 10,
+      "title": "生命周期语言",
+      "sourceText": "For agent memory, the engram literature is most useful as a lifecycle model. A memory item should have encoding conditions, consolidation state, retrieval accessibility, update history, and forgetting or suppression rules.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "For agent memory, the engram literature is most useful as a lifecycle model. A memory item should have encoding conditions, consolidation state, retrieval accessibility, update history, and forgetting or suppression rules."
+        }
+      ],
+      "zhTranslation": "对智能体记忆来说，engram 文献最有用的是生命周期模型。一个记忆项应有编码条件、巩固状态、检索可访问性、更新历史，以及遗忘或抑制规则。",
+      "zhExplanation": "这可以成为本项目后续 memory schema 的神经科学主线，不是神经元到向量库的一一映射。",
+      "figureRefs": [],
+      "keywords": [
+        "agent",
+        "lifecycle",
+        "memory schema"
+      ]
+    }
+  ]
+}

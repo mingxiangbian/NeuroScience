@@ -5,23 +5,49 @@
   "authors": "Yassa and Stark",
   "year": 2011,
   "category": "Hippocampal computation",
+  "categoryZh": "海马模式分离机制",
   "relation": "Explains a concrete hippocampal computation that can inspire memory indexing and interference control in agents.",
+  "relationZh": "这篇综述把模式分离解释为海马处理相似经验的一种核心计算，可用于思考智能体记忆中的检索碰撞、相似情节区分和索引粒度。",
   "description": "A review of pattern separation as a hippocampal computation for making overlapping inputs more distinct.",
+  "descriptionZh": "阅读重点是分清 pattern separation 和 pattern completion 的计算角色，理解 DG/CA3 环路证据，并谨慎把它迁移到 embedding 检索和 agent memory 设计。",
+  "readingFocus": [
+    "pattern separation 解决的是相似经验之间的干扰，不是所有记忆问题。",
+    "DG、CA3、CA1 的证据来自不同方法，fMRI、记录和损伤研究的结论边界不同。",
+    "映射到 agent memory 时，重点是检索碰撞和相似 chunk 的粒度控制。"
+  ],
   "source": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3183227/",
   "sourceFile": "../../html/2011-yassa-stark-pattern-separation-hippocampus.html",
   "noteFile": "../../notes-cn/reading-packet-cn.md#7-yassa--stark-2011-pattern-separation-in-the-hippocampus",
   "sections": [
     {
-      "id": "sec-1",
-      "title": "Why similar inputs must be separated"
+      "id": "sec-abstract",
+      "title": "Core problem",
+      "titleZh": "核心问题"
     },
     {
-      "id": "sec-2",
-      "title": "Dentate gyrus and CA3 computation"
+      "id": "sec-computation",
+      "title": "Separation and completion",
+      "titleZh": "分离与补全"
     },
     {
-      "id": "sec-3",
-      "title": "Behavioral and agent relevance"
+      "id": "sec-circuit",
+      "title": "DG, CA3, and hippocampal circuitry",
+      "titleZh": "DG、CA3 与海马环路"
+    },
+    {
+      "id": "sec-evidence",
+      "title": "Animal and human evidence",
+      "titleZh": "动物与人类证据"
+    },
+    {
+      "id": "sec-boundaries",
+      "title": "Limits and boundary conditions",
+      "titleZh": "边界与限制"
+    },
+    {
+      "id": "sec-agent",
+      "title": "Agent-memory implications",
+      "titleZh": "对智能体记忆的启发"
     }
   ]
 }
