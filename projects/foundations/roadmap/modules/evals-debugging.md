@@ -1,8 +1,8 @@
 ---
 id: evals-debugging
 title: Evals & Debugging
-status: in-progress
-progress: 25
+status: not-started
+learning_progress: 0
 last_updated: 2026-07-05
 priority: high
 ---
@@ -90,33 +90,46 @@ Interview story：
 - Days 31-45：深入 eval harness：golden set、adversarial set、regression suite。
 - Days 46-60：capstone extension 可以做 Agent eval and trace workbench。
 
-## 资源
+## 知识笔记
 
-Research reading：
+### Eval Harness
 
-- Evals：OpenAI evals ideas、HELM-style thinking、agent eval discussions。Need to know：eval set、graders、contamination、regression。Interview use：设计 eval harness。
+核心理解：
 
-## 反思
+- Eval Harness 要覆盖 task set、graders、golden traces、adversarial cases、CI integration、pass/fail thresholds、flaky eval handling、model/prompt versioning。
+- Agent regression evals need task-level outcomes and step-level diagnostics。
 
-Agent 失败通常不是单点 bug，而是 prompt、tool、retrieval、model、state、权限和 user goal 的组合问题。没有 trace，debugging 会变成猜测；没有 eval，修复会退化成 anecdote。
+常见误区：
 
-## 面试表达
+- 只写 unit tests，但没有 task-level outcomes。
+- pass/fail 没有绑定 model、prompt、tools、graders 的版本，导致结果不可解释。
 
-可复用表达：
+面试转译：
 
-- “I would keep golden traces for known-good workflows, then compare prompt/tool/model events between runs.”
-- “Agent regression evals need task-level outcomes and step-level diagnostics.”
 - “A good eval harness needs versioning for model, prompt, tools and graders; otherwise pass/fail is not interpretable.”
 
-## 验收标准
+### Trace Debugging
 
-- 能设计 eval harness 的 task set、grader、threshold 和 CI integration。
-- 能解释 golden traces 和 adversarial cases 的作用。
-- 能实现 Agent Trace Logger 和 Eval Harness drills。
-- 能从 trace schema 讲到 replay、diff、latency/cost aggregation 和 redaction。
+核心理解：
 
-## 下一步
+- Trace Debugging 覆盖 trace schema、span hierarchy、prompt/tool/model events、latency/cost aggregation、redaction、replay、diff between runs。
+- Agent 失败通常不是单点 bug，而是 prompt、tool、retrieval、model、state、权限和 user goal 的组合问题。
 
-- 给所有 drills 加 trace id 和 error field。
-- 先做小型 Eval Harness，再考虑 capstone。
-- 每次 mock design 后记录一个 failure taxonomy。
+常见误区：
+
+- 没有 trace 时，debugging 会变成猜测；没有 eval 时，修复会退化成 anecdote。
+
+面试转译：
+
+- “I would keep golden traces for known-good workflows, then compare prompt/tool/model events between runs.”
+
+### Agent Trace Logger
+
+核心理解：
+
+- Agent Trace Logger drill 包含 trace id、model/tool/retrieval spans、latency and error fields、redaction policy。
+- Eval And Debugging 的强信号来自能把 failure taxonomy 转成 regression suite。
+
+相关资料：
+
+- Evals：OpenAI evals ideas、HELM-style thinking、agent eval discussions。Need to know：eval set、graders、contamination、regression。

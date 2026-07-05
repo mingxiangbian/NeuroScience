@@ -420,10 +420,13 @@ body,
   display: none;
   flex-direction: column;
   align-items: center;
-  gap: 13px;
-  height: 100%;
-  padding-top: 6px;
+  justify-content: center;
+  gap: 14px;
+  height: min(58vh, calc(100vh - var(--toolbar-offset) - 70px));
+  padding: 10px 6px;
   background: transparent;
+  opacity: 0.9;
+  transform: translateY(4vh);
 }
 
 .reader-shell.is-left-collapsed .directory-surface {
@@ -436,10 +439,13 @@ body,
 
 .section-lines {
   display: grid;
-  gap: 9px;
+  width: 38px;
+  gap: 13px;
 }
 
 .section-line {
+  position: relative;
+  justify-self: center;
   display: block;
   width: 18px;
   height: 2px;
@@ -460,11 +466,47 @@ body,
   background: var(--reader-section-line-hover);
 }
 
+.section-line:hover + .section-line,
+.section-line:has(+ .section-line:hover) {
+  width: 27px;
+  background: var(--reader-section-line-hover);
+}
+
 .section-line[aria-current="true"],
 .section-line.is-active {
   width: 32px;
   height: 3px;
   background: var(--reader-section-line-active);
+}
+
+.section-tooltip {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 10px);
+  max-width: 180px;
+  overflow: hidden;
+  border: 1px solid var(--reader-glass-edge);
+  border-radius: 8px;
+  background: var(--reader-glass-strong);
+  color: var(--reader-ink);
+  box-shadow: 0 12px 30px var(--reader-glass-shadow);
+  padding: 5px 8px;
+  font-size: 11px;
+  line-height: 1.25;
+  opacity: 0;
+  pointer-events: none;
+  text-overflow: ellipsis;
+  transform: translateY(-50%) translateX(-4px);
+  transition:
+    opacity 140ms ease,
+    transform 140ms ease;
+  white-space: nowrap;
+}
+
+.section-line:hover .section-tooltip,
+.section-line:focus-visible .section-tooltip {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
 }
 
 .reader-main {
@@ -514,6 +556,10 @@ body,
   padding-top: 18px;
 }
 
+.learning-progress {
+  color: var(--reader-ink);
+}
+
 .progress-ring {
   --progress: 0;
   display: inline-flex;
@@ -558,6 +604,73 @@ body,
   gap: 7px;
   max-width: 320px;
   margin-top: 18px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 18px 0 8px;
+}
+
+.dashboard-card {
+  border: 1px solid var(--reader-line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.24);
+  padding: 14px;
+}
+
+.dashboard-card-label {
+  margin: 0 0 8px;
+  color: var(--reader-ink-muted);
+  font-size: 12px;
+}
+
+.dashboard-card strong {
+  font-family: var(--reader-mono);
+  font-size: 24px;
+}
+
+.dashboard-module-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.dashboard-module-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  border: 1px solid var(--reader-line);
+  border-radius: 8px;
+  color: var(--reader-ink);
+  background: rgba(255, 255, 255, 0.18);
+  padding: 10px 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dashboard-module-row:hover {
+  border-color: var(--reader-line-strong);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.dashboard-module-row span:first-child {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.dashboard-module-row small,
+.dashboard-module-progress {
+  color: var(--reader-ink-muted);
+  font-size: 12px;
+}
+
+.dashboard-module-progress {
+  font-family: var(--reader-mono);
 }
 
 .progress-meter span {
@@ -643,6 +756,47 @@ body,
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.24);
   padding: 14px;
+}
+
+.knowledge-list {
+  display: grid;
+  gap: 12px;
+}
+
+.knowledge-card {
+  border: 1px solid var(--reader-line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.18);
+  padding: 16px;
+}
+
+.knowledge-card h3 {
+  margin: 0 0 12px;
+  color: var(--reader-blue);
+  font-size: 17px;
+}
+
+.knowledge-card-body {
+  font-size: 15px;
+  line-height: 1.78;
+}
+
+.knowledge-card-body p,
+.knowledge-card-body ul,
+.knowledge-card-body ol,
+.knowledge-card-body pre {
+  margin: 0 0 12px;
+}
+
+.knowledge-note-group {
+  border-left: 1px solid var(--reader-line);
+  padding-left: 12px;
+}
+
+.knowledge-note-label {
+  color: var(--reader-ink-muted);
+  font-size: 12px;
+  font-weight: 720;
 }
 
 .timeline-list {
@@ -736,6 +890,12 @@ body,
   color: var(--reader-ink);
   font-size: 14px;
   line-height: 1.78;
+}
+
+.note-context > h3 {
+  margin: 0 0 14px;
+  color: var(--reader-ink);
+  font-size: 16px;
 }
 
 .note-block {

@@ -32,10 +32,17 @@ for (const [id] of requiredModules) {
   assert.equal(existsSync(moduleUrl), true, `module ${id} should exist`);
   const moduleMarkdown = readFileSync(moduleUrl, "utf8");
   assert.match(moduleMarkdown, new RegExp(`id: ${id}`), `module ${id} should declare its id`);
-  assert.match(moduleMarkdown, /status: (not-started|in-progress|review|done)/, `module ${id} should declare an allowed status`);
-  assert.match(moduleMarkdown, /progress: [0-9]+/, `module ${id} should declare progress`);
+  assert.match(moduleMarkdown, /status: (not-started|learning|review|done)/, `module ${id} should declare an allowed learning status`);
+  assert.match(moduleMarkdown, /learning_progress: [0-9]+/, `module ${id} should declare learning progress`);
+  assert.doesNotMatch(moduleMarkdown, /^progress: /m, `module ${id} should not use legacy progress`);
   assert.match(moduleMarkdown, /last_updated: 2026-07-05/, `module ${id} should declare a last updated date`);
-  assert.match(moduleMarkdown, /## 目标|## 当前状态|## 时间线|## 资源|## 面试表达|## 验收标准/, `module ${id} should use fixed second-level sections`);
+  if (id === "overview") {
+    assert.match(moduleMarkdown, /## Dashboard/, "overview should be a dashboard source");
+    assert.doesNotMatch(moduleMarkdown, /## 验收标准|## 下一步/, "overview should not use ordinary-module closing sections");
+  } else {
+    assert.match(moduleMarkdown, /## 目标[\s\S]*## 当前状态[\s\S]*## 核心知识[\s\S]*## 任务[\s\S]*## 时间线[\s\S]*## 知识笔记/, `module ${id} should use the knowledge-base section contract`);
+    assert.doesNotMatch(moduleMarkdown, /## 资源|## 反思|## 面试表达|## 验收标准|## 下一步/, `module ${id} should not keep old side-note or project-management sections`);
+  }
 }
 
 execFileSync(process.execPath, [buildScriptUrl.pathname], { stdio: "pipe" });
@@ -59,13 +66,19 @@ assert.doesNotMatch(html, /href="README\.md"[\s\S]*href="multi-agent-planner\.md
 assert.match(css, /\.reader-shell\s*\{[\s\S]*grid-template-columns:/, "roadmap CSS should define a three-column reader shell");
 assert.match(css, /data-theme="dark"/, "roadmap CSS should support dark mode");
 assert.match(css, /\.module-nav-item\[aria-current="true"\]/, "roadmap CSS should style the active module");
-assert.match(css, /\.progress-meter/, "roadmap CSS should style module progress");
+assert.match(css, /\.learning-progress/, "roadmap CSS should style learning progress");
 assert.match(css, /\.progress-ring/, "roadmap CSS should style a module progress ring");
-assert.match(css, /\.overall-progress/, "roadmap CSS should label overall roadmap progress");
+assert.match(css, /\.overall-progress/, "roadmap CSS should label overall learning progress");
+assert.match(css, /\.dashboard-grid/, "roadmap CSS should style the overview dashboard");
+assert.match(css, /\.dashboard-module-list/, "roadmap CSS should style module dashboard rows");
+assert.match(css, /\.knowledge-list/, "roadmap CSS should style knowledge-note lists");
+assert.match(css, /\.knowledge-card/, "roadmap CSS should style concept-centric knowledge cards");
 assert.match(css, /\.timeline-list/, "roadmap CSS should style timeline content as a visual list");
 assert.match(css, /\.note-group-title/, "roadmap CSS should style explicit note group headings");
 assert.match(css, /\.section-line:hover/, "roadmap CSS should style collapsed rail hover state");
+assert.match(css, /\.section-line:hover \+ \.section-line/, "collapsed rail should grow neighboring lines on hover");
 assert.match(css, /\.section-line\[aria-current="true"\]/, "roadmap CSS should expose active collapsed rail state");
+assert.match(css, /\.section-tooltip/, "collapsed rail should expose section tooltips");
 assert.match(css, /\.result-meta/, "roadmap CSS should show module and section metadata in search results");
 assert.match(css, /\.reader-shell\.is-searching \.reader-toolbar\s*\{[\s\S]*z-index:\s*4[0-9]/, "search toolbar and results should sit above the search overlay");
 assert.match(css, /@media \(max-width:\s*860px\)/, "roadmap CSS should include mobile layout rules");
@@ -74,10 +87,13 @@ assert.doesNotMatch(css, /border-radius:\s*24px|border-radius:\s*28px/, "roadmap
 assert.match(js, /fetchJson\("roadmap\/roadmap-data\.json"\)/, "roadmap JS should load generated JSON");
 assert.match(js, /function renderModuleNav/, "roadmap JS should isolate module navigation rendering");
 assert.match(js, /function renderCurrentModule/, "roadmap JS should isolate module content rendering");
-assert.match(js, /function renderNotePanel/, "roadmap JS should isolate right-note rendering");
+assert.match(js, /function renderOverviewDashboard/, "roadmap JS should render overview as a dashboard");
+assert.match(js, /function renderKnowledgeNotesSection/, "roadmap JS should render concept-centric knowledge notes");
+assert.match(js, /function renderContextualNotePanel/, "roadmap JS should render context-aware right notes");
+assert.match(js, /function setActiveKnowledgeContext/, "roadmap JS should sync right notes with active knowledge context");
 assert.match(js, /function runSearch/, "roadmap JS should implement local keyword search");
 assert.match(js, /function setTheme/, "roadmap JS should support theme switching");
-assert.match(js, /function renderProgressSummary/, "roadmap JS should render labeled module and overall progress");
+assert.match(js, /function renderProgressSummary/, "roadmap JS should render labeled module and overall learning progress");
 assert.match(js, /function renderTimelineSection/, "roadmap JS should render timeline as a visual component");
 assert.match(js, /function renderSearchResults/, "roadmap JS should isolate section-level search rendering");
 assert.match(js, /function hasSearchTerm/, "roadmap JS should avoid raw substring-only search matches");
@@ -85,35 +101,50 @@ assert.match(js, /function getSearchScore/, "roadmap JS should rank search entri
 assert.match(js, /function setActiveSection/, "roadmap JS should update collapsed rail active state dynamically");
 assert.match(js, /IntersectionObserver/, "roadmap JS should observe visible sections for active rail state");
 assert.match(js, /data-section-id/, "roadmap JS should render stable section targets for search and rail navigation");
+assert.match(js, /section-tooltip/, "roadmap JS should render collapsed rail tooltips");
+assert.match(js, /knowledgeNotes/, "roadmap JS should consume generated knowledge notes");
+assert.doesNotMatch(js, /资源", "反思", "面试表达"/, "right notes should not be hard-coded to old resource/reflection/interview groups");
 assert.doesNotMatch(js, /localStorage|sessionStorage/, "first version should not persist state in browser storage");
 assert.doesNotMatch(js, /embeddings\.json|cosineSimilarity|PROJECT_ID = "brain-memory-for-ai-agents"/, "Foundations reader JS should not reuse paper-specific semantic search state");
 
 assert.equal(data.project.id, "foundations", "generated data should identify the Foundations project");
 assert.equal(data.project.targetRole, "Agent / LLM Systems Engineer", "generated data should keep the target role");
-assert.equal(typeof data.project.overallProgress, "number", "generated data should include overall progress");
-assert.ok(data.project.overallProgress > 0, "overall progress should be greater than zero");
-assert.ok(data.project.overallProgress <= 100, "overall progress should not exceed 100");
+assert.equal(data.project.dashboardModuleId, "overview", "generated data should identify overview as the dashboard");
+assert.equal(typeof data.project.overallLearningProgress, "number", "generated data should include overall learning progress");
+assert.equal(data.project.overallLearningProgress, 0, "initial overall learning progress should be zero");
 assert.deepEqual(data.modules.map((module) => [module.id, module.title]), requiredModules, "generated data should include the required modules in navigation order");
 
 for (const module of data.modules) {
   assert.equal(typeof module.status, "string", `${module.id} should include status`);
-  assert.equal(typeof module.progress, "number", `${module.id} should include numeric progress`);
+  assert.equal(typeof module.learningProgress, "number", `${module.id} should include numeric learning progress`);
+  assert.ok(module.learningProgress >= 0 && module.learningProgress <= 100, `${module.id} learningProgress should be bounded`);
+  assert.equal(Object.hasOwn(module, "progress"), false, `${module.id} should not expose legacy progress`);
   assert.equal(typeof module.lastUpdated, "string", `${module.id} should include lastUpdated`);
   assert.equal(typeof module.searchText, "string", `${module.id} should include search text`);
   assert.ok(module.searchText.length > 80, `${module.id} should have useful search text`);
   assert.ok(module.sections && typeof module.sections === "object", `${module.id} should include sections`);
+  assert.equal(Object.hasOwn(module.sections, "验收标准"), false, `${module.id} should not render 验收标准 as a section`);
+  assert.equal(Object.hasOwn(module.sections, "下一步"), false, `${module.id} should not render 下一步 as a section`);
+  if (module.id !== "overview") {
+    assert.equal(Object.hasOwn(module.sections, "时间线"), true, `${module.id} should preserve 时间线`);
+    assert.equal(Object.hasOwn(module.sections, "知识笔记"), true, `${module.id} should include 知识笔记`);
+  }
   assert.ok(Array.isArray(module.searchEntries), `${module.id} should include section-level search entries`);
   assert.ok(module.searchEntries.length > 0, `${module.id} should expose searchable sections`);
   assert.ok(module.searchEntries.every((entry) => entry.moduleId === module.id), `${module.id} search entries should point back to the module`);
   assert.ok(module.searchEntries.every((entry) => typeof entry.sectionTitle === "string" && entry.sectionTitle.length > 0), `${module.id} search entries should include section titles`);
   assert.ok(module.searchEntries.every((entry) => typeof entry.text === "string" && entry.text.length > 20), `${module.id} search entries should include useful text`);
-  assert.ok(Array.isArray(module.noteGroups), `${module.id} should include note groups`);
-  assert.ok(module.noteGroups.every((group) => ["资源", "反思", "面试表达"].includes(group.title)), `${module.id} note groups should use known categories`);
+  assert.ok(Array.isArray(module.knowledgeNotes), `${module.id} should include knowledge notes`);
+  assert.ok(module.knowledgeNotes.every((note) => typeof note.id === "string" && note.id.startsWith(module.id)), `${module.id} knowledge notes should have stable ids`);
+  assert.ok(module.knowledgeNotes.every((note) => typeof note.title === "string" && note.title.length > 0), `${module.id} knowledge notes should include titles`);
   assert.ok(Array.isArray(module.timeline), `${module.id} should include a timeline array`);
 }
 
 const byId = Object.fromEntries(data.modules.map((module) => [module.id, module]));
 assert.ok(byId["agent-design"].timeline.length >= 3, "agent design should expose timeline items for visual rendering");
+assert.ok(byId["rag-memory"].knowledgeNotes.length >= 2, "RAG and memory should expose concept-centric notes");
+assert.ok(byId["rag-memory"].knowledgeNotes.some((note) => note.title === "RAG evaluation"), "RAG and memory should include a RAG evaluation note");
+assert.ok(byId["rag-memory"].searchEntries.some((entry) => entry.type === "knowledge-note"), "search should include knowledge-note entries");
 assert.match(byId.overview.searchText, /30\/45\/60-Day Plan|Project Recommendations|Weekly Review Checklist/, "overview should preserve timeline and project recommendation content");
 assert.match(byId.coding.searchText, /Coding Plan|Python Standards|TypeScript Standards|Optional Rust Log Parser/, "coding should preserve implementation training content");
 assert.match(byId["llm-systems"].searchText, /LLM Systems|Transformer|post-training|LLM Fundamentals/, "LLM systems should preserve model and theory content");

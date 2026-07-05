@@ -1,8 +1,8 @@
 ---
 id: coding
 title: Coding
-status: in-progress
-progress: 35
+status: not-started
+learning_progress: 0
 last_updated: 2026-07-05
 priority: high
 ---
@@ -113,91 +113,57 @@ TypeScript 不作为算法主语言，主要用于 Agent interfaces：
 - Days 31-45：每周 2 次 timed coding。
 - Days 46-60：如果 coding baseline 稳定，加入 Optional Rust Log Parser。
 
-## 资源
+## 知识笔记
+
+### Python Standards
+
+核心理解：
+
+- Python 是主面试语言，目标是 45 分钟内写出 medium 题，并能解释 complexity 和 edge cases。
+- 每题都按 clarify、brute force、bottleneck、optimized approach、invariants、manual tests 的顺序推进。
+- `heapq`、`deque`、`defaultdict`、dataclass / TypedDict 是当前最常用的实现工具。
+
+常见误区：
+
+- 只刷数量但不复盘 bug，会让同一类边界错误反复出现。
+- 写代码时沉默会降低面试信号；需要边写边说明 invariant 和测试用例。
+
+面试转译：
+
+- “I first clarify constraints and edge cases, then write the simplest correct invariant before optimizing.”
+- “Coding 不是和 Agent/LLM 系统分开的训练。每周的算法 pattern 之后都要接一个小型 component drill。”
+
+### TypeScript Standards
+
+核心理解：
+
+- TypeScript 主要训练 API boundary 和 schema thinking，不作为算法主语言。
+- Agent interfaces 包括 `ToolCall`、`ToolResult`、`AgentTrace`、`MemoryRecord`、`EvalCase`。
+- 对 tool call 使用 discriminated unions，对失败返回 error result types，对 async wrapper 写 timeout、retry、trace hooks。
+
+面试转译：
+
+- “I use typed interfaces to make tool schema, traces, and eval cases auditable across model, runtime, and UI boundaries.”
 
 ### Mock Interview Set: Coding
 
-1. Longest substring without repeating characters。
-2. Merge intervals。
-3. Top K frequent elements。
-4. Number of islands。
-5. Course schedule。
-6. LRU cache。
-7. Word ladder 或 shortest path variant。
-8. Coin change。
+核心理解：
 
-Strong signal：
+- 题型池：Longest substring without repeating characters、Merge intervals、Top K frequent elements、Number of islands、Course schedule、LRU cache、Word ladder、Coin change。
+- Strong signal：clarify edge cases、write clean Python、test manually、explain complexity。
+- Weak signal：jump into code without constraints、cannot debug own code、cannot explain why algorithm works。
 
-- clarify edge cases
-- write clean Python
-- test manually
-- explain complexity
+复习提示：
 
-Weak signal：
+- 每道错题只记录四件事：pattern、bug、edge case、可复用模板。
 
-- jump into code without constraints
-- cannot debug own code
-- cannot explain why algorithm works
+### Optional Rust Log Parser
 
-### Python / TypeScript Implementation Mock
+核心理解：
 
-1. Implement a tool router with schema validation。
-2. Implement an in-memory vector retrieval stub and recall@k evaluator。
-3. Implement a trace logger for an agent loop。
-4. Implement retry with timeout and exponential backoff。
-5. Define TypeScript interfaces for ToolCall, ToolResult, AgentTrace。
+- Optional Rust Log Parser 只在 coding baseline 稳定后进入，不是核心准备。
+- Build：parse JSONL traces、aggregate latency by span type、output slowest traces。
 
-Strong signal：
+面试转译：
 
-- small testable units
-- clear error handling
-- typed boundaries
-- observability hooks
-
-## 反思
-
-Coding 不是和 Agent/LLM 系统分开的训练。每周的算法 pattern 之后都要接一个小型 component drill，让“会写代码”能转成面试证据。
-
-## 面试表达
-
-回答 coding 题时的表达顺序：
-
-1. Clarify input/output and constraints。
-2. State brute force。
-3. Identify bottleneck。
-4. Explain optimized idea。
-5. Define invariants。
-6. Code cleanly。
-7. Manually test representative cases。
-8. Give complexity。
-
-Implementation drill 的表达句式：
-
-- “我把它拆成可测试的小模块，因为 agent runtime 的失败通常跨越 model/tool/runtime 三层。”
-- “这个 boundary 用 TypeScript interface 表达，是为了让 tool schema、trace 和 eval case 可审计。”
-
-## 验收标准
-
-- 45 分钟内完成 medium 题并能解释复杂度。
-- Python 代码不依赖全局变量，变量名清楚。
-- 每周至少一次 timed mock。
-- 能完成 `ToolCall`、`ToolResult`、`AgentTrace`、`EvalCase` 的 TypeScript interface。
-- 能把 coding 训练和 Agent/LLM component drill 连接起来讲。
-
-## 下一步
-
-- 先执行 Week 1 array/hash map/sliding window。
-- 同步做 `Tool Router` drill。
-- 记录每道错题的 pattern、bug、edge case 和可复用模板。
-
-### Drill 8: Optional Rust Log Parser
-
-Build：
-
-- parse JSONL traces
-- aggregate latency by span type
-- output slowest traces
-
-Interview story：
-
-- Rust is optional depth: useful for performance/system credibility, not core preparation.
+- “Rust is optional depth: useful for performance/system credibility, not core preparation.”

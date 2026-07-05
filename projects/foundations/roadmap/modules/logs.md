@@ -1,8 +1,8 @@
 ---
 id: logs
 title: Logs
-status: in-progress
-progress: 20
+status: not-started
+learning_progress: 0
 last_updated: 2026-07-05
 priority: medium
 ---
@@ -50,9 +50,24 @@ If a week goes badly, do not restart the whole plan. Repeat the current week wit
 - Week 3 review：记录 heap/DP/memory store 和 ambiguity story。
 - Week 4 review：记录 mock sprint、system design answers、behavioral stories 和 portfolio summary。
 
-## 资源
+## 知识笔记
 
-复盘模板：
+### Weekly Review
+
+核心理解：
+
+- Weekly Review Checklist 用来回答：哪类 coding pattern 还错、哪个 system design case 不看笔记能讲、实现了哪个 Agent/LLM component、学会了哪个 failure mode、哪个 mock answer sounded vague。
+- Logs 不是主导航，只提供跨模块复盘视角。
+
+复习提示：
+
+- If a week goes badly, do not restart the whole plan. Repeat the current week with only `minimum` and `standard` tasks.
+
+### Review template
+
+核心理解：
+
+- 复盘模板：
 
 ```md
 ### YYYY-MM-DD
@@ -66,26 +81,13 @@ If a week goes badly, do not restart the whole plan. Repeat the current week wit
 - Cut next:
 ```
 
-## 反思
+### Cross-module synthesis
 
-如果全局计划执行得不好，不要重启整个 plan。更好的动作是：找出一个最弱模块，回到该模块的 `minimum` 和 `standard`，减少阅读和额外扩展。
+核心理解：
 
-## 面试表达
+- 如果全局计划执行得不好，不要重启整个 plan。更好的动作是找出一个最弱模块，回到该模块的 `minimum` 和 `standard`，减少阅读和额外扩展。
+- 每月检查一次哪些 logs 应该沉淀回模块正文。
 
-Logs 可以转化成 behavioral answers：
+面试转译：
 
 - “我一开始计划按周推进，后来发现长期维护会膨胀，所以把主导航改成能力模块，并在模块内保留时间线。”
-- “当一周失败时，我不会补偿性堆积任务，而是回到 minimum/standard，保证系统继续运转。”
-
-## 验收标准
-
-- 每周至少一条 review。
-- 每条 review 至少关联一个可面试 artifact。
-- 至少记录一个 cut decision：删掉一个不服务面试目标的任务。
-- Logs 不新增大量子目录，只保持轻量追加。
-
-## 下一步
-
-- 第一周结束后补 Week 1 review。
-- mock practice 后立刻记录 vague answer。
-- 每月检查一次哪些 logs 应该沉淀回模块正文。

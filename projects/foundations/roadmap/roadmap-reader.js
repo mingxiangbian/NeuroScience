@@ -3,6 +3,7 @@ const state = {
   currentModule: null,
   searchQuery: "",
   activeSectionId: "",
+  activeKnowledgeNoteId: "",
   sectionObserver: null,
 };
 
@@ -63,6 +64,28 @@ function getSectionId(module, title) {
   return module.sectionIds?.[title] ?? `${module.id}-${title}`;
 }
 
+function clampProgress(value) {
+  return Math.max(0, Math.min(100, Number(value) || 0));
+}
+
+function getLearningProgress(module) {
+  return clampProgress(module?.learningProgress);
+}
+
+function getOverallLearningProgress() {
+  return clampProgress(state.data?.project?.overallLearningProgress);
+}
+
+function getStatusLabel(status) {
+  const labels = {
+    "not-started": "未开始",
+    learning: "学习中",
+    review: "复习中",
+    done: "已完成",
+  };
+  return labels[status] ?? status;
+}
+
 function setTheme(theme) {
   const normalized = theme === "dark" ? "dark" : "light";
   document.body.dataset.theme = normalized;
@@ -72,6 +95,7 @@ function setTheme(theme) {
 function renderModuleNav() {
   els.nav.innerHTML = "";
   for (const module of state.data.modules) {
+    const progress = getLearningProgress(module);
     const button = document.createElement("button");
     button.className = "module-nav-item";
     button.type = "button";
@@ -79,49 +103,61 @@ function renderModuleNav() {
     button.setAttribute("aria-current", module.id === state.currentModule?.id ? "true" : "false");
     button.innerHTML = `
       <span class="module-nav-title">${escapeHtml(module.title)}</span>
-      <span class="module-nav-progress">${escapeHtml(String(module.progress))}%</span>
-      <span class="module-nav-meta">${escapeHtml(module.status)} · ${escapeHtml(module.priority)}</span>
+      <span class="module-nav-progress">${escapeHtml(String(progress))}%</span>
+      <span class="module-nav-meta">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(module.priority)}</span>
     `;
     button.addEventListener("click", () => openModule(module.id));
     els.nav.append(button);
   }
 }
 
+function getRailTargets(module) {
+  const sectionTargets = Object.keys(module.sections ?? {}).map((sectionTitle) => ({
+    id: getSectionId(module, sectionTitle),
+    title: sectionTitle,
+  }));
+  const noteTargets = (module.knowledgeNotes ?? []).map((note) => ({
+    id: note.id,
+    title: note.title,
+  }));
+  return [...sectionTargets, ...noteTargets];
+}
+
 function renderSectionRail(module) {
   els.sectionLines.innerHTML = "";
-  const sectionTitles = Object.keys(module.sections ?? {});
-  sectionTitles.forEach((sectionTitle, index) => {
-    const sectionId = getSectionId(module, sectionTitle);
+  getRailTargets(module).forEach((target, index) => {
     const button = document.createElement("button");
     button.className = `section-line${index === 0 ? " is-active" : ""}`;
     button.type = "button";
-    button.dataset.sectionId = sectionId;
-    button.title = sectionTitle;
-    button.setAttribute("aria-label", sectionTitle);
+    button.dataset.sectionId = target.id;
+    button.title = target.title;
+    button.setAttribute("aria-label", target.title);
     button.setAttribute("aria-current", index === 0 ? "true" : "false");
+    button.innerHTML = `<span class="section-tooltip">${escapeHtml(target.title)}</span>`;
     button.addEventListener("click", () => {
-      document.querySelector(`#${CSS.escape(sectionId)}`)?.scrollIntoView({
+      document.querySelector(`#${CSS.escape(target.id)}`)?.scrollIntoView({
         behavior: "smooth",
         block: "start",
       });
-      setActiveSection(sectionId);
+      setActiveSection(target.id);
     });
     els.sectionLines.append(button);
   });
 }
 
-function renderProgressSummary(module, progress) {
-  const overallProgress = Math.max(0, Math.min(100, Number(state.data.project.overallProgress) || 0));
+function renderProgressSummary(module) {
+  const progress = getLearningProgress(module);
+  const overallProgress = getOverallLearningProgress();
   return `
-    <div class="module-progress-summary" aria-label="进度摘要">
-      <div class="progress-ring" style="--progress: ${progress}" aria-label="本模块进度 ${progress}%">
+    <div class="module-progress-summary learning-progress" aria-label="学习进度摘要">
+      <div class="progress-ring" style="--progress: ${progress}" aria-label="本模块学习进度 ${progress}%">
         <span>${escapeHtml(String(progress))}%</span>
       </div>
       <div class="progress-copy">
-        <p class="progress-label">本模块进度</p>
-        <p class="progress-status">${escapeHtml(module.status)} · ${escapeHtml(module.priority)}</p>
+        <p class="progress-label">本模块学习进度</p>
+        <p class="progress-status">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(module.priority)}</p>
       </div>
-      <p class="overall-progress">整体进度 ${escapeHtml(String(overallProgress))}%</p>
+      <p class="overall-progress">整体学习进度 ${escapeHtml(String(overallProgress))}%</p>
     </div>
   `;
 }
@@ -142,20 +178,104 @@ function renderTimelineSection(module, title) {
   return `<ol class="timeline-list">${items}</ol>`;
 }
 
+function renderOverviewDashboard(module) {
+  const dashboardModuleId = state.data.project.dashboardModuleId;
+  const learningModules = state.data.modules.filter((item) => item.id !== dashboardModuleId);
+  const moduleRows = learningModules
+    .map((item) => `
+      <button class="dashboard-module-row" type="button" data-dashboard-module-id="${escapeHtml(item.id)}">
+        <span>
+          <strong>${escapeHtml(item.title)}</strong>
+          <small>${escapeHtml(getStatusLabel(item.status))} · ${escapeHtml(item.priority)}</small>
+        </span>
+        <span class="dashboard-module-progress">${escapeHtml(String(getLearningProgress(item)))}%</span>
+      </button>
+    `)
+    .join("");
+
+  const blocks = [
+    ["Dashboard", `
+      ${getSection(module, "Dashboard")}
+      <div class="dashboard-grid" aria-label="Foundations dashboard">
+        <section class="dashboard-card">
+          <p class="dashboard-card-label">整体学习进度</p>
+          <strong>${escapeHtml(String(getOverallLearningProgress()))}%</strong>
+        </section>
+        <section class="dashboard-card">
+          <p class="dashboard-card-label">主线模块</p>
+          <strong>${escapeHtml(String(learningModules.length))}</strong>
+        </section>
+        <section class="dashboard-card">
+          <p class="dashboard-card-label">当前状态</p>
+          <strong>未开始</strong>
+        </section>
+      </div>
+    `],
+    ["模块总览", `
+      ${getSection(module, "模块总览")}
+      <div class="dashboard-module-list" aria-label="模块学习状态">
+        ${moduleRows}
+      </div>
+    `],
+    ["计划节奏", getSection(module, "计划节奏")],
+    ["待补知识", getSection(module, "待补知识")],
+  ];
+
+  return blocks
+    .map(([title, body]) => {
+      if (!body) return "";
+      const sectionId = getSectionId(module, title);
+      return `
+        <article class="module-section" id="${escapeHtml(sectionId)}" data-section-id="${escapeHtml(sectionId)}" data-section-title="${escapeHtml(title)}">
+          <h2>${escapeHtml(title)}</h2>
+          <div class="section-body">${body}</div>
+        </article>
+      `;
+    })
+    .filter(Boolean)
+    .join("");
+}
+
+function renderKnowledgeNotesSection(module) {
+  const notes = module.knowledgeNotes ?? [];
+  if (notes.length === 0) return `<p class="note-empty">这个模块还没有知识笔记。</p>`;
+  return `
+    <div class="knowledge-list">
+      ${notes.map((note) => `
+        <article class="knowledge-card" id="${escapeHtml(note.id)}" data-section-id="${escapeHtml(note.id)}" data-section-title="${escapeHtml(note.title)}" data-note-id="${escapeHtml(note.id)}">
+          <h3>${escapeHtml(note.title)}</h3>
+          <div class="knowledge-card-body">${note.body}</div>
+        </article>
+      `).join("")}
+    </div>
+  `;
+}
+
 function renderCurrentModule() {
   const module = state.currentModule;
-  const progress = Math.max(0, Math.min(100, Number(module.progress) || 0));
   els.moduleHeader.innerHTML = `
     <p class="module-kicker">${escapeHtml(state.data.project.title)} · ${escapeHtml(state.data.project.targetRole)}</p>
     <h1 class="module-title">${escapeHtml(module.title)}</h1>
-    <p class="module-meta">${escapeHtml(module.status)} · ${escapeHtml(module.priority)} · Updated ${escapeHtml(module.lastUpdated)}</p>
-    ${renderProgressSummary(module, progress)}
+    <p class="module-meta">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(module.priority)} · Updated ${escapeHtml(module.lastUpdated)}</p>
+    ${renderProgressSummary(module)}
   `;
 
-  const mainSections = ["目标", "当前状态", "核心知识", "任务", "时间线", "验收标准", "下一步"];
+  if (module.id === state.data.project.dashboardModuleId) {
+    els.sectionList.innerHTML = renderOverviewDashboard(module);
+    els.sectionList.querySelectorAll("[data-dashboard-module-id]").forEach((button) => {
+      button.addEventListener("click", () => openModule(button.dataset.dashboardModuleId));
+    });
+    return;
+  }
+
+  const mainSections = ["目标", "当前状态", "核心知识", "任务", "时间线", "知识笔记"];
   const blocks = mainSections
     .map((title) => {
-      const body = title === "时间线" ? renderTimelineSection(module, title) : getSection(module, title);
+      const body = title === "时间线"
+        ? renderTimelineSection(module, title)
+        : title === "知识笔记"
+          ? renderKnowledgeNotesSection(module)
+          : getSection(module, title);
       if (!body) return "";
       const sectionId = getSectionId(module, title);
       return `
@@ -176,23 +296,43 @@ function renderCurrentModule() {
   `;
 }
 
-function renderNotePanel() {
+function getKnowledgeNoteById(module, noteId) {
+  return (module.knowledgeNotes ?? []).find((note) => note.id === noteId);
+}
+
+function getKnowledgeNoteForSection(module, sectionId) {
+  const directNote = getKnowledgeNoteById(module, sectionId);
+  if (directNote) return directNote;
+  if (sectionId === getSectionId(module, "知识笔记")) return module.knowledgeNotes?.[0];
+  return getKnowledgeNoteById(module, state.activeKnowledgeNoteId) ?? module.knowledgeNotes?.[0];
+}
+
+function renderContextualNotePanel(note) {
   const module = state.currentModule;
-  const noteBlocks = (module.noteGroups ?? [])
-    .map((group) => `
-      <section class="note-block" data-note-group="${escapeHtml(group.title)}">
-        <h3 class="note-group-title">${escapeHtml(group.title)}</h3>
+  const noteGroups = note?.groups?.length
+    ? note.groups.map((group) => `
+      <section class="note-block" data-note-group="${escapeHtml(group.label)}">
+        <h3 class="note-group-title">${escapeHtml(group.label)}</h3>
         <div class="note-group-body">${group.body}</div>
       </section>
-    `)
-    .join("");
-  const renderedNotes = noteBlocks || `<p class="note-empty">这个模块还没有资源、反思或面试表达。</p>`;
+    `).join("")
+    : note?.body ? `<section class="note-block"><div class="note-group-body">${note.body}</div></section>` : "";
+  const renderedNotes = note
+    ? `<article class="note-context"><h3>${escapeHtml(note.title)}</h3>${noteGroups}</article>`
+    : `<p class="note-empty">这个模块没有独立知识笔记；选择具体能力模块后，右栏会同步显示当前知识卡。</p>`;
 
-  const label = `Parallel note · ${module.title}`;
+  const label = `学习过程记录 · ${module.title}`;
   els.noteLabel.textContent = label;
   els.mobileNoteLabel.textContent = label;
   els.noteSurface.innerHTML = renderedNotes;
   els.mobileNoteSurface.innerHTML = renderedNotes;
+}
+
+function setActiveKnowledgeContext(sectionId) {
+  const module = state.currentModule;
+  const note = getKnowledgeNoteForSection(module, sectionId);
+  state.activeKnowledgeNoteId = note?.id ?? "";
+  renderContextualNotePanel(note);
 }
 
 function updateUrl(moduleId) {
@@ -209,6 +349,7 @@ function setActiveSection(sectionId) {
     button.classList.toggle("is-active", isActive);
     button.setAttribute("aria-current", isActive ? "true" : "false");
   });
+  setActiveKnowledgeContext(sectionId);
 }
 
 function observeSections() {
@@ -239,10 +380,11 @@ function clearSearch() {
 function openModule(moduleId, { syncUrl = true, targetSectionId = "" } = {}) {
   const nextModule = getModuleById(moduleId) ?? state.data.modules[0];
   state.currentModule = nextModule;
+  state.activeKnowledgeNoteId = "";
   if (syncUrl) updateUrl(nextModule.id);
   renderModuleNav();
   renderCurrentModule();
-  renderNotePanel();
+  renderContextualNotePanel(nextModule.knowledgeNotes?.[0]);
   renderSectionRail(nextModule);
   els.main.scrollTop = 0;
   observeSections();

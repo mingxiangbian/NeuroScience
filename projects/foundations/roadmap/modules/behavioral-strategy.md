@@ -1,8 +1,8 @@
 ---
 id: behavioral-strategy
 title: Behavioral / Strategy
-status: in-progress
-progress: 30
+status: not-started
+learning_progress: 0
 last_updated: 2026-07-05
 priority: high
 ---
@@ -66,55 +66,39 @@ Weekly target：
 - Days 31-45：简历项目叙事和 mock interview iteration。
 - Days 46-60：3 次 full mock，并按 rubric 复盘。
 
-## 资源
+## 知识笔记
 
-Strong signal：
+### STAR and evidence
 
-- 清楚地说出“我做了什么、为什么这样设计、怎么验证、哪里失败过、我如何改进”。
-- 所有 drills 都要能对应一个 interview story。
-- 每个 system design 都要包含 success metrics、failure modes、evals and monitoring。
+核心理解：
 
-Weak signal：
+- STAR 可以用，但不要僵硬。Situation、Task、Action、Result、Reflection 都要有具体证据。
+- Strong signal 是清楚地说出“我做了什么、为什么这样设计、怎么验证、哪里失败过、我如何改进”。
+- Weak signal 是只说“我了解 RAG/Agent/RLHF”、只背论文名、只画组件不讲 failure recovery。
 
-- 只说“我了解 RAG/Agent/RLHF”。
-- 只背论文名。
-- 只画组件，不讲 failure recovery。
-- 只说项目很复杂，不给 evidence。
+面试转译：
 
-## 反思
+- “The strongest version of this story is not that the project was complex; it is the specific tradeoff I made and how I verified it.”
 
-Strategy 的重点是“being perceived as strong”，但这不等于包装。真正强信号来自可验证的行为：限时写代码、实现小组件、设计 eval、复盘失败、清楚表达取舍。
+### Strategy Rubric
 
-## 面试表达
+核心理解：
 
-STAR-ish 但不要僵硬：
+- Strategy Rubric 每周从 Coding correctness、Coding communication、LLM systems、Agent design、Research depth、Behavioral、Project evidence 七个维度打分。
+- 目标不是包装，而是 being perceived as strong through evidence。
+- 真正强信号来自可验证的行为：限时写代码、实现小组件、设计 eval、复盘失败、清楚表达取舍。
 
-- Situation：背景和约束。
-- Task：你要解决什么。
-- Action：你具体做了什么。
-- Result：结果、证据、指标。
-- Reflection：如果重做会改什么。
+复习提示：
 
-Project deep dive 模板：
+- 每次 mock 后记录“哪个回答听起来 vague”，再把它改成 evidence-backed answer。
 
-1. Problem and users。
-2. Constraints。
-3. Architecture。
-4. Hardest tradeoff。
-5. Failure mode。
-6. Eval or verification。
-7. What I would improve。
+### Project deep dive
 
-## 验收标准
+核心理解：
 
-- 至少 5 个 behavioral stories。
-- 每个 story 都有 evidence，而不是抽象形容。
-- 每个 mini drill 都能讲成 project evidence。
-- Strategy Rubric 每周更新一次。
-- 至少一个维度到 Day 60 能达到 5。
+- Project deep dive 模板：Problem and users、Constraints、Architecture、Hardest tradeoff、Failure mode、Eval or verification、What I would improve。
+- 每个 mini drill 都要能讲成 project evidence。
 
-## 下一步
+面试转译：
 
-- 先为 Tool Router、Retrieval Evaluator、Memory Store、Trace Logger 各写 3 句 interview story。
-- 每周按 Strategy Rubric 自评。
-- mock 后记录“哪个回答听起来 vague”。
+- “I did not build a large demo first; I decomposed it into tool router, retrieval evaluator, memory store, trace logger, and eval harness because each maps to a measurable interview signal.”

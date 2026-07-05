@@ -19,7 +19,8 @@ const MODULES = [
   ["logs", "Logs"],
 ];
 
-const VALID_STATUSES = new Set(["not-started", "in-progress", "review", "done"]);
+const VALID_STATUSES = new Set(["not-started", "learning", "review", "done"]);
+const NOTE_GROUP_LABELS = new Set(["核心理解", "常见误区", "关键提醒", "相关资料", "面试转译", "复习提示"]);
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -56,6 +57,35 @@ function splitSections(content) {
     sections[title] = content.slice(start, end).trim();
   }
   return sections;
+}
+
+function splitSubsections(markdown) {
+  const blocks = [];
+  let currentTitle = "";
+  let currentLines = [];
+  let inCode = false;
+
+  function flush() {
+    if (!currentTitle) return;
+    blocks.push({
+      title: currentTitle,
+      markdown: currentLines.join("\n").trim(),
+    });
+    currentLines = [];
+  }
+
+  for (const line of String(markdown ?? "").split("\n")) {
+    if (line.startsWith("```")) inCode = !inCode;
+    if (!inCode && line.startsWith("### ")) {
+      flush();
+      currentTitle = line.replace(/^### /, "").trim();
+      continue;
+    }
+    if (currentTitle) currentLines.push(line);
+  }
+
+  flush();
+  return blocks;
 }
 
 function renderInline(text) {
@@ -201,39 +231,88 @@ function extractTimelineItems(markdown) {
     });
 }
 
-function buildSearchEntries(id, title, rawSections) {
-  return Object.entries(rawSections)
+function splitNoteGroups(markdown) {
+  const groups = [];
+  let currentLabel = "";
+  let currentLines = [];
+  let inCode = false;
+
+  function flush() {
+    if (!currentLabel) return;
+    const markdownBody = currentLines.join("\n").trim();
+    groups.push({
+      label: currentLabel,
+      body: renderMarkdown(markdownBody),
+      text: stripMarkdown(markdownBody),
+    });
+    currentLines = [];
+  }
+
+  for (const line of String(markdown ?? "").split("\n")) {
+    if (line.startsWith("```")) inCode = !inCode;
+    const labelMatch = !inCode ? line.match(/^([^：:]{2,12})[：:]$/) : null;
+    if (labelMatch && NOTE_GROUP_LABELS.has(labelMatch[1])) {
+      flush();
+      currentLabel = labelMatch[1];
+      continue;
+    }
+    if (currentLabel) currentLines.push(line);
+  }
+
+  flush();
+  return groups;
+}
+
+function buildKnowledgeNotes(moduleId, knowledgeMarkdown) {
+  return splitSubsections(knowledgeMarkdown).map((block) => {
+    const text = stripMarkdown(block.markdown);
+    return {
+      id: `${moduleId}-${slugifySection(block.title) || "note"}`,
+      title: block.title,
+      body: renderMarkdown(block.markdown),
+      text,
+      groups: splitNoteGroups(block.markdown),
+    };
+  });
+}
+
+function buildSearchEntries(id, title, rawSections, knowledgeNotes) {
+  const sectionEntries = Object.entries(rawSections)
     .map(([sectionTitle, sectionMarkdown]) => ({
       id: `${id}-${slugifySection(sectionTitle) || "section"}`,
+      type: "section",
       moduleId: id,
       moduleTitle: title,
       sectionTitle,
       text: stripMarkdown(sectionMarkdown),
     }))
     .filter((entry) => entry.text.length > 20);
-}
 
-function buildNoteGroups(sections) {
-  return ["资源", "反思", "面试表达"]
-    .map((title) => ({
-      title,
-      body: sections[title] ?? "",
-      text: stripHtml(sections[title] ?? ""),
+  const noteEntries = knowledgeNotes
+    .map((note) => ({
+      id: note.id,
+      type: "knowledge-note",
+      moduleId: id,
+      moduleTitle: title,
+      sectionTitle: note.title,
+      text: note.text,
     }))
-    .filter((group) => group.body);
+    .filter((entry) => entry.text.length > 20);
+
+  return [...sectionEntries, ...noteEntries];
 }
 
 function validateModule(record, expectedId, expectedTitle) {
   if (record.id !== expectedId) throw new Error(`${expectedId} has id ${record.id}`);
   if (record.title !== expectedTitle) throw new Error(`${expectedId} has title ${record.title}`);
   if (!VALID_STATUSES.has(record.status)) throw new Error(`${expectedId} has invalid status ${record.status}`);
-  if (!Number.isFinite(record.progress) || record.progress < 0 || record.progress > 100) {
-    throw new Error(`${expectedId} has invalid progress ${record.progress}`);
+  if (!Number.isFinite(record.learningProgress) || record.learningProgress < 0 || record.learningProgress > 100) {
+    throw new Error(`${expectedId} has invalid learning progress ${record.learningProgress}`);
   }
   if (!record.lastUpdated) throw new Error(`${expectedId} is missing lastUpdated`);
   if (Object.keys(record.sections).length === 0) throw new Error(`${expectedId} has no sections`);
   if (!Array.isArray(record.searchEntries) || record.searchEntries.length === 0) throw new Error(`${expectedId} has no search entries`);
-  if (!Array.isArray(record.noteGroups)) throw new Error(`${expectedId} has invalid note groups`);
+  if (!Array.isArray(record.knowledgeNotes)) throw new Error(`${expectedId} has invalid knowledge notes`);
   if (!Array.isArray(record.timeline)) throw new Error(`${expectedId} has invalid timeline`);
 }
 
@@ -252,24 +331,26 @@ function buildModule([id, title]) {
     id: parsed.data.id,
     title: parsed.data.title,
     status: parsed.data.status,
-    progress: Number(parsed.data.progress),
+    learningProgress: Number(parsed.data.learning_progress),
     lastUpdated: parsed.data.last_updated,
     priority: parsed.data.priority ?? "medium",
     sections,
     sectionIds,
-    searchEntries: buildSearchEntries(id, title, rawSections),
-    noteGroups: buildNoteGroups(sections),
+    knowledgeNotes: buildKnowledgeNotes(id, rawSections["知识笔记"] ?? ""),
     timeline: extractTimelineItems(rawSections["时间线"] ?? ""),
     searchText: `${title} ${stripMarkdown(parsed.content)}`,
   };
+  record.searchEntries = buildSearchEntries(id, title, rawSections, record.knowledgeNotes);
   validateModule(record, id, title);
   return record;
 }
 
 const modules = MODULES.map(buildModule);
 const latestDate = modules.map((module) => module.lastUpdated).sort().at(-1);
-const overallProgress = Math.round(
-  modules.reduce((sum, module) => sum + module.progress, 0) / modules.length,
+const dashboardModuleId = "overview";
+const learningModules = modules.filter((module) => module.id !== dashboardModuleId);
+const overallLearningProgress = Math.round(
+  learningModules.reduce((sum, module) => sum + module.learningProgress, 0) / learningModules.length,
 );
 
 const roadmapData = {
@@ -278,7 +359,8 @@ const roadmapData = {
     id: "foundations",
     title: "基石",
     targetRole: "Agent / LLM Systems Engineer",
-    overallProgress,
+    dashboardModuleId,
+    overallLearningProgress,
   },
   modules,
 };

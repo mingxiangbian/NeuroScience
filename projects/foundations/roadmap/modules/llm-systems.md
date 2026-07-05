@@ -1,8 +1,8 @@
 ---
 id: llm-systems
 title: LLM Systems
-status: in-progress
-progress: 30
+status: not-started
+learning_progress: 0
 last_updated: 2026-07-05
 priority: high
 ---
@@ -68,46 +68,50 @@ LLM/Agent 系统知识已有基础，但需要从术语级理解推进到系统�
 - Days 31-45：读 post-training / RLHF / DPO / RLVR 概念，并解释它们和 Agent eval 的关系。
 - Days 46-60：练 research-engineering discussion：如何把 ambiguous failure 转成 experiment。
 
-## 资源
+## 知识笔记
+
+### Transformer and KV cache
+
+核心理解：
+
+- Transformer basics 要能解释 attention、positional encoding、context limits 和 inference behavior。
+- KV cache 不是实现细节；它改变 serving latency、batching strategy、streaming behavior 和 cost tradeoff。
+
+常见误区：
+
+- 只说“attention lets tokens attend to each other”不够，需要落到 inference 和系统约束。
+- Long context expands what the model can attend to, but memory requires write policy、retrieval policy、update/delete policy and user control。
+
+面试转译：
+
+- “KV cache is not just an implementation detail; it changes serving latency, batching strategy, streaming behavior and cost tradeoff.”
+
+### Post-training and structured outputs
+
+核心理解：
+
+- Post-training 需要区分 SFT、RLHF、DPO、RLVR 的作用。
+- Structured outputs 不能只靠 prompt instruction，需要 schema validation、retry policy 和 trace logging。
+- Model selection 要讲 latency、cost、reliability、eval 和 fallback，而不是“哪个模型更强”。
+
+常见误区：
+
+- 把 benchmark score 直接等同于 production choice。
+- 把 structured output failure 当作 prompt wording 问题，而不是 runtime 和 validation 问题。
+
+面试转译：
+
+- “For structured outputs, prompt instruction is not enough. I would add schema validation, retry policy and trace logging.”
 
 ### Research Reading List
 
-阅读原则：只读能转化为面试答案的材料。
+核心理解：
 
-- Transformer basics：Attention Is All You Need。Need to know：attention、positional encoding、encoder/decoder intuition。Interview use：解释 LLM inference 和 context limits。
-- Scaling：Kaplan scaling laws、Chinchilla。Need to know：data/model/compute tradeoff。Interview use：讨论模型能力和成本边界。
-- Instruction tuning：InstructGPT。Need to know：SFT、RLHF、human preference。Interview use：解释 post-training 为什么重要。
-- Preference optimization：DPO、PPO basics。Need to know：reward model vs direct preference optimization。Interview use：回答 RLHF / DPO 追问。
+- Transformer basics：Attention Is All You Need。Interview use：解释 LLM inference 和 context limits。
+- Scaling：Kaplan scaling laws、Chinchilla。Interview use：讨论模型能力和成本边界。
+- Instruction tuning：InstructGPT。Interview use：解释 post-training 为什么重要。
+- Preference optimization：DPO、PPO basics。Interview use：回答 RLHF / DPO 追问。
 
-每篇 reading 的输出只要 5 行：
+复习提示：
 
-1. paper claim
-2. mechanism
-3. limitation
-4. interview question it helps answer
-5. one system design implication
-
-## 反思
-
-LLM systems 回答容易变成术语堆叠。每个术语必须接一个 production consequence：latency、cost、reliability、eval、debugging、fallback 或 user experience。
-
-## 面试表达
-
-可复用表达：
-
-- “Long context expands what the model can attend to, but memory requires write policy、retrieval policy、update/delete policy and user control.”
-- “KV cache is not just an implementation detail; it changes serving latency, batching strategy, streaming behavior and cost tradeoff.”
-- “For structured outputs, prompt instruction is not enough. I would add schema validation, retry policy and trace logging.”
-
-## 验收标准
-
-- 能 2 分钟解释 attention 和 KV cache。
-- 能区分 SFT、RLHF、DPO、RLVR 在 post-training 中的作用。
-- 能把 model selection 讲成 latency/cost/reliability tradeoff，而不是“哪个模型更强”。
-- 能回答 LLM Fundamentals mock questions，并给出具体 production implication。
-
-## 下一步
-
-- 用一页笔记写清 long context vs memory。
-- 写一个 structured output failure taxonomy。
-- 把 post-training 相关阅读转成 5 行 interview-use card。
+- 每篇 reading 只写 5 行：paper claim、mechanism、limitation、interview question、system design implication。

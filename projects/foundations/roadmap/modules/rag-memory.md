@@ -1,8 +1,8 @@
 ---
 id: rag-memory
 title: RAG & Memory
-status: in-progress
-progress: 30
+status: not-started
+learning_progress: 0
 last_updated: 2026-07-05
 priority: high
 ---
@@ -94,34 +94,51 @@ Interview story：
 - Week 3：实现 JSON-backed memory store：write、retrieve、update、delete；练 `Design long-term memory for a personal assistant`。
 - Week 3 stretch：给 memory store 加 conflict resolution；加 eval：memory 是否应该写入、是否应该删除。
 
-## 资源
+## 知识笔记
 
-Research reading：
+### RAG evaluation
 
-- RAG：Lewis RAG paper plus modern retrieval notes。Need to know：retrieval、generation、faithfulness。Interview use：设计 production RAG。
-- Agent memory：Generative Agents、MemGPT、LLM agent memory surveys。Need to know：memory write/read、reflection、context management。Interview use：设计 long-term memory。
+核心理解：
 
-## 反思
+- RAG quality 先评估 retrieval，再评估 generation；不能只看最终回答是否顺眼。
+- Production RAG System 至少要有 recall@k、answer faithfulness、latency、cost 和 citation/provenance checks。
+- Retrieval Evaluator 输入 query、documents、expected relevant ids，输出 recall@k 和 failure report。
 
-RAG 和 memory 的共同陷阱是“存得多”不等于“记得好”。强回答要覆盖 retrieval precision、write policy、delete policy、privacy、stale memory 和 harmful memory rate。
+常见误区：
 
-## 面试表达
+- 只讨论 embedding model，不讨论 chunking、metadata、reranking、freshness 和 prompt injection。
+- 把 final answer 评估当作 retrieval 评估的替代品。
 
-可复用表达：
+面试转译：
 
 - “I would evaluate retrieval before generation with recall@k and failure reports, then separately evaluate answer faithfulness.”
+
+### Long-Term Memory
+
+核心理解：
+
+- Long-Term Memory 不是把所有交互 append 到上下文，而是 write policy、retrieval policy、update/delete policy 和 user control。
+- Memory Store drill 覆盖 write/read/update/delete、metadata tags、conflict detection、deletion test。
+- 关键 eval：precision of memory use、harmful memory rate、stale memory detection。
+
+常见误区：
+
+- “存得多”不等于“记得好”。
+- 没有 deletion 和 user control 的 memory system 不适合 personal assistant。
+
+面试转译：
+
 - “Memory write should be a policy decision, not an automatic append of every interaction.”
 - “Deletion and user control are part of memory quality, especially for personal assistants.”
 
-## 验收标准
+### Retrieval and memory failure modes
 
-- 能设计 production RAG pipeline 并给出 recall@k、faithfulness、latency、cost eval。
-- 能解释 long-term memory 的 write/retrieve/update/delete policy。
-- 能实现 retrieval evaluator 和 memory store 两个 drills。
-- 能讲清 freshness、privacy 和 prompt injection defense。
+核心理解：
 
-## 下一步
+- RAG And Memory 共同关注 retrieval precision、write policy、delete policy、privacy、stale memory、harmful memory rate。
+- 失败类型：bad chunking、stale docs、wrong citation、prompt injection、conflicting memories、over-triggered memory。
 
-- 先做 Retrieval Evaluator。
-- 再做 Memory Store。
-- 每个实现都配一个 failure report，避免只写 happy path。
+相关资料：
+
+- RAG：Lewis RAG paper plus modern retrieval notes。
+- Agent memory：Generative Agents、MemGPT、LLM agent memory surveys。
