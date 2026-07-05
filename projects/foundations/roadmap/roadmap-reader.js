@@ -267,7 +267,6 @@ function findTextRange(root, selectedText, matchIndex) {
   if (!selectedText) return null;
   const nodes = getTextNodes(root);
   let occurrence = 0;
-  let order = 0;
   for (const node of nodes) {
     let index = node.nodeValue.indexOf(selectedText);
     while (index !== -1) {
@@ -275,12 +274,11 @@ function findTextRange(root, selectedText, matchIndex) {
         const range = document.createRange();
         range.setStart(node, index);
         range.setEnd(node, index + selectedText.length);
-        return { range, order: order + index };
+        return range;
       }
       occurrence += 1;
       index = node.nodeValue.indexOf(selectedText, index + selectedText.length);
     }
-    order += node.nodeValue.length;
   }
   return null;
 }
@@ -306,12 +304,12 @@ function applyHighlights() {
   for (const annotation of activeAnnotations) {
     const card = els.sectionList.querySelector(`.knowledge-card[data-note-id="${CSS.escape(annotation.noteId)}"]`);
     if (!card) continue;
-    const match = findTextRange(card, annotation.selectedText, annotation.matchIndex);
-    if (!match) continue;
+    const range = findTextRange(card, annotation.selectedText, annotation.matchIndex);
+    if (!range) continue;
     resolvedHighlights.push({
       annotation,
-      range: match.range,
-      order: getRangeDocumentOrder(match.range),
+      range,
+      order: getRangeDocumentOrder(range),
     });
   }
   resolvedHighlights.sort((left, right) => right.order - left.order);
