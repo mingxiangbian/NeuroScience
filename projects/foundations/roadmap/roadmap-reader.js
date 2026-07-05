@@ -144,6 +144,7 @@ function renderAnnotationToolbar(context) {
     <button type="button" data-annotation-mode="highlight">高亮</button>
     <button type="button" data-annotation-mode="note">笔记</button>
   `;
+  toolbar.style.position = "fixed";
   toolbar.style.left = `${Math.max(12, context.rect.left + context.rect.width / 2)}px`;
   toolbar.style.top = `${Math.max(12, context.rect.top - 46)}px`;
   toolbar.querySelectorAll("[data-annotation-mode]").forEach((button) => {
@@ -670,12 +671,14 @@ function bindEvents() {
     requestAnimationFrame(() => {
       const context = getSelectionAnnotationContext();
       if (context) renderAnnotationToolbar(context);
+      else hideAnnotationToolbar();
     });
   });
 
   els.main.addEventListener("keyup", () => {
     const context = getSelectionAnnotationContext();
     if (context) renderAnnotationToolbar(context);
+    else hideAnnotationToolbar();
   });
 
   document.addEventListener("mousedown", (event) => {
