@@ -198,14 +198,17 @@ function buildModule([id, title]) {
   return record;
 }
 
+const modules = MODULES.map(buildModule);
+const latestDate = modules.map((module) => module.lastUpdated).sort().at(-1);
+
 const roadmapData = {
-  generatedAt: new Date().toISOString(),
+  generatedAt: `${latestDate}T00:00:00.000Z`,
   project: {
     id: "foundations",
     title: "基石",
     targetRole: "Agent / LLM Systems Engineer",
   },
-  modules: MODULES.map(buildModule),
+  modules,
 };
 
 mkdirSync(dirname(outputPath), { recursive: true });
