@@ -3,18 +3,56 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Research Projects | NeuroScience x AI</title>
+    <title>项目阁 | NeuroScience x AI</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='20' fill='%23f4efe3'/%3E%3Cpath fill='%231f2724' d='M39 12C22 21 14 34 14 49c0 16 9 29 25 35-8-13-10-25-5-36-5-10-3-22 5-36Z'/%3E%3Cpath fill='%231f2724' d='M57 12c17 9 25 22 25 37 0 16-9 29-25 35 8-13 10-25 5-36 5-10 3-22-5-36Z'/%3E%3C/svg%3E" />
     <style>
+      @font-face {
+        font-family: "WenXianGe Title";
+        src: url("../assets/fonts/MaShanZheng-WenXianGe.woff2") format("woff2");
+        font-display: swap;
+        font-style: normal;
+        font-weight: 400;
+      }
+
+      @font-face {
+        font-family: "WenXianGe Bookmark";
+        src: url("../assets/fonts/ZhiMangXing-Bookmark.woff2") format("woff2");
+        font-display: swap;
+        font-style: normal;
+        font-weight: 400;
+      }
+
       :root {
         color-scheme: light;
         --ink: #1f2724;
+        --ink-muted: rgba(31, 39, 36, 0.66);
         --paper: #f4efe3;
         --paper-soft: #fbf8ef;
         --paper-warm: #e8dcc8;
+        --paper-fiber: rgba(109, 88, 53, 0.032);
+        --paper-speck: rgba(49, 41, 30, 0.035);
+        --grid-line: rgba(31, 39, 36, 0.018);
         --edge: rgba(31, 39, 36, 0.18);
+        --edge-strong: rgba(31, 39, 36, 0.3);
         --blue: #2e6f77;
-        --shadow: rgba(42, 35, 25, 0.12);
+        --green: #517c57;
+        --dai-blue: #183c49;
+        --mist-jade: rgba(194, 221, 214, 0.36);
+        --ice-edge: rgba(255, 255, 255, 0.68);
+        --seal-red: #b24338;
+        --gold: #a47c38;
+        --ink-shadow: rgba(42, 35, 25, 0.14);
+        --title-calligraphy-font:
+          "WenXianGe Title", "Ma Shan Zheng", "HanziPen SC", "Hannotate SC",
+          "Kaiti SC", "STKaiti", "KaiTi", "Songti SC", serif;
+        --bookmark-calligraphy-font:
+          "WenXianGe Bookmark", "Zhi Mang Xing", "HanziPen SC",
+          "Hannotate SC", "Kaiti SC", "STKaiti", "KaiTi", "Songti SC",
+          serif;
+        --brush-font:
+          "HanziPen SC", "Hannotate SC", "Xingkai SC", "STXingkai",
+          "Kaiti SC", "STKaiti", "KaiTi", "FZKai-Z03", "Noto Serif CJK SC",
+          "Songti SC", "STSong", serif;
         font-family:
           "Inter", "SF Pro Display", "PingFang SC", "Noto Sans SC", system-ui,
           sans-serif;
@@ -27,27 +65,51 @@
       body {
         margin: 0;
         min-height: 100vh;
+        overflow-x: hidden;
         color: var(--ink);
         background:
-          linear-gradient(rgba(31, 39, 36, 0.045) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(31, 39, 36, 0.04) 1px, transparent 1px),
-          linear-gradient(145deg, var(--paper-soft) 0%, var(--paper) 58%, var(--paper-warm) 100%);
+          radial-gradient(circle at 14% 18%, var(--paper-speck) 0 0.7px, transparent 1px),
+          radial-gradient(circle at 78% 32%, rgba(164, 124, 56, 0.04) 0 0.8px, transparent 1.2px),
+          linear-gradient(var(--grid-line) 1px, transparent 1px),
+          linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+          radial-gradient(ellipse at 18% 76%, rgba(24, 60, 73, 0.09), transparent 34%),
+          radial-gradient(ellipse at 90% 22%, rgba(31, 39, 36, 0.075), transparent 31%),
+          linear-gradient(118deg, rgba(255, 252, 244, 0.42) 0%, transparent 46%),
+          linear-gradient(145deg, var(--paper-soft) 0%, var(--paper) 62%, var(--paper-warm) 100%);
         background-size:
-          68px 68px,
-          68px 68px,
+          42px 42px,
+          58px 58px,
+          74px 74px,
+          74px 74px,
+          auto,
+          auto,
+          auto,
           auto;
       }
 
-      body::before {
+      body::before,
+      body::after {
         position: fixed;
         inset: 0;
-        z-index: -1;
+        z-index: 0;
         content: "";
         pointer-events: none;
+      }
+
+      body::before {
         background:
-          repeating-linear-gradient(9deg, transparent 0 18px, rgba(107, 86, 52, 0.035) 18px 19px),
-          repeating-linear-gradient(91deg, transparent 0 32px, rgba(31, 39, 36, 0.026) 32px 33px);
+          repeating-linear-gradient(8deg, transparent 0 18px, var(--paper-fiber) 18px 19px),
+          repeating-linear-gradient(96deg, transparent 0 34px, rgba(31, 39, 36, 0.018) 34px 35px);
         mix-blend-mode: multiply;
+        opacity: 0.74;
+      }
+
+      body::after {
+        background:
+          radial-gradient(circle at 28% 22%, rgba(164, 124, 56, 0.045), transparent 22%),
+          radial-gradient(circle at 70% 74%, rgba(31, 39, 36, 0.03), transparent 26%),
+          linear-gradient(103deg, transparent 0 48%, rgba(24, 60, 73, 0.026) 68%, transparent 100%);
+        opacity: 0.68;
       }
 
       a {
@@ -55,9 +117,27 @@
       }
 
       .shell {
-        width: min(1120px, calc(100vw - 32px));
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) clamp(178px, 19vw, 238px);
+        grid-template-areas: "project-scroll title-axis";
+        align-items: center;
+        gap: clamp(34px, 7vw, 96px);
+        width: min(1180px, calc(100vw - 40px));
+        min-height: 100vh;
         margin: 0 auto;
-        padding: clamp(22px, 5vw, 56px) 0 48px;
+        padding: clamp(28px, 5vw, 64px) 0;
+      }
+
+      header {
+        grid-area: title-axis;
+        justify-self: end;
+      }
+
+      main {
+        grid-area: project-scroll;
+        min-width: 0;
       }
 
       .home-logo-link {
@@ -81,9 +161,16 @@
       }
 
       .title-x-mark {
+        width: 24px;
+        height: 20px;
+        flex: 0 0 auto;
+        overflow: visible;
+        color: var(--ink);
+      }
+
+      .home-logo-link .title-x-mark {
         width: 100%;
         height: 100%;
-        overflow: visible;
       }
 
       .title-x-left-bleed,
@@ -109,86 +196,318 @@
 
       .hero {
         display: grid;
-        gap: 18px;
-        padding: clamp(20px, 5vw, 48px) 0 clamp(22px, 4vw, 38px);
+        justify-items: center;
+        align-content: center;
+        gap: clamp(18px, 3vw, 34px);
+        min-height: min(76vh, 640px);
+        padding: 0;
       }
 
       h1 {
-        max-width: 900px;
+        display: block;
+        max-width: none;
+        max-height: min(70vh, 620px);
         margin: 0;
-        font-family: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
-        font-size: 104px;
-        font-weight: 760;
+        font-family: var(--title-calligraphy-font);
+        font-size: clamp(66px, 8vw, 116px);
+        font-weight: 400;
+        font-synthesis-weight: none;
         letter-spacing: 0;
-        line-height: 0.96;
-        overflow-wrap: anywhere;
-        word-break: break-word;
+        line-height: 0.94;
+        text-shadow:
+          0 0 0.5px rgba(31, 39, 36, 0.34),
+          0 6px 20px rgba(31, 39, 36, 0.08);
+        filter: drop-shadow(0 0 0.45px rgba(31, 39, 36, 0.42));
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        white-space: nowrap;
+      }
+
+      .title-line {
+        display: block;
       }
 
       .project-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 430px));
-        gap: 14px;
+        display: flex;
+        flex-flow: row-reverse wrap;
+        align-items: center;
+        justify-content: flex-start;
+        gap: clamp(18px, 3vw, 32px);
+        min-height: min(72vh, 560px);
       }
 
       .project-card {
+        --card-lift: 0px;
+        position: relative;
+        isolation: isolate;
         display: grid;
-        min-height: 172px;
-        align-content: end;
-        border: 1px solid var(--edge);
-        border-radius: 8px;
-        background: rgba(251, 248, 239, 0.72);
-        padding: 18px;
+        width: clamp(96px, 9vw, 124px);
+        height: clamp(360px, 62vh, 500px);
+        place-items: stretch center;
+        overflow: hidden;
+        border: 0;
+        border-radius: 7px 7px 4px 4px;
+        background:
+          radial-gradient(circle at 50% 12%, rgba(255, 255, 255, 0.5), transparent 28%),
+          linear-gradient(90deg, transparent 0 47%, rgba(255, 255, 255, 0.28) 49% 51%, transparent 53% 100%),
+          linear-gradient(162deg, rgba(227, 245, 239, 0.48), rgba(185, 211, 208, 0.24) 48%, rgba(246, 240, 226, 0.28)),
+          var(--mist-jade);
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 92%, 0 100%);
+        padding: clamp(92px, 13vh, 112px) 16px clamp(50px, 6vh, 66px);
         color: inherit;
         text-decoration: none;
+        backdrop-filter: blur(26px) saturate(1.28);
+        -webkit-backdrop-filter: blur(26px) saturate(1.28);
         box-shadow:
-          inset 0 0 0 1px rgba(255, 252, 244, 0.54),
-          0 18px 42px var(--shadow);
+          inset 0 0 0 1px var(--ice-edge),
+          inset 0 1px 0 rgba(255, 255, 255, 0.86),
+          inset 0 -48px 86px rgba(24, 60, 73, 0.1),
+          inset 12px 0 24px rgba(255, 255, 255, 0.14),
+          inset -10px 0 22px rgba(24, 60, 73, 0.045),
+          0 36px 104px var(--ink-shadow),
+          0 12px 34px rgba(24, 60, 73, 0.1);
         transition:
           transform 160ms ease,
-          border-color 160ms ease,
-          background 160ms ease;
+          background 160ms ease,
+          box-shadow 160ms ease;
+        transform: translateY(var(--card-lift));
+      }
+
+      .project-card::before {
+        position: absolute;
+        top: 60px;
+        left: 50%;
+        z-index: 3;
+        width: 20px;
+        aspect-ratio: 1;
+        border-radius: 2px;
+        content: "";
+        background:
+          radial-gradient(circle at 32% 28%, rgba(214, 93, 72, 0.82), transparent 58%),
+          linear-gradient(135deg, var(--seal-red), rgba(112, 38, 34, 0.78));
+        box-shadow:
+          0 0 0 1px rgba(112, 38, 34, 0.1),
+          0 10px 22px rgba(178, 67, 56, 0.12);
+        opacity: 0.88;
+        transform: translateX(-50%) rotate(-2deg);
+      }
+
+      .project-card::after {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        content: "";
+        pointer-events: none;
+        background:
+          radial-gradient(circle at 50% 24px, rgba(31, 39, 36, 0.2) 0 3px, rgba(255, 255, 255, 0.7) 3.8px 7.5px, rgba(24, 60, 73, 0.12) 8px 9px, transparent 9.5px),
+          radial-gradient(circle at 50% 42px, rgba(112, 38, 34, 0.5) 0 2.5px, rgba(255, 255, 255, 0.26) 2.6px 4px, transparent 4.2px),
+          linear-gradient(90deg, transparent calc(50% - 0.65px), rgba(112, 38, 34, 0.42) calc(50% - 0.65px) calc(50% + 0.65px), transparent calc(50% + 0.65px)),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.2), transparent 16% 82%, rgba(255, 255, 255, 0.15)),
+          linear-gradient(90deg, transparent 0 47%, rgba(24, 60, 73, 0.035) 49.6% 50.4%, transparent 53% 100%),
+          repeating-linear-gradient(12deg, transparent 0 16px, rgba(109, 88, 53, 0.026) 16px 17px),
+          radial-gradient(circle at 50% 44%, rgba(255, 255, 255, 0.34), transparent 58%);
+        background-repeat:
+          no-repeat,
+          no-repeat,
+          no-repeat,
+          repeat,
+          no-repeat,
+          repeat,
+          no-repeat;
+        background-size:
+          auto,
+          auto,
+          100% 54px,
+          auto,
+          100% calc(100% - 120px),
+          auto,
+          auto;
+        background-position:
+          center top,
+          center top,
+          center top,
+          center center,
+          center 74px,
+          center center,
+          center center;
+        mix-blend-mode: multiply;
+        opacity: 0.7;
+      }
+
+      .project-card:nth-child(3n + 2) {
+        --card-lift: -18px;
+      }
+
+      .project-card:nth-child(3n) {
+        --card-lift: 14px;
       }
 
       .project-card:hover {
-        border-color: rgba(46, 111, 119, 0.42);
-        background: rgba(251, 248, 239, 0.86);
-        transform: translateY(-2px);
+        background:
+          radial-gradient(circle at 50% 12%, rgba(255, 255, 255, 0.62), transparent 28%),
+          linear-gradient(90deg, transparent 0 47%, rgba(255, 255, 255, 0.34) 49% 51%, transparent 53% 100%),
+          linear-gradient(162deg, rgba(231, 248, 242, 0.54), rgba(185, 211, 208, 0.3) 48%, rgba(246, 240, 226, 0.34)),
+          rgba(194, 221, 214, 0.42);
+        box-shadow:
+          inset 0 0 0 1px rgba(255, 255, 255, 0.74),
+          inset 0 1px 0 rgba(255, 255, 255, 0.9),
+          inset 0 -48px 86px rgba(24, 60, 73, 0.11),
+          inset 12px 0 24px rgba(255, 255, 255, 0.18),
+          inset -10px 0 22px rgba(24, 60, 73, 0.055),
+          0 42px 112px rgba(42, 35, 25, 0.18),
+          0 14px 38px rgba(24, 60, 73, 0.12);
+        transform: translateY(calc(var(--card-lift) - 3px));
       }
 
       .project-card h2 {
+        position: relative;
+        z-index: 1;
+        align-self: center;
+        max-width: none;
+        max-height: calc(100% - 28px);
         margin: 0;
-        font-family: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
-        font-size: 34px;
-        font-weight: 650;
+        color: var(--dai-blue);
+        font-family: var(--bookmark-calligraphy-font);
+        font-size: clamp(25px, 2.4vw, 34px);
+        font-weight: 400;
+        font-synthesis-weight: none;
         letter-spacing: 0;
-        line-height: 1.08;
-        overflow-wrap: anywhere;
-        word-break: break-word;
+        line-height: 1;
+        text-align: center;
+        text-shadow: 0 0 0.45px rgba(24, 60, 73, 0.18);
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        white-space: nowrap;
+        overflow-wrap: normal;
+        word-break: normal;
       }
 
-      @media (max-width: 900px) {
-        h1 {
-          font-size: 54px;
-        }
+      .empty {
+        border: 1px dashed var(--edge-strong);
+        border-radius: 8px;
+        background: rgba(251, 248, 239, 0.48);
+        padding: 18px;
+        color: var(--ink-muted);
+        line-height: 1.7;
       }
 
-      @media (max-width: 720px) {
+      [hidden] {
+        display: none !important;
+      }
+
+      @media (min-width: 681px) and (max-width: 980px) {
         .shell {
-          width: calc(100vw - 24px);
-          padding-top: 14px;
+          grid-template-columns: minmax(0, 1fr) clamp(96px, 13vw, 132px);
+          gap: clamp(22px, 5vw, 48px);
+          width: min(920px, calc(100vw - 32px));
+        }
+
+        .hero {
+          min-height: min(70vh, 600px);
+          gap: clamp(14px, 2.4vw, 24px);
+        }
+
+        .home-logo-link {
+          width: clamp(52px, 7vw, 68px);
+          height: clamp(44px, 5.8vw, 56px);
+        }
+
+        h1 {
+          font-size: clamp(68px, 9vw, 88px);
         }
 
         .project-grid {
-          grid-template-columns: minmax(0, 1fr);
+          min-height: min(70vh, 540px);
+        }
+
+        .project-card {
+          width: clamp(96px, 12vw, 112px);
+          height: clamp(360px, 62vh, 496px);
         }
 
         .project-card h2 {
-          font-size: 28px;
+          font-size: clamp(25px, 3.1vw, 30px);
+        }
+      }
+
+      @media (max-width: 680px) {
+        .shell {
+          display: block;
+          width: calc(100vw - 24px);
+          max-width: 640px;
+          min-height: 100vh;
+          padding: 24px 0 48px;
+        }
+
+        header {
+          width: 100%;
+          justify-self: auto;
+        }
+
+        main {
+          width: 100%;
+        }
+
+        .hero {
+          justify-items: center;
+          min-height: auto;
+          gap: 16px;
+          padding: 0 0 30px;
+        }
+
+        .home-logo-link {
+          width: 58px;
+          height: 48px;
+        }
+
+        h1 {
+          display: flex;
+          flex-wrap: wrap;
+          column-gap: 0.28em;
+          max-width: 100%;
+          max-height: none;
+          font-size: clamp(42px, 13vw, 56px);
+          line-height: 0.98;
+          writing-mode: horizontal-tb;
+          text-orientation: mixed;
+          justify-content: center;
+          white-space: normal;
+        }
+
+        .title-line {
+          display: inline-block;
+        }
+
+        .project-grid {
+          flex-direction: column;
+          flex-wrap: nowrap;
+          align-items: center;
+          justify-content: center;
+          min-height: 0;
+          gap: 22px;
+        }
+
+        .project-card {
+          width: clamp(108px, 32vw, 132px);
+          height: clamp(360px, 58vh, 440px);
+          padding-top: 96px;
+        }
+
+        .project-card:nth-child(3n + 2),
+        .project-card:nth-child(3n) {
+          --card-lift: 0px;
+        }
+
+        .project-card h2 {
+          font-size: clamp(24px, 6.3vw, 29px);
         }
       }
 
       @media (max-width: 420px) {
+        .shell {
+          width: calc(100vw - 24px);
+        }
+
         h1 {
           font-size: 48px;
         }
@@ -206,17 +525,70 @@
               <path class="title-x-right-core" d="M55 13 C70 22 78 35 78 49 C78 63 69 76 55 83 C61 71 63 59 58 48 C63 38 61 25 55 13 Z" />
             </svg>
           </a>
-          <h1 id="page-title">Research Projects</h1>
+          <h1 id="page-title"><span class="title-line">项目阁</span></h1>
         </section>
       </header>
 
       <main aria-label="Research project modules">
-        <section class="project-grid">
-          <a class="project-card" href="brain-memory-for-ai-agents/">
-            <h2>Brain Memory for AI Agents</h2>
-          </a>
-        </section>
+        <div id="project-empty" class="empty" hidden>还没有登记 research 项目。</div>
+        <section id="project-grid" class="project-grid" aria-live="polite"></section>
       </main>
     </div>
+
+    <script type="module">
+      const MANIFEST_LABEL = "projects/manifest.json";
+      const MANIFEST_URL = "manifest.json";
+
+      const els = {
+        grid: document.getElementById("project-grid"),
+        empty: document.getElementById("project-empty"),
+      };
+
+      function escapeHtml(value) {
+        return String(value ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#39;");
+      }
+
+      function normalizeProject(record) {
+        return {
+          title: String(record.title ?? "Untitled project"),
+          folder: String(record.folder ?? ""),
+        };
+      }
+
+      function renderProjects(projects) {
+        els.grid.replaceChildren();
+        els.empty.hidden = projects.length !== 0;
+
+        for (const project of projects) {
+          const card = document.createElement("a");
+          card.className = "project-card";
+          card.href = project.folder;
+          card.innerHTML = `
+            <h2>${escapeHtml(project.title)}</h2>
+          `;
+          els.grid.append(card);
+        }
+      }
+
+      async function loadProjects() {
+        try {
+          const response = await fetch(MANIFEST_URL);
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          const records = await response.json();
+          if (!Array.isArray(records)) throw new Error("manifest is not an array");
+          renderProjects(records.map(normalizeProject));
+        } catch (error) {
+          els.empty.hidden = false;
+          els.empty.textContent = `无法加载 ${MANIFEST_LABEL}: ${error.message}`;
+        }
+      }
+
+      void loadProjects();
+    </script>
   </body>
 </html>

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>基石</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='20' fill='%23f4efe3'/%3E%3Cpath fill='%231f2724' d='M39 12C22 21 14 34 14 49c0 16 9 29 25 35-8-13-10-25-5-36-5-10-3-22 5-36Z'/%3E%3Cpath fill='%231f2724' d='M57 12c17 9 25 22 25 37 0 16-9 29-25 35 8-13 10-25 5-36 5-10 3-22-5-36Z'/%3E%3C/svg%3E" />
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #1f2724;
+        --ink-muted: rgba(31, 39, 36, 0.64);
+        --paper: #f4efe3;
+        --paper-soft: #fbf8ef;
+        --paper-warm: #e8dcc8;
+        --line: rgba(31, 39, 36, 0.14);
+        --blue: #183c49;
+        font-family:
+          "Inter", "SF Pro Display", "PingFang SC", "Noto Sans SC", system-ui,
+          sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 16% 12%, rgba(164, 124, 56, 0.045), transparent 22%),
+          radial-gradient(circle at 86% 26%, rgba(24, 60, 73, 0.075), transparent 30%),
+          linear-gradient(rgba(31, 39, 36, 0.026) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(31, 39, 36, 0.022) 1px, transparent 1px),
+          linear-gradient(145deg, var(--paper-soft), var(--paper) 64%, var(--paper-warm));
+        background-size:
+          auto,
+          auto,
+          72px 72px,
+          72px 72px,
+          auto;
+      }
+
+      body::before {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        content: "";
+        pointer-events: none;
+        background:
+          repeating-linear-gradient(8deg, transparent 0 18px, rgba(109, 88, 53, 0.03) 18px 19px),
+          repeating-linear-gradient(96deg, transparent 0 34px, rgba(31, 39, 36, 0.018) 34px 35px);
+        mix-blend-mode: multiply;
+        opacity: 0.72;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .shell {
+        display: grid;
+        align-content: center;
+        gap: 34px;
+        width: min(860px, calc(100vw - 32px));
+        min-height: 100vh;
+        margin: 0 auto;
+        padding: 48px 0;
+      }
+
+      .back-link {
+        width: max-content;
+        color: var(--ink-muted);
+        text-decoration: none;
+      }
+
+      .back-link:hover {
+        color: var(--blue);
+      }
+
+      h1 {
+        margin: 0;
+        font-family: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
+        font-size: clamp(72px, 13vw, 132px);
+        font-weight: 760;
+        letter-spacing: 0;
+        line-height: 0.92;
+      }
+
+      .empty {
+        max-width: 640px;
+        border-top: 1px solid var(--line);
+        padding-top: 22px;
+        color: var(--ink-muted);
+        line-height: 1.8;
+      }
+    </style>
+  </head>
+  <body data-page="foundations-project">
+    <main class="shell">
+      <a class="back-link" href="../">返回项目阁</a>
+      <header>
+        <h1>基石</h1>
+      </header>
+      <section class="empty" aria-label="Project status">
+        这里会放面试准备的知识、方向、技巧和复盘材料。
+      </section>
+    </main>
+  </body>
+</html>
