@@ -108,6 +108,7 @@ function getSelectionAnnotationContext() {
   const range = selection.getRangeAt(0);
   const selectedText = selection.toString().trim();
   if (selectedText.length < 2) return null;
+  if (range.startContainer !== range.endContainer) return null;
 
   const startCard = getKnowledgeCardFromNode(range.startContainer);
   const endCard = getKnowledgeCardFromNode(range.endContainer);
@@ -701,6 +702,7 @@ function openModule(moduleId, { syncUrl = true, targetSectionId = "" } = {}) {
   state.currentModule = nextModule;
   state.activeKnowledgeNoteId = "";
   hideAnnotationDeletePopover();
+  hideAnnotationToolbar();
   if (syncUrl) updateUrl(nextModule.id);
   renderModuleNav();
   renderCurrentModule();
@@ -910,6 +912,7 @@ function bindEvents() {
     }
     if (event.key === "Escape") {
       hideAnnotationDeletePopover();
+      hideAnnotationToolbar();
       closeSearchModal();
       els.shell.classList.remove("is-mobile-left-open", "is-mobile-note-open");
     }
