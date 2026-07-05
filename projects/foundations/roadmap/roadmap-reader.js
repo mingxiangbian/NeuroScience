@@ -575,6 +575,10 @@ function renderCurrentModule() {
       <p>这个模块还没有可展示内容。</p>
     </article>
   `;
+
+  els.sectionList.querySelectorAll(".knowledge-card").forEach((card) => {
+    card.addEventListener("click", () => setActiveKnowledgeContext(card.dataset.noteId));
+  });
 }
 
 function getKnowledgeNoteById(module, noteId) {
@@ -588,6 +592,26 @@ function getKnowledgeNoteForSection(module, sectionId) {
   return getKnowledgeNoteById(module, state.activeKnowledgeNoteId) ?? module.knowledgeNotes?.[0];
 }
 
+function renderLocalAnnotations(note) {
+  if (!state.currentModule || !note) return "";
+  const annotations = getAnnotationsForNote(state.currentModule.id, note.id)
+    .filter((annotation) => annotation.mode === "note" || annotation.note || !annotation.highlightActive);
+  if (annotations.length === 0) return "";
+
+  return `
+    <section class="note-block local-annotation-list">
+      <h3 class="note-group-title">本地学习笔记</h3>
+      ${annotations.map((annotation) => `
+        <article class="local-annotation${annotation.highlightActive ? "" : " is-detached"}" data-annotation-id="${escapeHtml(annotation.id)}">
+          <p class="local-annotation-quote">${escapeHtml(annotation.selectedText)}</p>
+          <textarea class="local-annotation-editor" rows="4" data-annotation-editor="${escapeHtml(annotation.id)}" placeholder="写下理解、反思或面试表达">${escapeHtml(annotation.note)}</textarea>
+          ${annotation.highlightActive ? "" : `<p class="local-annotation-status">原文高亮已删除，笔记仍保留。</p>`}
+        </article>
+      `).join("")}
+    </section>
+  `;
+}
+
 function renderContextualNotePanel(note) {
   const module = state.currentModule;
   const noteGroups = note?.groups?.length
@@ -599,7 +623,7 @@ function renderContextualNotePanel(note) {
     `).join("")
     : note?.body ? `<section class="note-block"><div class="note-group-body">${note.body}</div></section>` : "";
   const renderedNotes = note
-    ? `<article class="note-context"><h3>${escapeHtml(note.title)}</h3>${noteGroups}</article>`
+    ? `<article class="note-context"><h3>${escapeHtml(note.title)}</h3>${noteGroups}${renderLocalAnnotations(note)}</article>`
     : `<p class="note-empty">这个模块没有独立知识笔记；选择具体能力模块后，右栏会同步显示当前知识卡。</p>`;
 
   const label = `学习过程记录 · ${module.title}`;
@@ -607,6 +631,13 @@ function renderContextualNotePanel(note) {
   els.mobileNoteLabel.textContent = label;
   els.noteSurface.innerHTML = renderedNotes;
   els.mobileNoteSurface.innerHTML = renderedNotes;
+  for (const surface of [els.noteSurface, els.mobileNoteSurface]) {
+    surface.querySelectorAll("[data-annotation-editor]").forEach((editor) => {
+      editor.addEventListener("input", () => {
+        updateAnnotationNote(editor.dataset.annotationEditor, editor.value);
+      });
+    });
+  }
 }
 
 function setActiveKnowledgeContext(sectionId) {
