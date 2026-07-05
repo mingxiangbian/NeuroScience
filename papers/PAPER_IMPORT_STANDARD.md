@@ -375,8 +375,9 @@ chunk 边界优先级：
 
 - 前端可以用 `localStorage` 保存 `paperReader.annotations.v1.<projectId>`。
 - annotation 可以记录 `paperId`、`chunkId`、`selectedText`、`matchIndex`、`mode`、`note` 和 `highlightActive`。
+- 当前 chunk 的自由笔记可以记录在同一个本地 store 的 `chunkNotes` 中，key 使用 `paperId:chunkId`。
 - `Highlight` 只恢复原文高亮；`Note` 同时把选中原文作为引用放入右侧平行笔记区。
-- 本地 annotation 不写回 `notes.json`，也不要求进入 GitHub commit。
+- 本地 annotation 和自由笔记不写回 `notes.json`，也不要求进入 GitHub commit。
 - 如果需要长期沉淀，后续应通过单独导出/导入或人工整理流程完成。
 
 ## embeddings.json Contract

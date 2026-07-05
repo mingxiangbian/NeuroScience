@@ -92,7 +92,8 @@ function createEmptyAnnotationStore() {
   return {
     version: 1,
     projectId: PROJECT_ID,
-    items: []
+    items: [],
+    chunkNotes: {}
   };
 }
 
@@ -105,7 +106,8 @@ function loadAnnotations() {
     return {
       version: 1,
       projectId: PROJECT_ID,
-      items: parsed.items.filter((item) => item && item.projectId === PROJECT_ID)
+      items: parsed.items.filter((item) => item && item.projectId === PROJECT_ID),
+      chunkNotes: parsed.chunkNotes && typeof parsed.chunkNotes === "object" ? parsed.chunkNotes : {}
     };
   } catch (error) {
     console.warn("Unable to load local annotations", error);
@@ -123,6 +125,31 @@ function saveAnnotations(annotations = state.annotations) {
 
 function getAnnotationsForChunk(paperId, chunkId) {
   return state.annotations.items.filter((item) => item.paperId === paperId && item.chunkId === chunkId);
+}
+
+function getLocalChunkNoteKey(paperId, chunkId) {
+  return `${paperId}:${chunkId}`;
+}
+
+function getLocalChunkNote(paperId, chunkId) {
+  if (!paperId || !chunkId) return "";
+  return state.annotations.chunkNotes?.[getLocalChunkNoteKey(paperId, chunkId)] ?? "";
+}
+
+function updateLocalChunkNote(paperId, chunkId, value) {
+  if (!paperId || !chunkId) return;
+  if (!state.annotations.chunkNotes) state.annotations.chunkNotes = {};
+  const key = getLocalChunkNoteKey(paperId, chunkId);
+  if (value.trim()) {
+    state.annotations.chunkNotes[key] = value;
+  } else {
+    delete state.annotations.chunkNotes[key];
+  }
+  saveAnnotations();
+  document.querySelectorAll(`.note-free-editor[data-local-note-paper-id="${CSS.escape(paperId)}"][data-local-note-chunk-id="${CSS.escape(chunkId)}"]`)
+    .forEach((editor) => {
+      if (editor.value !== value) editor.value = value;
+    });
 }
 
 function getSourceParagraphFromNode(node) {
@@ -624,8 +651,13 @@ function renderChunks(reading) {
   observeChunks(reading);
 }
 
-function renderNoteSurface(surface, note, annotations = []) {
+function renderNoteSurface(surface, note, annotations = [], chunkId = "") {
   const baseNote = note ? `<p>${renderMultilineText(note)}</p>` : "";
+  const paperId = state.currentPaper?.id ?? "";
+  const localNote = getLocalChunkNote(paperId, chunkId);
+  const freeEditor = paperId && chunkId
+    ? `<textarea class="note-free-editor" data-local-note-paper-id="${escapeHtml(paperId)}" data-local-note-chunk-id="${escapeHtml(chunkId)}" aria-label="编辑当前段落笔记">${escapeHtml(localNote)}</textarea>`
+    : "";
   const annotationMarkup = annotations
     .filter((annotation) => annotation.mode === "note")
     .map((annotation) => `
@@ -635,8 +667,13 @@ function renderNoteSurface(surface, note, annotations = []) {
       </article>
     `)
     .join("");
-  surface.innerHTML = `${baseNote}${annotationMarkup}`;
+  surface.innerHTML = `${baseNote}${freeEditor}${annotationMarkup}`;
   surface.classList.remove("is-changing");
+  surface.querySelectorAll(".note-free-editor").forEach((editor) => {
+    editor.addEventListener("input", () => {
+      updateLocalChunkNote(editor.dataset.localNotePaperId, editor.dataset.localNoteChunkId, editor.value);
+    });
+  });
   surface.querySelectorAll(".note-annotation-editor").forEach((editor) => {
     editor.addEventListener("input", () => updateAnnotationNote(editor.dataset.annotationNoteId, editor.value));
   });
@@ -651,7 +688,7 @@ function updateNoteSurface(chunkId, note) {
     : [];
   for (const surface of [els.noteSurface, els.mobileNoteSurface]) {
     surface.classList.add("is-changing");
-    window.setTimeout(() => renderNoteSurface(surface, note, annotations), 90);
+    window.setTimeout(() => renderNoteSurface(surface, note, annotations, chunkId), 90);
   }
 }
 
@@ -949,16 +986,24 @@ function renderAnnotationToolbar() {
   toolbar.style.top = `${Math.max(12, context.rect.top - 48)}px`;
 }
 
+function renderAnnotationDeleteActions(popover, annotation) {
+  popover.innerHTML = annotation?.mode === "note"
+    ? `
+      <button type="button" data-delete-behavior="highlight-only">只删除高亮，保留笔记</button>
+      <button type="button" data-delete-behavior="all">高亮和批注一起删除</button>
+      <button type="button" data-delete-behavior="cancel">取消</button>
+    `
+    : `
+      <button type="button" data-delete-behavior="all">取消高亮</button>
+      <button type="button" data-delete-behavior="cancel">取消</button>
+    `;
+}
+
 function ensureAnnotationDeletePopover() {
   if (state.annotationDeletePopover) return state.annotationDeletePopover;
   const popover = document.createElement("div");
   popover.className = "annotation-delete-popover";
   popover.hidden = true;
-  popover.innerHTML = `
-    <button type="button" data-delete-behavior="highlight-only">只删除高亮，保留笔记</button>
-    <button type="button" data-delete-behavior="all">高亮和批注一起删除</button>
-    <button type="button" data-delete-behavior="cancel">取消</button>
-  `;
   popover.addEventListener("click", (event) => {
     const button = event.target.closest("[data-delete-behavior]");
     if (!button) return;
@@ -978,8 +1023,11 @@ function hideAnnotationDeletePopover() {
 }
 
 function showAnnotationDeletePopover(annotationId, rect) {
+  const annotation = state.annotations.items.find((item) => item.id === annotationId);
+  if (!annotation) return;
   const popover = ensureAnnotationDeletePopover();
   popover.dataset.annotationId = annotationId;
+  renderAnnotationDeleteActions(popover, annotation);
   popover.hidden = false;
   popover.style.left = `${Math.min(window.innerWidth - 250, Math.max(12, rect.left))}px`;
   popover.style.top = `${Math.min(window.innerHeight - 130, Math.max(12, rect.bottom + 8))}px`;

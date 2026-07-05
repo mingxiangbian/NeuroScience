@@ -184,6 +184,7 @@ assert.match(css, /\.note-annotation/, "reader CSS should style local annotation
 assert.match(css, /\.note-annotation-quote/, "right-side copied source quotes should use a distinct quote style");
 assert.match(css, /\.note-annotation-editor/, "right-side annotation notes should be editable");
 assert.match(css, /\.note-annotation\.is-detached/, "notes retained after highlight deletion should show detached state");
+assert.match(css, /\.note-free-editor/, "right-side note panel should expose a free local note editor");
 
 assert.match(js, /const PROJECT_ID = "brain-memory-for-ai-agents"/, "reader JS should bind the current project id for this project instance");
 assert.match(js, /const SEARCH_DEBOUNCE_MS = 260/, "search debounce duration should stay lightweight");
@@ -254,13 +255,19 @@ assert.match(js, /function getAnnotationStorageKey/, "reader should isolate loca
 assert.match(js, /function loadAnnotations/, "reader should load local annotations from localStorage");
 assert.match(js, /function saveAnnotations/, "reader should save local annotations to localStorage");
 assert.match(js, /function getAnnotationsForChunk/, "reader should filter annotations by active paper and chunk");
+assert.match(js, /function getLocalChunkNote/, "reader should load free local notes for the active chunk");
+assert.match(js, /function updateLocalChunkNote/, "reader should save free local notes while editing the right note panel");
 assert.match(js, /function createAnnotationFromSelection/, "reader should create annotations from selected source text");
 assert.match(js, /function applyHighlights/, "reader should restore source highlights after render");
 assert.match(js, /function updateAnnotationNote/, "reader should update annotation notes live");
 assert.match(js, /function deleteAnnotation/, "reader should support deleting highlights and annotations");
+assert.match(js, /function renderAnnotationDeleteActions/, "reader should render delete actions according to highlight type");
 assert.match(js, /\.chunk-source-card/, "annotation selection should be scoped to English source cards");
+assert.match(js, /note-free-editor/, "note surface should render a free editor without requiring a source highlight");
+assert.match(js, /data-local-note-chunk-id/, "free note editor should bind to the active chunk id");
 assert.match(js, /Highlight/, "selection toolbar should expose a Highlight action");
 assert.match(js, /Note/, "selection toolbar should expose a Note action");
+assert.match(js, /取消高亮/, "pure highlights should expose a clear cancel highlight action");
 assert.match(js, /只删除高亮，保留笔记/, "delete confirmation should allow keeping the note");
 assert.match(js, /高亮和批注一起删除/, "delete confirmation should allow deleting both highlight and note");
 assert.doesNotMatch(js, /githubToken|Authorization|contents\/|repos\/|gitHub/i, "local annotations should not write to GitHub");
