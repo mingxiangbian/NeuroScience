@@ -310,6 +310,7 @@ for (const paperId of readingPaperIds) {
 
   const chunkIds = new Set();
   const noteChunkIds = new Set(notesData.notes.map((note) => note.chunkId));
+  const notesByChunkId = new Map(notesData.notes.map((note) => [note.chunkId, note.note]));
   const embeddingChunkIds = new Set(embeddingsData.items.map((item) => item.chunkId));
   const figureIds = new Set(figuresData.figures.map((figure) => figure.id));
   const renderedFigures = figuresData.figures.filter((item) => item.file);
@@ -343,6 +344,7 @@ for (const paperId of readingPaperIds) {
     assert.equal(typeof chunk.zhExplanation, "string", `${paperId} ${chunk.id} should include zhExplanation`);
     assert.ok(chunk.zhExplanation.trim().length > 20, `${paperId} ${chunk.id} zhExplanation should be substantive`);
     assert.equal(noteChunkIds.has(chunk.id), true, `${paperId} ${chunk.id} should have a parallel note entry, even if blank`);
+    assert.equal(notesByChunkId.get(chunk.id), "", `${paperId} ${chunk.id} parallel note should start blank`);
     assert.equal(embeddingChunkIds.has(chunk.id), true, `${paperId} ${chunk.id} should have an embedding vector`);
     assert.ok(Array.isArray(chunk.keywords), `${paperId} ${chunk.id} should include keywords`);
     if (chunk.blocks) {

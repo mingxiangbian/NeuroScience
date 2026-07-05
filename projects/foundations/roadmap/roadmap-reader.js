@@ -1,3 +1,5 @@
+const ANNOTATION_STORAGE_KEY = "foundationsReader.annotations.v1";
+
 const state = {
   data: null,
   currentModule: null,
@@ -5,6 +7,10 @@ const state = {
   activeSectionId: "",
   activeKnowledgeNoteId: "",
   sectionObserver: null,
+  annotations: { version: 1, items: [] },
+  pendingAnnotation: null,
+  annotationToolbar: null,
+  annotationDeletePopover: null,
 };
 
 const els = {
@@ -43,6 +49,282 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+}
+
+function createEmptyAnnotationStore() {
+  return {
+    version: 1,
+    items: [],
+  };
+}
+
+function loadAnnotations() {
+  try {
+    const raw = window.localStorage.getItem(ANNOTATION_STORAGE_KEY);
+    if (!raw) return createEmptyAnnotationStore();
+    const parsed = JSON.parse(raw);
+    if (!parsed || !Array.isArray(parsed.items)) return createEmptyAnnotationStore();
+    return {
+      version: 1,
+      items: parsed.items.filter((item) => item && item.projectId === "foundations"),
+    };
+  } catch (error) {
+    console.warn("Unable to load Foundations annotations", error);
+    return createEmptyAnnotationStore();
+  }
+}
+
+function saveAnnotations(annotations = state.annotations) {
+  try {
+    window.localStorage.setItem(ANNOTATION_STORAGE_KEY, JSON.stringify(annotations));
+  } catch (error) {
+    console.warn("Unable to save Foundations annotations", error);
+  }
+}
+
+function getAnnotationsForNote(moduleId, noteId) {
+  return state.annotations.items.filter((item) => item.moduleId === moduleId && item.noteId === noteId);
+}
+
+function getKnowledgeCardFromNode(node) {
+  const element = node?.nodeType === Node.ELEMENT_NODE ? node : node?.parentElement;
+  return element?.closest?.(".knowledge-card") ?? null;
+}
+
+function countTextOccurrences(text, needle) {
+  if (!needle) return 0;
+  let count = 0;
+  let index = text.indexOf(needle);
+  while (index !== -1) {
+    count += 1;
+    index = text.indexOf(needle, index + needle.length);
+  }
+  return count;
+}
+
+function getSelectionAnnotationContext() {
+  const selection = window.getSelection();
+  if (!selection || selection.rangeCount === 0 || selection.isCollapsed) return null;
+  const range = selection.getRangeAt(0);
+  const selectedText = selection.toString().trim();
+  if (selectedText.length < 2) return null;
+  if (range.startContainer !== range.endContainer) return null;
+
+  const startCard = getKnowledgeCardFromNode(range.startContainer);
+  const endCard = getKnowledgeCardFromNode(range.endContainer);
+  if (!startCard || startCard !== endCard) return null;
+
+  const noteId = startCard.dataset.noteId;
+  const moduleId = state.currentModule?.id;
+  if (!moduleId || !noteId) return null;
+
+  const beforeRange = document.createRange();
+  beforeRange.selectNodeContents(startCard);
+  beforeRange.setEnd(range.startContainer, range.startOffset);
+
+  return {
+    moduleId,
+    noteId,
+    selectedText,
+    matchIndex: countTextOccurrences(beforeRange.toString(), selectedText),
+    rect: range.getBoundingClientRect(),
+  };
+}
+
+function hideAnnotationToolbar() {
+  state.annotationToolbar?.remove();
+  state.annotationToolbar = null;
+  state.pendingAnnotation = null;
+}
+
+function renderAnnotationToolbar(context) {
+  hideAnnotationToolbar();
+  const toolbar = document.createElement("div");
+  toolbar.className = "annotation-toolbar";
+  toolbar.innerHTML = `
+    <button type="button" data-annotation-mode="highlight">高亮</button>
+    <button type="button" data-annotation-mode="note">笔记</button>
+  `;
+  toolbar.style.position = "fixed";
+  toolbar.style.left = `${Math.max(12, context.rect.left + context.rect.width / 2)}px`;
+  toolbar.style.top = `${Math.max(12, context.rect.top - 46)}px`;
+  toolbar.querySelectorAll("[data-annotation-mode]").forEach((button) => {
+    button.addEventListener("click", () => createAnnotationFromSelection(button.dataset.annotationMode));
+  });
+  document.body.append(toolbar);
+  state.annotationToolbar = toolbar;
+  state.pendingAnnotation = context;
+}
+
+function createAnnotationId() {
+  return `foundation-ann-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function createAnnotationFromSelection(mode) {
+  const context = state.pendingAnnotation;
+  if (!context?.moduleId || !context?.noteId) return;
+  const now = new Date().toISOString();
+  const annotation = {
+    id: createAnnotationId(),
+    projectId: "foundations",
+    moduleId: context.moduleId,
+    noteId: context.noteId,
+    selectedText: context.selectedText,
+    matchIndex: context.matchIndex,
+    mode: mode === "note" ? "note" : "highlight",
+    note: "",
+    highlightActive: true,
+    createdAt: now,
+    updatedAt: now,
+  };
+  state.annotations.items.push(annotation);
+  saveAnnotations();
+  window.getSelection()?.removeAllRanges();
+  hideAnnotationToolbar();
+  applyHighlights();
+  renderContextualNotePanel(getKnowledgeNoteById(state.currentModule, context.noteId));
+}
+
+function updateAnnotationNote(annotationId, value) {
+  const annotation = state.annotations.items.find((item) => item.id === annotationId);
+  if (!annotation) return;
+  annotation.note = value;
+  annotation.updatedAt = new Date().toISOString();
+  saveAnnotations();
+}
+
+function deleteAnnotation(annotationId, behavior) {
+  const annotation = state.annotations.items.find((item) => item.id === annotationId);
+  if (!annotation) return;
+  if (behavior === "highlight-only" && annotation.mode === "note") {
+    annotation.highlightActive = false;
+    annotation.updatedAt = new Date().toISOString();
+  } else {
+    state.annotations.items = state.annotations.items.filter((item) => item.id !== annotationId);
+  }
+  saveAnnotations();
+  hideAnnotationDeletePopover();
+  applyHighlights();
+  renderContextualNotePanel(getKnowledgeNoteById(state.currentModule, annotation.noteId));
+}
+
+function hideAnnotationDeletePopover() {
+  state.annotationDeletePopover?.remove();
+  state.annotationDeletePopover = null;
+}
+
+function showAnnotationDeletePopover(annotationId, rect) {
+  hideAnnotationDeletePopover();
+  const annotation = state.annotations.items.find((item) => item.id === annotationId);
+  if (!annotation) return;
+  const popover = document.createElement("div");
+  popover.className = "annotation-delete-popover";
+  const keepButton = annotation.mode === "note"
+    ? `<button type="button" data-delete-behavior="highlight-only">只删除高亮，保留笔记</button>`
+    : "";
+  popover.innerHTML = `
+    ${keepButton}
+    <button type="button" data-delete-behavior="all">高亮和笔记一起删除</button>
+    <button type="button" data-delete-behavior="cancel">取消</button>
+  `;
+  popover.style.position = "fixed";
+  popover.style.left = `${Math.max(12, rect.left)}px`;
+  popover.style.top = `${Math.max(12, rect.bottom + 8)}px`;
+  popover.querySelectorAll("[data-delete-behavior]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const behavior = button.dataset.deleteBehavior;
+      if (behavior === "cancel") {
+        hideAnnotationDeletePopover();
+        return;
+      }
+      deleteAnnotation(annotationId, behavior);
+    });
+  });
+  document.body.append(popover);
+  state.annotationDeletePopover = popover;
+}
+
+function getTextNodes(root) {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      if (node.parentElement?.closest(".knowledge-highlight")) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    },
+  });
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  return nodes;
+}
+
+function clearHighlights() {
+  els.sectionList.querySelectorAll(".knowledge-highlight").forEach((mark) => {
+    mark.replaceWith(document.createTextNode(mark.textContent));
+  });
+  els.sectionList.normalize();
+}
+
+function findTextRange(root, selectedText, matchIndex) {
+  if (!selectedText) return null;
+  const nodes = getTextNodes(root);
+  let occurrence = 0;
+  for (const node of nodes) {
+    let index = node.nodeValue.indexOf(selectedText);
+    while (index !== -1) {
+      if (occurrence === matchIndex) {
+        const range = document.createRange();
+        range.setStart(node, index);
+        range.setEnd(node, index + selectedText.length);
+        return range;
+      }
+      occurrence += 1;
+      index = node.nodeValue.indexOf(selectedText, index + selectedText.length);
+    }
+  }
+  return null;
+}
+
+function getRangeDocumentOrder(range) {
+  const nodes = getTextNodes(els.sectionList);
+  let order = 0;
+  for (const node of nodes) {
+    if (node === range.startContainer) return order + range.startOffset;
+    order += node.nodeValue.length;
+  }
+  return 0;
+}
+
+function applyHighlights() {
+  clearHighlights();
+  if (!state.currentModule) return;
+  const moduleId = state.currentModule.id;
+  const activeAnnotations = state.annotations.items.filter((item) => (
+    item.moduleId === moduleId && item.highlightActive
+  ));
+  const resolvedHighlights = [];
+  for (const annotation of activeAnnotations) {
+    const card = els.sectionList.querySelector(`.knowledge-card[data-note-id="${CSS.escape(annotation.noteId)}"]`);
+    if (!card) continue;
+    const range = findTextRange(card, annotation.selectedText, annotation.matchIndex);
+    if (!range) continue;
+    resolvedHighlights.push({
+      annotation,
+      range,
+      order: getRangeDocumentOrder(range),
+    });
+  }
+  resolvedHighlights.sort((left, right) => right.order - left.order);
+  for (const { annotation, range } of resolvedHighlights) {
+    const mark = document.createElement("mark");
+    mark.className = `knowledge-highlight${annotation.mode === "note" ? " is-note" : ""}`;
+    mark.dataset.annotationId = annotation.id;
+    mark.append(range.extractContents());
+    mark.addEventListener("click", (event) => {
+      event.stopPropagation();
+      showAnnotationDeletePopover(annotation.id, mark.getBoundingClientRect());
+    });
+    range.insertNode(mark);
+  }
 }
 
 function getInitialModuleId() {
@@ -294,6 +576,10 @@ function renderCurrentModule() {
       <p>这个模块还没有可展示内容。</p>
     </article>
   `;
+
+  els.sectionList.querySelectorAll(".knowledge-card").forEach((card) => {
+    card.addEventListener("click", () => setActiveKnowledgeContext(card.dataset.noteId));
+  });
 }
 
 function getKnowledgeNoteById(module, noteId) {
@@ -307,6 +593,26 @@ function getKnowledgeNoteForSection(module, sectionId) {
   return getKnowledgeNoteById(module, state.activeKnowledgeNoteId) ?? module.knowledgeNotes?.[0];
 }
 
+function renderLocalAnnotations(note) {
+  if (!state.currentModule || !note) return "";
+  const annotations = getAnnotationsForNote(state.currentModule.id, note.id)
+    .filter((annotation) => annotation.mode === "note" || annotation.note || !annotation.highlightActive);
+  if (annotations.length === 0) return "";
+
+  return `
+    <section class="note-block local-annotation-list">
+      <h3 class="note-group-title">本地学习笔记</h3>
+      ${annotations.map((annotation) => `
+        <article class="local-annotation${annotation.highlightActive ? "" : " is-detached"}" data-annotation-id="${escapeHtml(annotation.id)}">
+          <p class="local-annotation-quote">${escapeHtml(annotation.selectedText)}</p>
+          <textarea class="local-annotation-editor" rows="4" data-annotation-editor="${escapeHtml(annotation.id)}" placeholder="写下理解、反思或面试表达">${escapeHtml(annotation.note)}</textarea>
+          ${annotation.highlightActive ? "" : `<p class="local-annotation-status">原文高亮已删除，笔记仍保留。</p>`}
+        </article>
+      `).join("")}
+    </section>
+  `;
+}
+
 function renderContextualNotePanel(note) {
   const module = state.currentModule;
   const noteGroups = note?.groups?.length
@@ -318,7 +624,7 @@ function renderContextualNotePanel(note) {
     `).join("")
     : note?.body ? `<section class="note-block"><div class="note-group-body">${note.body}</div></section>` : "";
   const renderedNotes = note
-    ? `<article class="note-context"><h3>${escapeHtml(note.title)}</h3>${noteGroups}</article>`
+    ? `<article class="note-context"><h3>${escapeHtml(note.title)}</h3>${noteGroups}${renderLocalAnnotations(note)}</article>`
     : `<p class="note-empty">这个模块没有独立知识笔记；选择具体能力模块后，右栏会同步显示当前知识卡。</p>`;
 
   const label = `学习过程记录 · ${module.title}`;
@@ -326,6 +632,20 @@ function renderContextualNotePanel(note) {
   els.mobileNoteLabel.textContent = label;
   els.noteSurface.innerHTML = renderedNotes;
   els.mobileNoteSurface.innerHTML = renderedNotes;
+  for (const surface of [els.noteSurface, els.mobileNoteSurface]) {
+    surface.querySelectorAll("[data-annotation-editor]").forEach((editor) => {
+      editor.addEventListener("input", () => {
+        const annotationId = editor.dataset.annotationEditor;
+        const value = editor.value;
+        for (const surfaceToSync of [els.noteSurface, els.mobileNoteSurface]) {
+          surfaceToSync.querySelectorAll(`[data-annotation-editor="${CSS.escape(annotationId)}"]`).forEach((matchingEditor) => {
+            if (matchingEditor !== editor) matchingEditor.value = value;
+          });
+        }
+        updateAnnotationNote(annotationId, value);
+      });
+    });
+  }
 }
 
 function setActiveKnowledgeContext(sectionId) {
@@ -381,11 +701,14 @@ function openModule(moduleId, { syncUrl = true, targetSectionId = "" } = {}) {
   const nextModule = getModuleById(moduleId) ?? state.data.modules[0];
   state.currentModule = nextModule;
   state.activeKnowledgeNoteId = "";
+  hideAnnotationDeletePopover();
+  hideAnnotationToolbar();
   if (syncUrl) updateUrl(nextModule.id);
   renderModuleNav();
   renderCurrentModule();
   renderContextualNotePanel(nextModule.knowledgeNotes?.[0]);
   renderSectionRail(nextModule);
+  applyHighlights();
   els.main.scrollTop = 0;
   observeSections();
   if (targetSectionId) {
@@ -398,6 +721,8 @@ function openModule(moduleId, { syncUrl = true, targetSectionId = "" } = {}) {
 }
 
 function openSearchModal() {
+  hideAnnotationDeletePopover();
+  hideAnnotationToolbar();
   els.shell.classList.add("is-searching");
   els.searchResults.hidden = false;
 }
@@ -557,6 +882,28 @@ function bindEvents() {
   els.searchInput.addEventListener("input", () => runSearch(els.searchInput.value));
   els.searchOverlay.addEventListener("click", closeSearchModal);
 
+  els.main.addEventListener("mouseup", () => {
+    requestAnimationFrame(() => {
+      const context = getSelectionAnnotationContext();
+      if (context) renderAnnotationToolbar(context);
+      else hideAnnotationToolbar();
+    });
+  });
+
+  els.main.addEventListener("keyup", () => {
+    const context = getSelectionAnnotationContext();
+    if (context) renderAnnotationToolbar(context);
+    else hideAnnotationToolbar();
+  });
+
+  document.addEventListener("mousedown", (event) => {
+    const isDeletePopoverClick = state.annotationDeletePopover?.contains(event.target);
+    if (state.annotationDeletePopover && !isDeletePopoverClick) hideAnnotationDeletePopover();
+    if (isDeletePopoverClick) return;
+    if (state.annotationToolbar?.contains(event.target)) return;
+    if (!getKnowledgeCardFromNode(event.target)) hideAnnotationToolbar();
+  });
+
   window.addEventListener("keydown", (event) => {
     if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
       event.preventDefault();
@@ -564,6 +911,8 @@ function bindEvents() {
       els.searchInput.focus();
     }
     if (event.key === "Escape") {
+      hideAnnotationDeletePopover();
+      hideAnnotationToolbar();
       closeSearchModal();
       els.shell.classList.remove("is-mobile-left-open", "is-mobile-note-open");
     }
@@ -573,6 +922,7 @@ function bindEvents() {
 async function init() {
   try {
     state.data = await fetchJson("roadmap/roadmap-data.json");
+    state.annotations = loadAnnotations();
     bindEvents();
     setTheme("light");
     openModule(getInitialModuleId(), { syncUrl: false });
