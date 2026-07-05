@@ -226,6 +226,7 @@ function showAnnotationDeletePopover(annotationId, rect) {
     <button type="button" data-delete-behavior="all">高亮和笔记一起删除</button>
     <button type="button" data-delete-behavior="cancel">取消</button>
   `;
+  popover.style.position = "fixed";
   popover.style.left = `${Math.max(12, rect.left)}px`;
   popover.style.top = `${Math.max(12, rect.bottom + 8)}px`;
   popover.querySelectorAll("[data-delete-behavior]").forEach((button) => {
@@ -240,6 +241,67 @@ function showAnnotationDeletePopover(annotationId, rect) {
   });
   document.body.append(popover);
   state.annotationDeletePopover = popover;
+}
+
+function getTextNodes(root) {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      if (node.parentElement?.closest(".knowledge-highlight")) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    },
+  });
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  return nodes;
+}
+
+function clearHighlights() {
+  els.sectionList.querySelectorAll(".knowledge-highlight").forEach((mark) => {
+    mark.replaceWith(document.createTextNode(mark.textContent));
+  });
+  els.sectionList.normalize();
+}
+
+function findTextRange(root, selectedText, matchIndex) {
+  const nodes = getTextNodes(root);
+  let occurrence = 0;
+  for (const node of nodes) {
+    const index = node.nodeValue.indexOf(selectedText);
+    if (index === -1) continue;
+    if (occurrence === matchIndex) {
+      const range = document.createRange();
+      range.setStart(node, index);
+      range.setEnd(node, index + selectedText.length);
+      return range;
+    }
+    occurrence += 1;
+  }
+  return null;
+}
+
+function applyHighlights() {
+  clearHighlights();
+  if (!state.currentModule) return;
+  const moduleId = state.currentModule.id;
+  const activeAnnotations = state.annotations.items.filter((item) => (
+    item.moduleId === moduleId && item.highlightActive
+  ));
+  for (const annotation of activeAnnotations) {
+    const card = els.sectionList.querySelector(`.knowledge-card[data-note-id="${CSS.escape(annotation.noteId)}"]`);
+    if (!card) continue;
+    const range = findTextRange(card, annotation.selectedText, annotation.matchIndex);
+    if (!range) continue;
+    const mark = document.createElement("mark");
+    mark.className = `knowledge-highlight${annotation.mode === "note" ? " is-note" : ""}`;
+    mark.dataset.annotationId = annotation.id;
+    mark.append(range.extractContents());
+    mark.addEventListener("click", (event) => {
+      event.stopPropagation();
+      showAnnotationDeletePopover(annotation.id, mark.getBoundingClientRect());
+    });
+    range.insertNode(mark);
+  }
 }
 
 function getInitialModuleId() {
@@ -578,11 +640,13 @@ function openModule(moduleId, { syncUrl = true, targetSectionId = "" } = {}) {
   const nextModule = getModuleById(moduleId) ?? state.data.modules[0];
   state.currentModule = nextModule;
   state.activeKnowledgeNoteId = "";
+  hideAnnotationDeletePopover();
   if (syncUrl) updateUrl(nextModule.id);
   renderModuleNav();
   renderCurrentModule();
   renderContextualNotePanel(nextModule.knowledgeNotes?.[0]);
   renderSectionRail(nextModule);
+  applyHighlights();
   els.main.scrollTop = 0;
   observeSections();
   if (targetSectionId) {
@@ -769,8 +833,10 @@ function bindEvents() {
   });
 
   document.addEventListener("mousedown", (event) => {
+    const isDeletePopoverClick = state.annotationDeletePopover?.contains(event.target);
+    if (state.annotationDeletePopover && !isDeletePopoverClick) hideAnnotationDeletePopover();
+    if (isDeletePopoverClick) return;
     if (state.annotationToolbar?.contains(event.target)) return;
-    if (state.annotationDeletePopover?.contains(event.target)) return;
     if (!getKnowledgeCardFromNode(event.target)) hideAnnotationToolbar();
   });
 
@@ -781,6 +847,7 @@ function bindEvents() {
       els.searchInput.focus();
     }
     if (event.key === "Escape") {
+      hideAnnotationDeletePopover();
       closeSearchModal();
       els.shell.classList.remove("is-mobile-left-open", "is-mobile-note-open");
     }
