@@ -681,6 +681,8 @@ function openModule(moduleId, { syncUrl = true, targetSectionId = "" } = {}) {
 }
 
 function openSearchModal() {
+  hideAnnotationDeletePopover();
+  hideAnnotationToolbar();
   els.shell.classList.add("is-searching");
   els.searchResults.hidden = false;
 }
