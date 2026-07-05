@@ -1,6 +1,7 @@
 const PROJECT_ID = "brain-memory-for-ai-agents";
 const SEARCH_DEBOUNCE_MS = 260;
 const SEMANTIC_SCORE_THRESHOLD = 0.42;
+const ANNOTATION_STORAGE_PREFIX = "paperReader.annotations.v1";
 
 const DOMAIN_DIMS = [
   ["agent", ["agent", "agents", "智能体", "llm", "memory architecture", "prompt", "tool"]],
@@ -27,7 +28,11 @@ const state = {
   activeChunkId: null,
   observer: null,
   scrollSpyHandler: null,
-  searchDebounceTimer: null
+  searchDebounceTimer: null,
+  annotations: { version: 1, projectId: PROJECT_ID, items: [] },
+  pendingAnnotation: null,
+  annotationToolbar: null,
+  annotationDeletePopover: null
 };
 
 const els = {
@@ -73,6 +78,97 @@ function escapeHtml(value) {
 
 function escapeRegExp(value) {
   return String(value ?? "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function renderMultilineText(value) {
+  return escapeHtml(value).replace(/\n/g, "<br>");
+}
+
+function getAnnotationStorageKey() {
+  return `${ANNOTATION_STORAGE_PREFIX}.${PROJECT_ID}`;
+}
+
+function createEmptyAnnotationStore() {
+  return {
+    version: 1,
+    projectId: PROJECT_ID,
+    items: []
+  };
+}
+
+function loadAnnotations() {
+  try {
+    const raw = window.localStorage.getItem(getAnnotationStorageKey());
+    if (!raw) return createEmptyAnnotationStore();
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed.items)) return createEmptyAnnotationStore();
+    return {
+      version: 1,
+      projectId: PROJECT_ID,
+      items: parsed.items.filter((item) => item && item.projectId === PROJECT_ID)
+    };
+  } catch (error) {
+    console.warn("Unable to load local annotations", error);
+    return createEmptyAnnotationStore();
+  }
+}
+
+function saveAnnotations(annotations = state.annotations) {
+  try {
+    window.localStorage.setItem(getAnnotationStorageKey(), JSON.stringify(annotations));
+  } catch (error) {
+    console.warn("Unable to save local annotations", error);
+  }
+}
+
+function getAnnotationsForChunk(paperId, chunkId) {
+  return state.annotations.items.filter((item) => item.paperId === paperId && item.chunkId === chunkId);
+}
+
+function getSourceParagraphFromNode(node) {
+  const element = node?.nodeType === Node.ELEMENT_NODE ? node : node?.parentElement;
+  return element?.closest?.(".source-paragraph") ?? null;
+}
+
+function countTextOccurrences(text, needle) {
+  if (!needle) return 0;
+  let count = 0;
+  let index = text.indexOf(needle);
+  while (index !== -1) {
+    count += 1;
+    index = text.indexOf(needle, index + needle.length);
+  }
+  return count;
+}
+
+function getSelectionAnnotationContext() {
+  const selection = window.getSelection();
+  if (!selection || selection.rangeCount === 0 || selection.isCollapsed) return null;
+  const range = selection.getRangeAt(0);
+  const selectedText = selection.toString().trim();
+  if (selectedText.length < 2) return null;
+
+  const startParagraph = getSourceParagraphFromNode(range.startContainer);
+  const endParagraph = getSourceParagraphFromNode(range.endContainer);
+  if (!startParagraph || startParagraph !== endParagraph) return null;
+
+  const sourceCard = startParagraph.closest(".chunk-source-card");
+  const chunk = startParagraph.closest(".chunk");
+  if (!sourceCard || !chunk || !sourceCard.contains(startParagraph)) return null;
+
+  const beforeRange = document.createRange();
+  beforeRange.selectNodeContents(sourceCard);
+  beforeRange.setEnd(range.startContainer, range.startOffset);
+  const matchIndex = countTextOccurrences(beforeRange.toString(), selectedText);
+  const rect = range.getBoundingClientRect();
+
+  return {
+    selectedText,
+    matchIndex,
+    paperId: state.currentPaper?.id,
+    chunkId: chunk.dataset.chunkId,
+    rect
+  };
 }
 
 function normalizeVector(vector) {
@@ -373,23 +469,189 @@ function renderChunk(chunk, reading) {
   `;
 }
 
+function refreshNoteSurfaceForChunk(chunkId = state.activeChunkId) {
+  if (!chunkId || !state.currentReading) return;
+  updateNoteSurface(chunkId, state.currentReading.notes.get(chunkId) ?? "");
+}
+
+function createAnnotationId() {
+  return `ann-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function createAnnotationFromSelection(mode) {
+  const context = state.pendingAnnotation;
+  if (!context?.paperId || !context?.chunkId) return;
+  const now = new Date().toISOString();
+  state.annotations.items.push({
+    id: createAnnotationId(),
+    projectId: PROJECT_ID,
+    paperId: context.paperId,
+    chunkId: context.chunkId,
+    selectedText: context.selectedText,
+    matchIndex: context.matchIndex,
+    mode,
+    note: "",
+    highlightActive: true,
+    createdAt: now,
+    updatedAt: now
+  });
+  saveAnnotations();
+  state.pendingAnnotation = null;
+  window.getSelection()?.removeAllRanges();
+  hideAnnotationToolbar();
+  applyHighlights(state.currentReading);
+  refreshNoteSurfaceForChunk(context.chunkId);
+}
+
+function updateAnnotationNote(annotationId, value) {
+  const annotation = state.annotations.items.find((item) => item.id === annotationId);
+  if (!annotation) return;
+  annotation.note = value;
+  annotation.updatedAt = new Date().toISOString();
+  saveAnnotations();
+  document.querySelectorAll(`.note-annotation-editor[data-annotation-note-id="${CSS.escape(annotationId)}"]`)
+    .forEach((editor) => {
+      if (editor.value !== value) editor.value = value;
+    });
+}
+
+function deleteAnnotation(annotationId, behavior) {
+  const annotation = state.annotations.items.find((item) => item.id === annotationId);
+  if (!annotation) return;
+  const chunkId = annotation.chunkId;
+  if (behavior === "highlight-only" && annotation.mode === "note") {
+    annotation.highlightActive = false;
+    annotation.updatedAt = new Date().toISOString();
+  } else {
+    state.annotations.items = state.annotations.items.filter((item) => item.id !== annotationId);
+  }
+  saveAnnotations();
+  hideAnnotationDeletePopover();
+  applyHighlights(state.currentReading);
+  refreshNoteSurfaceForChunk(chunkId);
+}
+
+function clearHighlights() {
+  document.querySelectorAll(".source-highlight").forEach((mark) => {
+    mark.replaceWith(document.createTextNode(mark.textContent ?? ""));
+  });
+}
+
+function getSourceTextNodes(chunkElement) {
+  const nodes = [];
+  chunkElement.querySelectorAll(".source-paragraph").forEach((paragraph) => {
+    const walker = document.createTreeWalker(paragraph, NodeFilter.SHOW_TEXT);
+    let node = walker.nextNode();
+    while (node) {
+      nodes.push(node);
+      node = walker.nextNode();
+    }
+  });
+  return nodes;
+}
+
+function findTextRangeInNodes(nodes, selectedText, matchIndex) {
+  const fullText = nodes.map((node) => node.textContent ?? "").join("");
+  let startIndex = -1;
+  let searchFrom = 0;
+  for (let count = 0; count <= matchIndex; count += 1) {
+    startIndex = fullText.indexOf(selectedText, searchFrom);
+    if (startIndex === -1) return null;
+    searchFrom = startIndex + selectedText.length;
+  }
+
+  const endIndex = startIndex + selectedText.length;
+  let offset = 0;
+  let startNode = null;
+  let endNode = null;
+  let startOffset = 0;
+  let endOffset = 0;
+
+  for (const node of nodes) {
+    const text = node.textContent ?? "";
+    const nextOffset = offset + text.length;
+    if (!startNode && startIndex >= offset && startIndex <= nextOffset) {
+      startNode = node;
+      startOffset = startIndex - offset;
+    }
+    if (!endNode && endIndex >= offset && endIndex <= nextOffset) {
+      endNode = node;
+      endOffset = endIndex - offset;
+      break;
+    }
+    offset = nextOffset;
+  }
+
+  if (!startNode || !endNode) return null;
+  return { startNode, startOffset, endNode, endOffset };
+}
+
+function applyHighlight(annotation) {
+  if (!annotation.highlightActive) return;
+  const chunkElement = document.querySelector(`.chunk[data-chunk-id="${CSS.escape(annotation.chunkId)}"]`);
+  if (!chunkElement) return;
+  const rangeParts = findTextRangeInNodes(
+    getSourceTextNodes(chunkElement),
+    annotation.selectedText,
+    annotation.matchIndex ?? 0
+  );
+  if (!rangeParts) return;
+
+  try {
+    const range = document.createRange();
+    range.setStart(rangeParts.startNode, rangeParts.startOffset);
+    range.setEnd(rangeParts.endNode, rangeParts.endOffset);
+    const mark = document.createElement("mark");
+    mark.className = `source-highlight${annotation.mode === "note" ? " is-note" : ""}`;
+    mark.dataset.annotationId = annotation.id;
+    range.surroundContents(mark);
+  } catch (error) {
+    console.warn("Unable to restore local highlight", error);
+  }
+}
+
+function applyHighlights(reading) {
+  clearHighlights();
+  if (!reading || !state.currentPaper) return;
+  state.annotations.items
+    .filter((item) => item.paperId === state.currentPaper.id)
+    .forEach((annotation) => applyHighlight(annotation));
+}
+
 function renderChunks(reading) {
   els.chunkList.innerHTML = reading.chunks.map((chunk) => renderChunk(chunk, reading)).join("");
+  applyHighlights(reading);
   observeChunks(reading);
 }
 
-function renderNoteSurface(surface, note) {
-  surface.textContent = note ?? "";
+function renderNoteSurface(surface, note, annotations = []) {
+  const baseNote = note ? `<p>${renderMultilineText(note)}</p>` : "";
+  const annotationMarkup = annotations
+    .filter((annotation) => annotation.mode === "note")
+    .map((annotation) => `
+      <article class="note-annotation${annotation.highlightActive ? "" : " is-detached"}" data-note-annotation-id="${escapeHtml(annotation.id)}">
+        <blockquote class="note-annotation-quote">${escapeHtml(annotation.selectedText)}</blockquote>
+        <textarea class="note-annotation-editor" data-annotation-note-id="${escapeHtml(annotation.id)}" placeholder="写批注...">${escapeHtml(annotation.note ?? "")}</textarea>
+      </article>
+    `)
+    .join("");
+  surface.innerHTML = `${baseNote}${annotationMarkup}`;
   surface.classList.remove("is-changing");
+  surface.querySelectorAll(".note-annotation-editor").forEach((editor) => {
+    editor.addEventListener("input", () => updateAnnotationNote(editor.dataset.annotationNoteId, editor.value));
+  });
 }
 
 function updateNoteSurface(chunkId, note) {
   const label = chunkId ? `Parallel note · ${chunkId}` : "Parallel note";
   els.noteLabel.textContent = label;
   els.mobileNoteLabel.textContent = label;
+  const annotations = state.currentPaper && chunkId
+    ? getAnnotationsForChunk(state.currentPaper.id, chunkId)
+    : [];
   for (const surface of [els.noteSurface, els.mobileNoteSurface]) {
     surface.classList.add("is-changing");
-    window.setTimeout(() => renderNoteSurface(surface, note), 90);
+    window.setTimeout(() => renderNoteSurface(surface, note, annotations), 90);
   }
 }
 
@@ -650,6 +912,95 @@ function runSearch(query) {
   });
 }
 
+function ensureAnnotationToolbar() {
+  if (state.annotationToolbar) return state.annotationToolbar;
+  const toolbar = document.createElement("div");
+  toolbar.className = "annotation-toolbar";
+  toolbar.hidden = true;
+  toolbar.innerHTML = `
+    <button type="button" data-annotation-action="highlight">Highlight</button>
+    <button type="button" data-annotation-action="note">Note</button>
+  `;
+  toolbar.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-annotation-action]");
+    if (!button) return;
+    createAnnotationFromSelection(button.dataset.annotationAction);
+  });
+  document.body.append(toolbar);
+  state.annotationToolbar = toolbar;
+  return toolbar;
+}
+
+function hideAnnotationToolbar() {
+  if (state.annotationToolbar) state.annotationToolbar.hidden = true;
+}
+
+function renderAnnotationToolbar() {
+  const context = getSelectionAnnotationContext();
+  if (!context) {
+    state.pendingAnnotation = null;
+    hideAnnotationToolbar();
+    return;
+  }
+  state.pendingAnnotation = context;
+  const toolbar = ensureAnnotationToolbar();
+  toolbar.hidden = false;
+  toolbar.style.left = `${Math.min(window.innerWidth - 170, Math.max(12, context.rect.left + context.rect.width / 2 - 76))}px`;
+  toolbar.style.top = `${Math.max(12, context.rect.top - 48)}px`;
+}
+
+function ensureAnnotationDeletePopover() {
+  if (state.annotationDeletePopover) return state.annotationDeletePopover;
+  const popover = document.createElement("div");
+  popover.className = "annotation-delete-popover";
+  popover.hidden = true;
+  popover.innerHTML = `
+    <button type="button" data-delete-behavior="highlight-only">只删除高亮，保留笔记</button>
+    <button type="button" data-delete-behavior="all">高亮和批注一起删除</button>
+    <button type="button" data-delete-behavior="cancel">取消</button>
+  `;
+  popover.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-delete-behavior]");
+    if (!button) return;
+    const annotationId = popover.dataset.annotationId;
+    if (button.dataset.deleteBehavior !== "cancel") {
+      deleteAnnotation(annotationId, button.dataset.deleteBehavior);
+    }
+    hideAnnotationDeletePopover();
+  });
+  document.body.append(popover);
+  state.annotationDeletePopover = popover;
+  return popover;
+}
+
+function hideAnnotationDeletePopover() {
+  if (state.annotationDeletePopover) state.annotationDeletePopover.hidden = true;
+}
+
+function showAnnotationDeletePopover(annotationId, rect) {
+  const popover = ensureAnnotationDeletePopover();
+  popover.dataset.annotationId = annotationId;
+  popover.hidden = false;
+  popover.style.left = `${Math.min(window.innerWidth - 250, Math.max(12, rect.left))}px`;
+  popover.style.top = `${Math.min(window.innerHeight - 130, Math.max(12, rect.bottom + 8))}px`;
+}
+
+function bindAnnotationControls() {
+  els.chunkList.addEventListener("mouseup", () => window.setTimeout(renderAnnotationToolbar, 0));
+  els.chunkList.addEventListener("keyup", () => window.setTimeout(renderAnnotationToolbar, 0));
+  els.chunkList.addEventListener("touchend", () => window.setTimeout(renderAnnotationToolbar, 0));
+  els.chunkList.addEventListener("click", (event) => {
+    const highlight = event.target.closest(".source-highlight");
+    if (!highlight) return;
+    showAnnotationDeletePopover(highlight.dataset.annotationId, highlight.getBoundingClientRect());
+  });
+  document.addEventListener("mousedown", (event) => {
+    if (state.annotationToolbar?.contains(event.target) || state.annotationDeletePopover?.contains(event.target)) return;
+    if (!event.target.closest(".source-highlight")) hideAnnotationDeletePopover();
+    if (!event.target.closest(".chunk-source-card")) hideAnnotationToolbar();
+  });
+}
+
 function bindControls() {
   syncResponsiveState();
   const toggleLeftPanel = () => {
@@ -692,6 +1043,7 @@ function bindControls() {
     }
   }, { capture: true });
   window.addEventListener("resize", syncResponsiveState);
+  bindAnnotationControls();
 }
 
 function syncResponsiveState() {
@@ -704,6 +1056,7 @@ function syncResponsiveState() {
 }
 
 async function initReader() {
+  state.annotations = loadAnnotations();
   bindControls();
   const projects = await fetchJson("../manifest.json");
   state.project = projects.find((project) => project.id === PROJECT_ID);

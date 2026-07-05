@@ -861,6 +861,59 @@ input {
   word-break: break-word;
 }
 
+.source-highlight {
+  border-radius: 4px;
+  background: rgba(166, 67, 56, 0.16);
+  box-shadow: 0 0 0 1px rgba(166, 67, 56, 0.08);
+  cursor: pointer;
+}
+
+.source-highlight.is-note {
+  background: rgba(183, 142, 64, 0.22);
+}
+
+.source-highlight:hover {
+  background: rgba(166, 67, 56, 0.24);
+}
+
+.annotation-toolbar,
+.annotation-delete-popover {
+  position: fixed;
+  z-index: 80;
+  display: flex;
+  gap: 6px;
+  border: 1px solid var(--reader-glass-edge);
+  border-radius: 14px;
+  background: var(--reader-glass-strong);
+  padding: 6px;
+  backdrop-filter: var(--reader-panel-blur);
+  -webkit-backdrop-filter: var(--reader-panel-blur);
+  box-shadow:
+    inset 0 1px 0 var(--reader-glass-highlight),
+    0 18px 44px var(--reader-glass-shadow);
+}
+
+.annotation-toolbar button,
+.annotation-delete-popover button {
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--reader-ink);
+  padding: 6px 9px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.annotation-toolbar button:hover,
+.annotation-delete-popover button:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.annotation-delete-popover {
+  flex-direction: column;
+  min-width: 220px;
+}
+
 .source-paragraph + .source-paragraph,
 .source-paragraph + .math-block,
 .source-paragraph + .code-block,
@@ -1055,6 +1108,43 @@ input {
 
 .note-surface.is-changing {
   opacity: 0.18;
+}
+
+.note-annotation {
+  margin: 0 0 18px;
+  padding: 0 0 16px 12px;
+  border-left: 1px solid rgba(24, 60, 73, 0.28);
+}
+
+.note-annotation.is-detached {
+  opacity: 0.72;
+}
+
+.note-annotation-quote {
+  margin: 0 0 9px;
+  color: var(--reader-blue);
+  font-family: var(--reader-serif);
+  font-size: 13px;
+  line-height: 1.58;
+}
+
+.note-annotation-editor {
+  display: block;
+  width: 100%;
+  min-height: 84px;
+  resize: vertical;
+  border: 0;
+  border-bottom: 1px solid var(--reader-line);
+  background: transparent;
+  color: var(--reader-ink);
+  padding: 0 0 8px;
+  outline: none;
+  font: inherit;
+  line-height: 1.72;
+}
+
+.note-annotation-editor:focus {
+  border-bottom-color: var(--reader-red);
 }
 
 .mobile-note-drawer {

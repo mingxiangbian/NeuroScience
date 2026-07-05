@@ -369,6 +369,16 @@ chunk 边界优先级：
 - 前端不要显示“这一段还没有笔记”之类的占位文字；空笔记保持连续拟态表面。
 - 笔记和 chunk 平行，而不是把所有笔记集中到文末。
 
+## Runtime Local Annotations
+
+本地高亮和批注是 reader runtime 的个人层，不属于 reading package 源文件。
+
+- 前端可以用 `localStorage` 保存 `paperReader.annotations.v1.<projectId>`。
+- annotation 可以记录 `paperId`、`chunkId`、`selectedText`、`matchIndex`、`mode`、`note` 和 `highlightActive`。
+- `Highlight` 只恢复原文高亮；`Note` 同时把选中原文作为引用放入右侧平行笔记区。
+- 本地 annotation 不写回 `notes.json`，也不要求进入 GitHub commit。
+- 如果需要长期沉淀，后续应通过单独导出/导入或人工整理流程完成。
+
 ## embeddings.json Contract
 
 `embeddings.json` 是静态检索索引。当前 reader 可以用本地向量或轻量关键词向量，不要求在线 provider。

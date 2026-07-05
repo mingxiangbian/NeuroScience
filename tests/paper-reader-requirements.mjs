@@ -176,6 +176,14 @@ assert.match(noteSurfaceRule, /background:\s*transparent/, "note surface should 
 assert.match(css, /\.note-surface p\s*\{[\s\S]*padding:\s*0 0 15px/, "parallel note surface should render the active chunk note as the only visible note");
 assert.doesNotMatch(css, /\.note-item/, "parallel notes should not render every chunk note at once");
 assert.match(css, /@media \(max-width:\s*860px\)[\s\S]*\.note-panel[\s\S]*display:\s*none/, "mobile layout should keep the desktop note line hidden by default");
+assert.match(css, /\.annotation-toolbar/, "reader CSS should style the selection annotation toolbar");
+assert.match(css, /\.source-highlight/, "reader CSS should style source text highlights");
+assert.match(css, /\.source-highlight\.is-note/, "note-backed highlights should be visually distinguishable");
+assert.match(css, /\.annotation-delete-popover/, "reader CSS should style the highlight delete confirmation popover");
+assert.match(css, /\.note-annotation/, "reader CSS should style local annotation notes");
+assert.match(css, /\.note-annotation-quote/, "right-side copied source quotes should use a distinct quote style");
+assert.match(css, /\.note-annotation-editor/, "right-side annotation notes should be editable");
+assert.match(css, /\.note-annotation\.is-detached/, "notes retained after highlight deletion should show detached state");
 
 assert.match(js, /const PROJECT_ID = "brain-memory-for-ai-agents"/, "reader JS should bind the current project id for this project instance");
 assert.match(js, /const SEARCH_DEBOUNCE_MS = 260/, "search debounce duration should stay lightweight");
@@ -241,6 +249,21 @@ assert.match(js, /function resolveReadingAssetPath\(path,\s*reading\)/, "reader 
 assert.match(js, /figureRefs/, "reader should resolve cross-page figure references");
 assert.match(js, /if \(!figure\?\.file\) return ""/, "reader should skip missing figure files instead of rendering empty placeholders");
 assert.match(js, /renderNoChunkPaper/, "reader should render real metadata for papers without chunk packages");
+assert.match(js, /ANNOTATION_STORAGE_PREFIX = "paperReader\.annotations\.v1"/, "reader should define a versioned local annotation storage prefix");
+assert.match(js, /function getAnnotationStorageKey/, "reader should isolate local annotation storage keys");
+assert.match(js, /function loadAnnotations/, "reader should load local annotations from localStorage");
+assert.match(js, /function saveAnnotations/, "reader should save local annotations to localStorage");
+assert.match(js, /function getAnnotationsForChunk/, "reader should filter annotations by active paper and chunk");
+assert.match(js, /function createAnnotationFromSelection/, "reader should create annotations from selected source text");
+assert.match(js, /function applyHighlights/, "reader should restore source highlights after render");
+assert.match(js, /function updateAnnotationNote/, "reader should update annotation notes live");
+assert.match(js, /function deleteAnnotation/, "reader should support deleting highlights and annotations");
+assert.match(js, /\.chunk-source-card/, "annotation selection should be scoped to English source cards");
+assert.match(js, /Highlight/, "selection toolbar should expose a Highlight action");
+assert.match(js, /Note/, "selection toolbar should expose a Note action");
+assert.match(js, /只删除高亮，保留笔记/, "delete confirmation should allow keeping the note");
+assert.match(js, /高亮和批注一起删除/, "delete confirmation should allow deleting both highlight and note");
+assert.doesNotMatch(js, /githubToken|Authorization|contents\/|repos\/|gitHub/i, "local annotations should not write to GitHub");
 assert.doesNotMatch(js, /\/api\/|localhost|127\.0\.0\.1|openai|anthropic|generateAnswer|chatCompletion|SurrealDB/i, "reader should stay static without backend, provider keys, AI answers, or hard SurrealDB dependency");
 
 const readingPaperIds = project.papers.map((paper) => paper.id);
