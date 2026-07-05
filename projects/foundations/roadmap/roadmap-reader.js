@@ -264,20 +264,35 @@ function clearHighlights() {
 }
 
 function findTextRange(root, selectedText, matchIndex) {
+  if (!selectedText) return null;
   const nodes = getTextNodes(root);
   let occurrence = 0;
+  let order = 0;
   for (const node of nodes) {
-    const index = node.nodeValue.indexOf(selectedText);
-    if (index === -1) continue;
-    if (occurrence === matchIndex) {
-      const range = document.createRange();
-      range.setStart(node, index);
-      range.setEnd(node, index + selectedText.length);
-      return range;
+    let index = node.nodeValue.indexOf(selectedText);
+    while (index !== -1) {
+      if (occurrence === matchIndex) {
+        const range = document.createRange();
+        range.setStart(node, index);
+        range.setEnd(node, index + selectedText.length);
+        return { range, order: order + index };
+      }
+      occurrence += 1;
+      index = node.nodeValue.indexOf(selectedText, index + selectedText.length);
     }
-    occurrence += 1;
+    order += node.nodeValue.length;
   }
   return null;
+}
+
+function getRangeDocumentOrder(range) {
+  const nodes = getTextNodes(els.sectionList);
+  let order = 0;
+  for (const node of nodes) {
+    if (node === range.startContainer) return order + range.startOffset;
+    order += node.nodeValue.length;
+  }
+  return 0;
 }
 
 function applyHighlights() {
@@ -287,11 +302,20 @@ function applyHighlights() {
   const activeAnnotations = state.annotations.items.filter((item) => (
     item.moduleId === moduleId && item.highlightActive
   ));
+  const resolvedHighlights = [];
   for (const annotation of activeAnnotations) {
     const card = els.sectionList.querySelector(`.knowledge-card[data-note-id="${CSS.escape(annotation.noteId)}"]`);
     if (!card) continue;
-    const range = findTextRange(card, annotation.selectedText, annotation.matchIndex);
-    if (!range) continue;
+    const match = findTextRange(card, annotation.selectedText, annotation.matchIndex);
+    if (!match) continue;
+    resolvedHighlights.push({
+      annotation,
+      range: match.range,
+      order: getRangeDocumentOrder(match.range),
+    });
+  }
+  resolvedHighlights.sort((left, right) => right.order - left.order);
+  for (const { annotation, range } of resolvedHighlights) {
     const mark = document.createElement("mark");
     mark.className = `knowledge-highlight${annotation.mode === "note" ? " is-note" : ""}`;
     mark.dataset.annotationId = annotation.id;
