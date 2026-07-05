@@ -50,7 +50,8 @@ assert.match(topicHtml, /mechanism-to-agent-design\.md/, "topic page should link
 assert.match(topicHtml, /href="\.\.\/\.\.\/papers\/brain-memory-for-ai-agents\/"/, "topic page should link to the matching local paper topic page");
 assert.doesNotMatch(topicHtml, /github\.com\/mingxiangbian\/NeuroScience\/tree\/main\/projects/i, "topic page should not send users to the GitHub folder listing");
 
-assert.match(foundationsHtml, /href="README\.md"/, "foundations page should link to the project README");
-assert.match(foundationsHtml, /href="multi-agent-planner\.md"/, "foundations page should link to the reusable planner");
-assert.match(foundationsHtml, /href="llm-agent-engineer-roadmap\.md"/, "foundations page should link to the roadmap");
+assert.match(foundationsHtml, /data-page="foundations-roadmap-reader"/, "foundations page should identify itself as the roadmap reader");
+assert.match(foundationsHtml, /id="reader-shell"/, "foundations page should use the reader shell");
+assert.match(foundationsHtml, /roadmap\/roadmap-data\.json/, "foundations reader should load generated roadmap data");
+assert.doesNotMatch(foundationsHtml, /class="doc-grid"|class="doc-link"/, "foundations page should not remain a document-card homepage");
 assert.match(foundationsRoadmap, /Agent \/ LLM Systems Engineer/, "foundations roadmap should target Agent / LLM Systems Engineer interviews");
