@@ -153,6 +153,8 @@ assert.match(css, /\.paper-header\s*\{[\s\S]*max-width:\s*min\(75ch,\s*calc\(100
 assert.match(css, /\.chunk-list\s*\{[\s\S]*max-width:\s*min\(75ch,\s*calc\(100vw - 40px\)\)/, "chunk list should use a readable ch-based width");
 assert.match(css, /\.note-surface\s*\{[\s\S]*min-height:/, "note panel should stay as a continuous blank surface");
 assert.match(css, /\.math-block/, "reader CSS should style LaTeX/math blocks");
+assert.match(css, /\.math-render/, "reader CSS should style rendered LaTeX output");
+assert.match(css, /\.math-fallback/, "reader CSS should keep a readable fallback when math rendering fails");
 assert.match(css, /\.code-block/, "reader CSS should style code blocks");
 assert.match(css, /\.table-block/, "reader CSS should style table blocks");
 assert.match(css, /\.figure-frame/, "reader CSS should style figure references with constrained dimensions");
@@ -227,6 +229,12 @@ assert.doesNotMatch(js, /no found/, "reader should remove the old broken no foun
 assert.match(js, /els\.searchOverlay\.addEventListener\("click"[\s\S]*closeSearchModal/, "overlay click should close the search modal");
 assert.match(js, /if \(!trimmed\)[\s\S]*searchResults\.innerHTML = ""/, "empty modal search should show no hint text");
 assert.match(js, /renderMathBlock/, "reader should render math blocks");
+assert.match(html, /katex\.min\.css/, "reader should load KaTeX styles for math rendering");
+assert.match(html, /katex\.min\.js/, "reader should load KaTeX runtime for math rendering");
+assert.match(js, /function renderLatex/, "reader should isolate LaTeX rendering");
+assert.match(js, /window\.katex\?\.renderToString/, "reader should use KaTeX instead of showing raw LaTeX as code");
+assert.match(js, /throwOnError:\s*false/, "reader should keep the page usable when one formula cannot render");
+assert.match(js, /class="math-fallback"/, "reader should retain a readable escaped fallback for unsupported LaTeX");
 assert.match(js, /renderCodeBlock/, "reader should render code blocks");
 assert.match(js, /renderTableBlock/, "reader should render table blocks");
 assert.match(js, /function resolveReadingAssetPath\(path,\s*reading\)/, "reader should resolve figure assets relative to the active reading package");

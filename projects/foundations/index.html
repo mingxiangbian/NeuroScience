@@ -88,12 +88,46 @@
         line-height: 0.92;
       }
 
-      .empty {
+      .intro {
         max-width: 640px;
         border-top: 1px solid var(--line);
         padding-top: 22px;
         color: var(--ink-muted);
         line-height: 1.8;
+      }
+
+      .doc-grid {
+        display: grid;
+        max-width: 760px;
+        gap: 12px;
+      }
+
+      .doc-link {
+        display: grid;
+        gap: 8px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(251, 248, 239, 0.58);
+        padding: 18px 20px;
+        text-decoration: none;
+      }
+
+      .doc-link:hover {
+        border-color: rgba(24, 60, 73, 0.34);
+        background: rgba(251, 248, 239, 0.78);
+      }
+
+      .doc-link strong {
+        color: var(--ink);
+        font-family: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
+        font-size: 22px;
+        font-weight: 650;
+        line-height: 1.2;
+      }
+
+      .doc-link span {
+        color: var(--ink-muted);
+        line-height: 1.7;
       }
     </style>
   </head>
@@ -103,8 +137,22 @@
       <header>
         <h1>基石</h1>
       </header>
-      <section class="empty" aria-label="Project status">
-        这里会放面试准备的知识、方向、技巧和复盘材料。
+      <section class="intro" aria-label="Project status">
+        面向 Agent / LLM Systems Engineer 的面试准备区，先建立可执行路线，再逐步沉淀 coding、system design、mock 和项目证据。
+      </section>
+      <section class="doc-grid" aria-label="Foundations documents">
+        <a class="doc-link" href="README.md">
+          <strong>README</strong>
+          <span>项目入口、当前 track、使用方式和第一天行动。</span>
+        </a>
+        <a class="doc-link" href="multi-agent-planner.md">
+          <strong>Multi-Agent Planner</strong>
+          <span>可复用的 6-agent 面试准备规划模板。</span>
+        </a>
+        <a class="doc-link" href="llm-agent-engineer-roadmap.md">
+          <strong>LLM / Agent Engineer Roadmap</strong>
+          <span>面向顶尖 AI Lab 的弹性 30/45/60 天准备路线。</span>
+        </a>
       </section>
     </main>
   </body>

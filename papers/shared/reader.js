@@ -275,12 +275,31 @@ function renderBlock(block, reading) {
 }
 
 function renderMathBlock(block) {
+  const latex = String(block.latex ?? "").trim();
   return `
     <div class="math-block">
       ${block.label ? `<span class="math-label">${escapeHtml(block.label)}</span>` : ""}
-      <code>${escapeHtml(block.latex ?? "")}</code>
+      <div class="math-render" data-latex="${escapeHtml(latex)}">${renderLatex(latex)}</div>
     </div>
   `;
+}
+
+function renderLatex(latex) {
+  if (!latex) return "";
+  const renderToString = window.katex?.renderToString;
+  if (typeof renderToString !== "function") {
+    return `<code class="math-fallback">${escapeHtml(latex)}</code>`;
+  }
+  try {
+    return renderToString(latex, {
+      displayMode: true,
+      throwOnError: false,
+      strict: "ignore",
+      trust: false
+    });
+  } catch {
+    return `<code class="math-fallback">${escapeHtml(latex)}</code>`;
+  }
 }
 
 function renderCodeBlock(block) {

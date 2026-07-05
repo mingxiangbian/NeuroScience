@@ -893,6 +893,17 @@ input {
 .math-block {
   padding: 14px;
   color: var(--reader-blue);
+}
+
+.math-render {
+  min-width: max-content;
+}
+
+.math-render .katex-display {
+  margin: 0;
+}
+
+.math-fallback {
   font-family: var(--reader-mono);
   white-space: nowrap;
 }
