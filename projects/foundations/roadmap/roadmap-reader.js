@@ -86,6 +86,74 @@ function getAnnotationsForNote(moduleId, noteId) {
   return state.annotations.items.filter((item) => item.moduleId === moduleId && item.noteId === noteId);
 }
 
+function getKnowledgeCardFromNode(node) {
+  const element = node?.nodeType === Node.ELEMENT_NODE ? node : node?.parentElement;
+  return element?.closest?.(".knowledge-card") ?? null;
+}
+
+function countTextOccurrences(text, needle) {
+  if (!needle) return 0;
+  let count = 0;
+  let index = text.indexOf(needle);
+  while (index !== -1) {
+    count += 1;
+    index = text.indexOf(needle, index + needle.length);
+  }
+  return count;
+}
+
+function getSelectionAnnotationContext() {
+  const selection = window.getSelection();
+  if (!selection || selection.rangeCount === 0 || selection.isCollapsed) return null;
+  const range = selection.getRangeAt(0);
+  const selectedText = selection.toString().trim();
+  if (selectedText.length < 2) return null;
+
+  const startCard = getKnowledgeCardFromNode(range.startContainer);
+  const endCard = getKnowledgeCardFromNode(range.endContainer);
+  if (!startCard || startCard !== endCard) return null;
+
+  const noteId = startCard.dataset.noteId;
+  const moduleId = state.currentModule?.id;
+  if (!moduleId || !noteId) return null;
+
+  const beforeRange = document.createRange();
+  beforeRange.selectNodeContents(startCard);
+  beforeRange.setEnd(range.startContainer, range.startOffset);
+
+  return {
+    moduleId,
+    noteId,
+    selectedText,
+    matchIndex: countTextOccurrences(beforeRange.toString(), selectedText),
+    rect: range.getBoundingClientRect(),
+  };
+}
+
+function hideAnnotationToolbar() {
+  state.annotationToolbar?.remove();
+  state.annotationToolbar = null;
+  state.pendingAnnotation = null;
+}
+
+function renderAnnotationToolbar(context) {
+  hideAnnotationToolbar();
+  const toolbar = document.createElement("div");
+  toolbar.className = "annotation-toolbar";
+  toolbar.innerHTML = `
+    <button type="button" data-annotation-mode="highlight">高亮</button>
+    <button type="button" data-annotation-mode="note">笔记</button>
+  `;
+  toolbar.style.left = `${Math.max(12, context.rect.left + context.rect.width / 2)}px`;
+  toolbar.style.top = `${Math.max(12, context.rect.top - 46)}px`;
+  toolbar.querySelectorAll("[data-annotation-mode]").forEach((button) => {
+    button.addEventListener("click", () => createAnnotationFromSelection(button.dataset.annotationMode));
+  });
+  document.body.append(toolbar);
+  state.annotationToolbar = toolbar;
+  state.pendingAnnotation = context;
+}
+
 function getInitialModuleId() {
   const url = new URL(window.location.href);
   const fromQuery = url.searchParams.get("module");
@@ -597,6 +665,24 @@ function bindEvents() {
   els.searchInput.addEventListener("focus", openSearchModal);
   els.searchInput.addEventListener("input", () => runSearch(els.searchInput.value));
   els.searchOverlay.addEventListener("click", closeSearchModal);
+
+  els.main.addEventListener("mouseup", () => {
+    requestAnimationFrame(() => {
+      const context = getSelectionAnnotationContext();
+      if (context) renderAnnotationToolbar(context);
+    });
+  });
+
+  els.main.addEventListener("keyup", () => {
+    const context = getSelectionAnnotationContext();
+    if (context) renderAnnotationToolbar(context);
+  });
+
+  document.addEventListener("mousedown", (event) => {
+    if (state.annotationToolbar?.contains(event.target)) return;
+    if (state.annotationDeletePopover?.contains(event.target)) return;
+    if (!getKnowledgeCardFromNode(event.target)) hideAnnotationToolbar();
+  });
 
   window.addEventListener("keydown", (event) => {
     if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
