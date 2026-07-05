@@ -165,6 +165,64 @@ function stripMarkdown(markdown) {
     .trim();
 }
 
+function stripHtml(html) {
+  return String(html ?? "")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function slugifySection(title) {
+  return String(title ?? "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\u4e00-\u9fff]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function extractTimelineItems(markdown) {
+  return String(markdown ?? "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => /^- /.test(line))
+    .map((line, index) => {
+      const text = line.replace(/^- /, "").trim();
+      const labelMatch = text.match(/^(Week \d+|Days \d+-\d+|Day \d+\+|Days \d+\+|[^：:]{1,18})[：:]\s*(.+)$/);
+      return {
+        id: `timeline-${index + 1}`,
+        label: labelMatch?.[1] ?? `Step ${index + 1}`,
+        text: labelMatch?.[2] ?? text,
+        status: /进行中|current|in-progress/i.test(text) ? "current" : index < 2 ? "done" : "open",
+      };
+    });
+}
+
+function buildSearchEntries(id, title, rawSections) {
+  return Object.entries(rawSections)
+    .map(([sectionTitle, sectionMarkdown]) => ({
+      id: `${id}-${slugifySection(sectionTitle) || "section"}`,
+      moduleId: id,
+      moduleTitle: title,
+      sectionTitle,
+      text: stripMarkdown(sectionMarkdown),
+    }))
+    .filter((entry) => entry.text.length > 20);
+}
+
+function buildNoteGroups(sections) {
+  return ["资源", "反思", "面试表达"]
+    .map((title) => ({
+      title,
+      body: sections[title] ?? "",
+      text: stripHtml(sections[title] ?? ""),
+    }))
+    .filter((group) => group.body);
+}
+
 function validateModule(record, expectedId, expectedTitle) {
   if (record.id !== expectedId) throw new Error(`${expectedId} has id ${record.id}`);
   if (record.title !== expectedTitle) throw new Error(`${expectedId} has title ${record.title}`);
@@ -174,6 +232,9 @@ function validateModule(record, expectedId, expectedTitle) {
   }
   if (!record.lastUpdated) throw new Error(`${expectedId} is missing lastUpdated`);
   if (Object.keys(record.sections).length === 0) throw new Error(`${expectedId} has no sections`);
+  if (!Array.isArray(record.searchEntries) || record.searchEntries.length === 0) throw new Error(`${expectedId} has no search entries`);
+  if (!Array.isArray(record.noteGroups)) throw new Error(`${expectedId} has invalid note groups`);
+  if (!Array.isArray(record.timeline)) throw new Error(`${expectedId} has invalid timeline`);
 }
 
 function buildModule([id, title]) {
@@ -184,6 +245,9 @@ function buildModule([id, title]) {
   const sections = Object.fromEntries(
     Object.entries(rawSections).map(([sectionTitle, sectionMarkdown]) => [sectionTitle, renderMarkdown(sectionMarkdown)]),
   );
+  const sectionIds = Object.fromEntries(
+    Object.keys(rawSections).map((sectionTitle) => [sectionTitle, `${id}-${slugifySection(sectionTitle) || "section"}`]),
+  );
   const record = {
     id: parsed.data.id,
     title: parsed.data.title,
@@ -192,6 +256,10 @@ function buildModule([id, title]) {
     lastUpdated: parsed.data.last_updated,
     priority: parsed.data.priority ?? "medium",
     sections,
+    sectionIds,
+    searchEntries: buildSearchEntries(id, title, rawSections),
+    noteGroups: buildNoteGroups(sections),
+    timeline: extractTimelineItems(rawSections["时间线"] ?? ""),
     searchText: `${title} ${stripMarkdown(parsed.content)}`,
   };
   validateModule(record, id, title);
@@ -200,6 +268,9 @@ function buildModule([id, title]) {
 
 const modules = MODULES.map(buildModule);
 const latestDate = modules.map((module) => module.lastUpdated).sort().at(-1);
+const overallProgress = Math.round(
+  modules.reduce((sum, module) => sum + module.progress, 0) / modules.length,
+);
 
 const roadmapData = {
   generatedAt: `${latestDate}T00:00:00.000Z`,
@@ -207,6 +278,7 @@ const roadmapData = {
     id: "foundations",
     title: "基石",
     targetRole: "Agent / LLM Systems Engineer",
+    overallProgress,
   },
   modules,
 };

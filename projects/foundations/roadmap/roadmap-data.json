@@ -3,7 +3,8 @@
   "project": {
     "id": "foundations",
     "title": "基石",
-    "targetRole": "Agent / LLM Systems Engineer"
+    "targetRole": "Agent / LLM Systems Engineer",
+    "overallProgress": 31
   },
   "modules": [
     {
@@ -25,6 +26,421 @@
         "验收标准": "<ul><li>能在 45 分钟内完成中等 Python coding 题，并解释复杂度。</li><li>能独立讲清至少 4 个 system design case。</li><li>能把每个 mini drill 讲成“问题、约束、设计、失败模式、验证”的面试故事。</li><li>能解释 high-signal reading 的 claim、mechanism、limitation、interview use 和 system design implication。</li><li>每周 strategy rubric 至少有两个维度提升。</li></ul>",
         "下一步": "<ul><li>先推进 Coding、Agent Design、RAG &amp; Memory、Evals &amp; Debugging 四个高权重模块。</li><li>每周只做一次总览复盘，不把 Overview 变成流水账。</li><li>后续新增材料时优先落到能力模块，而不是新增全局时间目录。</li></ul>"
       },
+      "sectionIds": {
+        "目标": "overview-目标",
+        "当前状态": "overview-当前状态",
+        "核心知识": "overview-核心知识",
+        "任务": "overview-任务",
+        "时间线": "overview-时间线",
+        "资源": "overview-资源",
+        "反思": "overview-反思",
+        "面试表达": "overview-面试表达",
+        "验收标准": "overview-验收标准",
+        "下一步": "overview-下一步"
+      },
+      "searchEntries": [
+        {
+          "id": "overview-目标",
+          "moduleId": "overview",
+          "moduleTitle": "Overview",
+          "sectionTitle": "目标",
+          "text": "目标岗位： Agent / LLM Systems Engineer 。 目标难度：OpenAI / Anthropic / Google DeepMind / xAI 这类顶尖 AI Lab / AGI 团队。 当前策略： - 主线不是大项目，而是面试可用能力包。 - 第一优先级是 coding 和实现能力。 - 第二优先级是面试表达：能把设计、tradeoff、failure mode、eval 讲清楚。 - LLM/Agent 系统知识不从 0 讲起，而是拉深到可设计、可实现、可调试。 - Python + TypeScript 是主栈，Rust 只作为 45/60 天 optional add-on。 公开岗位信号校准： - OpenAI AI Systems Engineer, Codex Agents https://openai.com/careers/ai-systems-engineer-codex-agents-san-francisco/ 强调 coding agents、tool-using LLM systems、evals、inference behavior、logs/traces、runtime constraints、Rust/Python/API layers。 - OpenAI Applied AI Engineer, Codex Core Agent https://openai.com/careers/applied-ai-engineer-codex-core-agent-san-francisco/ 强调 shipping LLM products、Python、model evaluation、fine-tuning、prompt design 和 agent UX。 - OpenAI Software Engineer, Agent Infrastructure https://openai.com/careers/software-engineer-agent-infrastructure-san-francisco/ 强调 FastAPI/gRPC APIs、agentic infrastructure、research-production collaboration 和 scaling。 - OpenAI Backend Software Engineer Evals https://openai.com/careers/backend-software-engineer-%28evals%29-san-francisco/ 强调 AI agents、production evals、multi-agent workflows、tool use、long context 和 backend systems。 - Anthropic Alignment roles https://www.anthropic.com/careers/jobs/4631822008 强调 empirical AI research、safety-relevant evals、multi-agent experiments 和 LLM-generated jailbreak eval tooling。 - Google DeepMind Careers https://deepmind.google/careers/ 中 Research Engineer role family 强调 engineering + ML/deep learning + research implementation，能 build and scale systems to test and evaluate ideas。 结论：这条路线必须把 coding、Agent/LLM implementation、eval、trace/debugging 和表达训练放在阅读之前。"
+        },
+        {
+          "id": "overview-当前状态",
+          "moduleId": "overview",
+          "moduleTitle": "Overview",
+          "sectionTitle": "当前状态",
+          "text": "6-agent debate 的收敛结论： - Research Agent 想扩大论文阅读：限制为 high-signal reading，每组 reading 必须能转成 system design 或面试追问。 - CTO Agent 强调 production infra：保留 latency、cost、reliability、trace、eval，但不把准备变成云原生/SRE 复习。 - Coding Agent 要求可测量训练：每周固定 coding patterns 和 implementation drills。 - Product Agent 强调 agent UX：每个 design case 必须包含用户 workflow、failure recovery、human-in-the-loop。 - Strategy Agent 强调强信号：所有任务都要能产出面试叙事：我做了什么、为什么这样设计、怎么验证。 最终优先级： 1. Python coding fluency。 2. Agent / LLM component implementation。 3. System design casebook。 4. Eval and failure analysis。 5. Mock interview expression。 6. Focused research reading。 7. Optional Rust systems-depth。"
+        },
+        {
+          "id": "overview-核心知识",
+          "moduleId": "overview",
+          "moduleTitle": "Overview",
+          "sectionTitle": "核心知识",
+          "text": "总知识地图拆成八个稳定模块： - Coding：基础算法、Python fluency、TypeScript interfaces、optional Rust depth。 - LLM Systems：tokenization、attention、KV cache、batching、streaming、post-training、structured outputs。 - Agent Design：tool registry、tool router、planner loop、sandbox、approval gate、trace。 - RAG & Memory：chunking、retrieval、reranking、context assembly、freshness、privacy、memory conflict。 - Evals & Debugging：task success eval、regression eval、tool correctness、trace debugging、golden/adversarial sets。 - Research Reading：Transformer、scaling、instruction tuning、preference optimization、tool use、RAG、agent memory、evals。 - Behavioral / Strategy：STAR stories、project evidence、tradeoff answer、mock scoring rubric。 - Logs：weekly review、cross-module reflection、uncategorized notes。"
+        },
+        {
+          "id": "overview-任务",
+          "moduleId": "overview",
+          "moduleTitle": "Overview",
+          "sectionTitle": "任务",
+          "text": "每天时间不固定时，用三层任务： - minimum ：30-45 分钟，维持连续性。 - standard ：2-3 小时，推荐强度。 - stretch ：有额外时间时做，用来冲击高信号。 任何一天中断时，不做补偿性堆积；下一天回到当前模块的 minimum 和 standard 。"
+        },
+        {
+          "id": "overview-时间线",
+          "moduleId": "overview",
+          "moduleTitle": "Overview",
+          "sectionTitle": "时间线",
+          "text": "30/45/60-Day Plan Week 1: Coding Baseline And Agent Vocabulary 目标：建立节奏，补齐基础表达。 minimum ： - 1 道 Python coding 题。 - 10 分钟复盘：bug、复杂度、可复用 pattern。 - 读一个 Agent 系统概念：tool calling、RAG、memory、eval 任选一个。 standard ： - 2 道 coding 题：array/hash map/sliding window。 - 写一个 50-100 行 Python tool router。 - 练 1 个 2 分钟口头回答： How would you design a tool-calling agent? stretch ： - 用 TypeScript 写同一个 tool schema interface。 - 做一次 30 分钟 mock coding，限制时间。 产出： - tool router.py - 10 道 coding 题复盘笔记 - 1 页 tool-calling agent design answer Week 2: Graphs, RAG, And Trace 目标：把 coding patterns 接到 LLM system components。 minimum ： - 1 道 tree/graph 题。 - 画一个 RAG data flow。 - 写 5 行 failure notes。 standard ： - 8-10 道 tree/graph/BFS/DFS 题。 - 写一个 mini retrieval evaluator：输入 query、documents、expected doc ids，输出 recall@k。 - 练 system design： Design a production RAG system 。 stretch ： - 给 retrieval evaluator 加 TypeScript API wrapper。 - 加 trace log：query、retrieved docs、latency、score。 产出： - retrieval eval.py - RAG case answer - failure taxonomy: bad chunking, stale docs, wrong citation, prompt injection Week 3: DP / Heap / Memory System 目标：处理中高频 coding，并能讲长期 memory tradeoff。 minimum ： - 1 道 heap、interval 或 DP basic 题。 - 写一个 memory design bullet answer。 standard ： - 8-10 道 heap/interval/DP 题。 - 实现一个 JSON-backed memory store：write、retrieve、update、delete。 - 练 system design： Design long-term memory for a personal assistant 。 stretch ： - 给 memory store 加 conflict resolution。 - 加 eval：memory 是否应该写入、是否应该删除。 产出： - memory store.py - memory design case - 1 个 behavioral story：如何在 ambiguity 下做取舍 Week 4: Mock Sprint And Integration 目标：进入可面试状态。 minimum ： - 1 道 mixed coding 题。 - 复述一个 system design case。 standard ： - 2 次 timed coding mock。 - 2 次 system design mock。 - 写一个 agent trace/debugging answer。 - 整理 5 个 behavioral stories。 stretch ： - 做一轮 full loop mock：coding 45 分钟 + system design 45 分钟 + behavioral 20 分钟。 - 把 Week 1-3 drills 包装成一个 project narrative。 产出： - mock score sheet - 3 个 system design answers - 5 个 behavioral stories - mini drill portfolio summary Days 31-45: Depth Extension - 每周 2 次 timed coding。 - 深入 eval harness：golden set、adversarial set、regression suite。 - 加一个 multi-agent workflow case：planner-worker-reviewer。 - 读 post-training / RLHF / DPO / RLVR 概念，并能解释它们和 Agent eval 的关系。 Days 46-60: Top Lab Signal Extension - 做 1 个 capstone only if time permits：Agent eval and trace workbench。 - optional Rust module：写一个小型 sandbox runner 或 log parser。 - 练 research-engineering discussion：如何把 ambiguous failure 转成 experiment。 - 做 3 次 full mock，并按 rubric 复盘。"
+        },
+        {
+          "id": "overview-资源",
+          "moduleId": "overview",
+          "moduleTitle": "Overview",
+          "sectionTitle": "资源",
+          "text": "推荐项目方向： 1. Agent Runtime Casebook + Drills ：最佳当前 fit。组合 tool router、memory store、trace logger、eval harness 和 written design answers。 2. RAG Evaluation Pack ：适合 evals、applied AI、backend LLM roles。重点是 retrieval quality、citations、regression tests。 3. Memory System Mini Portfolio ：适合 personal assistant 或 agent memory roles。重点是 write policy、retrieval、deletion、stale memory。 4. Trace Debugging Workbench ：适合 top lab signal。重点是 observability、replay、diff、latency/cost。 5. Optional Rust Trace Parser ：只有 coding baseline 稳定后再做，用作 systems-depth add-on。"
+        },
+        {
+          "id": "overview-反思",
+          "moduleId": "overview",
+          "moduleTitle": "Overview",
+          "sectionTitle": "反思",
+          "text": "总览页不要追求“每天都完成计划”的假线性叙事。更真实的叙事是：能力模块会反复回归、螺旋深入。全局时间线只负责节奏校准，具体成长轨迹放到每个模块的 时间线 和 Logs 。"
+        },
+        {
+          "id": "overview-面试表达",
+          "moduleId": "overview",
+          "moduleTitle": "Overview",
+          "sectionTitle": "面试表达",
+          "text": "总叙事模板： 1. 我选择了 Agent / LLM Systems Engineer 作为目标，因为岗位同时需要 coding、LLM systems、agent runtime、eval 和 production debugging。 2. 我没有先做一个大而散的 demo，而是拆成 tool router、retrieval evaluator、memory store、trace logger、eval harness 这些可测量 drills。 3. 每个 drill 都能对应一个 system design case 和一个 failure mode。 4. 我的准备目标不是背概念，而是在面试中能写、能设计、能解释 tradeoff、能给 eval。"
+        },
+        {
+          "id": "overview-验收标准",
+          "moduleId": "overview",
+          "moduleTitle": "Overview",
+          "sectionTitle": "验收标准",
+          "text": "- 能在 45 分钟内完成中等 Python coding 题，并解释复杂度。 - 能独立讲清至少 4 个 system design case。 - 能把每个 mini drill 讲成“问题、约束、设计、失败模式、验证”的面试故事。 - 能解释 high-signal reading 的 claim、mechanism、limitation、interview use 和 system design implication。 - 每周 strategy rubric 至少有两个维度提升。"
+        },
+        {
+          "id": "overview-下一步",
+          "moduleId": "overview",
+          "moduleTitle": "Overview",
+          "sectionTitle": "下一步",
+          "text": "- 先推进 Coding、Agent Design、RAG & Memory、Evals & Debugging 四个高权重模块。 - 每周只做一次总览复盘，不把 Overview 变成流水账。 - 后续新增材料时优先落到能力模块，而不是新增全局时间目录。"
+        }
+      ],
+      "noteGroups": [
+        {
+          "title": "资源",
+          "body": "<p>推荐项目方向：</p>\n<ol><li><strong>Agent Runtime Casebook + Drills</strong>：最佳当前 fit。组合 tool router、memory store、trace logger、eval harness 和 written design answers。</li><li><strong>RAG Evaluation Pack</strong>：适合 evals、applied AI、backend LLM roles。重点是 retrieval quality、citations、regression tests。</li><li><strong>Memory System Mini Portfolio</strong>：适合 personal assistant 或 agent memory roles。重点是 write policy、retrieval、deletion、stale memory。</li><li><strong>Trace Debugging Workbench</strong>：适合 top lab signal。重点是 observability、replay、diff、latency/cost。</li><li><strong>Optional Rust Trace Parser</strong>：只有 coding baseline 稳定后再做，用作 systems-depth add-on。</li></ol>",
+          "text": "推荐项目方向： Agent Runtime Casebook + Drills ：最佳当前 fit。组合 tool router、memory store、trace logger、eval harness 和 written design answers。 RAG Evaluation Pack ：适合 evals、applied AI、backend LLM roles。重点是 retrieval quality、citations、regression tests。 Memory System Mini Portfolio ：适合 personal assistant 或 agent memory roles。重点是 write policy、retrieval、deletion、stale memory。 Trace Debugging Workbench ：适合 top lab signal。重点是 observability、replay、diff、latency/cost。 Optional Rust Trace Parser ：只有 coding baseline 稳定后再做，用作 systems-depth add-on。"
+        },
+        {
+          "title": "反思",
+          "body": "<p>总览页不要追求“每天都完成计划”的假线性叙事。更真实的叙事是：能力模块会反复回归、螺旋深入。全局时间线只负责节奏校准，具体成长轨迹放到每个模块的 <code>时间线</code> 和 <code>Logs</code>。</p>",
+          "text": "总览页不要追求“每天都完成计划”的假线性叙事。更真实的叙事是：能力模块会反复回归、螺旋深入。全局时间线只负责节奏校准，具体成长轨迹放到每个模块的 时间线 和 Logs 。"
+        },
+        {
+          "title": "面试表达",
+          "body": "<p>总叙事模板：</p>\n<ol><li>我选择了 Agent / LLM Systems Engineer 作为目标，因为岗位同时需要 coding、LLM systems、agent runtime、eval 和 production debugging。</li><li>我没有先做一个大而散的 demo，而是拆成 tool router、retrieval evaluator、memory store、trace logger、eval harness 这些可测量 drills。</li><li>每个 drill 都能对应一个 system design case 和一个 failure mode。</li><li>我的准备目标不是背概念，而是在面试中能写、能设计、能解释 tradeoff、能给 eval。</li></ol>",
+          "text": "总叙事模板： 我选择了 Agent / LLM Systems Engineer 作为目标，因为岗位同时需要 coding、LLM systems、agent runtime、eval 和 production debugging。 我没有先做一个大而散的 demo，而是拆成 tool router、retrieval evaluator、memory store、trace logger、eval harness 这些可测量 drills。 每个 drill 都能对应一个 system design case 和一个 failure mode。 我的准备目标不是背概念，而是在面试中能写、能设计、能解释 tradeoff、能给 eval。"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "timeline-1",
+          "label": "Step 1",
+          "text": "1 道 Python coding 题。",
+          "status": "done"
+        },
+        {
+          "id": "timeline-2",
+          "label": "10 分钟复盘",
+          "text": "bug、复杂度、可复用 pattern。",
+          "status": "done"
+        },
+        {
+          "id": "timeline-3",
+          "label": "读一个 Agent 系统概念",
+          "text": "tool calling、RAG、memory、eval 任选一个。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-4",
+          "label": "2 道 coding 题",
+          "text": "array/hash map/sliding window。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-5",
+          "label": "Step 5",
+          "text": "写一个 50-100 行 Python tool router。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-6",
+          "label": "练 1 个 2 分钟口头回答",
+          "text": "`How would you design a tool-calling agent?`",
+          "status": "open"
+        },
+        {
+          "id": "timeline-7",
+          "label": "Step 7",
+          "text": "用 TypeScript 写同一个 tool schema interface。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-8",
+          "label": "Step 8",
+          "text": "做一次 30 分钟 mock coding，限制时间。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-9",
+          "label": "Step 9",
+          "text": "`tool_router.py`",
+          "status": "open"
+        },
+        {
+          "id": "timeline-10",
+          "label": "Step 10",
+          "text": "10 道 coding 题复盘笔记",
+          "status": "open"
+        },
+        {
+          "id": "timeline-11",
+          "label": "Step 11",
+          "text": "1 页 `tool-calling agent` design answer",
+          "status": "open"
+        },
+        {
+          "id": "timeline-12",
+          "label": "Step 12",
+          "text": "1 道 tree/graph 题。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-13",
+          "label": "Step 13",
+          "text": "画一个 RAG data flow。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-14",
+          "label": "Step 14",
+          "text": "写 5 行 failure notes。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-15",
+          "label": "Step 15",
+          "text": "8-10 道 tree/graph/BFS/DFS 题。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-16",
+          "label": "Step 16",
+          "text": "写一个 mini retrieval evaluator：输入 query、documents、expected doc ids，输出 recall@k。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-17",
+          "label": "练 system design",
+          "text": "`Design a production RAG system`。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-18",
+          "label": "Step 18",
+          "text": "给 retrieval evaluator 加 TypeScript API wrapper。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-19",
+          "label": "加 trace log",
+          "text": "query、retrieved docs、latency、score。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-20",
+          "label": "Step 20",
+          "text": "`retrieval_eval.py`",
+          "status": "open"
+        },
+        {
+          "id": "timeline-21",
+          "label": "Step 21",
+          "text": "RAG case answer",
+          "status": "open"
+        },
+        {
+          "id": "timeline-22",
+          "label": "failure taxonomy",
+          "text": "bad chunking, stale docs, wrong citation, prompt injection",
+          "status": "open"
+        },
+        {
+          "id": "timeline-23",
+          "label": "Step 23",
+          "text": "1 道 heap、interval 或 DP basic 题。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-24",
+          "label": "Step 24",
+          "text": "写一个 memory design bullet answer。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-25",
+          "label": "Step 25",
+          "text": "8-10 道 heap/interval/DP 题。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-26",
+          "label": "Step 26",
+          "text": "实现一个 JSON-backed memory store：write、retrieve、update、delete。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-27",
+          "label": "练 system design",
+          "text": "`Design long-term memory for a personal assistant`。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-28",
+          "label": "Step 28",
+          "text": "给 memory store 加 conflict resolution。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-29",
+          "label": "加 eval",
+          "text": "memory 是否应该写入、是否应该删除。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-30",
+          "label": "Step 30",
+          "text": "`memory_store.py`",
+          "status": "open"
+        },
+        {
+          "id": "timeline-31",
+          "label": "Step 31",
+          "text": "memory design case",
+          "status": "open"
+        },
+        {
+          "id": "timeline-32",
+          "label": "Step 32",
+          "text": "1 个 behavioral story：如何在 ambiguity 下做取舍",
+          "status": "open"
+        },
+        {
+          "id": "timeline-33",
+          "label": "Step 33",
+          "text": "1 道 mixed coding 题。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-34",
+          "label": "Step 34",
+          "text": "复述一个 system design case。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-35",
+          "label": "Step 35",
+          "text": "2 次 timed coding mock。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-36",
+          "label": "Step 36",
+          "text": "2 次 system design mock。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-37",
+          "label": "Step 37",
+          "text": "写一个 agent trace/debugging answer。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-38",
+          "label": "Step 38",
+          "text": "整理 5 个 behavioral stories。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-39",
+          "label": "做一轮 full loop mock",
+          "text": "coding 45 分钟 + system design 45 分钟 + behavioral 20 分钟。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-40",
+          "label": "Step 40",
+          "text": "把 Week 1-3 drills 包装成一个 project narrative。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-41",
+          "label": "Step 41",
+          "text": "mock score sheet",
+          "status": "open"
+        },
+        {
+          "id": "timeline-42",
+          "label": "Step 42",
+          "text": "3 个 system design answers",
+          "status": "open"
+        },
+        {
+          "id": "timeline-43",
+          "label": "Step 43",
+          "text": "5 个 behavioral stories",
+          "status": "open"
+        },
+        {
+          "id": "timeline-44",
+          "label": "Step 44",
+          "text": "mini drill portfolio summary",
+          "status": "open"
+        },
+        {
+          "id": "timeline-45",
+          "label": "Step 45",
+          "text": "每周 2 次 timed coding。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-46",
+          "label": "深入 eval harness",
+          "text": "golden set、adversarial set、regression suite。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-47",
+          "label": "Step 47",
+          "text": "加一个 multi-agent workflow case：planner-worker-reviewer。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-48",
+          "label": "Step 48",
+          "text": "读 post-training / RLHF / DPO / RLVR 概念，并能解释它们和 Agent eval 的关系。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-49",
+          "label": "Step 49",
+          "text": "做 1 个 capstone only if time permits：Agent eval and trace workbench。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-50",
+          "label": "Step 50",
+          "text": "optional Rust module：写一个小型 sandbox runner 或 log parser。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-51",
+          "label": "Step 51",
+          "text": "练 research-engineering discussion：如何把 ambiguous failure 转成 experiment。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-52",
+          "label": "Step 52",
+          "text": "做 3 次 full mock，并按 rubric 复盘。",
+          "status": "open"
+        }
+      ],
       "searchText": "Overview 目标 目标岗位： Agent / LLM Systems Engineer 。 目标难度：OpenAI / Anthropic / Google DeepMind / xAI 这类顶尖 AI Lab / AGI 团队。 当前策略： - 主线不是大项目，而是面试可用能力包。 - 第一优先级是 coding 和实现能力。 - 第二优先级是面试表达：能把设计、tradeoff、failure mode、eval 讲清楚。 - LLM/Agent 系统知识不从 0 讲起，而是拉深到可设计、可实现、可调试。 - Python + TypeScript 是主栈，Rust 只作为 45/60 天 optional add-on。 公开岗位信号校准： - OpenAI AI Systems Engineer, Codex Agents https://openai.com/careers/ai-systems-engineer-codex-agents-san-francisco/ 强调 coding agents、tool-using LLM systems、evals、inference behavior、logs/traces、runtime constraints、Rust/Python/API layers。 - OpenAI Applied AI Engineer, Codex Core Agent https://openai.com/careers/applied-ai-engineer-codex-core-agent-san-francisco/ 强调 shipping LLM products、Python、model evaluation、fine-tuning、prompt design 和 agent UX。 - OpenAI Software Engineer, Agent Infrastructure https://openai.com/careers/software-engineer-agent-infrastructure-san-francisco/ 强调 FastAPI/gRPC APIs、agentic infrastructure、research-production collaboration 和 scaling。 - OpenAI Backend Software Engineer Evals https://openai.com/careers/backend-software-engineer-%28evals%29-san-francisco/ 强调 AI agents、production evals、multi-agent workflows、tool use、long context 和 backend systems。 - Anthropic Alignment roles https://www.anthropic.com/careers/jobs/4631822008 强调 empirical AI research、safety-relevant evals、multi-agent experiments 和 LLM-generated jailbreak eval tooling。 - Google DeepMind Careers https://deepmind.google/careers/ 中 Research Engineer role family 强调 engineering + ML/deep learning + research implementation，能 build and scale systems to test and evaluate ideas。 结论：这条路线必须把 coding、Agent/LLM implementation、eval、trace/debugging 和表达训练放在阅读之前。 当前状态 6-agent debate 的收敛结论： - Research Agent 想扩大论文阅读：限制为 high-signal reading，每组 reading 必须能转成 system design 或面试追问。 - CTO Agent 强调 production infra：保留 latency、cost、reliability、trace、eval，但不把准备变成云原生/SRE 复习。 - Coding Agent 要求可测量训练：每周固定 coding patterns 和 implementation drills。 - Product Agent 强调 agent UX：每个 design case 必须包含用户 workflow、failure recovery、human-in-the-loop。 - Strategy Agent 强调强信号：所有任务都要能产出面试叙事：我做了什么、为什么这样设计、怎么验证。 最终优先级： 1. Python coding fluency。 2. Agent / LLM component implementation。 3. System design casebook。 4. Eval and failure analysis。 5. Mock interview expression。 6. Focused research reading。 7. Optional Rust systems-depth。 核心知识 总知识地图拆成八个稳定模块： - Coding：基础算法、Python fluency、TypeScript interfaces、optional Rust depth。 - LLM Systems：tokenization、attention、KV cache、batching、streaming、post-training、structured outputs。 - Agent Design：tool registry、tool router、planner loop、sandbox、approval gate、trace。 - RAG & Memory：chunking、retrieval、reranking、context assembly、freshness、privacy、memory conflict。 - Evals & Debugging：task success eval、regression eval、tool correctness、trace debugging、golden/adversarial sets。 - Research Reading：Transformer、scaling、instruction tuning、preference optimization、tool use、RAG、agent memory、evals。 - Behavioral / Strategy：STAR stories、project evidence、tradeoff answer、mock scoring rubric。 - Logs：weekly review、cross-module reflection、uncategorized notes。 任务 每天时间不固定时，用三层任务： - minimum ：30-45 分钟，维持连续性。 - standard ：2-3 小时，推荐强度。 - stretch ：有额外时间时做，用来冲击高信号。 任何一天中断时，不做补偿性堆积；下一天回到当前模块的 minimum 和 standard 。 时间线 30/45/60-Day Plan Week 1: Coding Baseline And Agent Vocabulary 目标：建立节奏，补齐基础表达。 minimum ： - 1 道 Python coding 题。 - 10 分钟复盘：bug、复杂度、可复用 pattern。 - 读一个 Agent 系统概念：tool calling、RAG、memory、eval 任选一个。 standard ： - 2 道 coding 题：array/hash map/sliding window。 - 写一个 50-100 行 Python tool router。 - 练 1 个 2 分钟口头回答： How would you design a tool-calling agent? stretch ： - 用 TypeScript 写同一个 tool schema interface。 - 做一次 30 分钟 mock coding，限制时间。 产出： - tool router.py - 10 道 coding 题复盘笔记 - 1 页 tool-calling agent design answer Week 2: Graphs, RAG, And Trace 目标：把 coding patterns 接到 LLM system components。 minimum ： - 1 道 tree/graph 题。 - 画一个 RAG data flow。 - 写 5 行 failure notes。 standard ： - 8-10 道 tree/graph/BFS/DFS 题。 - 写一个 mini retrieval evaluator：输入 query、documents、expected doc ids，输出 recall@k。 - 练 system design： Design a production RAG system 。 stretch ： - 给 retrieval evaluator 加 TypeScript API wrapper。 - 加 trace log：query、retrieved docs、latency、score。 产出： - retrieval eval.py - RAG case answer - failure taxonomy: bad chunking, stale docs, wrong citation, prompt injection Week 3: DP / Heap / Memory System 目标：处理中高频 coding，并能讲长期 memory tradeoff。 minimum ： - 1 道 heap、interval 或 DP basic 题。 - 写一个 memory design bullet answer。 standard ： - 8-10 道 heap/interval/DP 题。 - 实现一个 JSON-backed memory store：write、retrieve、update、delete。 - 练 system design： Design long-term memory for a personal assistant 。 stretch ： - 给 memory store 加 conflict resolution。 - 加 eval：memory 是否应该写入、是否应该删除。 产出： - memory store.py - memory design case - 1 个 behavioral story：如何在 ambiguity 下做取舍 Week 4: Mock Sprint And Integration 目标：进入可面试状态。 minimum ： - 1 道 mixed coding 题。 - 复述一个 system design case。 standard ： - 2 次 timed coding mock。 - 2 次 system design mock。 - 写一个 agent trace/debugging answer。 - 整理 5 个 behavioral stories。 stretch ： - 做一轮 full loop mock：coding 45 分钟 + system design 45 分钟 + behavioral 20 分钟。 - 把 Week 1-3 drills 包装成一个 project narrative。 产出： - mock score sheet - 3 个 system design answers - 5 个 behavioral stories - mini drill portfolio summary Days 31-45: Depth Extension - 每周 2 次 timed coding。 - 深入 eval harness：golden set、adversarial set、regression suite。 - 加一个 multi-agent workflow case：planner-worker-reviewer。 - 读 post-training / RLHF / DPO / RLVR 概念，并能解释它们和 Agent eval 的关系。 Days 46-60: Top Lab Signal Extension - 做 1 个 capstone only if time permits：Agent eval and trace workbench。 - optional Rust module：写一个小型 sandbox runner 或 log parser。 - 练 research-engineering discussion：如何把 ambiguous failure 转成 experiment。 - 做 3 次 full mock，并按 rubric 复盘。 资源 推荐项目方向： 1. Agent Runtime Casebook + Drills ：最佳当前 fit。组合 tool router、memory store、trace logger、eval harness 和 written design answers。 2. RAG Evaluation Pack ：适合 evals、applied AI、backend LLM roles。重点是 retrieval quality、citations、regression tests。 3. Memory System Mini Portfolio ：适合 personal assistant 或 agent memory roles。重点是 write policy、retrieval、deletion、stale memory。 4. Trace Debugging Workbench ：适合 top lab signal。重点是 observability、replay、diff、latency/cost。 5. Optional Rust Trace Parser ：只有 coding baseline 稳定后再做，用作 systems-depth add-on。 反思 总览页不要追求“每天都完成计划”的假线性叙事。更真实的叙事是：能力模块会反复回归、螺旋深入。全局时间线只负责节奏校准，具体成长轨迹放到每个模块的 时间线 和 Logs 。 面试表达 总叙事模板： 1. 我选择了 Agent / LLM Systems Engineer 作为目标，因为岗位同时需要 coding、LLM systems、agent runtime、eval 和 production debugging。 2. 我没有先做一个大而散的 demo，而是拆成 tool router、retrieval evaluator、memory store、trace logger、eval harness 这些可测量 drills。 3. 每个 drill 都能对应一个 system design case 和一个 failure mode。 4. 我的准备目标不是背概念，而是在面试中能写、能设计、能解释 tradeoff、能给 eval。 验收标准 - 能在 45 分钟内完成中等 Python coding 题，并解释复杂度。 - 能独立讲清至少 4 个 system design case。 - 能把每个 mini drill 讲成“问题、约束、设计、失败模式、验证”的面试故事。 - 能解释 high-signal reading 的 claim、mechanism、limitation、interview use 和 system design implication。 - 每周 strategy rubric 至少有两个维度提升。 下一步 - 先推进 Coding、Agent Design、RAG & Memory、Evals & Debugging 四个高权重模块。 - 每周只做一次总览复盘，不把 Overview 变成流水账。 - 后续新增材料时优先落到能力模块，而不是新增全局时间目录。"
     },
     {
@@ -46,6 +462,145 @@
         "验收标准": "<ul><li>45 分钟内完成 medium 题并能解释复杂度。</li><li>Python 代码不依赖全局变量，变量名清楚。</li><li>每周至少一次 timed mock。</li><li>能完成 <code>ToolCall</code>、<code>ToolResult</code>、<code>AgentTrace</code>、<code>EvalCase</code> 的 TypeScript interface。</li><li>能把 coding 训练和 Agent/LLM component drill 连接起来讲。</li></ul>",
         "下一步": "<ul><li>先执行 Week 1 array/hash map/sliding window。</li><li>同步做 <code>Tool Router</code> drill。</li><li>记录每道错题的 pattern、bug、edge case 和可复用模板。</li></ul>\n<h3>Drill 8: Optional Rust Log Parser</h3>\n<p>Build：</p>\n<ul><li>parse JSONL traces</li><li>aggregate latency by span type</li><li>output slowest traces</li></ul>\n<p>Interview story：</p>\n<ul><li>Rust is optional depth: useful for performance/system credibility, not core preparation.</li></ul>"
       },
+      "sectionIds": {
+        "目标": "coding-目标",
+        "当前状态": "coding-当前状态",
+        "核心知识": "coding-核心知识",
+        "任务": "coding-任务",
+        "时间线": "coding-时间线",
+        "资源": "coding-资源",
+        "反思": "coding-反思",
+        "面试表达": "coding-面试表达",
+        "验收标准": "coding-验收标准",
+        "下一步": "coding-下一步"
+      },
+      "searchEntries": [
+        {
+          "id": "coding-目标",
+          "moduleId": "coding",
+          "moduleTitle": "Coding",
+          "sectionTitle": "目标",
+          "text": "把 coding 能力转成可测量的面试信号。重点不是刷题数量本身，而是限时写对、边写边解释、主动验证 edge cases，并能把实现能力连接到 Agent / LLM components。"
+        },
+        {
+          "id": "coding-当前状态",
+          "moduleId": "coding",
+          "moduleTitle": "Coding",
+          "sectionTitle": "当前状态",
+          "text": "当前短板优先级最高的是 coding 和实现能力。Python 是主面试语言；TypeScript 用于 service/API/interface style drills；Rust 只作为 45/60 天后 optional systems-depth。"
+        },
+        {
+          "id": "coding-核心知识",
+          "moduleId": "coding",
+          "moduleTitle": "Coding",
+          "sectionTitle": "核心知识",
+          "text": "Coding Fundamentals 必须掌握到能限时写对： - Arrays and strings：two pointers、sliding window、prefix sum。 - Hash maps and sets：frequency counting、dedup、index mapping。 - Stack and queue：monotonic stack、BFS queue。 - Trees：DFS recursion、iterative traversal、lowest common ancestor。 - Graphs：BFS/DFS、topological sort、shortest path basics。 - Heap：top-k、merge k lists、priority scheduling。 - Intervals：merge、sweep line basics。 - Greedy：排序后局部决策、反例检查。 - DP basics：1D/2D state、transition、base case。 面试表达要求： - 先说 brute force。 - 再说 bottleneck。 - 再给 optimized approach。 - 写代码时主动说明 invariants。 - 结束时给 complexity 和 edge cases。 Python / TypeScript Implementation Python： - clean function signatures - dataclass / TypedDict - heapq / deque / defaultdict - async basics - file and JSON handling - testable small modules TypeScript： - typed interfaces - async API wrappers - discriminated unions for tool calls - error result types - simple Node service structure TypeScript 不作为算法主语言，主要用于 Agent interfaces： - ToolCall - ToolResult - AgentTrace - MemoryRecord - EvalCase 用它训练 API boundary 和 schema thinking。"
+        },
+        {
+          "id": "coding-任务",
+          "moduleId": "coding",
+          "moduleTitle": "Coding",
+          "sectionTitle": "任务",
+          "text": "Coding Plan Weekly Pattern Allocation - Week 1：arrays, strings, hash maps, sliding window。目标是写稳基础题，减少语法和边界错误。 - Week 2：trees, graphs, BFS, DFS。目标是建立 recursion / traversal / visited set 直觉。 - Week 3：heap, intervals, greedy, DP basics。目标是覆盖中频题型。 - Week 4：mixed mock。目标是提升限时表现和解释质量。 Daily Coding Loop 1. 3 分钟澄清输入输出和 edge cases。 2. 5 分钟写 brute force 和瓶颈。 3. 20-35 分钟写 optimized solution。 4. 5 分钟手动跑测试。 5. 5 分钟写复盘：pattern、bug、复杂度。 Python Standards 每题必须做到： - 函数签名清楚。 - 不依赖全局变量。 - 变量名能表达含义。 - 主动处理 empty input、single item、duplicates。 - 复杂度能说出来。 TypeScript Standards - 用 typed interfaces 表达 API boundary。 - 对 tool call 使用 discriminated unions。 - 对失败返回 error result types。 - 对 async wrapper 写 timeout、retry、trace hooks。"
+        },
+        {
+          "id": "coding-时间线",
+          "moduleId": "coding",
+          "moduleTitle": "Coding",
+          "sectionTitle": "时间线",
+          "text": "- Week 1：10 道 array/hash map/sliding window 题，写 50-100 行 Python tool router。 - Week 2：8-10 道 tree/graph/BFS/DFS 题，写 mini retrieval evaluator。 - Week 3：8-10 道 heap/interval/DP 题，写 JSON-backed memory store。 - Week 4：2 次 timed coding mock，混合复盘。 - Days 31-45：每周 2 次 timed coding。 - Days 46-60：如果 coding baseline 稳定，加入 Optional Rust Log Parser。"
+        },
+        {
+          "id": "coding-资源",
+          "moduleId": "coding",
+          "moduleTitle": "Coding",
+          "sectionTitle": "资源",
+          "text": "Mock Interview Set: Coding 1. Longest substring without repeating characters。 2. Merge intervals。 3. Top K frequent elements。 4. Number of islands。 5. Course schedule。 6. LRU cache。 7. Word ladder 或 shortest path variant。 8. Coin change。 Strong signal： - clarify edge cases - write clean Python - test manually - explain complexity Weak signal： - jump into code without constraints - cannot debug own code - cannot explain why algorithm works Python / TypeScript Implementation Mock 1. Implement a tool router with schema validation。 2. Implement an in-memory vector retrieval stub and recall@k evaluator。 3. Implement a trace logger for an agent loop。 4. Implement retry with timeout and exponential backoff。 5. Define TypeScript interfaces for ToolCall, ToolResult, AgentTrace。 Strong signal： - small testable units - clear error handling - typed boundaries - observability hooks"
+        },
+        {
+          "id": "coding-反思",
+          "moduleId": "coding",
+          "moduleTitle": "Coding",
+          "sectionTitle": "反思",
+          "text": "Coding 不是和 Agent/LLM 系统分开的训练。每周的算法 pattern 之后都要接一个小型 component drill，让“会写代码”能转成面试证据。"
+        },
+        {
+          "id": "coding-面试表达",
+          "moduleId": "coding",
+          "moduleTitle": "Coding",
+          "sectionTitle": "面试表达",
+          "text": "回答 coding 题时的表达顺序： 1. Clarify input/output and constraints。 2. State brute force。 3. Identify bottleneck。 4. Explain optimized idea。 5. Define invariants。 6. Code cleanly。 7. Manually test representative cases。 8. Give complexity。 Implementation drill 的表达句式： - “我把它拆成可测试的小模块，因为 agent runtime 的失败通常跨越 model/tool/runtime 三层。” - “这个 boundary 用 TypeScript interface 表达，是为了让 tool schema、trace 和 eval case 可审计。”"
+        },
+        {
+          "id": "coding-验收标准",
+          "moduleId": "coding",
+          "moduleTitle": "Coding",
+          "sectionTitle": "验收标准",
+          "text": "- 45 分钟内完成 medium 题并能解释复杂度。 - Python 代码不依赖全局变量，变量名清楚。 - 每周至少一次 timed mock。 - 能完成 ToolCall 、 ToolResult 、 AgentTrace 、 EvalCase 的 TypeScript interface。 - 能把 coding 训练和 Agent/LLM component drill 连接起来讲。"
+        },
+        {
+          "id": "coding-下一步",
+          "moduleId": "coding",
+          "moduleTitle": "Coding",
+          "sectionTitle": "下一步",
+          "text": "- 先执行 Week 1 array/hash map/sliding window。 - 同步做 Tool Router drill。 - 记录每道错题的 pattern、bug、edge case 和可复用模板。 Drill 8: Optional Rust Log Parser Build： - parse JSONL traces - aggregate latency by span type - output slowest traces Interview story： - Rust is optional depth: useful for performance/system credibility, not core preparation."
+        }
+      ],
+      "noteGroups": [
+        {
+          "title": "资源",
+          "body": "<h3>Mock Interview Set: Coding</h3>\n<ol><li>Longest substring without repeating characters。</li><li>Merge intervals。</li><li>Top K frequent elements。</li><li>Number of islands。</li><li>Course schedule。</li><li>LRU cache。</li><li>Word ladder 或 shortest path variant。</li><li>Coin change。</li></ol>\n<p>Strong signal：</p>\n<ul><li>clarify edge cases</li><li>write clean Python</li><li>test manually</li><li>explain complexity</li></ul>\n<p>Weak signal：</p>\n<ul><li>jump into code without constraints</li><li>cannot debug own code</li><li>cannot explain why algorithm works</li></ul>\n<h3>Python / TypeScript Implementation Mock</h3>\n<ol><li>Implement a tool router with schema validation。</li><li>Implement an in-memory vector retrieval stub and recall@k evaluator。</li><li>Implement a trace logger for an agent loop。</li><li>Implement retry with timeout and exponential backoff。</li><li>Define TypeScript interfaces for ToolCall, ToolResult, AgentTrace。</li></ol>\n<p>Strong signal：</p>\n<ul><li>small testable units</li><li>clear error handling</li><li>typed boundaries</li><li>observability hooks</li></ul>",
+          "text": "Mock Interview Set: Coding Longest substring without repeating characters。 Merge intervals。 Top K frequent elements。 Number of islands。 Course schedule。 LRU cache。 Word ladder 或 shortest path variant。 Coin change。 Strong signal： clarify edge cases write clean Python test manually explain complexity Weak signal： jump into code without constraints cannot debug own code cannot explain why algorithm works Python / TypeScript Implementation Mock Implement a tool router with schema validation。 Implement an in-memory vector retrieval stub and recall@k evaluator。 Implement a trace logger for an agent loop。 Implement retry with timeout and exponential backoff。 Define TypeScript interfaces for ToolCall, ToolResult, AgentTrace。 Strong signal： small testable units clear error handling typed boundaries observability hooks"
+        },
+        {
+          "title": "反思",
+          "body": "<p>Coding 不是和 Agent/LLM 系统分开的训练。每周的算法 pattern 之后都要接一个小型 component drill，让“会写代码”能转成面试证据。</p>",
+          "text": "Coding 不是和 Agent/LLM 系统分开的训练。每周的算法 pattern 之后都要接一个小型 component drill，让“会写代码”能转成面试证据。"
+        },
+        {
+          "title": "面试表达",
+          "body": "<p>回答 coding 题时的表达顺序：</p>\n<ol><li>Clarify input/output and constraints。</li><li>State brute force。</li><li>Identify bottleneck。</li><li>Explain optimized idea。</li><li>Define invariants。</li><li>Code cleanly。</li><li>Manually test representative cases。</li><li>Give complexity。</li></ol>\n<p>Implementation drill 的表达句式：</p>\n<ul><li>“我把它拆成可测试的小模块，因为 agent runtime 的失败通常跨越 model/tool/runtime 三层。”</li><li>“这个 boundary 用 TypeScript interface 表达，是为了让 tool schema、trace 和 eval case 可审计。”</li></ul>",
+          "text": "回答 coding 题时的表达顺序： Clarify input/output and constraints。 State brute force。 Identify bottleneck。 Explain optimized idea。 Define invariants。 Code cleanly。 Manually test representative cases。 Give complexity。 Implementation drill 的表达句式： “我把它拆成可测试的小模块，因为 agent runtime 的失败通常跨越 model/tool/runtime 三层。” “这个 boundary 用 TypeScript interface 表达，是为了让 tool schema、trace 和 eval case 可审计。”"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "timeline-1",
+          "label": "Week 1",
+          "text": "10 道 array/hash map/sliding window 题，写 50-100 行 Python tool router。",
+          "status": "done"
+        },
+        {
+          "id": "timeline-2",
+          "label": "Week 2",
+          "text": "8-10 道 tree/graph/BFS/DFS 题，写 mini retrieval evaluator。",
+          "status": "done"
+        },
+        {
+          "id": "timeline-3",
+          "label": "Week 3",
+          "text": "8-10 道 heap/interval/DP 题，写 JSON-backed memory store。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-4",
+          "label": "Week 4",
+          "text": "2 次 timed coding mock，混合复盘。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-5",
+          "label": "Days 31-45",
+          "text": "每周 2 次 timed coding。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-6",
+          "label": "Days 46-60",
+          "text": "如果 coding baseline 稳定，加入 Optional Rust Log Parser。",
+          "status": "open"
+        }
+      ],
       "searchText": "Coding 目标 把 coding 能力转成可测量的面试信号。重点不是刷题数量本身，而是限时写对、边写边解释、主动验证 edge cases，并能把实现能力连接到 Agent / LLM components。 当前状态 当前短板优先级最高的是 coding 和实现能力。Python 是主面试语言；TypeScript 用于 service/API/interface style drills；Rust 只作为 45/60 天后 optional systems-depth。 核心知识 Coding Fundamentals 必须掌握到能限时写对： - Arrays and strings：two pointers、sliding window、prefix sum。 - Hash maps and sets：frequency counting、dedup、index mapping。 - Stack and queue：monotonic stack、BFS queue。 - Trees：DFS recursion、iterative traversal、lowest common ancestor。 - Graphs：BFS/DFS、topological sort、shortest path basics。 - Heap：top-k、merge k lists、priority scheduling。 - Intervals：merge、sweep line basics。 - Greedy：排序后局部决策、反例检查。 - DP basics：1D/2D state、transition、base case。 面试表达要求： - 先说 brute force。 - 再说 bottleneck。 - 再给 optimized approach。 - 写代码时主动说明 invariants。 - 结束时给 complexity 和 edge cases。 Python / TypeScript Implementation Python： - clean function signatures - dataclass / TypedDict - heapq / deque / defaultdict - async basics - file and JSON handling - testable small modules TypeScript： - typed interfaces - async API wrappers - discriminated unions for tool calls - error result types - simple Node service structure TypeScript 不作为算法主语言，主要用于 Agent interfaces： - ToolCall - ToolResult - AgentTrace - MemoryRecord - EvalCase 用它训练 API boundary 和 schema thinking。 任务 Coding Plan Weekly Pattern Allocation - Week 1：arrays, strings, hash maps, sliding window。目标是写稳基础题，减少语法和边界错误。 - Week 2：trees, graphs, BFS, DFS。目标是建立 recursion / traversal / visited set 直觉。 - Week 3：heap, intervals, greedy, DP basics。目标是覆盖中频题型。 - Week 4：mixed mock。目标是提升限时表现和解释质量。 Daily Coding Loop 1. 3 分钟澄清输入输出和 edge cases。 2. 5 分钟写 brute force 和瓶颈。 3. 20-35 分钟写 optimized solution。 4. 5 分钟手动跑测试。 5. 5 分钟写复盘：pattern、bug、复杂度。 Python Standards 每题必须做到： - 函数签名清楚。 - 不依赖全局变量。 - 变量名能表达含义。 - 主动处理 empty input、single item、duplicates。 - 复杂度能说出来。 TypeScript Standards - 用 typed interfaces 表达 API boundary。 - 对 tool call 使用 discriminated unions。 - 对失败返回 error result types。 - 对 async wrapper 写 timeout、retry、trace hooks。 时间线 - Week 1：10 道 array/hash map/sliding window 题，写 50-100 行 Python tool router。 - Week 2：8-10 道 tree/graph/BFS/DFS 题，写 mini retrieval evaluator。 - Week 3：8-10 道 heap/interval/DP 题，写 JSON-backed memory store。 - Week 4：2 次 timed coding mock，混合复盘。 - Days 31-45：每周 2 次 timed coding。 - Days 46-60：如果 coding baseline 稳定，加入 Optional Rust Log Parser。 资源 Mock Interview Set: Coding 1. Longest substring without repeating characters。 2. Merge intervals。 3. Top K frequent elements。 4. Number of islands。 5. Course schedule。 6. LRU cache。 7. Word ladder 或 shortest path variant。 8. Coin change。 Strong signal： - clarify edge cases - write clean Python - test manually - explain complexity Weak signal： - jump into code without constraints - cannot debug own code - cannot explain why algorithm works Python / TypeScript Implementation Mock 1. Implement a tool router with schema validation。 2. Implement an in-memory vector retrieval stub and recall@k evaluator。 3. Implement a trace logger for an agent loop。 4. Implement retry with timeout and exponential backoff。 5. Define TypeScript interfaces for ToolCall, ToolResult, AgentTrace。 Strong signal： - small testable units - clear error handling - typed boundaries - observability hooks 反思 Coding 不是和 Agent/LLM 系统分开的训练。每周的算法 pattern 之后都要接一个小型 component drill，让“会写代码”能转成面试证据。 面试表达 回答 coding 题时的表达顺序： 1. Clarify input/output and constraints。 2. State brute force。 3. Identify bottleneck。 4. Explain optimized idea。 5. Define invariants。 6. Code cleanly。 7. Manually test representative cases。 8. Give complexity。 Implementation drill 的表达句式： - “我把它拆成可测试的小模块，因为 agent runtime 的失败通常跨越 model/tool/runtime 三层。” - “这个 boundary 用 TypeScript interface 表达，是为了让 tool schema、trace 和 eval case 可审计。” 验收标准 - 45 分钟内完成 medium 题并能解释复杂度。 - Python 代码不依赖全局变量，变量名清楚。 - 每周至少一次 timed mock。 - 能完成 ToolCall 、 ToolResult 、 AgentTrace 、 EvalCase 的 TypeScript interface。 - 能把 coding 训练和 Agent/LLM component drill 连接起来讲。 下一步 - 先执行 Week 1 array/hash map/sliding window。 - 同步做 Tool Router drill。 - 记录每道错题的 pattern、bug、edge case 和可复用模板。 Drill 8: Optional Rust Log Parser Build： - parse JSONL traces - aggregate latency by span type - output slowest traces Interview story： - Rust is optional depth: useful for performance/system credibility, not core preparation."
     },
     {
@@ -67,6 +622,145 @@
         "验收标准": "<ul><li>能 2 分钟解释 attention 和 KV cache。</li><li>能区分 SFT、RLHF、DPO、RLVR 在 post-training 中的作用。</li><li>能把 model selection 讲成 latency/cost/reliability tradeoff，而不是“哪个模型更强”。</li><li>能回答 LLM Fundamentals mock questions，并给出具体 production implication。</li></ul>",
         "下一步": "<ul><li>用一页笔记写清 long context vs memory。</li><li>写一个 structured output failure taxonomy。</li><li>把 post-training 相关阅读转成 5 行 interview-use card。</li></ul>"
       },
+      "sectionIds": {
+        "目标": "llm-systems-目标",
+        "当前状态": "llm-systems-当前状态",
+        "核心知识": "llm-systems-核心知识",
+        "任务": "llm-systems-任务",
+        "时间线": "llm-systems-时间线",
+        "资源": "llm-systems-资源",
+        "反思": "llm-systems-反思",
+        "面试表达": "llm-systems-面试表达",
+        "验收标准": "llm-systems-验收标准",
+        "下一步": "llm-systems-下一步"
+      },
+      "searchEntries": [
+        {
+          "id": "llm-systems-目标",
+          "moduleId": "llm-systems",
+          "moduleTitle": "LLM Systems",
+          "sectionTitle": "目标",
+          "text": "把 LLM 概念推进到“能设计、能实现、能解释 tradeoff、能被追问”的程度。重点是 inference behavior、context budgeting、structured outputs、post-training intuition 和 production constraints。"
+        },
+        {
+          "id": "llm-systems-当前状态",
+          "moduleId": "llm-systems",
+          "moduleTitle": "LLM Systems",
+          "sectionTitle": "当前状态",
+          "text": "LLM/Agent 系统知识已有基础，但需要从术语级理解推进到系统级回答。这个模块服务 system design、research discussion 和 LLM Fundamentals mock。"
+        },
+        {
+          "id": "llm-systems-核心知识",
+          "moduleId": "llm-systems",
+          "moduleTitle": "LLM Systems",
+          "sectionTitle": "核心知识",
+          "text": "LLM Systems 核心概念： - tokenization and context windows - attention and KV cache intuition - batching, streaming, rate limits - latency and cost tradeoff - prompt assembly and context budgeting - model selection and fallback - structured outputs and schema validation 需要能解释： - 为什么 long context 不等于 memory。 - 为什么 KV cache 影响 latency 和 serving design。 - 为什么 structured output 需要 schema validation 和 retry。 - 为什么 benchmark scores 会误导 production system choices。"
+        },
+        {
+          "id": "llm-systems-任务",
+          "moduleId": "llm-systems",
+          "moduleTitle": "LLM Systems",
+          "sectionTitle": "任务",
+          "text": "System Design Answer Template 每个 LLM system design case 用同一套结构： 1. Clarify requirements。 2. Define success metrics。 3. State assumptions。 4. Draw components。 5. Explain data flow。 6. Identify failure modes。 7. Propose evals and monitoring。 8. Discuss tradeoffs and follow-ups。 LLM Fundamentals Mock 1. Explain attention and why KV cache matters。 2. Explain why long context is not the same as memory。 3. Explain SFT vs RLHF vs DPO。 4. Explain why benchmark scores can mislead。 5. Explain temperature, sampling, and structured outputs。"
+        },
+        {
+          "id": "llm-systems-时间线",
+          "moduleId": "llm-systems",
+          "moduleTitle": "LLM Systems",
+          "sectionTitle": "时间线",
+          "text": "- Week 1：读一个 Agent/LLM 系统概念并练 2 分钟口头回答。 - Week 2：把 RAG data flow 和 prompt/context budgeting 讲清楚。 - Week 3：把 long-term memory 和 long context 的差别讲清楚。 - Week 4：整理 LLM Fundamentals mock questions。 - Days 31-45：读 post-training / RLHF / DPO / RLVR 概念，并解释它们和 Agent eval 的关系。 - Days 46-60：练 research-engineering discussion：如何把 ambiguous failure 转成 experiment。"
+        },
+        {
+          "id": "llm-systems-资源",
+          "moduleId": "llm-systems",
+          "moduleTitle": "LLM Systems",
+          "sectionTitle": "资源",
+          "text": "Research Reading List 阅读原则：只读能转化为面试答案的材料。 - Transformer basics：Attention Is All You Need。Need to know：attention、positional encoding、encoder/decoder intuition。Interview use：解释 LLM inference 和 context limits。 - Scaling：Kaplan scaling laws、Chinchilla。Need to know：data/model/compute tradeoff。Interview use：讨论模型能力和成本边界。 - Instruction tuning：InstructGPT。Need to know：SFT、RLHF、human preference。Interview use：解释 post-training 为什么重要。 - Preference optimization：DPO、PPO basics。Need to know：reward model vs direct preference optimization。Interview use：回答 RLHF / DPO 追问。 每篇 reading 的输出只要 5 行： 1. paper claim 2. mechanism 3. limitation 4. interview question it helps answer 5. one system design implication"
+        },
+        {
+          "id": "llm-systems-反思",
+          "moduleId": "llm-systems",
+          "moduleTitle": "LLM Systems",
+          "sectionTitle": "反思",
+          "text": "LLM systems 回答容易变成术语堆叠。每个术语必须接一个 production consequence：latency、cost、reliability、eval、debugging、fallback 或 user experience。"
+        },
+        {
+          "id": "llm-systems-面试表达",
+          "moduleId": "llm-systems",
+          "moduleTitle": "LLM Systems",
+          "sectionTitle": "面试表达",
+          "text": "可复用表达： - “Long context expands what the model can attend to, but memory requires write policy、retrieval policy、update/delete policy and user control.” - “KV cache is not just an implementation detail; it changes serving latency, batching strategy, streaming behavior and cost tradeoff.” - “For structured outputs, prompt instruction is not enough. I would add schema validation, retry policy and trace logging.”"
+        },
+        {
+          "id": "llm-systems-验收标准",
+          "moduleId": "llm-systems",
+          "moduleTitle": "LLM Systems",
+          "sectionTitle": "验收标准",
+          "text": "- 能 2 分钟解释 attention 和 KV cache。 - 能区分 SFT、RLHF、DPO、RLVR 在 post-training 中的作用。 - 能把 model selection 讲成 latency/cost/reliability tradeoff，而不是“哪个模型更强”。 - 能回答 LLM Fundamentals mock questions，并给出具体 production implication。"
+        },
+        {
+          "id": "llm-systems-下一步",
+          "moduleId": "llm-systems",
+          "moduleTitle": "LLM Systems",
+          "sectionTitle": "下一步",
+          "text": "- 用一页笔记写清 long context vs memory。 - 写一个 structured output failure taxonomy。 - 把 post-training 相关阅读转成 5 行 interview-use card。"
+        }
+      ],
+      "noteGroups": [
+        {
+          "title": "资源",
+          "body": "<h3>Research Reading List</h3>\n<p>阅读原则：只读能转化为面试答案的材料。</p>\n<ul><li>Transformer basics：Attention Is All You Need。Need to know：attention、positional encoding、encoder/decoder intuition。Interview use：解释 LLM inference 和 context limits。</li><li>Scaling：Kaplan scaling laws、Chinchilla。Need to know：data/model/compute tradeoff。Interview use：讨论模型能力和成本边界。</li><li>Instruction tuning：InstructGPT。Need to know：SFT、RLHF、human preference。Interview use：解释 post-training 为什么重要。</li><li>Preference optimization：DPO、PPO basics。Need to know：reward model vs direct preference optimization。Interview use：回答 RLHF / DPO 追问。</li></ul>\n<p>每篇 reading 的输出只要 5 行：</p>\n<ol><li>paper claim</li><li>mechanism</li><li>limitation</li><li>interview question it helps answer</li><li>one system design implication</li></ol>",
+          "text": "Research Reading List 阅读原则：只读能转化为面试答案的材料。 Transformer basics：Attention Is All You Need。Need to know：attention、positional encoding、encoder/decoder intuition。Interview use：解释 LLM inference 和 context limits。 Scaling：Kaplan scaling laws、Chinchilla。Need to know：data/model/compute tradeoff。Interview use：讨论模型能力和成本边界。 Instruction tuning：InstructGPT。Need to know：SFT、RLHF、human preference。Interview use：解释 post-training 为什么重要。 Preference optimization：DPO、PPO basics。Need to know：reward model vs direct preference optimization。Interview use：回答 RLHF / DPO 追问。 每篇 reading 的输出只要 5 行： paper claim mechanism limitation interview question it helps answer one system design implication"
+        },
+        {
+          "title": "反思",
+          "body": "<p>LLM systems 回答容易变成术语堆叠。每个术语必须接一个 production consequence：latency、cost、reliability、eval、debugging、fallback 或 user experience。</p>",
+          "text": "LLM systems 回答容易变成术语堆叠。每个术语必须接一个 production consequence：latency、cost、reliability、eval、debugging、fallback 或 user experience。"
+        },
+        {
+          "title": "面试表达",
+          "body": "<p>可复用表达：</p>\n<ul><li>“Long context expands what the model can attend to, but memory requires write policy、retrieval policy、update/delete policy and user control.”</li><li>“KV cache is not just an implementation detail; it changes serving latency, batching strategy, streaming behavior and cost tradeoff.”</li><li>“For structured outputs, prompt instruction is not enough. I would add schema validation, retry policy and trace logging.”</li></ul>",
+          "text": "可复用表达： “Long context expands what the model can attend to, but memory requires write policy、retrieval policy、update/delete policy and user control.” “KV cache is not just an implementation detail; it changes serving latency, batching strategy, streaming behavior and cost tradeoff.” “For structured outputs, prompt instruction is not enough. I would add schema validation, retry policy and trace logging.”"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "timeline-1",
+          "label": "Week 1",
+          "text": "读一个 Agent/LLM 系统概念并练 2 分钟口头回答。",
+          "status": "done"
+        },
+        {
+          "id": "timeline-2",
+          "label": "Week 2",
+          "text": "把 RAG data flow 和 prompt/context budgeting 讲清楚。",
+          "status": "done"
+        },
+        {
+          "id": "timeline-3",
+          "label": "Week 3",
+          "text": "把 long-term memory 和 long context 的差别讲清楚。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-4",
+          "label": "Week 4",
+          "text": "整理 LLM Fundamentals mock questions。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-5",
+          "label": "Days 31-45",
+          "text": "读 post-training / RLHF / DPO / RLVR 概念，并解释它们和 Agent eval 的关系。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-6",
+          "label": "Days 46-60",
+          "text": "练 research-engineering discussion：如何把 ambiguous failure 转成 experiment。",
+          "status": "open"
+        }
+      ],
       "searchText": "LLM Systems 目标 把 LLM 概念推进到“能设计、能实现、能解释 tradeoff、能被追问”的程度。重点是 inference behavior、context budgeting、structured outputs、post-training intuition 和 production constraints。 当前状态 LLM/Agent 系统知识已有基础，但需要从术语级理解推进到系统级回答。这个模块服务 system design、research discussion 和 LLM Fundamentals mock。 核心知识 LLM Systems 核心概念： - tokenization and context windows - attention and KV cache intuition - batching, streaming, rate limits - latency and cost tradeoff - prompt assembly and context budgeting - model selection and fallback - structured outputs and schema validation 需要能解释： - 为什么 long context 不等于 memory。 - 为什么 KV cache 影响 latency 和 serving design。 - 为什么 structured output 需要 schema validation 和 retry。 - 为什么 benchmark scores 会误导 production system choices。 任务 System Design Answer Template 每个 LLM system design case 用同一套结构： 1. Clarify requirements。 2. Define success metrics。 3. State assumptions。 4. Draw components。 5. Explain data flow。 6. Identify failure modes。 7. Propose evals and monitoring。 8. Discuss tradeoffs and follow-ups。 LLM Fundamentals Mock 1. Explain attention and why KV cache matters。 2. Explain why long context is not the same as memory。 3. Explain SFT vs RLHF vs DPO。 4. Explain why benchmark scores can mislead。 5. Explain temperature, sampling, and structured outputs。 时间线 - Week 1：读一个 Agent/LLM 系统概念并练 2 分钟口头回答。 - Week 2：把 RAG data flow 和 prompt/context budgeting 讲清楚。 - Week 3：把 long-term memory 和 long context 的差别讲清楚。 - Week 4：整理 LLM Fundamentals mock questions。 - Days 31-45：读 post-training / RLHF / DPO / RLVR 概念，并解释它们和 Agent eval 的关系。 - Days 46-60：练 research-engineering discussion：如何把 ambiguous failure 转成 experiment。 资源 Research Reading List 阅读原则：只读能转化为面试答案的材料。 - Transformer basics：Attention Is All You Need。Need to know：attention、positional encoding、encoder/decoder intuition。Interview use：解释 LLM inference 和 context limits。 - Scaling：Kaplan scaling laws、Chinchilla。Need to know：data/model/compute tradeoff。Interview use：讨论模型能力和成本边界。 - Instruction tuning：InstructGPT。Need to know：SFT、RLHF、human preference。Interview use：解释 post-training 为什么重要。 - Preference optimization：DPO、PPO basics。Need to know：reward model vs direct preference optimization。Interview use：回答 RLHF / DPO 追问。 每篇 reading 的输出只要 5 行： 1. paper claim 2. mechanism 3. limitation 4. interview question it helps answer 5. one system design implication 反思 LLM systems 回答容易变成术语堆叠。每个术语必须接一个 production consequence：latency、cost、reliability、eval、debugging、fallback 或 user experience。 面试表达 可复用表达： - “Long context expands what the model can attend to, but memory requires write policy、retrieval policy、update/delete policy and user control.” - “KV cache is not just an implementation detail; it changes serving latency, batching strategy, streaming behavior and cost tradeoff.” - “For structured outputs, prompt instruction is not enough. I would add schema validation, retry policy and trace logging.” 验收标准 - 能 2 分钟解释 attention 和 KV cache。 - 能区分 SFT、RLHF、DPO、RLVR 在 post-training 中的作用。 - 能把 model selection 讲成 latency/cost/reliability tradeoff，而不是“哪个模型更强”。 - 能回答 LLM Fundamentals mock questions，并给出具体 production implication。 下一步 - 用一页笔记写清 long context vs memory。 - 写一个 structured output failure taxonomy。 - 把 post-training 相关阅读转成 5 行 interview-use card。"
     },
     {
@@ -88,6 +782,139 @@
         "验收标准": "<ul><li>能画出 tool registry、router、executor、trace logger、approval gate 的数据流。</li><li>能解释 tool selection accuracy、task success、loop failures 三类 eval。</li><li>能讲清 safe tool execution layer 的 permission model。</li><li>能用 TypeScript interfaces 表达 tool/runtime/UI boundary。</li></ul>",
         "下一步": "<ul><li>先做 Tool Router。</li><li>写一页 Agent Runtime With Tool Calling design answer。</li><li>给 safe execution layer 列出 abuse cases 和 recovery strategy。</li></ul>"
       },
+      "sectionIds": {
+        "目标": "agent-design-目标",
+        "当前状态": "agent-design-当前状态",
+        "核心知识": "agent-design-核心知识",
+        "任务": "agent-design-任务",
+        "时间线": "agent-design-时间线",
+        "资源": "agent-design-资源",
+        "反思": "agent-design-反思",
+        "面试表达": "agent-design-面试表达",
+        "验收标准": "agent-design-验收标准",
+        "下一步": "agent-design-下一步"
+      },
+      "searchEntries": [
+        {
+          "id": "agent-design-目标",
+          "moduleId": "agent-design",
+          "moduleTitle": "Agent Design",
+          "sectionTitle": "目标",
+          "text": "掌握 Agent runtime 的核心组件和 failure modes，并能把 tool calling、planner loop、safe execution、trace 和 user workflow 讲成完整 system design。"
+        },
+        {
+          "id": "agent-design-当前状态",
+          "moduleId": "agent-design",
+          "moduleTitle": "Agent Design",
+          "sectionTitle": "当前状态",
+          "text": "Agent 是目标岗位主线之一。当前准备要避免只讲“planner + tools”的空泛架构，必须落到 schema validation、timeouts、permission model、human approval、observability 和 eval。"
+        },
+        {
+          "id": "agent-design-核心知识",
+          "moduleId": "agent-design",
+          "moduleTitle": "Agent Design",
+          "sectionTitle": "核心知识",
+          "text": "Agent Systems 核心组件： - planner / policy loop - tool registry - tool router - execution sandbox - short-term context - long-term memory - trace logger - eval harness - human approval gate 核心风险： - tool hallucination - prompt injection - stale memory - runaway loops - hidden state mismatch - eval overfitting - latency explosion"
+        },
+        {
+          "id": "agent-design-任务",
+          "moduleId": "agent-design",
+          "moduleTitle": "Agent Design",
+          "sectionTitle": "任务",
+          "text": "Case 2: Design An Agent Runtime With Tool Calling 必须覆盖： - tool registry - schema validation - planner loop - execution timeout - retry policy - trace logger - human approval for risky tools - eval: tool selection accuracy, task success, loop failures Case 6: Design A Safe Tool Execution Layer 必须覆盖： - permission model - sandboxing - file/network restrictions - approval gates - audit logs - abuse cases - recovery from partial execution Drill 1: Tool Router Build： - Python tool registry - JSON schema validation - timeout wrapper - trace event for each call Interview story： - tool calling needs validation, permissions, timeouts, and observability. Drill 6: TypeScript Agent Interface Build： - ToolCall - ToolResult - AgentState - AgentTrace - EvalCase Interview story： - typed interfaces clarify boundaries between model, tools, runtime, and UI. Drill 7: Streaming Wrapper Build： - async token stream simulator - cancellation - partial output handling - error event Interview story： - user experience and runtime control matter for production LLM systems."
+        },
+        {
+          "id": "agent-design-时间线",
+          "moduleId": "agent-design",
+          "moduleTitle": "Agent Design",
+          "sectionTitle": "时间线",
+          "text": "- Week 1：写 50-100 行 Python tool router；练 How would you design a tool-calling agent? - Week 1 stretch：用 TypeScript 写 tool schema interface。 - Week 4：把 Week 1-3 drills 包装成 project narrative。 - Days 31-45：加一个 multi-agent workflow case：planner-worker-reviewer。 - Days 46-60：如果需要 capstone，把 Agent runtime、trace、eval 合成 Agent eval and trace workbench。"
+        },
+        {
+          "id": "agent-design-资源",
+          "moduleId": "agent-design",
+          "moduleTitle": "Agent Design",
+          "sectionTitle": "资源",
+          "text": "Research reading： - Tool use：ReAct、Toolformer。Need to know：reasoning + acting、tool selection。Interview use：设计 tool-calling agents。 - Agent memory：Generative Agents、MemGPT、LLM agent memory surveys。Need to know：memory write/read、reflection、context management。Interview use：设计 long-term memory。"
+        },
+        {
+          "id": "agent-design-反思",
+          "moduleId": "agent-design",
+          "moduleTitle": "Agent Design",
+          "sectionTitle": "反思",
+          "text": "Agent design 的强信号不是“我会写一个 loop”，而是知道 loop 会怎样坏掉：错误 tool、错误参数、无限循环、权限越界、partial execution、不可复现 trace。"
+        },
+        {
+          "id": "agent-design-面试表达",
+          "moduleId": "agent-design",
+          "moduleTitle": "Agent Design",
+          "sectionTitle": "面试表达",
+          "text": "回答 agent runtime 时必须说： - “I would treat tools as typed, permissioned interfaces, not just strings in a prompt.” - “Every model/tool/retrieval step needs a trace span, otherwise debugging multi-step failures becomes guesswork.” - “Risky tools need approval gates and audit logs; safe tools can be executed automatically with timeout and retry policy.”"
+        },
+        {
+          "id": "agent-design-验收标准",
+          "moduleId": "agent-design",
+          "moduleTitle": "Agent Design",
+          "sectionTitle": "验收标准",
+          "text": "- 能画出 tool registry、router、executor、trace logger、approval gate 的数据流。 - 能解释 tool selection accuracy、task success、loop failures 三类 eval。 - 能讲清 safe tool execution layer 的 permission model。 - 能用 TypeScript interfaces 表达 tool/runtime/UI boundary。"
+        },
+        {
+          "id": "agent-design-下一步",
+          "moduleId": "agent-design",
+          "moduleTitle": "Agent Design",
+          "sectionTitle": "下一步",
+          "text": "- 先做 Tool Router。 - 写一页 Agent Runtime With Tool Calling design answer。 - 给 safe execution layer 列出 abuse cases 和 recovery strategy。"
+        }
+      ],
+      "noteGroups": [
+        {
+          "title": "资源",
+          "body": "<p>Research reading：</p>\n<ul><li>Tool use：ReAct、Toolformer。Need to know：reasoning + acting、tool selection。Interview use：设计 tool-calling agents。</li><li>Agent memory：Generative Agents、MemGPT、LLM agent memory surveys。Need to know：memory write/read、reflection、context management。Interview use：设计 long-term memory。</li></ul>",
+          "text": "Research reading： Tool use：ReAct、Toolformer。Need to know：reasoning + acting、tool selection。Interview use：设计 tool-calling agents。 Agent memory：Generative Agents、MemGPT、LLM agent memory surveys。Need to know：memory write/read、reflection、context management。Interview use：设计 long-term memory。"
+        },
+        {
+          "title": "反思",
+          "body": "<p>Agent design 的强信号不是“我会写一个 loop”，而是知道 loop 会怎样坏掉：错误 tool、错误参数、无限循环、权限越界、partial execution、不可复现 trace。</p>",
+          "text": "Agent design 的强信号不是“我会写一个 loop”，而是知道 loop 会怎样坏掉：错误 tool、错误参数、无限循环、权限越界、partial execution、不可复现 trace。"
+        },
+        {
+          "title": "面试表达",
+          "body": "<p>回答 agent runtime 时必须说：</p>\n<ul><li>“I would treat tools as typed, permissioned interfaces, not just strings in a prompt.”</li><li>“Every model/tool/retrieval step needs a trace span, otherwise debugging multi-step failures becomes guesswork.”</li><li>“Risky tools need approval gates and audit logs; safe tools can be executed automatically with timeout and retry policy.”</li></ul>",
+          "text": "回答 agent runtime 时必须说： “I would treat tools as typed, permissioned interfaces, not just strings in a prompt.” “Every model/tool/retrieval step needs a trace span, otherwise debugging multi-step failures becomes guesswork.” “Risky tools need approval gates and audit logs; safe tools can be executed automatically with timeout and retry policy.”"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "timeline-1",
+          "label": "Week 1",
+          "text": "写 50-100 行 Python tool router；练 `How would you design a tool-calling agent?`",
+          "status": "done"
+        },
+        {
+          "id": "timeline-2",
+          "label": "Week 1 stretch",
+          "text": "用 TypeScript 写 tool schema interface。",
+          "status": "done"
+        },
+        {
+          "id": "timeline-3",
+          "label": "Week 4",
+          "text": "把 Week 1-3 drills 包装成 project narrative。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-4",
+          "label": "Days 31-45",
+          "text": "加一个 multi-agent workflow case：planner-worker-reviewer。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-5",
+          "label": "Days 46-60",
+          "text": "如果需要 capstone，把 Agent runtime、trace、eval 合成 Agent eval and trace workbench。",
+          "status": "open"
+        }
+      ],
       "searchText": "Agent Design 目标 掌握 Agent runtime 的核心组件和 failure modes，并能把 tool calling、planner loop、safe execution、trace 和 user workflow 讲成完整 system design。 当前状态 Agent 是目标岗位主线之一。当前准备要避免只讲“planner + tools”的空泛架构，必须落到 schema validation、timeouts、permission model、human approval、observability 和 eval。 核心知识 Agent Systems 核心组件： - planner / policy loop - tool registry - tool router - execution sandbox - short-term context - long-term memory - trace logger - eval harness - human approval gate 核心风险： - tool hallucination - prompt injection - stale memory - runaway loops - hidden state mismatch - eval overfitting - latency explosion 任务 Case 2: Design An Agent Runtime With Tool Calling 必须覆盖： - tool registry - schema validation - planner loop - execution timeout - retry policy - trace logger - human approval for risky tools - eval: tool selection accuracy, task success, loop failures Case 6: Design A Safe Tool Execution Layer 必须覆盖： - permission model - sandboxing - file/network restrictions - approval gates - audit logs - abuse cases - recovery from partial execution Drill 1: Tool Router Build： - Python tool registry - JSON schema validation - timeout wrapper - trace event for each call Interview story： - tool calling needs validation, permissions, timeouts, and observability. Drill 6: TypeScript Agent Interface Build： - ToolCall - ToolResult - AgentState - AgentTrace - EvalCase Interview story： - typed interfaces clarify boundaries between model, tools, runtime, and UI. Drill 7: Streaming Wrapper Build： - async token stream simulator - cancellation - partial output handling - error event Interview story： - user experience and runtime control matter for production LLM systems. 时间线 - Week 1：写 50-100 行 Python tool router；练 How would you design a tool-calling agent? - Week 1 stretch：用 TypeScript 写 tool schema interface。 - Week 4：把 Week 1-3 drills 包装成 project narrative。 - Days 31-45：加一个 multi-agent workflow case：planner-worker-reviewer。 - Days 46-60：如果需要 capstone，把 Agent runtime、trace、eval 合成 Agent eval and trace workbench。 资源 Research reading： - Tool use：ReAct、Toolformer。Need to know：reasoning + acting、tool selection。Interview use：设计 tool-calling agents。 - Agent memory：Generative Agents、MemGPT、LLM agent memory surveys。Need to know：memory write/read、reflection、context management。Interview use：设计 long-term memory。 反思 Agent design 的强信号不是“我会写一个 loop”，而是知道 loop 会怎样坏掉：错误 tool、错误参数、无限循环、权限越界、partial execution、不可复现 trace。 面试表达 回答 agent runtime 时必须说： - “I would treat tools as typed, permissioned interfaces, not just strings in a prompt.” - “Every model/tool/retrieval step needs a trace span, otherwise debugging multi-step failures becomes guesswork.” - “Risky tools need approval gates and audit logs; safe tools can be executed automatically with timeout and retry policy.” 验收标准 - 能画出 tool registry、router、executor、trace logger、approval gate 的数据流。 - 能解释 tool selection accuracy、task success、loop failures 三类 eval。 - 能讲清 safe tool execution layer 的 permission model。 - 能用 TypeScript interfaces 表达 tool/runtime/UI boundary。 下一步 - 先做 Tool Router。 - 写一页 Agent Runtime With Tool Calling design answer。 - 给 safe execution layer 列出 abuse cases 和 recovery strategy。"
     },
     {
@@ -109,6 +936,133 @@
         "验收标准": "<ul><li>能设计 production RAG pipeline 并给出 recall@k、faithfulness、latency、cost eval。</li><li>能解释 long-term memory 的 write/retrieve/update/delete policy。</li><li>能实现 retrieval evaluator 和 memory store 两个 drills。</li><li>能讲清 freshness、privacy 和 prompt injection defense。</li></ul>",
         "下一步": "<ul><li>先做 Retrieval Evaluator。</li><li>再做 Memory Store。</li><li>每个实现都配一个 failure report，避免只写 happy path。</li></ul>"
       },
+      "sectionIds": {
+        "目标": "rag-memory-目标",
+        "当前状态": "rag-memory-当前状态",
+        "核心知识": "rag-memory-核心知识",
+        "任务": "rag-memory-任务",
+        "时间线": "rag-memory-时间线",
+        "资源": "rag-memory-资源",
+        "反思": "rag-memory-反思",
+        "面试表达": "rag-memory-面试表达",
+        "验收标准": "rag-memory-验收标准",
+        "下一步": "rag-memory-下一步"
+      },
+      "searchEntries": [
+        {
+          "id": "rag-memory-目标",
+          "moduleId": "rag-memory",
+          "moduleTitle": "RAG & Memory",
+          "sectionTitle": "目标",
+          "text": "能设计 production RAG 和 long-term memory，并能解释 retrieval quality、context assembly、provenance、freshness、privacy、write policy、conflict resolution 和 deletion。"
+        },
+        {
+          "id": "rag-memory-当前状态",
+          "moduleId": "rag-memory",
+          "moduleTitle": "RAG & Memory",
+          "sectionTitle": "当前状态",
+          "text": "RAG & Memory 是 Agent / LLM 系统面试高频交叉点。准备重点是把“检索 + 生成”拆成可验证组件，不把“上下文窗口更长”误当作 memory。"
+        },
+        {
+          "id": "rag-memory-核心知识",
+          "moduleId": "rag-memory",
+          "moduleTitle": "RAG & Memory",
+          "sectionTitle": "核心知识",
+          "text": "RAG And Memory 必须会解释： - chunking strategy - embedding retrieval - reranking - metadata filtering - context assembly - citation and provenance - freshness - deletion and privacy - memory write policy - memory conflict resolution"
+        },
+        {
+          "id": "rag-memory-任务",
+          "moduleId": "rag-memory",
+          "moduleTitle": "RAG & Memory",
+          "sectionTitle": "任务",
+          "text": "Case 1: Design A Production RAG System 必须覆盖： - ingestion pipeline - chunking and metadata - embedding and index - retrieval and reranking - context assembly - citations - freshness - prompt injection defense - eval: recall@k, answer faithfulness, latency, cost Case 3: Design Long-Term Memory For A Personal Assistant 必须覆盖： - what should be remembered - write policy - retrieval policy - update/delete policy - privacy and user control - conflict resolution - stale memory detection - eval: precision of memory use, harmful memory rate Drill 2: Retrieval Evaluator Build： - document list - query set - expected relevant ids - recall@k and failure report Interview story： - RAG quality is measured before generation, not only by final answer. Drill 3: Memory Store Build： - write/read/update/delete - metadata tags - conflict detection - deletion test Interview story： - long-term memory requires write policy, user control, and stale memory handling."
+        },
+        {
+          "id": "rag-memory-时间线",
+          "moduleId": "rag-memory",
+          "moduleTitle": "RAG & Memory",
+          "sectionTitle": "时间线",
+          "text": "- Week 2：画 RAG data flow；写 mini retrieval evaluator；练 Design a production RAG system 。 - Week 2 stretch：给 retrieval evaluator 加 TypeScript API wrapper；加 trace log：query、retrieved docs、latency、score。 - Week 3：实现 JSON-backed memory store：write、retrieve、update、delete；练 Design long-term memory for a personal assistant 。 - Week 3 stretch：给 memory store 加 conflict resolution；加 eval：memory 是否应该写入、是否应该删除。"
+        },
+        {
+          "id": "rag-memory-资源",
+          "moduleId": "rag-memory",
+          "moduleTitle": "RAG & Memory",
+          "sectionTitle": "资源",
+          "text": "Research reading： - RAG：Lewis RAG paper plus modern retrieval notes。Need to know：retrieval、generation、faithfulness。Interview use：设计 production RAG。 - Agent memory：Generative Agents、MemGPT、LLM agent memory surveys。Need to know：memory write/read、reflection、context management。Interview use：设计 long-term memory。"
+        },
+        {
+          "id": "rag-memory-反思",
+          "moduleId": "rag-memory",
+          "moduleTitle": "RAG & Memory",
+          "sectionTitle": "反思",
+          "text": "RAG 和 memory 的共同陷阱是“存得多”不等于“记得好”。强回答要覆盖 retrieval precision、write policy、delete policy、privacy、stale memory 和 harmful memory rate。"
+        },
+        {
+          "id": "rag-memory-面试表达",
+          "moduleId": "rag-memory",
+          "moduleTitle": "RAG & Memory",
+          "sectionTitle": "面试表达",
+          "text": "可复用表达： - “I would evaluate retrieval before generation with recall@k and failure reports, then separately evaluate answer faithfulness.” - “Memory write should be a policy decision, not an automatic append of every interaction.” - “Deletion and user control are part of memory quality, especially for personal assistants.”"
+        },
+        {
+          "id": "rag-memory-验收标准",
+          "moduleId": "rag-memory",
+          "moduleTitle": "RAG & Memory",
+          "sectionTitle": "验收标准",
+          "text": "- 能设计 production RAG pipeline 并给出 recall@k、faithfulness、latency、cost eval。 - 能解释 long-term memory 的 write/retrieve/update/delete policy。 - 能实现 retrieval evaluator 和 memory store 两个 drills。 - 能讲清 freshness、privacy 和 prompt injection defense。"
+        },
+        {
+          "id": "rag-memory-下一步",
+          "moduleId": "rag-memory",
+          "moduleTitle": "RAG & Memory",
+          "sectionTitle": "下一步",
+          "text": "- 先做 Retrieval Evaluator。 - 再做 Memory Store。 - 每个实现都配一个 failure report，避免只写 happy path。"
+        }
+      ],
+      "noteGroups": [
+        {
+          "title": "资源",
+          "body": "<p>Research reading：</p>\n<ul><li>RAG：Lewis RAG paper plus modern retrieval notes。Need to know：retrieval、generation、faithfulness。Interview use：设计 production RAG。</li><li>Agent memory：Generative Agents、MemGPT、LLM agent memory surveys。Need to know：memory write/read、reflection、context management。Interview use：设计 long-term memory。</li></ul>",
+          "text": "Research reading： RAG：Lewis RAG paper plus modern retrieval notes。Need to know：retrieval、generation、faithfulness。Interview use：设计 production RAG。 Agent memory：Generative Agents、MemGPT、LLM agent memory surveys。Need to know：memory write/read、reflection、context management。Interview use：设计 long-term memory。"
+        },
+        {
+          "title": "反思",
+          "body": "<p>RAG 和 memory 的共同陷阱是“存得多”不等于“记得好”。强回答要覆盖 retrieval precision、write policy、delete policy、privacy、stale memory 和 harmful memory rate。</p>",
+          "text": "RAG 和 memory 的共同陷阱是“存得多”不等于“记得好”。强回答要覆盖 retrieval precision、write policy、delete policy、privacy、stale memory 和 harmful memory rate。"
+        },
+        {
+          "title": "面试表达",
+          "body": "<p>可复用表达：</p>\n<ul><li>“I would evaluate retrieval before generation with recall@k and failure reports, then separately evaluate answer faithfulness.”</li><li>“Memory write should be a policy decision, not an automatic append of every interaction.”</li><li>“Deletion and user control are part of memory quality, especially for personal assistants.”</li></ul>",
+          "text": "可复用表达： “I would evaluate retrieval before generation with recall@k and failure reports, then separately evaluate answer faithfulness.” “Memory write should be a policy decision, not an automatic append of every interaction.” “Deletion and user control are part of memory quality, especially for personal assistants.”"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "timeline-1",
+          "label": "Week 2",
+          "text": "画 RAG data flow；写 mini retrieval evaluator；练 `Design a production RAG system`。",
+          "status": "done"
+        },
+        {
+          "id": "timeline-2",
+          "label": "Week 2 stretch",
+          "text": "给 retrieval evaluator 加 TypeScript API wrapper；加 trace log：query、retrieved docs、latency、score。",
+          "status": "done"
+        },
+        {
+          "id": "timeline-3",
+          "label": "Week 3",
+          "text": "实现 JSON-backed memory store：write、retrieve、update、delete；练 `Design long-term memory for a personal assistant`。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-4",
+          "label": "Week 3 stretch",
+          "text": "给 memory store 加 conflict resolution；加 eval：memory 是否应该写入、是否应该删除。",
+          "status": "open"
+        }
+      ],
       "searchText": "RAG & Memory 目标 能设计 production RAG 和 long-term memory，并能解释 retrieval quality、context assembly、provenance、freshness、privacy、write policy、conflict resolution 和 deletion。 当前状态 RAG & Memory 是 Agent / LLM 系统面试高频交叉点。准备重点是把“检索 + 生成”拆成可验证组件，不把“上下文窗口更长”误当作 memory。 核心知识 RAG And Memory 必须会解释： - chunking strategy - embedding retrieval - reranking - metadata filtering - context assembly - citation and provenance - freshness - deletion and privacy - memory write policy - memory conflict resolution 任务 Case 1: Design A Production RAG System 必须覆盖： - ingestion pipeline - chunking and metadata - embedding and index - retrieval and reranking - context assembly - citations - freshness - prompt injection defense - eval: recall@k, answer faithfulness, latency, cost Case 3: Design Long-Term Memory For A Personal Assistant 必须覆盖： - what should be remembered - write policy - retrieval policy - update/delete policy - privacy and user control - conflict resolution - stale memory detection - eval: precision of memory use, harmful memory rate Drill 2: Retrieval Evaluator Build： - document list - query set - expected relevant ids - recall@k and failure report Interview story： - RAG quality is measured before generation, not only by final answer. Drill 3: Memory Store Build： - write/read/update/delete - metadata tags - conflict detection - deletion test Interview story： - long-term memory requires write policy, user control, and stale memory handling. 时间线 - Week 2：画 RAG data flow；写 mini retrieval evaluator；练 Design a production RAG system 。 - Week 2 stretch：给 retrieval evaluator 加 TypeScript API wrapper；加 trace log：query、retrieved docs、latency、score。 - Week 3：实现 JSON-backed memory store：write、retrieve、update、delete；练 Design long-term memory for a personal assistant 。 - Week 3 stretch：给 memory store 加 conflict resolution；加 eval：memory 是否应该写入、是否应该删除。 资源 Research reading： - RAG：Lewis RAG paper plus modern retrieval notes。Need to know：retrieval、generation、faithfulness。Interview use：设计 production RAG。 - Agent memory：Generative Agents、MemGPT、LLM agent memory surveys。Need to know：memory write/read、reflection、context management。Interview use：设计 long-term memory。 反思 RAG 和 memory 的共同陷阱是“存得多”不等于“记得好”。强回答要覆盖 retrieval precision、write policy、delete policy、privacy、stale memory 和 harmful memory rate。 面试表达 可复用表达： - “I would evaluate retrieval before generation with recall@k and failure reports, then separately evaluate answer faithfulness.” - “Memory write should be a policy decision, not an automatic append of every interaction.” - “Deletion and user control are part of memory quality, especially for personal assistants.” 验收标准 - 能设计 production RAG pipeline 并给出 recall@k、faithfulness、latency、cost eval。 - 能解释 long-term memory 的 write/retrieve/update/delete policy。 - 能实现 retrieval evaluator 和 memory store 两个 drills。 - 能讲清 freshness、privacy 和 prompt injection defense。 下一步 - 先做 Retrieval Evaluator。 - 再做 Memory Store。 - 每个实现都配一个 failure report，避免只写 happy path。"
     },
     {
@@ -130,6 +1084,133 @@
         "验收标准": "<ul><li>能设计 eval harness 的 task set、grader、threshold 和 CI integration。</li><li>能解释 golden traces 和 adversarial cases 的作用。</li><li>能实现 Agent Trace Logger 和 Eval Harness drills。</li><li>能从 trace schema 讲到 replay、diff、latency/cost aggregation 和 redaction。</li></ul>",
         "下一步": "<ul><li>给所有 drills 加 trace id 和 error field。</li><li>先做小型 Eval Harness，再考虑 capstone。</li><li>每次 mock design 后记录一个 failure taxonomy。</li></ul>"
       },
+      "sectionIds": {
+        "目标": "evals-debugging-目标",
+        "当前状态": "evals-debugging-当前状态",
+        "核心知识": "evals-debugging-核心知识",
+        "任务": "evals-debugging-任务",
+        "时间线": "evals-debugging-时间线",
+        "资源": "evals-debugging-资源",
+        "反思": "evals-debugging-反思",
+        "面试表达": "evals-debugging-面试表达",
+        "验收标准": "evals-debugging-验收标准",
+        "下一步": "evals-debugging-下一步"
+      },
+      "searchEntries": [
+        {
+          "id": "evals-debugging-目标",
+          "moduleId": "evals-debugging",
+          "moduleTitle": "Evals & Debugging",
+          "sectionTitle": "目标",
+          "text": "能设计 Agent / LLM eval harness，并能用 trace debugging 定位 multi-step workflow failure。重点是 task set、grader、golden traces、adversarial cases、CI integration、thresholds、flaky eval 和 versioning。"
+        },
+        {
+          "id": "evals-debugging-当前状态",
+          "moduleId": "evals-debugging",
+          "moduleTitle": "Evals & Debugging",
+          "sectionTitle": "当前状态",
+          "text": "Eval and failure analysis 是 top lab signal 的关键维度。当前路线把 eval、trace 和 debugging 放在阅读之前，因为它们能直接提升 system design 和 project narrative 的可信度。"
+        },
+        {
+          "id": "evals-debugging-核心知识",
+          "moduleId": "evals-debugging",
+          "moduleTitle": "Evals & Debugging",
+          "sectionTitle": "核心知识",
+          "text": "Eval And Debugging 必须会设计： - task success eval - regression eval - tool-use correctness eval - latency/cost metrics - human review sampling - trace-based debugging - golden set and adversarial set - failure taxonomy"
+        },
+        {
+          "id": "evals-debugging-任务",
+          "moduleId": "evals-debugging",
+          "moduleTitle": "Evals & Debugging",
+          "sectionTitle": "任务",
+          "text": "Case 4: Design An Eval Harness For Agent Regressions 必须覆盖： - task set - graders - golden traces - adversarial cases - CI integration - pass/fail thresholds - flaky eval handling - model and prompt versioning Case 5: Design Trace Debugging For Multi-Step LLM Workflows 必须覆盖： - trace schema - span hierarchy - prompt/tool/model events - latency/cost aggregation - redaction - replay - diff between runs Drill 4: Agent Trace Logger Build： - trace id - spans for model call, tool call, retrieval - latency and error fields - redaction policy Interview story： - agents fail across steps; trace is the debugging primitive. Drill 5: Eval Harness Build： - test cases - expected outcomes - grader functions - pass/fail summary Interview story： - agent regressions need evals tied to tasks, not only unit tests."
+        },
+        {
+          "id": "evals-debugging-时间线",
+          "moduleId": "evals-debugging",
+          "moduleTitle": "Evals & Debugging",
+          "sectionTitle": "时间线",
+          "text": "- Week 2：给 retrieval evaluator 加 trace log：query、retrieved docs、latency、score。 - Week 4：写一个 agent trace/debugging answer。 - Days 31-45：深入 eval harness：golden set、adversarial set、regression suite。 - Days 46-60：capstone extension 可以做 Agent eval and trace workbench。"
+        },
+        {
+          "id": "evals-debugging-资源",
+          "moduleId": "evals-debugging",
+          "moduleTitle": "Evals & Debugging",
+          "sectionTitle": "资源",
+          "text": "Research reading： - Evals：OpenAI evals ideas、HELM-style thinking、agent eval discussions。Need to know：eval set、graders、contamination、regression。Interview use：设计 eval harness。"
+        },
+        {
+          "id": "evals-debugging-反思",
+          "moduleId": "evals-debugging",
+          "moduleTitle": "Evals & Debugging",
+          "sectionTitle": "反思",
+          "text": "Agent 失败通常不是单点 bug，而是 prompt、tool、retrieval、model、state、权限和 user goal 的组合问题。没有 trace，debugging 会变成猜测；没有 eval，修复会退化成 anecdote。"
+        },
+        {
+          "id": "evals-debugging-面试表达",
+          "moduleId": "evals-debugging",
+          "moduleTitle": "Evals & Debugging",
+          "sectionTitle": "面试表达",
+          "text": "可复用表达： - “I would keep golden traces for known-good workflows, then compare prompt/tool/model events between runs.” - “Agent regression evals need task-level outcomes and step-level diagnostics.” - “A good eval harness needs versioning for model, prompt, tools and graders; otherwise pass/fail is not interpretable.”"
+        },
+        {
+          "id": "evals-debugging-验收标准",
+          "moduleId": "evals-debugging",
+          "moduleTitle": "Evals & Debugging",
+          "sectionTitle": "验收标准",
+          "text": "- 能设计 eval harness 的 task set、grader、threshold 和 CI integration。 - 能解释 golden traces 和 adversarial cases 的作用。 - 能实现 Agent Trace Logger 和 Eval Harness drills。 - 能从 trace schema 讲到 replay、diff、latency/cost aggregation 和 redaction。"
+        },
+        {
+          "id": "evals-debugging-下一步",
+          "moduleId": "evals-debugging",
+          "moduleTitle": "Evals & Debugging",
+          "sectionTitle": "下一步",
+          "text": "- 给所有 drills 加 trace id 和 error field。 - 先做小型 Eval Harness，再考虑 capstone。 - 每次 mock design 后记录一个 failure taxonomy。"
+        }
+      ],
+      "noteGroups": [
+        {
+          "title": "资源",
+          "body": "<p>Research reading：</p>\n<ul><li>Evals：OpenAI evals ideas、HELM-style thinking、agent eval discussions。Need to know：eval set、graders、contamination、regression。Interview use：设计 eval harness。</li></ul>",
+          "text": "Research reading： Evals：OpenAI evals ideas、HELM-style thinking、agent eval discussions。Need to know：eval set、graders、contamination、regression。Interview use：设计 eval harness。"
+        },
+        {
+          "title": "反思",
+          "body": "<p>Agent 失败通常不是单点 bug，而是 prompt、tool、retrieval、model、state、权限和 user goal 的组合问题。没有 trace，debugging 会变成猜测；没有 eval，修复会退化成 anecdote。</p>",
+          "text": "Agent 失败通常不是单点 bug，而是 prompt、tool、retrieval、model、state、权限和 user goal 的组合问题。没有 trace，debugging 会变成猜测；没有 eval，修复会退化成 anecdote。"
+        },
+        {
+          "title": "面试表达",
+          "body": "<p>可复用表达：</p>\n<ul><li>“I would keep golden traces for known-good workflows, then compare prompt/tool/model events between runs.”</li><li>“Agent regression evals need task-level outcomes and step-level diagnostics.”</li><li>“A good eval harness needs versioning for model, prompt, tools and graders; otherwise pass/fail is not interpretable.”</li></ul>",
+          "text": "可复用表达： “I would keep golden traces for known-good workflows, then compare prompt/tool/model events between runs.” “Agent regression evals need task-level outcomes and step-level diagnostics.” “A good eval harness needs versioning for model, prompt, tools and graders; otherwise pass/fail is not interpretable.”"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "timeline-1",
+          "label": "Week 2",
+          "text": "给 retrieval evaluator 加 trace log：query、retrieved docs、latency、score。",
+          "status": "done"
+        },
+        {
+          "id": "timeline-2",
+          "label": "Week 4",
+          "text": "写一个 agent trace/debugging answer。",
+          "status": "done"
+        },
+        {
+          "id": "timeline-3",
+          "label": "Days 31-45",
+          "text": "深入 eval harness：golden set、adversarial set、regression suite。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-4",
+          "label": "Days 46-60",
+          "text": "capstone extension 可以做 Agent eval and trace workbench。",
+          "status": "open"
+        }
+      ],
       "searchText": "Evals & Debugging 目标 能设计 Agent / LLM eval harness，并能用 trace debugging 定位 multi-step workflow failure。重点是 task set、grader、golden traces、adversarial cases、CI integration、thresholds、flaky eval 和 versioning。 当前状态 Eval and failure analysis 是 top lab signal 的关键维度。当前路线把 eval、trace 和 debugging 放在阅读之前，因为它们能直接提升 system design 和 project narrative 的可信度。 核心知识 Eval And Debugging 必须会设计： - task success eval - regression eval - tool-use correctness eval - latency/cost metrics - human review sampling - trace-based debugging - golden set and adversarial set - failure taxonomy 任务 Case 4: Design An Eval Harness For Agent Regressions 必须覆盖： - task set - graders - golden traces - adversarial cases - CI integration - pass/fail thresholds - flaky eval handling - model and prompt versioning Case 5: Design Trace Debugging For Multi-Step LLM Workflows 必须覆盖： - trace schema - span hierarchy - prompt/tool/model events - latency/cost aggregation - redaction - replay - diff between runs Drill 4: Agent Trace Logger Build： - trace id - spans for model call, tool call, retrieval - latency and error fields - redaction policy Interview story： - agents fail across steps; trace is the debugging primitive. Drill 5: Eval Harness Build： - test cases - expected outcomes - grader functions - pass/fail summary Interview story： - agent regressions need evals tied to tasks, not only unit tests. 时间线 - Week 2：给 retrieval evaluator 加 trace log：query、retrieved docs、latency、score。 - Week 4：写一个 agent trace/debugging answer。 - Days 31-45：深入 eval harness：golden set、adversarial set、regression suite。 - Days 46-60：capstone extension 可以做 Agent eval and trace workbench。 资源 Research reading： - Evals：OpenAI evals ideas、HELM-style thinking、agent eval discussions。Need to know：eval set、graders、contamination、regression。Interview use：设计 eval harness。 反思 Agent 失败通常不是单点 bug，而是 prompt、tool、retrieval、model、state、权限和 user goal 的组合问题。没有 trace，debugging 会变成猜测；没有 eval，修复会退化成 anecdote。 面试表达 可复用表达： - “I would keep golden traces for known-good workflows, then compare prompt/tool/model events between runs.” - “Agent regression evals need task-level outcomes and step-level diagnostics.” - “A good eval harness needs versioning for model, prompt, tools and graders; otherwise pass/fail is not interpretable.” 验收标准 - 能设计 eval harness 的 task set、grader、threshold 和 CI integration。 - 能解释 golden traces 和 adversarial cases 的作用。 - 能实现 Agent Trace Logger 和 Eval Harness drills。 - 能从 trace schema 讲到 replay、diff、latency/cost aggregation 和 redaction。 下一步 - 给所有 drills 加 trace id 和 error field。 - 先做小型 Eval Harness，再考虑 capstone。 - 每次 mock design 后记录一个 failure taxonomy。"
     },
     {
@@ -151,6 +1232,145 @@
         "验收标准": "<ul><li>每篇 reading 只产出 5 行卡片，不写长综述。</li><li>能把 Transformer、scaling laws、RLHF、DPO、RAG、agent memory、evals 连接到具体 system design。</li><li>能说明 paper claim 和自己的 system implication 之间的区别。</li><li>能解释 RLHF、RLAIF、RLVR 和 Agent eval 的关系。</li></ul>",
         "下一步": "<ul><li>先做 4 张 high-signal cards：Attention、InstructGPT、ReAct、RAG。</li><li>再补 memory 和 eval cards。</li><li>每张 card 都要关联一个 mock interview question。</li></ul>"
       },
+      "sectionIds": {
+        "目标": "research-reading-目标",
+        "当前状态": "research-reading-当前状态",
+        "核心知识": "research-reading-核心知识",
+        "任务": "research-reading-任务",
+        "时间线": "research-reading-时间线",
+        "资源": "research-reading-资源",
+        "反思": "research-reading-反思",
+        "面试表达": "research-reading-面试表达",
+        "验收标准": "research-reading-验收标准",
+        "下一步": "research-reading-下一步"
+      },
+      "searchEntries": [
+        {
+          "id": "research-reading-目标",
+          "moduleId": "research-reading",
+          "moduleTitle": "Research Reading",
+          "sectionTitle": "目标",
+          "text": "只读能转化为面试答案的材料。每篇 reading 必须输出 claim、mechanism、limitation、interview question 和 system design implication。"
+        },
+        {
+          "id": "research-reading-当前状态",
+          "moduleId": "research-reading",
+          "moduleTitle": "Research Reading",
+          "sectionTitle": "当前状态",
+          "text": "Research reading 是第六优先级，不能挤掉 coding、implementation、system design 和 mock expression。阅读要服务 Agent / LLM Systems Engineer 面试，而不是扩成论文综述。"
+        },
+        {
+          "id": "research-reading-核心知识",
+          "moduleId": "research-reading",
+          "moduleTitle": "Research Reading",
+          "sectionTitle": "核心知识",
+          "text": "阅读覆盖： - Transformer basics - Scaling laws - Instruction tuning - Preference optimization - Tool use - RAG - Agent memory - Evals"
+        },
+        {
+          "id": "research-reading-任务",
+          "moduleId": "research-reading",
+          "moduleTitle": "Research Reading",
+          "sectionTitle": "任务",
+          "text": "每篇 reading 的输出只要 5 行： 1. paper claim 2. mechanism 3. limitation 4. interview question it helps answer 5. one system design implication"
+        },
+        {
+          "id": "research-reading-时间线",
+          "moduleId": "research-reading",
+          "moduleTitle": "Research Reading",
+          "sectionTitle": "时间线",
+          "text": "- Week 1：只读一个 Agent 系统概念，服务 tool calling answer。 - Week 2：读 RAG / retrieval 相关材料，服务 production RAG。 - Week 3：读 agent memory 相关材料，服务 long-term memory。 - Week 4：整理成 mock interview 可用的 short cards。 - Days 31-45：读 post-training / RLHF / DPO / RLVR，并解释它们和 Agent eval 的关系。 - Days 46-60：练 research-engineering discussion：如何把 ambiguous failure 转成 experiment。"
+        },
+        {
+          "id": "research-reading-资源",
+          "moduleId": "research-reading",
+          "moduleTitle": "Research Reading",
+          "sectionTitle": "资源",
+          "text": "Research Reading List - Transformer basics：Attention Is All You Need。Need to know：attention、positional encoding、encoder/decoder intuition。Interview use：解释 LLM inference 和 context limits。 - Scaling：Kaplan scaling laws、Chinchilla。Need to know：data/model/compute tradeoff。Interview use：讨论模型能力和成本边界。 - Instruction tuning：InstructGPT。Need to know：SFT、RLHF、human preference。Interview use：解释 post-training 为什么重要。 - Preference optimization：DPO、PPO basics。Need to know：reward model vs direct preference optimization。Interview use：回答 RLHF / DPO 追问。 - Tool use：ReAct、Toolformer。Need to know：reasoning + acting、tool selection。Interview use：设计 tool-calling agents。 - RAG：Lewis RAG paper plus modern retrieval notes。Need to know：retrieval、generation、faithfulness。Interview use：设计 production RAG。 - Agent memory：Generative Agents、MemGPT、LLM agent memory surveys。Need to know：memory write/read、reflection、context management。Interview use：设计 long-term memory。 - Evals：OpenAI evals ideas、HELM-style thinking、agent eval discussions。Need to know：eval set、graders、contamination、regression。Interview use：设计 eval harness。 Post-training terms to connect: - SFT - RLHF - RLAIF - RLVR - PPO - DPO - reward model - direct preference optimization"
+        },
+        {
+          "id": "research-reading-反思",
+          "moduleId": "research-reading",
+          "moduleTitle": "Research Reading",
+          "sectionTitle": "反思",
+          "text": "Research Agent 的冲动是扩大 reading scope；Supervisor 的限制是：每组 reading 必须能转成 system design 或面试追问。读完不能讲出面试用途，就不进入当前准备主线。"
+        },
+        {
+          "id": "research-reading-面试表达",
+          "moduleId": "research-reading",
+          "moduleTitle": "Research Reading",
+          "sectionTitle": "面试表达",
+          "text": "阅读卡片回答模板： - “The paper claims X.” - “The mechanism is Y.” - “The limitation is Z.” - “This helps answer interview question Q.” - “The system design implication is S.”"
+        },
+        {
+          "id": "research-reading-验收标准",
+          "moduleId": "research-reading",
+          "moduleTitle": "Research Reading",
+          "sectionTitle": "验收标准",
+          "text": "- 每篇 reading 只产出 5 行卡片，不写长综述。 - 能把 Transformer、scaling laws、RLHF、DPO、RAG、agent memory、evals 连接到具体 system design。 - 能说明 paper claim 和自己的 system implication 之间的区别。 - 能解释 RLHF、RLAIF、RLVR 和 Agent eval 的关系。"
+        },
+        {
+          "id": "research-reading-下一步",
+          "moduleId": "research-reading",
+          "moduleTitle": "Research Reading",
+          "sectionTitle": "下一步",
+          "text": "- 先做 4 张 high-signal cards：Attention、InstructGPT、ReAct、RAG。 - 再补 memory 和 eval cards。 - 每张 card 都要关联一个 mock interview question。"
+        }
+      ],
+      "noteGroups": [
+        {
+          "title": "资源",
+          "body": "<h3>Research Reading List</h3>\n<ul><li>Transformer basics：Attention Is All You Need。Need to know：attention、positional encoding、encoder/decoder intuition。Interview use：解释 LLM inference 和 context limits。</li><li>Scaling：Kaplan scaling laws、Chinchilla。Need to know：data/model/compute tradeoff。Interview use：讨论模型能力和成本边界。</li><li>Instruction tuning：InstructGPT。Need to know：SFT、RLHF、human preference。Interview use：解释 post-training 为什么重要。</li><li>Preference optimization：DPO、PPO basics。Need to know：reward model vs direct preference optimization。Interview use：回答 RLHF / DPO 追问。</li><li>Tool use：ReAct、Toolformer。Need to know：reasoning + acting、tool selection。Interview use：设计 tool-calling agents。</li><li>RAG：Lewis RAG paper plus modern retrieval notes。Need to know：retrieval、generation、faithfulness。Interview use：设计 production RAG。</li><li>Agent memory：Generative Agents、MemGPT、LLM agent memory surveys。Need to know：memory write/read、reflection、context management。Interview use：设计 long-term memory。</li><li>Evals：OpenAI evals ideas、HELM-style thinking、agent eval discussions。Need to know：eval set、graders、contamination、regression。Interview use：设计 eval harness。</li></ul>\n<p>Post-training terms to connect:</p>\n<ul><li>SFT</li><li>RLHF</li><li>RLAIF</li><li>RLVR</li><li>PPO</li><li>DPO</li><li>reward model</li><li>direct preference optimization</li></ul>",
+          "text": "Research Reading List Transformer basics：Attention Is All You Need。Need to know：attention、positional encoding、encoder/decoder intuition。Interview use：解释 LLM inference 和 context limits。 Scaling：Kaplan scaling laws、Chinchilla。Need to know：data/model/compute tradeoff。Interview use：讨论模型能力和成本边界。 Instruction tuning：InstructGPT。Need to know：SFT、RLHF、human preference。Interview use：解释 post-training 为什么重要。 Preference optimization：DPO、PPO basics。Need to know：reward model vs direct preference optimization。Interview use：回答 RLHF / DPO 追问。 Tool use：ReAct、Toolformer。Need to know：reasoning + acting、tool selection。Interview use：设计 tool-calling agents。 RAG：Lewis RAG paper plus modern retrieval notes。Need to know：retrieval、generation、faithfulness。Interview use：设计 production RAG。 Agent memory：Generative Agents、MemGPT、LLM agent memory surveys。Need to know：memory write/read、reflection、context management。Interview use：设计 long-term memory。 Evals：OpenAI evals ideas、HELM-style thinking、agent eval discussions。Need to know：eval set、graders、contamination、regression。Interview use：设计 eval harness。 Post-training terms to connect: SFT RLHF RLAIF RLVR PPO DPO reward model direct preference optimization"
+        },
+        {
+          "title": "反思",
+          "body": "<p>Research Agent 的冲动是扩大 reading scope；Supervisor 的限制是：每组 reading 必须能转成 system design 或面试追问。读完不能讲出面试用途，就不进入当前准备主线。</p>",
+          "text": "Research Agent 的冲动是扩大 reading scope；Supervisor 的限制是：每组 reading 必须能转成 system design 或面试追问。读完不能讲出面试用途，就不进入当前准备主线。"
+        },
+        {
+          "title": "面试表达",
+          "body": "<p>阅读卡片回答模板：</p>\n<ul><li>“The paper claims X.”</li><li>“The mechanism is Y.”</li><li>“The limitation is Z.”</li><li>“This helps answer interview question Q.”</li><li>“The system design implication is S.”</li></ul>",
+          "text": "阅读卡片回答模板： “The paper claims X.” “The mechanism is Y.” “The limitation is Z.” “This helps answer interview question Q.” “The system design implication is S.”"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "timeline-1",
+          "label": "Week 1",
+          "text": "只读一个 Agent 系统概念，服务 tool calling answer。",
+          "status": "done"
+        },
+        {
+          "id": "timeline-2",
+          "label": "Week 2",
+          "text": "读 RAG / retrieval 相关材料，服务 production RAG。",
+          "status": "done"
+        },
+        {
+          "id": "timeline-3",
+          "label": "Week 3",
+          "text": "读 agent memory 相关材料，服务 long-term memory。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-4",
+          "label": "Week 4",
+          "text": "整理成 mock interview 可用的 short cards。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-5",
+          "label": "Days 31-45",
+          "text": "读 post-training / RLHF / DPO / RLVR，并解释它们和 Agent eval 的关系。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-6",
+          "label": "Days 46-60",
+          "text": "练 research-engineering discussion：如何把 ambiguous failure 转成 experiment。",
+          "status": "open"
+        }
+      ],
       "searchText": "Research Reading 目标 只读能转化为面试答案的材料。每篇 reading 必须输出 claim、mechanism、limitation、interview question 和 system design implication。 当前状态 Research reading 是第六优先级，不能挤掉 coding、implementation、system design 和 mock expression。阅读要服务 Agent / LLM Systems Engineer 面试，而不是扩成论文综述。 核心知识 阅读覆盖： - Transformer basics - Scaling laws - Instruction tuning - Preference optimization - Tool use - RAG - Agent memory - Evals 任务 每篇 reading 的输出只要 5 行： 1. paper claim 2. mechanism 3. limitation 4. interview question it helps answer 5. one system design implication 时间线 - Week 1：只读一个 Agent 系统概念，服务 tool calling answer。 - Week 2：读 RAG / retrieval 相关材料，服务 production RAG。 - Week 3：读 agent memory 相关材料，服务 long-term memory。 - Week 4：整理成 mock interview 可用的 short cards。 - Days 31-45：读 post-training / RLHF / DPO / RLVR，并解释它们和 Agent eval 的关系。 - Days 46-60：练 research-engineering discussion：如何把 ambiguous failure 转成 experiment。 资源 Research Reading List - Transformer basics：Attention Is All You Need。Need to know：attention、positional encoding、encoder/decoder intuition。Interview use：解释 LLM inference 和 context limits。 - Scaling：Kaplan scaling laws、Chinchilla。Need to know：data/model/compute tradeoff。Interview use：讨论模型能力和成本边界。 - Instruction tuning：InstructGPT。Need to know：SFT、RLHF、human preference。Interview use：解释 post-training 为什么重要。 - Preference optimization：DPO、PPO basics。Need to know：reward model vs direct preference optimization。Interview use：回答 RLHF / DPO 追问。 - Tool use：ReAct、Toolformer。Need to know：reasoning + acting、tool selection。Interview use：设计 tool-calling agents。 - RAG：Lewis RAG paper plus modern retrieval notes。Need to know：retrieval、generation、faithfulness。Interview use：设计 production RAG。 - Agent memory：Generative Agents、MemGPT、LLM agent memory surveys。Need to know：memory write/read、reflection、context management。Interview use：设计 long-term memory。 - Evals：OpenAI evals ideas、HELM-style thinking、agent eval discussions。Need to know：eval set、graders、contamination、regression。Interview use：设计 eval harness。 Post-training terms to connect: - SFT - RLHF - RLAIF - RLVR - PPO - DPO - reward model - direct preference optimization 反思 Research Agent 的冲动是扩大 reading scope；Supervisor 的限制是：每组 reading 必须能转成 system design 或面试追问。读完不能讲出面试用途，就不进入当前准备主线。 面试表达 阅读卡片回答模板： - “The paper claims X.” - “The mechanism is Y.” - “The limitation is Z.” - “This helps answer interview question Q.” - “The system design implication is S.” 验收标准 - 每篇 reading 只产出 5 行卡片，不写长综述。 - 能把 Transformer、scaling laws、RLHF、DPO、RAG、agent memory、evals 连接到具体 system design。 - 能说明 paper claim 和自己的 system implication 之间的区别。 - 能解释 RLHF、RLAIF、RLVR 和 Agent eval 的关系。 下一步 - 先做 4 张 high-signal cards：Attention、InstructGPT、ReAct、RAG。 - 再补 memory 和 eval cards。 - 每张 card 都要关联一个 mock interview question。"
     },
     {
@@ -172,6 +1392,139 @@
         "验收标准": "<ul><li>至少 5 个 behavioral stories。</li><li>每个 story 都有 evidence，而不是抽象形容。</li><li>每个 mini drill 都能讲成 project evidence。</li><li>Strategy Rubric 每周更新一次。</li><li>至少一个维度到 Day 60 能达到 5。</li></ul>",
         "下一步": "<ul><li>先为 Tool Router、Retrieval Evaluator、Memory Store、Trace Logger 各写 3 句 interview story。</li><li>每周按 Strategy Rubric 自评。</li><li>mock 后记录“哪个回答听起来 vague”。</li></ul>"
       },
+      "sectionIds": {
+        "目标": "behavioral-strategy-目标",
+        "当前状态": "behavioral-strategy-当前状态",
+        "核心知识": "behavioral-strategy-核心知识",
+        "任务": "behavioral-strategy-任务",
+        "时间线": "behavioral-strategy-时间线",
+        "资源": "behavioral-strategy-资源",
+        "反思": "behavioral-strategy-反思",
+        "面试表达": "behavioral-strategy-面试表达",
+        "验收标准": "behavioral-strategy-验收标准",
+        "下一步": "behavioral-strategy-下一步"
+      },
+      "searchEntries": [
+        {
+          "id": "behavioral-strategy-目标",
+          "moduleId": "behavioral-strategy",
+          "moduleTitle": "Behavioral / Strategy",
+          "sectionTitle": "目标",
+          "text": "把准备内容转成面试官能识别的强信号：结构化表达、清楚 tradeoff、真实 failure story、可验证 project evidence。"
+        },
+        {
+          "id": "behavioral-strategy-当前状态",
+          "moduleId": "behavioral-strategy",
+          "moduleTitle": "Behavioral / Strategy",
+          "sectionTitle": "当前状态",
+          "text": "第二优先级是面试表达。coding 和 system design 内容必须最终转成可讲述的故事，否则准备会停留在“做过一些练习”。"
+        },
+        {
+          "id": "behavioral-strategy-核心知识",
+          "moduleId": "behavioral-strategy",
+          "moduleTitle": "Behavioral / Strategy",
+          "sectionTitle": "核心知识",
+          "text": "表达训练重点： - clarify requirements - state assumptions - compare tradeoffs - identify failure modes - propose evals - tell evidence-backed stories - avoid vague claims"
+        },
+        {
+          "id": "behavioral-strategy-任务",
+          "moduleId": "behavioral-strategy",
+          "moduleTitle": "Behavioral / Strategy",
+          "sectionTitle": "任务",
+          "text": "Behavioral And Project Deep Dive 1. Tell me about a project where requirements were ambiguous。 2. Tell me about a time you debugged a difficult issue。 3. Tell me about a tradeoff you made between speed and correctness。 4. Tell me about a time you changed your mind after evidence。 5. Walk me through a system you built and what you would improve。 Strategy Rubric Score yourself weekly from 1 to 5: - Coding correctness：1 = Cannot finish medium；3 = Finishes with hints；5 = Finishes cleanly and explains。 - Coding communication：1 = Silent or scattered；3 = Explains main idea；5 = Clarifies, narrates, tests。 - LLM systems：1 = Knows terms；3 = Explains components；5 = Designs with tradeoffs and evals。 - Agent design：1 = Generic loop；3 = Names tools/memory；5 = Handles safety, trace, failure。 - Research depth：1 = Name-drops papers；3 = Explains claims；5 = Connects papers to systems。 - Behavioral：1 = Vague stories；3 = STAR-ish；5 = Crisp, evidence-backed, reflective。 - Project evidence：1 = No artifacts；3 = Small scripts；5 = Drills tied to interview stories。 Weekly target： - Week 1：average 2.5 - Week 2：average 3 - Week 3：average 3.5 - Week 4：average 4 - Day 45+：push weakest two dimensions toward 4 - Day 60+：one standout dimension should reach 5"
+        },
+        {
+          "id": "behavioral-strategy-时间线",
+          "moduleId": "behavioral-strategy",
+          "moduleTitle": "Behavioral / Strategy",
+          "sectionTitle": "时间线",
+          "text": "- Week 1：练一个 2 分钟 tool-calling agent 设计回答。 - Week 3：写 1 个 behavioral story：如何在 ambiguity 下做取舍。 - Week 4：整理 5 个 behavioral stories；做 2 次 system design mock；做一轮 full loop mock。 - Days 31-45：简历项目叙事和 mock interview iteration。 - Days 46-60：3 次 full mock，并按 rubric 复盘。"
+        },
+        {
+          "id": "behavioral-strategy-资源",
+          "moduleId": "behavioral-strategy",
+          "moduleTitle": "Behavioral / Strategy",
+          "sectionTitle": "资源",
+          "text": "Strong signal： - 清楚地说出“我做了什么、为什么这样设计、怎么验证、哪里失败过、我如何改进”。 - 所有 drills 都要能对应一个 interview story。 - 每个 system design 都要包含 success metrics、failure modes、evals and monitoring。 Weak signal： - 只说“我了解 RAG/Agent/RLHF”。 - 只背论文名。 - 只画组件，不讲 failure recovery。 - 只说项目很复杂，不给 evidence。"
+        },
+        {
+          "id": "behavioral-strategy-反思",
+          "moduleId": "behavioral-strategy",
+          "moduleTitle": "Behavioral / Strategy",
+          "sectionTitle": "反思",
+          "text": "Strategy 的重点是“being perceived as strong”，但这不等于包装。真正强信号来自可验证的行为：限时写代码、实现小组件、设计 eval、复盘失败、清楚表达取舍。"
+        },
+        {
+          "id": "behavioral-strategy-面试表达",
+          "moduleId": "behavioral-strategy",
+          "moduleTitle": "Behavioral / Strategy",
+          "sectionTitle": "面试表达",
+          "text": "STAR-ish 但不要僵硬： - Situation：背景和约束。 - Task：你要解决什么。 - Action：你具体做了什么。 - Result：结果、证据、指标。 - Reflection：如果重做会改什么。 Project deep dive 模板： 1. Problem and users。 2. Constraints。 3. Architecture。 4. Hardest tradeoff。 5. Failure mode。 6. Eval or verification。 7. What I would improve。"
+        },
+        {
+          "id": "behavioral-strategy-验收标准",
+          "moduleId": "behavioral-strategy",
+          "moduleTitle": "Behavioral / Strategy",
+          "sectionTitle": "验收标准",
+          "text": "- 至少 5 个 behavioral stories。 - 每个 story 都有 evidence，而不是抽象形容。 - 每个 mini drill 都能讲成 project evidence。 - Strategy Rubric 每周更新一次。 - 至少一个维度到 Day 60 能达到 5。"
+        },
+        {
+          "id": "behavioral-strategy-下一步",
+          "moduleId": "behavioral-strategy",
+          "moduleTitle": "Behavioral / Strategy",
+          "sectionTitle": "下一步",
+          "text": "- 先为 Tool Router、Retrieval Evaluator、Memory Store、Trace Logger 各写 3 句 interview story。 - 每周按 Strategy Rubric 自评。 - mock 后记录“哪个回答听起来 vague”。"
+        }
+      ],
+      "noteGroups": [
+        {
+          "title": "资源",
+          "body": "<p>Strong signal：</p>\n<ul><li>清楚地说出“我做了什么、为什么这样设计、怎么验证、哪里失败过、我如何改进”。</li><li>所有 drills 都要能对应一个 interview story。</li><li>每个 system design 都要包含 success metrics、failure modes、evals and monitoring。</li></ul>\n<p>Weak signal：</p>\n<ul><li>只说“我了解 RAG/Agent/RLHF”。</li><li>只背论文名。</li><li>只画组件，不讲 failure recovery。</li><li>只说项目很复杂，不给 evidence。</li></ul>",
+          "text": "Strong signal： 清楚地说出“我做了什么、为什么这样设计、怎么验证、哪里失败过、我如何改进”。 所有 drills 都要能对应一个 interview story。 每个 system design 都要包含 success metrics、failure modes、evals and monitoring。 Weak signal： 只说“我了解 RAG/Agent/RLHF”。 只背论文名。 只画组件，不讲 failure recovery。 只说项目很复杂，不给 evidence。"
+        },
+        {
+          "title": "反思",
+          "body": "<p>Strategy 的重点是“being perceived as strong”，但这不等于包装。真正强信号来自可验证的行为：限时写代码、实现小组件、设计 eval、复盘失败、清楚表达取舍。</p>",
+          "text": "Strategy 的重点是“being perceived as strong”，但这不等于包装。真正强信号来自可验证的行为：限时写代码、实现小组件、设计 eval、复盘失败、清楚表达取舍。"
+        },
+        {
+          "title": "面试表达",
+          "body": "<p>STAR-ish 但不要僵硬：</p>\n<ul><li>Situation：背景和约束。</li><li>Task：你要解决什么。</li><li>Action：你具体做了什么。</li><li>Result：结果、证据、指标。</li><li>Reflection：如果重做会改什么。</li></ul>\n<p>Project deep dive 模板：</p>\n<ol><li>Problem and users。</li><li>Constraints。</li><li>Architecture。</li><li>Hardest tradeoff。</li><li>Failure mode。</li><li>Eval or verification。</li><li>What I would improve。</li></ol>",
+          "text": "STAR-ish 但不要僵硬： Situation：背景和约束。 Task：你要解决什么。 Action：你具体做了什么。 Result：结果、证据、指标。 Reflection：如果重做会改什么。 Project deep dive 模板： Problem and users。 Constraints。 Architecture。 Hardest tradeoff。 Failure mode。 Eval or verification。 What I would improve。"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "timeline-1",
+          "label": "Week 1",
+          "text": "练一个 2 分钟 tool-calling agent 设计回答。",
+          "status": "done"
+        },
+        {
+          "id": "timeline-2",
+          "label": "Week 3",
+          "text": "写 1 个 behavioral story：如何在 ambiguity 下做取舍。",
+          "status": "done"
+        },
+        {
+          "id": "timeline-3",
+          "label": "Week 4",
+          "text": "整理 5 个 behavioral stories；做 2 次 system design mock；做一轮 full loop mock。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-4",
+          "label": "Days 31-45",
+          "text": "简历项目叙事和 mock interview iteration。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-5",
+          "label": "Days 46-60",
+          "text": "3 次 full mock，并按 rubric 复盘。",
+          "status": "open"
+        }
+      ],
       "searchText": "Behavioral / Strategy 目标 把准备内容转成面试官能识别的强信号：结构化表达、清楚 tradeoff、真实 failure story、可验证 project evidence。 当前状态 第二优先级是面试表达。coding 和 system design 内容必须最终转成可讲述的故事，否则准备会停留在“做过一些练习”。 核心知识 表达训练重点： - clarify requirements - state assumptions - compare tradeoffs - identify failure modes - propose evals - tell evidence-backed stories - avoid vague claims 任务 Behavioral And Project Deep Dive 1. Tell me about a project where requirements were ambiguous。 2. Tell me about a time you debugged a difficult issue。 3. Tell me about a tradeoff you made between speed and correctness。 4. Tell me about a time you changed your mind after evidence。 5. Walk me through a system you built and what you would improve。 Strategy Rubric Score yourself weekly from 1 to 5: - Coding correctness：1 = Cannot finish medium；3 = Finishes with hints；5 = Finishes cleanly and explains。 - Coding communication：1 = Silent or scattered；3 = Explains main idea；5 = Clarifies, narrates, tests。 - LLM systems：1 = Knows terms；3 = Explains components；5 = Designs with tradeoffs and evals。 - Agent design：1 = Generic loop；3 = Names tools/memory；5 = Handles safety, trace, failure。 - Research depth：1 = Name-drops papers；3 = Explains claims；5 = Connects papers to systems。 - Behavioral：1 = Vague stories；3 = STAR-ish；5 = Crisp, evidence-backed, reflective。 - Project evidence：1 = No artifacts；3 = Small scripts；5 = Drills tied to interview stories。 Weekly target： - Week 1：average 2.5 - Week 2：average 3 - Week 3：average 3.5 - Week 4：average 4 - Day 45+：push weakest two dimensions toward 4 - Day 60+：one standout dimension should reach 5 时间线 - Week 1：练一个 2 分钟 tool-calling agent 设计回答。 - Week 3：写 1 个 behavioral story：如何在 ambiguity 下做取舍。 - Week 4：整理 5 个 behavioral stories；做 2 次 system design mock；做一轮 full loop mock。 - Days 31-45：简历项目叙事和 mock interview iteration。 - Days 46-60：3 次 full mock，并按 rubric 复盘。 资源 Strong signal： - 清楚地说出“我做了什么、为什么这样设计、怎么验证、哪里失败过、我如何改进”。 - 所有 drills 都要能对应一个 interview story。 - 每个 system design 都要包含 success metrics、failure modes、evals and monitoring。 Weak signal： - 只说“我了解 RAG/Agent/RLHF”。 - 只背论文名。 - 只画组件，不讲 failure recovery。 - 只说项目很复杂，不给 evidence。 反思 Strategy 的重点是“being perceived as strong”，但这不等于包装。真正强信号来自可验证的行为：限时写代码、实现小组件、设计 eval、复盘失败、清楚表达取舍。 面试表达 STAR-ish 但不要僵硬： - Situation：背景和约束。 - Task：你要解决什么。 - Action：你具体做了什么。 - Result：结果、证据、指标。 - Reflection：如果重做会改什么。 Project deep dive 模板： 1. Problem and users。 2. Constraints。 3. Architecture。 4. Hardest tradeoff。 5. Failure mode。 6. Eval or verification。 7. What I would improve。 验收标准 - 至少 5 个 behavioral stories。 - 每个 story 都有 evidence，而不是抽象形容。 - 每个 mini drill 都能讲成 project evidence。 - Strategy Rubric 每周更新一次。 - 至少一个维度到 Day 60 能达到 5。 下一步 - 先为 Tool Router、Retrieval Evaluator、Memory Store、Trace Logger 各写 3 句 interview story。 - 每周按 Strategy Rubric 自评。 - mock 后记录“哪个回答听起来 vague”。"
     },
     {
@@ -193,6 +1546,132 @@
         "验收标准": "<ul><li>每周至少一条 review。</li><li>每条 review 至少关联一个可面试 artifact。</li><li>至少记录一个 cut decision：删掉一个不服务面试目标的任务。</li><li>Logs 不新增大量子目录，只保持轻量追加。</li></ul>",
         "下一步": "<ul><li>第一周结束后补 Week 1 review。</li><li>mock practice 后立刻记录 vague answer。</li><li>每月检查一次哪些 logs 应该沉淀回模块正文。</li></ul>"
       },
+      "sectionIds": {
+        "目标": "logs-目标",
+        "当前状态": "logs-当前状态",
+        "核心知识": "logs-核心知识",
+        "任务": "logs-任务",
+        "时间线": "logs-时间线",
+        "资源": "logs-资源",
+        "反思": "logs-反思",
+        "面试表达": "logs-面试表达",
+        "验收标准": "logs-验收标准",
+        "下一步": "logs-下一步"
+      },
+      "searchEntries": [
+        {
+          "id": "logs-目标",
+          "moduleId": "logs",
+          "moduleTitle": "Logs",
+          "sectionTitle": "目标",
+          "text": "保存跨模块复盘、当周实际发生的事、未归类想法和下一轮调整。Logs 不替代能力模块，只提供横向视角。"
+        },
+        {
+          "id": "logs-当前状态",
+          "moduleId": "logs",
+          "moduleTitle": "Logs",
+          "sectionTitle": "当前状态",
+          "text": "第一版 logs 从 Weekly Review Checklist 初始化，后续按日期追加。它解决“这周/这个月总体做了什么”的问题，而不是重新变成主导航。"
+        },
+        {
+          "id": "logs-核心知识",
+          "moduleId": "logs",
+          "moduleTitle": "Logs",
+          "sectionTitle": "核心知识",
+          "text": "复盘应服务面试准备，而不是写情绪流水账。每条 log 尽量关联： - coding pattern - system design case - Agent/LLM component - failure mode - mock answer - interview artifact"
+        },
+        {
+          "id": "logs-任务",
+          "moduleId": "logs",
+          "moduleTitle": "Logs",
+          "sectionTitle": "任务",
+          "text": "Weekly Review Checklist Every week, answer: 1. Which coding pattern still causes mistakes? 2. Which system design case can I explain without notes? 3. Which Agent/LLM component did I implement? 4. What failure mode did I learn to detect? 5. Which answer sounded vague during mock practice? 6. What is one artifact I can mention in an interview? 7. What should I cut next week because it is not interview-relevant? If a week goes badly, do not restart the whole plan. Repeat the current week with only minimum and standard tasks."
+        },
+        {
+          "id": "logs-时间线",
+          "moduleId": "logs",
+          "moduleTitle": "Logs",
+          "sectionTitle": "时间线",
+          "text": "- 2026-07-05：建立 Foundations roadmap reader 结构。决定主导航按能力模块，而不是按周；时间叙事放入模块内部时间线和 Logs。 - Week 1 review：记录 coding baseline、tool router、tool-calling agent answer。 - Week 2 review：记录 graph/RAG/retrieval evaluator 和 failure taxonomy。 - Week 3 review：记录 heap/DP/memory store 和 ambiguity story。 - Week 4 review：记录 mock sprint、system design answers、behavioral stories 和 portfolio summary。"
+        },
+        {
+          "id": "logs-反思",
+          "moduleId": "logs",
+          "moduleTitle": "Logs",
+          "sectionTitle": "反思",
+          "text": "如果全局计划执行得不好，不要重启整个 plan。更好的动作是：找出一个最弱模块，回到该模块的 minimum 和 standard ，减少阅读和额外扩展。"
+        },
+        {
+          "id": "logs-面试表达",
+          "moduleId": "logs",
+          "moduleTitle": "Logs",
+          "sectionTitle": "面试表达",
+          "text": "Logs 可以转化成 behavioral answers： - “我一开始计划按周推进，后来发现长期维护会膨胀，所以把主导航改成能力模块，并在模块内保留时间线。” - “当一周失败时，我不会补偿性堆积任务，而是回到 minimum/standard，保证系统继续运转。”"
+        },
+        {
+          "id": "logs-验收标准",
+          "moduleId": "logs",
+          "moduleTitle": "Logs",
+          "sectionTitle": "验收标准",
+          "text": "- 每周至少一条 review。 - 每条 review 至少关联一个可面试 artifact。 - 至少记录一个 cut decision：删掉一个不服务面试目标的任务。 - Logs 不新增大量子目录，只保持轻量追加。"
+        },
+        {
+          "id": "logs-下一步",
+          "moduleId": "logs",
+          "moduleTitle": "Logs",
+          "sectionTitle": "下一步",
+          "text": "- 第一周结束后补 Week 1 review。 - mock practice 后立刻记录 vague answer。 - 每月检查一次哪些 logs 应该沉淀回模块正文。"
+        }
+      ],
+      "noteGroups": [
+        {
+          "title": "资源",
+          "body": "<p>复盘模板：</p>\n<pre><code data-language=\"md\">### YYYY-MM-DD\n\n- Coding pattern:\n- System design case:\n- Component implemented:\n- Failure mode learned:\n- Vague answer:\n- Interview artifact:\n- Cut next:</code></pre>",
+          "text": "复盘模板： ### YYYY-MM-DD - Coding pattern: - System design case: - Component implemented: - Failure mode learned: - Vague answer: - Interview artifact: - Cut next:"
+        },
+        {
+          "title": "反思",
+          "body": "<p>如果全局计划执行得不好，不要重启整个 plan。更好的动作是：找出一个最弱模块，回到该模块的 <code>minimum</code> 和 <code>standard</code>，减少阅读和额外扩展。</p>",
+          "text": "如果全局计划执行得不好，不要重启整个 plan。更好的动作是：找出一个最弱模块，回到该模块的 minimum 和 standard ，减少阅读和额外扩展。"
+        },
+        {
+          "title": "面试表达",
+          "body": "<p>Logs 可以转化成 behavioral answers：</p>\n<ul><li>“我一开始计划按周推进，后来发现长期维护会膨胀，所以把主导航改成能力模块，并在模块内保留时间线。”</li><li>“当一周失败时，我不会补偿性堆积任务，而是回到 minimum/standard，保证系统继续运转。”</li></ul>",
+          "text": "Logs 可以转化成 behavioral answers： “我一开始计划按周推进，后来发现长期维护会膨胀，所以把主导航改成能力模块，并在模块内保留时间线。” “当一周失败时，我不会补偿性堆积任务，而是回到 minimum/standard，保证系统继续运转。”"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "timeline-1",
+          "label": "2026-07-05",
+          "text": "建立 Foundations roadmap reader 结构。决定主导航按能力模块，而不是按周；时间叙事放入模块内部时间线和 Logs。",
+          "status": "done"
+        },
+        {
+          "id": "timeline-2",
+          "label": "Week 1 review",
+          "text": "记录 coding baseline、tool router、tool-calling agent answer。",
+          "status": "done"
+        },
+        {
+          "id": "timeline-3",
+          "label": "Week 2 review",
+          "text": "记录 graph/RAG/retrieval evaluator 和 failure taxonomy。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-4",
+          "label": "Week 3 review",
+          "text": "记录 heap/DP/memory store 和 ambiguity story。",
+          "status": "open"
+        },
+        {
+          "id": "timeline-5",
+          "label": "Week 4 review",
+          "text": "记录 mock sprint、system design answers、behavioral stories 和 portfolio summary。",
+          "status": "open"
+        }
+      ],
       "searchText": "Logs 目标 保存跨模块复盘、当周实际发生的事、未归类想法和下一轮调整。Logs 不替代能力模块，只提供横向视角。 当前状态 第一版 logs 从 Weekly Review Checklist 初始化，后续按日期追加。它解决“这周/这个月总体做了什么”的问题，而不是重新变成主导航。 核心知识 复盘应服务面试准备，而不是写情绪流水账。每条 log 尽量关联： - coding pattern - system design case - Agent/LLM component - failure mode - mock answer - interview artifact 任务 Weekly Review Checklist Every week, answer: 1. Which coding pattern still causes mistakes? 2. Which system design case can I explain without notes? 3. Which Agent/LLM component did I implement? 4. What failure mode did I learn to detect? 5. Which answer sounded vague during mock practice? 6. What is one artifact I can mention in an interview? 7. What should I cut next week because it is not interview-relevant? If a week goes badly, do not restart the whole plan. Repeat the current week with only minimum and standard tasks. 时间线 - 2026-07-05：建立 Foundations roadmap reader 结构。决定主导航按能力模块，而不是按周；时间叙事放入模块内部时间线和 Logs。 - Week 1 review：记录 coding baseline、tool router、tool-calling agent answer。 - Week 2 review：记录 graph/RAG/retrieval evaluator 和 failure taxonomy。 - Week 3 review：记录 heap/DP/memory store 和 ambiguity story。 - Week 4 review：记录 mock sprint、system design answers、behavioral stories 和 portfolio summary。 资源 复盘模板： 反思 如果全局计划执行得不好，不要重启整个 plan。更好的动作是：找出一个最弱模块，回到该模块的 minimum 和 standard ，减少阅读和额外扩展。 面试表达 Logs 可以转化成 behavioral answers： - “我一开始计划按周推进，后来发现长期维护会膨胀，所以把主导航改成能力模块，并在模块内保留时间线。” - “当一周失败时，我不会补偿性堆积任务，而是回到 minimum/standard，保证系统继续运转。” 验收标准 - 每周至少一条 review。 - 每条 review 至少关联一个可面试 artifact。 - 至少记录一个 cut decision：删掉一个不服务面试目标的任务。 - Logs 不新增大量子目录，只保持轻量追加。 下一步 - 第一周结束后补 Week 1 review。 - mock practice 后立刻记录 vague answer。 - 每月检查一次哪些 logs 应该沉淀回模块正文。"
     }
   ]

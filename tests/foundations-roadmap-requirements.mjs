@@ -67,6 +67,7 @@ assert.match(css, /\.note-group-title/, "roadmap CSS should style explicit note 
 assert.match(css, /\.section-line:hover/, "roadmap CSS should style collapsed rail hover state");
 assert.match(css, /\.section-line\[aria-current="true"\]/, "roadmap CSS should expose active collapsed rail state");
 assert.match(css, /\.result-meta/, "roadmap CSS should show module and section metadata in search results");
+assert.match(css, /\.reader-shell\.is-searching \.reader-toolbar\s*\{[\s\S]*z-index:\s*4[0-9]/, "search toolbar and results should sit above the search overlay");
 assert.match(css, /@media \(max-width:\s*860px\)/, "roadmap CSS should include mobile layout rules");
 assert.doesNotMatch(css, /border-radius:\s*24px|border-radius:\s*28px/, "roadmap reader should avoid oversized card radii");
 
@@ -79,6 +80,8 @@ assert.match(js, /function setTheme/, "roadmap JS should support theme switching
 assert.match(js, /function renderProgressSummary/, "roadmap JS should render labeled module and overall progress");
 assert.match(js, /function renderTimelineSection/, "roadmap JS should render timeline as a visual component");
 assert.match(js, /function renderSearchResults/, "roadmap JS should isolate section-level search rendering");
+assert.match(js, /function hasSearchTerm/, "roadmap JS should avoid raw substring-only search matches");
+assert.match(js, /function getSearchScore/, "roadmap JS should rank search entries with explicit scoring");
 assert.match(js, /function setActiveSection/, "roadmap JS should update collapsed rail active state dynamically");
 assert.match(js, /IntersectionObserver/, "roadmap JS should observe visible sections for active rail state");
 assert.match(js, /data-section-id/, "roadmap JS should render stable section targets for search and rail navigation");
