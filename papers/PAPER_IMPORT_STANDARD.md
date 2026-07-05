@@ -265,9 +265,19 @@ chunk 边界优先级：
 
 图像资源应按语义对象裁剪，而不是按 PDF 页面裁剪：
 
-- `semantic-crop`：推荐模式，只保留图表主体、caption 和少量边距。
+- `source-figure`：优先模式，从 HTML、PMC、期刊页面或原始补充资源中取得真实来源图。
+- `semantic-crop`：推荐模式，从 PDF 渲染页中只裁出图表主体、caption 和少量边距。
+- `paper-extract`：从 PDF 内嵌图片对象直接抽取出的真实来源图。
+- `manual-redraw`：fallback 模式，只用于真实图无法清晰裁取、或需要读者侧解释图时。
 - `page-fallback`：临时模式，表示当前只能提供整页截图；不能作为长期合格图像。
-- `manual-redraw`：重绘模式，用于未来把复杂图表重画成更清晰的网页图。
+
+真实图、真实来源图或 source-backed figure 必须优先于重绘图。导入 agent 的顺序是：
+
+1. 先找 HTML/PMC/期刊页面里的 `source-figure`。
+2. 找不到时渲染 PDF 页面并做 `semantic-crop`。
+3. PDF 有可用图片对象时可以用 `paper-extract`。
+4. 只有上述方式都不适合，才使用 `manual-redraw`。
+5. `page-fallback` 只能临时使用，不能作为合格 reading package 的最终图。
 
 每个已裁剪图像应在 `figures.json` 中记录 `bbox`，用于让后续 agent 追溯裁剪来源：
 
@@ -283,7 +293,17 @@ chunk 边界优先级：
 }
 ```
 
-`bbox` 使用源图像或源 PDF 渲染图的像素坐标，字段必须包含 `x`、`y`、`width`、`height`。如果 `cropMode` 是 `page-fallback`，`bbox` 可以省略，但 `status` 不能写成 `cropped`。
+`bbox` 使用源图像或源 PDF 渲染图的像素坐标，字段必须包含 `x`、`y`、`width`、`height`。如果 `cropMode` 是 `source-figure` 或 `paper-extract`，可以省略 `bbox`，但必须写清 `sourceFigure` 或 `sourcePage`。如果 `cropMode` 是 `manual-redraw`，必须记录：
+
+```json
+{
+  "cropMode": "manual-redraw",
+  "redrawType": "reader-side-fallback",
+  "sourceBasis": "Redrawn from the paper's Figure 1 taxonomy and caption because the source image is unavailable or unsuitable for direct display."
+}
+```
+
+如果 `cropMode` 是 `page-fallback`，`bbox` 可以省略，但 `status` 不能写成 `cropped`。
 
 ## figures.json Contract
 
@@ -316,10 +336,12 @@ chunk 边界优先级：
 - `id` 使用稳定编号，例如 `fig-001`。
 - `file` 是相对 reading package 的路径。
 - `sourcePage` 记录 PDF 页码；HTML 来源可记录 `null`。
-- `cropMode` 使用 `semantic-crop`、`page-fallback` 或 `manual-redraw`。
+- `sourceFigure` 记录论文中的图号，例如 `Figure 1` 或 `Fig. 3`。
+- `cropMode` 使用 `source-figure`、`semantic-crop`、`paper-extract`、`manual-redraw` 或 `page-fallback`。
 - `bbox` 记录裁剪区域；`semantic-crop` 图像必须提供。
+- `manual-redraw` 必须写 `redrawType: "reader-side-fallback"` 和 `sourceBasis`。
 - `canonicalSectionId` 指向主要归属章节。
-- `status` 可使用 `cropped`、`page-fallback`, `redrawn`, `missing`。
+- `status` 可使用 `cropped`、`extracted`、`page-fallback`, `redrawn`, `missing`。
 
 ## notes.json Contract
 
@@ -386,7 +408,7 @@ chunk 边界优先级：
 8. 为每个 chunk 写 `zhTranslation`，只做忠实翻译。
 9. 为每个 chunk 写 `zhExplanation`，说明它和当前项目的关系。
 10. 把公式写成 `math` block，把代码或伪代码写成 `code` block，把表格写成 `table` block。
-11. 抽取或裁剪关键图表，写入 `figures.json`，并用 `figureRefs` 处理跨页图表。
+11. 先抽取真实来源图，再裁剪关键图表，最后才考虑 reader-side fallback 重绘；写入 `figures.json`，并用 `figureRefs` 处理跨页图表。
 12. 为每个 chunk 在 `notes.json` 写一条 note；没有笔记就写空字符串。
 13. 为每个 chunk 在 `embeddings.json` 写一个本地检索向量。
 14. 运行 `node tests/paper-reader-requirements.mjs`。

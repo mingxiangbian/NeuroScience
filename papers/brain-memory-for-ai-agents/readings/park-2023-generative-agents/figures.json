@@ -3,23 +3,37 @@
   "figures": [
     {
       "id": "fig-001",
-      "label": "Manual redrawn generative-agent loop",
-      "file": "figures/generative-agent-loop.svg",
-      "caption": "Reader-side manual redraw of the architecture loop: observe, write memories, retrieve, reflect, plan, and act.",
-      "sourcePage": null,
-      "cropMode": "manual-redraw",
+      "label": "Figure 5",
+      "file": "figures/figure-5-generative-agent-architecture.png",
+      "caption": "Generative agent architecture: perception writes to memory stream, retrieval supports action, and reflection/planning write higher-level memories back.",
+      "sourcePage": 8,
+      "sourceFigure": "Figure 5",
+      "cropMode": "semantic-crop",
+      "bbox": {
+        "x": 95,
+        "y": 185,
+        "width": 1330,
+        "height": 590
+      },
       "canonicalSectionId": "sec-architecture",
-      "status": "redrawn"
+      "status": "cropped"
     },
     {
       "id": "fig-002",
-      "label": "Manual redrawn retrieval score",
-      "file": "figures/retrieval-score.svg",
-      "caption": "Reader-side manual redraw of the retrieval factors: relevance, importance, and recency jointly select memories.",
-      "sourcePage": null,
-      "cropMode": "manual-redraw",
+      "label": "Figure 6",
+      "file": "figures/figure-6-memory-stream-retrieval.png",
+      "caption": "Memory stream retrieval example showing recency, importance, and relevance used to select observations for the current situation.",
+      "sourcePage": 9,
+      "sourceFigure": "Figure 6",
+      "cropMode": "semantic-crop",
+      "bbox": {
+        "x": 95,
+        "y": 205,
+        "width": 1335,
+        "height": 710
+      },
       "canonicalSectionId": "sec-memory",
-      "status": "redrawn"
+      "status": "cropped"
     }
   ]
 }

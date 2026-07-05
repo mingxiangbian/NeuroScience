@@ -274,11 +274,24 @@ for (const paperId of readingPaperIds) {
   const noteChunkIds = new Set(notesData.notes.map((note) => note.chunkId));
   const embeddingChunkIds = new Set(embeddingsData.items.map((item) => item.chunkId));
   const figureIds = new Set(figuresData.figures.map((figure) => figure.id));
+  const renderedFigures = figuresData.figures.filter((item) => item.file);
+  const sourceFigures = renderedFigures.filter((figure) => /^(semantic-crop|source-figure|paper-extract)$/.test(figure.cropMode));
 
-  for (const figure of figuresData.figures.filter((item) => item.file)) {
+  assert.ok(sourceFigures.length >= 1, `${paperId} should include at least one real source figure before using redraw fallbacks`);
+
+  for (const figure of renderedFigures) {
     assert.equal(existsSync(new URL(figure.file, readingBase)), true, `${paperId} figure file ${figure.file} should exist`);
-    assert.match(figure.cropMode, /^(semantic-crop|manual-redraw)$/, `${paperId} figure ${figure.id} should be cropped or redrawn, not a page fallback`);
-    assert.match(figure.status, /^(cropped|redrawn)$/, `${paperId} figure ${figure.id} should be marked ready for rendering`);
+    assert.match(figure.cropMode, /^(semantic-crop|source-figure|paper-extract|manual-redraw)$/, `${paperId} figure ${figure.id} should be source-backed or a documented redraw, not a page fallback`);
+    assert.match(figure.status, /^(cropped|extracted|redrawn)$/, `${paperId} figure ${figure.id} should be marked ready for rendering`);
+    if (/^(semantic-crop|source-figure|paper-extract)$/.test(figure.cropMode)) {
+      assert.doesNotMatch(figure.file, /\.svg$/i, `${paperId} figure ${figure.id} should use a raster source image when it is marked as source-backed`);
+      assert.ok(figure.sourceFigure || Number.isFinite(figure.sourcePage), `${paperId} figure ${figure.id} should identify the source figure or source page`);
+    }
+    if (figure.cropMode === "manual-redraw") {
+      assert.equal(figure.redrawType, "reader-side-fallback", `${paperId} manual redraw ${figure.id} should declare itself as a fallback`);
+      assert.equal(typeof figure.sourceBasis, "string", `${paperId} manual redraw ${figure.id} should explain the source basis`);
+      assert.ok(figure.sourceBasis.length > 12, `${paperId} manual redraw ${figure.id} should have a meaningful source basis`);
+    }
   }
 
   for (const [index, chunk] of chunkData.chunks.entries()) {
@@ -383,8 +396,8 @@ for (const { id, label } of expandedReadingIds) {
 
   for (const figure of figuresData.filter((item) => item.file)) {
     assert.equal(existsSync(new URL(figure.file, readingBase)), true, `${label} figure file ${figure.file} should exist`);
-    assert.match(figure.cropMode, /^(semantic-crop|manual-redraw)$/, `${label} figure ${figure.id} should be cropped or redrawn, not a page fallback`);
-    assert.match(figure.status, /^(cropped|redrawn)$/, `${label} figure ${figure.id} should be marked ready for rendering`);
+    assert.match(figure.cropMode, /^(semantic-crop|source-figure|paper-extract|manual-redraw)$/, `${label} figure ${figure.id} should be cropped, extracted, or documented as a redraw`);
+    assert.match(figure.status, /^(cropped|extracted|redrawn)$/, `${label} figure ${figure.id} should be marked ready for rendering`);
   }
 
   for (const chunk of chunkData) {

@@ -3,23 +3,37 @@
   "figures": [
     {
       "id": "fig-001",
-      "label": "Manual redrawn context hierarchy",
-      "file": "figures/context-hierarchy.svg",
-      "caption": "Reader-side manual redraw: limited context is surrounded by core memory, recall memory, and archival storage.",
-      "sourcePage": null,
-      "cropMode": "manual-redraw",
-      "canonicalSectionId": "sec-memory",
-      "status": "redrawn"
+      "label": "Figure 3",
+      "file": "figures/figure-3-memgpt-hierarchical-memory.png",
+      "caption": "MemGPT augments a fixed-context LLM processor with hierarchical memory, function execution, queue management, archival storage, and recall storage.",
+      "sourcePage": 3,
+      "sourceFigure": "Figure 3",
+      "cropMode": "semantic-crop",
+      "bbox": {
+        "x": 95,
+        "y": 150,
+        "width": 1325,
+        "height": 650
+      },
+      "canonicalSectionId": "sec-architecture",
+      "status": "cropped"
     },
     {
       "id": "fig-002",
-      "label": "Manual redrawn memory control loop",
-      "file": "figures/memory-control-loop.svg",
-      "caption": "Reader-side manual redraw: system messages and function calls let the agent page information in and out.",
-      "sourcePage": null,
-      "cropMode": "manual-redraw",
+      "label": "Figure 4",
+      "file": "figures/figure-4-working-context-update.png",
+      "caption": "Example conversation snippet where MemGPT updates stored working-context information through an explicit memory operation.",
+      "sourcePage": 4,
+      "sourceFigure": "Figure 4",
+      "cropMode": "semantic-crop",
+      "bbox": {
+        "x": 790,
+        "y": 170,
+        "width": 560,
+        "height": 330
+      },
       "canonicalSectionId": "sec-control",
-      "status": "redrawn"
+      "status": "cropped"
     }
   ]
 }
