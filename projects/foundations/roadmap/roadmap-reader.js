@@ -634,7 +634,14 @@ function renderContextualNotePanel(note) {
   for (const surface of [els.noteSurface, els.mobileNoteSurface]) {
     surface.querySelectorAll("[data-annotation-editor]").forEach((editor) => {
       editor.addEventListener("input", () => {
-        updateAnnotationNote(editor.dataset.annotationEditor, editor.value);
+        const annotationId = editor.dataset.annotationEditor;
+        const value = editor.value;
+        for (const surfaceToSync of [els.noteSurface, els.mobileNoteSurface]) {
+          surfaceToSync.querySelectorAll(`[data-annotation-editor="${CSS.escape(annotationId)}"]`).forEach((matchingEditor) => {
+            if (matchingEditor !== editor) matchingEditor.value = value;
+          });
+        }
+        updateAnnotationNote(annotationId, value);
       });
     });
   }
