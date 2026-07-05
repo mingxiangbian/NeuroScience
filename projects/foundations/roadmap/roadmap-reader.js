@@ -1,3 +1,5 @@
+const ANNOTATION_STORAGE_KEY = "foundationsReader.annotations.v1";
+
 const state = {
   data: null,
   currentModule: null,
@@ -5,6 +7,10 @@ const state = {
   activeSectionId: "",
   activeKnowledgeNoteId: "",
   sectionObserver: null,
+  annotations: { version: 1, items: [] },
+  pendingAnnotation: null,
+  annotationToolbar: null,
+  annotationDeletePopover: null,
 };
 
 const els = {
@@ -43,6 +49,41 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+}
+
+function createEmptyAnnotationStore() {
+  return {
+    version: 1,
+    items: [],
+  };
+}
+
+function loadAnnotations() {
+  try {
+    const raw = window.localStorage.getItem(ANNOTATION_STORAGE_KEY);
+    if (!raw) return createEmptyAnnotationStore();
+    const parsed = JSON.parse(raw);
+    if (!parsed || !Array.isArray(parsed.items)) return createEmptyAnnotationStore();
+    return {
+      version: 1,
+      items: parsed.items.filter((item) => item && item.projectId === "foundations"),
+    };
+  } catch (error) {
+    console.warn("Unable to load Foundations annotations", error);
+    return createEmptyAnnotationStore();
+  }
+}
+
+function saveAnnotations(annotations = state.annotations) {
+  try {
+    window.localStorage.setItem(ANNOTATION_STORAGE_KEY, JSON.stringify(annotations));
+  } catch (error) {
+    console.warn("Unable to save Foundations annotations", error);
+  }
+}
+
+function getAnnotationsForNote(moduleId, noteId) {
+  return state.annotations.items.filter((item) => item.moduleId === moduleId && item.noteId === noteId);
 }
 
 function getInitialModuleId() {
@@ -573,6 +614,7 @@ function bindEvents() {
 async function init() {
   try {
     state.data = await fetchJson("roadmap/roadmap-data.json");
+    state.annotations = loadAnnotations();
     bindEvents();
     setTheme("light");
     openModule(getInitialModuleId(), { syncUrl: false });
