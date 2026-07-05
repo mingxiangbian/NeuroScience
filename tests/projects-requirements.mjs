@@ -10,15 +10,17 @@ assert.equal(existsSync(topicPageUrl), true, "brain-memory-for-ai-agents should 
 const projectsHtml = readFileSync(projectsPageUrl, "utf8");
 const topicHtml = readFileSync(topicPageUrl, "utf8");
 
-assert.match(projectsHtml, /<title>Research Projects \| NeuroScience x AI<\/title>/, "projects page should use a project homepage title");
+assert.match(projectsHtml, /<title>项目 \| NeuroScience x AI<\/title>/, "projects page should use the Chinese project directory page title");
 assert.match(projectsHtml, /data-page="projects-homepage"/, "projects/ should identify itself as a homepage");
 assert.match(projectsHtml, /href="\.\.\/index\.html" aria-label="Back to NeuroScience x AI homepage"/, "projects page logo should link back to the main homepage");
-assert.match(projectsHtml, /href="brain-memory-for-ai-agents\/"[\s\S]*Brain Memory for AI Agents/, "projects page should link to the Brain Memory for AI Agents topic page");
+assert.match(projectsHtml, /projects\/manifest\.json/, "projects homepage should load its project modules from projects/manifest.json");
+assert.match(projectsHtml, /<h1 id="page-title"><span class="title-line">项目<\/span><\/h1>/, "visible projects page title should be 项目");
+assert.match(projectsHtml, /font-family:\s*var\(--title-calligraphy-font\)/, "projects page title should use the shared self-hosted calligraphy font stack");
 assert.doesNotMatch(projectsHtml, /github\.com\/mingxiangbian\/NeuroScience\/tree\/main\/projects/i, "projects page should not send users to the GitHub folder listing");
 
 assert.match(topicHtml, /<title>Brain Memory for AI Agents \| NeuroScience x AI<\/title>/, "topic page should use the project title");
 assert.match(topicHtml, /data-page="project-topic"/, "project topic should identify itself as a topic page");
-assert.match(topicHtml, /href="\.\.\/index\.html"[\s\S]*Research Projects/, "topic page should link back to the local projects homepage");
+assert.match(topicHtml, /href="\.\.\/index\.html"[\s\S]*返回项目/, "topic page should link back to the local projects homepage");
 assert.match(topicHtml, /README\.md/, "topic page should link to the existing project README");
 assert.match(topicHtml, /research-roadmap\.md/, "topic page should link to the existing project roadmap");
 assert.match(topicHtml, /hypotheses\.md/, "topic page should link to the existing project hypotheses");
