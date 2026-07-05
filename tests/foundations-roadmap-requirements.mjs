@@ -60,6 +60,13 @@ assert.match(css, /\.reader-shell\s*\{[\s\S]*grid-template-columns:/, "roadmap C
 assert.match(css, /data-theme="dark"/, "roadmap CSS should support dark mode");
 assert.match(css, /\.module-nav-item\[aria-current="true"\]/, "roadmap CSS should style the active module");
 assert.match(css, /\.progress-meter/, "roadmap CSS should style module progress");
+assert.match(css, /\.progress-ring/, "roadmap CSS should style a module progress ring");
+assert.match(css, /\.overall-progress/, "roadmap CSS should label overall roadmap progress");
+assert.match(css, /\.timeline-list/, "roadmap CSS should style timeline content as a visual list");
+assert.match(css, /\.note-group-title/, "roadmap CSS should style explicit note group headings");
+assert.match(css, /\.section-line:hover/, "roadmap CSS should style collapsed rail hover state");
+assert.match(css, /\.section-line\[aria-current="true"\]/, "roadmap CSS should expose active collapsed rail state");
+assert.match(css, /\.result-meta/, "roadmap CSS should show module and section metadata in search results");
 assert.match(css, /@media \(max-width:\s*860px\)/, "roadmap CSS should include mobile layout rules");
 assert.doesNotMatch(css, /border-radius:\s*24px|border-radius:\s*28px/, "roadmap reader should avoid oversized card radii");
 
@@ -69,11 +76,20 @@ assert.match(js, /function renderCurrentModule/, "roadmap JS should isolate modu
 assert.match(js, /function renderNotePanel/, "roadmap JS should isolate right-note rendering");
 assert.match(js, /function runSearch/, "roadmap JS should implement local keyword search");
 assert.match(js, /function setTheme/, "roadmap JS should support theme switching");
+assert.match(js, /function renderProgressSummary/, "roadmap JS should render labeled module and overall progress");
+assert.match(js, /function renderTimelineSection/, "roadmap JS should render timeline as a visual component");
+assert.match(js, /function renderSearchResults/, "roadmap JS should isolate section-level search rendering");
+assert.match(js, /function setActiveSection/, "roadmap JS should update collapsed rail active state dynamically");
+assert.match(js, /IntersectionObserver/, "roadmap JS should observe visible sections for active rail state");
+assert.match(js, /data-section-id/, "roadmap JS should render stable section targets for search and rail navigation");
 assert.doesNotMatch(js, /localStorage|sessionStorage/, "first version should not persist state in browser storage");
 assert.doesNotMatch(js, /embeddings\.json|cosineSimilarity|PROJECT_ID = "brain-memory-for-ai-agents"/, "Foundations reader JS should not reuse paper-specific semantic search state");
 
 assert.equal(data.project.id, "foundations", "generated data should identify the Foundations project");
 assert.equal(data.project.targetRole, "Agent / LLM Systems Engineer", "generated data should keep the target role");
+assert.equal(typeof data.project.overallProgress, "number", "generated data should include overall progress");
+assert.ok(data.project.overallProgress > 0, "overall progress should be greater than zero");
+assert.ok(data.project.overallProgress <= 100, "overall progress should not exceed 100");
 assert.deepEqual(data.modules.map((module) => [module.id, module.title]), requiredModules, "generated data should include the required modules in navigation order");
 
 for (const module of data.modules) {
@@ -83,9 +99,18 @@ for (const module of data.modules) {
   assert.equal(typeof module.searchText, "string", `${module.id} should include search text`);
   assert.ok(module.searchText.length > 80, `${module.id} should have useful search text`);
   assert.ok(module.sections && typeof module.sections === "object", `${module.id} should include sections`);
+  assert.ok(Array.isArray(module.searchEntries), `${module.id} should include section-level search entries`);
+  assert.ok(module.searchEntries.length > 0, `${module.id} should expose searchable sections`);
+  assert.ok(module.searchEntries.every((entry) => entry.moduleId === module.id), `${module.id} search entries should point back to the module`);
+  assert.ok(module.searchEntries.every((entry) => typeof entry.sectionTitle === "string" && entry.sectionTitle.length > 0), `${module.id} search entries should include section titles`);
+  assert.ok(module.searchEntries.every((entry) => typeof entry.text === "string" && entry.text.length > 20), `${module.id} search entries should include useful text`);
+  assert.ok(Array.isArray(module.noteGroups), `${module.id} should include note groups`);
+  assert.ok(module.noteGroups.every((group) => ["资源", "反思", "面试表达"].includes(group.title)), `${module.id} note groups should use known categories`);
+  assert.ok(Array.isArray(module.timeline), `${module.id} should include a timeline array`);
 }
 
 const byId = Object.fromEntries(data.modules.map((module) => [module.id, module]));
+assert.ok(byId["agent-design"].timeline.length >= 3, "agent design should expose timeline items for visual rendering");
 assert.match(byId.overview.searchText, /30\/45\/60-Day Plan|Project Recommendations|Weekly Review Checklist/, "overview should preserve timeline and project recommendation content");
 assert.match(byId.coding.searchText, /Coding Plan|Python Standards|TypeScript Standards|Optional Rust Log Parser/, "coding should preserve implementation training content");
 assert.match(byId["llm-systems"].searchText, /LLM Systems|Transformer|post-training|LLM Fundamentals/, "LLM systems should preserve model and theory content");
