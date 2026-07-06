@@ -92,7 +92,7 @@ const activeRailHoverRule = css.match(/\.section-line\[aria-current="true"\]:hov
 assert.ok(activeRailRule, "active collapsed rail rule should be inspectable");
 assert.ok(activeRailHoverRule, "active collapsed rail hover rule should be inspectable");
 assert.doesNotMatch(activeRailRule, /width\s*:/, "active collapsed rail state should not lengthen the current line");
-assert.doesNotMatch(activeRailHoverRule, /width\s*:/, "active collapsed rail hover state should not lengthen the current line");
+assert.match(activeRailHoverRule, /width:\s*36px/, "active collapsed rail hover state should lengthen the current line");
 assert.match(css, /\.section-tooltip/, "collapsed rail should expose section tooltips");
 assert.match(css, /\.result-meta/, "roadmap CSS should show module and section metadata in search results");
 assert.match(css, /\.reader-shell\.is-searching \.reader-toolbar\s*\{[\s\S]*z-index:\s*4[0-9]/, "search toolbar and results should sit above the search overlay");
@@ -120,7 +120,10 @@ assert.match(js, /moduleLevel === 2 \? 16 : moduleLevel === 1 \? 6 : 0/, "whole-
 assert.match(js, /bodyLevel === 2 \? 4 : bodyLevel === 1 \? 1 : 0/, "body partial matches should remain a low-score fallback");
 assert.match(js, /function getSearchScore/, "roadmap JS should rank search entries with explicit scoring");
 assert.match(js, /function setActiveSection/, "roadmap JS should update collapsed rail active state dynamically");
-assert.match(js, /IntersectionObserver/, "roadmap JS should observe visible sections for active rail state");
+assert.match(js, /function syncActiveSectionFromScroll/, "roadmap JS should actively sync rail state from reader scroll position");
+assert.match(js, /addEventListener\("scroll", state\.sectionScrollHandler, \{ passive: true \}\)/, "reader scroll should drive collapsed rail active state");
+assert.match(js, /els\.main\.clientHeight \* 0\.24/, "active rail state should switch near the upper reading anchor");
+assert.doesNotMatch(js, /rootMargin:\s*"-16% 0px -68% 0px"/, "active rail state should not depend on the old narrow intersection band");
 assert.match(js, /data-section-id/, "roadmap JS should render stable section targets for search and rail navigation");
 assert.match(js, /section-tooltip/, "roadmap JS should render collapsed rail tooltips");
 assert.doesNotMatch(js, /index === 0 \? " is-active" : ""/, "section rail should not hard-code the first line as active");

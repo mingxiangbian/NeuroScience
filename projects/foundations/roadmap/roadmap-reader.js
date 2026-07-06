@@ -7,7 +7,8 @@ const state = {
   searchQuery: "",
   activeSectionId: "",
   activeKnowledgeNoteId: "",
-  sectionObserver: null,
+  sectionScrollHandler: null,
+  sectionScrollFrame: 0,
   annotations: { version: 1, items: [] },
   pendingAnnotation: null,
   annotationToolbar: null,
@@ -761,22 +762,47 @@ function setActiveSection(sectionId) {
   setActiveKnowledgeContext(sectionId);
 }
 
+function getActiveSectionFromScroll(sections) {
+  const anchorTop = els.main.getBoundingClientRect().top + els.main.clientHeight * 0.24;
+  let activeSection = sections[0];
+  for (const section of sections) {
+    if (section.getBoundingClientRect().top <= anchorTop) {
+      activeSection = section;
+    } else {
+      break;
+    }
+  }
+  return activeSection;
+}
+
+function syncActiveSectionFromScroll(sections = [...els.sectionList.querySelectorAll("[data-section-id]")]) {
+  const activeSection = getActiveSectionFromScroll(sections);
+  const sectionId = activeSection?.dataset.sectionId;
+  if (sectionId && sectionId !== state.activeSectionId) setActiveSection(sectionId);
+}
+
 function observeSections() {
-  state.sectionObserver?.disconnect();
+  if (state.sectionScrollHandler) {
+    els.main.removeEventListener("scroll", state.sectionScrollHandler);
+    state.sectionScrollHandler = null;
+  }
+  if (state.sectionScrollFrame) {
+    cancelAnimationFrame(state.sectionScrollFrame);
+    state.sectionScrollFrame = 0;
+  }
+
   const sections = [...els.sectionList.querySelectorAll("[data-section-id]")];
   if (sections.length === 0) return;
-  state.sectionObserver = new IntersectionObserver((entries) => {
-    const visible = entries
-      .filter((entry) => entry.isIntersecting)
-      .sort((left, right) => Math.abs(left.boundingClientRect.top) - Math.abs(right.boundingClientRect.top))[0];
-    if (visible?.target?.dataset.sectionId) setActiveSection(visible.target.dataset.sectionId);
-  }, {
-    root: els.main,
-    threshold: [0.2, 0.5, 0.8],
-    rootMargin: "-16% 0px -68% 0px",
-  });
-  sections.forEach((section) => state.sectionObserver.observe(section));
-  setActiveSection(sections[0].dataset.sectionId);
+
+  state.sectionScrollHandler = () => {
+    if (state.sectionScrollFrame) return;
+    state.sectionScrollFrame = requestAnimationFrame(() => {
+      state.sectionScrollFrame = 0;
+      syncActiveSectionFromScroll(sections);
+    });
+  };
+  els.main.addEventListener("scroll", state.sectionScrollHandler, { passive: true });
+  syncActiveSectionFromScroll(sections);
 }
 
 function clearSearch() {
