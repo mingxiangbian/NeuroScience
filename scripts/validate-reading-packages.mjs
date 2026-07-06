@@ -1,0 +1,298 @@
+#!/usr/bin/env node
+import { existsSync, readFileSync, statSync } from "node:fs";
+import { dirname, join, normalize, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const manifestPath = join(repoRoot, "papers", "manifest.json");
+const projectFilter = process.argv[2] ?? null;
+const errors = [];
+let packageCount = 0;
+
+function readJson(path, label) {
+  try {
+    return JSON.parse(readFileSync(path, "utf8"));
+  } catch (error) {
+    errors.push(`${label}: cannot read valid JSON (${error.message})`);
+    return null;
+  }
+}
+
+function fail(label, message) {
+  errors.push(`${label}: ${message}`);
+}
+
+function assert(condition, label, message) {
+  if (!condition) fail(label, message);
+}
+
+function isObject(value) {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+
+function isNonEmptyString(value, minLength = 1) {
+  return typeof value === "string" && value.trim().length >= minLength;
+}
+
+function relativeExists(baseDir, relativePath) {
+  if (!isNonEmptyString(relativePath)) return false;
+  const pathWithoutHash = relativePath.split("#")[0];
+  return existsSync(join(baseDir, pathWithoutHash));
+}
+
+function isSafeRelativePath(path) {
+  if (!isNonEmptyString(path)) return false;
+  const normalized = normalize(path);
+  return !normalized.startsWith("..") && !resolve(path).startsWith(path);
+}
+
+function validateRequiredFiles(readingDir, label) {
+  for (const file of ["paper.json", "chunks.json", "notes.json", "embeddings.json", "figures.json"]) {
+    const filePath = join(readingDir, file);
+    assert(existsSync(filePath), label, `missing ${file}`);
+    if (existsSync(filePath)) {
+      assert(statSync(filePath).size > 0, label, `${file} is empty`);
+    }
+  }
+}
+
+function validatePaperData(paperData, manifestPaper, label) {
+  assert(isObject(paperData), label, "paper.json must be an object");
+  if (!isObject(paperData)) return { sectionIds: new Set() };
+
+  assert(paperData.id === manifestPaper.id, label, "paper.json id must match manifest paper id");
+  assert(paperData.title === manifestPaper.title, label, "paper.json title should match manifest title");
+  assert(isNonEmptyString(paperData.shortTitle) && paperData.shortTitle.length <= 42, label, "paper.json shortTitle must be compact");
+  assert(isNonEmptyString(paperData.categoryZh, 4), label, "paper.json must include categoryZh");
+  assert(isNonEmptyString(paperData.relationZh, 10), label, "paper.json must include relationZh");
+  assert(isNonEmptyString(paperData.descriptionZh, 20), label, "paper.json must include descriptionZh");
+  assert(Array.isArray(paperData.readingFocus) && paperData.readingFocus.length >= 3, label, "paper.json readingFocus must include at least 3 Chinese reading prompts");
+  assert(Array.isArray(paperData.sections) && paperData.sections.length >= 2, label, "paper.json sections must include at least 2 sections");
+
+  const sectionIds = new Set();
+  for (const [index, section] of (paperData.sections ?? []).entries()) {
+    const sectionLabel = `${label} sections[${index}]`;
+    assert(isNonEmptyString(section?.id), sectionLabel, "section id is required");
+    assert(!sectionIds.has(section?.id), sectionLabel, "section id must be unique");
+    sectionIds.add(section?.id);
+    assert(isNonEmptyString(section?.title), sectionLabel, "section title is required");
+    assert(isNonEmptyString(section?.titleZh), sectionLabel, "section titleZh is required");
+  }
+
+  return { sectionIds };
+}
+
+function validateFigures(figuresData, readingDir, sectionIds, label) {
+  assert(isObject(figuresData), label, "figures.json must be an object");
+  assert(Array.isArray(figuresData?.figures), label, "figures.json must include figures array");
+
+  const figureIds = new Set();
+  const renderedFigures = [];
+  const sourceBackedModes = new Set(["source-figure", "semantic-crop", "paper-extract"]);
+
+  for (const [index, figure] of (figuresData?.figures ?? []).entries()) {
+    const figureLabel = `${label} figures[${index}]`;
+    assert(isNonEmptyString(figure?.id), figureLabel, "figure id is required");
+    assert(!figureIds.has(figure?.id), figureLabel, "figure id must be unique");
+    figureIds.add(figure?.id);
+    assert(isNonEmptyString(figure?.label), figureLabel, "figure label is required");
+    assert(isNonEmptyString(figure?.caption, 8), figureLabel, "figure caption is required");
+    assert(!figure?.file || isSafeRelativePath(figure.file), figureLabel, "figure file must be a safe relative path");
+    assert(!figure?.canonicalSectionId || sectionIds.has(figure.canonicalSectionId), figureLabel, "canonicalSectionId must point to a paper section");
+
+    if (figure?.file) {
+      renderedFigures.push(figure);
+      assert(existsSync(join(readingDir, figure.file)), figureLabel, `figure file does not exist: ${figure.file}`);
+      assert(/^(source-figure|semantic-crop|paper-extract|manual-redraw)$/.test(figure.cropMode), figureLabel, "rendered figure must not use page-fallback crop mode");
+      assert(/^(cropped|extracted|redrawn)$/.test(figure.status), figureLabel, "rendered figure status must be cropped, extracted, or redrawn");
+
+      if (figure.cropMode === "semantic-crop") {
+        assert(isObject(figure.bbox), figureLabel, "semantic-crop figures must include bbox");
+        for (const field of ["x", "y", "width", "height"]) {
+          assert(Number.isFinite(figure.bbox?.[field]), figureLabel, `bbox.${field} must be finite`);
+        }
+        assert(figure.bbox?.width > 0 && figure.bbox?.height > 0, figureLabel, "bbox width and height must be positive");
+      }
+
+      if (sourceBackedModes.has(figure.cropMode)) {
+        assert(isNonEmptyString(figure.sourceFigure) || Number.isFinite(figure.sourcePage), figureLabel, "source-backed figures need sourceFigure or sourcePage");
+      }
+
+      if (figure.cropMode === "manual-redraw") {
+        assert(figure.redrawType === "reader-side-fallback", figureLabel, "manual redraw must declare reader-side-fallback");
+        assert(isNonEmptyString(figure.sourceBasis, 20), figureLabel, "manual redraw must explain sourceBasis");
+      }
+    }
+  }
+
+  assert(renderedFigures.length >= 1, label, "reading package should render at least one figure");
+  assert(renderedFigures.some((figure) => sourceBackedModes.has(figure.cropMode)), label, "reading package should include at least one source-backed figure");
+
+  return { figureIds };
+}
+
+function validateChunks(chunksData, paperId, sectionIds, figureIds, label) {
+  assert(isObject(chunksData), label, "chunks.json must be an object");
+  assert(chunksData?.paperId === paperId, label, "chunks.json paperId must match paper id");
+  assert(Array.isArray(chunksData?.chunks) && chunksData.chunks.length >= 8, label, "chunks.json must include at least 8 substantive chunks");
+
+  const chunkIds = new Set();
+  const usedSectionIds = new Set();
+  let hasMath = false;
+  let hasStructuredBlock = false;
+  let hasFigureRef = false;
+
+  for (const [index, chunk] of (chunksData?.chunks ?? []).entries()) {
+    const chunkLabel = `${label} ${chunk?.id ?? `chunks[${index}]`}`;
+    assert(/^ch-\d{3}$/.test(chunk?.id ?? ""), chunkLabel, "chunk id must use ch-000 format");
+    assert(!chunkIds.has(chunk?.id), chunkLabel, "chunk id must be unique");
+    chunkIds.add(chunk?.id);
+    assert(sectionIds.has(chunk?.sectionId), chunkLabel, "sectionId must point to paper.json sections");
+    usedSectionIds.add(chunk?.sectionId);
+    assert(Number.isInteger(chunk?.order) && chunk.order >= 1, chunkLabel, "order must be a positive integer");
+    assert(isNonEmptyString(chunk?.title, 4), chunkLabel, "chunk title must be a meaningful Chinese short title");
+    assert(isNonEmptyString(chunk?.sourceText, 80), chunkLabel, "sourceText must contain substantive paper source text");
+    assert(isNonEmptyString(chunk?.zhTranslation, 40), chunkLabel, "zhTranslation must contain faithful Chinese translation");
+    assert(isNonEmptyString(chunk?.zhExplanation, 20), chunkLabel, "zhExplanation must contain project reading explanation");
+    assert(Array.isArray(chunk?.keywords) && chunk.keywords.length >= 2, chunkLabel, "keywords must include at least 2 terms");
+    assert(Array.isArray(chunk?.blocks) && chunk.blocks.length >= 1, chunkLabel, "blocks must preserve display structure");
+
+    for (const [blockIndex, block] of (chunk?.blocks ?? []).entries()) {
+      const blockLabel = `${chunkLabel} blocks[${blockIndex}]`;
+      assert(/^(paragraph|math|code|table|figure)$/.test(block?.type ?? ""), blockLabel, "block type is unsupported");
+      if (block?.type === "paragraph") {
+        assert(isNonEmptyString(block.text, 20), blockLabel, "paragraph block needs text");
+      }
+      if (block?.type === "math") {
+        hasMath = true;
+        assert(isNonEmptyString(block.latex, 3), blockLabel, "math block needs latex");
+        assert(!/^\$\$?|\$\$?$/.test(block.latex.trim()), blockLabel, "math latex should omit $ delimiters");
+      }
+      if (block?.type === "code") {
+        hasStructuredBlock = true;
+        assert(isNonEmptyString(block.code, 8), blockLabel, "code block needs code");
+      }
+      if (block?.type === "table") {
+        hasStructuredBlock = true;
+        assert(Array.isArray(block.columns) && block.columns.length >= 2, blockLabel, "table block needs columns");
+        assert(Array.isArray(block.rows) && block.rows.length >= 1, blockLabel, "table block needs rows");
+      }
+      if (block?.type === "figure") {
+        hasFigureRef = true;
+        assert(figureIds.has(block.id), blockLabel, "figure block id must exist in figures.json");
+      }
+    }
+
+    for (const [refIndex, ref] of (chunk?.figureRefs ?? []).entries()) {
+      const refLabel = `${chunkLabel} figureRefs[${refIndex}]`;
+      hasFigureRef = true;
+      assert(figureIds.has(ref?.id), refLabel, "figureRef id must exist in figures.json");
+      assert(/^(near|supporting|deferred)$/.test(ref?.relation ?? ""), refLabel, "figureRef relation must be near, supporting, or deferred");
+    }
+  }
+
+  for (const sectionId of sectionIds) {
+    assert(usedSectionIds.has(sectionId), label, `section ${sectionId} has no chunk coverage`);
+  }
+
+  assert(hasMath, label, "reading package should include at least one math block");
+  assert(hasStructuredBlock, label, "reading package should include at least one code or table block");
+  assert(hasFigureRef, label, "reading package should include figure references");
+
+  return { chunkIds };
+}
+
+function validateNotes(notesData, paperId, chunkIds, label) {
+  assert(isObject(notesData), label, "notes.json must be an object");
+  assert(notesData?.paperId === paperId, label, "notes.json paperId must match paper id");
+  assert(Array.isArray(notesData?.notes), label, "notes.json must include notes array");
+  assert(notesData?.notes?.length === chunkIds.size, label, "notes.json must include one note row per chunk");
+
+  const noteChunkIds = new Set();
+  for (const [index, note] of (notesData?.notes ?? []).entries()) {
+    const noteLabel = `${label} notes[${index}]`;
+    assert(chunkIds.has(note?.chunkId), noteLabel, "note chunkId must point to a real chunk");
+    assert(!noteChunkIds.has(note?.chunkId), noteLabel, "note chunkId must be unique");
+    noteChunkIds.add(note?.chunkId);
+    assert(note?.note === "", noteLabel, "source notes should start as empty strings; personal notes live in localStorage");
+  }
+}
+
+function validateEmbeddings(embeddingsData, paperId, chunkIds, label) {
+  assert(isObject(embeddingsData), label, "embeddings.json must be an object");
+  assert(embeddingsData?.paperId === paperId, label, "embeddings.json paperId must match paper id");
+  assert(Array.isArray(embeddingsData?.indexedFields), label, "embeddings.json must include indexedFields");
+  for (const field of ["sourceText", "zhTranslation", "zhExplanation"]) {
+    assert(embeddingsData?.indexedFields?.includes(field), label, `indexedFields must include ${field}`);
+  }
+  assert(Array.isArray(embeddingsData?.items), label, "embeddings.json must include items");
+  assert(embeddingsData?.items?.length === chunkIds.size, label, "embeddings.json must include one vector per chunk");
+
+  const embeddingChunkIds = new Set();
+  for (const [index, item] of (embeddingsData?.items ?? []).entries()) {
+    const itemLabel = `${label} embeddings[${index}]`;
+    assert(chunkIds.has(item?.chunkId), itemLabel, "embedding chunkId must point to a real chunk");
+    assert(!embeddingChunkIds.has(item?.chunkId), itemLabel, "embedding chunkId must be unique");
+    embeddingChunkIds.add(item?.chunkId);
+    assert(Array.isArray(item?.vector) && item.vector.length >= 8, itemLabel, "vector must be a non-trivial array");
+    assert((item?.vector ?? []).every((value) => typeof value === "number" && Number.isFinite(value)), itemLabel, "vector must contain finite numbers");
+  }
+}
+
+function validateReadingPackage(project, manifestPaper) {
+  const projectDir = join(repoRoot, "papers", project.id);
+  const readingDir = join(projectDir, "readings", manifestPaper.id);
+  const label = `${project.id}/${manifestPaper.id}`;
+
+  validateRequiredFiles(readingDir, label);
+
+  assert(relativeExists(projectDir, manifestPaper.localFile), label, "manifest localFile must point to an existing project file");
+  assert(relativeExists(projectDir, manifestPaper.noteFile), label, "manifest noteFile must point to an existing project file");
+
+  const paperData = readJson(join(readingDir, "paper.json"), `${label}/paper.json`);
+  const chunksData = readJson(join(readingDir, "chunks.json"), `${label}/chunks.json`);
+  const notesData = readJson(join(readingDir, "notes.json"), `${label}/notes.json`);
+  const embeddingsData = readJson(join(readingDir, "embeddings.json"), `${label}/embeddings.json`);
+  const figuresData = readJson(join(readingDir, "figures.json"), `${label}/figures.json`);
+
+  const { sectionIds } = validatePaperData(paperData, manifestPaper, label);
+  assert(!paperData?.sourceFile || relativeExists(readingDir, paperData.sourceFile), label, "paper.json sourceFile must exist");
+  assert(!paperData?.noteFile || relativeExists(readingDir, paperData.noteFile), label, "paper.json noteFile must exist");
+
+  const { figureIds } = validateFigures(figuresData, readingDir, sectionIds, label);
+  const { chunkIds } = validateChunks(chunksData, manifestPaper.id, sectionIds, figureIds, label);
+  validateNotes(notesData, manifestPaper.id, chunkIds, label);
+  validateEmbeddings(embeddingsData, manifestPaper.id, chunkIds, label);
+
+  packageCount += 1;
+}
+
+const manifest = readJson(manifestPath, "papers/manifest.json");
+assert(Array.isArray(manifest), "papers/manifest.json", "manifest must be a project array");
+
+for (const project of manifest ?? []) {
+  if (projectFilter && project.id !== projectFilter) continue;
+  const projectLabel = project?.id ?? "unknown-project";
+  assert(isNonEmptyString(project?.id), projectLabel, "project id is required");
+  assert(Array.isArray(project?.papers), projectLabel, "project papers must be an array");
+
+  const readingPapers = (project?.papers ?? []).filter((paper) => paper.hasReading);
+  for (const paper of readingPapers) {
+    validateReadingPackage(project, paper);
+  }
+}
+
+if (projectFilter && packageCount === 0) {
+  fail(projectFilter, "no reading packages matched the requested project");
+}
+
+if (errors.length > 0) {
+  console.error(`Reading package validation failed with ${errors.length} errors:`);
+  for (const error of errors) {
+    console.error(`- ${error}`);
+  }
+  process.exitCode = 1;
+} else {
+  const scope = projectFilter ?? "all projects";
+  console.log(`Validated ${packageCount} reading packages for ${scope}: 0 errors`);
+}
