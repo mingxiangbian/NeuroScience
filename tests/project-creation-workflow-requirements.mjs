@@ -30,3 +30,13 @@ assert.match(agents, /Knowledge \/ learning \/ roadmap/, "AGENTS should include 
 assert.match(agents, /Engineering \/ tool \/ experiment/, "AGENTS should include the engineering project route");
 assert.match(agents, /Do not force engineering projects into the Foundations reader/, "AGENTS should preserve the engineering project exception");
 assert.match(agents, /Ask only when the location, privacy, runtime, conflict, or overwrite risk is unclear/, "AGENTS should define when clarification is needed");
+assert.equal(existsSync(templateIndexUrl), true, "project creation template index should exist");
+assert.match(templateIndex, /# Project Creation Templates/, "template index should have a stable title");
+assert.match(templateIndex, /Knowledge \/ Learning \/ Roadmap/, "template index should include knowledge project structure");
+assert.match(templateIndex, /Paper \/ Topic Reading/, "template index should include paper project structure");
+assert.match(templateIndex, /Engineering \/ Tool \/ Experiment/, "template index should include engineering project structure");
+assert.match(templateIndex, /Research Project/, "template index should include research project structure");
+assert.match(templateIndex, /Hybrid Project/, "template index should include hybrid project structure");
+assert.match(templateIndex, /This is not a generator/, "template index should clarify that it is not a generator");
+assert.match(templateIndex, /projects\/\{slug\}\/\n(?:  .+\n)*  docs\/\n(?:    .+\n)*    spec\.md/, "engineering template should include project-local spec path");
+assert.match(templateIndex, /questions\/\{slug\}\/open-questions\.md/, "research template should link questions outside the project folder");
