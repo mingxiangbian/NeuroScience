@@ -24,3 +24,9 @@ assert.match(guide, /source maps belong in `sources\/`/, "workflow guide should 
 assert.match(guide, /open questions belong in `questions\/\{slug\}\/`/, "workflow guide should keep open questions in questions/{slug}/");
 assert.match(guide, /Ask only when/, "workflow guide should define the clarification boundary");
 assert.match(guide, /Verification Checklist/, "workflow guide should include a verification checklist");
+assert.match(agents, /## Project Creation Workflow/, "AGENTS should expose the project creation workflow");
+assert.match(agents, /docs\/project-creation-workflow\.md/, "AGENTS should point future workers to the workflow guide");
+assert.match(agents, /Knowledge \/ learning \/ roadmap/, "AGENTS should include the knowledge project route");
+assert.match(agents, /Engineering \/ tool \/ experiment/, "AGENTS should include the engineering project route");
+assert.match(agents, /Do not force engineering projects into the Foundations reader/, "AGENTS should preserve the engineering project exception");
+assert.match(agents, /Ask only when the location, privacy, runtime, conflict, or overwrite risk is unclear/, "AGENTS should define when clarification is needed");

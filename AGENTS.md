@@ -268,6 +268,22 @@ AI 与神经科学的关系必须具体分类，而不是笼统说“AI 像大�
 
 如果内容只是当次对话的推理过程、临时想法或尚未验证的假设，应留在 `sessions/`、`questions/` 或项目的 `hypotheses.md` 中。
 
+## Project Creation Workflow
+
+当用户要求创建新项目时，先读取并遵守 `docs/project-creation-workflow.md`。目标是让用户只提供主题、内容和目标，助手就能按项目类型选择结构、页面形态和验证步骤。
+
+默认分流：
+
+- Knowledge / learning / roadmap：放入 `projects/{slug}/`，使用 Foundations 风格 reader/dashboard。
+- Paper / topic reading：放入 `papers/{slug}/`，使用 paper reader 或结构化 paper note。
+- Engineering / tool / experiment：放入 `projects/{slug}/`，优先 `README`、`docs/spec.md`、`docs/plan.md`、`src/`、`tests/` 和可运行验证。
+- Research project：放入 `projects/{slug}/`，配套 `questions/{slug}/` 与 `sources/{slug}-sources.md`。
+- Hybrid project：主项目放 `projects/{slug}/`，学习页、source map 和 open questions 按职责分层链接。
+
+Do not force engineering projects into the Foundations reader. 只有当 location、privacy、runtime、目标冲突或 overwrite risk 不清楚时才先追问；其他情况按 workflow 默认值直接推进。
+
+Ask only when the location, privacy, runtime, conflict, or overwrite risk is unclear.
+
 ## 语言规范（Language Policy）
 
 默认使用中文回答和记录。
