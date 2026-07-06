@@ -41,6 +41,19 @@ const requiredFiles = [
   "../projects/language/ielts-academic/site/ielts-data.json",
   "../projects/language/ielts-academic/site/ielts-reader.css",
   "../projects/language/ielts-academic/site/ielts-reader.js",
+  "../projects/language/ielts-academic/diagnostics/score-profile.json",
+  "../projects/language/ielts-academic/diagnostics/score-history.json",
+  "../projects/language/ielts-academic/diagnostics/error-log.json",
+  "../projects/language/ielts-academic/plans/checkpoint-status.json",
+  "../projects/language/ielts-academic/notes/README.md",
+  "../projects/language/ielts-academic/notes/listening/.gitkeep",
+  "../projects/language/ielts-academic/notes/reading/.gitkeep",
+  "../projects/language/ielts-academic/notes/writing/task-2-argument-development.md",
+  "../projects/language/ielts-academic/notes/speaking/.gitkeep",
+  "../projects/language/ielts-academic/notes/vocabulary/.gitkeep",
+  "../projects/language/ielts-academic/notes/grammar/.gitkeep",
+  "../projects/language/ielts-academic/journal/README.md",
+  "../projects/language/ielts-academic/journal/entries/2026-07-06-initial-setup.md",
 ];
 
 for (const path of requiredFiles) {
@@ -66,6 +79,8 @@ const siteJs = read("../projects/language/ielts-academic/site/ielts-reader.js");
 const siteCss = read("../projects/language/ielts-academic/site/ielts-reader.css");
 const buildScript = read("../projects/language/ielts-academic/scripts/build-ielts-data.mjs");
 const manifest = JSON.parse(read("../projects/manifest.json"));
+const notesReadme = read("../projects/language/ielts-academic/notes/README.md");
+const journalReadme = read("../projects/language/ielts-academic/journal/README.md");
 
 assert.match(languageReadme, /IELTS Academic/, "language README should link to IELTS Academic");
 assert.match(projectReadme, /Overall 8\.0/, "project README should state the aggressive overall target");
@@ -145,6 +160,9 @@ const ieltsProject = manifest.find((project) => project.id === "ielts-academic")
 assert.ok(ieltsProject, "projects manifest should include IELTS Academic");
 assert.equal(ieltsProject.folder, "language/ielts-academic/", "IELTS manifest folder should point to the nested language project");
 assert.equal(ieltsProject.status, "active", "IELTS manifest entry should be active");
+
+assert.match(notesReadme, /related_errors/, "notes README should document related_errors");
+assert.match(journalReadme, /related_notes/, "journal README should document related_notes");
 
 assert.equal(root.pathname.endsWith("/projects/language/ielts-academic/"), true);
 assert.equal(languageReadmeUrl.pathname.endsWith("/projects/language/README.md"), true);
