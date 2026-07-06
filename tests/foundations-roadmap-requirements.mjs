@@ -87,6 +87,12 @@ assert.match(css, /\.section-line:hover/, "roadmap CSS should style collapsed ra
 assert.match(css, /\.section-line:hover \+ \.section-line/, "collapsed rail should grow neighboring lines on hover");
 assert.match(css, /\.section-line\[aria-current="true"\]/, "roadmap CSS should expose active collapsed rail state");
 assert.match(css, /\.section-line\[aria-current="true"\]:hover,\s*\.section-line\.is-active:hover\s*\{[\s\S]*background:\s*var\(--reader-section-line-hover\)/, "active collapsed rail line should show a distinct hover state");
+const activeRailRule = css.match(/\.section-line\[aria-current="true"\],\s*\.section-line\.is-active\s*\{(?<body>[\s\S]*?)\}/)?.groups.body ?? "";
+const activeRailHoverRule = css.match(/\.section-line\[aria-current="true"\]:hover,\s*\.section-line\.is-active:hover\s*\{(?<body>[\s\S]*?)\}/)?.groups.body ?? "";
+assert.ok(activeRailRule, "active collapsed rail rule should be inspectable");
+assert.ok(activeRailHoverRule, "active collapsed rail hover rule should be inspectable");
+assert.doesNotMatch(activeRailRule, /width\s*:/, "active collapsed rail state should not lengthen the current line");
+assert.doesNotMatch(activeRailHoverRule, /width\s*:/, "active collapsed rail hover state should not lengthen the current line");
 assert.match(css, /\.section-tooltip/, "collapsed rail should expose section tooltips");
 assert.match(css, /\.result-meta/, "roadmap CSS should show module and section metadata in search results");
 assert.match(css, /\.reader-shell\.is-searching \.reader-toolbar\s*\{[\s\S]*z-index:\s*4[0-9]/, "search toolbar and results should sit above the search overlay");

@@ -461,9 +461,12 @@ body,
 }
 
 .section-line:hover {
-  width: 36px;
   height: 3px;
   background: var(--reader-section-line-hover);
+}
+
+.section-line:not([aria-current="true"]):not(.is-active):hover {
+  width: 36px;
 }
 
 .section-line:hover + .section-line,
@@ -474,14 +477,12 @@ body,
 
 .section-line[aria-current="true"],
 .section-line.is-active {
-  width: 32px;
   height: 3px;
   background: var(--reader-section-line-active);
 }
 
 .section-line[aria-current="true"]:hover,
 .section-line.is-active:hover {
-  width: 36px;
   height: 3px;
   background: var(--reader-section-line-hover);
 }
