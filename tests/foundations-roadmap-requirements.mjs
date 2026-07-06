@@ -86,6 +86,7 @@ assert.match(css, /\.local-annotation\.is-detached/, "right note panel should ex
 assert.match(css, /\.section-line:hover/, "roadmap CSS should style collapsed rail hover state");
 assert.match(css, /\.section-line:hover \+ \.section-line/, "collapsed rail should grow neighboring lines on hover");
 assert.match(css, /\.section-line\[aria-current="true"\]/, "roadmap CSS should expose active collapsed rail state");
+assert.match(css, /\.section-line\[aria-current="true"\]:hover,\s*\.section-line\.is-active:hover\s*\{[\s\S]*background:\s*var\(--reader-section-line-hover\)/, "active collapsed rail line should show a distinct hover state");
 assert.match(css, /\.section-tooltip/, "collapsed rail should expose section tooltips");
 assert.match(css, /\.result-meta/, "roadmap CSS should show module and section metadata in search results");
 assert.match(css, /\.reader-shell\.is-searching \.reader-toolbar\s*\{[\s\S]*z-index:\s*4[0-9]/, "search toolbar and results should sit above the search overlay");
@@ -116,6 +117,10 @@ assert.match(js, /function setActiveSection/, "roadmap JS should update collapse
 assert.match(js, /IntersectionObserver/, "roadmap JS should observe visible sections for active rail state");
 assert.match(js, /data-section-id/, "roadmap JS should render stable section targets for search and rail navigation");
 assert.match(js, /section-tooltip/, "roadmap JS should render collapsed rail tooltips");
+assert.doesNotMatch(js, /index === 0 \? " is-active" : ""/, "section rail should not hard-code the first line as active");
+assert.doesNotMatch(js, /index === 0 \? "true" : "false"/, "section rail aria-current should not be hard-coded from initial index");
+assert.match(js, /button\.className = "section-line";/, "section rail buttons should start inactive");
+assert.match(js, /button\.setAttribute\("aria-current", "false"\);/, "section rail aria-current should be initialized as false");
 assert.match(js, /knowledgeNotes/, "roadmap JS should consume generated knowledge notes");
 assert.doesNotMatch(js, /资源", "反思", "面试表达"/, "right notes should not be hard-coded to old resource/reflection/interview groups");
 assert.doesNotMatch(js, /if \(sectionId === getSectionId\(module, "知识笔记"\)\) return module\.knowledgeNotes\?\.\[0\];/, "knowledge note section should not default to the first note");

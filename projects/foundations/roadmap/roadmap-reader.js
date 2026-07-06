@@ -407,14 +407,14 @@ function getRailTargets(module) {
 
 function renderSectionRail(module) {
   els.sectionLines.innerHTML = "";
-  getRailTargets(module).forEach((target, index) => {
+  getRailTargets(module).forEach((target) => {
     const button = document.createElement("button");
-    button.className = `section-line${index === 0 ? " is-active" : ""}`;
+    button.className = "section-line";
     button.type = "button";
     button.dataset.sectionId = target.id;
     button.title = target.title;
     button.setAttribute("aria-label", target.title);
-    button.setAttribute("aria-current", index === 0 ? "true" : "false");
+    button.setAttribute("aria-current", "false");
     button.innerHTML = `<span class="section-tooltip">${escapeHtml(target.title)}</span>`;
     button.addEventListener("click", () => {
       document.querySelector(`#${CSS.escape(target.id)}`)?.scrollIntoView({
