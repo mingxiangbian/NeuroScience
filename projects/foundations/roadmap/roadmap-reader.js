@@ -1,4 +1,5 @@
 const ANNOTATION_STORAGE_KEY = "foundationsReader.annotations.v1";
+const TASK_STORAGE_KEY = "foundationsReader.tasks.v1";
 
 const state = {
   data: null,
@@ -12,6 +13,8 @@ const state = {
   annotationToolbar: null,
   annotationDeletePopover: null,
 };
+
+const taskState = loadTaskState();
 
 const els = {
   shell: document.querySelector("#reader-shell"),
@@ -79,6 +82,25 @@ function saveAnnotations(annotations = state.annotations) {
     window.localStorage.setItem(ANNOTATION_STORAGE_KEY, JSON.stringify(annotations));
   } catch (error) {
     console.warn("Unable to save Foundations annotations", error);
+  }
+}
+
+function loadTaskState() {
+  try {
+    const raw = window.localStorage.getItem(TASK_STORAGE_KEY);
+    const parsed = raw ? JSON.parse(raw) : {};
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+  } catch (error) {
+    console.warn("Unable to load task checklist state", error);
+    return {};
+  }
+}
+
+function saveTaskState(tasks = taskState) {
+  try {
+    window.localStorage.setItem(TASK_STORAGE_KEY, JSON.stringify(tasks));
+  } catch (error) {
+    console.warn("Unable to save task checklist state", error);
   }
 }
 
@@ -439,7 +461,10 @@ function renderProgressSummary(module) {
         <p class="progress-label">本模块学习进度</p>
         <p class="progress-status">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(module.priority)}</p>
       </div>
-      <p class="overall-progress">整体学习进度 ${escapeHtml(String(overallProgress))}%</p>
+      <div class="overall-progress-card" aria-label="整体学习进度 ${overallProgress}%">
+        <span class="overall-progress-tag">全部模块</span>
+        <span class="overall-progress-value">${escapeHtml(String(overallProgress))}%</span>
+      </div>
     </div>
   `;
 }
@@ -458,6 +483,59 @@ function renderTimelineSection(module, title) {
     `)
     .join("");
   return `<ol class="timeline-list">${items}</ol>`;
+}
+
+function renderTaskSection(module, title) {
+  const raw = getSection(module, title);
+  if (!raw) return raw;
+
+  const temp = document.createElement("div");
+  temp.innerHTML = raw;
+
+  const groups = [];
+  let current = { heading: "", intro: [], items: [] };
+  temp.childNodes.forEach((node) => {
+    if (node.nodeType !== Node.ELEMENT_NODE) return;
+    if (node.tagName === "H3") {
+      if (current.heading || current.intro.length || current.items.length) groups.push(current);
+      current = { heading: node.textContent, intro: [], items: [] };
+    } else if (node.tagName === "OL" || node.tagName === "UL") {
+      node.querySelectorAll(":scope > li").forEach((li) => {
+        current.items.push(li.innerHTML);
+      });
+    } else if (node.tagName === "P") {
+      current.intro.push(node.innerHTML);
+    }
+  });
+  if (current.heading || current.intro.length || current.items.length) groups.push(current);
+
+  const hasCheckableItems = groups.some((group) => group.items.length > 0);
+  if (!hasCheckableItems) return raw;
+
+  return groups
+    .map((group, groupIndex) => {
+      const introHtml = group.intro.map((html) => `<p>${html}</p>`).join("");
+      const itemsHtml = group.items
+        .map((html, itemIndex) => {
+          const taskId = `${module.id}__${title}__${groupIndex}__${itemIndex}`;
+          const isDone = Boolean(taskState[taskId]);
+          return `
+            <li class="task-item${isDone ? " is-done" : ""}">
+              <label>
+                <input type="checkbox" data-task-id="${escapeHtml(taskId)}" ${isDone ? "checked" : ""} />
+                <span>${html}</span>
+              </label>
+            </li>
+          `;
+        })
+        .join("");
+      return `
+        ${group.heading ? `<h3>${escapeHtml(group.heading)}</h3>` : ""}
+        ${introHtml}
+        ${itemsHtml ? `<ul class="task-list">${itemsHtml}</ul>` : ""}
+      `;
+    })
+    .join("");
 }
 
 function renderOverviewDashboard(module) {
@@ -557,7 +635,9 @@ function renderCurrentModule() {
         ? renderTimelineSection(module, title)
         : title === "知识笔记"
           ? renderKnowledgeNotesSection(module)
-          : getSection(module, title);
+          : title === "任务"
+            ? renderTaskSection(module, title)
+            : getSection(module, title);
       if (!body) return "";
       const sectionId = getSectionId(module, title);
       return `
@@ -579,6 +659,15 @@ function renderCurrentModule() {
 
   els.sectionList.querySelectorAll(".knowledge-card").forEach((card) => {
     card.addEventListener("click", () => setActiveKnowledgeContext(card.dataset.noteId));
+  });
+
+  els.sectionList.querySelectorAll("[data-task-id]").forEach((checkbox) => {
+    checkbox.addEventListener("change", () => {
+      const taskId = checkbox.dataset.taskId;
+      taskState[taskId] = checkbox.checked;
+      saveTaskState(taskState);
+      checkbox.closest(".task-item")?.classList.toggle("is-done", checkbox.checked);
+    });
   });
 }
 

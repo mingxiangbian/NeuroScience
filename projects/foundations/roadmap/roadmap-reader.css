@@ -585,8 +585,7 @@ body,
 }
 
 .progress-label,
-.progress-status,
-.overall-progress {
+.progress-status {
   margin: 0;
 }
 
@@ -595,15 +594,34 @@ body,
   font-weight: 760;
 }
 
-.progress-status,
-.overall-progress {
+.progress-status {
   color: var(--reader-ink-muted);
   font-size: 12px;
 }
 
-.overall-progress {
+.overall-progress-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   justify-self: end;
-  font-weight: 720;
+  border: 1px solid var(--reader-line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.26);
+  padding: 6px 14px 6px 12px;
+}
+
+.overall-progress-tag {
+  color: var(--reader-ink-muted);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.overall-progress-value {
+  color: var(--reader-blue);
+  font-family: var(--reader-mono);
+  font-size: 14px;
+  font-weight: 760;
 }
 
 .progress-meter {
@@ -744,6 +762,21 @@ body,
   padding-left: 1.25em;
 }
 
+.section-body p:has(+ ul),
+.section-body p:has(+ ol) {
+  margin: 20px 0 8px;
+  color: var(--reader-ink-muted);
+  font-size: 12px;
+  font-weight: 720;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.section-body p:has(+ ul):first-child,
+.section-body p:has(+ ol):first-child {
+  margin-top: 0;
+}
+
 .section-body li + li {
   margin-top: 5px;
 }
@@ -763,6 +796,59 @@ body,
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.24);
   padding: 14px;
+}
+
+.task-list {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 15px;
+  padding: 0;
+  list-style: none;
+}
+
+.task-item {
+  border: 1px solid var(--reader-line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.16);
+  padding: 10px 12px;
+  transition:
+    opacity 160ms ease,
+    background 160ms ease,
+    border-color 160ms ease;
+}
+
+.task-item:hover {
+  border-color: var(--reader-line-strong);
+}
+
+.task-item label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.task-item input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+  accent-color: var(--reader-blue);
+}
+
+.task-item span {
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.task-item.is-done {
+  background: transparent;
+  opacity: 0.58;
+}
+
+.task-item.is-done span {
+  text-decoration: line-through;
+  text-decoration-color: var(--reader-ink-muted);
 }
 
 .knowledge-list {
@@ -1263,7 +1349,7 @@ body,
     grid-template-columns: 72px minmax(0, 1fr);
   }
 
-  .overall-progress {
+  .overall-progress-card {
     grid-column: 1 / -1;
     justify-self: start;
   }
