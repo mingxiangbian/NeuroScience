@@ -589,8 +589,8 @@ function getKnowledgeNoteById(module, noteId) {
 function getKnowledgeNoteForSection(module, sectionId) {
   const directNote = getKnowledgeNoteById(module, sectionId);
   if (directNote) return directNote;
-  if (sectionId === getSectionId(module, "知识笔记")) return module.knowledgeNotes?.[0];
-  return getKnowledgeNoteById(module, state.activeKnowledgeNoteId) ?? module.knowledgeNotes?.[0];
+  if (sectionId !== getSectionId(module, "知识笔记")) return null;
+  return getKnowledgeNoteById(module, state.activeKnowledgeNoteId) ?? null;
 }
 
 function renderLocalAnnotations(note) {
@@ -625,7 +625,7 @@ function renderContextualNotePanel(note) {
     : note?.body ? `<section class="note-block"><div class="note-group-body">${note.body}</div></section>` : "";
   const renderedNotes = note
     ? `<article class="note-context"><h3>${escapeHtml(note.title)}</h3>${noteGroups}${renderLocalAnnotations(note)}</article>`
-    : `<p class="note-empty">这个模块没有独立知识笔记；选择具体能力模块后，右栏会同步显示当前知识卡。</p>`;
+    : "";
 
   const label = `学习过程记录 · ${module.title}`;
   els.noteLabel.textContent = label;
@@ -706,7 +706,7 @@ function openModule(moduleId, { syncUrl = true, targetSectionId = "" } = {}) {
   if (syncUrl) updateUrl(nextModule.id);
   renderModuleNav();
   renderCurrentModule();
-  renderContextualNotePanel(nextModule.knowledgeNotes?.[0]);
+  renderContextualNotePanel(null);
   renderSectionRail(nextModule);
   applyHighlights();
   els.main.scrollTop = 0;

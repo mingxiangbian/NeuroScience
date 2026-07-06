@@ -112,6 +112,12 @@ assert.match(js, /data-section-id/, "roadmap JS should render stable section tar
 assert.match(js, /section-tooltip/, "roadmap JS should render collapsed rail tooltips");
 assert.match(js, /knowledgeNotes/, "roadmap JS should consume generated knowledge notes");
 assert.doesNotMatch(js, /资源", "反思", "面试表达"/, "right notes should not be hard-coded to old resource/reflection/interview groups");
+assert.doesNotMatch(js, /if \(sectionId === getSectionId\(module, "知识笔记"\)\) return module\.knowledgeNotes\?\.\[0\];/, "knowledge note section should not default to the first note");
+assert.doesNotMatch(js, /return getKnowledgeNoteById\(module, state\.activeKnowledgeNoteId\) \?\? module\.knowledgeNotes\?\.\[0\];/, "ordinary sections should not fall back to stale or first knowledge notes");
+assert.match(js, /if \(sectionId !== getSectionId\(module, "知识笔记"\)\) return null;/, "ordinary sections should return an empty right panel when they have no explicit knowledge note");
+assert.match(js, /const renderedNotes = note[\s\S]*: "";/, "right note panel should render an empty surface when no note is associated");
+assert.match(js, /renderContextualNotePanel\(null\);/, "module switches should start with an empty right note panel");
+assert.doesNotMatch(js, /renderContextualNotePanel\(nextModule\.knowledgeNotes\?\.\[0\]\);/, "module switches should not default the right panel to the first knowledge note");
 assert.match(js, /ANNOTATION_STORAGE_KEY = "foundationsReader\.annotations\.v1"/, "Foundations reader should define a versioned local annotation storage key");
 assert.match(js, /function createEmptyAnnotationStore/, "Foundations reader should create an empty annotation store");
 assert.match(js, /function loadAnnotations/, "Foundations reader should load local annotations from localStorage");
