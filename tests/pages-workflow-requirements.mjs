@@ -19,9 +19,13 @@ assert.match(workflow, /uses:\s*actions\/configure-pages@v6\b/, "Pages workflow 
 assert.match(workflow, /uses:\s*actions\/upload-pages-artifact@v5\b/, "Pages workflow should use upload-pages-artifact v5");
 assert.match(workflow, /uses:\s*actions\/deploy-pages@v5\b/, "Pages workflow should use deploy-pages v5, which runs on Node 24");
 assert.match(workflow, /NODE_OPTIONS:\s*--no-deprecation/, "Deploy step should locally suppress the upstream deploy-pages punycode deprecation warning");
-assert.match(workflow, /path:\s*\./, "Pages artifact should publish the static repository root");
-assert.match(workflow, /include-hidden-files:\s*true/, "Pages artifact should include .nojekyll while upload-pages-artifact still excludes .git and .github");
+assert.match(workflow, /name:\s*Prepare Pages artifact/, "Pages workflow should stage a narrow static artifact before upload");
+assert.match(workflow, /cp -R index\.html \.nojekyll assets papers projects _site\//, "Pages artifact should include only public site assets");
+assert.match(workflow, /find _site -name "\.DS_Store" -delete/, "Pages artifact staging should remove macOS metadata files");
+assert.match(workflow, /path:\s*_site/, "Pages artifact should publish the staged static site directory");
+assert.match(workflow, /include-hidden-files:\s*true/, "Pages artifact should include .nojekyll from the staged site directory");
+assert.doesNotMatch(workflow, /path:\s*\./, "Pages artifact should not publish the whole repository root");
 assert.doesNotMatch(workflow, /uses:\s*actions\/checkout@v4\b/, "Pages workflow should not use checkout v4, which triggers the Node 20 warning");
 assert.doesNotMatch(workflow, /uses:\s*actions\/upload-artifact@v4\b/, "Pages workflow should not directly use upload-artifact v4, which triggers the Node 20 warning");
 assert.doesNotMatch(workflow, /uses:\s*actions\/upload-pages-artifact@v4\b/, "Pages workflow should not use the older Pages artifact wrapper");
-assert.doesNotMatch(workflow, /npm\s+(?:install|ci|run)|pnpm|yarn|vite|jekyll/i, "Static Pages deploy should not introduce a build step or package manager dependency");
+assert.doesNotMatch(workflow, /npm\s+(?:install|ci|run)|pnpm|yarn|vite|\bjekyll\s+(?:build|serve)|bundle\s+exec\s+jekyll/i, "Static Pages deploy should not introduce a build step or package manager dependency");

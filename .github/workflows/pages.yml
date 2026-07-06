@@ -30,10 +30,17 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v6
 
+      - name: Prepare Pages artifact
+        run: |
+          rm -rf _site
+          mkdir -p _site
+          cp -R index.html .nojekyll assets papers projects _site/
+          find _site -name ".DS_Store" -delete
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:
-          path: .
+          path: _site
           include-hidden-files: true
 
       - name: Deploy to GitHub Pages
