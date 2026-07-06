@@ -1,0 +1,85 @@
+{
+  "build": {
+    "generatedAt": "2026-07-06",
+    "source": "projects/language/ielts-academic/scripts/build-ielts-data.mjs"
+  },
+  "scoreProfile": {
+    "target": "Overall 8.0",
+    "evidenceBasis": "Pending diagnostic input",
+    "confidence": "Low",
+    "unverifiedDimensions": [
+      "pronunciation",
+      "timed writing",
+      "listening accuracy"
+    ]
+  },
+  "scoreHistory": [
+    {
+      "label": "Initial placeholder",
+      "overall": "Unverified"
+    }
+  ],
+  "errorLog": [
+    {
+      "skill": "Writing",
+      "pattern": "Error log not populated yet",
+      "priority": "Pending diagnosis",
+      "nextAction": "Run the diagnostic input template before prioritizing errors."
+    }
+  ],
+  "checkpoints": [
+    {
+      "week": "Week 2",
+      "title": "Feasibility check",
+      "focus": "Confirm weekly workload and first diagnostic signal."
+    },
+    {
+      "week": "Week 6",
+      "title": "Correction checkpoint",
+      "focus": "Rebalance plan against persistent error patterns."
+    },
+    {
+      "week": "Week 8",
+      "title": "Readiness check",
+      "focus": "Validate exam readiness with calibrated mocks."
+    }
+  ],
+  "notes": [
+    {
+      "source": "README.md",
+      "title": "Project entry",
+      "body": "Use the existing Markdown materials as source of truth until later data extraction tasks expand this reader."
+    }
+  ],
+  "journal": [
+    {
+      "date": "TBD",
+      "title": "First diagnostic session",
+      "body": "Record diagnostic results before making claims about personal weaknesses."
+    }
+  ],
+  "promptLibrary": [
+    {
+      "mode": "orchestrator",
+      "title": "IELTS Academic orchestrator",
+      "path": "prompts/orchestrator.md"
+    },
+    {
+      "mode": "run modes",
+      "title": "Run modes",
+      "path": "prompts/run-modes.md"
+    },
+    {
+      "mode": "validation",
+      "title": "Output contract",
+      "path": "prompts/output-contract.md"
+    }
+  ],
+  "validation": [
+    {
+      "type": "contract",
+      "title": "Output contract checklist",
+      "status": "Structural reader entry only; later tasks can bind full checklist data."
+    }
+  ]
+}

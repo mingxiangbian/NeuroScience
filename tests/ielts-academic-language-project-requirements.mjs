@@ -36,6 +36,11 @@ const requiredFiles = [
   "../projects/language/ielts-academic/validation/output-contract-checklist.md",
   "../projects/language/ielts-academic/validation/dry-run-test-cases.md",
   "../projects/language/ielts-academic/validation/examiner-calibration-checklist.md",
+  "../projects/language/ielts-academic/index.html",
+  "../projects/language/ielts-academic/scripts/build-ielts-data.mjs",
+  "../projects/language/ielts-academic/site/ielts-data.json",
+  "../projects/language/ielts-academic/site/ielts-reader.css",
+  "../projects/language/ielts-academic/site/ielts-reader.js",
 ];
 
 for (const path of requiredFiles) {
@@ -56,6 +61,11 @@ const eightWeekPlan = read("../projects/language/ielts-academic/plans/8-week-dia
 const checkpoints = read("../projects/language/ielts-academic/plans/checkpoint-rules.md");
 const regression = read("../projects/language/ielts-academic/errors/regression-check-template.md");
 const dryRuns = read("../projects/language/ielts-academic/validation/dry-run-test-cases.md");
+const projectIndex = read("../projects/language/ielts-academic/index.html");
+const siteJs = read("../projects/language/ielts-academic/site/ielts-reader.js");
+const siteCss = read("../projects/language/ielts-academic/site/ielts-reader.css");
+const buildScript = read("../projects/language/ielts-academic/scripts/build-ielts-data.mjs");
+const manifest = JSON.parse(read("../projects/manifest.json"));
 
 assert.match(languageReadme, /IELTS Academic/, "language README should link to IELTS Academic");
 assert.match(projectReadme, /Overall 8\.0/, "project README should state the aggressive overall target");
@@ -101,6 +111,40 @@ assert.match(dryRuns, /Missing-information dry run/, "dry runs should test missi
 assert.match(dryRuns, /Partial-input dry run/, "dry runs should test partial input handling");
 assert.match(dryRuns, /Low-workload dry run/, "dry runs should test workload feasibility");
 assert.match(dryRuns, /Single-session mode dry run/, "dry runs should test simulation labeling");
+
+assert.match(projectIndex, /data-page="ielts-academic-reader"/, "IELTS project should expose a dedicated reader page");
+assert.match(projectIndex, /site\/ielts-reader\.css/, "IELTS reader should load dedicated CSS");
+assert.match(projectIndex, /site\/ielts-reader\.js/, "IELTS reader should load dedicated JS");
+assert.match(projectIndex, /id="dashboard"/, "IELTS reader should include a dashboard region");
+assert.match(projectIndex, /id="swimlane"/, "IELTS reader should include a swimlane region");
+assert.match(projectIndex, /id="errors"/, "IELTS reader should include an errors region");
+assert.match(projectIndex, /id="notes"/, "IELTS reader should include a notes region");
+assert.match(projectIndex, /id="journal"/, "IELTS reader should include a journal region");
+assert.match(projectIndex, /id="prompt-library"/, "IELTS reader should include a prompt library region");
+assert.match(projectIndex, /id="validation"/, "IELTS reader should include a validation region");
+
+assert.match(siteCss, /\.ielts-shell/, "IELTS CSS should style the reader shell");
+assert.match(siteCss, /\.swimlane-grid/, "IELTS CSS should style the 8-week swimlane");
+assert.match(siteCss, /\.error-board/, "IELTS CSS should style the error board");
+assert.match(siteCss, /@media \(max-width:\s*860px\)/, "IELTS CSS should include responsive rules");
+
+assert.match(siteJs, /fetchJson\("site\/ielts-data\.json"\)/, "IELTS JS should load generated site data");
+assert.match(siteJs, /function renderDashboard/, "IELTS JS should render dashboard");
+assert.match(siteJs, /function renderSwimlane/, "IELTS JS should render swimlane");
+assert.match(siteJs, /function renderErrors/, "IELTS JS should render errors");
+assert.match(siteJs, /function renderNotes/, "IELTS JS should render notes");
+assert.match(siteJs, /function renderJournal/, "IELTS JS should render journal");
+assert.match(siteJs, /function renderPromptLibrary/, "IELTS JS should render prompt library");
+assert.match(siteJs, /function renderValidation/, "IELTS JS should render validation");
+assert.doesNotMatch(siteJs, /githubToken|Authorization|contents\/|repos\/|fetch\("\/api/i, "IELTS JS should not include backend or GitHub write-back signals");
+
+assert.match(buildScript, /function parseFrontmatter/, "build script should parse frontmatter");
+assert.match(buildScript, /function validateReferences/, "build script should validate cross references");
+
+const ieltsProject = manifest.find((project) => project.id === "ielts-academic");
+assert.ok(ieltsProject, "projects manifest should include IELTS Academic");
+assert.equal(ieltsProject.folder, "language/ielts-academic/", "IELTS manifest folder should point to the nested language project");
+assert.equal(ieltsProject.status, "active", "IELTS manifest entry should be active");
 
 assert.equal(root.pathname.endsWith("/projects/language/ielts-academic/"), true);
 assert.equal(languageReadmeUrl.pathname.endsWith("/projects/language/README.md"), true);

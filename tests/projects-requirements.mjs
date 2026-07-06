@@ -35,10 +35,15 @@ assert.match(projectsHtml, /font-family:\s*var\(--title-calligraphy-font\)/, "pr
 assert.doesNotMatch(projectsHtml, /github\.com\/mingxiangbian\/NeuroScience\/tree\/main\/projects/i, "projects page should not send users to the GitHub folder listing");
 assert.deepEqual(
   manifest.map((project) => project.title),
-  ["基石", "记忆与智能体"],
-  "projects bookmarks should include the registered Chinese project titles in display order",
+  ["基石", "IELTS Academic", "记忆与智能体"],
+  "projects bookmarks should include the registered project titles in display order",
 );
-assert.match(fontSources, /ZhiMangXing-Regular\.ttf --text='记忆与智能体基石'/, "bookmark font subset should include both project bookmark titles");
+assert.equal(
+  manifest.find((project) => project.id === "ielts-academic")?.folder,
+  "language/ielts-academic/",
+  "IELTS Academic should be linked through the nested language project folder",
+);
+assert.match(fontSources, /ZhiMangXing-Regular\.ttf --text='记忆与智能体基石'/, "bookmark font subset should include the Chinese project bookmark titles");
 
 assert.match(topicHtml, /<title>Brain Memory for AI Agents \| NeuroScience x AI<\/title>/, "topic page should use the project title");
 assert.match(topicHtml, /data-page="project-topic"/, "project topic should identify itself as a topic page");
