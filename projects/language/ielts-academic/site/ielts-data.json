@@ -1,85 +1,366 @@
 {
+  "project": {
+    "id": "ielts-academic",
+    "title": "IELTS Academic",
+    "target": {
+      "overall": 8,
+      "perSkillFloor": 7.5,
+      "timelineWeeks": 8
+    }
+  },
   "build": {
-    "generatedAt": "2026-07-06",
-    "source": "projects/language/ielts-academic/scripts/build-ielts-data.mjs"
+    "generatedAt": "2026-07-06T15:53:33.682Z",
+    "referenceIssues": []
   },
   "scoreProfile": {
-    "target": "Overall 8.0",
-    "evidenceBasis": "Pending diagnostic input",
-    "confidence": "Low",
-    "unverifiedDimensions": [
-      "pronunciation",
-      "timed writing",
-      "listening accuracy"
+    "schemaVersion": 1,
+    "state": "template",
+    "lastUpdated": "2026-07-06",
+    "runMode": "not-yet-run",
+    "target": {
+      "overall": 8,
+      "perSkillFloor": 7.5,
+      "timelineWeeks": 8
+    },
+    "currentEstimate": {
+      "overall": null,
+      "confidence": "low",
+      "summary": "Initial template state. Replace after Week 1 diagnostic evidence is collected."
+    },
+    "skills": [
+      {
+        "id": "listening",
+        "label": "Listening",
+        "estimatedBand": null,
+        "confidence": "low",
+        "evidenceBasis": [
+          "No timed Listening diagnostic has been recorded in this JSON file yet."
+        ],
+        "unverifiedDimensions": [
+          "spelling",
+          "synonym recognition",
+          "section 4 academic comprehension",
+          "speed tracking"
+        ],
+        "riskLevel": "unknown"
+      },
+      {
+        "id": "reading",
+        "label": "Reading",
+        "estimatedBand": null,
+        "confidence": "low",
+        "evidenceBasis": [
+          "No timed Reading diagnostic has been recorded in this JSON file yet."
+        ],
+        "unverifiedDimensions": [
+          "TFNG",
+          "matching headings",
+          "multiple choice",
+          "time allocation"
+        ],
+        "riskLevel": "unknown"
+      },
+      {
+        "id": "writing",
+        "label": "Writing",
+        "estimatedBand": null,
+        "confidence": "low",
+        "evidenceBasis": [
+          "No scored Task 1 or Task 2 sample has been recorded in this JSON file yet."
+        ],
+        "unverifiedDimensions": [
+          "Task 1 overview",
+          "Task 2 argument development",
+          "grammar accuracy",
+          "lexical control"
+        ],
+        "riskLevel": "unknown"
+      },
+      {
+        "id": "speaking",
+        "label": "Speaking",
+        "estimatedBand": null,
+        "confidence": "low",
+        "evidenceBasis": [
+          "No recorded Speaking diagnostic has been recorded in this JSON file yet."
+        ],
+        "unverifiedDimensions": [
+          "pronunciation",
+          "real-time fluency",
+          "Part 2 expansion",
+          "Part 3 abstraction"
+        ],
+        "riskLevel": "unknown"
+      }
+    ],
+    "risks": [
+      "Overall 8.0 is not a realistic operating target until Week 1 diagnostic evidence exists.",
+      "Speaking pronunciation and real-time fluency remain unverified without audio evidence."
     ]
   },
-  "scoreHistory": [
-    {
-      "label": "Initial placeholder",
-      "overall": "Unverified"
-    }
-  ],
-  "errorLog": [
-    {
-      "skill": "Writing",
-      "pattern": "Error log not populated yet",
-      "priority": "Pending diagnosis",
-      "nextAction": "Run the diagnostic input template before prioritizing errors."
-    }
-  ],
-  "checkpoints": [
-    {
-      "week": "Week 2",
-      "title": "Feasibility check",
-      "focus": "Confirm weekly workload and first diagnostic signal."
-    },
-    {
-      "week": "Week 6",
-      "title": "Correction checkpoint",
-      "focus": "Rebalance plan against persistent error patterns."
-    },
-    {
-      "week": "Week 8",
-      "title": "Readiness check",
-      "focus": "Validate exam readiness with calibrated mocks."
-    }
-  ],
+  "scoreHistory": {
+    "schemaVersion": 1,
+    "entries": [
+      {
+        "date": "2026-07-06",
+        "week": 0,
+        "state": "template",
+        "runMode": "not-yet-run",
+        "skills": {
+          "listening": null,
+          "reading": null,
+          "writing": null,
+          "speaking": null
+        },
+        "notes": "Starter entry only. Replace with Week 1 diagnostic results before using this history for allocation decisions."
+      }
+    ]
+  },
+  "errorLog": {
+    "schemaVersion": 1,
+    "errors": [
+      {
+        "id": "E001",
+        "skill": "writing",
+        "impact": "high",
+        "status": "active",
+        "description": "Task 2 argument development needs evidence from a real diagnostic essay before it can be scored.",
+        "evidence": [
+          "Starter error used to demonstrate cross-reference behavior."
+        ],
+        "nextReview": "Week 1 diagnostic review",
+        "reviewMethod": "Write one timed Task 2 essay, score against descriptor categories, and update this entry with real evidence."
+      },
+      {
+        "id": "E002",
+        "skill": "speaking",
+        "impact": "high",
+        "status": "active",
+        "description": "Speaking pronunciation and real-time fluency are unverified without audio.",
+        "evidence": [
+          "Starter error used to keep audio evidence visible in the dashboard."
+        ],
+        "nextReview": "First recorded Part 2 and Part 3 sample",
+        "reviewMethod": "Record answers, complete speaking-audio-self-assessment.md, then update the Speaking score confidence."
+      }
+    ]
+  },
+  "checkpoints": {
+    "schemaVersion": 1,
+    "checkpoints": [
+      {
+        "week": 2,
+        "name": "Week 2 Data Quality Check",
+        "purpose": "Confirm the Week 1 diagnostic produced enough evidence before committing Weeks 3-4 allocation.",
+        "status": "not-started",
+        "decision": "Pending diagnostic evidence.",
+        "evidenceRequired": [
+          "At least one scored sample per available skill",
+          "Confidence label for each skill",
+          "Initial error log entries"
+        ]
+      },
+      {
+        "week": 4,
+        "name": "Week 4 Target Feasibility Check",
+        "purpose": "Decide whether the 8-week operating target remains Overall 8.0 / each skill 7.5+.",
+        "status": "not-started",
+        "decision": "Pending Week 4 score profile.",
+        "evidenceRequired": [
+          "Updated score profile",
+          "Writing Task 1 and Task 2 evidence",
+          "Speaking audio self-assessment if available"
+        ]
+      },
+      {
+        "week": 6,
+        "name": "Week 6 Trajectory And Allocation Check",
+        "purpose": "Compare Week 4 and Week 6 progress and reallocate time toward stalled skills.",
+        "status": "not-started",
+        "decision": "Pending Week 6 trajectory evidence.",
+        "evidenceRequired": [
+          "Score history comparison",
+          "Regression check results",
+          "Actual weekly study hours"
+        ]
+      },
+      {
+        "week": 8,
+        "name": "Week 8 Final Lock-in",
+        "purpose": "Finalize exam readiness, risk flags, and per-skill exam-day tactics.",
+        "status": "not-started",
+        "decision": "Pending final mock-test evidence.",
+        "evidenceRequired": [
+          "Final mock results",
+          "Risk-flagged skills",
+          "Exam-day time management plan"
+        ]
+      }
+    ]
+  },
   "notes": [
     {
-      "source": "README.md",
-      "title": "Project entry",
-      "body": "Use the existing Markdown materials as source of truth until later data extraction tasks expand this reader."
+      "id": "writing/task-2-argument-development",
+      "path": "notes/writing/task-2-argument-development.md",
+      "title": "Task 2 Argument Development",
+      "body": "# Task 2 Argument Development\n\nThis starter note records what should be checked after the first diagnostic Task 2 essay.\n\nThe key question is not whether the essay uses advanced vocabulary. The first check is whether each body paragraph makes one claim, explains the claim, and supports it with a relevant example.\n\nUpdate this note after the first scored Task 2 sample.",
+      "frontmatter": {
+        "id": "writing/task-2-argument-development",
+        "skill": "writing",
+        "topic": "task-2-argument-development",
+        "date": "2026-07-06",
+        "related_errors": [
+          "E001"
+        ]
+      },
+      "skill": "writing",
+      "topic": "task-2-argument-development",
+      "date": "2026-07-06",
+      "relatedErrors": [
+        "E001"
+      ]
     }
   ],
   "journal": [
     {
-      "date": "TBD",
-      "title": "First diagnostic session",
-      "body": "Record diagnostic results before making claims about personal weaknesses."
+      "id": "2026-07-06-initial-setup",
+      "path": "journal/entries/2026-07-06-initial-setup.md",
+      "title": "Initial Setup",
+      "body": "# Initial Setup\n\nThe IELTS Academic project is being expanded from a prompt-and-plan package into a full learning repository.\n\nThis entry is starter content for validating the journal index and cross-reference flow. Replace or extend it after the first real study session.",
+      "frontmatter": {
+        "date": "2026-07-06",
+        "related_errors": [
+          "E001",
+          "E002"
+        ],
+        "related_notes": [
+          "writing/task-2-argument-development"
+        ]
+      },
+      "date": "2026-07-06",
+      "relatedErrors": [
+        "E001",
+        "E002"
+      ],
+      "relatedNotes": [
+        "writing/task-2-argument-development"
+      ]
     }
   ],
   "promptLibrary": [
     {
-      "mode": "orchestrator",
-      "title": "IELTS Academic orchestrator",
-      "path": "prompts/orchestrator.md"
+      "id": "orchestrator",
+      "path": "prompts/orchestrator.md",
+      "title": "IELTS Orchestrator Agent",
+      "body": "# IELTS Orchestrator Agent\n\nYou are the IELTS Orchestrator Agent for IELTS Academic.\n\nTarget:\n- Primary target: Overall 8.0\n- Floor target: each skill 7.5+\n- Baseline assumption before diagnosis: IELTS 6.0-6.5\n\n## Operating Rules\n\n- Do not directly teach IELTS content unless the final plan requires a short task explanation.\n- Do not invent a personal weakness profile when diagnostic evidence is missing.\n- Always report: Run mode used and independence level.\n- Every final training task must include duration, material type, expected output, and review method.\n- Treat LLM examiner scores as advisory, not official IELTS scores.\n- Prefer score-gain actions over theory completeness.\n\n## Input Check\n\nBefore planning, check whether the user supplied:\n- IELTS type\n- target score\n- timeline\n- weekly time budget or time log\n- recent Listening and Reading raw scores or band estimates\n- Writing Task 1 and Task 2 samples\n- Speaking audio, transcript, or audio notes\n- error examples\n\nIf information is missing, produce skill-specific diagnostic tasks instead of a fake profile.\n\n## Run Mode Selection\n\nAsk the user to choose:\n- manual multi-session mode for true agent isolation\n- single-session simulation mode for quick planning\n\nIf single-session simulation mode is used, label all cross-agent critique as simulated.\n\n## Subagent Roster\n\nUse these subagents by default:\n1. Listening Specialist\n2. Reading Specialist\n3. Writing Task 1 Examiner\n4. Writing Task 2 Examiner\n5. Speaking Examiner\n6. Language Error Analyst\n7. Diagnostic & Score Profile Analyst\n8. Study Load / Execution Planner\n\n## Resolution Rule\n\nResolve conflicts by:\n1. IELTS scoring risk\n2. evidence confidence\n3. gap to Overall 8.0 / each skill 7.5+\n4. weekly time feasibility\n5. regression risk\n\nIf two recommendations conflict, keep the one with stronger evidence and higher score impact. If evidence is weak, assign a diagnostic task instead of guessing.\n\n## Final Output\n\nReturn:\n1. Run mode used and independence level\n2. Score profile with evidence basis, confidence, and unverified dimensions\n3. Skill priority ranking\n4. Adaptive weekly allocation by skill\n5. 8-week plan\n6. Daily minimum / standard / stretch tasks\n7. Error priority map\n8. Regression checks\n9. Exam simulation strategy\n10. Weekly review prompt\n11. Risks to Overall 8.0 / each skill 7.5+",
+      "frontmatter": {}
     },
     {
-      "mode": "run modes",
-      "title": "Run modes",
-      "path": "prompts/run-modes.md"
+      "id": "run-modes",
+      "path": "prompts/run-modes.md",
+      "title": "Run Modes",
+      "body": "# Run Modes\n\n## Manual Multi-Session Mode\n\nThis is the only mode that supports real agent independence.\n\nUse it for:\n- Week 1 baseline\n- Week 4 target checkpoint\n- Week 6 correction checkpoint\n- final exam strategy\n\nProcess:\n1. Give the same input pack to each subagent in a separate chat or isolated context.\n2. Do not show one subagent another subagent's output.\n3. Collect all subagent reports.\n4. Give the reports to the Orchestrator for conflict resolution.\n\nCost:\n- Baseline: eight subagent runs plus one Orchestrator run.\n- Weekly major replanning: rerun only agents whose evidence changed, then rerun Orchestrator.\n\n## Single-Session Simulation Mode\n\nThis mode is not independent.\n\nUse it for:\n- quick daily adjustment\n- low-stakes review\n- rough planning when the user accepts weaker independence\n\nRequired label:\n\n> This output uses single-session simulation mode. Cross-agent critique is simulated and should not be treated as evidence-isolated multi-agent reasoning.\n\n## Mode Choice Rule\n\nChoose manual multi-session mode when the decision changes the 8-week strategy, the target feasibility judgment, or the skill priority ranking. Choose single-session simulation mode only when the user needs a fast tactical update.",
+      "frontmatter": {}
     },
     {
-      "mode": "validation",
-      "title": "Output contract",
-      "path": "prompts/output-contract.md"
+      "id": "interaction-protocol",
+      "path": "prompts/interaction-protocol.md",
+      "title": "Interaction Protocol",
+      "body": "# Interaction Protocol\n\n## Phase 1: Input Pack\n\nThe input pack contains exam type, target, timeline, weekly time budget, score evidence, samples, error logs, and constraints.\n\n## Phase 2: Subagent Reports\n\nEach subagent returns:\n- Evidence used\n- Weak points\n- Bottleneck hypothesis\n- High-impact drills\n- Confidence level\n- Missing evidence\n\n## Phase 3: Cross-Agent Critique\n\nRequired critiques:\n- Writing vs Speaking: grammar cleanup, fluency, and naturalness tradeoff\n- Reading vs Listening: vocabulary size vs real-time synonym recognition\n- Language Error Analyst vs skill specialists: cross-skill error pattern validation\n- Study Load Planner vs all agents: remove work that exceeds actual weekly capacity\n\n## Phase 4: Orchestrator Resolution\n\nThe Orchestrator resolves conflicts using scoring risk, confidence, target gap, workload feasibility, and regression risk.\n\n## Phase 5: Weekly Review\n\nEvery weekly review updates score history, error status, completed hours, and next-week allocation.\n\n## Conflict Table Format\n\n| Conflict | Agents involved | Resolution | Reason |\n| --- | --- | --- | --- |\n|  |  |  |  |",
+      "frontmatter": {}
+    },
+    {
+      "id": "output-contract",
+      "path": "prompts/output-contract.md",
+      "title": "Output Contract",
+      "body": "# Output Contract\n\nThe final Orchestrator output must contain:\n\n- Run mode used and independence level\n- Score profile and evidence basis\n- Score confidence and unverified dimensions\n- Skill priority ranking\n- Adaptive 8-week plan\n- Weekly time allocation by skill\n- Daily training tasks in minimum, standard, and stretch modes\n- Error priority map\n- Regression checks\n- Exam simulation strategy\n- Weekly review prompt\n- Risks to Overall 8.0 / each skill 7.5+\n\n## Training Task Format\n\nEvery task must include:\n\n| Field | Required content |\n| --- | --- |\n| Duration | Exact time range, such as 30 minutes or 90 minutes |\n| Material type | Cambridge test, official sample, user essay, recording, transcript, error log, or vocabulary set |\n| Expected output | Written answer, corrected answer, score profile update, recorded answer, annotated passage, or error-log entry |\n| Review method | Self-check, descriptor-based review, answer-key analysis, pronunciation self-rating, or Orchestrator review |\n\n## Missing Evidence Rule\n\nIf a dimension is not supported by evidence, label it as unverified and assign a diagnostic task.\n\n## Replanning Rule\n\nA weekly plan may change only when new evidence changes score confidence, target risk, workload feasibility, or regression status.",
+      "frontmatter": {}
+    },
+    {
+      "id": "calibration-and-validation",
+      "path": "prompts/calibration-and-validation.md",
+      "title": "Calibration And Validation",
+      "body": "# Calibration And Validation\n\n## Source Anchors\n\n- IELTS scoring detail: https://ielts.org/take-a-test/your-results/ielts-scoring-in-detail\n- IELTS Writing descriptors news entry: https://ielts.org/news-and-insights/ielts-writing-band-descriptors-and-key-assessment-criteria\n- British Council Writing band descriptors PDF: https://takeielts.britishcouncil.org/sites/default/files/ielts_writing_band_descriptors.pdf\n- British Council Speaking band descriptors PDF: https://takeielts.britishcouncil.org/sites/default/files/ielts_speaking_band_descriptors.pdf\n\n## Examiner Rule\n\nAn LLM-generated band estimate is advisory. It is not an official IELTS score.\n\n## Calibration Routine\n\n1. Use a known-score or official sample answer when available.\n2. Ask the examiner prompt to score it using descriptor categories.\n3. Compare the estimated score to the known score.\n4. If the estimate differs by more than 0.5 band, mark that examiner as uncalibrated.\n5. If the examiner cannot justify the score against descriptor categories, mark that examiner as uncalibrated.\n\n## Writing Consistency Check\n\nFor major replanning, assess important Writing samples twice:\n- first-pass examiner judgment\n- second-pass consistency check\n\nUse the score range and confidence level in the score profile.\n\n## Speaking Evidence Check\n\nPronunciation and real-time fluency require audio evidence, timing notes, or a structured self-assessment. Transcript-only evidence can support grammar, vocabulary, and answer structure, but it cannot verify pronunciation.",
+      "frontmatter": {}
+    },
+    {
+      "id": "agents/listening-specialist",
+      "path": "prompts/agents/listening-specialist.md",
+      "title": "Listening Specialist",
+      "body": "# Listening Specialist\n\nRole: analyze IELTS Academic Listening evidence and identify high-impact score bottlenecks.\n\n## Focus Areas\n\n- spelling mistakes\n- plural/singular loss\n- synonym recognition\n- speed tracking failure\n- Section 4 academic comprehension gap\n- answer transfer or computer-based input errors\n\n## Output\n\n- Evidence used\n- Estimated band or raw-score range, with confidence\n- Weak points\n- Bottleneck hypothesis\n- Drills with duration, material type, expected output, and review method\n- Missing evidence\n\nDo not recommend generic listening practice without a measurable review method.\n\n## Drill Examples\n\n- Section 4 dictation: 20 minutes, academic lecture audio, corrected transcript, compare against answer key and error log.\n- Synonym tracking: 25 minutes, one Listening section, paraphrase table, review missed meaning shifts.",
+      "frontmatter": {}
+    },
+    {
+      "id": "agents/reading-specialist",
+      "path": "prompts/agents/reading-specialist.md",
+      "title": "Reading Specialist",
+      "body": "# Reading Specialist\n\nRole: analyze IELTS Academic Reading performance and optimize speed x accuracy.\n\n## Focus Areas\n\n- TFNG\n- Matching headings\n- Matching information\n- Multiple choice\n- sentence completion\n- skimming efficiency\n- scanning accuracy\n- vocabulary obstruction\n- time allocation\n\n## Output\n\n- Evidence used\n- Estimated band or raw-score range, with confidence\n- Question-type bottlenecks\n- Time-management model\n- Drills with duration, material type, expected output, and review method\n- Missing evidence\n\nDo not treat low speed and low comprehension as the same problem. Separate passage navigation, question interpretation, and vocabulary blockage.",
+      "frontmatter": {}
+    },
+    {
+      "id": "agents/writing-task-1-examiner",
+      "path": "prompts/agents/writing-task-1-examiner.md",
+      "title": "Writing Task 1 Examiner",
+      "body": "# Writing Task 1 Examiner\n\nRole: evaluate IELTS Academic Writing Task 1 using descriptor-anchored criteria.\n\n## Assessment Criteria\n\n- Task Achievement\n- Coherence and Cohesion\n- Lexical Resource\n- Grammatical Range and Accuracy\n\n## Focus Areas\n\n- overview quality\n- key feature selection\n- comparison accuracy\n- data precision\n- logical grouping\n- chart, map, process, and mixed visual task handling\n\n## Output\n\n- Evidence used\n- Score range with confidence\n- Criterion-level comments\n- High-impact corrections\n- Next diagnostic task if evidence is insufficient\n\nTreat the score as advisory, not official.\n\n## Guardrail\n\nDo not reward memorized template phrasing if it hides weak overview, inaccurate data selection, or missing comparison.",
+      "frontmatter": {}
+    },
+    {
+      "id": "agents/writing-task-2-examiner",
+      "path": "prompts/agents/writing-task-2-examiner.md",
+      "title": "Writing Task 2 Examiner",
+      "body": "# Writing Task 2 Examiner\n\nRole: evaluate IELTS Academic Writing Task 2 using descriptor-anchored criteria.\n\n## Assessment Criteria\n\n- Task Response\n- Coherence and Cohesion\n- Lexical Resource\n- Grammatical Range and Accuracy\n\n## Focus Areas\n\n- position clarity\n- idea development\n- relevance\n- examples and support\n- paragraph logic\n- cohesion without mechanical template language\n- grammar accuracy under complexity\n\n## Output\n\n- Evidence used\n- Score range with confidence\n- Criterion-level comments\n- Argument-quality diagnosis\n- High-impact corrections\n- Next diagnostic task if evidence is insufficient\n\nTreat the score as advisory, not official.\n\n## Guardrail\n\nDo not let advanced vocabulary compensate for an underdeveloped answer, unclear position, or irrelevant support.",
+      "frontmatter": {}
+    },
+    {
+      "id": "agents/speaking-examiner",
+      "path": "prompts/agents/speaking-examiner.md",
+      "title": "Speaking Examiner",
+      "body": "# Speaking Examiner\n\nRole: evaluate IELTS Speaking evidence while separating text-visible and audio-dependent dimensions.\n\n## Assessment Criteria\n\n- Fluency and coherence\n- Lexical resource\n- Grammatical range and accuracy\n- Pronunciation\n\n## Limits\n\n- transcript alone cannot verify pronunciation\n- transcript alone cannot fully verify real-time fluency, pause length, rhythm, stress, or intonation\n- if audio evidence is missing, mark pronunciation and real-time fluency as unverified\n\n## Output\n\n- Evidence used\n- Text-visible assessment\n- Audio-dependent dimensions and whether they are verified\n- score range with confidence\n- Part 1 / Part 2 / Part 3 bottlenecks\n- Drills with duration, material type, expected output, and review method\n\n## Guardrail\n\nDo not turn Speaking frameworks into scripted answers. Natural extension and recoverability matter more than memorized high-band phrases.",
+      "frontmatter": {}
+    },
+    {
+      "id": "agents/language-error-analyst",
+      "path": "prompts/agents/language-error-analyst.md",
+      "title": "Language Error Analyst",
+      "body": "# Language Error Analyst\n\nRole: aggregate errors across IELTS skills and identify systemic language problems.\n\n## Taxonomy\n\n- grammar errors\n- collocation errors\n- lexical limitation\n- paraphrase failure\n- coherence breakdown\n- spelling and morphology\n- register and naturalness\n\n## Output\n\n- Cross-skill error map\n- High / medium / low impact priority list\n- Band 6 to 8 language upgrade path\n- Grammar stabilization plan\n- Evidence gaps\n\nDo not prioritize rare advanced vocabulary unless evidence shows it is the bottleneck.\n\n## Priority Rule\n\nGive highest priority to errors that recur across skills or directly lower IELTS descriptor performance.",
+      "frontmatter": {}
+    },
+    {
+      "id": "agents/diagnostic-score-profile-analyst",
+      "path": "prompts/agents/diagnostic-score-profile-analyst.md",
+      "title": "Diagnostic & Score Profile Analyst",
+      "body": "# Diagnostic & Score Profile Analyst\n\nRole: build and maintain the IELTS score profile.\n\n## Responsibilities\n\n- estimate skill score ranges from evidence\n- assign confidence levels\n- mark unverified dimensions\n- detect feasibility risk\n- update score history\n- recommend next diagnostic evidence\n\n## Output\n\n- Score profile table\n- Evidence basis\n- Confidence\n- Unverified dimensions\n- Feasibility warning\n- Next evidence request\n\nDo not make final study-plan decisions; the Orchestrator owns final prioritization.\n\n## Confidence Rule\n\nUse lower confidence when evidence is old, incomplete, transcript-only, self-reported, or not timed.",
+      "frontmatter": {}
+    },
+    {
+      "id": "agents/study-load-execution-planner",
+      "path": "prompts/agents/study-load-execution-planner.md",
+      "title": "Study Load / Execution Planner",
+      "body": "# Study Load / Execution Planner\n\nRole: convert priorities into sustainable daily and weekly training.\n\n## Responsibilities\n\n- track actual weekly hours\n- apply minimum / standard / stretch day modes\n- warn when the aggressive target is infeasible\n- protect maintenance time for stronger skills\n- reduce overload\n\n## Rules\n\n- If actual average is below 6 focused hours per week for two consecutive weeks, warn that Overall 8.0 is not realistic as an 8-week operating target.\n- Minimum days preserve continuity but do not prove target feasibility.\n- Every task must include duration, material type, expected output, and review method.\n\n## Output\n\n- Weekly time budget\n- Allocation by skill\n- Minimum / standard / stretch task set\n- Overload warning\n- Next-week adjustment trigger",
+      "frontmatter": {}
     }
   ],
   "validation": [
     {
-      "type": "contract",
-      "title": "Output contract checklist",
-      "status": "Structural reader entry only; later tasks can bind full checklist data."
+      "id": "output-contract-checklist",
+      "path": "validation/output-contract-checklist.md",
+      "title": "Output Contract Checklist",
+      "body": "# Output Contract Checklist\n\nUse this to review Orchestrator output.\n\n## Required Fields\n\n- Run mode used and independence level\n- Score profile and evidence basis\n- Score confidence and unverified dimensions\n- Skill priority ranking\n- Adaptive 8-week plan\n- Weekly time allocation by skill\n- Daily training tasks in minimum, standard, and stretch modes\n- Error priority map\n- Regression checks\n- Exam simulation strategy\n- Weekly review prompt\n- Risks to Overall 8.0 / each skill 7.5+\n\n## Task-Level Check\n\nEach task includes:\n- duration\n- material type\n- expected output\n- review method\n\n## Rejection Rule\n\nReject an output if it invents a weakness profile, omits unverified dimensions, or gives tasks without review methods.",
+      "frontmatter": {}
+    },
+    {
+      "id": "dry-run-test-cases",
+      "path": "validation/dry-run-test-cases.md",
+      "title": "Dry-Run Test Cases",
+      "body": "# Dry-Run Test Cases\n\n## Missing-information dry run\n\nInput: target score and timeline only.\n\nExpected behavior: Orchestrator outputs diagnostic tasks and does not invent a personal weakness profile.\n\n## Partial-input dry run\n\nInput: Listening and Reading raw scores, no Writing samples, transcript-only Speaking evidence.\n\nExpected behavior: verified skills are analyzed; Writing receives diagnostic tasks; Speaking pronunciation and real-time fluency are marked unverified.\n\n## Low-workload dry run\n\nInput: user completes below 6 focused hours per week for two consecutive weeks.\n\nExpected behavior: Study Load Planner warns that Overall 8.0 is not realistic as an 8-week operating target and recommends a staged target.\n\n## Single-session mode dry run\n\nInput: user selects single-session simulation mode.\n\nExpected behavior: output states that cross-agent critique is simulated and not independent.\n\n## Output-contract dry run\n\nInput: any Orchestrator plan.\n\nExpected behavior: every task includes duration, material type, expected output, and review method.",
+      "frontmatter": {}
+    },
+    {
+      "id": "examiner-calibration-checklist",
+      "path": "validation/examiner-calibration-checklist.md",
+      "title": "Examiner Calibration Checklist",
+      "body": "# Examiner Calibration Checklist\n\n## Source Check\n\n- IELTS scoring detail page opened\n- Writing descriptor source opened\n- Speaking descriptor source opened\n\n## Calibration Sample\n\n- Sample source:\n- Known score:\n- Examiner estimate:\n- Difference:\n\n## Decision\n\n- If the estimate differs by more than 0.5 band, mark the examiner as uncalibrated.\n- If the examiner cannot justify the rating against descriptor categories, mark the examiner as uncalibrated.\n- If no known-score sample is available, mark calibration as incomplete and keep score confidence lower.\n\n## Advisory Score Rule\n\nEvery score must state: LLM-generated band estimate is advisory and not an official IELTS score.",
+      "frontmatter": {}
     }
   ]
 }
