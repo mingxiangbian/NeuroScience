@@ -1,0 +1,38 @@
+# IELTS Academic
+
+Goal: move from an estimated IELTS 6.0-6.5 baseline toward Overall 8.0, with each skill 7.5+.
+
+This project has two layers:
+
+1. Prompt system: reusable Orchestrator and subagent prompts for diagnosis, critique, calibration, and replanning.
+2. Learning package: diagnostic templates, adaptive 8-week plan, daily flexible training, error tracking, and validation checklists.
+
+## Recommended Flow
+
+1. Start with `diagnostics/diagnostic-input-template.md`.
+2. Choose a run mode in `prompts/run-modes.md`.
+3. Use `prompts/orchestrator.md` to coordinate subagent outputs.
+4. Fill `diagnostics/score-profile-template.md` and append weekly updates to `diagnostics/score-history-template.md`.
+5. Follow `plans/8-week-diagnostic-driven-plan.md`, adjusting weekly allocation through `plans/checkpoint-rules.md`.
+6. Track recurring issues in `diagnostics/error-log-template.md` and `errors/regression-check-template.md`.
+
+## Run Modes
+
+- manual multi-session mode: recommended for Week 1 baseline, Week 4 target checkpoint, Week 6 correction, and final exam strategy. This mode gives each subagent an isolated context and is the only mode that supports real agent independence.
+- single-session simulation mode: useful for quick daily planning or low-stakes review. It is not independent and any critique must be labeled as simulated.
+
+## Scoring Caution
+
+LLM examiner scores are advisory. They must be descriptor-anchored, confidence-labeled, and calibrated with known-score or official sample material when available. Do not treat them as official IELTS scores.
+
+## Key Files
+
+- `prompts/orchestrator.md`
+- `prompts/run-modes.md`
+- `prompts/interaction-protocol.md`
+- `prompts/output-contract.md`
+- `prompts/calibration-and-validation.md`
+- `diagnostics/score-profile-template.md`
+- `plans/8-week-diagnostic-driven-plan.md`
+- `plans/checkpoint-rules.md`
+- `validation/dry-run-test-cases.md`
