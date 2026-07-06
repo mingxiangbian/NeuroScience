@@ -142,8 +142,20 @@ assert.match(siteCss, /\.ielts-shell/, "IELTS CSS should style the reader shell"
 assert.match(siteCss, /\.swimlane-grid/, "IELTS CSS should style the 8-week swimlane");
 assert.match(siteCss, /\.error-board/, "IELTS CSS should style the error board");
 assert.match(siteCss, /@media \(max-width:\s*860px\)/, "IELTS CSS should include responsive rules");
+assert.match(siteCss, /\.skill-gap/, "IELTS CSS should style skill gap bars");
+assert.match(siteCss, /\.checkpoint-marker/, "IELTS CSS should style checkpoint markers");
+assert.match(siteCss, /\.reference-chip/, "IELTS CSS should style reference chips");
+assert.match(siteCss, /\.reader-search/, "IELTS CSS should style reader search");
+assert.doesNotMatch(siteCss, /border-radius:\s*24px|border-radius:\s*28px/, "IELTS reader should avoid oversized card radii");
 
 assert.match(siteJs, /fetchJson\("site\/ielts-data\.json"\)/, "IELTS JS should load generated site data");
+assert.match(siteJs, /function renderSkillGapBars/, "IELTS JS should render skill gap bars");
+assert.match(siteJs, /function renderCheckpointMarker/, "IELTS JS should render checkpoint markers");
+assert.match(siteJs, /function filterErrors/, "IELTS JS should filter errors");
+assert.match(siteJs, /function runReaderSearch/, "IELTS JS should support reader search");
+assert.match(siteJs, /function renderReferenceChips/, "IELTS JS should render cross-reference chips");
+assert.match(siteJs, /localStorage\.setItem\("ieltsReader\.ui\.v1"/, "IELTS JS may persist only non-critical UI state");
+assert.doesNotMatch(siteJs, /localStorage\.setItem\(".*score|localStorage\.setItem\(".*error|localStorage\.setItem\(".*checkpoint/i, "IELTS JS should not store score, error, or checkpoint source data in localStorage");
 assert.match(siteJs, /function renderDashboard/, "IELTS JS should render dashboard");
 assert.match(siteJs, /function renderSwimlane/, "IELTS JS should render swimlane");
 assert.match(siteJs, /function renderErrors/, "IELTS JS should render errors");
