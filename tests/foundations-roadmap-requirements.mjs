@@ -38,6 +38,8 @@ for (const [id] of requiredModules) {
   assert.match(moduleMarkdown, /last_updated: 2026-07-05/, `module ${id} should declare a last updated date`);
   if (id === "overview") {
     assert.match(moduleMarkdown, /## Dashboard/, "overview should be a dashboard source");
+    assert.match(moduleMarkdown, /## Interview Signal/, "overview should include interview signal calibration");
+    assert.match(moduleMarkdown, /真实 baseline|Signal Rubric|当前最大风险/, "overview should track interview-readiness uncertainty");
     assert.doesNotMatch(moduleMarkdown, /## 验收标准|## 下一步/, "overview should not use ordinary-module closing sections");
   } else {
     assert.match(moduleMarkdown, /## 目标[\s\S]*## 当前状态[\s\S]*## 核心知识[\s\S]*## 任务[\s\S]*## 时间线[\s\S]*## 知识笔记/, `module ${id} should use the knowledge-base section contract`);
@@ -196,6 +198,7 @@ assert.ok(byId["rag-memory"].knowledgeNotes.length >= 2, "RAG and memory should 
 assert.ok(byId["rag-memory"].knowledgeNotes.some((note) => note.title === "RAG evaluation"), "RAG and memory should include a RAG evaluation note");
 assert.ok(byId["rag-memory"].searchEntries.some((entry) => entry.type === "knowledge-note"), "search should include knowledge-note entries");
 assert.match(byId.overview.searchText, /30\/45\/60-Day Plan|Project Recommendations|Weekly Review Checklist/, "overview should preserve timeline and project recommendation content");
+assert.match(byId.overview.searchText, /Interview Signal|真实 baseline|Agent system design mock/, "overview should preserve interview signal calibration content");
 assert.match(byId.coding.searchText, /Coding Plan|Python Standards|TypeScript Standards|Optional Rust Log Parser/, "coding should preserve implementation training content");
 assert.match(byId["llm-systems"].searchText, /LLM Systems|Transformer|post-training|LLM Fundamentals/, "LLM systems should preserve model and theory content");
 assert.match(byId["agent-design"].searchText, /Agent Systems|Agent Runtime With Tool Calling|Safe Tool Execution Layer|Tool Router/, "agent design should preserve agent runtime content");

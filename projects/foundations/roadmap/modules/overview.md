@@ -25,6 +25,30 @@ priority: high
 - LLM/Agent 系统知识不从 0 讲起，而是拉深到可设计、可实现、可调试。
 - Python + TypeScript 是主栈，Rust 只作为 45/60 天 optional add-on。
 
+## Interview Signal
+
+这个区块不替代 Dashboard。Dashboard 回答“这个项目现在是什么状态”，Interview Signal 只回答“如果明天面试，哪些信号强、哪些信号弱、哪些判断还没有证据”。
+
+当前主判断：
+
+- 最强可塑信号：Agent / LLM component implementation + eval / failure analysis。
+- 当前最大风险：目标岗位过宽，容易把准备做成知识库，而不是可验证的面试表现。
+- 需要先校准的真实 baseline：coding、LLM systems、Agent design、research discussion、behavioral communication。
+- 当前证据资产：Foundations reader、Agent Runtime Casebook、RAG Evaluation Pack、Memory System Mini Portfolio、Trace Debugging Workbench。
+- 近期校准动作：做一次 45 分钟 coding baseline 和一次 30 分钟 Agent system design mock，然后把扣分点写回对应模块。
+
+### Signal Rubric
+
+- Coding signal：45 分钟内完成 medium 题，并能解释 invariant、complexity、edge cases。
+- Systems signal：能把 LLM / Agent system 拆成 state、tools、memory、eval、trace、failure recovery。
+- Research signal：能从论文 claim 推到 system implication，不停留在论文名。
+- Project signal：每个项目能讲清 problem、constraint、tradeoff、failure mode、verification。
+- Communication signal：回答不只正确，还要让面试官听到假设、取舍和验证动作。
+
+### Current Uncertainty
+
+眼下最没有把握的是你的真实 baseline。没有 timed coding、mock system design 和 project deep dive 记录，任何进度判断都只能是计划假设。
+
 ## 模块总览
 
 总知识地图拆成八个稳定模块：

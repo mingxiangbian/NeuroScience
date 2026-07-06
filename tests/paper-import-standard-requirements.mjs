@@ -1,9 +1,14 @@
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 
 const standardUrl = new URL("../papers/PAPER_IMPORT_STANDARD.md", import.meta.url);
+const validatorUrl = new URL("../scripts/validate-reading-packages.mjs", import.meta.url);
+const repoRoot = fileURLToPath(new URL("..", import.meta.url));
 
 assert.equal(existsSync(standardUrl), true, "paper import standard should exist at papers/PAPER_IMPORT_STANDARD.md");
+assert.equal(existsSync(validatorUrl), true, "reading package validator should exist at scripts/validate-reading-packages.mjs");
 
 const standard = readFileSync(standardUrl, "utf8");
 
@@ -24,3 +29,12 @@ assert.match(standard, /notes\.json[\s\S]*空字符串/, "standard should allow 
 assert.match(standard, /indexedFields[\s\S]*sourceText[\s\S]*zhTranslation[\s\S]*zhExplanation/, "standard should define searchable fields");
 assert.match(standard, /不引入[\s\S]*\/api\/[\s\S]*provider key[\s\S]*SurrealDB/, "standard should keep the reader static and backend-free");
 assert.match(standard, /Import Checklist/, "standard should include an import checklist for future agents");
+assert.match(standard, /node scripts\/validate-reading-packages\.mjs/, "standard should tell agents to run the package validator");
+
+const validatorOutput = execFileSync(process.execPath, [fileURLToPath(validatorUrl), "brain-memory-for-ai-agents"], {
+  cwd: repoRoot,
+  encoding: "utf8"
+});
+
+assert.match(validatorOutput, /Validated 9 reading packages for brain-memory-for-ai-agents/, "validator should check every current reading package");
+assert.match(validatorOutput, /0 errors/, "validator should report a clean package set");

@@ -425,9 +425,10 @@ chunk 边界优先级：
 11. 先抽取真实来源图，再裁剪关键图表，最后才考虑 reader-side fallback 重绘；写入 `figures.json`，并用 `figureRefs` 处理跨页图表。
 12. 为每个 chunk 在 `notes.json` 写一条 note；没有笔记就写空字符串。
 13. 为每个 chunk 在 `embeddings.json` 写一个本地检索向量。
-14. 运行 `node tests/paper-reader-requirements.mjs`。
-15. 运行 `node tests/paper-import-standard-requirements.mjs`。
-16. 运行 `git diff --check`。
+14. 运行 `node scripts/validate-reading-packages.mjs <project-id>`，例如 `node scripts/validate-reading-packages.mjs brain-memory-for-ai-agents`。
+15. 运行 `node tests/paper-reader-requirements.mjs`。
+16. 运行 `node tests/paper-import-standard-requirements.mjs`。
+17. 运行 `git diff --check`。
 
 ## Quality Boundary
 
