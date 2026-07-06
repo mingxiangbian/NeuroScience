@@ -572,6 +572,7 @@ function renderOverviewDashboard(module) {
         </section>
       </div>
     `],
+    ["Interview Signal", getSection(module, "Interview Signal")],
     ["模块总览", `
       ${getSection(module, "模块总览")}
       <div class="dashboard-module-list" aria-label="模块学习状态">

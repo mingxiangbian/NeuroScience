@@ -105,6 +105,7 @@ assert.match(js, /fetchJson\("roadmap\/roadmap-data\.json"\)/, "roadmap JS shoul
 assert.match(js, /function renderModuleNav/, "roadmap JS should isolate module navigation rendering");
 assert.match(js, /function renderCurrentModule/, "roadmap JS should isolate module content rendering");
 assert.match(js, /function renderOverviewDashboard/, "roadmap JS should render overview as a dashboard");
+assert.match(js, /\["Interview Signal",\s*getSection\(module, "Interview Signal"\)\]/, "overview dashboard should render the interview signal section");
 assert.match(js, /function renderKnowledgeNotesSection/, "roadmap JS should render concept-centric knowledge notes");
 assert.match(js, /function renderContextualNotePanel/, "roadmap JS should render context-aware right notes");
 assert.match(js, /function setActiveKnowledgeContext/, "roadmap JS should sync right notes with active knowledge context");
