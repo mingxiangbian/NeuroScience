@@ -382,6 +382,21 @@
         word-break: normal;
       }
 
+      .project-card[data-title-script="latin"] h2 {
+        width: min(100%, 86px);
+        max-width: 86px;
+        max-height: none;
+        font-family:
+          "Inter", "SF Pro Display", "PingFang SC", "Noto Sans SC", system-ui,
+          sans-serif;
+        font-size: clamp(15px, 1.2vw, 18px);
+        font-weight: 700;
+        line-height: 1.08;
+        text-orientation: mixed;
+        white-space: normal;
+        writing-mode: horizontal-tb;
+      }
+
       .empty {
         border: 1px dashed var(--edge-strong);
         border-radius: 8px;
@@ -560,6 +575,10 @@
         };
       }
 
+      function getTitleScript(title) {
+        return /[A-Za-z]/.test(title) ? "latin" : "cjk";
+      }
+
       function renderProjects(projects) {
         els.grid.replaceChildren();
         els.empty.hidden = projects.length !== 0;
@@ -568,6 +587,7 @@
           const card = document.createElement("a");
           card.className = "project-card";
           card.href = project.folder;
+          card.setAttribute("data-title-script", getTitleScript(project.title));
           card.innerHTML = `
             <h2>${escapeHtml(project.title)}</h2>
           `;

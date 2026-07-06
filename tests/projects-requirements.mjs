@@ -32,6 +32,8 @@ assert.match(projectsHtml, /href="\.\.\/index\.html" aria-label="Back to NeuroSc
 assert.match(projectsHtml, /projects\/manifest\.json/, "projects homepage should load its project modules from projects/manifest.json");
 assert.match(projectsHtml, /<h1 id="page-title"><span class="title-line">项目<\/span><\/h1>/, "visible projects page title should be 项目");
 assert.match(projectsHtml, /font-family:\s*var\(--title-calligraphy-font\)/, "projects page title should use the shared self-hosted calligraphy font stack");
+assert.match(projectsHtml, /data-title-script/, "projects page should tag project title script for bookmark layout");
+assert.match(projectsHtml, /\.project-card\[data-title-script="latin"\] h2\s*\{[\s\S]*writing-mode:\s*horizontal-tb/, "latin project titles should render horizontally inside bookmarks");
 assert.doesNotMatch(projectsHtml, /github\.com\/mingxiangbian\/NeuroScience\/tree\/main\/projects/i, "projects page should not send users to the GitHub folder listing");
 assert.deepEqual(
   manifest.map((project) => project.title),
