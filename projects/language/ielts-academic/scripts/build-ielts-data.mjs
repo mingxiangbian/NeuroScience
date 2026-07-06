@@ -237,6 +237,10 @@ function toArray(value) {
   return [String(value)];
 }
 
+function getStableBuildStamp(scoreProfile) {
+  return scoreProfile.lastUpdated || "2026-07-06";
+}
+
 const scoreProfile = readJson("diagnostics/score-profile.json");
 const scoreHistory = readJson("diagnostics/score-history.json");
 const errorLog = readJson("diagnostics/error-log.json");
@@ -254,7 +258,7 @@ const data = {
     target: scoreProfile.target,
   },
   build: {
-    generatedAt: new Date().toISOString(),
+    generatedAt: getStableBuildStamp(scoreProfile),
     referenceIssues,
   },
   scoreProfile,

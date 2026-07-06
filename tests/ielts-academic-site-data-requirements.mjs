@@ -14,6 +14,11 @@ const readerJs = readFileSync(jsUrl, "utf8");
 assert.equal(data.project.id, "ielts-academic");
 assert.equal(data.project.target.overall, 8);
 assert.equal(data.project.target.perSkillFloor, 7.5);
+assert.equal(
+  data.build.generatedAt,
+  data.scoreProfile.lastUpdated,
+  "generated site data should be stable across repeated builds",
+);
 assert.ok(data.scoreProfile);
 assert.equal(Array.isArray(data.scoreProfile.skills), true);
 assert.equal(Array.isArray(data.scoreHistory.entries), true);
