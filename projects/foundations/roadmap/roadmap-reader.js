@@ -743,26 +743,38 @@ function isAsciiSearchTerm(term) {
   return /^[a-z0-9]+$/i.test(term);
 }
 
-function hasSearchTerm(text, term) {
+function escapeSearchPattern(value) {
+  return String(value ?? "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function getSearchMatchLevel(text, term) {
   const normalizedText = String(text ?? "").toLowerCase();
   const normalizedTerm = String(term ?? "").toLowerCase();
-  if (!normalizedTerm) return false;
-  if (!isAsciiSearchTerm(normalizedTerm)) return normalizedText.includes(normalizedTerm);
-  const pattern = new RegExp(`(^|[^a-z0-9])${normalizedTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}([^a-z0-9]|$)`, "i");
-  return pattern.test(normalizedText);
+  if (!normalizedTerm) return 0;
+  if (!normalizedText.includes(normalizedTerm)) return 0;
+  if (!isAsciiSearchTerm(normalizedTerm)) return 2;
+  const pattern = new RegExp(`(^|[^a-z0-9])${escapeSearchPattern(normalizedTerm)}([^a-z0-9]|$)`, "i");
+  return pattern.test(normalizedText) ? 2 : 1;
+}
+
+function hasSearchTerm(text, term) {
+  return getSearchMatchLevel(text, term) > 0;
 }
 
 function getSearchScore(entry, terms) {
   return terms.reduce((score, term) => {
-    const moduleHit = hasSearchTerm(entry.moduleTitle, term);
-    const sectionHit = hasSearchTerm(entry.sectionTitle, term);
-    const bodyHit = hasSearchTerm(entry.text, term);
-    return score + (moduleHit ? 8 : 0) + (sectionHit ? 5 : 0) + (bodyHit ? 2 : 0);
+    const moduleLevel = getSearchMatchLevel(entry.moduleTitle, term);
+    const sectionLevel = getSearchMatchLevel(entry.sectionTitle, term);
+    const bodyLevel = getSearchMatchLevel(entry.text, term);
+    const moduleScore = moduleLevel === 2 ? 16 : moduleLevel === 1 ? 6 : 0;
+    const sectionScore = sectionLevel === 2 ? 10 : sectionLevel === 1 ? 4 : 0;
+    const bodyScore = bodyLevel === 2 ? 4 : bodyLevel === 1 ? 1 : 0;
+    return score + moduleScore + sectionScore + bodyScore;
   }, 0);
 }
 
 function highlightTerms(text, query) {
-  const terms = getSearchTerms(query).map((term) => term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  const terms = getSearchTerms(query).map(escapeSearchPattern);
   if (terms.length === 0) return escapeHtml(text);
   const pattern = new RegExp(`(${terms.join("|")})`, "gi");
   const exactPattern = new RegExp(`^(${terms.join("|")})$`, "i");

@@ -105,6 +105,12 @@ assert.match(js, /function renderProgressSummary/, "roadmap JS should render lab
 assert.match(js, /function renderTimelineSection/, "roadmap JS should render timeline as a visual component");
 assert.match(js, /function renderSearchResults/, "roadmap JS should isolate section-level search rendering");
 assert.match(js, /function hasSearchTerm/, "roadmap JS should avoid raw substring-only search matches");
+assert.match(js, /function getSearchMatchLevel/, "roadmap JS should distinguish whole-word matches from partial matches");
+assert.match(js, /function escapeSearchPattern/, "roadmap JS should escape user search terms before building regex patterns");
+assert.match(js, /return getSearchMatchLevel\(text, term\) > 0;/, "hasSearchTerm should delegate to the shared match-level helper");
+assert.match(js, /const moduleLevel = getSearchMatchLevel\(entry\.moduleTitle, term\);/, "search scoring should evaluate module title match levels");
+assert.match(js, /moduleLevel === 2 \? 16 : moduleLevel === 1 \? 6 : 0/, "whole-word module matches should outrank partial module matches");
+assert.match(js, /bodyLevel === 2 \? 4 : bodyLevel === 1 \? 1 : 0/, "body partial matches should remain a low-score fallback");
 assert.match(js, /function getSearchScore/, "roadmap JS should rank search entries with explicit scoring");
 assert.match(js, /function setActiveSection/, "roadmap JS should update collapsed rail active state dynamically");
 assert.match(js, /IntersectionObserver/, "roadmap JS should observe visible sections for active rail state");
