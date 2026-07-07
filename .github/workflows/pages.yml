@@ -39,6 +39,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install font validation tools
+        run: python3 -m pip install fonttools==4.63.0
+
       - name: Build IELTS reader data
         run: npm run build:ielts
 

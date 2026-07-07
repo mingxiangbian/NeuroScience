@@ -67,6 +67,7 @@ assert.match(indexHtml, /site\/ielts-reader\.js/, "reader HTML should keep stabl
 assert.match(indexHtml, /data-shortcut-label/, "shortcut hint should be platform-aware");
 assert.match(workflow, /actions\/setup-node@v5/, "Pages workflow should setup Node before deploy");
 assert.match(workflow, /npm ci/, "Pages workflow should install dependencies");
+assert.match(workflow, /fonttools==4\.63\.0/, "Pages workflow should install font validation tools");
 assert.match(workflow, /npm run build:ielts/, "Pages workflow should build IELTS data before deploy");
 assert.match(workflow, /npm run test:all/, "Pages workflow should run static site tests before deploy");
 assert.equal(Array.isArray(data.references.targets), true);
