@@ -63,7 +63,8 @@ export function findMarkdownDocuments(rootDir, projectDir, options = {}) {
     .filter((filePath) => options.includeReadme === true || !filePath.endsWith(`${sep}README.md`))
     .map((filePath) => {
       const path = toProjectPath(filePath, projectDir);
-      const id = path.replace(new RegExp(`^${stripPrefix}`), "").replace(/\.md$/, "");
+      const idPath = stripPrefix && path.startsWith(stripPrefix) ? path.slice(stripPrefix.length) : path;
+      const id = idPath.replace(/\.md$/, "");
       const markdown = readFileSync(filePath, "utf8");
       const { frontmatter, body } = parseFrontmatter(markdown);
       return {

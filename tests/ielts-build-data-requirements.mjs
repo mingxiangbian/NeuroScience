@@ -111,6 +111,15 @@ assert.equal(
   "missing scoreProfile.skills should be fatal",
 );
 
+const malformedErrorsResult = validateSiteDataInputs(makeValidInputs({
+  errorLog: { schemaVersion: 1, errors: {} },
+}));
+assert.equal(
+  malformedErrorsResult.fatalIssues.some((issue) => issue.type === "invalid_type" && issue.path === "errorLog.errors"),
+  true,
+  "non-array errorLog.errors should be reported as fatal instead of throwing",
+);
+
 const warningResult = validateSiteDataInputs(makeValidInputs({
   scoreProfile: {
     ...makeValidInputs().scoreProfile,
@@ -135,6 +144,11 @@ try {
   writeFileSync(join(tempDir, "prompts", "agents", "new-agent.md"), "# New Agent\nBody\n");
   const docs = findMarkdownDocuments(join(tempDir, "prompts"), tempDir);
   assert.deepEqual(docs.map((doc) => doc.id), ["prompts/agents/new-agent", "prompts/orchestrator"]);
+
+  mkdirSync(join(tempDir, "docs.v1"), { recursive: true });
+  writeFileSync(join(tempDir, "docs.v1", "file.md"), "# Versioned Doc\nBody\n");
+  const prefixedDocs = findMarkdownDocuments(join(tempDir, "docs.v1"), tempDir, { stripPrefix: "docs.v1/" });
+  assert.deepEqual(prefixedDocs.map((doc) => doc.id), ["file"]);
 } finally {
   rmSync(tempDir, { recursive: true, force: true });
 }

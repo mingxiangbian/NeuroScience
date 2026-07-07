@@ -7,7 +7,7 @@ const allowedTags = [
 ];
 
 const allowedAttributes = {
-  a: ["href", "title"],
+  a: ["href", "title", "rel"],
   code: ["class"],
   th: ["align"],
   td: ["align"],

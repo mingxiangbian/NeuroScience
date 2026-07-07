@@ -40,6 +40,7 @@ export function validateSiteDataInputs(inputs) {
   const checkpoints = inputs.checkpoints ?? {};
   const notes = Array.isArray(inputs.notes) ? inputs.notes : [];
   const journal = Array.isArray(inputs.journal) ? inputs.journal : [];
+  const errors = Array.isArray(errorLog.errors) ? errorLog.errors : [];
 
   for (const field of ["schemaVersion", "target", "skills", "currentEstimate"]) {
     requireField(scoreProfile[field], `scoreProfile.${field}`, fatalIssues);
@@ -80,7 +81,7 @@ export function validateSiteDataInputs(inputs) {
   if (!Array.isArray(errorLog.errors)) {
     fatalIssues.push(issue("fatal", "invalid_type", "errorLog.errors", "errorLog.errors must be an array"));
   } else {
-    errorLog.errors.forEach((errorRecord, index) => {
+    errors.forEach((errorRecord, index) => {
       for (const field of ["id", "skill", "impact", "status", "description"]) {
         requireField(errorRecord?.[field], `errorLog.errors[${index}].${field}`, fatalIssues);
       }
@@ -94,7 +95,7 @@ export function validateSiteDataInputs(inputs) {
     });
   }
 
-  const errorIds = new Set((errorLog.errors ?? []).map((errorRecord) => errorRecord.id));
+  const errorIds = new Set(errors.map((errorRecord) => errorRecord.id));
   const noteIds = new Set(notes.map((note) => note.id));
 
   notes.forEach((note) => {
