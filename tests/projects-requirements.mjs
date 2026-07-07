@@ -50,6 +50,26 @@ assert.equal(
   "语言",
   "IELTS Academic should display as the Chinese language bookmark",
 );
+assert.equal(
+  manifest.find((project) => project.id === "ielts-academic")?.summary,
+  "诊断驱动的 IELTS Academic 备考系统：多智能体提示词、弹性计划、错误回归、笔记、日志与验证。",
+  "IELTS Academic bookmark should keep the configured Chinese project copy",
+);
+assert.match(
+  projectsHtml,
+  /summary: String\(record\.summary \?\? ""\)/,
+  "projects homepage should normalize project summary copy from manifest entries",
+);
+assert.match(
+  projectsHtml,
+  /project\.summary/,
+  "projects homepage should consume the project summary copy when rendering bookmarks",
+);
+assert.match(
+  projectsHtml,
+  /project-card-summary/,
+  "projects homepage should expose project summary copy on bookmark cards",
+);
 assert.match(fontSources, /ZhiMangXing-Regular\.ttf --text='记忆与智能体基石语言'/, "bookmark font subset should include the Chinese project bookmark titles");
 
 assert.match(topicHtml, /<title>Brain Memory for AI Agents \| NeuroScience x AI<\/title>/, "topic page should use the project title");
