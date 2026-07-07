@@ -31,6 +31,13 @@ function warnUnknownFields(object, path, known, issues) {
   }
 }
 
+function normalizeArrayField(value, path, issues) {
+  if (value === undefined || value === null) return [];
+  if (Array.isArray(value)) return value;
+  issues.push(issue("fatal", "invalid_type", path, `${path} must be an array`));
+  return [];
+}
+
 export function validateSiteDataInputs(inputs) {
   const fatalIssues = [];
   const warningIssues = [];
@@ -99,7 +106,8 @@ export function validateSiteDataInputs(inputs) {
   const noteIds = new Set(notes.map((note) => note.id));
 
   notes.forEach((note) => {
-    for (const errorId of note.relatedErrors ?? []) {
+    const relatedErrors = normalizeArrayField(note.relatedErrors, `${note.id}.relatedErrors`, fatalIssues);
+    for (const errorId of relatedErrors) {
       if (!errorIds.has(errorId)) {
         fatalIssues.push(issue("fatal", "missing_reference", `${note.id}.relatedErrors`, `${note.id} references missing error ${errorId}`));
       }
@@ -107,12 +115,14 @@ export function validateSiteDataInputs(inputs) {
   });
 
   journal.forEach((entry) => {
-    for (const errorId of entry.relatedErrors ?? []) {
+    const relatedErrors = normalizeArrayField(entry.relatedErrors, `${entry.id}.relatedErrors`, fatalIssues);
+    const relatedNotes = normalizeArrayField(entry.relatedNotes, `${entry.id}.relatedNotes`, fatalIssues);
+    for (const errorId of relatedErrors) {
       if (!errorIds.has(errorId)) {
         fatalIssues.push(issue("fatal", "missing_reference", `${entry.id}.relatedErrors`, `${entry.id} references missing error ${errorId}`));
       }
     }
-    for (const noteId of entry.relatedNotes ?? []) {
+    for (const noteId of relatedNotes) {
       if (!noteIds.has(noteId)) {
         fatalIssues.push(issue("fatal", "missing_reference", `${entry.id}.relatedNotes`, `${entry.id} references missing note ${noteId}`));
       }

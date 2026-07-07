@@ -120,6 +120,41 @@ assert.equal(
   "non-array errorLog.errors should be reported as fatal instead of throwing",
 );
 
+const malformedRelationsResult = validateSiteDataInputs(makeValidInputs({
+  notes: [
+    {
+      id: "bad-note",
+      path: "notes/bad-note.md",
+      title: "Bad note",
+      relatedErrors: {},
+    },
+  ],
+  journal: [
+    {
+      id: "bad-entry",
+      path: "journal/entries/bad-entry.md",
+      title: "Bad entry",
+      relatedErrors: {},
+      relatedNotes: {},
+    },
+  ],
+}));
+assert.equal(
+  malformedRelationsResult.fatalIssues.some((issue) => issue.type === "invalid_type" && issue.path === "bad-note.relatedErrors"),
+  true,
+  "non-array note.relatedErrors should be reported as fatal instead of throwing",
+);
+assert.equal(
+  malformedRelationsResult.fatalIssues.some((issue) => issue.type === "invalid_type" && issue.path === "bad-entry.relatedErrors"),
+  true,
+  "non-array journal.relatedErrors should be reported as fatal instead of throwing",
+);
+assert.equal(
+  malformedRelationsResult.fatalIssues.some((issue) => issue.type === "invalid_type" && issue.path === "bad-entry.relatedNotes"),
+  true,
+  "non-array journal.relatedNotes should be reported as fatal instead of throwing",
+);
+
 const warningResult = validateSiteDataInputs(makeValidInputs({
   scoreProfile: {
     ...makeValidInputs().scoreProfile,
@@ -153,11 +188,12 @@ try {
   rmSync(tempDir, { recursive: true, force: true });
 }
 
-const html = markdownToSafeHtml("# Heading\n\nA **bold** item with `code`.\n\n[bad](javascript:alert(1))\n\n<img src=x onerror=alert(1)>\n\n```js\nconsole.log(1)\n```\n\n<script>alert(1)</script>\n");
+const html = markdownToSafeHtml("# Heading\n\nA **bold** item with `code`.\n\n[good](https://example.com)\n\n[bad](javascript:alert(1))\n\n<img src=x onerror=alert(1)>\n\n```js\nconsole.log(1)\n```\n\n<script>alert(1)</script>\n");
 assert.match(html.html, /<h1[^>]*>Heading<\/h1>/);
 assert.match(html.html, /<strong>bold<\/strong>/);
 assert.match(html.html, /<code>code<\/code>/);
 assert.match(html.html, /<pre><code class="language-js">/);
+assert.match(html.html, /rel="noopener noreferrer"/);
 assert.doesNotMatch(html.html, /<script|alert\(1\)/);
 assert.doesNotMatch(html.html, /javascript:|onerror|<img/i);
 assert.match(html.text, /Heading/);
@@ -166,4 +202,30 @@ const referenceIndex = buildReferenceIndex(makeValidInputs());
 assert.equal(referenceIndex.targets.some((target) => target.id === "error:writing-task2-argument"), true);
 assert.equal(referenceIndex.targets.some((target) => target.id === "note:writing/task-2-argument-development"), true);
 assert.equal(referenceIndex.backlinks["note:writing/task-2-argument-development"].some((link) => link.id === "journal:2026-07-06-initial-setup"), true);
+
+const malformedReferenceIndex = buildReferenceIndex({
+  errorLog: { errors: {} },
+  notes: [{ id: "bad-note", title: "Bad note", relatedErrors: {} }],
+  journal: [{ id: "bad-entry", title: "Bad entry", relatedErrors: {}, relatedNotes: {} }],
+});
+assert.deepEqual(malformedReferenceIndex.targets, [
+  {
+    id: "note:bad-note",
+    rawId: "bad-note",
+    type: "note",
+    label: "Bad note",
+    moduleId: "notes",
+    sectionId: "note-bad-note",
+    sourcePath: "",
+  },
+  {
+    id: "journal:bad-entry",
+    rawId: "bad-entry",
+    type: "journal",
+    label: "Bad entry",
+    moduleId: "journal",
+    sectionId: "journal-bad-entry",
+    sourcePath: "",
+  },
+]);
 assert.equal(existsSync(new URL("../projects/language/ielts-academic/scripts/build-ielts-data.mjs", import.meta.url)), true);
