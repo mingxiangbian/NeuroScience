@@ -1,4 +1,5 @@
 import { makeKnowledgeNote } from "./reader-modules.js";
+import { renderReferenceChips } from "./reader-references.js";
 import { renderTaskChecklist } from "./reader-tasks.js";
 import { escapeHtml, slugify, titleCase, toList, truncateText } from "./reader-utils.js";
 
@@ -22,28 +23,6 @@ export function formatTarget(target) {
   const floor = Number.isFinite(Number(target.perSkillFloor)) ? Number(target.perSkillFloor).toFixed(1) : "7.5";
   const weeks = Number.isFinite(Number(target.timelineWeeks)) ? `${Number(target.timelineWeeks)} weeks` : "8 weeks";
   return `Overall ${overall} / each skill ${floor}+ / ${weeks}`;
-}
-
-export function renderReferenceChips(items, kind = "reference") {
-  const chips = toList(items).filter(Boolean);
-  if (chips.length === 0) return "";
-
-  return `
-    <div class="reference-chip-list">
-      ${chips
-        .map((item) => {
-          const label = typeof item === "string" ? item : item.label;
-          const href = typeof item === "string" ? "" : item.href;
-          const safeKind = escapeHtml(kind);
-          const safeLabel = escapeHtml(label);
-          if (href) {
-            return `<a class="reference-chip" data-kind="${safeKind}" href="${escapeHtml(href)}">${safeLabel}</a>`;
-          }
-          return `<span class="reference-chip" data-kind="${safeKind}">${safeLabel}</span>`;
-        })
-        .join("")}
-    </div>
-  `;
 }
 
 function renderSkillGapBars(skills, target) {
@@ -299,7 +278,7 @@ function renderErrorCard(error) {
       <h3>${escapeHtml(error.description)}</h3>
       <p class="error-priority">${escapeHtml(error.nextReview ?? "Next review pending")}</p>
       <p class="card-body">${escapeHtml(error.reviewMethod ?? "")}</p>
-      ${renderReferenceChips([error.id], "error")}
+      ${renderReferenceChips([{ referenceId: `error:${error.id}`, label: error.id }], "error")}
     </article>
   `;
 }
@@ -335,8 +314,11 @@ export function renderNotes(data) {
             <p class="card-kicker">${escapeHtml(note.skill ?? "general")} | ${escapeHtml(note.topic ?? "untagged")}</p>
             <h3>${escapeHtml(note.title)}</h3>
             <p class="card-body">${escapeHtml(truncateText(note.body))}</p>
-            ${renderReferenceChips([{ label: note.path, href: note.path }], "source")}
-            ${renderReferenceChips(note.relatedErrors, "error")}
+            ${renderReferenceChips([{ referenceId: `note:${note.id}`, label: note.path, sourcePath: note.path }], "source")}
+            ${renderReferenceChips(toList(note.relatedErrors).map((errorId) => ({
+              referenceId: `error:${errorId}`,
+              label: errorId,
+            })), "error")}
           </article>
         `)
         .join("")}
@@ -356,9 +338,15 @@ export function renderJournal(data) {
             <p class="card-kicker">${escapeHtml(entry.date ?? "undated")}</p>
             <h3>${escapeHtml(entry.title)}</h3>
             <p class="card-body">${escapeHtml(truncateText(entry.body))}</p>
-            ${renderReferenceChips([{ label: entry.path, href: entry.path }], "source")}
-            ${renderReferenceChips(entry.relatedErrors, "error")}
-            ${renderReferenceChips(toList(entry.relatedNotes).map((note) => `note: ${note}`), "note")}
+            ${renderReferenceChips([{ referenceId: `journal:${entry.id}`, label: entry.path, sourcePath: entry.path }], "source")}
+            ${renderReferenceChips(toList(entry.relatedErrors).map((errorId) => ({
+              referenceId: `error:${errorId}`,
+              label: errorId,
+            })), "error")}
+            ${renderReferenceChips(toList(entry.relatedNotes).map((noteId) => ({
+              referenceId: `note:${noteId}`,
+              label: noteId,
+            })), "note")}
           </article>
         `)
         .join("")}
@@ -378,7 +366,7 @@ export function renderPromptLibrary(data) {
             <p class="card-kicker">${escapeHtml(prompt.id ?? "prompt")}</p>
             <h3>${escapeHtml(prompt.title)}</h3>
             <p class="card-body">${escapeHtml(truncateText(prompt.body))}</p>
-            ${renderReferenceChips([{ label: prompt.path, href: prompt.path }], "source")}
+            ${renderReferenceChips([{ referenceId: `prompt:${prompt.id}`, label: prompt.path, sourcePath: prompt.path }], "source")}
           </article>
         `)
         .join("")}
@@ -398,7 +386,7 @@ export function renderValidation(data) {
             <p class="card-kicker">${escapeHtml(check.id ?? "validation")}</p>
             <h3>${escapeHtml(check.title)}</h3>
             <p class="card-body">${escapeHtml(truncateText(check.body))}</p>
-            ${renderReferenceChips([{ label: check.path, href: check.path }], "source")}
+            ${renderReferenceChips([{ referenceId: `validation:${check.id}`, label: check.path, sourcePath: check.path }], "source")}
           </article>
         `)
         .join("")}
@@ -413,7 +401,7 @@ export function buildErrorNotes(data) {
     `
       <p>${escapeHtml(error.description)}</p>
       <p>${escapeHtml(error.reviewMethod ?? "")}</p>
-      ${renderReferenceChips([error.id], "error")}
+      ${renderReferenceChips([{ referenceId: `error:${error.id}`, label: error.id }], "error")}
     `,
     [
       {
@@ -436,7 +424,7 @@ export function buildDocumentNotes(items, prefix) {
     [
       {
         label: "Source",
-        body: renderReferenceChips([{ label: item.path, href: item.path }], "source"),
+        body: renderReferenceChips([{ referenceId: `${prefix}:${item.id}`, label: item.path, sourcePath: item.path }], "source"),
       },
     ],
   ));

@@ -32,6 +32,11 @@ assert.match(renderers, /scoreHistory\?\.entries/, "dashboard should consume sco
 assert.match(references, /function renderReferenceChips/, "reference chips should live in reference module");
 assert.match(references, /data-reference-id/, "reference chips should bind internal target ids");
 assert.match(references, /function getReferencePanelPayload/, "right panel should render reference payloads");
+assert.match(references, /relatedObjects/, "right panel payload should expose forward related objects");
+assert.match(references, /payload\.status/, "right panel should expose object status metadata");
+assert.match(references, /payload\.skill/, "right panel should expose object skill metadata");
+assert.match(references, /payload\.date/, "right panel should expose object date metadata");
+assert.match(references, /payload\.summary/, "right panel should expose object summary metadata");
 assert.match(references, /function openReferenceTarget/, "references should support internal navigation");
 assert.doesNotMatch(references, /href="\$\{escapeHtml\(item\.path\)\}"/, "source path should not be the primary chip navigation");
 

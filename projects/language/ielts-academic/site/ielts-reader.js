@@ -11,10 +11,10 @@ import {
   renderJournal,
   renderNotes,
   renderPromptLibrary,
-  renderReferenceChips,
   renderSwimlane,
   renderValidation,
 } from "./reader-renderers.js";
+import { getReferencePanelPayload, openReferenceTarget, renderReferencePanel } from "./reader-references.js";
 import { loadAnnotations, loadTaskState, loadUiState, saveAnnotations, saveTaskState, saveUiState } from "./reader-state.js";
 import { renderTaskChecklist } from "./reader-tasks.js";
 import { escapeHtml, getShortcutLabel, slugify, titleCase, toList } from "./reader-utils.js";
@@ -86,6 +86,12 @@ function getStatusLabel(status) {
   return labels[status] ?? titleCase(status);
 }
 
+function renderRiskList(risks) {
+  const items = toList(risks);
+  if (items.length === 0) return "";
+  return `<ul>${items.map((risk) => `<li>${escapeHtml(risk)}</li>`).join("")}</ul>`;
+}
+
 function buildReaderModules(data) {
   const target = data.project?.target ?? data.scoreProfile?.target ?? {};
   const lastUpdated = data.scoreProfile?.lastUpdated ?? data.build?.generatedAt ?? "";
@@ -93,7 +99,7 @@ function buildReaderModules(data) {
     Dashboard: renderModuleSafely("dashboard", "Dashboard", () => renderDashboard(data)),
     "Score profile": renderModuleSafely("dashboard", "Score profile", () => `
       <p>${escapeHtml(data.scoreProfile?.currentEstimate?.summary ?? "Diagnostic evidence has not been collected yet.")}</p>
-      ${renderReferenceChips(toList(data.scoreProfile?.risks), "risk")}
+      ${renderRiskList(data.scoreProfile?.risks)}
     `),
     "Daily training tasks": renderModuleSafely("dashboard", "Daily training tasks", () => renderDailyTasks(data, "dashboard", taskState, saveTaskState)),
   };
@@ -700,6 +706,8 @@ function renderCurrentModule() {
       checkbox.closest(".task-item")?.classList.toggle("is-done", checkbox.checked);
     });
   });
+
+  bindSectionReferenceChips();
 }
 
 function getKnowledgeNoteById(module, noteId) {
@@ -761,7 +769,40 @@ function renderContextualNotePanel(note) {
         updateAnnotationNote(annotationId, value);
       });
     });
+    bindReferencePanelActions(surface);
   }
+}
+
+function bindReferencePanelActions(surface) {
+  surface.querySelectorAll("[data-jump-reference]").forEach((button) => {
+    button.addEventListener("click", () => {
+      openReferenceTarget(state.data, button.dataset.jumpReference, openModule);
+    });
+  });
+  surface.querySelectorAll("[data-reference-id]").forEach((button) => {
+    button.addEventListener("click", () => renderReferenceContext(button.dataset.referenceId));
+  });
+}
+
+function renderReferenceContext(referenceId) {
+  const payload = getReferencePanelPayload(state.data, referenceId);
+  const rendered = renderReferencePanel(payload);
+  const label = payload ? `Reference · ${payload.title}` : "Reference";
+  els.noteLabel.textContent = label;
+  els.mobileNoteLabel.textContent = label;
+  els.noteSurface.innerHTML = rendered;
+  els.mobileNoteSurface.innerHTML = rendered;
+  bindReferencePanelActions(els.noteSurface);
+  bindReferencePanelActions(els.mobileNoteSurface);
+}
+
+function bindSectionReferenceChips() {
+  els.sectionList.querySelectorAll("[data-reference-id]").forEach((chip) => {
+    chip.addEventListener("click", (event) => {
+      event.stopPropagation();
+      renderReferenceContext(chip.dataset.referenceId);
+    });
+  });
 }
 
 function setActiveKnowledgeContext(sectionId) {

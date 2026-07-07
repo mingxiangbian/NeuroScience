@@ -915,9 +915,11 @@ body,
   min-height: 26px;
   max-width: 100%;
   border: 1px solid var(--reader-line);
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: var(--reader-paper-soft);
   color: var(--reader-blue);
+  cursor: pointer;
+  font: inherit;
   font-size: 12px;
   font-weight: 700;
   line-height: 1.2;
@@ -928,6 +930,55 @@ body,
 .reference-chip[data-kind="error"] {
   border-color: rgba(166, 67, 56, 0.28);
   color: var(--reader-red);
+}
+
+.reference-chip:focus-visible,
+.reference-panel-action:focus-visible {
+  outline: 2px solid var(--reader-blue);
+  outline-offset: 2px;
+}
+
+.reference-panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.reference-panel-action {
+  border: 1px solid var(--reader-line);
+  border-radius: 6px;
+  background: var(--reader-paper-strong);
+  color: var(--reader-ink);
+  cursor: pointer;
+  font: inherit;
+  padding: 7px 10px;
+  text-decoration: none;
+}
+
+.reference-panel-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.reference-panel-meta div {
+  border: 1px solid var(--reader-line);
+  border-radius: 6px;
+  padding: 8px;
+}
+
+.reference-panel-meta dt {
+  color: var(--reader-ink-muted);
+  font-size: 11px;
+  font-weight: 760;
+  margin: 0 0 4px;
+  text-transform: uppercase;
+}
+
+.reference-panel-meta dd {
+  margin: 0;
 }
 
 .task-list {
