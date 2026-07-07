@@ -689,7 +689,7 @@ body,
 }
 
 .metric-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
 
 .dashboard-card,
@@ -769,6 +769,41 @@ body,
   background: linear-gradient(90deg, var(--reader-red), var(--reader-blue));
 }
 
+.score-history {
+  overflow-x: auto;
+}
+
+.score-history table,
+.swimlane-table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border: 1px solid var(--reader-line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.score-history th,
+.score-history td,
+.swimlane-table th,
+.swimlane-table td {
+  border-bottom: 1px solid var(--reader-line);
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.score-history-empty {
+  margin: 0;
+}
+
+.checkpoint-milestones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
 .swimlane-grid {
   display: grid;
   grid-template-columns: 112px repeat(8, minmax(92px, 1fr));
@@ -846,6 +881,10 @@ body,
 .error-column h3 {
   margin: 0;
   color: var(--reader-blue);
+}
+
+.validation-issue {
+  border-left: 3px solid var(--reader-gold);
 }
 
 .error-card {

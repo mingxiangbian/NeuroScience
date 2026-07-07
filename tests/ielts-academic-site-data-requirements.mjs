@@ -7,6 +7,7 @@ const dataUrl = new URL("../projects/language/ielts-academic/site/ielts-data.jso
 const jsUrl = new URL("../projects/language/ielts-academic/site/ielts-reader.js", import.meta.url);
 const readerModuleUrls = [
   "../projects/language/ielts-academic/site/reader-modules.js",
+  "../projects/language/ielts-academic/site/reader-renderers.js",
   "../projects/language/ielts-academic/site/reader-state.js",
   "../projects/language/ielts-academic/site/reader-tasks.js",
   "../projects/language/ielts-academic/site/reader-utils.js",
@@ -116,6 +117,7 @@ for (const entry of data.journal) {
 }
 
 assert.deepEqual(data.build.referenceIssues, []);
+assert.match(readerJs, /from "\.\/reader-renderers\.js"/, "reader entrypoint should import renderer helpers");
 assert.match(readerJs, /from "\.\/reader-state\.js"/, "reader entrypoint should import local state helpers");
 assert.doesNotMatch(readerJsBundle, /githubToken|Authorization|contents\/|repos\/|fetch\("\/api/i);
 assert.match(readerJsBundle, /ieltsReader\.annotations\.v1/, "reader JS should allow local annotation state only under the IELTS annotation key");

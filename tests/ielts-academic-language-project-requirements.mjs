@@ -42,6 +42,7 @@ const requiredFiles = [
   "../projects/language/ielts-academic/site/ielts-reader.css",
   "../projects/language/ielts-academic/site/ielts-reader.js",
   "../projects/language/ielts-academic/site/reader-modules.js",
+  "../projects/language/ielts-academic/site/reader-renderers.js",
   "../projects/language/ielts-academic/site/reader-state.js",
   "../projects/language/ielts-academic/site/reader-tasks.js",
   "../projects/language/ielts-academic/site/reader-utils.js",
@@ -81,10 +82,11 @@ const dryRuns = read("../projects/language/ielts-academic/validation/dry-run-tes
 const projectIndex = read("../projects/language/ielts-academic/index.html");
 const siteJs = read("../projects/language/ielts-academic/site/ielts-reader.js");
 const readerModulesJs = read("../projects/language/ielts-academic/site/reader-modules.js");
+const readerRenderersJs = read("../projects/language/ielts-academic/site/reader-renderers.js");
 const readerStateJs = read("../projects/language/ielts-academic/site/reader-state.js");
 const readerTasksJs = read("../projects/language/ielts-academic/site/reader-tasks.js");
 const readerUtilsJs = read("../projects/language/ielts-academic/site/reader-utils.js");
-const readerJsBundle = [siteJs, readerModulesJs, readerStateJs, readerTasksJs, readerUtilsJs].join("\n");
+const readerJsBundle = [siteJs, readerModulesJs, readerRenderersJs, readerStateJs, readerTasksJs, readerUtilsJs].join("\n");
 const siteCss = read("../projects/language/ielts-academic/site/ielts-reader.css");
 const buildScript = read("../projects/language/ielts-academic/scripts/build-ielts-data.mjs");
 const buildSources = read("../projects/language/ielts-academic/scripts/build-sources.mjs");
@@ -179,9 +181,16 @@ assert.match(readerJsBundle, /const ANNOTATION_STORAGE_KEY = "ieltsReader\.annot
 assert.match(readerJsBundle, /const TASK_STORAGE_KEY = "ieltsReader\.tasks\.v1"/, "IELTS JS should use an IELTS task localStorage key");
 assert.match(readerJsBundle, /const UI_STATE_KEY = "ieltsReader\.ui\.v1"/, "IELTS JS should use an IELTS UI localStorage key");
 assert.match(siteJs, /from "\.\/reader-modules\.js"/, "IELTS reader entry should import module helpers");
+assert.match(siteJs, /from "\.\/reader-renderers\.js"/, "IELTS reader entry should import renderer helpers");
 assert.match(siteJs, /from "\.\/reader-state\.js"/, "IELTS reader entry should import state helpers");
 assert.match(siteJs, /from "\.\/reader-tasks\.js"/, "IELTS reader entry should import task helpers");
 assert.match(siteJs, /from "\.\/reader-utils\.js"/, "IELTS reader entry should import utility helpers");
+assert.match(readerRenderersJs, /value === null \|\| value === undefined/, "IELTS renderer should not format missing bands as numeric scores");
+assert.match(readerRenderersJs, /entry\.date/, "IELTS score history should expose diagnostic dates");
+assert.match(readerRenderersJs, /skill\.riskLevel/, "IELTS skill gaps should expose risk levels");
+assert.match(readerRenderersJs, /skill\.unverifiedDimensions/, "IELTS skill gaps should expose unverified dimensions");
+assert.match(readerRenderersJs, /\["high", "medium"\]/, "IELTS swimlane should consider high and medium impact errors");
+assert.match(readerRenderersJs, /checkpoint\.evidenceRequired/, "IELTS checkpoint milestones should expose evidence requirements");
 assert.match(siteJs, /function buildReaderModules/, "IELTS JS should adapt IELTS site data into reader modules");
 assert.match(siteJs, /function renderModuleNav/, "IELTS JS should render module navigation");
 assert.match(siteJs, /function renderCurrentModule/, "IELTS JS should render the active module");
