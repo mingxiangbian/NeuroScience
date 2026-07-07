@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:ielts": "node projects/language/ielts-academic/scripts/build-ielts-data.mjs",
+    "test:projects": "node tests/projects-requirements.mjs",
+    "test:ielts": "node tests/ielts-academic-language-project-requirements.mjs && node tests/ielts-academic-site-data-requirements.mjs && node tests/ielts-build-data-requirements.mjs && node tests/ielts-reader-data-consumption-requirements.mjs",
+    "test:all": "npm run test:projects && npm run test:ielts"
+  },
+  "dependencies": {
+    "marked": "18.0.5",
+    "sanitize-html": "2.17.5"
+  }
+}
