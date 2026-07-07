@@ -41,6 +41,10 @@ const requiredFiles = [
   "../projects/language/ielts-academic/site/ielts-data.json",
   "../projects/language/ielts-academic/site/ielts-reader.css",
   "../projects/language/ielts-academic/site/ielts-reader.js",
+  "../projects/language/ielts-academic/site/reader-modules.js",
+  "../projects/language/ielts-academic/site/reader-state.js",
+  "../projects/language/ielts-academic/site/reader-tasks.js",
+  "../projects/language/ielts-academic/site/reader-utils.js",
   "../projects/language/ielts-academic/diagnostics/score-profile.json",
   "../projects/language/ielts-academic/diagnostics/score-history.json",
   "../projects/language/ielts-academic/diagnostics/error-log.json",
@@ -76,6 +80,11 @@ const regression = read("../projects/language/ielts-academic/errors/regression-c
 const dryRuns = read("../projects/language/ielts-academic/validation/dry-run-test-cases.md");
 const projectIndex = read("../projects/language/ielts-academic/index.html");
 const siteJs = read("../projects/language/ielts-academic/site/ielts-reader.js");
+const readerModulesJs = read("../projects/language/ielts-academic/site/reader-modules.js");
+const readerStateJs = read("../projects/language/ielts-academic/site/reader-state.js");
+const readerTasksJs = read("../projects/language/ielts-academic/site/reader-tasks.js");
+const readerUtilsJs = read("../projects/language/ielts-academic/site/reader-utils.js");
+const readerJsBundle = [siteJs, readerModulesJs, readerStateJs, readerTasksJs, readerUtilsJs].join("\n");
 const siteCss = read("../projects/language/ielts-academic/site/ielts-reader.css");
 const buildScript = read("../projects/language/ielts-academic/scripts/build-ielts-data.mjs");
 const buildSources = read("../projects/language/ielts-academic/scripts/build-sources.mjs");
@@ -166,9 +175,9 @@ assert.match(siteCss, /\.task-list/, "IELTS CSS should style task checklist stat
 assert.match(siteCss, /@media \(max-width:\s*860px\)/, "IELTS CSS should include mobile drawer responsive rules");
 assert.doesNotMatch(siteCss, /border-radius:\s*24px|border-radius:\s*28px/, "IELTS reader should avoid oversized card radii");
 
-assert.match(siteJs, /const ANNOTATION_STORAGE_KEY = "ieltsReader\.annotations\.v1"/, "IELTS JS should use an IELTS annotation localStorage key");
-assert.match(siteJs, /const TASK_STORAGE_KEY = "ieltsReader\.tasks\.v1"/, "IELTS JS should use an IELTS task localStorage key");
-assert.match(siteJs, /const UI_STATE_KEY = "ieltsReader\.ui\.v1"/, "IELTS JS should use an IELTS UI localStorage key");
+assert.match(readerJsBundle, /const ANNOTATION_STORAGE_KEY = "ieltsReader\.annotations\.v1"/, "IELTS JS should use an IELTS annotation localStorage key");
+assert.match(readerJsBundle, /const TASK_STORAGE_KEY = "ieltsReader\.tasks\.v1"/, "IELTS JS should use an IELTS task localStorage key");
+assert.match(readerJsBundle, /const UI_STATE_KEY = "ieltsReader\.ui\.v1"/, "IELTS JS should use an IELTS UI localStorage key");
 assert.match(siteJs, /function buildReaderModules/, "IELTS JS should adapt IELTS site data into reader modules");
 assert.match(siteJs, /function renderModuleNav/, "IELTS JS should render module navigation");
 assert.match(siteJs, /function renderCurrentModule/, "IELTS JS should render the active module");
@@ -176,7 +185,7 @@ assert.match(siteJs, /function renderSectionRail/, "IELTS JS should render a sec
 assert.match(siteJs, /function renderContextualNotePanel/, "IELTS JS should render contextual notes");
 assert.match(siteJs, /function runSearch/, "IELTS JS should support Foundations-style global search");
 assert.match(siteJs, /function createAnnotationFromSelection/, "IELTS JS should support local annotations");
-assert.match(siteJs, /function saveTaskState/, "IELTS JS should persist local task state");
+assert.match(readerJsBundle, /function saveTaskState/, "IELTS JS should persist local task state");
 assert.match(siteJs, /function setTheme/, "IELTS JS should support theme switching");
 assert.match(siteJs, /fetchJson\(getDataSource\(\)\)/, "IELTS JS should load generated data from the script data-source attribute");
 assert.match(siteJs, /Dashboard/, "IELTS modules should keep the Dashboard content");
@@ -186,8 +195,8 @@ assert.match(siteJs, /Notes/, "IELTS modules should keep the Notes content");
 assert.match(siteJs, /Journal/, "IELTS modules should keep the Journal content");
 assert.match(siteJs, /Prompt library/, "IELTS modules should keep the Prompt library content");
 assert.match(siteJs, /Validation/, "IELTS modules should keep the Validation content");
-assert.doesNotMatch(siteJs, /localStorage\.setItem\(".*score|localStorage\.setItem\(".*error|localStorage\.setItem\(".*checkpoint/i, "IELTS JS should not store score, error, or checkpoint source data in localStorage");
-assert.doesNotMatch(siteJs, /localStorage\.setItem\("(?!ieltsReader\.(ui|annotations|tasks)\.v1")/, "IELTS JS should only write allowed IELTS localStorage keys");
+assert.doesNotMatch(readerJsBundle, /localStorage\.setItem\(".*score|localStorage\.setItem\(".*error|localStorage\.setItem\(".*checkpoint/i, "IELTS JS should not store score, error, or checkpoint source data in localStorage");
+assert.doesNotMatch(readerJsBundle, /localStorage\.setItem\("(?!ieltsReader\.(ui|annotations|tasks)\.v1")/, "IELTS JS should only write allowed IELTS localStorage keys");
 assert.doesNotMatch(siteJs, /githubToken|Authorization|contents\/|repos\/|fetch\("\/api/i, "IELTS JS should not include backend or GitHub write-back signals");
 
 assert.match(buildScript, /from "\.\/build-sources\.mjs"/, "build script should use source helper module");

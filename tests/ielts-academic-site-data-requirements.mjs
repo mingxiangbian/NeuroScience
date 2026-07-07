@@ -5,11 +5,21 @@ import { readFileSync } from "node:fs";
 const buildScriptUrl = new URL("../projects/language/ielts-academic/scripts/build-ielts-data.mjs", import.meta.url);
 const dataUrl = new URL("../projects/language/ielts-academic/site/ielts-data.json", import.meta.url);
 const jsUrl = new URL("../projects/language/ielts-academic/site/ielts-reader.js", import.meta.url);
+const readerModuleUrls = [
+  "../projects/language/ielts-academic/site/reader-modules.js",
+  "../projects/language/ielts-academic/site/reader-state.js",
+  "../projects/language/ielts-academic/site/reader-tasks.js",
+  "../projects/language/ielts-academic/site/reader-utils.js",
+].map((path) => new URL(path, import.meta.url));
 
 execFileSync(process.execPath, [buildScriptUrl.pathname], { stdio: "pipe" });
 
 const data = JSON.parse(readFileSync(dataUrl, "utf8"));
 const readerJs = readFileSync(jsUrl, "utf8");
+const readerJsBundle = [
+  readerJs,
+  ...readerModuleUrls.map((url) => readFileSync(url, "utf8")),
+].join("\n");
 
 assert.equal(data.project.id, "ielts-academic");
 assert.equal(data.project.target.overall, 8);
@@ -106,8 +116,8 @@ for (const entry of data.journal) {
 }
 
 assert.deepEqual(data.build.referenceIssues, []);
-assert.doesNotMatch(readerJs, /githubToken|Authorization|contents\/|repos\/|fetch\("\/api/i);
-assert.match(readerJs, /ieltsReader\.annotations\.v1/, "reader JS should allow local annotation state only under the IELTS annotation key");
-assert.match(readerJs, /ieltsReader\.tasks\.v1/, "reader JS should allow local task state only under the IELTS task key");
-assert.doesNotMatch(readerJs, /localStorage\.setItem\(".*score|localStorage\.setItem\(".*error|localStorage\.setItem\(".*checkpoint|localStorage\.setItem\(".*journal|localStorage\.setItem\(".*notes/i);
-assert.doesNotMatch(readerJs, /method:\s*["']POST["']|method:\s*["']PUT["']|method:\s*["']PATCH["']|method:\s*["']DELETE["']/i);
+assert.doesNotMatch(readerJsBundle, /githubToken|Authorization|contents\/|repos\/|fetch\("\/api/i);
+assert.match(readerJsBundle, /ieltsReader\.annotations\.v1/, "reader JS should allow local annotation state only under the IELTS annotation key");
+assert.match(readerJsBundle, /ieltsReader\.tasks\.v1/, "reader JS should allow local task state only under the IELTS task key");
+assert.doesNotMatch(readerJsBundle, /localStorage\.setItem\(".*score|localStorage\.setItem\(".*error|localStorage\.setItem\(".*checkpoint|localStorage\.setItem\(".*journal|localStorage\.setItem\(".*notes/i);
+assert.doesNotMatch(readerJsBundle, /method:\s*["']POST["']|method:\s*["']PUT["']|method:\s*["']PATCH["']|method:\s*["']DELETE["']/i);

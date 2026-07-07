@@ -1,6 +1,7 @@
-const UI_STATE_KEY = "ieltsReader.ui.v1";
-const ANNOTATION_STORAGE_KEY = "ieltsReader.annotations.v1";
-const TASK_STORAGE_KEY = "ieltsReader.tasks.v1";
+import { createReaderModule, makeKnowledgeNote, renderModuleSafely } from "./reader-modules.js";
+import { loadAnnotations, loadTaskState, loadUiState, saveAnnotations, saveTaskState, saveUiState } from "./reader-state.js";
+import { renderTaskChecklist } from "./reader-tasks.js";
+import { escapeHtml, getShortcutLabel, slugify, titleCase, toList, truncateText } from "./reader-utils.js";
 
 const WEEKS = [1, 2, 3, 4, 5, 6, 7, 8];
 const LANES = ["Listening", "Reading", "Writing", "Speaking", "Errors"];
@@ -57,49 +58,6 @@ async function fetchJson(path) {
   const response = await fetch(resolveUrl(path));
   if (!response.ok) throw new Error(`Unable to load ${path}`);
   return response.json();
-}
-
-function escapeHtml(value) {
-  return String(value ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
-}
-
-function toList(value) {
-  return Array.isArray(value) ? value : [];
-}
-
-function titleCase(value) {
-  return String(value ?? "")
-    .replace(/[-_]/g, " ")
-    .replace(/\b\w/g, (letter) => letter.toUpperCase());
-}
-
-function slugify(value) {
-  const slug = String(value ?? "")
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-  return slug || "section";
-}
-
-function stripHtml(value) {
-  const temp = document.createElement("div");
-  temp.innerHTML = String(value ?? "");
-  return temp.textContent?.replace(/\s+/g, " ").trim() ?? "";
-}
-
-function truncateText(value, maxLength = 220) {
-  const text = String(value ?? "")
-    .replace(/[#*_`>]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-  if (text.length <= maxLength) return text;
-  return `${text.slice(0, maxLength - 1).trim()}...`;
 }
 
 function formatBand(value) {
@@ -183,30 +141,6 @@ function renderMarkdownPreview(markdown) {
   flushList();
 
   return blocks.join("") || '<p class="empty-state">No content.</p>';
-}
-
-function renderTaskChecklist(moduleId, sectionTitle, items) {
-  const rows = toList(items).filter(Boolean);
-  if (rows.length === 0) return "";
-
-  return `
-    <ul class="task-list">
-      ${rows
-        .map((item, index) => {
-          const taskId = `${moduleId}__${slugify(sectionTitle)}__${index}`;
-          const isDone = Boolean(taskState[taskId]);
-          return `
-            <li class="task-item${isDone ? " is-done" : ""}">
-              <label>
-                <input type="checkbox" data-task-id="${escapeHtml(taskId)}" ${isDone ? "checked" : ""} />
-                <span>${escapeHtml(item)}</span>
-              </label>
-            </li>
-          `;
-        })
-        .join("")}
-    </ul>
-  `;
 }
 
 function renderSkillGapBars(skills, target) {
@@ -362,7 +296,12 @@ function renderDailyTasks(data, moduleId) {
     "Run one diagnostic or review task before adding new theory.",
     "Update confidence and unverified dimensions only after evidence changes.",
   ];
-  return renderTaskChecklist(moduleId, "Daily training tasks", [...baseTasks, ...errors]);
+  return renderTaskChecklist({
+    sourceId: `${moduleId}:daily-training`,
+    fieldName: "dailyTask",
+    items: [...baseTasks, ...errors],
+    taskState,
+  });
 }
 
 function renderErrorCard(error) {
@@ -479,62 +418,6 @@ function renderValidation(data) {
   `;
 }
 
-function makeKnowledgeNote(id, title, body, groups = []) {
-  return {
-    id,
-    title,
-    body,
-    groups,
-  };
-}
-
-function buildSearchEntries(moduleId, moduleTitle, sections, sectionIds, knowledgeNotes) {
-  const sectionEntries = Object.entries(sections).map(([sectionTitle, body]) => ({
-    id: sectionIds[sectionTitle],
-    moduleId,
-    moduleTitle,
-    sectionTitle,
-    text: `${sectionTitle} ${stripHtml(body)}`,
-  }));
-  const noteEntries = toList(knowledgeNotes).map((note) => ({
-    id: note.id,
-    moduleId,
-    moduleTitle,
-    sectionTitle: note.title,
-    text: `${note.title} ${stripHtml(note.body)} ${toList(note.groups).map((group) => stripHtml(group.body)).join(" ")}`,
-  }));
-  return [...sectionEntries, ...noteEntries];
-}
-
-function createReaderModule(config) {
-  const sections = config.sections ?? {};
-  const sectionIds = {};
-  const sectionNotes = {};
-  for (const sectionTitle of Object.keys(sections)) {
-    const sectionId = `${config.id}-${slugify(sectionTitle)}`;
-    sectionIds[sectionTitle] = sectionId;
-    sectionNotes[sectionId] = makeKnowledgeNote(sectionId, sectionTitle, sections[sectionTitle]);
-  }
-  const knowledgeNotes = toList(config.knowledgeNotes);
-  const searchEntries = buildSearchEntries(config.id, config.title, sections, sectionIds, knowledgeNotes);
-  const searchText = searchEntries.map((entry) => `${entry.sectionTitle} ${entry.text}`).join(" ");
-
-  return {
-    id: config.id,
-    title: config.title,
-    status: config.status ?? "ready",
-    priority: config.priority ?? "core",
-    learningProgress: config.learningProgress ?? 0,
-    lastUpdated: config.lastUpdated ?? "",
-    sections,
-    sectionIds,
-    sectionNotes,
-    knowledgeNotes,
-    searchEntries,
-    searchText,
-  };
-}
-
 function buildErrorNotes(data) {
   return toList(data.errorLog?.errors).map((error) => makeKnowledgeNote(
     `error-${error.id}`,
@@ -575,32 +458,33 @@ function buildReaderModules(data) {
   const target = data.project?.target ?? data.scoreProfile?.target ?? {};
   const lastUpdated = data.scoreProfile?.lastUpdated ?? data.build?.generatedAt ?? "";
   const dashboardSections = {
-    Dashboard: renderDashboard(data),
-    "Score profile": `
+    Dashboard: renderModuleSafely("dashboard", "Dashboard", () => renderDashboard(data)),
+    "Score profile": renderModuleSafely("dashboard", "Score profile", () => `
       <p>${escapeHtml(data.scoreProfile?.currentEstimate?.summary ?? "Diagnostic evidence has not been collected yet.")}</p>
       ${renderReferenceChips(toList(data.scoreProfile?.risks), "risk")}
-    `,
-    "Daily training tasks": renderDailyTasks(data, "dashboard"),
+    `),
+    "Daily training tasks": renderModuleSafely("dashboard", "Daily training tasks", () => renderDailyTasks(data, "dashboard")),
   };
 
   const swimlaneSections = {
-    "8-week swimlane": renderSwimlane(data),
-    "Checkpoint rules": renderCheckpointList(data),
-    "Daily training tasks": renderDailyTasks(data, "swimlane"),
+    "8-week swimlane": renderModuleSafely("swimlane", "8-week swimlane", () => renderSwimlane(data)),
+    "Checkpoint rules": renderModuleSafely("swimlane", "Checkpoint rules", () => renderCheckpointList(data)),
+    "Daily training tasks": renderModuleSafely("swimlane", "Daily training tasks", () => renderDailyTasks(data, "swimlane")),
   };
 
   const errorSections = {
-    Errors: renderErrors(data),
-    "Regression control": renderTaskChecklist(
-      "errors",
-      "Regression control",
-      toList(data.errorLog?.errors).map((error) => `${error.id}: verify whether this error is fixed repeatedly or regressed.`),
-    ),
+    Errors: renderModuleSafely("errors", "Errors", () => renderErrors(data)),
+    "Regression control": renderModuleSafely("errors", "Regression control", () => renderTaskChecklist({
+      sourceId: "errors:regression-control",
+      fieldName: "reviewMethod",
+      items: toList(data.errorLog?.errors).map((error) => `${error.id}: verify whether this error is fixed repeatedly or regressed.`),
+      taskState,
+    })),
   };
 
   const noteSections = {
-    Notes: renderNotes(data),
-    "Indexed note bodies": `
+    Notes: renderModuleSafely("notes", "Notes", () => renderNotes(data)),
+    "Indexed note bodies": renderModuleSafely("notes", "Indexed note bodies", () => `
       <div class="knowledge-list">
         ${buildDocumentNotes(data.notes, "note")
           .map((note) => `
@@ -611,12 +495,12 @@ function buildReaderModules(data) {
           `)
           .join("")}
       </div>
-    `,
+    `),
   };
 
   const journalSections = {
-    Journal: renderJournal(data),
-    "Session bodies": `
+    Journal: renderModuleSafely("journal", "Journal", () => renderJournal(data)),
+    "Session bodies": renderModuleSafely("journal", "Session bodies", () => `
       <div class="knowledge-list">
         ${buildDocumentNotes(data.journal, "journal")
           .map((note) => `
@@ -627,12 +511,12 @@ function buildReaderModules(data) {
           `)
           .join("")}
       </div>
-    `,
+    `),
   };
 
   const promptSections = {
-    "Prompt library": renderPromptLibrary(data),
-    "Prompt bodies": `
+    "Prompt library": renderModuleSafely("prompt-library", "Prompt library", () => renderPromptLibrary(data)),
+    "Prompt bodies": renderModuleSafely("prompt-library", "Prompt bodies", () => `
       <div class="knowledge-list">
         ${buildDocumentNotes(data.promptLibrary, "prompt")
           .map((note) => `
@@ -643,12 +527,12 @@ function buildReaderModules(data) {
           `)
           .join("")}
       </div>
-    `,
+    `),
   };
 
   const validationSections = {
-    Validation: renderValidation(data),
-    "Validation bodies": `
+    Validation: renderModuleSafely("validation", "Validation", () => renderValidation(data)),
+    "Validation bodies": renderModuleSafely("validation", "Validation bodies", () => `
       <div class="knowledge-list">
         ${buildDocumentNotes(data.validation, "validation")
           .map((note) => `
@@ -659,7 +543,7 @@ function buildReaderModules(data) {
           `)
           .join("")}
       </div>
-    `,
+    `),
   };
 
   const modules = [
@@ -754,93 +638,20 @@ function buildReaderModules(data) {
   };
 }
 
-function createEmptyAnnotationStore() {
-  return {
-    version: 1,
-    items: [],
-  };
-}
-
-function loadAnnotations() {
-  try {
-    const raw = window.localStorage.getItem(ANNOTATION_STORAGE_KEY);
-    if (!raw) return createEmptyAnnotationStore();
-    const parsed = JSON.parse(raw);
-    if (!parsed || !Array.isArray(parsed.items)) return createEmptyAnnotationStore();
-    return {
-      version: 1,
-      items: parsed.items.filter((item) => item && item.projectId === "ielts-academic"),
-    };
-  } catch (error) {
-    console.warn("Unable to load IELTS annotations", error);
-    return createEmptyAnnotationStore();
-  }
-}
-
-function saveAnnotations(annotations = state.annotations) {
-  try {
-    window.localStorage.setItem(ANNOTATION_STORAGE_KEY, JSON.stringify(annotations));
-  } catch (error) {
-    console.warn("Unable to save IELTS annotations", error);
-  }
-}
-
-function loadTaskState() {
-  try {
-    const raw = window.localStorage.getItem(TASK_STORAGE_KEY);
-    const parsed = raw ? JSON.parse(raw) : {};
-    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
-  } catch (error) {
-    console.warn("Unable to load task checklist state", error);
-    return {};
-  }
-}
-
-function saveTaskState(tasks = taskState) {
-  try {
-    window.localStorage.setItem(TASK_STORAGE_KEY, JSON.stringify(tasks));
-  } catch (error) {
-    console.warn("Unable to save task checklist state", error);
-  }
-}
-
-function loadUiState() {
-  try {
-    const raw = window.localStorage.getItem(UI_STATE_KEY);
-    const parsed = raw ? JSON.parse(raw) : {};
-    return {
-      theme: parsed.theme === "dark" ? "dark" : "light",
-      leftCollapsed: Boolean(parsed.leftCollapsed),
-      noteCollapsed: Boolean(parsed.noteCollapsed),
-    };
-  } catch {
-    return {
-      theme: "light",
-      leftCollapsed: false,
-      noteCollapsed: false,
-    };
-  }
-}
-
-function saveUiState() {
-  try {
-    window.localStorage.setItem(UI_STATE_KEY, JSON.stringify(state.ui));
-  } catch {
-    return;
-  }
-}
-
 function setTheme(theme, options = {}) {
   const normalized = theme === "dark" ? "dark" : "light";
   state.ui.theme = normalized;
   document.body.dataset.theme = normalized;
   els.toggleTheme?.setAttribute("aria-pressed", normalized === "dark" ? "true" : "false");
-  if (options.persist !== false) saveUiState();
+  if (options.persist !== false) saveUiState(state.ui);
 }
 
 function applyStoredShellState() {
   els.shell?.classList.toggle("is-left-collapsed", state.ui.leftCollapsed);
   els.shell?.classList.toggle("is-note-collapsed", state.ui.noteCollapsed);
+  document.querySelectorAll(".search-shortcut").forEach((shortcut) => {
+    shortcut.textContent = getShortcutLabel();
+  });
   setTheme(state.ui.theme, { persist: false });
 }
 
@@ -940,7 +751,7 @@ function createAnnotationFromSelection(mode) {
     updatedAt: now,
   };
   state.annotations.items.push(annotation);
-  saveAnnotations();
+  saveAnnotations(state.annotations);
   window.getSelection()?.removeAllRanges();
   hideAnnotationToolbar();
   applyHighlights();
@@ -952,7 +763,7 @@ function updateAnnotationNote(annotationId, value) {
   if (!annotation) return;
   annotation.note = value;
   annotation.updatedAt = new Date().toISOString();
-  saveAnnotations();
+  saveAnnotations(state.annotations);
 }
 
 function hideAnnotationDeletePopover() {
@@ -969,7 +780,7 @@ function deleteAnnotation(annotationId, behavior) {
   } else {
     state.annotations.items = state.annotations.items.filter((item) => item.id !== annotationId);
   }
-  saveAnnotations();
+  saveAnnotations(state.annotations);
   hideAnnotationDeletePopover();
   applyHighlights();
   renderContextualNotePanel(getKnowledgeNoteById(state.currentModule, annotation.noteId));
@@ -1547,7 +1358,7 @@ function bindEvents() {
     }
     state.ui.noteCollapsed = !state.ui.noteCollapsed;
     els.shell.classList.toggle("is-note-collapsed", state.ui.noteCollapsed);
-    saveUiState();
+    saveUiState(state.ui);
   });
 
   els.toggleLeftControls.forEach((button) => {
@@ -1558,7 +1369,7 @@ function bindEvents() {
       }
       state.ui.leftCollapsed = !state.ui.leftCollapsed;
       els.shell.classList.toggle("is-left-collapsed", state.ui.leftCollapsed);
-      saveUiState();
+      saveUiState(state.ui);
     });
   });
 
