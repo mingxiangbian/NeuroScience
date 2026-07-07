@@ -1,0 +1,64 @@
+{
+  "id": "gurnee-2026-global-workspace-language-models",
+  "title": "Verbalizable Representations Form a Global Workspace in Language Models",
+  "shortTitle": "Global Workspace in LMs",
+  "authors": "Gurnee et al.",
+  "year": 2026,
+  "category": "Mechanistic interpretability and global workspace",
+  "categoryZh": "AI 机制可解释性与全局工作空间",
+  "relation": "Maps verbalizable internal representations to workspace-like access, report, reasoning, and auditing functions in language models.",
+  "relationZh": "这篇不是记忆主线论文，而是当前项目的 workspace/internal reasoning 分支：它帮助区分长期记忆、工作空间、可报告表征和内部推理通道。",
+  "description": "A source-linked reading package for the Transformer Circuits essay on the Jacobian Lens, J-space, workspace-like functional evidence, alignment auditing, and counterfactual reflection training.",
+  "descriptionZh": "这份精读包把原网页压缩成可核对的阅读锚点：重点看 J-lens 怎样读出可 verbalize 的表征，J-space 为什么被解释为功能性 global workspace，以及这些表征如何服务内部推理、审计和训练干预。",
+  "readingFocus": [
+    "先区分 memory、working memory、workspace 和 verbal report，不要把它们合成一个概念。",
+    "把 global workspace 当作功能通达假设阅读，不把它直接等同于主观意识或脑机制复现。",
+    "重点核对 J-lens / J-space 的方法定义，以及 report、modulation、reasoning、generalization、selectivity 五类证据。",
+    "把 alignment auditing 和 counterfactual reflection 读作方法应用，不把它们当成已经解决对齐问题。"
+  ],
+  "source": "https://transformer-circuits.pub/2026/workspace/index.html",
+  "sourceMode": "source-linked",
+  "license": "See source terms",
+  "sections": [
+    {
+      "id": "sec-frame",
+      "title": "Introduction and framing",
+      "titleZh": "问题设定"
+    },
+    {
+      "id": "sec-method",
+      "title": "Jacobian Lens and J-space",
+      "titleZh": "J-lens 与 J-space"
+    },
+    {
+      "id": "sec-workspace",
+      "title": "Functional workspace evidence",
+      "titleZh": "功能证据"
+    },
+    {
+      "id": "sec-structure",
+      "title": "Structure supports function",
+      "titleZh": "结构证据"
+    },
+    {
+      "id": "sec-auditing",
+      "title": "Alignment auditing",
+      "titleZh": "对齐审计"
+    },
+    {
+      "id": "sec-posttraining",
+      "title": "Post-training and reflection",
+      "titleZh": "后训练与反思"
+    },
+    {
+      "id": "sec-discussion",
+      "title": "Discussion and limits",
+      "titleZh": "讨论与局限"
+    },
+    {
+      "id": "sec-agent",
+      "title": "Project relevance",
+      "titleZh": "对本项目的启发"
+    }
+  ]
+}

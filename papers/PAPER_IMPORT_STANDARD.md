@@ -100,6 +100,8 @@ papers/<project-id>/readings/<paper-id>/
 
 规则：
 
+- `sourceMode` 可选，默认视为 `verbatim`。`verbatim` 表示 `sourceText` 来自本地 PDF/HTML/Markdown 的论文原文；`source-linked` 表示源材料是外部网页或不适合整篇复制的文章，reading package 只保存 source-linked 精读锚点和中文阅读转写。
+- `source-linked` 包必须在 `paper.json.source` 写外部来源 URL，并且不应在 manifest 中伪造不存在的本地全文文件。
 - `categoryZh`、`relationZh`、`descriptionZh` 优先用于中文 reader。
 - `readingFocus` 是中文阅读提示，不是论文摘要；控制在 3 到 5 条。
 - `sections[].id` 必须被 `chunks.json` 的 `sectionId` 引用。
@@ -138,6 +140,30 @@ papers/<project-id>/readings/<paper-id>/
 - `zhTranslation` 是 `sourceText` 的忠实翻译，不加入项目判断，不扩写。
 - `zhExplanation` 是解释、评注和项目关联，可以写“这一段为什么重要”。
 - `keywords` 用于本地检索和后续 embedding，保持少量关键术语即可。
+
+### Source Mode
+
+两种导入模式：
+
+- `verbatim`：用于本地 PDF、PMC HTML、开放全文 HTML 或 Markdown。`sourceText` 保存论文原文或源文件原文，`zhTranslation` 做忠实翻译，图表优先保存真实来源图或语义裁剪图。
+- `source-linked`：用于外部 web essay、互动网页或版权/体量上不适合整篇复制的来源。`sourceText` 保存英文 source-linked reading anchor，也就是围绕来源段落写成的非整篇复制精读锚点；`zhTranslation` 是这段本地 anchor 的中文阅读转写，不是整篇文章的完整翻译；`zhExplanation` 继续承担项目解释。
+
+`source-linked` chunk 必须额外包含：
+
+```json
+{
+  "sourceMode": "source-linked",
+  "sourceAnchor": "The Jacobian Lens",
+  "sourceSection": "Methods",
+  "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#methods"
+}
+```
+
+规则：
+
+- `sourceAnchor` 写源网页的小节、图号或稳定锚点名称；`sourceUrl` 必须是可打开的外部锚点 URL，优先使用页面内 hash；`sourceSection` 写读者可在源网页中定位的上级章节。
+- 不要把 `source-linked` 包写成完整搬运；它的职责是建立可核对、可搜索、可精读的阅读入口。
+- 如果后续确认许可证允许全文本地化，可以单独把模式升级为 `verbatim`，并补齐本地源文件。
 
 ### Chunk Boundary
 
@@ -234,7 +260,7 @@ chunk 边界优先级：
 
 - `id` 必须存在于 `figures.json`。
 - `relation` 使用 `near`、`supporting` 或 `deferred`。
-- 如果图像文件暂时缺失，reader 会跳过，不显示破图或占位符。
+- 如果图像文件暂时缺失但 `figures.json` 有 `sourceUrl`，reader 会显示 source-linked 图表卡片；如果连 `sourceUrl` 也没有，reader 会跳过，不显示破图或占位符。
 
 ## Cross-Page Figure Rules
 
@@ -272,6 +298,7 @@ chunk 边界优先级：
 - `semantic-crop`：推荐模式，从 PDF 渲染页中只裁出图表主体、caption 和少量边距。
 - `paper-extract`：从 PDF 内嵌图片对象直接抽取出的真实来源图。
 - `manual-redraw`：fallback 模式，只用于真实图无法清晰裁取、或需要读者侧解释图时。
+- `source-linked`：外部网页型模式，只保存 `sourceUrl`、`sourceAnchor`、`sourceFigure` 和 caption，不复制互动图或整页截图。
 - `page-fallback`：临时模式，表示当前只能提供整页截图；不能作为长期合格图像。
 
 真实图、真实来源图或 source-backed figure 必须优先于重绘图。导入 agent 的顺序是：
@@ -280,7 +307,8 @@ chunk 边界优先级：
 2. 找不到时渲染 PDF 页面并做 `semantic-crop`。
 3. PDF 有可用图片对象时可以用 `paper-extract`。
 4. 只有上述方式都不适合，才使用 `manual-redraw`。
-5. `page-fallback` 只能临时使用，不能作为合格 reading package 的最终图。
+5. 如果来源是互动网页且不宜复制图像，用 `source-linked` 保存来源锚点。
+6. `page-fallback` 只能临时使用，不能作为合格 reading package 的最终图。
 
 每个已裁剪图像应在 `figures.json` 中记录 `bbox`，用于让后续 agent 追溯裁剪来源：
 
@@ -341,6 +369,7 @@ chunk 边界优先级：
 - `sourcePage` 记录 PDF 页码；HTML 来源可记录 `null`。
 - `sourceFigure` 记录论文中的图号，例如 `Figure 1` 或 `Fig. 3`。
 - `cropMode` 使用 `source-figure`、`semantic-crop`、`paper-extract`、`manual-redraw` 或 `page-fallback`。
+- `source-linked` figure 可以不写 `file`，但必须写 `sourceUrl`、`sourceAnchor`、`sourceFigure`，并把 `status` 设为 `source-linked`。
 - `bbox` 记录裁剪区域；`semantic-crop` 图像必须提供。
 - `manual-redraw` 必须写 `redrawType: "reader-side-fallback"` 和 `sourceBasis`。
 - `canonicalSectionId` 指向主要归属章节。

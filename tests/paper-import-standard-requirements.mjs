@@ -16,6 +16,8 @@ assert.match(standard, /^# Paper Import Standard/m, "standard should have a stab
 assert.match(standard, /papers\/<project-id>\/readings\/<paper-id>\//, "standard should define the reading package path");
 assert.match(standard, /paper\.json[\s\S]*chunks\.json[\s\S]*notes\.json[\s\S]*embeddings\.json[\s\S]*figures\.json/, "standard should list all required reading package files");
 assert.match(standard, /sourceText[\s\S]*论文原文/, "standard should define sourceText as paper source text, not a summary");
+assert.match(standard, /sourceMode[\s\S]*verbatim[\s\S]*source-linked/, "standard should define source-linked reading packages for web essays without copying full text");
+assert.match(standard, /sourceAnchor[\s\S]*sourceUrl[\s\S]*sourceSection/, "standard should require source anchors for source-linked chunks");
 assert.match(standard, /zhTranslation[\s\S]*忠实翻译/, "standard should define zhTranslation as faithful translation");
 assert.match(standard, /zhExplanation[\s\S]*解释/, "standard should separate explanation from translation");
 assert.match(standard, /blocks[\s\S]*paragraph[\s\S]*math[\s\S]*code[\s\S]*table[\s\S]*figure/, "standard should define supported block types");
@@ -36,5 +38,5 @@ const validatorOutput = execFileSync(process.execPath, [fileURLToPath(validatorU
   encoding: "utf8"
 });
 
-assert.match(validatorOutput, /Validated 9 reading packages for brain-memory-for-ai-agents/, "validator should check every current reading package");
+assert.match(validatorOutput, /Validated 10 reading packages for brain-memory-for-ai-agents/, "validator should check every current reading package");
 assert.match(validatorOutput, /0 errors/, "validator should report a clean package set");

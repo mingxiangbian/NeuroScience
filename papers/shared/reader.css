@@ -1014,6 +1014,32 @@ input {
   background: rgba(255, 255, 255, 0.18);
 }
 
+.figure-link-card {
+  display: grid;
+  gap: 8px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.34), rgba(238, 247, 242, 0.16));
+}
+
+.figure-link-label {
+  color: var(--reader-blue);
+  font-family: var(--reader-serif);
+  font-size: 16px;
+  font-weight: 680;
+}
+
+.figure-source-link {
+  width: fit-content;
+  border-bottom: 1px solid var(--reader-line);
+  color: var(--reader-blue);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.figure-source-link:hover {
+  border-bottom-color: var(--reader-blue);
+}
+
 .figure-placeholder {
   display: grid;
   min-height: 120px;

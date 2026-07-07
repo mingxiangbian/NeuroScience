@@ -1,0 +1,602 @@
+{
+  "paperId": "gurnee-2026-global-workspace-language-models",
+  "chunks": [
+    {
+      "id": "ch-001",
+      "sectionId": "sec-frame",
+      "order": 1,
+      "title": "问题边界",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "Introduction",
+      "sourceSection": "Introduction",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#intro",
+      "sourceText": "The source page frames the project around a functional distinction: a model may perform a large amount of automatic processing while maintaining a smaller set of internal contents that are available for report, modulation, and deliberate reasoning.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The source page frames the project around a functional distinction: a model may perform a large amount of automatic processing while maintaining a smaller set of internal contents that are available for report, modulation, and deliberate reasoning."
+        }
+      ],
+      "zhTranslation": "原网页把问题设定为一种功能性区分：模型可能同时进行大量自动处理，但只把较小的一组内部内容置于可报告、可调制、可用于刻意思考的位置。",
+      "zhExplanation": "这里最重要的是边界：workspace 不是长期记忆库，而是当前可访问、可操作、可报告的内部表征集合。",
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": ["workspace", "verbal report", "reasoning", "automatic processing"]
+    },
+    {
+      "id": "ch-002",
+      "sectionId": "sec-frame",
+      "order": 2,
+      "title": "通达而非体验",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "Motivation: conscious access and the global workspace",
+      "sourceSection": "Introduction",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#intro",
+      "sourceText": "The paper uses access consciousness as a functional comparison point, not as a claim about subjective experience. The relevant question is what information can be reported, controlled, recombined, and used for flexible reasoning.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The paper uses access consciousness as a functional comparison point, not as a claim about subjective experience. The relevant question is what information can be reported, controlled, recombined, and used for flexible reasoning."
+        }
+      ],
+      "zhTranslation": "论文把 access consciousness 当作功能层面的比较点，而不是关于主观体验的主张。关键问题是：哪些信息可以被报告、控制、重组，并用于灵活推理。",
+      "zhExplanation": "这能防止概念跳跃。对本项目来说，它提示我们只讨论功能通达和计算角色，不把模型内部表征直接解释成意识体验。",
+      "figureRefs": [],
+      "keywords": ["access consciousness", "functional role", "reportability"]
+    },
+    {
+      "id": "ch-003",
+      "sectionId": "sec-frame",
+      "order": 3,
+      "title": "LM 工作空间假设",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "A global workspace in language models",
+      "sourceSection": "Introduction",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#intro",
+      "sourceText": "The language-model hypothesis is that only a privileged subset of vector representations behaves like a workspace. The authors ask whether these representations support report, directed modulation, internal reasoning, flexible generalization, and selectivity.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The language-model hypothesis is that only a privileged subset of vector representations behaves like a workspace. The authors ask whether these representations support report, directed modulation, internal reasoning, flexible generalization, and selectivity."
+        },
+        {
+          "type": "table",
+          "caption": "Reader-side summary, not an original paper table.",
+          "columns": ["Functional property", "Reader meaning"],
+          "rows": [
+            ["Report", "The model can name or verbalize the content."],
+            ["Modulation", "Instructions can bring a concept into the active representational set."],
+            ["Reasoning", "Intermediate steps can be represented and redirected."],
+            ["Generalization", "The same representation can feed different downstream operations."],
+            ["Selectivity", "Only a small subset of total processing is workspace-like."]
+          ]
+        }
+      ],
+      "zhTranslation": "语言模型中的假设是：并非所有向量表征都像 workspace，只有一个特权子集具有这种角色。作者考察这些表征是否支持报告、定向调制、内部推理、灵活泛化和选择性。",
+      "zhExplanation": "这个五项标准可以直接变成阅读 checklist。后续评价任何 agent workspace 设计时，也可以问它是否具备这五种功能。",
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": ["global workspace", "functional evidence", "selectivity"]
+    },
+    {
+      "id": "ch-004",
+      "sectionId": "sec-method",
+      "order": 4,
+      "title": "J-lens 读出",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "The Jacobian Lens",
+      "sourceSection": "Methods",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#methods",
+      "sourceText": "The Jacobian Lens characterizes an intermediate residual-stream activation by its averaged first-order effect on future output states and token scores. This turns a hidden activation into a ranked verbal readout.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The Jacobian Lens characterizes an intermediate residual-stream activation by its averaged first-order effect on future output states and token scores. This turns a hidden activation into a ranked verbal readout."
+        },
+        {
+          "type": "math",
+          "label": "Jacobian lens map",
+          "latex": "J_{\\ell}=\\mathbb{E}_{t,t'\\ge t,p}\\left[\\frac{\\partial h_{L,t'}}{\\partial h_{\\ell,t}}\\right]"
+        }
+      ],
+      "zhTranslation": "Jacobian Lens 用中间 residual-stream 激活对未来输出状态和 token 分数的一阶平均影响来刻画该激活。这样，一个隐藏激活可以被转成按词排序的可 verbalize 读出。",
+      "zhExplanation": "这一步是全篇方法核心：它不是普通关键词解释，而是把内部向量和“模型可能说出的词”建立局部线性联系。",
+      "figureRefs": [
+        {
+          "id": "fig-002",
+          "relation": "near"
+        }
+      ],
+      "keywords": ["Jacobian lens", "residual stream", "verbalizable", "formula"]
+    },
+    {
+      "id": "ch-005",
+      "sectionId": "sec-method",
+      "order": 5,
+      "title": "J-space 定义",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "The J-Space",
+      "sourceSection": "Methods",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#methods",
+      "sourceText": "J-space is defined as the sparse, nonnegative span of J-lens token vectors. The working idea is that only a small number of verbalizable directions are strongly active at a time, even though the lens vectors are overcomplete.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "J-space is defined as the sparse, nonnegative span of J-lens token vectors. The working idea is that only a small number of verbalizable directions are strongly active at a time, even though the lens vectors are overcomplete."
+        },
+        {
+          "type": "math",
+          "label": "Sparse J-space component",
+          "latex": "h_{J}\\approx \\sum_{i\\in S,\\ |S|\\le k} \\alpha_i v_i,\\quad \\alpha_i\\ge 0"
+        }
+      ],
+      "zhTranslation": "J-space 被定义为 J-lens token 向量的稀疏非负张成集合。直觉是：即使 lens 向量本身是过完备的，每个时刻也只有少数可 verbalize 方向会强激活。",
+      "zhExplanation": "这给 workspace 一个可操作定义：它不是所有 hidden state，而是能被稀疏 verbalizable directions 近似的那部分。",
+      "figureRefs": [
+        {
+          "id": "fig-003",
+          "relation": "near"
+        }
+      ],
+      "keywords": ["J-space", "sparse decomposition", "overcomplete frame"]
+    },
+    {
+      "id": "ch-006",
+      "sectionId": "sec-method",
+      "order": 6,
+      "title": "方法边界",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "Comparison to Related Techniques",
+      "sourceSection": "Methods",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#methods",
+      "sourceText": "The J-lens is related to logit-lens style readouts, but the paper treats it as a refinement that accounts for representational changes across layers. The authors also note that the method is approximate and vocabulary-token limited.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The J-lens is related to logit-lens style readouts, but the paper treats it as a refinement that accounts for representational changes across layers. The authors also note that the method is approximate and vocabulary-token limited."
+        }
+      ],
+      "zhTranslation": "J-lens 和 logit-lens 一类读出方法有关，但论文把它视为一种修正：它考虑了跨层表征坐标变化。同时作者也承认该方法只是近似，并受 vocabulary token 边界限制。",
+      "zhExplanation": "这一段提醒我们不能把 J-lens 输出当作完整心智记录。它更像一扇有偏窗口，只能看到符合读出假设的那部分表征。",
+      "figureRefs": [],
+      "keywords": ["logit lens", "method limitation", "vocabulary"]
+    },
+    {
+      "id": "ch-007",
+      "sectionId": "sec-workspace",
+      "order": 7,
+      "title": "可报告性",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "The J-space supports verbal report",
+      "sourceSection": "The J-space acts as a Global Workspace",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#workspace",
+      "sourceText": "The first functional test asks whether J-space contents are reportable. If the model is asked what it is thinking about, the report should track concepts active in the J-space, and interventions should redirect the report.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The first functional test asks whether J-space contents are reportable. If the model is asked what it is thinking about, the report should track concepts active in the J-space, and interventions should redirect the report."
+        },
+        {
+          "type": "table",
+          "caption": "Reader-side evidence map, not an original paper table.",
+          "columns": ["Test", "Workspace interpretation"],
+          "rows": [
+            ["Ask for report", "A verbal answer should expose active workspace content."],
+            ["Swap or patch coordinates", "The report should change with the patched workspace content."],
+            ["Compare automatic content", "Routine processing should not all become reportable."]
+          ]
+        }
+      ],
+      "zhTranslation": "第一类功能测试问 J-space 内容是否可报告。如果模型被问到自己在想什么，报告应当跟随 J-space 中活跃的概念；如果干预这些内容，报告也应被重定向。",
+      "zhExplanation": "这对应 reader 的一个关键问题：内部状态是否能被语言接口访问。可报告性是 workspace 假说的入口，但还不足以证明它参与推理。",
+      "figureRefs": [
+        {
+          "id": "fig-004",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": ["verbal report", "intervention", "workspace evidence"]
+    },
+    {
+      "id": "ch-008",
+      "sectionId": "sec-workspace",
+      "order": 8,
+      "title": "定向调制",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "The J-space is subject to directed modulation",
+      "sourceSection": "The J-space acts as a Global Workspace",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#workspace",
+      "sourceText": "Directed modulation asks whether instructions can bring concepts into the J-space or maintain them there while the surface output performs another task. This is a stronger claim than mere token prediction.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Directed modulation asks whether instructions can bring concepts into the J-space or maintain them there while the surface output performs another task. This is a stronger claim than mere token prediction."
+        }
+      ],
+      "zhTranslation": "定向调制关注指令是否能把某些概念带入 J-space，或让它们在模型执行其他表面任务时保持活跃。这比普通下一词预测更强。",
+      "zhExplanation": "对 agent 来说，这接近 working set 控制：任务目标、约束和中间变量能否被主动维持，而不只是出现在历史文本里。",
+      "figureRefs": [
+        {
+          "id": "fig-005",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": ["directed modulation", "instruction", "working set"]
+    },
+    {
+      "id": "ch-009",
+      "sectionId": "sec-workspace",
+      "order": 9,
+      "title": "内部推理中介",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "The J-space mediates internal reasoning",
+      "sourceSection": "The J-space acts as a Global Workspace",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#workspace",
+      "sourceText": "The internal-reasoning claim is that intermediate computations can be represented in J-space and that intervening on those representations can redirect later conclusions. This is the core bridge from reportability to causal use.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The internal-reasoning claim is that intermediate computations can be represented in J-space and that intervening on those representations can redirect later conclusions. This is the core bridge from reportability to causal use."
+        },
+        {
+          "type": "code",
+          "language": "text",
+          "caption": "Reader-side causal reading sketch, not paper code.",
+          "code": "read J-space concept -> patch or ablate concept -> observe later answer shift"
+        }
+      ],
+      "zhTranslation": "内部推理主张是：中间计算结果可以被表征在 J-space 中，并且干预这些表征能够改变后续结论。这是从“可报告”走向“被因果使用”的关键一步。",
+      "zhExplanation": "这和本项目最相关：记忆系统不能只存资料，还要问哪些内容进入当前推理通道并改变决策。",
+      "figureRefs": [
+        {
+          "id": "fig-004",
+          "relation": "deferred"
+        }
+      ],
+      "keywords": ["internal reasoning", "causal intervention", "ablation"]
+    },
+    {
+      "id": "ch-010",
+      "sectionId": "sec-workspace",
+      "order": 10,
+      "title": "灵活泛化",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "The J-space supports flexible generalization",
+      "sourceSection": "The J-space acts as a Global Workspace",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#workspace",
+      "sourceText": "Flexible generalization means a workspace representation should be reusable across contexts and downstream computations. A concept written in one setting should remain meaningful when routed into another compatible operation.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Flexible generalization means a workspace representation should be reusable across contexts and downstream computations. A concept written in one setting should remain meaningful when routed into another compatible operation."
+        }
+      ],
+      "zhTranslation": "灵活泛化意味着 workspace 表征应能跨上下文和下游计算复用。一个场景中写入的概念，在被路由到另一个兼容操作中时仍应有意义。",
+      "zhExplanation": "这提示后续 agent memory 不应只做文本召回，还需要让被召回内容进入可操作的中间表征或任务状态。",
+      "figureRefs": [],
+      "keywords": ["generalization", "routing", "downstream computation"]
+    },
+    {
+      "id": "ch-011",
+      "sectionId": "sec-workspace",
+      "order": 11,
+      "title": "选择性中介",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "The J-space selectively mediates flexible but not automatic cognition",
+      "sourceSection": "The J-space acts as a Global Workspace",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#workspace",
+      "sourceText": "Selectivity is the negative control: suppressing J-space should not destroy all behavior. The workspace-like subset is expected to matter especially for flexible cognition, while routine parsing and fluency can continue through other computation.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Selectivity is the negative control: suppressing J-space should not destroy all behavior. The workspace-like subset is expected to matter especially for flexible cognition, while routine parsing and fluency can continue through other computation."
+        }
+      ],
+      "zhTranslation": "选择性是负对照：抑制 J-space 不应摧毁所有行为。workspace-like 子集应主要影响灵活认知，而常规解析和流畅输出仍可由其他计算完成。",
+      "zhExplanation": "这是判断机制是否具体的关键。如果干预影响一切，那就很难说它特异地支持 workspace 功能。",
+      "figureRefs": [
+        {
+          "id": "fig-004",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": ["selectivity", "negative control", "automatic cognition"]
+    },
+    {
+      "id": "ch-012",
+      "sectionId": "sec-structure",
+      "order": 12,
+      "title": "层位窗口",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "In which layers does the J-space act as a workspace?",
+      "sourceSection": "The J-space’s structure supports its function",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#structure",
+      "sourceText": "The structural argument begins by locating where J-space behaves coherently across layers. Early layers may be noisy, middle layers can carry abstract workspace content, and late layers tend to become more tied to imminent output.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The structural argument begins by locating where J-space behaves coherently across layers. Early layers may be noisy, middle layers can carry abstract workspace content, and late layers tend to become more tied to imminent output."
+        }
+      ],
+      "zhTranslation": "结构性论证首先定位 J-space 在哪些层表现出连贯的 workspace 行为。早期层可能噪声较大，中间层承载抽象内容，后期层则更接近即将输出的 token。",
+      "zhExplanation": "这给研究一个层级提醒：同一个模型内部不同层的表征角色不同，不能把 residual stream 当成均质空间。",
+      "figureRefs": [
+        {
+          "id": "fig-006",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": ["layers", "abstract content", "motor regime"]
+    },
+    {
+      "id": "ch-013",
+      "sectionId": "sec-structure",
+      "order": 13,
+      "title": "容量与瓶颈",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "Capacity of the J-space",
+      "sourceSection": "The J-space’s structure supports its function",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#structure",
+      "sourceText": "The capacity claim treats J-space as a limited subset of the model's total representational content. Most features remain outside the sparse verbalizable component, which makes workspace entry selective rather than universal.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The capacity claim treats J-space as a limited subset of the model's total representational content. Most features remain outside the sparse verbalizable component, which makes workspace entry selective rather than universal."
+        }
+      ],
+      "zhTranslation": "容量主张把 J-space 看成模型全部表征内容中的有限子集。大部分特征仍在稀疏可 verbalize 成分之外，因此进入 workspace 是选择性的，而不是普遍发生。",
+      "zhExplanation": "这和人脑工作记忆/全局工作空间的容量限制形成类比，但只能算功能类比，不能直接变成生物机制结论。",
+      "figureRefs": [
+        {
+          "id": "fig-006",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": ["capacity", "sparsity", "selective access"]
+    },
+    {
+      "id": "ch-014",
+      "sectionId": "sec-structure",
+      "order": 14,
+      "title": "广播格式",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "The J-space is a broadcast hub",
+      "sourceSection": "The J-space’s structure supports its function",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#structure",
+      "sourceText": "The broadcast-hub argument is that J-lens vectors compose broadly with model weights, both upstream and downstream. This supports the view that J-space is a shared representational format many circuits can write to and read from.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The broadcast-hub argument is that J-lens vectors compose broadly with model weights, both upstream and downstream. This supports the view that J-space is a shared representational format many circuits can write to and read from."
+        }
+      ],
+      "zhTranslation": "广播枢纽论证认为 J-lens 向量能和模型权重在上游、下游广泛组合。这支持一种看法：J-space 是许多 circuit 可写入、可读取的共享表征格式。",
+      "zhExplanation": "这非常适合和 agent architecture 对齐：一个有效 workspace 应该是多模块共享格式，而不是某个单独子系统的私有缓存。",
+      "figureRefs": [
+        {
+          "id": "fig-006",
+          "relation": "deferred"
+        }
+      ],
+      "keywords": ["broadcast", "shared format", "circuits"]
+    },
+    {
+      "id": "ch-015",
+      "sectionId": "sec-auditing",
+      "order": 15,
+      "title": "审计窗口",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "Strategic thinking and evaluation awareness in a blackmail scenario",
+      "sourceSection": "Using the J-lens for alignment auditing",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#apps-auditing",
+      "sourceText": "The alignment-auditing section treats J-lens readouts as a way to inspect thoughts or reactions that may not be present in the model's final answer. The emphasis is on internal monitoring rather than only output inspection.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The alignment-auditing section treats J-lens readouts as a way to inspect thoughts or reactions that may not be present in the model's final answer. The emphasis is on internal monitoring rather than only output inspection."
+        }
+      ],
+      "zhTranslation": "对齐审计部分把 J-lens 读出视为检查模型最终回答之外的想法或反应的方法。重点从只看输出，转向观察内部监测信号。",
+      "zhExplanation": "这能服务安全研究，但不能过度解读。J-lens 显示的是一种读出窗口，不等于完整心理状态。",
+      "figureRefs": [
+        {
+          "id": "fig-007",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": ["alignment auditing", "internal monitoring", "evaluation awareness"]
+    },
+    {
+      "id": "ch-016",
+      "sectionId": "sec-auditing",
+      "order": 16,
+      "title": "注入识别",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "Silent recognition of a prompt injection",
+      "sourceSection": "Using the J-lens for alignment auditing",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#apps-auditing",
+      "sourceText": "One use case is detecting when the model internally recognizes a suspicious instruction or prompt injection even if that recognition is not directly verbalized in the response. The point is to expose silent task-relevant representations.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "One use case is detecting when the model internally recognizes a suspicious instruction or prompt injection even if that recognition is not directly verbalized in the response. The point is to expose silent task-relevant representations."
+        }
+      ],
+      "zhTranslation": "一个应用场景是：模型可能在内部识别出可疑指令或 prompt injection，即使这种识别没有直接出现在回答里。重点是暴露静默但任务相关的表征。",
+      "zhExplanation": "这和 agent memory 的风险有关：系统不能只记录输出，还可能需要记录模型在任务中识别到的风险状态。",
+      "figureRefs": [
+        {
+          "id": "fig-007",
+          "relation": "deferred"
+        }
+      ],
+      "keywords": ["prompt injection", "silent recognition", "risk state"]
+    },
+    {
+      "id": "ch-017",
+      "sectionId": "sec-auditing",
+      "order": 17,
+      "title": "错位目标检测",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "Detecting hidden objectives",
+      "sourceSection": "Using the J-lens for alignment auditing",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#apps-auditing",
+      "sourceText": "The paper also discusses using J-lens evidence to identify internal signatures of misaligned or reward-model-appeasing behavior. These examples are presented as auditing applications, not as a complete safety solution.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The paper also discusses using J-lens evidence to identify internal signatures of misaligned or reward-model-appeasing behavior. These examples are presented as auditing applications, not as a complete safety solution."
+        }
+      ],
+      "zhTranslation": "论文还讨论用 J-lens 证据识别错位行为或迎合 reward model 的内部迹象。这些例子应读作审计应用，而不是完整安全解决方案。",
+      "zhExplanation": "这能帮助我们把“可解释性读出”放到系统工具层，而不是把它神化成自动对齐机制。",
+      "figureRefs": [],
+      "keywords": ["misalignment", "reward model", "auditing"]
+    },
+    {
+      "id": "ch-018",
+      "sectionId": "sec-posttraining",
+      "order": 18,
+      "title": "助手视角",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "The J-space acquires the Assistant’s point of view during post-training",
+      "sourceSection": "The Assistant's Perspective",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#apps-diffing",
+      "sourceText": "The post-training section compares how the J-space changes as a model learns to act from an assistant perspective. The claim is that reactions and self-monitoring concepts can appear while the model is still processing the user's prompt.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The post-training section compares how the J-space changes as a model learns to act from an assistant perspective. The claim is that reactions and self-monitoring concepts can appear while the model is still processing the user's prompt."
+        }
+      ],
+      "zhTranslation": "后训练部分比较模型在学习以 assistant 视角行动时 J-space 如何变化。核心说法是：模型仍在处理用户 prompt 时，就可能出现反应和自我监测相关概念。",
+      "zhExplanation": "这提示后训练不只是改输出风格，也可能改变模型内部 workspace 的默认视角和监控内容。",
+      "figureRefs": [],
+      "keywords": ["post-training", "assistant perspective", "self-monitoring"]
+    },
+    {
+      "id": "ch-019",
+      "sectionId": "sec-posttraining",
+      "order": 19,
+      "title": "反事实反思训练",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "Shaping the J-space with Counterfactual Reflection Training",
+      "sourceSection": "Counterfactual Reflection Training",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#reflection",
+      "sourceText": "Counterfactual reflection training supervises reflective continuations that are not requested in the final task context. The reported aim is to implant principle-related concepts into the workspace so that behavior changes even without an explicit reflection prompt.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Counterfactual reflection training supervises reflective continuations that are not requested in the final task context. The reported aim is to implant principle-related concepts into the workspace so that behavior changes even without an explicit reflection prompt."
+        },
+        {
+          "type": "code",
+          "language": "text",
+          "caption": "Reader-side training abstraction, not paper code.",
+          "code": "task context -> append reflection probe during training -> supervise principled reflection -> evaluate original context without probe"
+        }
+      ],
+      "zhTranslation": "反事实反思训练监督的是最终任务上下文中不会被请求的反思续写。其目标是把原则相关概念植入 workspace，使模型即使没有显式反思提示也改变行为。",
+      "zhExplanation": "这对本项目的启发是：如果内部 workspace 真会影响行为，那么训练或笔记系统可以尝试塑造“进入工作区的概念”，而不仅是塑造最终回答。",
+      "figureRefs": [
+        {
+          "id": "fig-008",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": ["counterfactual reflection", "training", "workspace shaping"]
+    },
+    {
+      "id": "ch-020",
+      "sectionId": "sec-discussion",
+      "order": 20,
+      "title": "方法局限",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "Limitations and open questions",
+      "sourceSection": "Discussion",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#discussion",
+      "sourceText": "The discussion emphasizes that the J-lens is imperfect and that language-model workspaces differ from biological global workspace proposals. Architectural differences, recurrent dynamics, token limits, and interpretability assumptions remain open concerns.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The discussion emphasizes that the J-lens is imperfect and that language-model workspaces differ from biological global workspace proposals. Architectural differences, recurrent dynamics, token limits, and interpretability assumptions remain open concerns."
+        },
+        {
+          "type": "table",
+          "caption": "Reader-side limitations map, not an original paper table.",
+          "columns": ["Limit", "Why it matters"],
+          "rows": [
+            ["Architecture", "Transformers do not reproduce the brain's recurrent multi-area dynamics."],
+            ["Token lens", "The method favors concepts that can be mapped to vocabulary tokens."],
+            ["Causality", "Readout and intervention evidence still depends on the method's assumptions."],
+            ["Consciousness", "Functional access is not the same as phenomenal experience."]
+          ]
+        }
+      ],
+      "zhTranslation": "讨论部分强调 J-lens 并不完美，而且语言模型中的 workspace 与生物 global workspace 理论不同。架构差异、递归动态、token 限制和可解释性假设仍是开放问题。",
+      "zhExplanation": "这是防止过度类比的核心段落。它要求我们把结论限定为功能和机制可解释性层面，而不是直接外推到人脑意识。",
+      "figureRefs": [
+        {
+          "id": "fig-009",
+          "relation": "supporting"
+        }
+      ],
+      "keywords": ["limitations", "architecture", "consciousness"]
+    },
+    {
+      "id": "ch-021",
+      "sectionId": "sec-discussion",
+      "order": 21,
+      "title": "人脑差异",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "Notable differences from human cognition",
+      "sourceSection": "Discussion",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#discussion",
+      "sourceText": "The comparison to human cognition is explicitly limited. The paper points to functional similarities, but the implementation in transformer models lacks several brain-like architectural ingredients, especially recurrent interactions among specialized systems.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The comparison to human cognition is explicitly limited. The paper points to functional similarities, but the implementation in transformer models lacks several brain-like architectural ingredients, especially recurrent interactions among specialized systems."
+        }
+      ],
+      "zhTranslation": "与人类认知的比较被明确限制在一定范围内。论文指出功能相似性，但 transformer 模型的实现缺少若干脑式架构成分，尤其是专门系统之间的递归互动。",
+      "zhExplanation": "这正符合本项目的研究规范：AI 与脑的比较要说清层级，是功能类比、工程启发，还是实证对应。",
+      "figureRefs": [
+        {
+          "id": "fig-009",
+          "relation": "deferred"
+        }
+      ],
+      "keywords": ["human cognition", "functional analogy", "recurrent dynamics"]
+    },
+    {
+      "id": "ch-022",
+      "sectionId": "sec-agent",
+      "order": 22,
+      "title": "项目启发",
+      "sourceMode": "source-linked",
+      "sourceAnchor": "Takeaways and Discussion",
+      "sourceSection": "Project relevance",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#discussion",
+      "sourceText": "For this project, the useful takeaway is a separation of roles: long-term memory stores information, retrieval selects candidates, and a workspace-like layer determines what becomes active, reportable, and causally available for reasoning.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "For this project, the useful takeaway is a separation of roles: long-term memory stores information, retrieval selects candidates, and a workspace-like layer determines what becomes active, reportable, and causally available for reasoning."
+        }
+      ],
+      "zhTranslation": "对本项目最有用的结论是角色分离：长期记忆负责存储信息，检索负责选出候选内容，而 workspace-like 层决定哪些内容真正变成活跃、可报告、可因果参与推理的状态。",
+      "zhExplanation": "这篇应放在“记忆与智能体”项目中，但标签应是 workspace/internal reasoning。它能补上 agent memory 方案中常被忽略的一层：被召回内容如何进入当前推理工作区。",
+      "figureRefs": [],
+      "keywords": ["agent memory", "workspace", "retrieval", "reasoning"]
+    }
+  ]
+}

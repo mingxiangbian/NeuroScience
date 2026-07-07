@@ -34,6 +34,16 @@ function isNonEmptyString(value, minLength = 1) {
   return typeof value === "string" && value.trim().length >= minLength;
 }
 
+function isHttpUrl(value) {
+  if (!isNonEmptyString(value)) return false;
+  try {
+    const url = new URL(value);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 function relativeExists(baseDir, relativePath) {
   if (!isNonEmptyString(relativePath)) return false;
   const pathWithoutHash = relativePath.split("#")[0];
@@ -68,6 +78,10 @@ function validatePaperData(paperData, manifestPaper, label) {
   assert(isNonEmptyString(paperData.descriptionZh, 20), label, "paper.json must include descriptionZh");
   assert(Array.isArray(paperData.readingFocus) && paperData.readingFocus.length >= 3, label, "paper.json readingFocus must include at least 3 Chinese reading prompts");
   assert(Array.isArray(paperData.sections) && paperData.sections.length >= 2, label, "paper.json sections must include at least 2 sections");
+  assert(!paperData.sourceMode || /^(verbatim|source-linked)$/.test(paperData.sourceMode), label, "paper.json sourceMode must be verbatim or source-linked");
+  if (paperData.sourceMode === "source-linked") {
+    assert(isHttpUrl(paperData.source), label, "source-linked paper.json must include an http source URL");
+  }
 
   const sectionIds = new Set();
   for (const [index, section] of (paperData.sections ?? []).entries()) {
@@ -82,13 +96,14 @@ function validatePaperData(paperData, manifestPaper, label) {
   return { sectionIds };
 }
 
-function validateFigures(figuresData, readingDir, sectionIds, label) {
+function validateFigures(figuresData, readingDir, sectionIds, label, { sourceLinked = false } = {}) {
   assert(isObject(figuresData), label, "figures.json must be an object");
   assert(Array.isArray(figuresData?.figures), label, "figures.json must include figures array");
 
   const figureIds = new Set();
   const renderedFigures = [];
   const sourceBackedModes = new Set(["source-figure", "semantic-crop", "paper-extract"]);
+  const sourceLinkedFigures = [];
 
   for (const [index, figure] of (figuresData?.figures ?? []).entries()) {
     const figureLabel = `${label} figures[${index}]`;
@@ -99,6 +114,16 @@ function validateFigures(figuresData, readingDir, sectionIds, label) {
     assert(isNonEmptyString(figure?.caption, 8), figureLabel, "figure caption is required");
     assert(!figure?.file || isSafeRelativePath(figure.file), figureLabel, "figure file must be a safe relative path");
     assert(!figure?.canonicalSectionId || sectionIds.has(figure.canonicalSectionId), figureLabel, "canonicalSectionId must point to a paper section");
+
+    if (!figure?.file && figure?.cropMode === "source-linked") {
+      sourceLinkedFigures.push(figure);
+      assert(sourceLinked, figureLabel, "source-linked figure metadata is only allowed in source-linked packages");
+      assert(figure.status === "source-linked", figureLabel, "source-linked figure status must be source-linked");
+      assert(isHttpUrl(figure.sourceUrl), figureLabel, "source-linked figures need sourceUrl");
+      assert(isNonEmptyString(figure.sourceAnchor, 4), figureLabel, "source-linked figures need sourceAnchor");
+      assert(isNonEmptyString(figure.sourceFigure, 4), figureLabel, "source-linked figures need sourceFigure");
+      continue;
+    }
 
     if (figure?.file) {
       renderedFigures.push(figure);
@@ -125,13 +150,18 @@ function validateFigures(figuresData, readingDir, sectionIds, label) {
     }
   }
 
-  assert(renderedFigures.length >= 1, label, "reading package should render at least one figure");
-  assert(renderedFigures.some((figure) => sourceBackedModes.has(figure.cropMode)), label, "reading package should include at least one source-backed figure");
+  if (sourceLinked) {
+    assert(renderedFigures.length + sourceLinkedFigures.length >= 1, label, "source-linked reading package should include at least one figure reference");
+    assert(sourceLinkedFigures.length >= 1 || renderedFigures.some((figure) => sourceBackedModes.has(figure.cropMode)), label, "source-linked reading package should include source-linked or source-backed figures");
+  } else {
+    assert(renderedFigures.length >= 1, label, "reading package should render at least one figure");
+    assert(renderedFigures.some((figure) => sourceBackedModes.has(figure.cropMode)), label, "reading package should include at least one source-backed figure");
+  }
 
   return { figureIds };
 }
 
-function validateChunks(chunksData, paperId, sectionIds, figureIds, label) {
+function validateChunks(chunksData, paperId, sectionIds, figureIds, label, { sourceLinked = false, sourceBase = "" } = {}) {
   assert(isObject(chunksData), label, "chunks.json must be an object");
   assert(chunksData?.paperId === paperId, label, "chunks.json paperId must match paper id");
   assert(Array.isArray(chunksData?.chunks) && chunksData.chunks.length >= 8, label, "chunks.json must include at least 8 substantive chunks");
@@ -156,6 +186,13 @@ function validateChunks(chunksData, paperId, sectionIds, figureIds, label) {
     assert(isNonEmptyString(chunk?.zhExplanation, 20), chunkLabel, "zhExplanation must contain project reading explanation");
     assert(Array.isArray(chunk?.keywords) && chunk.keywords.length >= 2, chunkLabel, "keywords must include at least 2 terms");
     assert(Array.isArray(chunk?.blocks) && chunk.blocks.length >= 1, chunkLabel, "blocks must preserve display structure");
+    if (sourceLinked) {
+      assert(chunk?.sourceMode === "source-linked", chunkLabel, "source-linked chunks must declare sourceMode");
+      assert(isNonEmptyString(chunk?.sourceAnchor, 4), chunkLabel, "source-linked chunks must include sourceAnchor");
+      assert(isNonEmptyString(chunk?.sourceSection, 4), chunkLabel, "source-linked chunks must include sourceSection");
+      assert(isHttpUrl(chunk?.sourceUrl), chunkLabel, "source-linked chunks must include sourceUrl");
+      assert(chunk.sourceUrl.startsWith(sourceBase) && chunk.sourceUrl.includes("#"), chunkLabel, "source-linked sourceUrl must point to an anchored source section");
+    }
 
     for (const [blockIndex, block] of (chunk?.blocks ?? []).entries()) {
       const blockLabel = `${chunkLabel} blocks[${blockIndex}]`;
@@ -246,9 +283,6 @@ function validateReadingPackage(project, manifestPaper) {
 
   validateRequiredFiles(readingDir, label);
 
-  assert(relativeExists(projectDir, manifestPaper.localFile), label, "manifest localFile must point to an existing project file");
-  assert(relativeExists(projectDir, manifestPaper.noteFile), label, "manifest noteFile must point to an existing project file");
-
   const paperData = readJson(join(readingDir, "paper.json"), `${label}/paper.json`);
   const chunksData = readJson(join(readingDir, "chunks.json"), `${label}/chunks.json`);
   const notesData = readJson(join(readingDir, "notes.json"), `${label}/notes.json`);
@@ -256,11 +290,22 @@ function validateReadingPackage(project, manifestPaper) {
   const figuresData = readJson(join(readingDir, "figures.json"), `${label}/figures.json`);
 
   const { sectionIds } = validatePaperData(paperData, manifestPaper, label);
-  assert(!paperData?.sourceFile || relativeExists(readingDir, paperData.sourceFile), label, "paper.json sourceFile must exist");
-  assert(!paperData?.noteFile || relativeExists(readingDir, paperData.noteFile), label, "paper.json noteFile must exist");
+  const isSourceLinked = paperData?.sourceMode === "source-linked";
+  if (isSourceLinked) {
+    assert(isHttpUrl(manifestPaper.source), label, "source-linked manifest paper must include a source URL");
+    assert(!manifestPaper.localFile, label, "source-linked manifest paper should not pretend to have a local full source file");
+  } else {
+    assert(relativeExists(projectDir, manifestPaper.localFile), label, "manifest localFile must point to an existing project file");
+    assert(relativeExists(projectDir, manifestPaper.noteFile), label, "manifest noteFile must point to an existing project file");
+    assert(!paperData?.sourceFile || relativeExists(readingDir, paperData.sourceFile), label, "paper.json sourceFile must exist");
+    assert(!paperData?.noteFile || relativeExists(readingDir, paperData.noteFile), label, "paper.json noteFile must exist");
+  }
 
-  const { figureIds } = validateFigures(figuresData, readingDir, sectionIds, label);
-  const { chunkIds } = validateChunks(chunksData, manifestPaper.id, sectionIds, figureIds, label);
+  const { figureIds } = validateFigures(figuresData, readingDir, sectionIds, label, { sourceLinked: isSourceLinked });
+  const { chunkIds } = validateChunks(chunksData, manifestPaper.id, sectionIds, figureIds, label, {
+    sourceLinked: isSourceLinked,
+    sourceBase: paperData?.source ?? manifestPaper.source ?? ""
+  });
   validateNotes(notesData, manifestPaper.id, chunkIds, label);
   validateEmbeddings(embeddingsData, manifestPaper.id, chunkIds, label);
 

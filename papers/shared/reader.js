@@ -462,6 +462,15 @@ function resolveReadingAssetPath(path, reading) {
 }
 
 function renderFigure(figure, relation = "supporting", reading = null) {
+  if (!figure?.file && figure?.sourceUrl) {
+    return `
+      <figure class="figure-frame figure-link-card" data-relation="${escapeHtml(relation)}">
+        <div class="figure-link-label">${escapeHtml(figure.label ?? "Source figure")}</div>
+        <figcaption class="figure-caption">${escapeHtml(figure.caption ?? "")}</figcaption>
+        <a class="figure-source-link" href="${escapeHtml(figure.sourceUrl)}" target="_blank" rel="noopener">Open source figure</a>
+      </figure>
+    `;
+  }
   if (!figure?.file) return "";
   return `
     <figure class="figure-frame" data-relation="${escapeHtml(relation)}">

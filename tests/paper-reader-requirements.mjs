@@ -158,6 +158,8 @@ assert.match(css, /\.math-fallback/, "reader CSS should keep a readable fallback
 assert.match(css, /\.code-block/, "reader CSS should style code blocks");
 assert.match(css, /\.table-block/, "reader CSS should style table blocks");
 assert.match(css, /\.figure-frame/, "reader CSS should style figure references with constrained dimensions");
+assert.match(css, /\.figure-link-card/, "reader CSS should style source-linked figure cards");
+assert.match(css, /\.figure-source-link/, "reader CSS should style source figure links");
 assert.match(css, /\.search-results\s+\.result-item\s*\+ \.result-item/, "search results should use line separators");
 assert.match(css, /@media \(max-width:\s*860px\)[\s\S]*\.reader-shell\.is-searching \.toolbar-search[\s\S]*width:\s*calc\(100vw - 28px\)/, "mobile search modal should stay near full width without overflow");
 assert.match(css, /\.paper-actions\.is-fallback-only/, "source links should be available only in the no-chunk fallback state");
@@ -248,7 +250,9 @@ assert.match(js, /renderCodeBlock/, "reader should render code blocks");
 assert.match(js, /renderTableBlock/, "reader should render table blocks");
 assert.match(js, /function resolveReadingAssetPath\(path,\s*reading\)/, "reader should resolve figure assets relative to the active reading package");
 assert.match(js, /figureRefs/, "reader should resolve cross-page figure references");
-assert.match(js, /if \(!figure\?\.file\) return ""/, "reader should skip missing figure files instead of rendering empty placeholders");
+assert.match(js, /figure\?\.sourceUrl/, "reader should render source-linked figure references without local image assets");
+assert.match(js, /class="figure-source-link"/, "reader should expose source-linked figure links in the reading flow");
+assert.match(js, /if \(!figure\?\.file\) return ""/, "reader should skip figure references without file or sourceUrl instead of rendering broken placeholders");
 assert.match(js, /renderNoChunkPaper/, "reader should render real metadata for papers without chunk packages");
 assert.match(js, /ANNOTATION_STORAGE_PREFIX = "paperReader\.annotations\.v1"/, "reader should define a versioned local annotation storage prefix");
 assert.match(js, /function getAnnotationStorageKey/, "reader should isolate local annotation storage keys");
@@ -273,13 +277,26 @@ assert.match(js, /高亮和批注一起删除/, "delete confirmation should allo
 assert.doesNotMatch(js, /githubToken|Authorization|contents\/|repos\/|gitHub/i, "local annotations should not write to GitHub");
 assert.doesNotMatch(js, /\/api\/|localhost|127\.0\.0\.1|openai|anthropic|generateAnswer|chatCompletion|SurrealDB/i, "reader should stay static without backend, provider keys, AI answers, or hard SurrealDB dependency");
 
-const readingPaperIds = project.papers.map((paper) => paper.id);
+const readingPapers = project.papers.filter((paper) => paper.hasReading === true);
+const readingPaperIds = readingPapers.map((paper) => paper.id);
+const workspacePaper = project.papers.find((paper) => paper.id === "gurnee-2026-global-workspace-language-models");
 
 for (const paper of project.papers) {
   assert.equal(typeof paper.shortTitle, "string", `paper ${paper.id} should include shortTitle`);
   assert.ok(paper.shortTitle.length > 0 && paper.shortTitle.length <= 42, `paper ${paper.id} shortTitle should stay compact`);
+}
+
+for (const paper of readingPapers) {
   assert.equal(paper.hasReading, true, `paper ${paper.id} should expose a completed reading package`);
 }
+
+assert.ok(workspacePaper, "project manifest should register the 2026 Transformer Circuits global workspace paper");
+assert.equal(workspacePaper.title, "Verbalizable Representations Form a Global Workspace in Language Models", "global workspace paper should use the source title");
+assert.equal(workspacePaper.shortTitle, "Global Workspace in LMs", "global workspace paper should use a compact reader title");
+assert.equal(workspacePaper.authors, "Gurnee et al.", "global workspace paper should use compact author metadata");
+assert.equal(workspacePaper.year, 2026, "global workspace paper should use the source publication year");
+assert.equal(workspacePaper.source, "https://transformer-circuits.pub/2026/workspace/index.html", "global workspace paper should link to the Transformer Circuits source page");
+assert.equal(workspacePaper.hasReading, true, "global workspace paper should expose a completed source-linked reading package");
 
 for (const paperId of readingPaperIds) {
   const readingBase = new URL(`../papers/${projectId}/readings/${paperId}/`, import.meta.url);
@@ -299,6 +316,10 @@ for (const paperId of readingPaperIds) {
 
   assert.equal(paperData.id, paperId, `${paperId} paper.json should use the paper id`);
   assert.equal(typeof paperData.shortTitle, "string", `${paperId} paper.json should include shortTitle`);
+  if (paperId === "gurnee-2026-global-workspace-language-models") {
+    assert.equal(paperData.sourceMode, "source-linked", "Gurnee 2026 should use source-linked mode instead of copying the whole web essay");
+    assert.equal(paperData.categoryZh, "AI 机制可解释性与全局工作空间", "Gurnee 2026 should be classified as workspace/internal reasoning, not memory");
+  }
   assert.ok(Array.isArray(paperData.sections) && paperData.sections.length >= 2, `${paperId} should include section metadata`);
   assert.equal(chunkData.paperId, paperId, `${paperId} chunks.json should use the paper id`);
   assert.ok(Array.isArray(chunkData.chunks) && chunkData.chunks.length >= 8, `${paperId} should include a substantive reading package`);
@@ -316,7 +337,11 @@ for (const paperId of readingPaperIds) {
   const renderedFigures = figuresData.figures.filter((item) => item.file);
   const sourceFigures = renderedFigures.filter((figure) => /^(semantic-crop|source-figure|paper-extract)$/.test(figure.cropMode));
 
-  assert.ok(sourceFigures.length >= 1, `${paperId} should include at least one real source figure before using redraw fallbacks`);
+  if (paperId === "gurnee-2026-global-workspace-language-models") {
+    assert.ok(figuresData.figures.some((figure) => figure.cropMode === "source-linked" && figure.sourceUrl), "Gurnee 2026 should keep web figures as source-linked references");
+  } else {
+    assert.ok(sourceFigures.length >= 1, `${paperId} should include at least one real source figure before using redraw fallbacks`);
+  }
 
   for (const figure of renderedFigures) {
     assert.equal(existsSync(new URL(figure.file, readingBase)), true, `${paperId} figure file ${figure.file} should exist`);
@@ -339,6 +364,12 @@ for (const paperId of readingPaperIds) {
     chunkIds.add(chunk.id);
     assert.equal(typeof chunk.sourceText, "string", `${paperId} ${chunk.id} should include sourceText`);
     assert.ok(chunk.sourceText.trim().length > 40, `${paperId} ${chunk.id} sourceText should be substantive`);
+    if (paperId === "gurnee-2026-global-workspace-language-models") {
+      assert.equal(chunk.sourceMode, "source-linked", `Gurnee 2026 ${chunk.id} should declare source-linked chunk mode`);
+      assert.equal(typeof chunk.sourceAnchor, "string", `Gurnee 2026 ${chunk.id} should include a sourceAnchor`);
+      assert.match(chunk.sourceUrl, /^https:\/\/transformer-circuits\.pub\/2026\/workspace\/index\.html#/, `Gurnee 2026 ${chunk.id} should include an anchored sourceUrl`);
+      assert.equal(typeof chunk.sourceSection, "string", `Gurnee 2026 ${chunk.id} should include sourceSection`);
+    }
     assert.equal(typeof chunk.zhTranslation, "string", `${paperId} ${chunk.id} should include zhTranslation`);
     assert.ok(chunk.zhTranslation.trim().length > 20, `${paperId} ${chunk.id} zhTranslation should be substantive`);
     assert.equal(typeof chunk.zhExplanation, "string", `${paperId} ${chunk.id} should include zhExplanation`);
