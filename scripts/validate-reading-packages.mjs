@@ -326,6 +326,13 @@ function validateNotes(notesData, paperId, chunkIds, label) {
   assert(notesData?.paperId === paperId, label, "notes.json paperId must match paper id");
   assert(Array.isArray(notesData?.notes), label, "notes.json must include notes array");
   assert(notesData?.notes?.length === chunkIds.size, label, "notes.json must include one note row per chunk");
+  if (notesData?.noteMode) {
+    assert(notesData.noteMode === "public", label, "notes.json noteMode must be public when set");
+  }
+  const publicNotes = notesData?.noteMode === "public";
+  if (publicNotes) {
+    assert((notesData.notes ?? []).some((note) => typeof note?.note === "string" && note.note.trim().length > 0), label, "public notes should include at least one non-empty note");
+  }
 
   const noteChunkIds = new Set();
   for (const [index, note] of (notesData?.notes ?? []).entries()) {
@@ -333,7 +340,11 @@ function validateNotes(notesData, paperId, chunkIds, label) {
     assert(chunkIds.has(note?.chunkId), noteLabel, "note chunkId must point to a real chunk");
     assert(!noteChunkIds.has(note?.chunkId), noteLabel, "note chunkId must be unique");
     noteChunkIds.add(note?.chunkId);
-    assert(note?.note === "", noteLabel, "source notes should start as empty strings; personal notes live in localStorage");
+    if (publicNotes) {
+      assert(typeof note?.note === "string", noteLabel, "public note must be a string");
+    } else {
+      assert(note?.note === "", noteLabel, "source notes should start as empty strings; personal notes live in localStorage");
+    }
   }
 }
 

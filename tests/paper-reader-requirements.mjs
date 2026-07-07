@@ -348,6 +348,13 @@ for (const paperId of readingPaperIds) {
   }
   assert.equal(figuresData.paperId, paperId, `${paperId} figures.json should use the paper id`);
   assert.ok(Array.isArray(figuresData.figures), `${paperId} figures.json should include a figures array`);
+  const notesArePublic = notesData.noteMode === "public";
+  if (paperId === "zhang-2024-memory-mechanism-llm-agents") {
+    assert.equal(notesArePublic, true, "Zhang 2024 should publish the polished local annotations as stable public notes");
+    assert.ok(notesData.notes.some((note) => note.note.trim().length > 0), "Zhang 2024 should include at least one stable public note");
+  } else {
+    assert.notEqual(notesArePublic, true, `${paperId} should keep source notes blank unless explicitly publishing stable notes`);
+  }
 
   const chunkIds = new Set();
   const noteChunkIds = new Set(notesData.notes.map((note) => note.chunkId));
@@ -409,7 +416,11 @@ for (const paperId of readingPaperIds) {
     assert.equal(typeof chunk.zhExplanation, "string", `${paperId} ${chunk.id} should include zhExplanation`);
     assert.ok(chunk.zhExplanation.trim().length > 20, `${paperId} ${chunk.id} zhExplanation should be substantive`);
     assert.equal(noteChunkIds.has(chunk.id), true, `${paperId} ${chunk.id} should have a parallel note entry, even if blank`);
-    assert.equal(notesByChunkId.get(chunk.id), "", `${paperId} ${chunk.id} parallel note should start blank`);
+    if (!notesArePublic) {
+      assert.equal(notesByChunkId.get(chunk.id), "", `${paperId} ${chunk.id} parallel note should start blank`);
+    } else {
+      assert.equal(typeof notesByChunkId.get(chunk.id), "string", `${paperId} ${chunk.id} public note should be a string`);
+    }
     assert.equal(embeddingChunkIds.has(chunk.id), true, `${paperId} ${chunk.id} should have an embedding vector`);
     assert.ok(Array.isArray(chunk.keywords), `${paperId} ${chunk.id} should include keywords`);
     if (chunk.blocks) {

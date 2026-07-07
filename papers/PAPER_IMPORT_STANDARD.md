@@ -465,10 +465,13 @@ chunk 边界优先级：
 ```json
 {
   "paperId": "zhang-2024-memory-mechanism-llm-agents",
+  "noteMode": "public",
+  "noteSource": "polished-local-annotations",
+  "updatedAt": "2026-07-07",
   "notes": [
     {
       "chunkId": "ch-001",
-      "note": ""
+      "note": "经过整理的稳定公开笔记。"
     }
   ]
 }
@@ -478,6 +481,10 @@ chunk 边界优先级：
 
 - `chunkId` 必须存在于 `chunks.json`。
 - 没有笔记时，`note` 使用空字符串。
+- 默认模式下，所有 `note` 必须保持空字符串；个人阅读批注先留在浏览器本地。
+- 只有经过人工确认、润色并准备公开上传的笔记，才可以设置 `noteMode: "public"` 并写入非空 `note`。
+- `noteMode: "public"` 至少需要一条非空 note；其余 chunk 仍可保留空字符串。
+- `noteSource` 可说明来源，例如 `polished-local-annotations`。
 - 前端不要显示“这一段还没有笔记”之类的占位文字；空笔记保持连续拟态表面。
 - 笔记和 chunk 平行，而不是把所有笔记集中到文末。
 
@@ -489,8 +496,8 @@ chunk 边界优先级：
 - annotation 可以记录 `paperId`、`chunkId`、`selectedText`、`matchIndex`、`mode`、`note` 和 `highlightActive`。
 - 当前 chunk 的自由笔记可以记录在同一个本地 store 的 `chunkNotes` 中，key 使用 `paperId:chunkId`。
 - `Highlight` 只恢复原文高亮；`Note` 同时把选中原文作为引用放入右侧平行笔记区。
-- 本地 annotation 和自由笔记不写回 `notes.json`，也不要求进入 GitHub commit。
-- 如果需要长期沉淀，后续应通过单独导出/导入或人工整理流程完成。
+- 本地 annotation 和自由笔记默认不写回 `notes.json`，也不要求进入 GitHub commit。
+- 如果需要长期沉淀，必须先导出、润色、回答其中的问题，再以 `noteMode: "public"` 写入 `notes.json`。
 
 ## embeddings.json Contract
 
