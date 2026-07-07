@@ -208,7 +208,7 @@ function buildReaderModules(data) {
       title: "Dashboard",
       status: data.scoreProfile?.state ?? "template",
       priority: "score profile",
-      learningProgress: data.scoreProfile?.state === "template" ? 10 : 45,
+      learningProgress: data.scoreProfile?.state === "template" ? 0 : 45,
       lastUpdated,
       sections: dashboardSections,
       knowledgeNotes: [

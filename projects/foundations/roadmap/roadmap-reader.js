@@ -542,6 +542,7 @@ function renderTaskSection(module, title) {
 function renderOverviewDashboard(module) {
   const dashboardModuleId = state.data.project.dashboardModuleId;
   const learningModules = state.data.modules.filter((item) => item.id !== dashboardModuleId);
+  const nextModule = learningModules.find((item) => item.status !== "complete") ?? learningModules[0];
   const moduleRows = learningModules
     .map((item) => `
       <button class="dashboard-module-row" type="button" data-dashboard-module-id="${escapeHtml(item.id)}">
@@ -556,6 +557,21 @@ function renderOverviewDashboard(module) {
 
   const blocks = [
     ["Dashboard", `
+      <div class="route-ledger" aria-label="Foundations route ledger">
+        <div class="route-ledger-row">
+          <span class="route-ledger-label">下一次打开</span>
+          ${nextModule ? `
+            <button class="route-ledger-target" type="button" data-dashboard-module-id="${escapeHtml(nextModule.id)}">
+              <strong>${escapeHtml(nextModule.title)}</strong>
+              <span>${escapeHtml(nextModule.priority)}</span>
+            </button>
+          ` : "<strong>暂无下一模块</strong>"}
+        </div>
+        <div class="route-ledger-row">
+          <span class="route-ledger-label">当前缺口</span>
+          <strong>先校准 coding / system design baseline，再扩展项目。</strong>
+        </div>
+      </div>
       ${getSection(module, "Dashboard")}
       <div class="dashboard-grid" aria-label="Foundations dashboard">
         <section class="dashboard-card">

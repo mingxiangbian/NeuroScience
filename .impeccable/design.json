@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-07T12:27:12Z",
+  "title": "Design System: NeuroScience x AI",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "primary",
+        "displayName": "Deep Ink",
+        "canonical": "#1f2724",
+        "tonalRamp": ["#111615", "#1f2724", "#33413c", "#50635d", "#71827c", "#9aa7a2", "#c8d0cc", "#eef0e7"]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Rice Paper",
+        "canonical": "#f4efe3",
+        "tonalRamp": ["#5d5141", "#81725f", "#a99a83", "#c8bda8", "#e8dcc8", "#f4efe3", "#fbf8ef", "#fffdf7"]
+      },
+      "dai-blue": {
+        "role": "secondary",
+        "displayName": "Dai Blue",
+        "canonical": "#183c49",
+        "tonalRamp": ["#07171d", "#102a33", "#183c49", "#2b5b68", "#4b7c87", "#77a4ac", "#aad0d5", "#d9eef0"]
+      },
+      "flower-blue": {
+        "role": "secondary",
+        "displayName": "Flower Blue",
+        "canonical": "#2e6f77",
+        "tonalRamp": ["#102427", "#1b4449", "#2e6f77", "#4d8f96", "#72aeb4", "#a0cdd1", "#cde7e9", "#edf8f8"]
+      },
+      "cinnabar": {
+        "role": "tertiary",
+        "displayName": "Cinnabar",
+        "canonical": "#a64338",
+        "tonalRamp": ["#2b0d0a", "#5a1f18", "#863429", "#a64338", "#c8665b", "#df968d", "#efc7c1", "#fbebe8"]
+      },
+      "gold": {
+        "role": "tertiary",
+        "displayName": "Muted Gold",
+        "canonical": "#9b7430",
+        "tonalRamp": ["#241704", "#4f340d", "#75551c", "#9b7430", "#bd9650", "#d7ba7d", "#ead7aa", "#f8efd6"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Songti Display",
+        "purpose": "Module titles, page identity, and major reader headings."
+      },
+      "body": {
+        "displayName": "Research Sans Body",
+        "purpose": "Repeated reading, controls, metadata, and durable knowledge text."
+      },
+      "mono": {
+        "displayName": "Compact Mono",
+        "purpose": "Keyboard hints, source paths, small technical labels, and status metadata."
+      }
+    },
+    "shadows": [
+      {
+        "name": "reader-chrome-float",
+        "value": "0 14px 40px rgba(19, 45, 42, 0.16)",
+        "purpose": "Floating reader toolbar groups and search controls."
+      },
+      {
+        "name": "popover-lift",
+        "value": "0 8px 24px rgba(30, 42, 38, 0.16)",
+        "purpose": "Tooltips, search results, annotation bars, and temporary overlays."
+      },
+      {
+        "name": "project-card-lift",
+        "value": "0 22px 52px rgba(42, 35, 25, 0.18)",
+        "purpose": "Physical lift for project index cards only."
+      }
+    ],
+    "motion": [
+      {
+        "name": "state-standard",
+        "value": "180ms ease",
+        "purpose": "Grid, sidebar, hover, and compact state transitions."
+      },
+      {
+        "name": "theme-shift",
+        "value": "240ms ease",
+        "purpose": "Light/dark reader color and border changes."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "reader-mobile",
+        "value": "980px"
+      },
+      {
+        "name": "compact-phone",
+        "value": "520px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Icon Button",
+      "kind": "button",
+      "refersTo": "icon-button",
+      "description": "Compact reader control for theme, sidebar, note panel, and toolbar actions.",
+      "html": "<button class=\"ds-icon-button\" type=\"button\" aria-label=\"Toggle panel\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 6h16M4 12h16M4 18h16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/></svg></button>",
+      "css": ".ds-icon-button { width: 42px; height: 42px; display: inline-flex; align-items: center; justify-content: center; border: 0; border-radius: 12px; color: var(--reader-ink, #1f2724); background: transparent; transition: background 180ms ease, color 180ms ease; } .ds-icon-button svg { width: 21px; height: 21px; } .ds-icon-button:hover, .ds-icon-button[aria-pressed=\"true\"] { background: rgba(255, 255, 255, 0.28); } .ds-icon-button:focus-visible { outline: 2px solid rgba(46, 111, 119, 0.58); outline-offset: 3px; }"
+    },
+    {
+      "name": "Reader Search Field",
+      "kind": "input",
+      "refersTo": "search-field",
+      "description": "Toolbar search with an icon, keyboard hint, and paper/glass surface.",
+      "html": "<label class=\"ds-search\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m21 21-4.2-4.2M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/></svg><input type=\"search\" placeholder=\"Search\"/><kbd>⌘ K</kbd></label>",
+      "css": ".ds-search { min-width: 230px; height: 42px; display: inline-flex; align-items: center; gap: 9px; padding: 0 12px; border: 1px solid rgba(226, 239, 235, 0.72); border-radius: 12px; color: var(--reader-ink, #1f2724); background: rgba(238, 247, 242, 0.42); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82), 0 14px 40px rgba(19, 45, 42, 0.16); } .ds-search svg { width: 16px; height: 16px; opacity: .72; } .ds-search input { flex: 1; min-width: 0; border: 0; outline: 0; color: inherit; background: transparent; font: 15px Inter, system-ui, sans-serif; } .ds-search kbd { font: 12px SFMono-Regular, Consolas, monospace; color: rgba(31, 39, 36, 0.64); }"
+    },
+    {
+      "name": "Module Nav Item",
+      "kind": "nav",
+      "refersTo": "module-nav-item",
+      "description": "Reader module entry with active state and progress metadata.",
+      "html": "<button class=\"ds-module-nav\" aria-current=\"true\"><span class=\"ds-module-title\">Module title</span><span class=\"ds-module-meta\">4 sections · 62%</span></button>",
+      "css": ".ds-module-nav { width: 100%; display: grid; gap: 4px; border: 0; border-radius: 12px; padding: 12px 10px; text-align: left; color: var(--reader-ink, #1f2724); background: transparent; transition: background 180ms ease, color 180ms ease; } .ds-module-nav:hover, .ds-module-nav[aria-current=\"true\"] { background: rgba(255, 255, 255, 0.28); } .ds-module-nav[aria-current=\"true\"] { box-shadow: inset 3px 0 0 #a64338; } .ds-module-title { font: 600 14px Inter, system-ui, sans-serif; } .ds-module-meta { font: 12px SFMono-Regular, Consolas, monospace; color: rgba(31, 39, 36, 0.64); }"
+    },
+    {
+      "name": "Status Chip",
+      "kind": "chip",
+      "refersTo": "status-chip",
+      "description": "Small state marker for progress, evidence, risk, or source metadata.",
+      "html": "<span class=\"ds-status-chip\">reading</span>",
+      "css": ".ds-status-chip { display: inline-flex; align-items: center; min-height: 24px; border-radius: 999px; padding: 4px 8px; color: #183c49; background: rgba(251, 248, 239, 0.78); font: 600 12px Inter, system-ui, sans-serif; letter-spacing: .02em; }"
+    },
+    {
+      "name": "Reader Card",
+      "kind": "card",
+      "refersTo": "reader-card",
+      "description": "Compact dashboard or note card inside a reader surface.",
+      "html": "<article class=\"ds-reader-card\"><p class=\"ds-card-kicker\">Checkpoint</p><h3>Weekly review</h3><p>Summarize evidence, update weak points, and choose the next action.</p></article>",
+      "css": ".ds-reader-card { border: 1px solid rgba(31, 39, 36, 0.13); border-radius: 12px; padding: 12px; color: #1f2724; background: rgba(255, 255, 255, 0.18); } .ds-card-kicker { margin: 0 0 8px; color: rgba(31, 39, 36, 0.64); font: 600 12px Inter, system-ui, sans-serif; letter-spacing: .02em; } .ds-reader-card h3 { margin: 0 0 8px; font: 700 18px \"Songti SC\", Georgia, serif; } .ds-reader-card p { margin: 0; font: 15px/1.78 Inter, system-ui, sans-serif; }"
+    },
+    {
+      "name": "Project Card",
+      "kind": "card",
+      "refersTo": "project-card",
+      "description": "Large physical card from the project index, where the card itself is the browsing object.",
+      "html": "<a class=\"ds-project-card\" href=\"#\"><h2>基石</h2><p>Foundations roadmap and long-term learning structure.</p></a>",
+      "css": ".ds-project-card { display: grid; align-content: end; min-height: 260px; padding: 96px 16px 56px; border: 1px solid rgba(31, 39, 36, 0.18); border-radius: 7px 7px 4px 4px; color: #1f2724; text-decoration: none; background: #fbf8ef; box-shadow: inset 0 0 0 1px rgba(255, 252, 244, 0.54), 0 18px 44px rgba(42, 35, 25, 0.12); transition: transform 160ms ease, box-shadow 160ms ease; } .ds-project-card:hover { transform: translateY(-6px); box-shadow: inset 0 0 0 1px rgba(255, 252, 244, 0.72), 0 22px 52px rgba(42, 35, 25, 0.18); } .ds-project-card h2 { margin: 0 0 14px; font: 700 clamp(25px, 2.4vw, 34px)/1 \"Songti SC\", Georgia, serif; } .ds-project-card p { margin: 0; color: rgba(31, 39, 36, 0.66); font: 15px/1.7 Inter, system-ui, sans-serif; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Living Research Notebook",
+    "overview": "This system should feel like a personal research instrument that has been used, tuned, and trusted over time. The identity is archival and crafted: pale rice-paper fields, deep ink structure, small cinnabar or blue accents, and dense reader controls that stay quiet until needed. The workspace is product UI, not a marketing page. Beauty matters because the pages are used repeatedly, but the reader surfaces must keep navigation, search, module status, and context recovery clear.",
+    "keyCharacteristics": [
+      "Rice-paper surfaces anchored by deep ink text and thin structural lines.",
+      "Serif or Songti display moments paired with practical sans body text.",
+      "Restrained accent vocabulary: dai blue, flower blue, cinnabar, seal red, and gold.",
+      "Compact, stateful reader chrome with recognizable controls and stable density.",
+      "Project-specific beauty without losing the six-space knowledge map."
+    ],
+    "rules": [
+      {
+        "name": "The Ink-First Rule",
+        "body": "Structure is carried by ink, thin lines, spacing, and type before accent color. If every section needs a colored marker to make sense, the hierarchy is wrong.",
+        "section": "colors"
+      },
+      {
+        "name": "The Rare Cinnabar Rule",
+        "body": "Cinnabar and seal red are for priority, selection, warnings, or identity marks. They should not decorate inactive UI.",
+        "section": "colors"
+      },
+      {
+        "name": "The Serif Is a Signal Rule",
+        "body": "Use Songti or serif for page and module meaning, not for every label. Buttons, search, metadata, and dense controls stay sans.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tonal-Layer Rule",
+        "body": "Use background tone and border contrast before adding a shadow. A panel at rest should not need a large blur to separate from the page.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do preserve the rice-paper, deep-ink, restrained accent identity when working inside `projects/foundations` and `projects/language`.",
+      "Do make module status, current section, next action, and context panel state obvious after the user returns to a page days later.",
+      "Do keep long-reading text comfortable: body around 15px, line-height around 1.78, and prose broken into meaningful sections.",
+      "Do use compact, familiar product controls for repeated workflows."
+    ],
+    "donts": [
+      "Don't redesign the root homepage or `papers/brain-memory-for-ai-agents` by default; PRODUCT.md marks them as already close to target.",
+      "Don't ship generic AI-generated UI: template SaaS panels, repetitive card grids, decorative gradients, stock dashboard tropes, or excessive glass effects.",
+      "Don't flatten the workspace into a plain documentation site.",
+      "Don't spread ornamental Cyber Ink effects into dense reader surfaces when they reduce clarity.",
+      "Don't use colored side-stripe borders, gradient text, or decorative grid backgrounds as filler."
+    ]
+  }
+}

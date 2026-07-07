@@ -150,6 +150,12 @@ export function renderScoreHistory(scoreHistory) {
 export function renderDashboard(data) {
   const target = data.project?.target ?? data.scoreProfile?.target ?? {};
   const profile = data.scoreProfile ?? {};
+  const profileState = profile.state ?? "template";
+  const isTemplateState = ["template", "not-yet-run"].includes(profileState);
+  const checkpoints = toList(data.checkpoints?.checkpoints);
+  const nextCheckpoint = checkpoints.find((checkpoint) => checkpoint.status !== "complete") ?? checkpoints[0];
+  const skills = toList(profile.skills);
+  const focusSkill = skills.find((skill) => skill.riskLevel === "high") ?? skills[0];
   const referenceIssueCount = toList(data.build?.referenceIssues).length;
   const validationIssues = toList(data.build?.validationIssues);
   const fatalCount = validationIssues.filter((issue) => issue.severity === "fatal").length;
@@ -157,10 +163,30 @@ export function renderDashboard(data) {
 
   return `
     <div class="dashboard-stack">
+      <article class="evidence-ledger" data-state="${escapeHtml(profileState)}">
+        <div class="evidence-ledger-copy">
+          <p>Evidence ledger</p>
+          <h3>${isTemplateState ? "诊断证据还没落地" : "围绕最高风险技能修正"}</h3>
+        </div>
+        <dl class="evidence-ledger-list" aria-label="Next IELTS training action">
+          <div>
+            <dt>Next action</dt>
+            <dd>${isTemplateState ? "Run Week 1 diagnostic" : "Repair active errors"}</dd>
+          </div>
+          <div>
+            <dt>Checkpoint</dt>
+            <dd>${escapeHtml(nextCheckpoint?.name ?? "Week 1 diagnostic")}</dd>
+          </div>
+          <div>
+            <dt>Focus skill</dt>
+            <dd>${escapeHtml(focusSkill?.label ?? "Evidence first")}</dd>
+          </div>
+        </dl>
+      </article>
       ${renderMetricGrid([
         { label: "Target", value: formatTarget(target) },
         { label: "Run mode", value: profile.runMode ?? "not-yet-run" },
-        { label: "State", value: profile.state ?? "template" },
+        { label: "State", value: isTemplateState ? "evidence missing" : profileState },
         { label: "Reference issues", value: String(referenceIssueCount) },
         { label: "Validation", value: `${fatalCount} fatal / ${warningCount} warning` },
       ])}
