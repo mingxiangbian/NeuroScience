@@ -41,6 +41,7 @@ const requiredFiles = [
   "../projects/language/ielts-academic/site/ielts-data.json",
   "../projects/language/ielts-academic/site/ielts-reader.css",
   "../projects/language/ielts-academic/site/ielts-reader.js",
+  "../projects/language/ielts-academic/site/reader-annotations.js",
   "../projects/language/ielts-academic/site/reader-modules.js",
   "../projects/language/ielts-academic/site/reader-references.js",
   "../projects/language/ielts-academic/site/reader-renderers.js",
@@ -82,13 +83,14 @@ const regression = read("../projects/language/ielts-academic/errors/regression-c
 const dryRuns = read("../projects/language/ielts-academic/validation/dry-run-test-cases.md");
 const projectIndex = read("../projects/language/ielts-academic/index.html");
 const siteJs = read("../projects/language/ielts-academic/site/ielts-reader.js");
+const readerAnnotationsJs = read("../projects/language/ielts-academic/site/reader-annotations.js");
 const readerModulesJs = read("../projects/language/ielts-academic/site/reader-modules.js");
 const readerReferencesJs = read("../projects/language/ielts-academic/site/reader-references.js");
 const readerRenderersJs = read("../projects/language/ielts-academic/site/reader-renderers.js");
 const readerStateJs = read("../projects/language/ielts-academic/site/reader-state.js");
 const readerTasksJs = read("../projects/language/ielts-academic/site/reader-tasks.js");
 const readerUtilsJs = read("../projects/language/ielts-academic/site/reader-utils.js");
-const readerJsBundle = [siteJs, readerModulesJs, readerReferencesJs, readerRenderersJs, readerStateJs, readerTasksJs, readerUtilsJs].join("\n");
+const readerJsBundle = [siteJs, readerAnnotationsJs, readerModulesJs, readerReferencesJs, readerRenderersJs, readerStateJs, readerTasksJs, readerUtilsJs].join("\n");
 const siteCss = read("../projects/language/ielts-academic/site/ielts-reader.css");
 const buildScript = read("../projects/language/ielts-academic/scripts/build-ielts-data.mjs");
 const buildSources = read("../projects/language/ielts-academic/scripts/build-sources.mjs");
@@ -182,6 +184,7 @@ assert.doesNotMatch(siteCss, /border-radius:\s*24px|border-radius:\s*28px/, "IEL
 assert.match(readerJsBundle, /const ANNOTATION_STORAGE_KEY = "ieltsReader\.annotations\.v1"/, "IELTS JS should use an IELTS annotation localStorage key");
 assert.match(readerJsBundle, /const TASK_STORAGE_KEY = "ieltsReader\.tasks\.v1"/, "IELTS JS should use an IELTS task localStorage key");
 assert.match(readerJsBundle, /const UI_STATE_KEY = "ieltsReader\.ui\.v1"/, "IELTS JS should use an IELTS UI localStorage key");
+assert.match(siteJs, /from "\.\/reader-annotations\.js"/, "IELTS reader entry should import annotation helpers");
 assert.match(siteJs, /from "\.\/reader-modules\.js"/, "IELTS reader entry should import module helpers");
 assert.match(siteJs, /from "\.\/reader-references\.js"/, "IELTS reader entry should import reference helpers");
 assert.match(siteJs, /from "\.\/reader-renderers\.js"/, "IELTS reader entry should import renderer helpers");
@@ -200,7 +203,7 @@ assert.match(siteJs, /function renderCurrentModule/, "IELTS JS should render the
 assert.match(siteJs, /function renderSectionRail/, "IELTS JS should render a section rail");
 assert.match(siteJs, /function renderContextualNotePanel/, "IELTS JS should render contextual notes");
 assert.match(siteJs, /function runSearch/, "IELTS JS should support Foundations-style global search");
-assert.match(siteJs, /function createAnnotationFromSelection/, "IELTS JS should support local annotations");
+assert.match(readerJsBundle, /function createAnnotationFromSelection/, "IELTS JS should support local annotations");
 assert.match(readerJsBundle, /function saveTaskState/, "IELTS JS should persist local task state");
 assert.match(readerTasksJs, /legacyIds/, "IELTS task helper should migrate legacy checklist IDs");
 assert.match(siteJs, /createLegacyTaskIds/, "IELTS reader should supply legacy checklist IDs during migration");

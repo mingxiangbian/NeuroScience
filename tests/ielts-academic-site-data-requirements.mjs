@@ -6,6 +6,7 @@ const buildScriptUrl = new URL("../projects/language/ielts-academic/scripts/buil
 const dataUrl = new URL("../projects/language/ielts-academic/site/ielts-data.json", import.meta.url);
 const jsUrl = new URL("../projects/language/ielts-academic/site/ielts-reader.js", import.meta.url);
 const readerModuleUrls = [
+  "../projects/language/ielts-academic/site/reader-annotations.js",
   "../projects/language/ielts-academic/site/reader-modules.js",
   "../projects/language/ielts-academic/site/reader-references.js",
   "../projects/language/ielts-academic/site/reader-renderers.js",
@@ -118,6 +119,7 @@ for (const entry of data.journal) {
 }
 
 assert.deepEqual(data.build.referenceIssues, []);
+assert.match(readerJs, /from "\.\/reader-annotations\.js"/, "reader entrypoint should import annotation helpers");
 assert.match(readerJs, /from "\.\/reader-references\.js"/, "reader entrypoint should import reference helpers");
 assert.match(readerJs, /from "\.\/reader-renderers\.js"/, "reader entrypoint should import renderer helpers");
 assert.match(readerJs, /from "\.\/reader-state\.js"/, "reader entrypoint should import local state helpers");

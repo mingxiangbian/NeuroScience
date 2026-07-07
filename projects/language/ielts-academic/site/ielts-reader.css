@@ -1198,11 +1198,18 @@ body,
 }
 
 .local-annotation-quote,
-.local-annotation-status {
+.local-annotation-status,
+.local-annotation-boundary,
+.annotation-unresolved {
   margin: 0;
   color: var(--reader-ink-muted);
   font-size: 12px;
   line-height: 1.62;
+}
+
+.annotation-unresolved {
+  border-left: 3px solid var(--reader-gold);
+  padding-left: 8px;
 }
 
 .local-annotation-editor {
@@ -1221,6 +1228,24 @@ body,
 .local-annotation-editor:focus {
   outline: 1px solid var(--reader-blue);
   border-color: var(--reader-blue);
+}
+
+.annotation-draft {
+  margin-top: 10px;
+}
+
+.annotation-draft textarea {
+  width: 100%;
+  border: 1px solid var(--reader-line);
+  border-radius: 6px;
+  background: var(--reader-paper-soft);
+  color: var(--reader-ink);
+  font: 12px/1.5 var(--reader-mono);
+  padding: 8px;
+}
+
+.annotation-draft button {
+  margin-top: 6px;
 }
 
 .mobile-note-drawer {
