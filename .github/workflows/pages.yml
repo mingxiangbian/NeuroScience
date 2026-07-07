@@ -30,6 +30,21 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v6
 
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build IELTS reader data
+        run: npm run build:ielts
+
+      - name: Test static site contracts
+        run: npm run test:all
+
       - name: Prepare Pages artifact
         run: |
           rm -rf _site

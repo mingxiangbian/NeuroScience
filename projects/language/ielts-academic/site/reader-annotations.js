@@ -28,10 +28,10 @@ ${annotation.note || "Write the durable reflection here before saving this as a 
 export function renderAnnotationDraft(annotation, context) {
   const draft = createJournalDraftMarkdown(annotation, context);
   return `
-    <details class="annotation-draft">
+    <details class="annotation-draft" data-annotation-draft="${escapeHtml(annotation.id)}">
       <summary>复制为 journal 草稿</summary>
       <p>本机临时阅读标注不会写回 repo。需要长期保留时，把下面草稿保存到 journal/entries/。</p>
-      <textarea readonly rows="10">${escapeHtml(draft)}</textarea>
+      <textarea readonly rows="10" data-journal-draft="${escapeHtml(annotation.id)}">${escapeHtml(draft)}</textarea>
       <button type="button" data-copy-journal-draft="${escapeHtml(annotation.id)}">复制草稿</button>
     </details>
   `;
@@ -292,7 +292,7 @@ export function applyHighlights(runtime) {
   }
 }
 
-function getAnnotationContext(note) {
+export function getAnnotationContext(note) {
   const noteReferenceId = note?.id?.startsWith("note-") ? `note:${note.id.slice(5)}` : "";
   const errorReferenceId = note?.id?.startsWith("error-") ? `error:${note.id.slice(6)}` : "";
   return {

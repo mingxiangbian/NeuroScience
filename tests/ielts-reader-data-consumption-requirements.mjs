@@ -6,6 +6,7 @@ const read = (path) => readFileSync(new URL(path, import.meta.url), "utf8");
 const indexHtml = read("../projects/language/ielts-academic/index.html");
 const entryJs = read("../projects/language/ielts-academic/site/ielts-reader.js");
 const css = read("../projects/language/ielts-academic/site/ielts-reader.css");
+const workflow = read("../.github/workflows/pages.yml");
 const data = JSON.parse(read("../projects/language/ielts-academic/site/ielts-data.json"));
 
 assert.match(entryJs, /from "\.\/reader-renderers\.js"/, "entrypoint should import renderer module");
@@ -44,8 +45,12 @@ assert.match(tasks, /function createStableTaskId/, "task module should create st
 assert.doesNotMatch(tasks, /__\$\{index\}/, "task ids should not use array index");
 
 assert.match(annotations, /function createJournalDraftMarkdown/, "annotations should support journal draft export");
+assert.match(annotations, /data-journal-draft/, "annotation journal draft should have a refresh target");
 assert.match(annotations, /定位失效|unresolved/i, "annotations should expose unresolved locator state");
 assert.match(annotations, /本机临时阅读标注/, "annotation UI should state local temporary boundary");
+assert.match(entryJs, /function refreshJournalDraftTextareas/, "annotation editor should refresh adjacent journal drafts");
+assert.match(entryJs, /navigator\.clipboard\?\.writeText/, "journal draft copy should handle unavailable clipboard APIs");
+assert.match(entryJs, /请手动复制|复制失败/, "journal draft copy should expose a manual fallback state");
 
 assert.match(modules, /function renderModuleSafely/, "module rendering should have per-module error boundary");
 assert.match(utils, /function getShortcutLabel/, "shortcut label should be platform-aware");
@@ -59,5 +64,10 @@ assert.match(css, /\.annotation-draft/, "CSS should style annotation journal dra
 assert.match(css, /\.annotation-unresolved/, "CSS should style unresolved annotations");
 
 assert.match(indexHtml, /site\/ielts-reader\.js/, "reader HTML should keep stable entrypoint");
+assert.match(indexHtml, /data-shortcut-label/, "shortcut hint should be platform-aware");
+assert.match(workflow, /actions\/setup-node@v5/, "Pages workflow should setup Node before deploy");
+assert.match(workflow, /npm ci/, "Pages workflow should install dependencies");
+assert.match(workflow, /npm run build:ielts/, "Pages workflow should build IELTS data before deploy");
+assert.match(workflow, /npm run test:all/, "Pages workflow should run static site tests before deploy");
 assert.equal(Array.isArray(data.references.targets), true);
 assert.equal(Array.isArray(data.build.validationIssues), true);

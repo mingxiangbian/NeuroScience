@@ -376,10 +376,28 @@ export function renderPromptLibrary(data) {
 
 export function renderValidation(data) {
   const checks = toList(data.validation);
-  if (checks.length === 0) return '<p class="empty-state">No validation documents found.</p>';
+  const issues = toList(data.build?.validationIssues);
+  const issuePanel = `
+    <section class="validation-issues" aria-label="Build validation issues">
+      <h3>Build validation</h3>
+      ${
+        issues.length
+          ? issues.map((issue) => `
+            <article class="validation-issue" data-severity="${escapeHtml(issue.severity)}">
+              <strong>${escapeHtml(issue.severity)} · ${escapeHtml(issue.type)}</strong>
+              <span>${escapeHtml(issue.path)}</span>
+              <p>${escapeHtml(issue.message)}</p>
+            </article>
+          `).join("")
+          : '<p class="empty-state">No build validation issues.</p>'
+      }
+    </section>
+  `;
+  if (checks.length === 0) return issuePanel;
 
   return `
     <div class="stack">
+      ${issuePanel}
       ${checks
         .map((check) => `
           <article class="content-card validation-issue">

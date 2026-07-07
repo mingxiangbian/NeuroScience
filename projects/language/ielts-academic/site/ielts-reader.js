@@ -1,6 +1,8 @@
 import { createReaderModule, makeKnowledgeNote, renderModuleSafely } from "./reader-modules.js";
 import {
   applyHighlights as applyAnnotationHighlights,
+  createJournalDraftMarkdown,
+  getAnnotationContext as getAnnotationDraftContext,
   getReadableCardFromNode,
   getSelectionAnnotationContext as getSelectionAnnotationContextFromRuntime,
   hideAnnotationDeletePopover as hideAnnotationDeletePopoverFromRuntime,
@@ -302,7 +304,7 @@ function setTheme(theme, options = {}) {
 function applyStoredShellState() {
   els.shell?.classList.toggle("is-left-collapsed", state.ui.leftCollapsed);
   els.shell?.classList.toggle("is-note-collapsed", state.ui.noteCollapsed);
-  document.querySelectorAll(".search-shortcut").forEach((shortcut) => {
+  document.querySelectorAll("[data-shortcut-label]").forEach((shortcut) => {
     shortcut.textContent = getShortcutLabel();
   });
   setTheme(state.ui.theme, { persist: false });
@@ -344,6 +346,36 @@ function updateAnnotationNote(annotationId, value) {
 
 function renderLocalAnnotations(note) {
   return renderLocalAnnotationsFromRuntime(getAnnotationRuntime(), note);
+}
+
+function refreshJournalDraftTextareas(annotationId) {
+  if (!annotationId) return;
+  const annotation = state.annotations.items.find((item) => item.id === annotationId);
+  if (!annotation) return;
+  const note = getKnowledgeNoteById(state.currentModule, annotation.noteId);
+  const draft = createJournalDraftMarkdown(annotation, getAnnotationDraftContext(note));
+  for (const surface of [els.noteSurface, els.mobileNoteSurface]) {
+    surface.querySelectorAll(`[data-journal-draft="${CSS.escape(annotationId)}"]`).forEach((textarea) => {
+      textarea.value = draft;
+    });
+  }
+}
+
+async function copyJournalDraft(button, textarea) {
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(textarea.value);
+      button.textContent = "已复制";
+      return;
+    }
+    textarea.focus();
+    textarea.select();
+    button.textContent = "请手动复制";
+  } catch {
+    textarea.focus();
+    textarea.select();
+    button.textContent = "复制失败，请手动复制";
+  }
 }
 
 function getInitialModuleId() {
@@ -550,14 +582,14 @@ function renderContextualNotePanel(note) {
           });
         }
         updateAnnotationNote(annotationId, value);
+        refreshJournalDraftTextareas(annotationId);
       });
     });
     surface.querySelectorAll("[data-copy-journal-draft]").forEach((button) => {
       button.addEventListener("click", async () => {
         const textarea = button.closest(".annotation-draft")?.querySelector("textarea");
         if (!textarea) return;
-        await navigator.clipboard.writeText(textarea.value);
-        button.textContent = "已复制";
+        await copyJournalDraft(button, textarea);
       });
     });
     bindReferencePanelActions(surface);
