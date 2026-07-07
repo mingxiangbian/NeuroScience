@@ -1,28 +1,60 @@
 const UI_STATE_KEY = "ieltsReader.ui.v1";
-const WEEKS = [1, 2, 3, 4, 5, 6, 7, 8];
-const ERROR_STATUSES = ["active", "improving", "fixed", "regressed"];
-const LANE_LABELS = ["Listening", "Reading", "Writing", "Speaking", "Errors"];
+const ANNOTATION_STORAGE_KEY = "ieltsReader.annotations.v1";
+const TASK_STORAGE_KEY = "ieltsReader.tasks.v1";
 
-const roots = {
-  dashboard: document.querySelector('[data-render="dashboard"]'),
-  swimlane: document.querySelector('[data-render="swimlane"]'),
-  errors: document.querySelector('[data-render="errors"]'),
-  notes: document.querySelector('[data-render="notes"]'),
-  journal: document.querySelector('[data-render="journal"]'),
-  promptLibrary: document.querySelector('[data-render="prompt-library"]'),
-  validation: document.querySelector('[data-render="validation"]'),
-};
+const WEEKS = [1, 2, 3, 4, 5, 6, 7, 8];
+const LANES = ["Listening", "Reading", "Writing", "Speaking", "Errors"];
+const ERROR_STATUSES = ["active", "improving", "fixed", "regressed"];
+
+const readerScript = document.querySelector('script[src$="ielts-reader.js"]');
 
 const state = {
-  searchTerm: "",
-  errorSkill: "all",
-  errorImpact: "all",
+  rawData: null,
+  data: null,
+  currentModule: null,
+  searchQuery: "",
+  activeSectionId: "",
+  activeKnowledgeNoteId: "",
+  sectionScrollHandler: null,
+  sectionScrollFrame: 0,
+  annotations: { version: 1, items: [] },
+  pendingAnnotation: null,
+  annotationToolbar: null,
+  annotationDeletePopover: null,
+  ui: loadUiState(),
 };
 
-let readerData = null;
+const taskState = loadTaskState();
+
+const els = {
+  shell: document.querySelector("#reader-shell"),
+  nav: document.querySelector("#module-nav"),
+  sectionLines: document.querySelector("#section-lines"),
+  moduleHeader: document.querySelector("#module-header"),
+  sectionList: document.querySelector("#section-list"),
+  noteLabel: document.querySelector("#note-label"),
+  noteSurface: document.querySelector("#note-surface"),
+  mobileNoteLabel: document.querySelector("#mobile-note-label"),
+  mobileNoteSurface: document.querySelector("#mobile-note-surface"),
+  searchInput: document.querySelector("#global-search"),
+  searchResults: document.querySelector("#search-results"),
+  searchOverlay: document.querySelector("#search-overlay"),
+  toggleTheme: document.querySelector("#toggle-theme"),
+  toggleNote: document.querySelector("#toggle-note"),
+  toggleLeftControls: document.querySelectorAll("[data-toggle-left]"),
+  main: document.querySelector("#reader-main"),
+};
+
+function getDataSource() {
+  return readerScript?.dataset.source ?? "site/ielts-data.json";
+}
+
+function resolveUrl(path) {
+  return new URL(path, window.location.href);
+}
 
 async function fetchJson(path) {
-  const response = await fetch(new URL(path, window.location.href));
+  const response = await fetch(resolveUrl(path));
   if (!response.ok) throw new Error(`Unable to load ${path}`);
   return response.json();
 }
@@ -36,24 +68,29 @@ function escapeHtml(value) {
     .replaceAll("'", "&#39;");
 }
 
-function setHtml(root, html) {
-  if (root) root.innerHTML = html;
-}
-
 function toList(value) {
   return Array.isArray(value) ? value : [];
 }
 
-function toSearchText(value) {
-  if (Array.isArray(value)) return value.map(toSearchText).join(" ");
-  if (value && typeof value === "object") return Object.values(value).map(toSearchText).join(" ");
-  return String(value ?? "").toLowerCase();
+function titleCase(value) {
+  return String(value ?? "")
+    .replace(/[-_]/g, " ")
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
-function matchesSearch(item) {
-  const term = state.searchTerm.trim().toLowerCase();
-  if (!term) return true;
-  return toSearchText(item).includes(term);
+function slugify(value) {
+  const slug = String(value ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return slug || "section";
+}
+
+function stripHtml(value) {
+  const temp = document.createElement("div");
+  temp.innerHTML = String(value ?? "");
+  return temp.textContent?.replace(/\s+/g, " ").trim() ?? "";
 }
 
 function truncateText(value, maxLength = 220) {
@@ -65,6 +102,10 @@ function truncateText(value, maxLength = 220) {
   return `${text.slice(0, maxLength - 1).trim()}...`;
 }
 
+function formatBand(value) {
+  return Number.isFinite(Number(value)) ? Number(value).toFixed(1) : "Unverified";
+}
+
 function formatTarget(target) {
   if (!target || typeof target !== "object") return "Overall 8.0 / each skill 7.5+";
   const overall = Number.isFinite(Number(target.overall)) ? Number(target.overall).toFixed(1) : "8.0";
@@ -73,14 +114,18 @@ function formatTarget(target) {
   return `Overall ${overall} / each skill ${floor}+ / ${weeks}`;
 }
 
-function formatBand(value) {
-  return Number.isFinite(Number(value)) ? Number(value).toFixed(1) : "Unverified";
-}
-
-function titleCase(value) {
-  return String(value ?? "")
-    .replace(/[-_]/g, " ")
-    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+function getStatusLabel(status) {
+  const labels = {
+    active: "进行中",
+    improving: "改善中",
+    fixed: "已修复",
+    regressed: "复发",
+    template: "模板态",
+    "not-yet-run": "未运行",
+    "not-started": "未开始",
+    ready: "可执行",
+  };
+  return labels[status] ?? titleCase(status);
 }
 
 function renderReferenceChips(items, kind = "reference") {
@@ -105,6 +150,65 @@ function renderReferenceChips(items, kind = "reference") {
   `;
 }
 
+function renderMarkdownPreview(markdown) {
+  const lines = String(markdown ?? "").split(/\r?\n/);
+  const blocks = [];
+  let listItems = [];
+
+  const flushList = () => {
+    if (listItems.length === 0) return;
+    blocks.push(`<ul>${listItems.map((item) => `<li>${item}</li>`).join("")}</ul>`);
+    listItems = [];
+  };
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line) {
+      flushList();
+      continue;
+    }
+    const listMatch = line.match(/^[-*]\s+(.+)$/);
+    if (listMatch) {
+      listItems.push(escapeHtml(listMatch[1]));
+      continue;
+    }
+    flushList();
+    const headingMatch = line.match(/^(#{1,4})\s+(.+)$/);
+    if (headingMatch) {
+      blocks.push(`<h3>${escapeHtml(headingMatch[2])}</h3>`);
+      continue;
+    }
+    blocks.push(`<p>${escapeHtml(line)}</p>`);
+  }
+  flushList();
+
+  return blocks.join("") || '<p class="empty-state">No content.</p>';
+}
+
+function renderTaskChecklist(moduleId, sectionTitle, items) {
+  const rows = toList(items).filter(Boolean);
+  if (rows.length === 0) return "";
+
+  return `
+    <ul class="task-list">
+      ${rows
+        .map((item, index) => {
+          const taskId = `${moduleId}__${slugify(sectionTitle)}__${index}`;
+          const isDone = Boolean(taskState[taskId]);
+          return `
+            <li class="task-item${isDone ? " is-done" : ""}">
+              <label>
+                <input type="checkbox" data-task-id="${escapeHtml(taskId)}" ${isDone ? "checked" : ""} />
+                <span>${escapeHtml(item)}</span>
+              </label>
+            </li>
+          `;
+        })
+        .join("")}
+    </ul>
+  `;
+}
+
 function renderSkillGapBars(skills, target) {
   const floor = Number.isFinite(Number(target?.perSkillFloor)) ? Number(target.perSkillFloor) : 7.5;
   const safeSkills = toList(skills);
@@ -114,7 +218,7 @@ function renderSkillGapBars(skills, target) {
   }
 
   return `
-    <div class="stack">
+    <div class="skill-gap-stack">
       ${safeSkills
         .map((skill) => {
           const estimate = Number(skill.estimatedBand);
@@ -141,40 +245,54 @@ function renderSkillGapBars(skills, target) {
   `;
 }
 
+function renderMetricGrid(metrics) {
+  return `
+    <div class="metric-grid">
+      ${metrics
+        .map((metric) => `
+          <article class="metric-card">
+            <p class="metric-label">${escapeHtml(metric.label)}</p>
+            <p class="metric-value">${escapeHtml(metric.value)}</p>
+          </article>
+        `)
+        .join("")}
+    </div>
+  `;
+}
+
 function renderDashboard(data) {
   const target = data.project?.target ?? data.scoreProfile?.target ?? {};
   const profile = data.scoreProfile ?? {};
   const referenceIssueCount = toList(data.build?.referenceIssues).length;
 
-  setHtml(
-    roots.dashboard,
-    `
-      <div class="dashboard-stack">
-        <div class="metric-grid">
-          <article class="metric-card">
-            <p class="metric-label">Target</p>
-            <p class="metric-value">${escapeHtml(formatTarget(target))}</p>
-          </article>
-          <article class="metric-card">
-            <p class="metric-label">Run mode</p>
-            <p class="metric-value">${escapeHtml(profile.runMode ?? "not-yet-run")}</p>
-          </article>
-          <article class="metric-card">
-            <p class="metric-label">State</p>
-            <p class="metric-value">${escapeHtml(profile.state ?? "template")}</p>
-          </article>
-          <article class="metric-card">
-            <p class="metric-label">Reference issues</p>
-            <p class="metric-value">${escapeHtml(referenceIssueCount)}</p>
-          </article>
-        </div>
-        <article class="content-card">
-          <h3>Skill gaps</h3>
-          ${renderSkillGapBars(profile.skills, target)}
-        </article>
+  return `
+    <div class="dashboard-stack">
+      ${renderMetricGrid([
+        { label: "Target", value: formatTarget(target) },
+        { label: "Run mode", value: profile.runMode ?? "not-yet-run" },
+        { label: "State", value: profile.state ?? "template" },
+        { label: "Reference issues", value: String(referenceIssueCount) },
+      ])}
+      <article class="content-card">
+        <h3>Skill gaps</h3>
+        ${renderSkillGapBars(profile.skills, target)}
+      </article>
+      <div class="dashboard-grid" aria-label="IELTS dashboard">
+        <section class="dashboard-card">
+          <p class="dashboard-card-label">Current estimate</p>
+          <strong>${escapeHtml(formatBand(profile.currentEstimate?.overall))}</strong>
+        </section>
+        <section class="dashboard-card">
+          <p class="dashboard-card-label">Confidence</p>
+          <strong>${escapeHtml(profile.currentEstimate?.confidence ?? "low")}</strong>
+        </section>
+        <section class="dashboard-card">
+          <p class="dashboard-card-label">Open risks</p>
+          <strong>${escapeHtml(String(toList(profile.risks).length))}</strong>
+        </section>
       </div>
-    `,
-  );
+    </div>
+  `;
 }
 
 function renderCheckpointMarker(checkpoint) {
@@ -203,7 +321,7 @@ function renderSwimlane(data) {
     ${WEEKS.map((week) => `<div class="swimlane-heading">Week ${week}</div>`).join("")}
   `;
 
-  const rows = LANE_LABELS.map((label) => {
+  const rows = LANES.map((label) => {
     const cells = WEEKS.map((week) => {
       const checkpoint = label === "Errors" ? checkpointByWeek.get(week) : null;
       return `
@@ -215,15 +333,36 @@ function renderSwimlane(data) {
     return `<div class="swimlane-row-label">${escapeHtml(label)}</div>${cells}`;
   }).join("");
 
-  setHtml(roots.swimlane, `<div class="swimlane-grid">${header}${rows}</div>`);
+  return `<div class="swimlane-scroll"><div class="swimlane-grid">${header}${rows}</div></div>`;
 }
 
-function filterErrors(errors) {
-  return toList(errors).filter((error) => {
-    const skillMatch = state.errorSkill === "all" || error.skill === state.errorSkill;
-    const impactMatch = state.errorImpact === "all" || error.impact === state.errorImpact;
-    return skillMatch && impactMatch && matchesSearch(error);
-  });
+function renderCheckpointList(data) {
+  const checkpoints = toList(data.checkpoints?.checkpoints);
+  if (checkpoints.length === 0) return '<p class="empty-state">No checkpoints found.</p>';
+  return `
+    <div class="stack">
+      ${checkpoints
+        .map((checkpoint) => `
+          <article class="content-card">
+            <p class="card-kicker">Week ${escapeHtml(checkpoint.week)} | ${escapeHtml(checkpoint.status ?? "not-started")}</p>
+            <h3>${escapeHtml(checkpoint.name)}</h3>
+            <p class="card-body">${escapeHtml(checkpoint.purpose)}</p>
+            <p class="card-body">${escapeHtml(checkpoint.decision)}</p>
+          </article>
+        `)
+        .join("")}
+    </div>
+  `;
+}
+
+function renderDailyTasks(data, moduleId) {
+  const errors = toList(data.errorLog?.errors).map((error) => `${error.id}: ${error.reviewMethod ?? error.description}`);
+  const baseTasks = [
+    "Log actual focused study minutes before changing the weekly allocation.",
+    "Run one diagnostic or review task before adding new theory.",
+    "Update confidence and unverified dimensions only after evidence changes.",
+  ];
+  return renderTaskChecklist(moduleId, "Daily training tasks", [...baseTasks, ...errors]);
 }
 
 function renderErrorCard(error) {
@@ -238,38 +377,10 @@ function renderErrorCard(error) {
   `;
 }
 
-function renderSelectOptions(values, activeValue, fallbackLabel) {
-  return [
-    `<option value="all"${activeValue === "all" ? " selected" : ""}>${escapeHtml(fallbackLabel)}</option>`,
-    ...values.map((value) => `<option value="${escapeHtml(value)}"${activeValue === value ? " selected" : ""}>${escapeHtml(titleCase(value))}</option>`),
-  ].join("");
-}
-
-function bindErrorControls(data) {
-  const skillSelect = roots.errors?.querySelector('[data-error-filter="skill"]');
-  const impactSelect = roots.errors?.querySelector('[data-error-filter="impact"]');
-
-  skillSelect?.addEventListener("change", () => {
-    state.errorSkill = skillSelect.value;
-    saveUiState();
-    renderErrors(data);
-  });
-
-  impactSelect?.addEventListener("change", () => {
-    state.errorImpact = impactSelect.value;
-    saveUiState();
-    renderErrors(data);
-  });
-}
-
 function renderErrors(data) {
   const allErrors = toList(data.errorLog?.errors);
-  const skills = Array.from(new Set(allErrors.map((error) => error.skill).filter(Boolean))).sort();
-  const impacts = Array.from(new Set(allErrors.map((error) => error.impact).filter(Boolean))).sort();
-  const filteredErrors = filterErrors(allErrors);
-
   const columns = ERROR_STATUSES.map((status) => {
-    const statusErrors = filteredErrors.filter((error) => error.status === status);
+    const statusErrors = allErrors.filter((error) => error.status === status);
     return `
       <section class="error-column" aria-label="${escapeHtml(titleCase(status))} errors">
         <h3>${escapeHtml(titleCase(status))}</h3>
@@ -282,217 +393,1232 @@ function renderErrors(data) {
     `;
   }).join("");
 
-  setHtml(
-    roots.errors,
-    `
-      <div class="error-controls">
-        <label>
-          Skill
-          <select data-error-filter="skill">
-            ${renderSelectOptions(skills, state.errorSkill, "All skills")}
-          </select>
-        </label>
-        <label>
-          Impact
-          <select data-error-filter="impact">
-            ${renderSelectOptions(impacts, state.errorImpact, "All impacts")}
-          </select>
-        </label>
-      </div>
-      <div class="error-board">${columns}</div>
-    `,
-  );
-  bindErrorControls(data);
+  return `<div class="error-board">${columns}</div>`;
 }
 
 function renderNotes(data) {
-  const notes = toList(data.notes).filter(matchesSearch);
-  if (notes.length === 0) {
-    setHtml(roots.notes, '<p class="empty-state">No notes match the current search.</p>');
-    return;
-  }
+  const notes = toList(data.notes);
+  if (notes.length === 0) return '<p class="empty-state">No notes have been indexed.</p>';
 
-  setHtml(
-    roots.notes,
-    `
-      <div class="stack">
-        ${notes
-          .map((note) => `
-            <article class="note-card">
-              <p class="card-kicker">${escapeHtml(note.skill ?? "general")} | ${escapeHtml(note.topic ?? "untagged")}</p>
-              <h3>${escapeHtml(note.title)}</h3>
-              <p class="card-body">${escapeHtml(truncateText(note.body))}</p>
-              ${renderReferenceChips([{ label: note.path, href: note.path }], "source")}
-              ${renderReferenceChips(note.relatedErrors, "error")}
-            </article>
-          `)
-          .join("")}
-      </div>
-    `,
-  );
+  return `
+    <div class="stack">
+      ${notes
+        .map((note) => `
+          <article class="note-card">
+            <p class="card-kicker">${escapeHtml(note.skill ?? "general")} | ${escapeHtml(note.topic ?? "untagged")}</p>
+            <h3>${escapeHtml(note.title)}</h3>
+            <p class="card-body">${escapeHtml(truncateText(note.body))}</p>
+            ${renderReferenceChips([{ label: note.path, href: note.path }], "source")}
+            ${renderReferenceChips(note.relatedErrors, "error")}
+          </article>
+        `)
+        .join("")}
+    </div>
+  `;
 }
 
 function renderJournal(data) {
-  const entries = toList(data.journal).filter(matchesSearch);
-  if (entries.length === 0) {
-    setHtml(roots.journal, '<p class="empty-state">No journal entries match the current search.</p>');
-    return;
-  }
+  const entries = toList(data.journal);
+  if (entries.length === 0) return '<p class="empty-state">No journal entries have been indexed.</p>';
 
-  setHtml(
-    roots.journal,
-    `
-      <div class="stack">
-        ${entries
-          .map((entry) => `
-            <article class="journal-card">
-              <p class="card-kicker">${escapeHtml(entry.date ?? "undated")}</p>
-              <h3>${escapeHtml(entry.title)}</h3>
-              <p class="card-body">${escapeHtml(truncateText(entry.body))}</p>
-              ${renderReferenceChips([{ label: entry.path, href: entry.path }], "source")}
-              ${renderReferenceChips(entry.relatedErrors, "error")}
-              ${renderReferenceChips(toList(entry.relatedNotes).map((note) => `note: ${note}`), "note")}
-            </article>
-          `)
-          .join("")}
-      </div>
-    `,
-  );
+  return `
+    <div class="stack">
+      ${entries
+        .map((entry) => `
+          <article class="journal-card">
+            <p class="card-kicker">${escapeHtml(entry.date ?? "undated")}</p>
+            <h3>${escapeHtml(entry.title)}</h3>
+            <p class="card-body">${escapeHtml(truncateText(entry.body))}</p>
+            ${renderReferenceChips([{ label: entry.path, href: entry.path }], "source")}
+            ${renderReferenceChips(entry.relatedErrors, "error")}
+            ${renderReferenceChips(toList(entry.relatedNotes).map((note) => `note: ${note}`), "note")}
+          </article>
+        `)
+        .join("")}
+    </div>
+  `;
 }
 
 function renderPromptLibrary(data) {
   const prompts = toList(data.promptLibrary);
-  if (prompts.length === 0) {
-    setHtml(roots.promptLibrary, '<p class="empty-state">No prompt documents found.</p>');
-    return;
-  }
+  if (prompts.length === 0) return '<p class="empty-state">No prompt documents found.</p>';
 
-  setHtml(
-    roots.promptLibrary,
-    `
-      <div class="stack">
-        ${prompts
-          .map((prompt) => `
-            <article class="content-card">
-              <p class="card-kicker">${escapeHtml(prompt.id ?? "prompt")}</p>
-              <h3>${escapeHtml(prompt.title)}</h3>
-              ${renderReferenceChips([{ label: prompt.path, href: prompt.path }], "source")}
-            </article>
-          `)
-          .join("")}
-      </div>
-    `,
-  );
+  return `
+    <div class="stack">
+      ${prompts
+        .map((prompt) => `
+          <article class="content-card">
+            <p class="card-kicker">${escapeHtml(prompt.id ?? "prompt")}</p>
+            <h3>${escapeHtml(prompt.title)}</h3>
+            <p class="card-body">${escapeHtml(truncateText(prompt.body))}</p>
+            ${renderReferenceChips([{ label: prompt.path, href: prompt.path }], "source")}
+          </article>
+        `)
+        .join("")}
+    </div>
+  `;
 }
 
 function renderValidation(data) {
   const checks = toList(data.validation);
-  if (checks.length === 0) {
-    setHtml(roots.validation, '<p class="empty-state">No validation documents found.</p>');
-    return;
-  }
+  if (checks.length === 0) return '<p class="empty-state">No validation documents found.</p>';
 
-  setHtml(
-    roots.validation,
+  return `
+    <div class="stack">
+      ${checks
+        .map((check) => `
+          <article class="content-card">
+            <p class="card-kicker">${escapeHtml(check.id ?? "validation")}</p>
+            <h3>${escapeHtml(check.title)}</h3>
+            <p class="card-body">${escapeHtml(truncateText(check.body))}</p>
+            ${renderReferenceChips([{ label: check.path, href: check.path }], "source")}
+          </article>
+        `)
+        .join("")}
+    </div>
+  `;
+}
+
+function makeKnowledgeNote(id, title, body, groups = []) {
+  return {
+    id,
+    title,
+    body,
+    groups,
+  };
+}
+
+function buildSearchEntries(moduleId, moduleTitle, sections, sectionIds, knowledgeNotes) {
+  const sectionEntries = Object.entries(sections).map(([sectionTitle, body]) => ({
+    id: sectionIds[sectionTitle],
+    moduleId,
+    moduleTitle,
+    sectionTitle,
+    text: `${sectionTitle} ${stripHtml(body)}`,
+  }));
+  const noteEntries = toList(knowledgeNotes).map((note) => ({
+    id: note.id,
+    moduleId,
+    moduleTitle,
+    sectionTitle: note.title,
+    text: `${note.title} ${stripHtml(note.body)} ${toList(note.groups).map((group) => stripHtml(group.body)).join(" ")}`,
+  }));
+  return [...sectionEntries, ...noteEntries];
+}
+
+function createReaderModule(config) {
+  const sections = config.sections ?? {};
+  const sectionIds = {};
+  const sectionNotes = {};
+  for (const sectionTitle of Object.keys(sections)) {
+    const sectionId = `${config.id}-${slugify(sectionTitle)}`;
+    sectionIds[sectionTitle] = sectionId;
+    sectionNotes[sectionId] = makeKnowledgeNote(sectionId, sectionTitle, sections[sectionTitle]);
+  }
+  const knowledgeNotes = toList(config.knowledgeNotes);
+  const searchEntries = buildSearchEntries(config.id, config.title, sections, sectionIds, knowledgeNotes);
+  const searchText = searchEntries.map((entry) => `${entry.sectionTitle} ${entry.text}`).join(" ");
+
+  return {
+    id: config.id,
+    title: config.title,
+    status: config.status ?? "ready",
+    priority: config.priority ?? "core",
+    learningProgress: config.learningProgress ?? 0,
+    lastUpdated: config.lastUpdated ?? "",
+    sections,
+    sectionIds,
+    sectionNotes,
+    knowledgeNotes,
+    searchEntries,
+    searchText,
+  };
+}
+
+function buildErrorNotes(data) {
+  return toList(data.errorLog?.errors).map((error) => makeKnowledgeNote(
+    `error-${error.id}`,
+    `${error.id} · ${error.description}`,
     `
-      <div class="stack">
-        ${checks
-          .map((check) => `
-            <article class="content-card">
-              <p class="card-kicker">${escapeHtml(check.id ?? "validation")}</p>
-              <h3>${escapeHtml(check.title)}</h3>
-              ${renderReferenceChips([{ label: check.path, href: check.path }], "source")}
+      <p>${escapeHtml(error.description)}</p>
+      <p>${escapeHtml(error.reviewMethod ?? "")}</p>
+      ${renderReferenceChips([error.id], "error")}
+    `,
+    [
+      {
+        label: "Evidence",
+        body: `<ul>${toList(error.evidence).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`,
+      },
+      {
+        label: "Next review",
+        body: `<p>${escapeHtml(error.nextReview ?? "Pending")}</p>`,
+      },
+    ],
+  ));
+}
+
+function buildDocumentNotes(items, prefix) {
+  return toList(items).map((item) => makeKnowledgeNote(
+    `${prefix}-${item.id}`,
+    item.title,
+    renderMarkdownPreview(item.body),
+    [
+      {
+        label: "Source",
+        body: renderReferenceChips([{ label: item.path, href: item.path }], "source"),
+      },
+    ],
+  ));
+}
+
+function buildReaderModules(data) {
+  const target = data.project?.target ?? data.scoreProfile?.target ?? {};
+  const lastUpdated = data.scoreProfile?.lastUpdated ?? data.build?.generatedAt ?? "";
+  const dashboardSections = {
+    Dashboard: renderDashboard(data),
+    "Score profile": `
+      <p>${escapeHtml(data.scoreProfile?.currentEstimate?.summary ?? "Diagnostic evidence has not been collected yet.")}</p>
+      ${renderReferenceChips(toList(data.scoreProfile?.risks), "risk")}
+    `,
+    "Daily training tasks": renderDailyTasks(data, "dashboard"),
+  };
+
+  const swimlaneSections = {
+    "8-week swimlane": renderSwimlane(data),
+    "Checkpoint rules": renderCheckpointList(data),
+    "Daily training tasks": renderDailyTasks(data, "swimlane"),
+  };
+
+  const errorSections = {
+    Errors: renderErrors(data),
+    "Regression control": renderTaskChecklist(
+      "errors",
+      "Regression control",
+      toList(data.errorLog?.errors).map((error) => `${error.id}: verify whether this error is fixed repeatedly or regressed.`),
+    ),
+  };
+
+  const noteSections = {
+    Notes: renderNotes(data),
+    "Indexed note bodies": `
+      <div class="knowledge-list">
+        ${buildDocumentNotes(data.notes, "note")
+          .map((note) => `
+            <article class="knowledge-card" id="${escapeHtml(note.id)}" data-section-id="${escapeHtml(note.id)}" data-note-id="${escapeHtml(note.id)}" data-section-title="${escapeHtml(note.title)}">
+              <h3>${escapeHtml(note.title)}</h3>
+              <div class="knowledge-card-body">${note.body}</div>
             </article>
           `)
           .join("")}
       </div>
     `,
-  );
-}
-
-function runReaderSearch(term = state.searchTerm) {
-  state.searchTerm = String(term ?? "");
-  const input = document.querySelector("#reader-search");
-  if (input && input.value !== state.searchTerm) input.value = state.searchTerm;
-  saveUiState();
-
-  if (!readerData) return;
-  renderErrors(readerData);
-  renderNotes(readerData);
-  renderJournal(readerData);
-}
-
-function saveUiState() {
-  const payload = {
-    searchTerm: state.searchTerm,
-    errorSkill: state.errorSkill,
-    errorImpact: state.errorImpact,
   };
 
+  const journalSections = {
+    Journal: renderJournal(data),
+    "Session bodies": `
+      <div class="knowledge-list">
+        ${buildDocumentNotes(data.journal, "journal")
+          .map((note) => `
+            <article class="knowledge-card" id="${escapeHtml(note.id)}" data-section-id="${escapeHtml(note.id)}" data-note-id="${escapeHtml(note.id)}" data-section-title="${escapeHtml(note.title)}">
+              <h3>${escapeHtml(note.title)}</h3>
+              <div class="knowledge-card-body">${note.body}</div>
+            </article>
+          `)
+          .join("")}
+      </div>
+    `,
+  };
+
+  const promptSections = {
+    "Prompt library": renderPromptLibrary(data),
+    "Prompt bodies": `
+      <div class="knowledge-list">
+        ${buildDocumentNotes(data.promptLibrary, "prompt")
+          .map((note) => `
+            <article class="knowledge-card" id="${escapeHtml(note.id)}" data-section-id="${escapeHtml(note.id)}" data-note-id="${escapeHtml(note.id)}" data-section-title="${escapeHtml(note.title)}">
+              <h3>${escapeHtml(note.title)}</h3>
+              <div class="knowledge-card-body">${note.body}</div>
+            </article>
+          `)
+          .join("")}
+      </div>
+    `,
+  };
+
+  const validationSections = {
+    Validation: renderValidation(data),
+    "Validation bodies": `
+      <div class="knowledge-list">
+        ${buildDocumentNotes(data.validation, "validation")
+          .map((note) => `
+            <article class="knowledge-card" id="${escapeHtml(note.id)}" data-section-id="${escapeHtml(note.id)}" data-note-id="${escapeHtml(note.id)}" data-section-title="${escapeHtml(note.title)}">
+              <h3>${escapeHtml(note.title)}</h3>
+              <div class="knowledge-card-body">${note.body}</div>
+            </article>
+          `)
+          .join("")}
+      </div>
+    `,
+  };
+
+  const modules = [
+    createReaderModule({
+      id: "dashboard",
+      title: "Dashboard",
+      status: data.scoreProfile?.state ?? "template",
+      priority: "score profile",
+      learningProgress: data.scoreProfile?.state === "template" ? 10 : 45,
+      lastUpdated,
+      sections: dashboardSections,
+      knowledgeNotes: [
+        makeKnowledgeNote("dashboard-target", "Target and diagnosis boundary", `<p>${escapeHtml(formatTarget(target))}</p>`),
+      ],
+    }),
+    createReaderModule({
+      id: "swimlane",
+      title: "8-week swimlane",
+      status: "ready",
+      priority: "weekly execution",
+      learningProgress: 15,
+      lastUpdated,
+      sections: swimlaneSections,
+      knowledgeNotes: toList(data.checkpoints?.checkpoints).map((checkpoint) => makeKnowledgeNote(
+        `checkpoint-week-${checkpoint.week}`,
+        checkpoint.name,
+        `<p>${escapeHtml(checkpoint.purpose)}</p><p>${escapeHtml(checkpoint.decision)}</p>`,
+      )),
+    }),
+    createReaderModule({
+      id: "errors",
+      title: "Errors",
+      status: toList(data.errorLog?.errors).length ? "active" : "not-started",
+      priority: "high-impact repair",
+      learningProgress: 20,
+      lastUpdated,
+      sections: errorSections,
+      knowledgeNotes: buildErrorNotes(data),
+    }),
+    createReaderModule({
+      id: "notes",
+      title: "Notes",
+      status: toList(data.notes).length ? "ready" : "not-started",
+      priority: "study memory",
+      learningProgress: toList(data.notes).length ? 20 : 0,
+      lastUpdated,
+      sections: noteSections,
+      knowledgeNotes: buildDocumentNotes(data.notes, "note"),
+    }),
+    createReaderModule({
+      id: "journal",
+      title: "Journal",
+      status: toList(data.journal).length ? "ready" : "not-started",
+      priority: "weekly review",
+      learningProgress: toList(data.journal).length ? 20 : 0,
+      lastUpdated,
+      sections: journalSections,
+      knowledgeNotes: buildDocumentNotes(data.journal, "journal"),
+    }),
+    createReaderModule({
+      id: "prompt-library",
+      title: "Prompt library",
+      status: "ready",
+      priority: "agent operation",
+      learningProgress: 40,
+      lastUpdated,
+      sections: promptSections,
+      knowledgeNotes: buildDocumentNotes(data.promptLibrary, "prompt"),
+    }),
+    createReaderModule({
+      id: "validation",
+      title: "Validation",
+      status: "ready",
+      priority: "quality gate",
+      learningProgress: 35,
+      lastUpdated,
+      sections: validationSections,
+      knowledgeNotes: buildDocumentNotes(data.validation, "validation"),
+    }),
+  ];
+
+  return {
+    project: {
+      id: "ielts-academic",
+      title: "语言",
+      targetRole: `IELTS Academic · ${formatTarget(target)}`,
+      dashboardModuleId: "dashboard",
+      overallLearningProgress: Math.round(modules.reduce((sum, module) => sum + module.learningProgress, 0) / modules.length),
+    },
+    raw: data,
+    modules,
+  };
+}
+
+function createEmptyAnnotationStore() {
+  return {
+    version: 1,
+    items: [],
+  };
+}
+
+function loadAnnotations() {
   try {
-    localStorage.setItem("ieltsReader.ui.v1", JSON.stringify(payload));
-  } catch {
-    return;
+    const raw = window.localStorage.getItem(ANNOTATION_STORAGE_KEY);
+    if (!raw) return createEmptyAnnotationStore();
+    const parsed = JSON.parse(raw);
+    if (!parsed || !Array.isArray(parsed.items)) return createEmptyAnnotationStore();
+    return {
+      version: 1,
+      items: parsed.items.filter((item) => item && item.projectId === "ielts-academic"),
+    };
+  } catch (error) {
+    console.warn("Unable to load IELTS annotations", error);
+    return createEmptyAnnotationStore();
+  }
+}
+
+function saveAnnotations(annotations = state.annotations) {
+  try {
+    window.localStorage.setItem(ANNOTATION_STORAGE_KEY, JSON.stringify(annotations));
+  } catch (error) {
+    console.warn("Unable to save IELTS annotations", error);
+  }
+}
+
+function loadTaskState() {
+  try {
+    const raw = window.localStorage.getItem(TASK_STORAGE_KEY);
+    const parsed = raw ? JSON.parse(raw) : {};
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+  } catch (error) {
+    console.warn("Unable to load task checklist state", error);
+    return {};
+  }
+}
+
+function saveTaskState(tasks = taskState) {
+  try {
+    window.localStorage.setItem(TASK_STORAGE_KEY, JSON.stringify(tasks));
+  } catch (error) {
+    console.warn("Unable to save task checklist state", error);
   }
 }
 
 function loadUiState() {
   try {
-    const saved = JSON.parse(localStorage.getItem(UI_STATE_KEY) ?? "{}");
-    state.searchTerm = typeof saved.searchTerm === "string" ? saved.searchTerm : "";
-    state.errorSkill = typeof saved.errorSkill === "string" ? saved.errorSkill : "all";
-    state.errorImpact = typeof saved.errorImpact === "string" ? saved.errorImpact : "all";
+    const raw = window.localStorage.getItem(UI_STATE_KEY);
+    const parsed = raw ? JSON.parse(raw) : {};
+    return {
+      theme: parsed.theme === "dark" ? "dark" : "light",
+      leftCollapsed: Boolean(parsed.leftCollapsed),
+      noteCollapsed: Boolean(parsed.noteCollapsed),
+    };
   } catch {
-    state.searchTerm = "";
-    state.errorSkill = "all";
-    state.errorImpact = "all";
+    return {
+      theme: "light",
+      leftCollapsed: false,
+      noteCollapsed: false,
+    };
   }
 }
 
-function renderAll(data) {
-  renderDashboard(data);
-  renderSwimlane(data);
-  renderErrors(data);
-  renderNotes(data);
-  renderJournal(data);
-  renderPromptLibrary(data);
-  renderValidation(data);
+function saveUiState() {
+  try {
+    window.localStorage.setItem(UI_STATE_KEY, JSON.stringify(state.ui));
+  } catch {
+    return;
+  }
 }
 
-function bindNavigation() {
-  document.querySelectorAll("[data-section-target]").forEach((button) => {
+function setTheme(theme, options = {}) {
+  const normalized = theme === "dark" ? "dark" : "light";
+  state.ui.theme = normalized;
+  document.body.dataset.theme = normalized;
+  els.toggleTheme?.setAttribute("aria-pressed", normalized === "dark" ? "true" : "false");
+  if (options.persist !== false) saveUiState();
+}
+
+function applyStoredShellState() {
+  els.shell?.classList.toggle("is-left-collapsed", state.ui.leftCollapsed);
+  els.shell?.classList.toggle("is-note-collapsed", state.ui.noteCollapsed);
+  setTheme(state.ui.theme, { persist: false });
+}
+
+function getAnnotationsForNote(moduleId, noteId) {
+  return state.annotations.items.filter((item) => item.moduleId === moduleId && item.noteId === noteId);
+}
+
+function getReadableCardFromNode(node) {
+  const element = node?.nodeType === Node.ELEMENT_NODE ? node : node?.parentElement;
+  return element?.closest?.(".knowledge-card, .module-section") ?? null;
+}
+
+function countTextOccurrences(text, needle) {
+  if (!needle) return 0;
+  let count = 0;
+  let index = text.indexOf(needle);
+  while (index !== -1) {
+    count += 1;
+    index = text.indexOf(needle, index + needle.length);
+  }
+  return count;
+}
+
+function getSelectionAnnotationContext() {
+  const selection = window.getSelection();
+  if (!selection || selection.rangeCount === 0 || selection.isCollapsed) return null;
+  const range = selection.getRangeAt(0);
+  const selectedText = selection.toString().trim();
+  if (selectedText.length < 2) return null;
+  if (range.startContainer !== range.endContainer) return null;
+
+  const startCard = getReadableCardFromNode(range.startContainer);
+  const endCard = getReadableCardFromNode(range.endContainer);
+  if (!startCard || startCard !== endCard) return null;
+
+  const noteId = startCard.dataset.noteId || startCard.dataset.sectionId;
+  const moduleId = state.currentModule?.id;
+  if (!moduleId || !noteId) return null;
+
+  const beforeRange = document.createRange();
+  beforeRange.selectNodeContents(startCard);
+  beforeRange.setEnd(range.startContainer, range.startOffset);
+
+  return {
+    moduleId,
+    noteId,
+    selectedText,
+    matchIndex: countTextOccurrences(beforeRange.toString(), selectedText),
+    rect: range.getBoundingClientRect(),
+  };
+}
+
+function hideAnnotationToolbar() {
+  state.annotationToolbar?.remove();
+  state.annotationToolbar = null;
+  state.pendingAnnotation = null;
+}
+
+function renderAnnotationToolbar(context) {
+  hideAnnotationToolbar();
+  const toolbar = document.createElement("div");
+  toolbar.className = "annotation-toolbar";
+  toolbar.innerHTML = `
+    <button type="button" data-annotation-mode="highlight">高亮</button>
+    <button type="button" data-annotation-mode="note">笔记</button>
+  `;
+  toolbar.style.position = "fixed";
+  toolbar.style.left = `${Math.max(12, context.rect.left + context.rect.width / 2)}px`;
+  toolbar.style.top = `${Math.max(12, context.rect.top - 46)}px`;
+  toolbar.querySelectorAll("[data-annotation-mode]").forEach((button) => {
+    button.addEventListener("click", () => createAnnotationFromSelection(button.dataset.annotationMode));
+  });
+  document.body.append(toolbar);
+  state.annotationToolbar = toolbar;
+  state.pendingAnnotation = context;
+}
+
+function createAnnotationId() {
+  return `ielts-ann-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function createAnnotationFromSelection(mode) {
+  const context = state.pendingAnnotation;
+  if (!context?.moduleId || !context?.noteId) return;
+  const now = new Date().toISOString();
+  const annotation = {
+    id: createAnnotationId(),
+    projectId: "ielts-academic",
+    moduleId: context.moduleId,
+    noteId: context.noteId,
+    selectedText: context.selectedText,
+    matchIndex: context.matchIndex,
+    mode: mode === "note" ? "note" : "highlight",
+    note: "",
+    highlightActive: true,
+    createdAt: now,
+    updatedAt: now,
+  };
+  state.annotations.items.push(annotation);
+  saveAnnotations();
+  window.getSelection()?.removeAllRanges();
+  hideAnnotationToolbar();
+  applyHighlights();
+  renderContextualNotePanel(getKnowledgeNoteById(state.currentModule, context.noteId));
+}
+
+function updateAnnotationNote(annotationId, value) {
+  const annotation = state.annotations.items.find((item) => item.id === annotationId);
+  if (!annotation) return;
+  annotation.note = value;
+  annotation.updatedAt = new Date().toISOString();
+  saveAnnotations();
+}
+
+function hideAnnotationDeletePopover() {
+  state.annotationDeletePopover?.remove();
+  state.annotationDeletePopover = null;
+}
+
+function deleteAnnotation(annotationId, behavior) {
+  const annotation = state.annotations.items.find((item) => item.id === annotationId);
+  if (!annotation) return;
+  if (behavior === "highlight-only" && annotation.mode === "note") {
+    annotation.highlightActive = false;
+    annotation.updatedAt = new Date().toISOString();
+  } else {
+    state.annotations.items = state.annotations.items.filter((item) => item.id !== annotationId);
+  }
+  saveAnnotations();
+  hideAnnotationDeletePopover();
+  applyHighlights();
+  renderContextualNotePanel(getKnowledgeNoteById(state.currentModule, annotation.noteId));
+}
+
+function showAnnotationDeletePopover(annotationId, rect) {
+  hideAnnotationDeletePopover();
+  const annotation = state.annotations.items.find((item) => item.id === annotationId);
+  if (!annotation) return;
+  const popover = document.createElement("div");
+  popover.className = "annotation-delete-popover";
+  const keepButton = annotation.mode === "note"
+    ? `<button type="button" data-delete-behavior="highlight-only">只删除高亮，保留笔记</button>`
+    : "";
+  popover.innerHTML = `
+    ${keepButton}
+    <button type="button" data-delete-behavior="all">高亮和笔记一起删除</button>
+    <button type="button" data-delete-behavior="cancel">取消</button>
+  `;
+  popover.style.position = "fixed";
+  popover.style.left = `${Math.max(12, rect.left)}px`;
+  popover.style.top = `${Math.max(12, rect.bottom + 8)}px`;
+  popover.querySelectorAll("[data-delete-behavior]").forEach((button) => {
     button.addEventListener("click", () => {
-      const target = document.getElementById(button.dataset.sectionTarget);
-      if (!target) return;
-      document.querySelectorAll("[data-section-target]").forEach((item) => item.classList.remove("is-active"));
-      button.classList.add("is-active");
-      target.scrollIntoView({ block: "start", behavior: "smooth" });
+      const behavior = button.dataset.deleteBehavior;
+      if (behavior === "cancel") {
+        hideAnnotationDeletePopover();
+        return;
+      }
+      deleteAnnotation(annotationId, behavior);
+    });
+  });
+  document.body.append(popover);
+  state.annotationDeletePopover = popover;
+}
+
+function getTextNodes(root) {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      if (node.parentElement?.closest(".knowledge-highlight")) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    },
+  });
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  return nodes;
+}
+
+function clearHighlights() {
+  els.sectionList.querySelectorAll(".knowledge-highlight").forEach((mark) => {
+    mark.replaceWith(document.createTextNode(mark.textContent));
+  });
+  els.sectionList.normalize();
+}
+
+function findTextRange(root, selectedText, matchIndex) {
+  if (!selectedText) return null;
+  const nodes = getTextNodes(root);
+  let occurrence = 0;
+  for (const node of nodes) {
+    let index = node.nodeValue.indexOf(selectedText);
+    while (index !== -1) {
+      if (occurrence === matchIndex) {
+        const range = document.createRange();
+        range.setStart(node, index);
+        range.setEnd(node, index + selectedText.length);
+        return range;
+      }
+      occurrence += 1;
+      index = node.nodeValue.indexOf(selectedText, index + selectedText.length);
+    }
+  }
+  return null;
+}
+
+function getRangeDocumentOrder(range) {
+  const nodes = getTextNodes(els.sectionList);
+  let order = 0;
+  for (const node of nodes) {
+    if (node === range.startContainer) return order + range.startOffset;
+    order += node.nodeValue.length;
+  }
+  return 0;
+}
+
+function applyHighlights() {
+  clearHighlights();
+  if (!state.currentModule) return;
+  const moduleId = state.currentModule.id;
+  const activeAnnotations = state.annotations.items.filter((item) => (
+    item.moduleId === moduleId && item.highlightActive
+  ));
+  const resolvedHighlights = [];
+  for (const annotation of activeAnnotations) {
+    const card = els.sectionList.querySelector(`[data-note-id="${CSS.escape(annotation.noteId)}"], [data-section-id="${CSS.escape(annotation.noteId)}"]`);
+    if (!card) continue;
+    const range = findTextRange(card, annotation.selectedText, annotation.matchIndex);
+    if (!range) continue;
+    resolvedHighlights.push({
+      annotation,
+      range,
+      order: getRangeDocumentOrder(range),
+    });
+  }
+  resolvedHighlights.sort((left, right) => right.order - left.order);
+  for (const { annotation, range } of resolvedHighlights) {
+    const mark = document.createElement("mark");
+    mark.className = `knowledge-highlight${annotation.mode === "note" ? " is-note" : ""}`;
+    mark.dataset.annotationId = annotation.id;
+    mark.append(range.extractContents());
+    mark.addEventListener("click", (event) => {
+      event.stopPropagation();
+      showAnnotationDeletePopover(annotation.id, mark.getBoundingClientRect());
+    });
+    range.insertNode(mark);
+  }
+}
+
+function getInitialModuleId() {
+  const url = new URL(window.location.href);
+  const fromQuery = url.searchParams.get("module");
+  const fromHash = url.hash.replace(/^#/, "");
+  return fromQuery || fromHash || "dashboard";
+}
+
+function getModuleById(moduleId) {
+  return state.data?.modules.find((module) => module.id === moduleId);
+}
+
+function getSectionId(module, title) {
+  return module.sectionIds?.[title] ?? `${module.id}-${slugify(title)}`;
+}
+
+function clampProgress(value) {
+  return Math.max(0, Math.min(100, Number(value) || 0));
+}
+
+function getLearningProgress(module) {
+  return clampProgress(module?.learningProgress);
+}
+
+function getOverallLearningProgress() {
+  return clampProgress(state.data?.project?.overallLearningProgress);
+}
+
+function renderModuleNav() {
+  els.nav.innerHTML = "";
+  for (const module of state.data.modules) {
+    const progress = getLearningProgress(module);
+    const button = document.createElement("button");
+    button.className = "module-nav-item";
+    button.type = "button";
+    button.dataset.moduleId = module.id;
+    button.setAttribute("aria-current", module.id === state.currentModule?.id ? "true" : "false");
+    button.innerHTML = `
+      <span class="module-nav-title">${escapeHtml(module.title)}</span>
+      <span class="module-nav-progress">${escapeHtml(String(progress))}%</span>
+      <span class="module-nav-meta">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(module.priority)}</span>
+    `;
+    button.addEventListener("click", () => openModule(module.id));
+    els.nav.append(button);
+  }
+}
+
+function getRailTargets(module) {
+  const sectionTargets = Object.keys(module.sections ?? {}).map((sectionTitle) => ({
+    id: getSectionId(module, sectionTitle),
+    title: sectionTitle,
+  }));
+  const noteTargets = toList(module.knowledgeNotes).map((note) => ({
+    id: note.id,
+    title: note.title,
+  }));
+  return [...sectionTargets, ...noteTargets];
+}
+
+function renderSectionRail(module) {
+  els.sectionLines.innerHTML = "";
+  getRailTargets(module).forEach((target) => {
+    const button = document.createElement("button");
+    button.className = "section-line";
+    button.type = "button";
+    button.dataset.sectionId = target.id;
+    button.title = target.title;
+    button.setAttribute("aria-label", target.title);
+    button.setAttribute("aria-current", "false");
+    button.innerHTML = `<span class="section-tooltip">${escapeHtml(target.title)}</span>`;
+    button.addEventListener("click", () => {
+      document.querySelector(`#${CSS.escape(target.id)}`)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      setActiveSection(target.id);
+    });
+    els.sectionLines.append(button);
+  });
+}
+
+function renderProgressSummary(module) {
+  const progress = getLearningProgress(module);
+  const overallProgress = getOverallLearningProgress();
+  return `
+    <div class="module-progress-summary" aria-label="阅读进度摘要">
+      <div class="progress-ring" style="--progress: ${progress}" aria-label="本模块进度 ${progress}%">
+        <span>${escapeHtml(String(progress))}%</span>
+      </div>
+      <div>
+        <p class="progress-label">本模块进度</p>
+        <p class="progress-status">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(module.priority)}</p>
+      </div>
+      <div class="overall-progress-card" aria-label="整体进度 ${overallProgress}%">
+        <span class="overall-progress-tag">全部模块</span>
+        <span class="overall-progress-value">${escapeHtml(String(overallProgress))}%</span>
+      </div>
+    </div>
+  `;
+}
+
+function renderKnowledgeNotesSection(module) {
+  const notes = toList(module.knowledgeNotes);
+  if (notes.length === 0) return "";
+  return `
+    <article class="module-section" id="${escapeHtml(module.id)}-parallel-notes" data-section-id="${escapeHtml(module.id)}-parallel-notes" data-note-id="${escapeHtml(module.id)}-parallel-notes" data-section-title="Parallel notes">
+      <h2>Parallel notes</h2>
+      <div class="section-body knowledge-list">
+        ${notes.map((note) => `
+          <article class="knowledge-card" id="${escapeHtml(note.id)}" data-section-id="${escapeHtml(note.id)}" data-section-title="${escapeHtml(note.title)}" data-note-id="${escapeHtml(note.id)}">
+            <h3>${escapeHtml(note.title)}</h3>
+            <div class="knowledge-card-body">${note.body}</div>
+          </article>
+        `).join("")}
+      </div>
+    </article>
+  `;
+}
+
+function renderCurrentModule() {
+  const module = state.currentModule;
+  els.moduleHeader.innerHTML = `
+    <p class="module-kicker">${escapeHtml(state.data.project.title)} · ${escapeHtml(state.data.project.targetRole)}</p>
+    <h1 class="module-title">${escapeHtml(module.title)}</h1>
+    <p class="module-meta">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(module.priority)} · Updated ${escapeHtml(module.lastUpdated)}</p>
+    ${renderProgressSummary(module)}
+  `;
+
+  const sectionBlocks = Object.entries(module.sections ?? {})
+    .map(([title, body]) => {
+      const sectionId = getSectionId(module, title);
+      return `
+        <article class="module-section" id="${escapeHtml(sectionId)}" data-section-id="${escapeHtml(sectionId)}" data-note-id="${escapeHtml(sectionId)}" data-section-title="${escapeHtml(title)}">
+          <h2>${escapeHtml(title)}</h2>
+          <div class="section-body">${body}</div>
+        </article>
+      `;
+    })
+    .join("");
+  const noteBlocks = renderKnowledgeNotesSection(module);
+
+  els.sectionList.innerHTML = sectionBlocks || noteBlocks
+    ? `${sectionBlocks}${noteBlocks}`
+    : `
+      <article class="status-panel">
+        <h2>${escapeHtml(module.title)}</h2>
+        <p>这个模块还没有可展示内容。</p>
+      </article>
+    `;
+
+  els.sectionList.querySelectorAll("[data-section-id], [data-note-id]").forEach((card) => {
+    card.addEventListener("click", () => {
+      setActiveKnowledgeContext(card.dataset.noteId || card.dataset.sectionId);
+    });
+  });
+
+  els.sectionList.querySelectorAll("[data-task-id]").forEach((checkbox) => {
+    checkbox.addEventListener("change", () => {
+      const taskId = checkbox.dataset.taskId;
+      taskState[taskId] = checkbox.checked;
+      saveTaskState(taskState);
+      checkbox.closest(".task-item")?.classList.toggle("is-done", checkbox.checked);
     });
   });
 }
 
-function init() {
-  loadUiState();
-  bindNavigation();
+function getKnowledgeNoteById(module, noteId) {
+  if (!module || !noteId) return null;
+  return toList(module.knowledgeNotes).find((note) => note.id === noteId)
+    ?? module.sectionNotes?.[noteId]
+    ?? null;
+}
 
-  const searchInput = document.querySelector("#reader-search");
-  if (searchInput) {
-    searchInput.value = state.searchTerm;
-    searchInput.addEventListener("input", () => runReaderSearch(searchInput.value));
+function renderLocalAnnotations(note) {
+  if (!state.currentModule || !note) return "";
+  const annotations = getAnnotationsForNote(state.currentModule.id, note.id)
+    .filter((annotation) => annotation.mode === "note" || annotation.note || !annotation.highlightActive);
+  if (annotations.length === 0) return "";
+
+  return `
+    <section class="note-block local-annotation-list">
+      <h3 class="note-group-title">本地学习笔记</h3>
+      ${annotations.map((annotation) => `
+        <article class="local-annotation${annotation.highlightActive ? "" : " is-detached"}" data-annotation-id="${escapeHtml(annotation.id)}">
+          <p class="local-annotation-quote">${escapeHtml(annotation.selectedText)}</p>
+          <textarea class="local-annotation-editor" rows="4" data-annotation-editor="${escapeHtml(annotation.id)}" placeholder="写下理解、反思或备考动作">${escapeHtml(annotation.note)}</textarea>
+          ${annotation.highlightActive ? "" : `<p class="local-annotation-status">原文高亮已删除，笔记仍保留。</p>`}
+        </article>
+      `).join("")}
+    </section>
+  `;
+}
+
+function renderContextualNotePanel(note) {
+  const module = state.currentModule;
+  const noteGroups = note?.groups?.length
+    ? note.groups.map((group) => `
+      <section class="note-block" data-note-group="${escapeHtml(group.label)}">
+        <h3 class="note-group-title">${escapeHtml(group.label)}</h3>
+        <div class="note-group-body">${group.body}</div>
+      </section>
+    `).join("")
+    : note?.body ? `<section class="note-block"><div class="note-group-body">${note.body}</div></section>` : "";
+  const renderedNotes = note
+    ? `<article class="note-context"><h3>${escapeHtml(note.title)}</h3>${noteGroups}${renderLocalAnnotations(note)}</article>`
+    : `<p class="note-empty">选择正文区块或选中文本后，可在这里查看上下文和本地批注。</p>`;
+
+  const label = `Parallel note · ${module.title}`;
+  els.noteLabel.textContent = label;
+  els.mobileNoteLabel.textContent = label;
+  els.noteSurface.innerHTML = renderedNotes;
+  els.mobileNoteSurface.innerHTML = renderedNotes;
+  for (const surface of [els.noteSurface, els.mobileNoteSurface]) {
+    surface.querySelectorAll("[data-annotation-editor]").forEach((editor) => {
+      editor.addEventListener("input", () => {
+        const annotationId = editor.dataset.annotationEditor;
+        const value = editor.value;
+        for (const surfaceToSync of [els.noteSurface, els.mobileNoteSurface]) {
+          surfaceToSync.querySelectorAll(`[data-annotation-editor="${CSS.escape(annotationId)}"]`).forEach((matchingEditor) => {
+            if (matchingEditor !== editor) matchingEditor.value = value;
+          });
+        }
+        updateAnnotationNote(annotationId, value);
+      });
+    });
+  }
+}
+
+function setActiveKnowledgeContext(sectionId) {
+  const note = getKnowledgeNoteById(state.currentModule, sectionId);
+  state.activeKnowledgeNoteId = note?.id ?? "";
+  renderContextualNotePanel(note);
+}
+
+function updateUrl(moduleId) {
+  const url = new URL(window.location.href);
+  url.searchParams.set("module", moduleId);
+  url.hash = "";
+  window.history.replaceState({}, "", url);
+}
+
+function setActiveSection(sectionId) {
+  state.activeSectionId = sectionId;
+  els.sectionLines.querySelectorAll(".section-line").forEach((button) => {
+    const isActive = button.dataset.sectionId === sectionId;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-current", isActive ? "true" : "false");
+  });
+  setActiveKnowledgeContext(sectionId);
+}
+
+function getActiveSectionFromScroll(sections) {
+  const anchorTop = els.main.getBoundingClientRect().top + els.main.clientHeight * 0.24;
+  let activeSection = sections[0];
+  for (const section of sections) {
+    if (section.getBoundingClientRect().top <= anchorTop) {
+      activeSection = section;
+    } else {
+      break;
+    }
+  }
+  return activeSection;
+}
+
+function syncActiveSectionFromScroll(sections = [...els.sectionList.querySelectorAll("[data-section-id]")]) {
+  const activeSection = getActiveSectionFromScroll(sections);
+  const sectionId = activeSection?.dataset.sectionId;
+  if (sectionId && sectionId !== state.activeSectionId) setActiveSection(sectionId);
+}
+
+function observeSections() {
+  if (state.sectionScrollHandler) {
+    els.main.removeEventListener("scroll", state.sectionScrollHandler);
+    state.sectionScrollHandler = null;
+  }
+  if (state.sectionScrollFrame) {
+    cancelAnimationFrame(state.sectionScrollFrame);
+    state.sectionScrollFrame = 0;
   }
 
-  fetchJson("site/ielts-data.json")
-    .then((data) => {
-      readerData = data;
-      renderAll(data);
-    })
-    .catch((error) => {
-      setHtml(roots.dashboard, `<p class="empty-state">${escapeHtml(error.message)}</p>`);
+  const sections = [...els.sectionList.querySelectorAll("[data-section-id]")];
+  if (sections.length === 0) return;
+
+  state.sectionScrollHandler = () => {
+    if (state.sectionScrollFrame) return;
+    state.sectionScrollFrame = requestAnimationFrame(() => {
+      state.sectionScrollFrame = 0;
+      syncActiveSectionFromScroll(sections);
     });
+  };
+  els.main.addEventListener("scroll", state.sectionScrollHandler, { passive: true });
+  syncActiveSectionFromScroll(sections);
 }
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", init);
-} else {
-  init();
+function clearSearch() {
+  state.searchQuery = "";
+  els.searchInput.value = "";
+  els.searchResults.hidden = true;
+  els.searchResults.innerHTML = "";
 }
+
+function openModule(moduleId, { syncUrl = true, targetSectionId = "" } = {}) {
+  const nextModule = getModuleById(moduleId) ?? state.data.modules[0];
+  state.currentModule = nextModule;
+  state.activeKnowledgeNoteId = "";
+  hideAnnotationDeletePopover();
+  hideAnnotationToolbar();
+  if (syncUrl) updateUrl(nextModule.id);
+  renderModuleNav();
+  renderCurrentModule();
+  renderContextualNotePanel(null);
+  renderSectionRail(nextModule);
+  applyHighlights();
+  els.main.scrollTop = 0;
+  observeSections();
+  if (targetSectionId) {
+    requestAnimationFrame(() => {
+      document.querySelector(`#${CSS.escape(targetSectionId)}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      setActiveSection(targetSectionId);
+    });
+  }
+  els.shell.classList.remove("is-mobile-left-open");
+}
+
+function openSearchModal() {
+  hideAnnotationDeletePopover();
+  hideAnnotationToolbar();
+  els.shell.classList.add("is-searching");
+  els.searchResults.hidden = false;
+}
+
+function closeSearchModal() {
+  els.shell.classList.remove("is-searching");
+  if (!state.searchQuery) {
+    els.searchResults.hidden = true;
+    els.searchResults.innerHTML = "";
+  }
+}
+
+function getSearchTerms(query) {
+  return query.trim().split(/\s+/).filter(Boolean);
+}
+
+function isAsciiSearchTerm(term) {
+  return /^[a-z0-9]+$/i.test(term);
+}
+
+function escapeSearchPattern(value) {
+  return String(value ?? "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function getSearchMatchLevel(text, term) {
+  const normalizedText = String(text ?? "").toLowerCase();
+  const normalizedTerm = String(term ?? "").toLowerCase();
+  if (!normalizedTerm) return 0;
+  if (!normalizedText.includes(normalizedTerm)) return 0;
+  if (!isAsciiSearchTerm(normalizedTerm)) return 2;
+  const pattern = new RegExp(`(^|[^a-z0-9])${escapeSearchPattern(normalizedTerm)}([^a-z0-9]|$)`, "i");
+  return pattern.test(normalizedText) ? 2 : 1;
+}
+
+function getSearchScore(entry, terms) {
+  return terms.reduce((score, term) => {
+    const moduleLevel = getSearchMatchLevel(entry.moduleTitle, term);
+    const sectionLevel = getSearchMatchLevel(entry.sectionTitle, term);
+    const bodyLevel = getSearchMatchLevel(entry.text, term);
+    const moduleScore = moduleLevel === 2 ? 16 : moduleLevel === 1 ? 6 : 0;
+    const sectionScore = sectionLevel === 2 ? 10 : sectionLevel === 1 ? 4 : 0;
+    const bodyScore = bodyLevel === 2 ? 4 : bodyLevel === 1 ? 1 : 0;
+    return score + moduleScore + sectionScore + bodyScore;
+  }, 0);
+}
+
+function highlightTerms(text, query) {
+  const terms = getSearchTerms(query).map(escapeSearchPattern);
+  if (terms.length === 0) return escapeHtml(text);
+  const pattern = new RegExp(`(${terms.join("|")})`, "gi");
+  const exactPattern = new RegExp(`^(${terms.join("|")})$`, "i");
+  return String(text ?? "")
+    .split(pattern)
+    .map((part) => exactPattern.test(part) ? `<mark class="result-highlight">${escapeHtml(part)}</mark>` : escapeHtml(part))
+    .join("");
+}
+
+function getEntrySnippet(entry, query) {
+  const searchText = entry.text ?? "";
+  const lower = searchText.toLowerCase();
+  const term = getSearchTerms(query).find((item) => lower.includes(item.toLowerCase()));
+  if (!term) return searchText.slice(0, 160);
+  const index = lower.indexOf(term.toLowerCase());
+  const start = Math.max(0, index - 56);
+  const end = Math.min(searchText.length, index + term.length + 128);
+  return `${start > 0 ? "..." : ""}${searchText.slice(start, end)}${end < searchText.length ? "..." : ""}`;
+}
+
+function renderSearchResults(results) {
+  els.searchResults.hidden = false;
+  if (results.length === 0) {
+    els.searchResults.innerHTML = `<p class="result-empty">No results found</p>`;
+    return;
+  }
+
+  els.searchResults.innerHTML = results
+    .map(({ module, entry }) => `
+      <button class="result-item" type="button" data-module-id="${escapeHtml(module.id)}" data-section-id="${escapeHtml(entry.id)}">
+        <span>
+          <span class="result-title">${highlightTerms(entry.sectionTitle, state.searchQuery)}</span>
+          <span class="result-snippet">${highlightTerms(getEntrySnippet(entry, state.searchQuery), state.searchQuery)}</span>
+        </span>
+        <span class="result-meta">${escapeHtml(module.title)}</span>
+      </button>
+    `)
+    .join("");
+
+  els.searchResults.querySelectorAll("[data-module-id]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const moduleId = button.dataset.moduleId;
+      const sectionId = button.dataset.sectionId;
+      clearSearch();
+      closeSearchModal();
+      openModule(moduleId, { targetSectionId: sectionId });
+    });
+  });
+}
+
+function runSearch(query) {
+  state.searchQuery = query.trim();
+  if (!state.searchQuery) {
+    els.searchResults.hidden = true;
+    els.searchResults.innerHTML = "";
+    return;
+  }
+
+  const terms = getSearchTerms(state.searchQuery).map((term) => term.toLowerCase());
+  const results = state.data.modules
+    .flatMap((module) => module.searchEntries.map((entry) => ({ module, entry })))
+    .map(({ module, entry }) => {
+      const score = getSearchScore(entry, terms);
+      return { module, entry, score };
+    })
+    .filter((item) => item.score > 0)
+    .sort((left, right) => right.score - left.score || left.module.title.localeCompare(right.module.title))
+    .slice(0, 8);
+
+  renderSearchResults(results);
+}
+
+function bindEvents() {
+  els.toggleTheme.addEventListener("click", () => {
+    setTheme(document.body.dataset.theme === "dark" ? "light" : "dark");
+  });
+
+  els.toggleNote.addEventListener("click", () => {
+    if (window.matchMedia("(max-width: 860px)").matches) {
+      els.shell.classList.toggle("is-mobile-note-open");
+      return;
+    }
+    state.ui.noteCollapsed = !state.ui.noteCollapsed;
+    els.shell.classList.toggle("is-note-collapsed", state.ui.noteCollapsed);
+    saveUiState();
+  });
+
+  els.toggleLeftControls.forEach((button) => {
+    button.addEventListener("click", () => {
+      if (window.matchMedia("(max-width: 860px)").matches) {
+        els.shell.classList.toggle("is-mobile-left-open");
+        return;
+      }
+      state.ui.leftCollapsed = !state.ui.leftCollapsed;
+      els.shell.classList.toggle("is-left-collapsed", state.ui.leftCollapsed);
+      saveUiState();
+    });
+  });
+
+  els.searchInput.addEventListener("focus", openSearchModal);
+  els.searchInput.addEventListener("input", () => runSearch(els.searchInput.value));
+  els.searchOverlay.addEventListener("click", closeSearchModal);
+
+  els.main.addEventListener("mouseup", () => {
+    requestAnimationFrame(() => {
+      const context = getSelectionAnnotationContext();
+      if (context) renderAnnotationToolbar(context);
+      else hideAnnotationToolbar();
+    });
+  });
+
+  els.main.addEventListener("keyup", () => {
+    const context = getSelectionAnnotationContext();
+    if (context) renderAnnotationToolbar(context);
+    else hideAnnotationToolbar();
+  });
+
+  document.addEventListener("mousedown", (event) => {
+    const isDeletePopoverClick = state.annotationDeletePopover?.contains(event.target);
+    if (state.annotationDeletePopover && !isDeletePopoverClick) hideAnnotationDeletePopover();
+    if (isDeletePopoverClick) return;
+    if (state.annotationToolbar?.contains(event.target)) return;
+    if (!getReadableCardFromNode(event.target)) hideAnnotationToolbar();
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+      event.preventDefault();
+      openSearchModal();
+      els.searchInput.focus();
+    }
+    if (event.key === "Escape") {
+      hideAnnotationDeletePopover();
+      hideAnnotationToolbar();
+      closeSearchModal();
+      els.shell.classList.remove("is-mobile-left-open", "is-mobile-note-open");
+    }
+  });
+}
+
+async function init() {
+  try {
+    state.rawData = await fetchJson(getDataSource());
+    state.data = buildReaderModules(state.rawData);
+    state.annotations = loadAnnotations();
+    applyStoredShellState();
+    bindEvents();
+    openModule(getInitialModuleId(), { syncUrl: false });
+  } catch (error) {
+    els.sectionList.innerHTML = `
+      <article class="status-panel">
+        <h2>IELTS reader 加载失败</h2>
+        <p>${escapeHtml(error.message)}</p>
+      </article>
+    `;
+  }
+}
+
+init();
