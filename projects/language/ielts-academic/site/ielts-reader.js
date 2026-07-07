@@ -98,6 +98,19 @@ function getStatusLabel(status) {
   return labels[status] ?? titleCase(status);
 }
 
+function getPriorityLabel(priority) {
+  const labels = {
+    "score profile": "成绩档案",
+    "weekly execution": "周执行",
+    "high-impact repair": "高影响修复",
+    "study memory": "学习记忆",
+    "weekly review": "周复盘",
+    "agent operation": "智能体操作",
+    "quality gate": "质量门",
+  };
+  return labels[priority] ?? titleCase(priority);
+}
+
 function renderRiskList(risks) {
   const items = toList(risks);
   if (items.length === 0) return "";
@@ -155,18 +168,6 @@ function buildReaderModules(data) {
 
   const journalSections = {
     Journal: renderModuleSafely("journal", "Journal", () => renderJournal(data)),
-    "Session bodies": renderModuleSafely("journal", "Session bodies", () => `
-      <div class="knowledge-list">
-        ${buildDocumentNotes(data.journal, "journal")
-          .map((note) => `
-            <article class="knowledge-card" id="${escapeHtml(note.id)}" data-section-id="${escapeHtml(note.id)}" data-note-id="${escapeHtml(note.id)}" data-section-title="${escapeHtml(note.title)}">
-              <h3>${escapeHtml(note.title)}</h3>
-              <div class="knowledge-card-body">${note.body}</div>
-            </article>
-          `)
-          .join("")}
-      </div>
-    `),
   };
 
   const promptSections = {
@@ -417,7 +418,7 @@ function renderModuleNav() {
     button.innerHTML = `
       <span class="module-nav-title">${escapeHtml(module.title)}</span>
       <span class="module-nav-progress">${escapeHtml(String(progress))}%</span>
-      <span class="module-nav-meta">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(module.priority)}</span>
+      <span class="module-nav-meta">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(getPriorityLabel(module.priority))}</span>
     `;
     button.addEventListener("click", () => openModule(module.id));
     els.nav.append(button);
@@ -425,15 +426,10 @@ function renderModuleNav() {
 }
 
 function getRailTargets(module) {
-  const sectionTargets = Object.keys(module.sections ?? {}).map((sectionTitle) => ({
+  return Object.keys(module.sections ?? {}).map((sectionTitle) => ({
     id: getSectionId(module, sectionTitle),
     title: sectionTitle,
   }));
-  const noteTargets = toList(module.knowledgeNotes).map((note) => ({
-    id: note.id,
-    title: note.title,
-  }));
-  return [...sectionTargets, ...noteTargets];
 }
 
 function renderSectionRail(module) {
@@ -466,7 +462,7 @@ function renderProgressSummary(module) {
       ${renderExamMark(`${progress}%`, { size: 64 })}
       <div>
         <p class="progress-label">本模块进度</p>
-        <p class="progress-status">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(module.priority)}</p>
+        <p class="progress-status">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(getPriorityLabel(module.priority))}</p>
       </div>
       <div class="overall-progress-card" aria-label="整体进度 ${overallProgress}%">
         <span class="overall-progress-tag">全部模块</span>
@@ -476,30 +472,12 @@ function renderProgressSummary(module) {
   `;
 }
 
-function renderKnowledgeNotesSection(module) {
-  const notes = toList(module.knowledgeNotes);
-  if (notes.length === 0) return "";
-  return `
-    <article class="module-section" id="${escapeHtml(module.id)}-parallel-notes" data-section-id="${escapeHtml(module.id)}-parallel-notes" data-note-id="${escapeHtml(module.id)}-parallel-notes" data-section-title="Parallel notes">
-      <h2>Parallel notes</h2>
-      <div class="section-body knowledge-list">
-        ${notes.map((note) => `
-          <article class="knowledge-card" id="${escapeHtml(note.id)}" data-section-id="${escapeHtml(note.id)}" data-section-title="${escapeHtml(note.title)}" data-note-id="${escapeHtml(note.id)}">
-            <h3>${escapeHtml(note.title)}</h3>
-            <div class="knowledge-card-body">${note.body}</div>
-          </article>
-        `).join("")}
-      </div>
-    </article>
-  `;
-}
-
 function renderCurrentModule() {
   const module = state.currentModule;
   els.moduleHeader.innerHTML = `
     <p class="module-kicker">${escapeHtml(state.data.project.title)} · ${escapeHtml(state.data.project.targetRole)}</p>
     <h1 class="module-title">${escapeHtml(module.title)}</h1>
-    <p class="module-meta">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(module.priority)} · Updated ${escapeHtml(module.lastUpdated)}</p>
+    <p class="module-meta">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(getPriorityLabel(module.priority))} · Updated ${escapeHtml(module.lastUpdated)}</p>
     ${renderProgressSummary(module)}
   `;
 
@@ -514,22 +492,15 @@ function renderCurrentModule() {
       `;
     })
     .join("");
-  const noteBlocks = renderKnowledgeNotesSection(module);
 
-  els.sectionList.innerHTML = sectionBlocks || noteBlocks
-    ? `${sectionBlocks}${noteBlocks}`
+  els.sectionList.innerHTML = sectionBlocks
+    ? sectionBlocks
     : `
       <article class="status-panel">
         <h2>${escapeHtml(module.title)}</h2>
         <p>这个模块还没有可展示内容。</p>
       </article>
     `;
-
-  els.sectionList.querySelectorAll("[data-section-id], [data-note-id]").forEach((card) => {
-    card.addEventListener("click", () => {
-      setActiveKnowledgeContext(card.dataset.noteId || card.dataset.sectionId);
-    });
-  });
 
   els.sectionList.querySelectorAll("[data-task-id]").forEach((checkbox) => {
     checkbox.addEventListener("change", () => {
@@ -550,8 +521,16 @@ function getKnowledgeNoteById(module, noteId) {
     ?? null;
 }
 
+function renderEmptyDetailPanel() {
+  return `
+    <article class="note-context detail-empty">
+      <h3>上下文详情</h3>
+      <p class="note-empty">点击引用，或选中正文后创建高亮/笔记，在这里查看具体对象。</p>
+    </article>
+  `;
+}
+
 function renderContextualNotePanel(note) {
-  const module = state.currentModule;
   const noteGroups = note?.groups?.length
     ? note.groups.map((group) => `
       <section class="note-block" data-note-group="${escapeHtml(group.label)}">
@@ -562,9 +541,9 @@ function renderContextualNotePanel(note) {
     : note?.body ? `<section class="note-block"><div class="note-group-body">${note.body}</div></section>` : "";
   const renderedNotes = note
     ? `<article class="note-context"><h3>${escapeHtml(note.title)}</h3>${noteGroups}${renderLocalAnnotations(note)}</article>`
-    : `<p class="note-empty">选择正文区块或选中文本后，可在这里查看上下文和本地批注。</p>`;
+    : renderEmptyDetailPanel();
 
-  const label = `Parallel note · ${module.title}`;
+  const label = note ? `详情 · ${note.title}` : "上下文详情";
   els.noteLabel.textContent = label;
   els.mobileNoteLabel.textContent = label;
   els.noteSurface.innerHTML = renderedNotes;
@@ -646,7 +625,6 @@ function setActiveSection(sectionId) {
     button.classList.toggle("is-active", isActive);
     button.setAttribute("aria-current", isActive ? "true" : "false");
   });
-  setActiveKnowledgeContext(sectionId);
 }
 
 function getActiveSectionFromScroll(sections) {
@@ -715,8 +693,13 @@ function openModule(moduleId, { syncUrl = true, targetSectionId = "" } = {}) {
   observeSections();
   if (targetSectionId) {
     requestAnimationFrame(() => {
-      document.querySelector(`#${CSS.escape(targetSectionId)}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
-      setActiveSection(targetSectionId);
+      const target = document.querySelector(`#${CSS.escape(targetSectionId)}`);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        setActiveSection(targetSectionId);
+        return;
+      }
+      setActiveKnowledgeContext(targetSectionId);
     });
   }
   els.shell.classList.remove("is-mobile-left-open");

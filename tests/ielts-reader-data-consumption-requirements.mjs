@@ -51,6 +51,21 @@ assert.match(annotations, /本机临时阅读标注/, "annotation UI should stat
 assert.match(entryJs, /function refreshJournalDraftTextareas/, "annotation editor should refresh adjacent journal drafts");
 assert.match(entryJs, /navigator\.clipboard\?\.writeText/, "journal draft copy should handle unavailable clipboard APIs");
 assert.match(entryJs, /请手动复制|复制失败/, "journal draft copy should expose a manual fallback state");
+assert.match(entryJs, /function renderEmptyDetailPanel/, "right panel should default to an empty detail state");
+assert.match(entryJs, /function getPriorityLabel/, "module priority labels should be localized");
+assert.match(entryJs, /成绩档案/, "module priority labels should be Chinese-facing");
+assert.doesNotMatch(entryJs, /"Session bodies"/, "journal module should not render duplicate full session bodies by default");
+assert.doesNotMatch(entryJs, /renderKnowledgeNotesSection/, "main content should not auto-render parallel notes");
+assert.doesNotMatch(
+  entryJs,
+  /querySelectorAll\("\[data-section-id\], \[data-note-id\]"\)/,
+  "clicking normal main sections should not mirror content into the right panel",
+);
+const setActiveSectionBlock = entryJs.slice(
+  entryJs.indexOf("function setActiveSection"),
+  entryJs.indexOf("function getActiveSectionFromScroll"),
+);
+assert.doesNotMatch(setActiveSectionBlock, /setActiveKnowledgeContext/, "scroll sync should not populate the right panel");
 
 assert.match(modules, /function renderModuleSafely/, "module rendering should have per-module error boundary");
 assert.match(utils, /function getShortcutLabel/, "shortcut label should be platform-aware");
@@ -58,6 +73,16 @@ assert.match(utils, /function renderExamMark/, "utility module should render the
 assert.match(renderers, /renderExamMark/, "dashboard and checkpoint renderers should use exam marks");
 assert.match(entryJs, /renderExamMark/, "entrypoint progress summary should use exam marks");
 assert.match(renderers, /<table class="swimlane-table"/, "swimlane should expose table semantics");
+assert.match(renderers, /function getCheckpointDisplayName/, "checkpoint titles should remove duplicate week prefixes");
+assert.doesNotMatch(
+  renderers,
+  /Week \$\{escapeHtml\(checkpoint\.week\)\} · \$\{escapeHtml\(checkpoint\.name\)\}/,
+  "checkpoint marker should not duplicate week text from data names",
+);
+assert.match(renderers, /function getCompactWeekFocusLabel/, "swimlane cells should have compact labels");
+assert.match(renderers, /class="swimlane-chip"/, "swimlane cells should render compact chips");
+assert.doesNotMatch(renderers, /<h3>\$\{escapeHtml\(error\.description\)\}<\/h3>/, "error cards should not use long descriptions as headings");
+assert.match(renderers, /error-description/, "error cards should demote descriptions to compact body text");
 
 assert.match(css, /\.score-history/, "CSS should style score history");
 assert.match(css, /\.checkpoint-milestones/, "CSS should style checkpoint milestones");
@@ -65,6 +90,8 @@ assert.match(css, /\.reference-panel-action/, "CSS should style reference panel 
 assert.match(css, /\.validation-issue/, "CSS should style validation issues");
 assert.match(css, /\.annotation-draft/, "CSS should style annotation journal draft");
 assert.match(css, /\.annotation-unresolved/, "CSS should style unresolved annotations");
+assert.match(css, /\.swimlane-chip/, "CSS should style compact swimlane chips");
+assert.match(css, /\.error-description/, "CSS should clamp compact error descriptions");
 assert.match(css, /--reader-marker: var\(--reader-red\);/, "CSS should expose the IELTS marker token");
 assert.match(css, /--text-display: clamp\(36px, 5vw, 56px\);/, "CSS should expose display type scale token");
 assert.match(css, /--sp-16: 64px;/, "CSS should expose spacing scale tokens");

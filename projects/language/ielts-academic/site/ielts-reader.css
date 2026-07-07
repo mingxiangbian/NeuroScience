@@ -872,6 +872,21 @@ body,
   font-size: var(--text-caption);
 }
 
+.swimlane-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 26px;
+  border: 1px solid var(--reader-line);
+  border-radius: var(--radius-pill);
+  background: var(--reader-paper-soft);
+  color: var(--reader-blue);
+  font-size: var(--text-caption);
+  font-weight: 600;
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+
 .checkpoint-marker {
   display: flex;
   align-items: center;
@@ -921,6 +936,10 @@ body,
   color: var(--reader-blue);
 }
 
+.error-column .card-body {
+  overflow-wrap: anywhere;
+}
+
 .validation-issues {
   display: grid;
   gap: 10px;
@@ -945,6 +964,13 @@ body,
 .error-priority {
   color: var(--reader-red);
   font-weight: 600;
+}
+
+.error-description {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .card-body,
@@ -1196,6 +1222,10 @@ body,
   margin: 0 0 14px;
   color: var(--reader-ink);
   font-size: var(--text-subhead);
+}
+
+.detail-empty .note-empty {
+  margin: 0;
 }
 
 .note-block {

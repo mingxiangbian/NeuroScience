@@ -25,6 +25,32 @@ export function formatTarget(target) {
   return `Overall ${overall} / each skill ${floor}+ / ${weeks}`;
 }
 
+function getCheckpointDisplayName(checkpoint) {
+  const name = String(checkpoint?.name ?? "").trim();
+  const week = String(checkpoint?.week ?? "").trim();
+  if (!name) return week ? `Checkpoint ${week}` : "Checkpoint";
+  const pattern = new RegExp(`^Week\\s*${week}\\s*[·:|\\-–—]?\\s*`, "i");
+  return name.replace(pattern, "").trim() || name;
+}
+
+function getCompactWeekFocusLabel(focus) {
+  if (/^诊断前模板态/.test(focus)) return "待诊断";
+  if (/Data Quality|Target Feasibility|Trajectory|Final Lock-in|Check/i.test(focus)) return "检查点";
+  if (/repair/i.test(focus)) return "修复";
+  if (/verify/i.test(focus)) return "验证";
+  if (/maintain/i.test(focus)) return "保持";
+  return truncateText(focus, 12);
+}
+
+function getBodyPreview(item, maxLength = 220) {
+  let preview = truncateText(item?.body ?? "", maxLength);
+  const title = String(item?.title ?? "").trim();
+  if (title && preview.toLowerCase().startsWith(title.toLowerCase())) {
+    preview = preview.slice(title.length).replace(/^[:：.\s·|-]+/, "").trim();
+  }
+  return preview || title;
+}
+
 function renderSkillGapBars(skills, target) {
   const floor = Number.isFinite(Number(target?.perSkillFloor)) ? Number(target.perSkillFloor) : 7.5;
   const safeSkills = toList(skills);
@@ -191,7 +217,7 @@ export function renderCheckpointMilestones(checkpoints) {
         <article class="checkpoint-marker" data-week="${escapeHtml(checkpoint.week)}">
           ${renderExamMark(`W${checkpoint.week}`, { size: 40, pending: checkpoint.status !== "complete" })}
           <div class="checkpoint-copy">
-            <strong>Week ${escapeHtml(checkpoint.week)} · ${escapeHtml(checkpoint.name)}</strong>
+            <strong>${escapeHtml(getCheckpointDisplayName(checkpoint))}</strong>
             <span>${escapeHtml(checkpoint.status ?? "not-started")}</span>
             <span>${escapeHtml(checkpoint.decision ?? checkpoint.purpose ?? "")}</span>
             <span>${escapeHtml(toList(checkpoint.evidenceRequired).join(" / "))}</span>
@@ -222,9 +248,14 @@ export function renderSwimlane(data) {
           ${skills.map((skill) => `
             <tr>
               <th scope="row">${escapeHtml(skill.label ?? titleCase(skill.id))}</th>
-              ${WEEKS.map((week) => `
-                <td>${escapeHtml(getSkillWeekFocus({ skill, week, errors, checkpoints, state: scoreProfile.state }))}</td>
-              `).join("")}
+              ${WEEKS.map((week) => {
+                const focus = getSkillWeekFocus({ skill, week, errors, checkpoints, state: scoreProfile.state });
+                return `
+                  <td>
+                    <span class="swimlane-chip" title="${escapeHtml(focus)}">${escapeHtml(getCompactWeekFocusLabel(focus))}</span>
+                  </td>
+                `;
+              }).join("")}
             </tr>
           `).join("")}
         </tbody>
@@ -242,7 +273,7 @@ export function renderCheckpointList(data) {
         .map((checkpoint) => `
           <article class="content-card">
             <p class="card-kicker">Week ${escapeHtml(checkpoint.week)} | ${escapeHtml(checkpoint.status ?? "not-started")}</p>
-            <h3>${escapeHtml(checkpoint.name)}</h3>
+            <h3>${escapeHtml(getCheckpointDisplayName(checkpoint))}</h3>
             <p class="card-body">${escapeHtml(checkpoint.purpose)}</p>
             <p class="card-body">${escapeHtml(checkpoint.decision)}</p>
           </article>
@@ -276,10 +307,12 @@ export function renderDailyTasks(data, moduleId, taskState, onTaskStateMigrated)
 }
 
 function renderErrorCard(error) {
+  const skillLabel = titleCase(error.skill ?? "general");
   return `
     <article class="error-card">
-      <p class="card-kicker">${escapeHtml(error.id)} | ${escapeHtml(error.skill)} | ${escapeHtml(error.impact)}</p>
-      <h3>${escapeHtml(error.description)}</h3>
+      <p class="card-kicker">${escapeHtml(error.impact)} | ${escapeHtml(error.status ?? "active")}</p>
+      <h3>${escapeHtml(`${error.id} · ${skillLabel}`)}</h3>
+      <p class="card-body error-description">${escapeHtml(error.description)}</p>
       <p class="error-priority">${escapeHtml(error.nextReview ?? "Next review pending")}</p>
       <p class="card-body">${escapeHtml(error.reviewMethod ?? "")}</p>
       ${renderReferenceChips([{ referenceId: `error:${error.id}`, label: error.id }], "error")}
@@ -341,7 +374,7 @@ export function renderJournal(data) {
           <article class="journal-card">
             <p class="card-kicker">${escapeHtml(entry.date ?? "undated")}</p>
             <h3>${escapeHtml(entry.title)}</h3>
-            <p class="card-body">${escapeHtml(truncateText(entry.body))}</p>
+            <p class="card-body">${escapeHtml(getBodyPreview(entry))}</p>
             ${renderReferenceChips([{ referenceId: `journal:${entry.id}`, label: entry.path, sourcePath: entry.path }], "source")}
             ${renderReferenceChips(toList(entry.relatedErrors).map((errorId) => ({
               referenceId: `error:${errorId}`,
