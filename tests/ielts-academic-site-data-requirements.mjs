@@ -14,11 +14,38 @@ const readerJs = readFileSync(jsUrl, "utf8");
 assert.equal(data.project.id, "ielts-academic");
 assert.equal(data.project.target.overall, 8);
 assert.equal(data.project.target.perSkillFloor, 7.5);
+assert.equal(data.build.contentUpdatedAt, data.scoreProfile.lastUpdated);
+assert.match(data.build.generatedAt, /^\d{4}-\d{2}-\d{2}$/);
+assert.equal(Array.isArray(data.build.validationIssues), true);
+assert.deepEqual(data.build.validationIssues.filter((issue) => issue.severity === "fatal"), []);
+assert.ok(data.references);
+assert.equal(Array.isArray(data.references.targets), true);
+assert.ok(data.references.backlinks);
 assert.equal(
-  data.build.generatedAt,
-  data.scoreProfile.lastUpdated,
-  "generated site data should be stable across repeated builds",
+  data.references.targets.some((target) => target.id === "note:writing/task-2-argument-development"),
+  true,
 );
+assert.equal(
+  data.references.targets.some((target) => target.id === "error:E001"),
+  true,
+);
+assert.equal(
+  data.references.backlinks["note:writing/task-2-argument-development"].some((link) => link.id.startsWith("journal:")),
+  true,
+);
+assert.equal(
+  data.notes.every((note) => typeof note.html === "string" && note.html.length > 0),
+  true,
+);
+assert.equal(
+  data.promptLibrary.every((prompt) => typeof prompt.html === "string" && prompt.html.length > 0),
+  true,
+);
+assert.equal(
+  data.validation.every((check) => typeof check.html === "string" && check.html.length > 0),
+  true,
+);
+assert.equal(Array.isArray(data.sourceLinks), true);
 assert.ok(data.scoreProfile);
 assert.equal(Array.isArray(data.scoreProfile.skills), true);
 assert.equal(Array.isArray(data.scoreHistory.entries), true);
@@ -39,16 +66,16 @@ assert.equal(
 );
 assert.equal(Array.isArray(data.promptLibrary), true);
 assert.equal(
-  data.promptLibrary.some((prompt) => prompt.id === "orchestrator"),
+  data.promptLibrary.some((prompt) => prompt.id === "prompts/orchestrator"),
   true,
 );
 assert.equal(
-  data.promptLibrary.some((prompt) => prompt.id === "agents/writing-task-2-examiner"),
+  data.promptLibrary.some((prompt) => prompt.id === "prompts/agents/writing-task-2-examiner"),
   true,
 );
 assert.equal(Array.isArray(data.validation), true);
 assert.equal(
-  data.validation.some((doc) => doc.id === "dry-run-test-cases"),
+  data.validation.some((doc) => doc.id === "validation/dry-run-test-cases"),
   true,
 );
 
