@@ -698,6 +698,11 @@ body,
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
 
+.note-panel .dashboard-grid,
+.mobile-note-drawer .dashboard-grid {
+  grid-template-columns: 1fr;
+}
+
 .dashboard-card,
 .metric-card,
 .content-card,
@@ -723,10 +728,13 @@ body,
 
 .metric-value,
 .dashboard-card strong {
+  display: block;
   margin: 0;
   font-family: var(--reader-mono);
   font-size: 22px;
   font-weight: 760;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
 }
 
 .dashboard-stack,
@@ -1472,12 +1480,13 @@ body,
   }
 
   .toolbar-right {
+    justify-content: flex-start;
     min-width: 0;
     flex: 1;
   }
 
   .toolbar-search {
-    width: min(220px, 50vw);
+    width: min(150px, 40vw);
   }
 
   .toolbar-controls {
@@ -1493,6 +1502,24 @@ body,
   .dashboard-grid,
   .error-board {
     grid-template-columns: 1fr;
+  }
+
+  .module-kicker,
+  .module-meta {
+    max-width: calc(100vw - 28px);
+    overflow-wrap: anywhere;
+  }
+
+  .module-kicker {
+    max-width: 42ch;
+  }
+
+  .metric-value,
+  .dashboard-card strong {
+    max-width: calc(100vw - 84px);
+    font-size: 18px;
+    white-space: normal;
+    word-break: break-word;
   }
 
   .swimlane-grid {
