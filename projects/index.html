@@ -380,7 +380,6 @@
         white-space: nowrap;
         overflow-wrap: normal;
         word-break: normal;
-        transition: opacity 160ms ease;
       }
 
       .project-card[data-title-script="latin"] h2 {
@@ -396,53 +395,6 @@
         text-orientation: mixed;
         white-space: normal;
         writing-mode: horizontal-tb;
-      }
-
-      .project-card-summary {
-        position: absolute;
-        right: 10px;
-        bottom: 50px;
-        left: 10px;
-        z-index: 4;
-        max-height: 142px;
-        margin: 0;
-        overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.56);
-        border-radius: 6px;
-        background: rgba(251, 248, 239, 0.84);
-        padding: 8px 7px;
-        color: rgba(31, 39, 36, 0.74);
-        font-family:
-          "Inter", "SF Pro Display", "PingFang SC", "Noto Sans SC", system-ui,
-          sans-serif;
-        font-size: 10px;
-        font-weight: 500;
-        letter-spacing: 0;
-        line-height: 1.45;
-        overflow-wrap: anywhere;
-        text-align: left;
-        box-shadow: 0 10px 24px rgba(42, 35, 25, 0.1);
-        opacity: 0;
-        pointer-events: none;
-        transform: translateY(8px);
-        transition:
-          opacity 160ms ease,
-          transform 160ms ease;
-      }
-
-      .project-card:hover h2,
-      .project-card:focus h2 {
-        opacity: 0.34;
-      }
-
-      .project-card:hover .project-card-summary,
-      .project-card:focus .project-card-summary {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      .project-card-summary:empty {
-        display: none;
       }
 
       .empty {
@@ -620,7 +572,6 @@
         return {
           title: String(record.title ?? "Untitled project"),
           folder: String(record.folder ?? ""),
-          summary: String(record.summary ?? ""),
         };
       }
 
@@ -636,12 +587,9 @@
           const card = document.createElement("a");
           card.className = "project-card";
           card.href = project.folder;
-          card.title = project.summary;
-          card.setAttribute("aria-label", project.summary ? `${project.title}: ${project.summary}` : project.title);
           card.setAttribute("data-title-script", getTitleScript(project.title));
           card.innerHTML = `
             <h2>${escapeHtml(project.title)}</h2>
-            <p class="project-card-summary">${escapeHtml(project.summary)}</p>
           `;
           els.grid.append(card);
         }

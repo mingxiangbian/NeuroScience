@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 
 const projectsPageUrl = new URL("../projects/index.html", import.meta.url);
 const manifestUrl = new URL("../projects/manifest.json", import.meta.url);
@@ -9,6 +11,7 @@ const foundationsReadmeUrl = new URL("../projects/foundations/README.md", import
 const foundationsPlannerUrl = new URL("../projects/foundations/multi-agent-planner.md", import.meta.url);
 const foundationsRoadmapUrl = new URL("../projects/foundations/llm-agent-engineer-roadmap.md", import.meta.url);
 const fontSourcesUrl = new URL("../assets/fonts/README.md", import.meta.url);
+const bookmarkFontUrl = new URL("../assets/fonts/ZhiMangXing-Bookmark.woff2", import.meta.url);
 
 assert.equal(existsSync(projectsPageUrl), true, "projects/ should expose a static project homepage");
 assert.equal(existsSync(manifestUrl), true, "projects/ should expose a manifest.json index for project modules");
@@ -25,6 +28,9 @@ const topicHtml = readFileSync(topicPageUrl, "utf8");
 const foundationsHtml = readFileSync(foundationsPageUrl, "utf8");
 const foundationsRoadmap = readFileSync(foundationsRoadmapUrl, "utf8");
 const fontSources = readFileSync(fontSourcesUrl, "utf8");
+const bookmarkFontCmap = execFileSync("ttx", ["-q", "-t", "cmap", "-o", "-", fileURLToPath(bookmarkFontUrl)], {
+  encoding: "utf8",
+});
 
 assert.match(projectsHtml, /<title>项目 \| NeuroScience x AI<\/title>/, "projects page should use the Chinese project directory page title");
 assert.match(projectsHtml, /data-page="projects-homepage"/, "projects/ should identify itself as a homepage");
@@ -50,27 +56,15 @@ assert.equal(
   "语言",
   "IELTS Academic should display as the Chinese language bookmark",
 );
-assert.equal(
-  manifest.find((project) => project.id === "ielts-academic")?.summary,
-  "诊断驱动的 IELTS Academic 备考系统：多智能体提示词、弹性计划、错误回归、笔记、日志与验证。",
-  "IELTS Academic bookmark should keep the configured Chinese project copy",
-);
-assert.match(
-  projectsHtml,
-  /summary: String\(record\.summary \?\? ""\)/,
-  "projects homepage should normalize project summary copy from manifest entries",
-);
-assert.match(
-  projectsHtml,
-  /project\.summary/,
-  "projects homepage should consume the project summary copy when rendering bookmarks",
-);
-assert.match(
-  projectsHtml,
-  /project-card-summary/,
-  "projects homepage should expose project summary copy on bookmark cards",
-);
 assert.match(fontSources, /ZhiMangXing-Regular\.ttf --text='记忆与智能体基石语言'/, "bookmark font subset should include the Chinese project bookmark titles");
+for (const character of new Set(manifest.map((project) => project.title).join(""))) {
+  const codePoint = character.codePointAt(0)?.toString(16);
+  assert.match(
+    bookmarkFontCmap,
+    new RegExp(`code="0x${codePoint}"`, "i"),
+    `bookmark font subset should contain the visible Chinese bookmark character ${character}`,
+  );
+}
 
 assert.match(topicHtml, /<title>Brain Memory for AI Agents \| NeuroScience x AI<\/title>/, "topic page should use the project title");
 assert.match(topicHtml, /data-page="project-topic"/, "project topic should identify itself as a topic page");
