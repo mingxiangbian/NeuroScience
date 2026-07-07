@@ -87,8 +87,12 @@ assert.match(projectReadme, /Overall 8\.0/, "project README should state the agg
 assert.match(projectReadme, /each skill 7\.5\+/, "project README should state the per-skill floor");
 assert.match(projectReadme, /manual multi-session mode/, "project README should explain independent run mode");
 assert.match(projectReadme, /single-session simulation mode/, "project README should explain simulation mode");
-assert.match(projectReadme, /static reader|GitHub Pages|site\/ielts-data\.json/i, "project README should describe the v2 static reader workflow");
-assert.match(projectReadme, /notes\/|journal\//, "project README should link to notes and journal");
+assert.match(projectReadme, /Static Reader/, "project README should describe the v2 static reader workflow");
+assert.match(projectReadme, /GitHub Pages/, "project README should mention GitHub Pages launch guidance");
+assert.match(projectReadme, /local static server/, "project README should mention local static server launch guidance");
+assert.match(projectReadme, /site\/ielts-data\.json/, "project README should mention the static reader data file");
+assert.match(projectReadme, /notes\//, "project README should link to notes");
+assert.match(projectReadme, /journal\//, "project README should link to journal");
 assert.match(languageReadme, /ielts-academic\/index\.html/, "language README should link to the IELTS static reader");
 
 assert.match(orchestrator, /Do not invent a personal weakness profile/, "orchestrator should refuse unsupported diagnosis");

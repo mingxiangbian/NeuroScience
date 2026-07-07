@@ -9,7 +9,7 @@ This project has two layers:
 
 ## Static Reader
 
-Open `index.html` to browse the v2 project reader. It renders:
+Serve this project with GitHub Pages or a local static server, then open `index.html`. It renders:
 
 - Dashboard
 - 8-week swimlane
