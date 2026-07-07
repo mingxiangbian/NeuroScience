@@ -54,6 +54,9 @@ assert.match(entryJs, /请手动复制|复制失败/, "journal draft copy should
 
 assert.match(modules, /function renderModuleSafely/, "module rendering should have per-module error boundary");
 assert.match(utils, /function getShortcutLabel/, "shortcut label should be platform-aware");
+assert.match(utils, /function renderExamMark/, "utility module should render the exam mark component");
+assert.match(renderers, /renderExamMark/, "dashboard and checkpoint renderers should use exam marks");
+assert.match(entryJs, /renderExamMark/, "entrypoint progress summary should use exam marks");
 assert.match(renderers, /<table class="swimlane-table"/, "swimlane should expose table semantics");
 
 assert.match(css, /\.score-history/, "CSS should style score history");
@@ -62,6 +65,17 @@ assert.match(css, /\.reference-panel-action/, "CSS should style reference panel 
 assert.match(css, /\.validation-issue/, "CSS should style validation issues");
 assert.match(css, /\.annotation-draft/, "CSS should style annotation journal draft");
 assert.match(css, /\.annotation-unresolved/, "CSS should style unresolved annotations");
+assert.match(css, /--reader-marker: var\(--reader-red\);/, "CSS should expose the IELTS marker token");
+assert.match(css, /--text-display: clamp\(36px, 5vw, 56px\);/, "CSS should expose display type scale token");
+assert.match(css, /--sp-16: 64px;/, "CSS should expose spacing scale tokens");
+assert.match(css, /--radius-pill: 999px;/, "CSS should expose radius scale tokens");
+assert.match(css, /\.exam-mark/, "CSS should style the exam mark component");
+assert.doesNotMatch(css, /progress-ring/, "reader progress should no longer use progress rings");
+assert.doesNotMatch(
+  css,
+  /--reader-glass|--reader-panel-blur|backdrop-filter|-webkit-backdrop-filter/,
+  "reader should not use frosted glass tokens or filters",
+);
 
 assert.match(indexHtml, /site\/ielts-reader\.js/, "reader HTML should keep stable entrypoint");
 assert.match(indexHtml, /data-shortcut-label/, "shortcut hint should be platform-aware");

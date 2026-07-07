@@ -7,6 +7,19 @@ export function escapeHtml(value) {
     .replaceAll("'", "&#39;");
 }
 
+export function renderExamMark(label, { size = 56, pending = false } = {}) {
+  const strokeColor = pending ? "var(--reader-ink-muted)" : "var(--reader-marker)";
+  const dash = pending ? ' stroke-dasharray="4 3"' : "";
+  return `
+    <span class="exam-mark" style="--mark-size: ${size}px;">
+      <svg viewBox="0 0 56 56" aria-hidden="true">
+        <path d="M28 4C45 4 52 17 49 31C46 46 32 52 18 49C5 46 2 32 6 18C9 9 16 4 28 4Z" fill="none" stroke="${strokeColor}" stroke-width="2.5"${dash} />
+      </svg>
+      <span class="exam-mark-label">${escapeHtml(label)}</span>
+    </span>
+  `;
+}
+
 export function toList(value) {
   return Array.isArray(value) ? value : [];
 }

@@ -1,7 +1,7 @@
 import { makeKnowledgeNote } from "./reader-modules.js";
 import { renderReferenceChips } from "./reader-references.js";
 import { renderTaskChecklist } from "./reader-tasks.js";
-import { escapeHtml, slugify, titleCase, toList, truncateText } from "./reader-utils.js";
+import { escapeHtml, renderExamMark, slugify, titleCase, toList, truncateText } from "./reader-utils.js";
 
 export const WEEKS = [1, 2, 3, 4, 5, 6, 7, 8];
 export const ERROR_STATUSES = ["active", "improving", "fixed", "regressed"];
@@ -45,11 +45,12 @@ function renderSkillGapBars(skills, target) {
           return `
             <article class="skill-gap">
               <div class="skill-gap-header">
-                <div>
+                ${renderExamMark(hasEstimate ? formatBand(skill.estimatedBand) : "–", { size: 48, pending: !hasEstimate })}
+                <div class="skill-gap-copy">
                   <p class="skill-gap-label">${escapeHtml(skill.label ?? titleCase(skill.id))}</p>
                   <p class="skill-gap-meta">Band ${escapeHtml(formatBand(skill.estimatedBand))} | Gap: ${escapeHtml(gap)} | Risk: ${escapeHtml(skill.riskLevel ?? "unknown")}</p>
                 </div>
-                <p class="skill-gap-meta">${escapeHtml(skill.confidence ?? "low")} confidence</p>
+                <p class="skill-gap-meta skill-gap-confidence">${escapeHtml(skill.confidence ?? "low")} confidence</p>
               </div>
               ${
                 dimensions.length
@@ -188,10 +189,13 @@ export function renderCheckpointMilestones(checkpoints) {
     <div class="checkpoint-milestones" aria-label="Global checkpoint milestones">
       ${rows.map((checkpoint) => `
         <article class="checkpoint-marker" data-week="${escapeHtml(checkpoint.week)}">
-          <strong>Week ${escapeHtml(checkpoint.week)} · ${escapeHtml(checkpoint.name)}</strong>
-          <span>${escapeHtml(checkpoint.status ?? "not-started")}</span>
-          <span>${escapeHtml(checkpoint.decision ?? checkpoint.purpose ?? "")}</span>
-          <span>${escapeHtml(toList(checkpoint.evidenceRequired).join(" / "))}</span>
+          ${renderExamMark(`W${checkpoint.week}`, { size: 40, pending: checkpoint.status !== "complete" })}
+          <div class="checkpoint-copy">
+            <strong>Week ${escapeHtml(checkpoint.week)} · ${escapeHtml(checkpoint.name)}</strong>
+            <span>${escapeHtml(checkpoint.status ?? "not-started")}</span>
+            <span>${escapeHtml(checkpoint.decision ?? checkpoint.purpose ?? "")}</span>
+            <span>${escapeHtml(toList(checkpoint.evidenceRequired).join(" / "))}</span>
+          </div>
         </article>
       `).join("")}
     </div>

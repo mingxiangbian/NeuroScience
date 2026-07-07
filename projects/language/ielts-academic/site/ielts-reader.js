@@ -29,7 +29,7 @@ import {
 import { getReferencePanelPayload, openReferenceTarget, renderReferencePanel } from "./reader-references.js";
 import { loadAnnotations, loadTaskState, loadUiState, saveAnnotations, saveTaskState, saveUiState } from "./reader-state.js";
 import { renderTaskChecklist } from "./reader-tasks.js";
-import { escapeHtml, getShortcutLabel, slugify, titleCase, toList } from "./reader-utils.js";
+import { escapeHtml, getShortcutLabel, renderExamMark, slugify, titleCase, toList } from "./reader-utils.js";
 
 const readerScript = document.querySelector('script[src$="ielts-reader.js"]');
 
@@ -463,9 +463,7 @@ function renderProgressSummary(module) {
   const overallProgress = getOverallLearningProgress();
   return `
     <div class="module-progress-summary" aria-label="阅读进度摘要">
-      <div class="progress-ring" style="--progress: ${progress}" aria-label="本模块进度 ${progress}%">
-        <span>${escapeHtml(String(progress))}%</span>
-      </div>
+      ${renderExamMark(`${progress}%`, { size: 64 })}
       <div>
         <p class="progress-label">本模块进度</p>
         <p class="progress-status">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(module.priority)}</p>
