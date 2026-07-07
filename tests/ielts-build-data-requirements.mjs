@@ -96,6 +96,7 @@ function makeValidInputs(overrides = {}) {
 const validResult = validateSiteDataInputs(makeValidInputs());
 assert.deepEqual(validResult.fatalIssues, []);
 assert.equal(Array.isArray(validResult.warningIssues), true);
+assert.deepEqual(validResult.warningIssues, []);
 
 const invalidResult = validateSiteDataInputs(makeValidInputs({
   scoreProfile: {
@@ -125,6 +126,7 @@ assert.equal(
 const parsed = parseFrontmatter("---\nid: sample\nrelated_errors: [writing-task2-argument]\n---\n# Title\nBody");
 assert.equal(parsed.frontmatter.id, "sample");
 assert.deepEqual(parsed.frontmatter.related_errors, ["writing-task2-argument"]);
+assert.equal(parsed.body, "# Title\nBody");
 
 const tempDir = mkdtempSync(join(tmpdir(), "ielts-sources-"));
 try {
@@ -137,12 +139,13 @@ try {
   rmSync(tempDir, { recursive: true, force: true });
 }
 
-const html = markdownToSafeHtml("# Heading\n\nA **bold** item with `code`.\n\n```js\nconsole.log(1)\n```\n\n<script>alert(1)</script>\n");
+const html = markdownToSafeHtml("# Heading\n\nA **bold** item with `code`.\n\n[bad](javascript:alert(1))\n\n<img src=x onerror=alert(1)>\n\n```js\nconsole.log(1)\n```\n\n<script>alert(1)</script>\n");
 assert.match(html.html, /<h1[^>]*>Heading<\/h1>/);
 assert.match(html.html, /<strong>bold<\/strong>/);
 assert.match(html.html, /<code>code<\/code>/);
 assert.match(html.html, /<pre><code class="language-js">/);
 assert.doesNotMatch(html.html, /<script|alert\(1\)/);
+assert.doesNotMatch(html.html, /javascript:|onerror|<img/i);
 assert.match(html.text, /Heading/);
 
 const referenceIndex = buildReferenceIndex(makeValidInputs());
