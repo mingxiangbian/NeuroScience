@@ -44,6 +44,13 @@ Status: Draft design, awaiting review
 
 ```json
 {
+  "readingGroups": [
+    {
+      "id": "group-project-fit",
+      "title": "为什么这篇属于记忆与智能体项目",
+      "summary": "先交代这篇文章和本项目的关系。"
+    }
+  ],
   "premises": [
     {
       "title": "这篇文章讨论的不是普通注意力头解释",
@@ -51,22 +58,34 @@ Status: Draft design, awaiting review
     }
   ],
   "narrativeSpine": [
-    "先说明为什么 global workspace 是这里的比较对象。",
-    "再解释 J-lens 和 J-space 如何把模型内部状态投影成可测对象。",
-    "然后阅读 report、modulation、reasoning、generalization、selectivity 五组证据。"
+    {
+      "groupId": "group-project-fit",
+      "summary": "先说明为什么 global workspace 是这里的比较对象。"
+    },
+    {
+      "groupId": "group-method",
+      "summary": "再解释 J-lens 和 J-space 如何把模型内部状态投影成可测对象。"
+    }
   ],
   "misreadings": [
-    "不要把模型中的 workspace 直接等同于生物大脑的意识机制。",
-    "不要把可线性读出的信息误解为模型一定在因果使用这类信息。"
+    {
+      "groupId": "group-project-fit",
+      "text": "不要把模型中的 workspace 直接等同于生物大脑的意识机制。"
+    },
+    {
+      "groupId": "group-workspace-evidence",
+      "text": "不要把可线性读出的信息误解为模型一定在因果使用这类信息。"
+    }
   ]
 }
 ```
 
 字段规则：
 
+- `readingGroups` 是本篇深读结构的事实来源；每个 group 必须有 `id`、`title`、`summary`。
 - `premises` 是正式阅读前必须补齐的前提，使用中文，控制在 3 到 6 条。
-- `narrativeSpine` 是整篇文章的阅读路线，按实际论证顺序写。
-- `misreadings` 写容易误解的边界，用于防止把类比当作机制证据。
+- `narrativeSpine` 是整篇文章的阅读路线；每一项必须绑定一个存在的 `groupId`，不能写成没有归属的散句。
+- `misreadings` 写容易误解的边界，用于防止把类比当作机制证据；`groupId` 可选，但只要误读明显属于某个证据组，就必须绑定到该 group。
 - 这些字段服务读者，不替代论文摘要、作者 claim 或原文来源。
 
 ### Reading Groups
@@ -109,7 +128,8 @@ Status: Draft design, awaiting review
 规则：
 
 - group 用于给 chunk 提供上下文，不替代章节目录。
-- 当前 22 个 chunk 可以合并或重排为更少的论证单元，但旧 `ch-xxx` id 一旦发布后不要无意义重排。
+- 本轮不删除任何既有 `ch-xxx` 条目；“合并”只体现在多个 chunk 归入同一 `groupId` 和叙事位置，不通过删除或拼接条目实现。
+- 如果后续确实要减少 chunk 数量，必须单独做 migration plan，说明旧 id 如何映射到新 id。
 - UI 可以先只把 group 标题作为段落上方的轻量提示，不需要新增复杂导航。
 
 ### chunks.json
@@ -136,12 +156,13 @@ Status: Draft design, awaiting review
 
 字段规则：
 
-- `premise` 写读这段前必须先接受或理解的条件。
-- `claim` 写这一 chunk 的核心主张，必须和来源锚点可核对。
-- `evidence` 写支撑 claim 的证据点，可以引用 figure、实验名、来源小节或作者报告的结果。
+- `premise` 写读这段前必须先接受或理解的条件；只能写一句话，建议不超过 45 个中文字符。
+- `claim` 写这一 chunk 的核心主张，必须和来源锚点可核对；只能写一句话，建议不超过 55 个中文字符。
+- `evidence` 写支撑 claim 的证据点，可以引用 figure、实验名、来源小节或作者报告的结果；最多 3 条，每条写成短语或短句，建议不超过 38 个中文字符。
 - `sourceText` 在 `source-linked` 模式下仍是本地阅读锚点，不伪装成网页全文原文。
 - `zhTranslation` 翻译 `sourceText`，不混入额外评注。
-- `zhExplanation` 承担项目解释、读法提醒，以及与已有论文的连接。
+- `zhExplanation` 承担项目解释、读法提醒，以及与已有论文的连接；不得复述 `claim`，必须回答“这段和项目/已有论文/后续问题有什么关系”。
+- 如果 `claim` 和 `zhExplanation` 能互换而不改变意思，说明写法失败，需要重写其中一项。
 
 ## Screenshot And Figure Policy
 
@@ -168,6 +189,8 @@ Status: Draft design, awaiting review
 规则：
 
 - 优先裁剪“读者理解当前 claim 所必需”的图，不把整页网页截图塞进阅读器。
+- 因为页面会公开部署到 GitHub Pages，截图必须采用最小必要原则：只裁核心结构、关键坐标轴、必要图例和紧邻 caption；不要裁完整长页、完整实验组面板合集或与当前 claim 无关的数据区域。
+- 如果完整 figure 过大，优先拆成多个语义裁剪图，而不是缩成难以阅读的小图。
 - 每张截图必须保留 `sourceUrl` 和 `sourceAnchor`，便于回到原始上下文核对。
 - 交互图只截取一个有代表性的静态状态，并在 caption 中说明它来自交互网页。
 - 如果某张图因为交互、版权或技术原因暂时不能裁剪，可以保留 `source-linked` 记录，但必须写清楚原因和下一步。
@@ -188,6 +211,7 @@ Status: Draft design, awaiting review
 - 在论文顶部显示中文 `premises` 和 `narrativeSpine`，位置在简介下方、chunk 列表上方。
 - chunk 标题下方显示一行较轻的 `premise`。
 - `claim` 和 `evidence` 放在原文卡片之前或之后的轻量结构区，避免做成厚重卡片。
+- 不把 `readingGroups` 做成正式导航；第一版只作为中间正文的分组提示，用内容连贯性先验证标准是否有效。
 - 图表跟随 `figureRefs` 出现在相关 chunk 附近，仍使用当前统一 figure 样式。
 - 右侧 parallel note 行为不变：滚动到哪个 chunk，就显示哪个 chunk 的笔记和本地 annotation。
 - 搜索仍覆盖 `sourceText`、`zhTranslation`、`zhExplanation`，新增字段可纳入本地索引，但不新增后端语义服务。
@@ -197,9 +221,12 @@ Status: Draft design, awaiting review
 `PAPER_IMPORT_STANDARD.md` 新增一节 `Deep Reading Package Standard`，用于复杂论文：
 
 - 复杂 paper 必须有 `premises`、`narrativeSpine`、`misreadings`。
+- `narrativeSpine` 必须通过 `groupId` 绑定 `readingGroups`，不能写成独立散句。
 - 每个 chunk 必须说明 `premise`、`claim`、`evidence`。
+- `premise` 和 `claim` 各自最多一句；`evidence` 最多三条；`claim` 与 `zhExplanation` 不能语义重复。
 - 如果 paper 是 mechanistic interpretability、AI x neuroscience 或方法密集型文章，不能只给短摘要式 chunk。
 - 关键证据图优先使用本地裁剪截图；无法裁剪时必须保留原因，而不是只丢一个裸链接。
+- 公开页面的截图必须遵守最小必要裁剪：只保留理解当前 claim 所需区域，避免整页或整组图搬运。
 - `source-linked` 模式允许不保存完整原文，但不允许缺少可核对来源和证据链。
 - agent 导入新 paper 时，必须先写“这篇为什么属于当前项目”，再写 chunk。
 
@@ -209,16 +236,19 @@ Status: Draft design, awaiting review
 
 - `tests/paper-import-standard-requirements.mjs`
   - 断言标准包含 `Deep Reading Package Standard`。
-  - 断言标准要求 `premises`、`narrativeSpine`、`misreadings`。
-  - 断言标准要求 `premise`、`claim`、`evidence`。
-  - 断言标准要求本地裁剪截图和来源元数据。
+  - 断言标准要求 `readingGroups`、`premises`、`narrativeSpine`、`misreadings`。
+  - 断言 `narrativeSpine` 和 group 级 `misreadings` 必须通过 `groupId` 绑定既有 group。
+  - 断言标准要求 `premise`、`claim`、`evidence`，并写明长度、条数和去重规则。
+  - 断言标准要求本地裁剪截图、来源元数据和公开页面最小必要裁剪准则。
 - `tests/paper-reader-requirements.mjs`
   - 断言 reader 能显示 `premises` 和 `narrativeSpine`。
   - 断言 chunk 能渲染 `premise`、`claim`、`evidence`。
+  - 断言 `gurnee-2026-global-workspace-language-models` 保留既有 `ch-xxx` 条目，并通过 `groupId` 组织连续阅读。
   - 断言新增字段不会破坏平行笔记、annotation 和搜索。
 - `scripts/validate-reading-packages.mjs`
   - 对 `source-linked` 包允许短锚点，但要求 `sourceUrl`、`sourceAnchor`。
   - 对深读包要求关键 figures 有本地 `file` 或明确 `status`。
+  - CLI 参数仍是项目 id；本轮命令验证 `brain-memory-for-ai-agents` 项目，并由测试专门覆盖其中的 `gurnee-2026-global-workspace-language-models` paper。
 
 实现后运行：
 
@@ -234,8 +264,9 @@ git diff --check
 ## Risks And Boundaries
 
 - 版权边界：本设计只要求选择性证据截图和 source-linked anchor，不要求复制整篇外部文章。
+- 公开发布边界：截图只做最小必要裁剪，不能把公开阅读器变成外部网页或论文图表的镜像副本。
 - 图像稳定性：源网页布局可能变化，所以本地截图必须保存来源元数据和裁剪说明。
-- 内容质量：深读字段不能写成泛泛总结，必须围绕“前提、主张、证据、限制”组织。
+- 内容质量：深读字段不能写成泛泛总结，必须围绕“前提、主张、证据、限制”组织，并遵守长度和去重约束。
 - 范围控制：本轮模板只锁定 `Global Workspace in LMs`，后续再按这个标准补其他 paper。
 - 工程边界：保持静态站点；SurrealDB、在线 embedding、RAG 回答不进入这轮实现。
 
@@ -243,5 +274,5 @@ git diff --check
 
 - 这个深读模板是否足够解决“信息碎片化”和“前提不足”的问题？
 - 第一版本地截图最小集是否覆盖了理解这篇文章所需的关键证据？
-- `premise / claim / evidence` 是否是后续 agent 导入新 paper 时能稳定执行的标准？
-- 是否需要把 `readingGroups` 做成正式 UI 导航，还是先只作为 chunk 上下文信息？
+- `premise / claim / evidence` 的长度和去重约束是否足够防止新碎片化？
+- 第一版不做 `readingGroups` 正式导航，只做正文分组提示；这个范围是否足够？
