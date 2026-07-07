@@ -148,6 +148,10 @@ assert.match(css, /\.chunk-source-card/, "English source text should render in a
 assert.match(css, /\.chunk-explanation/, "Chinese explanation should render outside the source card");
 assert.match(css, /\.chunk-title/, "reader CSS should style chunk short titles");
 assert.match(css, /\.chunk-translation/, "reader CSS should style Chinese translation separately from explanation");
+assert.match(css, /\.deep-reading-intro/, "reader CSS should style paper-level deep reading intro");
+assert.match(css, /\.reading-spine/, "reader CSS should style the narrative spine");
+assert.match(css, /\.chunk-deep-reading/, "reader CSS should style chunk-level deep reading metadata");
+assert.match(css, /\.chunk-evidence/, "reader CSS should style chunk evidence");
 assert.match(css, /\.reading-focus/, "reader CSS should style Chinese reading focus metadata");
 assert.match(css, /\.paper-header\s*\{[\s\S]*max-width:\s*min\(75ch,\s*calc\(100vw - 40px\)\)/, "paper header should use a readable ch-based width");
 assert.match(css, /\.chunk-list\s*\{[\s\S]*max-width:\s*min\(75ch,\s*calc\(100vw - 40px\)\)/, "chunk list should use a readable ch-based width");
@@ -158,6 +162,8 @@ assert.match(css, /\.math-fallback/, "reader CSS should keep a readable fallback
 assert.match(css, /\.code-block/, "reader CSS should style code blocks");
 assert.match(css, /\.table-block/, "reader CSS should style table blocks");
 assert.match(css, /\.figure-frame/, "reader CSS should style figure references with constrained dimensions");
+assert.match(css, /\.figure-link-card/, "reader CSS should style source-linked figure cards");
+assert.match(css, /\.figure-source-link/, "reader CSS should style source figure links");
 assert.match(css, /\.search-results\s+\.result-item\s*\+ \.result-item/, "search results should use line separators");
 assert.match(css, /@media \(max-width:\s*860px\)[\s\S]*\.reader-shell\.is-searching \.toolbar-search[\s\S]*width:\s*calc\(100vw - 28px\)/, "mobile search modal should stay near full width without overflow");
 assert.match(css, /\.paper-actions\.is-fallback-only/, "source links should be available only in the no-chunk fallback state");
@@ -248,7 +254,15 @@ assert.match(js, /renderCodeBlock/, "reader should render code blocks");
 assert.match(js, /renderTableBlock/, "reader should render table blocks");
 assert.match(js, /function resolveReadingAssetPath\(path,\s*reading\)/, "reader should resolve figure assets relative to the active reading package");
 assert.match(js, /figureRefs/, "reader should resolve cross-page figure references");
-assert.match(js, /if \(!figure\?\.file\) return ""/, "reader should skip missing figure files instead of rendering empty placeholders");
+assert.match(js, /function renderDeepReadingIntro/, "reader should render paper-level deep reading intro");
+assert.match(js, /function renderChunkDeepReading/, "reader should render chunk-level premise, claim, and evidence");
+assert.match(js, /readingGroups/, "reader should consume reading groups from paper.json");
+assert.match(js, /chunk\.premise/, "reader should render chunk premise");
+assert.match(js, /chunk\.claim/, "reader should render chunk claim");
+assert.match(js, /chunk\.evidence/, "reader should render chunk evidence");
+assert.match(js, /figure\?\.sourceUrl/, "reader should render source-linked figure references without local image assets");
+assert.match(js, /class="figure-source-link"/, "reader should expose source-linked figure links in the reading flow");
+assert.match(js, /if \(!figure\?\.file\) return ""/, "reader should skip figure references without file or sourceUrl instead of rendering broken placeholders");
 assert.match(js, /renderNoChunkPaper/, "reader should render real metadata for papers without chunk packages");
 assert.match(js, /ANNOTATION_STORAGE_PREFIX = "paperReader\.annotations\.v1"/, "reader should define a versioned local annotation storage prefix");
 assert.match(js, /function getAnnotationStorageKey/, "reader should isolate local annotation storage keys");
@@ -273,13 +287,26 @@ assert.match(js, /高亮和批注一起删除/, "delete confirmation should allo
 assert.doesNotMatch(js, /githubToken|Authorization|contents\/|repos\/|gitHub/i, "local annotations should not write to GitHub");
 assert.doesNotMatch(js, /\/api\/|localhost|127\.0\.0\.1|openai|anthropic|generateAnswer|chatCompletion|SurrealDB/i, "reader should stay static without backend, provider keys, AI answers, or hard SurrealDB dependency");
 
-const readingPaperIds = project.papers.map((paper) => paper.id);
+const readingPapers = project.papers.filter((paper) => paper.hasReading === true);
+const readingPaperIds = readingPapers.map((paper) => paper.id);
+const workspacePaper = project.papers.find((paper) => paper.id === "gurnee-2026-global-workspace-language-models");
 
 for (const paper of project.papers) {
   assert.equal(typeof paper.shortTitle, "string", `paper ${paper.id} should include shortTitle`);
   assert.ok(paper.shortTitle.length > 0 && paper.shortTitle.length <= 42, `paper ${paper.id} shortTitle should stay compact`);
+}
+
+for (const paper of readingPapers) {
   assert.equal(paper.hasReading, true, `paper ${paper.id} should expose a completed reading package`);
 }
+
+assert.ok(workspacePaper, "project manifest should register the 2026 Transformer Circuits global workspace paper");
+assert.equal(workspacePaper.title, "Verbalizable Representations Form a Global Workspace in Language Models", "global workspace paper should use the source title");
+assert.equal(workspacePaper.shortTitle, "Global Workspace in LMs", "global workspace paper should use a compact reader title");
+assert.equal(workspacePaper.authors, "Gurnee et al.", "global workspace paper should use compact author metadata");
+assert.equal(workspacePaper.year, 2026, "global workspace paper should use the source publication year");
+assert.equal(workspacePaper.source, "https://transformer-circuits.pub/2026/workspace/index.html", "global workspace paper should link to the Transformer Circuits source page");
+assert.equal(workspacePaper.hasReading, true, "global workspace paper should expose a completed source-linked reading package");
 
 for (const paperId of readingPaperIds) {
   const readingBase = new URL(`../papers/${projectId}/readings/${paperId}/`, import.meta.url);
@@ -299,14 +326,35 @@ for (const paperId of readingPaperIds) {
 
   assert.equal(paperData.id, paperId, `${paperId} paper.json should use the paper id`);
   assert.equal(typeof paperData.shortTitle, "string", `${paperId} paper.json should include shortTitle`);
+  if (paperId === "gurnee-2026-global-workspace-language-models") {
+    assert.equal(paperData.sourceMode, "source-linked", "Gurnee 2026 should use source-linked mode instead of copying the whole web essay");
+    assert.equal(paperData.categoryZh, "AI 机制可解释性与全局工作空间", "Gurnee 2026 should be classified as workspace/internal reasoning, not memory");
+    assert.ok(Array.isArray(paperData.readingGroups) && paperData.readingGroups.length === 7, "Gurnee 2026 should define seven deep reading groups");
+    const groupIds = new Set(paperData.readingGroups.map((group) => group.id));
+    assert.equal(groupIds.size, paperData.readingGroups.length, "Gurnee 2026 readingGroups should use unique ids");
+    assert.ok(Array.isArray(paperData.premises) && paperData.premises.length >= 3, "Gurnee 2026 should include reading premises");
+    assert.ok(Array.isArray(paperData.narrativeSpine) && paperData.narrativeSpine.every((item) => groupIds.has(item.groupId)), "Gurnee 2026 narrativeSpine should bind to readingGroups");
+    assert.ok(Array.isArray(paperData.misreadings) && paperData.misreadings.some((item) => item.groupId === "group-workspace-evidence"), "Gurnee 2026 misreadings should include group-level evidence warnings");
+  }
   assert.ok(Array.isArray(paperData.sections) && paperData.sections.length >= 2, `${paperId} should include section metadata`);
   assert.equal(chunkData.paperId, paperId, `${paperId} chunks.json should use the paper id`);
   assert.ok(Array.isArray(chunkData.chunks) && chunkData.chunks.length >= 8, `${paperId} should include a substantive reading package`);
   assert.equal(notesData.paperId, paperId, `${paperId} notes.json should use the paper id`);
   assert.equal(embeddingsData.paperId, paperId, `${paperId} embeddings.json should use the paper id`);
-  assert.deepEqual(embeddingsData.indexedFields, ["sourceText", "zhTranslation", "zhExplanation"], `${paperId} embeddings should index sourceText, zhTranslation, and zhExplanation`);
+  if (paperId === "gurnee-2026-global-workspace-language-models") {
+    assert.deepEqual(embeddingsData.indexedFields, ["sourceText", "zhTranslation", "zhExplanation", "premise", "claim", "evidence"], "Gurnee 2026 embeddings should include deep reading searchable fields");
+  } else {
+    assert.deepEqual(embeddingsData.indexedFields, ["sourceText", "zhTranslation", "zhExplanation"], `${paperId} embeddings should index sourceText, zhTranslation, and zhExplanation`);
+  }
   assert.equal(figuresData.paperId, paperId, `${paperId} figures.json should use the paper id`);
   assert.ok(Array.isArray(figuresData.figures), `${paperId} figures.json should include a figures array`);
+  const notesArePublic = notesData.noteMode === "public";
+  if (paperId === "zhang-2024-memory-mechanism-llm-agents") {
+    assert.equal(notesArePublic, true, "Zhang 2024 should publish the polished local annotations as stable public notes");
+    assert.ok(notesData.notes.some((note) => note.note.trim().length > 0), "Zhang 2024 should include at least one stable public note");
+  } else {
+    assert.notEqual(notesArePublic, true, `${paperId} should keep source notes blank unless explicitly publishing stable notes`);
+  }
 
   const chunkIds = new Set();
   const noteChunkIds = new Set(notesData.notes.map((note) => note.chunkId));
@@ -314,15 +362,24 @@ for (const paperId of readingPaperIds) {
   const embeddingChunkIds = new Set(embeddingsData.items.map((item) => item.chunkId));
   const figureIds = new Set(figuresData.figures.map((figure) => figure.id));
   const renderedFigures = figuresData.figures.filter((item) => item.file);
-  const sourceFigures = renderedFigures.filter((figure) => /^(semantic-crop|source-figure|paper-extract)$/.test(figure.cropMode));
+  const sourceFigures = renderedFigures.filter((figure) => /^(semantic-crop|source-figure|paper-extract|web-screenshot-crop)$/.test(figure.cropMode));
 
-  assert.ok(sourceFigures.length >= 1, `${paperId} should include at least one real source figure before using redraw fallbacks`);
+  if (paperId === "gurnee-2026-global-workspace-language-models") {
+    const gurneeLocalFigures = figuresData.figures.filter((figure) => figure.file);
+    assert.ok(gurneeLocalFigures.length >= 5, "Gurnee 2026 should include key local cropped screenshots");
+    assert.ok(gurneeLocalFigures.every((figure) => figure.cropMode === "web-screenshot-crop"), "Gurnee 2026 local figures should use web-screenshot-crop");
+    assert.ok(gurneeLocalFigures.every((figure) => figure.publicCropPolicy === "minimal-necessary"), "Gurnee 2026 local figures should declare minimal necessary public crop policy");
+    assert.ok(gurneeLocalFigures.every((figure) => figure.sourceUrl && figure.sourceAnchor && figure.bbox), "Gurnee 2026 local figures should keep source metadata and crop notes");
+    assert.ok(figuresData.figures.some((figure) => figure.cropMode === "source-linked" && figure.sourceUrl), "Gurnee 2026 may keep non-key web figures as source-linked references");
+  } else {
+    assert.ok(sourceFigures.length >= 1, `${paperId} should include at least one real source figure before using redraw fallbacks`);
+  }
 
   for (const figure of renderedFigures) {
     assert.equal(existsSync(new URL(figure.file, readingBase)), true, `${paperId} figure file ${figure.file} should exist`);
-    assert.match(figure.cropMode, /^(semantic-crop|source-figure|paper-extract|manual-redraw)$/, `${paperId} figure ${figure.id} should be source-backed or a documented redraw, not a page fallback`);
+    assert.match(figure.cropMode, /^(semantic-crop|source-figure|paper-extract|web-screenshot-crop|manual-redraw)$/, `${paperId} figure ${figure.id} should be source-backed or a documented redraw, not a page fallback`);
     assert.match(figure.status, /^(cropped|extracted|redrawn)$/, `${paperId} figure ${figure.id} should be marked ready for rendering`);
-    if (/^(semantic-crop|source-figure|paper-extract)$/.test(figure.cropMode)) {
+    if (/^(semantic-crop|source-figure|paper-extract|web-screenshot-crop)$/.test(figure.cropMode)) {
       assert.doesNotMatch(figure.file, /\.svg$/i, `${paperId} figure ${figure.id} should use a raster source image when it is marked as source-backed`);
       assert.ok(figure.sourceFigure || Number.isFinite(figure.sourcePage), `${paperId} figure ${figure.id} should identify the source figure or source page`);
     }
@@ -339,12 +396,31 @@ for (const paperId of readingPaperIds) {
     chunkIds.add(chunk.id);
     assert.equal(typeof chunk.sourceText, "string", `${paperId} ${chunk.id} should include sourceText`);
     assert.ok(chunk.sourceText.trim().length > 40, `${paperId} ${chunk.id} sourceText should be substantive`);
+    if (paperId === "gurnee-2026-global-workspace-language-models") {
+      assert.equal(chunk.sourceMode, "source-linked", `Gurnee 2026 ${chunk.id} should declare source-linked chunk mode`);
+      assert.equal(typeof chunk.sourceAnchor, "string", `Gurnee 2026 ${chunk.id} should include a sourceAnchor`);
+      assert.match(chunk.sourceUrl, /^https:\/\/transformer-circuits\.pub\/2026\/workspace\/index\.html#/, `Gurnee 2026 ${chunk.id} should include an anchored sourceUrl`);
+      assert.equal(typeof chunk.sourceSection, "string", `Gurnee 2026 ${chunk.id} should include sourceSection`);
+      const groupIds = new Set(paperData.readingGroups.map((group) => group.id));
+      assert.equal(groupIds.has(chunk.groupId), true, `Gurnee 2026 ${chunk.id} should bind to a reading group`);
+      assert.equal(typeof chunk.premise, "string", `Gurnee 2026 ${chunk.id} should include a premise`);
+      assert.ok(chunk.premise.trim().length >= 8 && chunk.premise.trim().length <= 80, `Gurnee 2026 ${chunk.id} premise should be short`);
+      assert.equal(typeof chunk.claim, "string", `Gurnee 2026 ${chunk.id} should include a claim`);
+      assert.ok(chunk.claim.trim().length >= 8 && chunk.claim.trim().length <= 95, `Gurnee 2026 ${chunk.id} claim should be concise`);
+      assert.ok(Array.isArray(chunk.evidence) && chunk.evidence.length >= 1 && chunk.evidence.length <= 3, `Gurnee 2026 ${chunk.id} should include one to three evidence points`);
+      assert.ok(chunk.evidence.every((item) => typeof item === "string" && item.trim().length >= 4 && item.length <= 80), `Gurnee 2026 ${chunk.id} evidence points should be short`);
+      assert.notEqual(chunk.claim.trim(), chunk.zhExplanation.trim(), `Gurnee 2026 ${chunk.id} claim should not duplicate zhExplanation`);
+    }
     assert.equal(typeof chunk.zhTranslation, "string", `${paperId} ${chunk.id} should include zhTranslation`);
     assert.ok(chunk.zhTranslation.trim().length > 20, `${paperId} ${chunk.id} zhTranslation should be substantive`);
     assert.equal(typeof chunk.zhExplanation, "string", `${paperId} ${chunk.id} should include zhExplanation`);
     assert.ok(chunk.zhExplanation.trim().length > 20, `${paperId} ${chunk.id} zhExplanation should be substantive`);
     assert.equal(noteChunkIds.has(chunk.id), true, `${paperId} ${chunk.id} should have a parallel note entry, even if blank`);
-    assert.equal(notesByChunkId.get(chunk.id), "", `${paperId} ${chunk.id} parallel note should start blank`);
+    if (!notesArePublic) {
+      assert.equal(notesByChunkId.get(chunk.id), "", `${paperId} ${chunk.id} parallel note should start blank`);
+    } else {
+      assert.equal(typeof notesByChunkId.get(chunk.id), "string", `${paperId} ${chunk.id} public note should be a string`);
+    }
     assert.equal(embeddingChunkIds.has(chunk.id), true, `${paperId} ${chunk.id} should have an embedding vector`);
     assert.ok(Array.isArray(chunk.keywords), `${paperId} ${chunk.id} should include keywords`);
     if (chunk.blocks) {
@@ -364,6 +440,9 @@ for (const paperId of readingPaperIds) {
   assert.ok(chunkData.chunks.some((chunk) => chunk.blocks?.some((block) => block.type === "math")), `${paperId} should include at least one math block for formula support`);
   assert.ok(chunkData.chunks.some((chunk) => chunk.blocks?.some((block) => block.type === "code" || block.type === "table")), `${paperId} should include code or table block coverage`);
   assert.ok(chunkData.chunks.some((chunk) => chunk.figureRefs?.some((ref) => ref.relation === "supporting" || ref.relation === "deferred")), `${paperId} should include cross-page/supporting figure references`);
+  if (paperId === "gurnee-2026-global-workspace-language-models") {
+    assert.equal(chunkData.chunks.length, 22, "Gurnee 2026 should preserve the existing 22 chunk ids while grouping them");
+  }
 
   for (const item of embeddingsData.items) {
     assert.equal(chunkIds.has(item.chunkId), true, `${paperId} embedding item should point to a real chunk`);

@@ -1,0 +1,167 @@
+{
+  "id": "gurnee-2026-global-workspace-language-models",
+  "title": "Verbalizable Representations Form a Global Workspace in Language Models",
+  "shortTitle": "Global Workspace in LMs",
+  "authors": "Gurnee et al.",
+  "year": 2026,
+  "category": "Mechanistic interpretability and global workspace",
+  "categoryZh": "AI 机制可解释性与全局工作空间",
+  "relation": "Maps verbalizable internal representations to workspace-like access, report, reasoning, and auditing functions in language models.",
+  "relationZh": "这篇不是记忆主线论文，而是当前项目的 workspace/internal reasoning 分支：它帮助区分长期记忆、工作空间、可报告表征和内部推理通道。",
+  "description": "A source-linked reading package for the Transformer Circuits essay on the Jacobian Lens, J-space, workspace-like functional evidence, alignment auditing, and counterfactual reflection training.",
+  "descriptionZh": "这份精读包把原网页压缩成可核对的阅读锚点：重点看 J-lens 怎样读出可 verbalize 的表征，J-space 为什么被解释为功能性 global workspace，以及这些表征如何服务内部推理、审计和训练干预。",
+  "readingFocus": [
+    "先区分 memory、working memory、workspace 和 verbal report，不要把它们合成一个概念。",
+    "把 global workspace 当作功能通达假设阅读，不把它直接等同于主观意识或脑机制复现。",
+    "重点核对 J-lens / J-space 的方法定义，以及 report、modulation、reasoning、generalization、selectivity 五类证据。",
+    "把 alignment auditing 和 counterfactual reflection 读作方法应用，不把它们当成已经解决对齐问题。"
+  ],
+  "source": "https://transformer-circuits.pub/2026/workspace/index.html",
+  "sourceMode": "source-linked",
+  "license": "See source terms",
+  "sections": [
+    {
+      "id": "sec-frame",
+      "title": "Introduction and framing",
+      "titleZh": "问题设定"
+    },
+    {
+      "id": "sec-method",
+      "title": "Jacobian Lens and J-space",
+      "titleZh": "J-lens 与 J-space"
+    },
+    {
+      "id": "sec-workspace",
+      "title": "Functional workspace evidence",
+      "titleZh": "功能证据"
+    },
+    {
+      "id": "sec-structure",
+      "title": "Structure supports function",
+      "titleZh": "结构证据"
+    },
+    {
+      "id": "sec-auditing",
+      "title": "Alignment auditing",
+      "titleZh": "对齐审计"
+    },
+    {
+      "id": "sec-posttraining",
+      "title": "Post-training and reflection",
+      "titleZh": "后训练与反思"
+    },
+    {
+      "id": "sec-discussion",
+      "title": "Discussion and limits",
+      "titleZh": "讨论与局限"
+    },
+    {
+      "id": "sec-agent",
+      "title": "Project relevance",
+      "titleZh": "对本项目的启发"
+    }
+  ],
+  "readingGroups": [
+    {
+      "id": "group-project-fit",
+      "title": "项目入口与概念边界",
+      "summary": "先解释这篇为什么服务记忆与智能体项目，并把 workspace 限定为功能通达。"
+    },
+    {
+      "id": "group-method",
+      "title": "J-lens 与 J-space 方法前提",
+      "summary": "理解作者怎样把 residual stream 表征转成可 verbalize 的读出空间。"
+    },
+    {
+      "id": "group-workspace-evidence",
+      "title": "workspace-like 功能证据",
+      "summary": "核对 report、modulation、reasoning、generalization、selectivity 是否形成证据链。"
+    },
+    {
+      "id": "group-structure",
+      "title": "结构、容量与广播",
+      "summary": "看 J-space 是否具有层位窗口、容量瓶颈和跨模块广播结构。"
+    },
+    {
+      "id": "group-auditing",
+      "title": "内部状态审计",
+      "summary": "理解 J-lens 如何暴露输出文本没有直接呈现的内部反应。"
+    },
+    {
+      "id": "group-training",
+      "title": "反事实反思训练",
+      "summary": "看 workspace 表征能否作为训练目标或行为改写信号。"
+    },
+    {
+      "id": "group-limits",
+      "title": "限制与项目迁移",
+      "summary": "收束方法局限、人脑差异和对 agent memory 设计的启发。"
+    }
+  ],
+  "premises": [
+    {
+      "title": "workspace 是功能通达，不是意识体验",
+      "body": "本包只讨论信息能否被报告、调制、重组和用于推理，不把它等同于主观意识。"
+    },
+    {
+      "title": "J-lens 是读出工具，不是全知探针",
+      "body": "它用局部线性影响把隐藏激活映射到 token 读出，范围受模型和词表限制。"
+    },
+    {
+      "title": "可读出不等于因果使用",
+      "body": "只有干预、调制和后续行为改变，才能把读出证据推进到功能作用。"
+    },
+    {
+      "title": "这篇服务工作空间分支",
+      "body": "它补充长期记忆之外的当前工作集、内部推理和审计视角。"
+    }
+  ],
+  "narrativeSpine": [
+    {
+      "groupId": "group-project-fit",
+      "summary": "先把论文放到本项目里：它研究当前可通达工作集，而不是长期记忆库。"
+    },
+    {
+      "groupId": "group-method",
+      "summary": "再读 J-lens 和 J-space：作者需要一个能把隐藏表征转成语言读出的工具。"
+    },
+    {
+      "groupId": "group-workspace-evidence",
+      "summary": "随后检查五类功能证据，判断 J-space 是否真的像 workspace 一样工作。"
+    },
+    {
+      "groupId": "group-structure",
+      "summary": "功能证据之后看结构约束：层位、容量和广播决定它是否只是松散类比。"
+    },
+    {
+      "groupId": "group-auditing",
+      "summary": "应用部分把 J-space 当作审计窗口，用来看到输出文本之外的内部状态。"
+    },
+    {
+      "groupId": "group-training",
+      "summary": "训练部分进一步追问：如果内部工作集可测，是否也能被训练塑形。"
+    },
+    {
+      "groupId": "group-limits",
+      "summary": "最后回到边界：它对 agent workspace 有用，但不能证明模型拥有脑式意识。"
+    }
+  ],
+  "misreadings": [
+    {
+      "groupId": "group-project-fit",
+      "text": "不要把 global workspace 直接读成主观意识或人脑机制复现。"
+    },
+    {
+      "groupId": "group-workspace-evidence",
+      "text": "不要把可线性读出误认为已经证明该表征被因果使用。"
+    },
+    {
+      "groupId": "group-auditing",
+      "text": "审计读出能提示内部状态，但不能单独证明模型安全或对齐。"
+    },
+    {
+      "groupId": "group-limits",
+      "text": "这篇补的是当前工作区层，不应替代长期记忆、检索和巩固机制。"
+    }
+  ]
+}

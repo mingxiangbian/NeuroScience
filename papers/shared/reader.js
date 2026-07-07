@@ -285,7 +285,14 @@ async function loadAllSearchItems() {
         reading,
         chunk,
         vector: item.vector,
-        searchText: `${chunk.sourceText ?? ""}\n${chunk.zhTranslation ?? ""}\n${chunk.zhExplanation ?? ""}`
+        searchText: [
+          chunk.sourceText,
+          chunk.zhTranslation,
+          chunk.zhExplanation,
+          chunk.premise,
+          chunk.claim,
+          ...(chunk.evidence ?? [])
+        ].filter(Boolean).join("\n")
       });
     }
   }
@@ -337,6 +344,66 @@ function renderPaperLinks(paperData) {
   ].filter(Boolean).join("");
 }
 
+function renderDeepReadingIntro(paperData) {
+  const readingGroups = Array.isArray(paperData.readingGroups) ? paperData.readingGroups : [];
+  const groupTitles = new Map(readingGroups.map((group) => [group.id, group.title]));
+  const premises = Array.isArray(paperData.premises) ? paperData.premises : [];
+  const narrativeSpine = Array.isArray(paperData.narrativeSpine) ? paperData.narrativeSpine : [];
+  const misreadings = Array.isArray(paperData.misreadings) ? paperData.misreadings : [];
+
+  if (!premises.length && !narrativeSpine.length && !misreadings.length) return "";
+
+  const premiseMarkup = premises.length
+    ? `
+      <section class="deep-reading-section deep-reading-premises" aria-label="阅读前提">
+        <h2>阅读前提</h2>
+        <ul>
+          ${premises.map((premise) => `
+            <li>
+              <strong>${escapeHtml(premise.title ?? "")}</strong>
+              <span>${escapeHtml(premise.body ?? "")}</span>
+            </li>
+          `).join("")}
+        </ul>
+      </section>
+    `
+    : "";
+
+  const spineMarkup = narrativeSpine.length
+    ? `
+      <section class="deep-reading-section reading-spine" aria-label="叙事主线">
+        <h2>叙事主线</h2>
+        <ol>
+          ${narrativeSpine.map((item) => `
+            <li>
+              <span class="spine-group">${escapeHtml(groupTitles.get(item.groupId) ?? item.groupId ?? "")}</span>
+              <span>${escapeHtml(item.summary ?? "")}</span>
+            </li>
+          `).join("")}
+        </ol>
+      </section>
+    `
+    : "";
+
+  const misreadingMarkup = misreadings.length
+    ? `
+      <section class="deep-reading-section deep-reading-misreadings" aria-label="误读边界">
+        <h2>误读边界</h2>
+        <ul>
+          ${misreadings.map((item) => `
+            <li>
+              ${item.groupId ? `<span class="spine-group">${escapeHtml(groupTitles.get(item.groupId) ?? item.groupId)}</span>` : ""}
+              <span>${escapeHtml(item.text ?? "")}</span>
+            </li>
+          `).join("")}
+        </ul>
+      </section>
+    `
+    : "";
+
+  return `<div class="deep-reading-intro">${premiseMarkup}${spineMarkup}${misreadingMarkup}</div>`;
+}
+
 function renderPaperHeader(reading) {
   const paperData = reading?.paperData ?? state.currentPaper;
   const sections = (paperData.sections ?? [])
@@ -356,6 +423,7 @@ function renderPaperHeader(reading) {
     ${relation ? `<p class="paper-meta">${escapeHtml(relation)}</p>` : ""}
     ${description ? `<p class="paper-meta">${escapeHtml(description)}</p>` : ""}
     ${readingFocus ? `<ul class="reading-focus">${readingFocus}</ul>` : ""}
+    ${renderDeepReadingIntro(paperData)}
     <div class="paper-actions"></div>
     <div class="section-chips">${sections}</div>
   `;
@@ -462,12 +530,43 @@ function resolveReadingAssetPath(path, reading) {
 }
 
 function renderFigure(figure, relation = "supporting", reading = null) {
+  if (!figure?.file && figure?.sourceUrl) {
+    return `
+      <figure class="figure-frame figure-link-card" data-relation="${escapeHtml(relation)}">
+        <div class="figure-link-label">${escapeHtml(figure.label ?? "Source figure")}</div>
+        <figcaption class="figure-caption">${escapeHtml(figure.caption ?? "")}</figcaption>
+        <a class="figure-source-link" href="${escapeHtml(figure.sourceUrl)}" target="_blank" rel="noopener">Open source figure</a>
+      </figure>
+    `;
+  }
   if (!figure?.file) return "";
   return `
     <figure class="figure-frame" data-relation="${escapeHtml(relation)}">
       <img src="${escapeHtml(resolveReadingAssetPath(figure.file, reading))}" alt="${escapeHtml(figure.label ?? "Figure")}">
       <figcaption class="figure-caption">${escapeHtml(figure.caption ?? "")}</figcaption>
     </figure>
+  `;
+}
+
+function getReadingGroup(reading, groupId) {
+  return (reading?.paperData?.readingGroups ?? []).find((group) => group.id === groupId);
+}
+
+function renderChunkDeepReading(chunk, reading) {
+  const group = getReadingGroup(reading, chunk.groupId);
+  const evidenceItems = Array.isArray(chunk.evidence) ? chunk.evidence : [];
+  if (!group && !chunk.premise && !chunk.claim && evidenceItems.length === 0) return "";
+  return `
+    <div class="chunk-deep-reading">
+      ${group ? `<p class="chunk-group">${escapeHtml(group.title)}</p>` : ""}
+      ${chunk.premise ? `<p class="chunk-premise">${escapeHtml(chunk.premise)}</p>` : ""}
+      ${chunk.claim ? `<p class="chunk-claim">${escapeHtml(chunk.claim)}</p>` : ""}
+      ${evidenceItems.length ? `
+        <ul class="chunk-evidence">
+          ${evidenceItems.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+        </ul>
+      ` : ""}
+    </div>
   `;
 }
 
@@ -488,6 +587,7 @@ function renderChunk(chunk, reading) {
     <article class="chunk" id="${escapeHtml(chunk.id)}" data-chunk-id="${escapeHtml(chunk.id)}" data-section-id="${escapeHtml(chunk.sectionId)}">
       ${chunkTitle}
       <p class="chunk-heading">${escapeHtml(sectionTitle)} · ${escapeHtml(chunk.id)}</p>
+      ${renderChunkDeepReading(chunk, reading)}
       <div class="chunk-source-card">${blocks}${supportingFigures}</div>
       <div class="chunk-divider"></div>
       <div class="chunk-translation">${chunk.zhTranslation ? `<p>${escapeHtml(chunk.zhTranslation)}</p>` : ""}</div>
@@ -814,7 +914,14 @@ function getSearchTerms(query) {
 }
 
 function getSearchSnippet(item, query) {
-  const fields = [item.chunk.zhTranslation, item.chunk.zhExplanation, item.chunk.sourceText].filter(Boolean);
+  const fields = [
+    item.chunk.zhTranslation,
+    item.chunk.zhExplanation,
+    item.chunk.claim,
+    item.chunk.premise,
+    item.chunk.sourceText,
+    ...(item.chunk.evidence ?? [])
+  ].filter(Boolean);
   const terms = getSearchTerms(query);
   for (const field of fields) {
     const lowerField = field.toLowerCase();
@@ -848,9 +955,12 @@ function getLexicalScore(item, query) {
     [item.paper.title, 5],
     [item.paper.shortTitle, 5],
     [sectionTitle, 4],
+    [item.chunk.claim, 4],
+    [item.chunk.premise, 3],
     [item.chunk.sourceText, 2],
     [item.chunk.zhTranslation, 2],
     [item.chunk.zhExplanation, 2],
+    [(item.chunk.evidence ?? []).join(" "), 3],
     [(item.chunk.keywords ?? []).join(" "), 3]
   ];
   let score = 0;
