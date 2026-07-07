@@ -60,5 +60,108 @@
       "title": "Project relevance",
       "titleZh": "对本项目的启发"
     }
+  ],
+  "readingGroups": [
+    {
+      "id": "group-project-fit",
+      "title": "项目入口与概念边界",
+      "summary": "先解释这篇为什么服务记忆与智能体项目，并把 workspace 限定为功能通达。"
+    },
+    {
+      "id": "group-method",
+      "title": "J-lens 与 J-space 方法前提",
+      "summary": "理解作者怎样把 residual stream 表征转成可 verbalize 的读出空间。"
+    },
+    {
+      "id": "group-workspace-evidence",
+      "title": "workspace-like 功能证据",
+      "summary": "核对 report、modulation、reasoning、generalization、selectivity 是否形成证据链。"
+    },
+    {
+      "id": "group-structure",
+      "title": "结构、容量与广播",
+      "summary": "看 J-space 是否具有层位窗口、容量瓶颈和跨模块广播结构。"
+    },
+    {
+      "id": "group-auditing",
+      "title": "内部状态审计",
+      "summary": "理解 J-lens 如何暴露输出文本没有直接呈现的内部反应。"
+    },
+    {
+      "id": "group-training",
+      "title": "反事实反思训练",
+      "summary": "看 workspace 表征能否作为训练目标或行为改写信号。"
+    },
+    {
+      "id": "group-limits",
+      "title": "限制与项目迁移",
+      "summary": "收束方法局限、人脑差异和对 agent memory 设计的启发。"
+    }
+  ],
+  "premises": [
+    {
+      "title": "workspace 是功能通达，不是意识体验",
+      "body": "本包只讨论信息能否被报告、调制、重组和用于推理，不把它等同于主观意识。"
+    },
+    {
+      "title": "J-lens 是读出工具，不是全知探针",
+      "body": "它用局部线性影响把隐藏激活映射到 token 读出，范围受模型和词表限制。"
+    },
+    {
+      "title": "可读出不等于因果使用",
+      "body": "只有干预、调制和后续行为改变，才能把读出证据推进到功能作用。"
+    },
+    {
+      "title": "这篇服务工作空间分支",
+      "body": "它补充长期记忆之外的当前工作集、内部推理和审计视角。"
+    }
+  ],
+  "narrativeSpine": [
+    {
+      "groupId": "group-project-fit",
+      "summary": "先把论文放到本项目里：它研究当前可通达工作集，而不是长期记忆库。"
+    },
+    {
+      "groupId": "group-method",
+      "summary": "再读 J-lens 和 J-space：作者需要一个能把隐藏表征转成语言读出的工具。"
+    },
+    {
+      "groupId": "group-workspace-evidence",
+      "summary": "随后检查五类功能证据，判断 J-space 是否真的像 workspace 一样工作。"
+    },
+    {
+      "groupId": "group-structure",
+      "summary": "功能证据之后看结构约束：层位、容量和广播决定它是否只是松散类比。"
+    },
+    {
+      "groupId": "group-auditing",
+      "summary": "应用部分把 J-space 当作审计窗口，用来看到输出文本之外的内部状态。"
+    },
+    {
+      "groupId": "group-training",
+      "summary": "训练部分进一步追问：如果内部工作集可测，是否也能被训练塑形。"
+    },
+    {
+      "groupId": "group-limits",
+      "summary": "最后回到边界：它对 agent workspace 有用，但不能证明模型拥有脑式意识。"
+    }
+  ],
+  "misreadings": [
+    {
+      "groupId": "group-project-fit",
+      "text": "不要把 global workspace 直接读成主观意识或人脑机制复现。"
+    },
+    {
+      "groupId": "group-workspace-evidence",
+      "text": "不要把可线性读出误认为已经证明该表征被因果使用。"
+    },
+    {
+      "groupId": "group-auditing",
+      "text": "审计读出能提示内部状态，但不能单独证明模型安全或对齐。"
+    },
+    {
+      "groupId": "group-limits",
+      "text": "这篇补的是当前工作区层，不应替代长期记忆、检索和巩固机制。"
+    }
   ]
 }

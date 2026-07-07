@@ -107,6 +107,89 @@ papers/<project-id>/readings/<paper-id>/
 - `sections[].id` 必须被 `chunks.json` 的 `sectionId` 引用。
 - `titleZh` 用于章节 chip 和折叠索引 hover。
 
+## Deep Reading Package Standard
+
+复杂 paper 必须写成 deep reading package，尤其是 mechanistic interpretability、AI x neuroscience、方法密集型论文、互动网页型 source-linked essay。deep reading 的目标是减少碎片化：先给读者前提和叙事主线，再进入 chunk 原文、中文转写和项目解释。
+
+### Paper-Level Fields
+
+`paper.json` 可以增加这些字段：
+
+```json
+{
+  "readingGroups": [
+    {
+      "id": "group-method",
+      "title": "J-lens 与 J-space 的方法前提",
+      "summary": "先解释读出工具和表征空间，避免后面证据突兀。"
+    }
+  ],
+  "premises": [
+    {
+      "title": "不要把 workspace 直接等同于意识体验",
+      "body": "这里讨论的是可报告、可调制、可用于推理的功能通达。"
+    }
+  ],
+  "narrativeSpine": [
+    {
+      "groupId": "group-method",
+      "summary": "先理解方法，再读功能证据。"
+    }
+  ],
+  "misreadings": [
+    {
+      "groupId": "group-workspace-evidence",
+      "text": "不要把可线性读出误解为模型一定在因果使用这类信息。"
+    }
+  ]
+}
+```
+
+规则：
+
+- `readingGroups` 是本篇 deep reading 的结构来源；每个 group 必须有唯一 `id`、`title`、`summary`。
+- `premises` 写正式阅读前必须补齐的前提，控制在 3 到 6 条。
+- `narrativeSpine` 必须通过 `groupId` 绑定 `readingGroups`，不能写成独立散句。
+- `misreadings` 写常见误读；如果误读明显属于某个 group，必须写 `groupId`，并且该 `groupId` 必须存在于 `readingGroups`。
+- `readingGroups` 第一版不要求做成 reader 左侧导航；可以先在正文里作为轻量分组提示。
+
+### Chunk-Level Fields
+
+deep reading chunk 在原有字段外必须增加：
+
+```json
+{
+  "groupId": "group-workspace-evidence",
+  "premise": "如果只是局部特征，它不应同时支持报告、调制和泛化。",
+  "claim": "J-space 被作者解释为更全局、更可调制的信息形态。",
+  "evidence": [
+    "reportability 任务可读出",
+    "modulation 干预会改变输出",
+    "generalization 不只绑定单一模板"
+  ]
+}
+```
+
+规则：
+
+- `groupId` 必须指向 `paper.json.readingGroups[].id`。
+- `premise` 只写一句，说明读这段前需要理解的前提。
+- `claim` 只写一句，说明该 chunk 的核心主张。
+- `evidence` 最多 3 条，每条写成短语或短句，避免把证据区写成第二篇摘要。
+- `claim` 与 `zhExplanation` 不能语义重复。`claim` 回答“这一段主张什么”；`zhExplanation` 回答“它和项目、已有论文或后续问题有什么关系”。
+- 如果 `claim` 和 `zhExplanation` 可以互换位置而不影响理解，说明写法失败，需要重写。
+
+### Public Screenshot Crop Boundary
+
+GitHub Pages 是公开页面，所以 deep reading 的本地图像必须遵守最小必要裁剪：
+
+- 只裁当前 `claim` 需要的核心结构、关键坐标轴、必要图例和紧邻 caption。
+- 不裁完整长页、完整网页 section、完整实验组面板合集或与当前 `claim` 无关的数据区域。
+- 如果完整 figure 过大，优先拆成多个语义裁剪图，而不是把整图缩到难以阅读。
+- `figures.json` 必须保留 `sourceUrl`、`sourceAnchor`、`sourceFigure`、`bbox` 或裁剪说明。
+- 对互动网页，截取一个有代表性的静态状态，并在 caption 中说明来源是互动网页。
+- 无法裁剪时可以保留 `source-linked`，但必须写清原因；不要只放裸链接。
+
 ## chunks.json Contract
 
 `chunks.json` 是阅读器最核心的数据。每个 chunk 必须是完整论点单元，避免按固定字数机械切分。
@@ -431,6 +514,7 @@ chunk 边界优先级：
 规则：
 
 - `indexedFields` 必须包含 `sourceText`、`zhTranslation`、`zhExplanation`。
+- deep reading package 的 `indexedFields` 还必须包含 `premise`、`claim`、`evidence`，让搜索能命中前提、主张和证据。
 - 每个 chunk 必须有一个向量项。
 - `vector` 必须是有限数字数组。
 - 如果未来改用真实 embedding model，向量可以离线生成后提交为静态 JSON。
@@ -445,19 +529,20 @@ chunk 边界优先级：
 2. 确认本地源文件存在，例如 PDF、HTML 或 Markdown。
 3. 只有准备创建完整 reading package 时，才设置 `hasReading: true`。
 4. 创建 `papers/<project-id>/readings/<paper-id>/`。
-5. 写 `paper.json`，先定义章节 `sections` 和中文阅读简介。
+5. 写 `paper.json`，先定义章节 `sections` 和中文阅读简介；复杂 paper 还要写 `readingGroups`、`premises`、`narrativeSpine`、`misreadings`。
 6. 从源文件抽取论文原文，按完整论点单元划分 chunk。
 7. 为每个 chunk 写 `sourceText`，确保它是论文原文或源文件文本，不是摘要。
 8. 为每个 chunk 写 `zhTranslation`，只做忠实翻译。
 9. 为每个 chunk 写 `zhExplanation`，说明它和当前项目的关系。
-10. 把公式写成 `math` block，把代码或伪代码写成 `code` block，把表格写成 `table` block。
-11. 先抽取真实来源图，再裁剪关键图表，最后才考虑 reader-side fallback 重绘；写入 `figures.json`，并用 `figureRefs` 处理跨页图表。
-12. 为每个 chunk 在 `notes.json` 写一条 note；没有笔记就写空字符串。
-13. 为每个 chunk 在 `embeddings.json` 写一个本地检索向量。
-14. 运行 `node scripts/validate-reading-packages.mjs <project-id>`，例如 `node scripts/validate-reading-packages.mjs brain-memory-for-ai-agents`。
-15. 运行 `node tests/paper-reader-requirements.mjs`。
-16. 运行 `node tests/paper-import-standard-requirements.mjs`。
-17. 运行 `git diff --check`。
+10. deep reading package 为每个 chunk 写 `groupId`、`premise`、`claim`、`evidence`；`premise` 和 `claim` 各一句，`evidence` 最多 3 条，且 `claim` 与 `zhExplanation` 不能语义重复。
+11. 把公式写成 `math` block，把代码或伪代码写成 `code` block，把表格写成 `table` block。
+12. 先抽取真实来源图，再裁剪关键图表，最后才考虑 reader-side fallback 重绘；公开 GitHub Pages 图像必须使用最小必要裁剪；写入 `figures.json`，并用 `figureRefs` 处理跨页图表。
+13. 为每个 chunk 在 `notes.json` 写一条 note；没有笔记就写空字符串。
+14. 为每个 chunk 在 `embeddings.json` 写一个本地检索向量；deep reading package 的 `indexedFields` 要包含 `premise`、`claim`、`evidence`。
+15. 运行 `node scripts/validate-reading-packages.mjs <project-id>`，例如 `node scripts/validate-reading-packages.mjs brain-memory-for-ai-agents`。
+16. 运行 `node tests/paper-reader-requirements.mjs`。
+17. 运行 `node tests/paper-import-standard-requirements.mjs`。
+18. 运行 `git diff --check`。
 
 ## Quality Boundary
 

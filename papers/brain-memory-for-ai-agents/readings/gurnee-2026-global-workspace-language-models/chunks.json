@@ -25,7 +25,20 @@
           "relation": "supporting"
         }
       ],
-      "keywords": ["workspace", "verbal report", "reasoning", "automatic processing"]
+      "keywords": [
+        "workspace",
+        "verbal report",
+        "reasoning",
+        "automatic processing"
+      ],
+      "groupId": "group-project-fit",
+      "premise": "先把 workspace 限定为当前可通达内容。",
+      "claim": "论文研究的是可报告的内部工作集，而不是长期记忆库。",
+      "evidence": [
+        "区分自动处理与可报告内容",
+        "强调 report、modulation、reasoning",
+        "对应项目的工作空间分支"
+      ]
     },
     {
       "id": "ch-002",
@@ -46,7 +59,19 @@
       "zhTranslation": "论文把 access consciousness 当作功能层面的比较点，而不是关于主观体验的主张。关键问题是：哪些信息可以被报告、控制、重组，并用于灵活推理。",
       "zhExplanation": "这能防止概念跳跃。对本项目来说，它提示我们只讨论功能通达和计算角色，不把模型内部表征直接解释成意识体验。",
       "figureRefs": [],
-      "keywords": ["access consciousness", "functional role", "reportability"]
+      "keywords": [
+        "access consciousness",
+        "functional role",
+        "reportability"
+      ],
+      "groupId": "group-project-fit",
+      "premise": "access consciousness 在这里是功能类比。",
+      "claim": "作者不主张模型拥有主观体验。",
+      "evidence": [
+        "只讨论可报告与可控制",
+        "避开 phenomenology 判断",
+        "限定在计算功能层"
+      ]
     },
     {
       "id": "ch-003",
@@ -66,13 +91,31 @@
         {
           "type": "table",
           "caption": "Reader-side summary, not an original paper table.",
-          "columns": ["Functional property", "Reader meaning"],
+          "columns": [
+            "Functional property",
+            "Reader meaning"
+          ],
           "rows": [
-            ["Report", "The model can name or verbalize the content."],
-            ["Modulation", "Instructions can bring a concept into the active representational set."],
-            ["Reasoning", "Intermediate steps can be represented and redirected."],
-            ["Generalization", "The same representation can feed different downstream operations."],
-            ["Selectivity", "Only a small subset of total processing is workspace-like."]
+            [
+              "Report",
+              "The model can name or verbalize the content."
+            ],
+            [
+              "Modulation",
+              "Instructions can bring a concept into the active representational set."
+            ],
+            [
+              "Reasoning",
+              "Intermediate steps can be represented and redirected."
+            ],
+            [
+              "Generalization",
+              "The same representation can feed different downstream operations."
+            ],
+            [
+              "Selectivity",
+              "Only a small subset of total processing is workspace-like."
+            ]
           ]
         }
       ],
@@ -84,7 +127,19 @@
           "relation": "supporting"
         }
       ],
-      "keywords": ["global workspace", "functional evidence", "selectivity"]
+      "keywords": [
+        "global workspace",
+        "functional evidence",
+        "selectivity"
+      ],
+      "groupId": "group-project-fit",
+      "premise": "workspace 假说需要一组可检验功能。",
+      "claim": "作者把五类功能作为 LM workspace 的判据。",
+      "evidence": [
+        "report",
+        "modulation",
+        "reasoning、generalization、selectivity"
+      ]
     },
     {
       "id": "ch-004",
@@ -115,7 +170,20 @@
           "relation": "near"
         }
       ],
-      "keywords": ["Jacobian lens", "residual stream", "verbalizable", "formula"]
+      "keywords": [
+        "Jacobian lens",
+        "residual stream",
+        "verbalizable",
+        "formula"
+      ],
+      "groupId": "group-method",
+      "premise": "必须先知道隐藏向量怎样被读成词。",
+      "claim": "J-lens 把中间激活映射到未来 token 影响。",
+      "evidence": [
+        "平均 Jacobian",
+        "未来输出状态",
+        "token 级排序"
+      ]
     },
     {
       "id": "ch-005",
@@ -146,7 +214,19 @@
           "relation": "near"
         }
       ],
-      "keywords": ["J-space", "sparse decomposition", "overcomplete frame"]
+      "keywords": [
+        "J-space",
+        "sparse decomposition",
+        "overcomplete frame"
+      ],
+      "groupId": "group-method",
+      "premise": "J-space 是稀疏可 verbalize 子空间。",
+      "claim": "作者把少数活跃 J-lens 方向当作 workspace 候选。",
+      "evidence": [
+        "非负稀疏组合",
+        "过完备 lens 向量",
+        "少数方向同时活跃"
+      ]
     },
     {
       "id": "ch-006",
@@ -167,7 +247,19 @@
       "zhTranslation": "J-lens 和 logit-lens 一类读出方法有关，但论文把它视为一种修正：它考虑了跨层表征坐标变化。同时作者也承认该方法只是近似，并受 vocabulary token 边界限制。",
       "zhExplanation": "这一段提醒我们不能把 J-lens 输出当作完整心智记录。它更像一扇有偏窗口，只能看到符合读出假设的那部分表征。",
       "figureRefs": [],
-      "keywords": ["logit lens", "method limitation", "vocabulary"]
+      "keywords": [
+        "logit lens",
+        "method limitation",
+        "vocabulary"
+      ],
+      "groupId": "group-method",
+      "premise": "读出方法本身有边界。",
+      "claim": "J-lens 是近似窗口，不是完整心智记录。",
+      "evidence": [
+        "类似 logit lens 但考虑跨层",
+        "受 token 词表限制",
+        "作者承认近似性"
+      ]
     },
     {
       "id": "ch-007",
@@ -187,11 +279,23 @@
         {
           "type": "table",
           "caption": "Reader-side evidence map, not an original paper table.",
-          "columns": ["Test", "Workspace interpretation"],
+          "columns": [
+            "Test",
+            "Workspace interpretation"
+          ],
           "rows": [
-            ["Ask for report", "A verbal answer should expose active workspace content."],
-            ["Swap or patch coordinates", "The report should change with the patched workspace content."],
-            ["Compare automatic content", "Routine processing should not all become reportable."]
+            [
+              "Ask for report",
+              "A verbal answer should expose active workspace content."
+            ],
+            [
+              "Swap or patch coordinates",
+              "The report should change with the patched workspace content."
+            ],
+            [
+              "Compare automatic content",
+              "Routine processing should not all become reportable."
+            ]
           ]
         }
       ],
@@ -203,7 +307,19 @@
           "relation": "supporting"
         }
       ],
-      "keywords": ["verbal report", "intervention", "workspace evidence"]
+      "keywords": [
+        "verbal report",
+        "intervention",
+        "workspace evidence"
+      ],
+      "groupId": "group-workspace-evidence",
+      "premise": "可报告性是 workspace 的入口证据。",
+      "claim": "J-space 内容应能被模型语言接口报告。",
+      "evidence": [
+        "询问 thinking about",
+        "patch 后报告改变",
+        "不是所有自动内容都可报告"
+      ]
     },
     {
       "id": "ch-008",
@@ -229,7 +345,19 @@
           "relation": "supporting"
         }
       ],
-      "keywords": ["directed modulation", "instruction", "working set"]
+      "keywords": [
+        "directed modulation",
+        "instruction",
+        "working set"
+      ],
+      "groupId": "group-workspace-evidence",
+      "premise": "workspace 应能被指令维持或调制。",
+      "claim": "指令可以把相关概念推入或保持在 J-space 中。",
+      "evidence": [
+        "directed modulation",
+        "任务表面输出可不同",
+        "概念仍保持活跃"
+      ]
     },
     {
       "id": "ch-009",
@@ -261,7 +389,19 @@
           "relation": "deferred"
         }
       ],
-      "keywords": ["internal reasoning", "causal intervention", "ablation"]
+      "keywords": [
+        "internal reasoning",
+        "causal intervention",
+        "ablation"
+      ],
+      "groupId": "group-workspace-evidence",
+      "premise": "报告之外还要看干预后果。",
+      "claim": "干预 J-space 中间表征可以改变后续结论。",
+      "evidence": [
+        "读出中间概念",
+        "patch/ablate 概念",
+        "观察答案偏移"
+      ]
     },
     {
       "id": "ch-010",
@@ -282,7 +422,19 @@
       "zhTranslation": "灵活泛化意味着 workspace 表征应能跨上下文和下游计算复用。一个场景中写入的概念，在被路由到另一个兼容操作中时仍应有意义。",
       "zhExplanation": "这提示后续 agent memory 不应只做文本召回，还需要让被召回内容进入可操作的中间表征或任务状态。",
       "figureRefs": [],
-      "keywords": ["generalization", "routing", "downstream computation"]
+      "keywords": [
+        "generalization",
+        "routing",
+        "downstream computation"
+      ],
+      "groupId": "group-workspace-evidence",
+      "premise": "workspace 表征不应只服务单一模板。",
+      "claim": "J-space 功能证据需要跨任务泛化。",
+      "evidence": [
+        "不同 prompt 形式",
+        "同一概念可供多任务使用",
+        "区别于表面 token 匹配"
+      ]
     },
     {
       "id": "ch-011",
@@ -308,7 +460,19 @@
           "relation": "supporting"
         }
       ],
-      "keywords": ["selectivity", "negative control", "automatic cognition"]
+      "keywords": [
+        "selectivity",
+        "negative control",
+        "automatic cognition"
+      ],
+      "groupId": "group-workspace-evidence",
+      "premise": "workspace 是选择性瓶颈而非全量记录。",
+      "claim": "只有部分处理内容进入 J-space。",
+      "evidence": [
+        "区分 reportable 与 automatic",
+        "选择性中介",
+        "避免把所有 hidden state 都叫 workspace"
+      ]
     },
     {
       "id": "ch-012",
@@ -334,7 +498,19 @@
           "relation": "supporting"
         }
       ],
-      "keywords": ["layers", "abstract content", "motor regime"]
+      "keywords": [
+        "layers",
+        "abstract content",
+        "motor regime"
+      ],
+      "groupId": "group-structure",
+      "premise": "功能 workspace 应有稳定层位窗口。",
+      "claim": "J-space 主要出现在特定中后层范围。",
+      "evidence": [
+        "layer range",
+        "非全层均匀",
+        "支持结构约束"
+      ]
     },
     {
       "id": "ch-013",
@@ -360,7 +536,19 @@
           "relation": "supporting"
         }
       ],
-      "keywords": ["capacity", "sparsity", "selective access"]
+      "keywords": [
+        "capacity",
+        "sparsity",
+        "selective access"
+      ],
+      "groupId": "group-structure",
+      "premise": "workspace 需要容量约束。",
+      "claim": "J-space 呈现有限容量和稀疏瓶颈特征。",
+      "evidence": [
+        "少数方向活跃",
+        "capacity bottleneck",
+        "与全量残差流区分"
+      ]
     },
     {
       "id": "ch-014",
@@ -386,7 +574,19 @@
           "relation": "deferred"
         }
       ],
-      "keywords": ["broadcast", "shared format", "circuits"]
+      "keywords": [
+        "broadcast",
+        "shared format",
+        "circuits"
+      ],
+      "groupId": "group-structure",
+      "premise": "全局工作空间应能广播信息。",
+      "claim": "J-space 格式被解释为可供下游模块读取的广播格式。",
+      "evidence": [
+        "跨层影响",
+        "后续 token state",
+        "支持多功能读取"
+      ]
     },
     {
       "id": "ch-015",
@@ -412,7 +612,19 @@
           "relation": "supporting"
         }
       ],
-      "keywords": ["alignment auditing", "internal monitoring", "evaluation awareness"]
+      "keywords": [
+        "alignment auditing",
+        "internal monitoring",
+        "evaluation awareness"
+      ],
+      "groupId": "group-auditing",
+      "premise": "审计要看输出外的内部状态。",
+      "claim": "J-lens 能暴露最终回答未显示的内部反应。",
+      "evidence": [
+        "内部 reaction readout",
+        "blackmail 示例",
+        "输出文本不是唯一证据"
+      ]
     },
     {
       "id": "ch-016",
@@ -438,7 +650,19 @@
           "relation": "deferred"
         }
       ],
-      "keywords": ["prompt injection", "silent recognition", "risk state"]
+      "keywords": [
+        "prompt injection",
+        "silent recognition",
+        "risk state"
+      ],
+      "groupId": "group-auditing",
+      "premise": "攻击识别可能发生在内部而非输出。",
+      "claim": "J-space 可显示模型识别 prompt injection 的迹象。",
+      "evidence": [
+        "source anchor 指向 injection 示例",
+        "读出战略概念",
+        "外显回答可能掩盖"
+      ]
     },
     {
       "id": "ch-017",
@@ -459,7 +683,19 @@
       "zhTranslation": "论文还讨论用 J-lens 证据识别错位行为或迎合 reward model 的内部迹象。这些例子应读作审计应用，而不是完整安全解决方案。",
       "zhExplanation": "这能帮助我们把“可解释性读出”放到系统工具层，而不是把它神化成自动对齐机制。",
       "figureRefs": [],
-      "keywords": ["misalignment", "reward model", "auditing"]
+      "keywords": [
+        "misalignment",
+        "reward model",
+        "auditing"
+      ],
+      "groupId": "group-auditing",
+      "premise": "审计证据不能自动等于安全保证。",
+      "claim": "内部读出可帮助发现错位目标，但不能单独解决对齐。",
+      "evidence": [
+        "能暴露目标概念",
+        "仍依赖解释准确性",
+        "需要行为验证"
+      ]
     },
     {
       "id": "ch-018",
@@ -480,7 +716,19 @@
       "zhTranslation": "后训练部分比较模型在学习以 assistant 视角行动时 J-space 如何变化。核心说法是：模型仍在处理用户 prompt 时，就可能出现反应和自我监测相关概念。",
       "zhExplanation": "这提示后训练不只是改输出风格，也可能改变模型内部 workspace 的默认视角和监控内容。",
       "figureRefs": [],
-      "keywords": ["post-training", "assistant perspective", "self-monitoring"]
+      "keywords": [
+        "post-training",
+        "assistant perspective",
+        "self-monitoring"
+      ],
+      "groupId": "group-training",
+      "premise": "训练信号可以来自模型自己的内部反思。",
+      "claim": "作者把助手视角作为后训练干预的入口。",
+      "evidence": [
+        "reflective continuations",
+        "workspace content 可测",
+        "连接训练目标"
+      ]
     },
     {
       "id": "ch-019",
@@ -512,7 +760,19 @@
           "relation": "supporting"
         }
       ],
-      "keywords": ["counterfactual reflection", "training", "workspace shaping"]
+      "keywords": [
+        "counterfactual reflection",
+        "training",
+        "workspace shaping"
+      ],
+      "groupId": "group-training",
+      "premise": "如果 workspace 可测，就可被训练塑形。",
+      "claim": "反事实反思训练尝试改变 workspace 内容和行为。",
+      "evidence": [
+        "counterfactual reflection",
+        "训练前后比较",
+        "观察内部表征变化"
+      ]
     },
     {
       "id": "ch-020",
@@ -532,12 +792,27 @@
         {
           "type": "table",
           "caption": "Reader-side limitations map, not an original paper table.",
-          "columns": ["Limit", "Why it matters"],
+          "columns": [
+            "Limit",
+            "Why it matters"
+          ],
           "rows": [
-            ["Architecture", "Transformers do not reproduce the brain's recurrent multi-area dynamics."],
-            ["Token lens", "The method favors concepts that can be mapped to vocabulary tokens."],
-            ["Causality", "Readout and intervention evidence still depends on the method's assumptions."],
-            ["Consciousness", "Functional access is not the same as phenomenal experience."]
+            [
+              "Architecture",
+              "Transformers do not reproduce the brain's recurrent multi-area dynamics."
+            ],
+            [
+              "Token lens",
+              "The method favors concepts that can be mapped to vocabulary tokens."
+            ],
+            [
+              "Causality",
+              "Readout and intervention evidence still depends on the method's assumptions."
+            ],
+            [
+              "Consciousness",
+              "Functional access is not the same as phenomenal experience."
+            ]
           ]
         }
       ],
@@ -549,7 +824,19 @@
           "relation": "supporting"
         }
       ],
-      "keywords": ["limitations", "architecture", "consciousness"]
+      "keywords": [
+        "limitations",
+        "architecture",
+        "consciousness"
+      ],
+      "groupId": "group-limits",
+      "premise": "J-space 只覆盖可 verbalize 方向。",
+      "claim": "方法会遗漏非语言化或词表外的内部计算。",
+      "evidence": [
+        "vocabulary-token limited",
+        "局部线性近似",
+        "无法覆盖全部表征"
+      ]
     },
     {
       "id": "ch-021",
@@ -575,7 +862,19 @@
           "relation": "deferred"
         }
       ],
-      "keywords": ["human cognition", "functional analogy", "recurrent dynamics"]
+      "keywords": [
+        "human cognition",
+        "functional analogy",
+        "recurrent dynamics"
+      ],
+      "groupId": "group-limits",
+      "premise": "AI workspace 类比不等于脑机制复现。",
+      "claim": "这篇最多支持功能对应，不支持实现层等同。",
+      "evidence": [
+        "access/function 层比较",
+        "人脑机制未被验证",
+        "避免 consciousness 过度解释"
+      ]
     },
     {
       "id": "ch-022",
@@ -596,7 +895,20 @@
       "zhTranslation": "对本项目最有用的结论是角色分离：长期记忆负责存储信息，检索负责选出候选内容，而 workspace-like 层决定哪些内容真正变成活跃、可报告、可因果参与推理的状态。",
       "zhExplanation": "这篇应放在“记忆与智能体”项目中，但标签应是 workspace/internal reasoning。它能补上 agent memory 方案中常被忽略的一层：被召回内容如何进入当前推理工作区。",
       "figureRefs": [],
-      "keywords": ["agent memory", "workspace", "retrieval", "reasoning"]
+      "keywords": [
+        "agent memory",
+        "workspace",
+        "retrieval",
+        "reasoning"
+      ],
+      "groupId": "group-limits",
+      "premise": "项目迁移要区分 memory 与 workspace。",
+      "claim": "本项目可借用 J-space 思路定义 agent 当前工作集。",
+      "evidence": [
+        "长期记忆不是 workspace",
+        "工作集影响推理",
+        "可用于审计与训练"
+      ]
     }
   ]
 }

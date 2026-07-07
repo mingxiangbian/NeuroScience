@@ -34,6 +34,10 @@ function isNonEmptyString(value, minLength = 1) {
   return typeof value === "string" && value.trim().length >= minLength;
 }
 
+function isDeepReadingPaper(paperData) {
+  return Array.isArray(paperData?.readingGroups) || Array.isArray(paperData?.narrativeSpine);
+}
+
 function isHttpUrl(value) {
   if (!isNonEmptyString(value)) return false;
   try {
@@ -102,7 +106,7 @@ function validateFigures(figuresData, readingDir, sectionIds, label, { sourceLin
 
   const figureIds = new Set();
   const renderedFigures = [];
-  const sourceBackedModes = new Set(["source-figure", "semantic-crop", "paper-extract"]);
+  const sourceBackedModes = new Set(["source-figure", "semantic-crop", "paper-extract", "web-screenshot-crop"]);
   const sourceLinkedFigures = [];
 
   for (const [index, figure] of (figuresData?.figures ?? []).entries()) {
@@ -128,7 +132,7 @@ function validateFigures(figuresData, readingDir, sectionIds, label, { sourceLin
     if (figure?.file) {
       renderedFigures.push(figure);
       assert(existsSync(join(readingDir, figure.file)), figureLabel, `figure file does not exist: ${figure.file}`);
-      assert(/^(source-figure|semantic-crop|paper-extract|manual-redraw)$/.test(figure.cropMode), figureLabel, "rendered figure must not use page-fallback crop mode");
+      assert(/^(source-figure|semantic-crop|paper-extract|web-screenshot-crop|manual-redraw)$/.test(figure.cropMode), figureLabel, "rendered figure must not use page-fallback crop mode");
       assert(/^(cropped|extracted|redrawn)$/.test(figure.status), figureLabel, "rendered figure status must be cropped, extracted, or redrawn");
 
       if (figure.cropMode === "semantic-crop") {
@@ -137,6 +141,13 @@ function validateFigures(figuresData, readingDir, sectionIds, label, { sourceLin
           assert(Number.isFinite(figure.bbox?.[field]), figureLabel, `bbox.${field} must be finite`);
         }
         assert(figure.bbox?.width > 0 && figure.bbox?.height > 0, figureLabel, "bbox width and height must be positive");
+      }
+
+      if (figure.cropMode === "web-screenshot-crop") {
+        assert(figure.publicCropPolicy === "minimal-necessary", figureLabel, "web screenshot crops must declare minimal-necessary publicCropPolicy");
+        assert(isObject(figure.bbox), figureLabel, "web screenshot crops must include bbox metadata");
+        assert(isHttpUrl(figure.sourceUrl), figureLabel, "web screenshot crops need sourceUrl");
+        assert(isNonEmptyString(figure.sourceAnchor, 4), figureLabel, "web screenshot crops need sourceAnchor");
       }
 
       if (sourceBackedModes.has(figure.cropMode)) {
@@ -239,6 +250,77 @@ function validateChunks(chunksData, paperId, sectionIds, figureIds, label, { sou
   return { chunkIds };
 }
 
+function validateDeepReadingPaperData(paperData, label) {
+  if (!isDeepReadingPaper(paperData)) return { groupIds: new Set(), enabled: false };
+
+  assert(Array.isArray(paperData.readingGroups) && paperData.readingGroups.length >= 3, label, "deep reading papers need at least 3 readingGroups");
+  const groupIds = new Set();
+  for (const [index, group] of (paperData.readingGroups ?? []).entries()) {
+    const groupLabel = `${label} readingGroups[${index}]`;
+    assert(isNonEmptyString(group?.id), groupLabel, "group id is required");
+    assert(!groupIds.has(group?.id), groupLabel, "group id must be unique");
+    groupIds.add(group?.id);
+    assert(isNonEmptyString(group?.title, 4), groupLabel, "group title is required");
+    assert(isNonEmptyString(group?.summary, 10), groupLabel, "group summary is required");
+  }
+
+  assert(Array.isArray(paperData.premises) && paperData.premises.length >= 3 && paperData.premises.length <= 6, label, "deep reading papers need 3 to 6 premises");
+  for (const [index, premise] of (paperData.premises ?? []).entries()) {
+    const premiseLabel = `${label} premises[${index}]`;
+    assert(isNonEmptyString(premise?.title, 4), premiseLabel, "premise title is required");
+    assert(isNonEmptyString(premise?.body, 12), premiseLabel, "premise body is required");
+  }
+
+  assert(Array.isArray(paperData.narrativeSpine) && paperData.narrativeSpine.length >= 3, label, "deep reading papers need a narrativeSpine");
+  for (const [index, item] of (paperData.narrativeSpine ?? []).entries()) {
+    const spineLabel = `${label} narrativeSpine[${index}]`;
+    assert(groupIds.has(item?.groupId), spineLabel, "narrativeSpine groupId must point to readingGroups");
+    assert(isNonEmptyString(item?.summary, 8), spineLabel, "narrativeSpine summary is required");
+  }
+
+  assert(Array.isArray(paperData.misreadings) && paperData.misreadings.length >= 2, label, "deep reading papers need misreadings");
+  for (const [index, item] of (paperData.misreadings ?? []).entries()) {
+    const misreadingLabel = `${label} misreadings[${index}]`;
+    assert(isNonEmptyString(item?.text, 8), misreadingLabel, "misreading text is required");
+    if (item?.groupId) {
+      assert(groupIds.has(item.groupId), misreadingLabel, "misreading groupId must point to readingGroups");
+    }
+  }
+
+  return { groupIds, enabled: true };
+}
+
+function validateDeepReadingChunks(chunksData, groupIds, label, { enabled = false } = {}) {
+  if (!enabled) return;
+  for (const [index, chunk] of (chunksData?.chunks ?? []).entries()) {
+    const chunkLabel = `${label} ${chunk?.id ?? `chunks[${index}]`}`;
+    assert(groupIds.has(chunk?.groupId), chunkLabel, "deep reading chunk groupId must point to readingGroups");
+    assert(isNonEmptyString(chunk?.premise, 8), chunkLabel, "deep reading chunk needs premise");
+    assert(chunk.premise.length <= 80, chunkLabel, "premise should stay concise");
+    assert(isNonEmptyString(chunk?.claim, 8), chunkLabel, "deep reading chunk needs claim");
+    assert(chunk.claim.length <= 95, chunkLabel, "claim should stay concise");
+    assert(chunk.claim.trim() !== chunk.zhExplanation?.trim(), chunkLabel, "claim must not duplicate zhExplanation");
+    assert(Array.isArray(chunk?.evidence) && chunk.evidence.length >= 1 && chunk.evidence.length <= 3, chunkLabel, "evidence must include 1 to 3 items");
+    for (const [evidenceIndex, evidence] of chunk.evidence.entries()) {
+      assert(isNonEmptyString(evidence, 4), `${chunkLabel} evidence[${evidenceIndex}]`, "evidence item is required");
+      assert(evidence.length <= 80, `${chunkLabel} evidence[${evidenceIndex}]`, "evidence item should stay concise");
+    }
+  }
+}
+
+function validateDeepReadingFigures(figuresData, label, { enabled = false } = {}) {
+  if (!enabled) return;
+  const localFigures = (figuresData?.figures ?? []).filter((figure) => figure.file);
+  assert(localFigures.length >= 5, label, "deep reading package should include at least 5 local cropped figures");
+  for (const [index, figure] of localFigures.entries()) {
+    const figureLabel = `${label} deep figures[${index}]`;
+    assert(figure.publicCropPolicy === "minimal-necessary", figureLabel, "local public figures must declare minimal-necessary crop policy");
+    assert(isHttpUrl(figure.sourceUrl), figureLabel, "local public figures need sourceUrl");
+    assert(isNonEmptyString(figure.sourceAnchor, 4), figureLabel, "local public figures need sourceAnchor");
+    assert(isObject(figure.bbox), figureLabel, "local public figures need bbox metadata");
+  }
+}
+
 function validateNotes(notesData, paperId, chunkIds, label) {
   assert(isObject(notesData), label, "notes.json must be an object");
   assert(notesData?.paperId === paperId, label, "notes.json paperId must match paper id");
@@ -255,12 +337,17 @@ function validateNotes(notesData, paperId, chunkIds, label) {
   }
 }
 
-function validateEmbeddings(embeddingsData, paperId, chunkIds, label) {
+function validateEmbeddings(embeddingsData, paperId, chunkIds, label, { deepReading = false } = {}) {
   assert(isObject(embeddingsData), label, "embeddings.json must be an object");
   assert(embeddingsData?.paperId === paperId, label, "embeddings.json paperId must match paper id");
   assert(Array.isArray(embeddingsData?.indexedFields), label, "embeddings.json must include indexedFields");
   for (const field of ["sourceText", "zhTranslation", "zhExplanation"]) {
     assert(embeddingsData?.indexedFields?.includes(field), label, `indexedFields must include ${field}`);
+  }
+  if (deepReading) {
+    for (const field of ["premise", "claim", "evidence"]) {
+      assert(embeddingsData?.indexedFields?.includes(field), label, `deep reading indexedFields must include ${field}`);
+    }
   }
   assert(Array.isArray(embeddingsData?.items), label, "embeddings.json must include items");
   assert(embeddingsData?.items?.length === chunkIds.size, label, "embeddings.json must include one vector per chunk");
@@ -290,6 +377,7 @@ function validateReadingPackage(project, manifestPaper) {
   const figuresData = readJson(join(readingDir, "figures.json"), `${label}/figures.json`);
 
   const { sectionIds } = validatePaperData(paperData, manifestPaper, label);
+  const deepReading = validateDeepReadingPaperData(paperData, label);
   const isSourceLinked = paperData?.sourceMode === "source-linked";
   if (isSourceLinked) {
     assert(isHttpUrl(manifestPaper.source), label, "source-linked manifest paper must include a source URL");
@@ -306,8 +394,10 @@ function validateReadingPackage(project, manifestPaper) {
     sourceLinked: isSourceLinked,
     sourceBase: paperData?.source ?? manifestPaper.source ?? ""
   });
+  validateDeepReadingChunks(chunksData, deepReading.groupIds, label, { enabled: deepReading.enabled });
+  validateDeepReadingFigures(figuresData, label, { enabled: deepReading.enabled });
   validateNotes(notesData, manifestPaper.id, chunkIds, label);
-  validateEmbeddings(embeddingsData, manifestPaper.id, chunkIds, label);
+  validateEmbeddings(embeddingsData, manifestPaper.id, chunkIds, label, { deepReading: deepReading.enabled });
 
   packageCount += 1;
 }

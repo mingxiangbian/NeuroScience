@@ -30,6 +30,13 @@ assert.match(standard, /bbox[\s\S]*x[\s\S]*y[\s\S]*width[\s\S]*height/, "standar
 assert.match(standard, /notes\.json[\s\S]*空字符串/, "standard should allow empty notes without visible placeholder text");
 assert.match(standard, /indexedFields[\s\S]*sourceText[\s\S]*zhTranslation[\s\S]*zhExplanation/, "standard should define searchable fields");
 assert.match(standard, /不引入[\s\S]*\/api\/[\s\S]*provider key[\s\S]*SurrealDB/, "standard should keep the reader static and backend-free");
+assert.match(standard, /Deep Reading Package Standard/, "standard should define deep reading packages for complex papers");
+assert.match(standard, /readingGroups[\s\S]*premises[\s\S]*narrativeSpine[\s\S]*misreadings/, "standard should define paper-level deep reading fields");
+assert.match(standard, /narrativeSpine[\s\S]*groupId[\s\S]*readingGroups/, "narrative spine should bind to reading groups");
+assert.match(standard, /premise[\s\S]*claim[\s\S]*evidence/, "standard should define chunk-level deep reading fields");
+assert.match(standard, /premise[\s\S]*一句[\s\S]*claim[\s\S]*一句[\s\S]*evidence[\s\S]*最多\s*3/, "standard should limit deep reading field density");
+assert.match(standard, /claim[\s\S]*zhExplanation[\s\S]*不能语义重复/, "standard should require claim and zhExplanation de-duplication");
+assert.match(standard, /最小必要裁剪[\s\S]*GitHub Pages/, "standard should define public-page screenshot crop boundaries");
 assert.match(standard, /Import Checklist/, "standard should include an import checklist for future agents");
 assert.match(standard, /node scripts\/validate-reading-packages\.mjs/, "standard should tell agents to run the package validator");
 
