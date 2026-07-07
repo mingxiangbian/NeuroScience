@@ -178,6 +178,10 @@ assert.doesNotMatch(siteCss, /border-radius:\s*24px|border-radius:\s*28px/, "IEL
 assert.match(readerJsBundle, /const ANNOTATION_STORAGE_KEY = "ieltsReader\.annotations\.v1"/, "IELTS JS should use an IELTS annotation localStorage key");
 assert.match(readerJsBundle, /const TASK_STORAGE_KEY = "ieltsReader\.tasks\.v1"/, "IELTS JS should use an IELTS task localStorage key");
 assert.match(readerJsBundle, /const UI_STATE_KEY = "ieltsReader\.ui\.v1"/, "IELTS JS should use an IELTS UI localStorage key");
+assert.match(siteJs, /from "\.\/reader-modules\.js"/, "IELTS reader entry should import module helpers");
+assert.match(siteJs, /from "\.\/reader-state\.js"/, "IELTS reader entry should import state helpers");
+assert.match(siteJs, /from "\.\/reader-tasks\.js"/, "IELTS reader entry should import task helpers");
+assert.match(siteJs, /from "\.\/reader-utils\.js"/, "IELTS reader entry should import utility helpers");
 assert.match(siteJs, /function buildReaderModules/, "IELTS JS should adapt IELTS site data into reader modules");
 assert.match(siteJs, /function renderModuleNav/, "IELTS JS should render module navigation");
 assert.match(siteJs, /function renderCurrentModule/, "IELTS JS should render the active module");
@@ -186,6 +190,8 @@ assert.match(siteJs, /function renderContextualNotePanel/, "IELTS JS should rend
 assert.match(siteJs, /function runSearch/, "IELTS JS should support Foundations-style global search");
 assert.match(siteJs, /function createAnnotationFromSelection/, "IELTS JS should support local annotations");
 assert.match(readerJsBundle, /function saveTaskState/, "IELTS JS should persist local task state");
+assert.match(readerTasksJs, /legacyIds/, "IELTS task helper should migrate legacy checklist IDs");
+assert.match(siteJs, /createLegacyTaskIds/, "IELTS reader should supply legacy checklist IDs during migration");
 assert.match(siteJs, /function setTheme/, "IELTS JS should support theme switching");
 assert.match(siteJs, /fetchJson\(getDataSource\(\)\)/, "IELTS JS should load generated data from the script data-source attribute");
 assert.match(siteJs, /Dashboard/, "IELTS modules should keep the Dashboard content");

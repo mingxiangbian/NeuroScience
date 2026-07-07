@@ -289,6 +289,11 @@ function renderCheckpointList(data) {
   `;
 }
 
+function createLegacyTaskIds(moduleId, sectionTitle, count) {
+  const slug = slugify(sectionTitle);
+  return Array.from({ length: count }, (_, index) => `${moduleId}__${slug}__${index}`);
+}
+
 function renderDailyTasks(data, moduleId) {
   const errors = toList(data.errorLog?.errors).map((error) => `${error.id}: ${error.reviewMethod ?? error.description}`);
   const baseTasks = [
@@ -296,11 +301,14 @@ function renderDailyTasks(data, moduleId) {
     "Run one diagnostic or review task before adding new theory.",
     "Update confidence and unverified dimensions only after evidence changes.",
   ];
+  const items = [...baseTasks, ...errors];
   return renderTaskChecklist({
     sourceId: `${moduleId}:daily-training`,
     fieldName: "dailyTask",
-    items: [...baseTasks, ...errors],
+    items,
     taskState,
+    legacyIds: createLegacyTaskIds(moduleId, "Daily training tasks", items.length),
+    onTaskStateMigrated: saveTaskState,
   });
 }
 
@@ -474,12 +482,17 @@ function buildReaderModules(data) {
 
   const errorSections = {
     Errors: renderModuleSafely("errors", "Errors", () => renderErrors(data)),
-    "Regression control": renderModuleSafely("errors", "Regression control", () => renderTaskChecklist({
-      sourceId: "errors:regression-control",
-      fieldName: "reviewMethod",
-      items: toList(data.errorLog?.errors).map((error) => `${error.id}: verify whether this error is fixed repeatedly or regressed.`),
-      taskState,
-    })),
+    "Regression control": renderModuleSafely("errors", "Regression control", () => {
+      const items = toList(data.errorLog?.errors).map((error) => `${error.id}: verify whether this error is fixed repeatedly or regressed.`);
+      return renderTaskChecklist({
+        sourceId: "errors:regression-control",
+        fieldName: "reviewMethod",
+        items,
+        taskState,
+        legacyIds: createLegacyTaskIds("errors", "Regression control", items.length),
+        onTaskStateMigrated: saveTaskState,
+      });
+    }),
   };
 
   const noteSections = {

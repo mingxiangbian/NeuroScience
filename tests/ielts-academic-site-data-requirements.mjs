@@ -116,6 +116,7 @@ for (const entry of data.journal) {
 }
 
 assert.deepEqual(data.build.referenceIssues, []);
+assert.match(readerJs, /from "\.\/reader-state\.js"/, "reader entrypoint should import local state helpers");
 assert.doesNotMatch(readerJsBundle, /githubToken|Authorization|contents\/|repos\/|fetch\("\/api/i);
 assert.match(readerJsBundle, /ieltsReader\.annotations\.v1/, "reader JS should allow local annotation state only under the IELTS annotation key");
 assert.match(readerJsBundle, /ieltsReader\.tasks\.v1/, "reader JS should allow local task state only under the IELTS task key");
