@@ -1,25 +1,25 @@
 :root {
   color-scheme: light;
-  --reader-ink: #1f2724;
-  --reader-ink-muted: rgba(31, 39, 36, 0.64);
-  --reader-paper: #f4efe3;
-  --reader-paper-soft: rgba(251, 248, 239, 0.78);
-  --reader-paper-strong: rgba(255, 252, 244, 0.9);
-  --reader-line: rgba(31, 39, 36, 0.13);
-  --reader-line-strong: rgba(31, 39, 36, 0.32);
-  --reader-glass: rgba(238, 247, 242, 0.42);
-  --reader-glass-strong: rgba(244, 249, 245, 0.56);
+  --reader-ink: #1d2a22;
+  --reader-ink-muted: rgba(29, 42, 34, 0.65);
+  --reader-paper: #edf2e7;
+  --reader-paper-soft: rgba(248, 251, 243, 0.8);
+  --reader-paper-strong: rgba(253, 255, 249, 0.92);
+  --reader-line: rgba(29, 42, 34, 0.14);
+  --reader-line-strong: rgba(29, 42, 34, 0.34);
+  --reader-glass: rgba(241, 248, 240, 0.46);
+  --reader-glass-strong: rgba(248, 252, 245, 0.62);
   --reader-glass-highlight: rgba(255, 255, 255, 0.82);
-  --reader-glass-edge: rgba(226, 239, 235, 0.72);
-  --reader-glass-shadow: rgba(19, 45, 42, 0.16);
-  --reader-note-rule: rgba(24, 60, 73, 0.18);
-  --reader-section-line: rgba(31, 39, 36, 0.18);
-  --reader-section-line-hover: rgba(31, 39, 36, 0.82);
-  --reader-section-line-active: rgba(24, 60, 73, 0.62);
+  --reader-glass-edge: rgba(200, 225, 204, 0.76);
+  --reader-glass-shadow: rgba(24, 57, 36, 0.16);
+  --reader-note-rule: rgba(42, 104, 64, 0.24);
+  --reader-section-line: rgba(29, 42, 34, 0.18);
+  --reader-section-line-hover: rgba(29, 42, 34, 0.84);
+  --reader-section-line-active: rgba(42, 104, 64, 0.7);
   --reader-section-line-glow: transparent;
-  --reader-blue: #183c49;
-  --reader-red: #a64338;
-  --reader-shadow: rgba(30, 42, 38, 0.13);
+  --reader-blue: #2e704d;
+  --reader-red: #876a2d;
+  --reader-shadow: rgba(28, 45, 34, 0.13);
   --reader-panel-blur: blur(34px) saturate(1.3);
   --toolbar-offset: 86px;
   --toolbar-control-size: 42px;
@@ -35,9 +35,9 @@
   color-scheme: dark;
   --reader-ink: #eef0e7;
   --reader-ink-muted: rgba(238, 240, 231, 0.66);
-  --reader-paper: #111615;
-  --reader-paper-soft: rgba(28, 34, 32, 0.78);
-  --reader-paper-strong: rgba(35, 42, 39, 0.9);
+  --reader-paper: #101713;
+  --reader-paper-soft: rgba(27, 37, 31, 0.78);
+  --reader-paper-strong: rgba(34, 45, 38, 0.9);
   --reader-line: rgba(238, 240, 231, 0.14);
   --reader-line-strong: rgba(238, 240, 231, 0.34);
   --reader-glass: rgba(24, 34, 32, 0.58);
@@ -45,13 +45,13 @@
   --reader-glass-highlight: rgba(255, 255, 255, 0.18);
   --reader-glass-edge: rgba(255, 255, 255, 0.16);
   --reader-glass-shadow: rgba(0, 0, 0, 0.36);
-  --reader-note-rule: rgba(156, 201, 207, 0.2);
+  --reader-note-rule: rgba(152, 217, 166, 0.24);
   --reader-section-line: rgba(255, 255, 255, 0.88);
   --reader-section-line-hover: rgba(255, 255, 255, 1);
   --reader-section-line-active: rgba(255, 255, 255, 1);
   --reader-section-line-glow: rgba(255, 255, 255, 0.34);
-  --reader-blue: #9cc9cf;
-  --reader-red: #ca6a60;
+  --reader-blue: #98d9a6;
+  --reader-red: #dcc06f;
   --reader-shadow: rgba(0, 0, 0, 0.32);
 }
 
@@ -73,28 +73,20 @@ body {
   overflow-x: hidden;
   color: var(--reader-ink);
   background:
-    radial-gradient(circle at 16% 12%, rgba(164, 124, 56, 0.045), transparent 22%),
-    radial-gradient(circle at 86% 26%, rgba(24, 60, 73, 0.075), transparent 30%),
-    linear-gradient(rgba(31, 39, 36, 0.026) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(31, 39, 36, 0.022) 1px, transparent 1px),
-    linear-gradient(145deg, #fbf8ef, var(--reader-paper) 64%, #e7dcc8);
-  background-size:
-    auto,
-    auto,
-    72px 72px,
-    72px 72px,
-    auto;
+    radial-gradient(circle at 14% 10%, rgba(135, 106, 45, 0.07), transparent 24%),
+    radial-gradient(circle at 86% 24%, rgba(46, 112, 77, 0.14), transparent 32%),
+    linear-gradient(118deg, rgba(46, 112, 77, 0.035), transparent 38%),
+    linear-gradient(145deg, #fbfcf1, var(--reader-paper) 62%, #dce4d4);
   font-family: var(--reader-font);
 }
 
 [data-theme="dark"] body,
 body[data-theme="dark"] {
   background:
-    radial-gradient(circle at 18% 16%, rgba(108, 70, 60, 0.16), transparent 24%),
-    radial-gradient(circle at 86% 28%, rgba(66, 106, 112, 0.14), transparent 34%),
-    linear-gradient(rgba(238, 240, 231, 0.026) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(238, 240, 231, 0.022) 1px, transparent 1px),
-    linear-gradient(145deg, #101312, #151b19 64%, #1c211e);
+    radial-gradient(circle at 16% 16%, rgba(135, 106, 45, 0.18), transparent 24%),
+    radial-gradient(circle at 86% 28%, rgba(46, 112, 77, 0.24), transparent 34%),
+    linear-gradient(118deg, rgba(152, 217, 166, 0.05), transparent 42%),
+    linear-gradient(145deg, #0f1311, #141d17 64%, #1b251d);
 }
 
 body::before {
@@ -104,10 +96,11 @@ body::before {
   content: "";
   pointer-events: none;
   background:
-    repeating-linear-gradient(8deg, transparent 0 18px, rgba(109, 88, 53, 0.03) 18px 19px),
-    repeating-linear-gradient(96deg, transparent 0 34px, rgba(31, 39, 36, 0.018) 34px 35px);
+    linear-gradient(102deg, transparent 0 34%, rgba(42, 104, 64, 0.035) 34.2%, transparent 35%),
+    linear-gradient(17deg, transparent 0 56%, rgba(135, 106, 45, 0.03) 56.2%, transparent 57%),
+    radial-gradient(ellipse at 18% 30%, rgba(255, 255, 255, 0.34), transparent 40%);
   mix-blend-mode: multiply;
-  opacity: 0.72;
+  opacity: 0.8;
 }
 
 a {
@@ -878,22 +871,22 @@ body,
 
 .knowledge-highlight {
   border-radius: 3px;
-  background: rgba(166, 67, 56, 0.18);
+  background: rgba(138, 106, 47, 0.18);
   color: inherit;
   cursor: pointer;
 }
 
 .knowledge-highlight.is-note {
-  background: rgba(24, 60, 73, 0.2);
-  box-shadow: inset 0 -1px 0 rgba(24, 60, 73, 0.28);
+  background: rgba(39, 99, 68, 0.22);
+  box-shadow: inset 0 -1px 0 rgba(39, 99, 68, 0.34);
 }
 
 .knowledge-highlight:hover {
-  background: rgba(166, 67, 56, 0.28);
+  background: rgba(138, 106, 47, 0.28);
 }
 
 .knowledge-highlight.is-note:hover {
-  background: rgba(24, 60, 73, 0.3);
+  background: rgba(39, 99, 68, 0.34);
 }
 
 .annotation-toolbar,
@@ -994,7 +987,7 @@ body,
 
 .timeline-item[data-status="current"] .timeline-dot {
   border-color: var(--reader-red);
-  box-shadow: 0 0 0 4px rgba(166, 67, 56, 0.1);
+  box-shadow: 0 0 0 4px rgba(138, 106, 47, 0.11);
 }
 
 .timeline-label,
@@ -1263,7 +1256,7 @@ body,
 
 .result-highlight {
   border-radius: 4px;
-  background: rgba(166, 67, 56, 0.16);
+  background: rgba(138, 106, 47, 0.16);
   padding: 0 2px;
 }
 
@@ -1408,8 +1401,8 @@ body,
   border: 1px solid var(--reader-line);
   border-radius: 12px;
   background:
-    linear-gradient(90deg, rgba(24, 60, 73, 0.06), transparent 42%),
-    rgba(255, 255, 255, 0.18);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08)),
+    rgba(255, 255, 255, 0.12);
 }
 
 .route-ledger-row {
@@ -1467,7 +1460,7 @@ body,
   overflow: hidden;
   border-top: 1px solid var(--reader-line);
   border-bottom: 1px solid var(--reader-line);
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .dashboard-card {
@@ -1502,7 +1495,7 @@ body,
   counter-reset: route-step;
   border: 1px solid var(--reader-line);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.11);
 }
 
 .dashboard-module-row {
@@ -1529,7 +1522,7 @@ body,
 
 .dashboard-module-row:hover {
   border-color: var(--reader-line);
-  background: rgba(24, 60, 73, 0.055);
+  background: rgba(46, 112, 77, 0.07);
 }
 
 @media (max-width: 860px) {

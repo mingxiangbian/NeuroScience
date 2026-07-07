@@ -1,25 +1,25 @@
 :root {
   color-scheme: light;
-  --reader-ink: #1f2724;
-  --reader-ink-muted: rgba(31, 39, 36, 0.64);
-  --reader-ink-muted-strong: rgba(31, 39, 36, 0.78);
-  --reader-paper: #f4efe3;
-  --reader-paper-soft: rgba(251, 248, 239, 0.78);
-  --reader-paper-strong: rgba(255, 252, 244, 0.9);
-  --reader-line: rgba(31, 39, 36, 0.13);
-  --reader-line-strong: rgba(31, 39, 36, 0.32);
-  --reader-note-rule: rgba(24, 60, 73, 0.18);
-  --reader-section-line: rgba(31, 39, 36, 0.18);
-  --reader-section-line-hover: rgba(31, 39, 36, 0.82);
-  --reader-section-line-active: rgba(24, 60, 73, 0.62);
+  --reader-ink: #252333;
+  --reader-ink-muted: rgba(37, 35, 51, 0.65);
+  --reader-ink-muted-strong: rgba(37, 35, 51, 0.78);
+  --reader-paper: #f0edf5;
+  --reader-paper-soft: rgba(249, 247, 253, 0.8);
+  --reader-paper-strong: rgba(254, 253, 255, 0.92);
+  --reader-line: rgba(37, 35, 51, 0.14);
+  --reader-line-strong: rgba(37, 35, 51, 0.34);
+  --reader-note-rule: rgba(96, 70, 143, 0.24);
+  --reader-section-line: rgba(37, 35, 51, 0.18);
+  --reader-section-line-hover: rgba(37, 35, 51, 0.82);
+  --reader-section-line-active: rgba(96, 70, 143, 0.72);
   --reader-section-line-glow: transparent;
-  --reader-blue: #183c49;
-  --reader-red: #a64338;
+  --reader-blue: #60468f;
+  --reader-red: #9b6928;
   --reader-marker: var(--reader-red);
-  --reader-gold: #9b7430;
-  --reader-warning: #a46a14;
+  --reader-gold: #a9762d;
+  --reader-warning: #a86f25;
   --reader-danger: #a23b32;
-  --reader-shadow: rgba(30, 42, 38, 0.13);
+  --reader-shadow: rgba(38, 32, 48, 0.13);
   --toolbar-offset: 86px;
   --toolbar-control-size: 42px;
   --text-caption: 12px;
@@ -49,23 +49,23 @@
 
 [data-theme="dark"] {
   color-scheme: dark;
-  --reader-ink: #eef0e7;
-  --reader-ink-muted: rgba(238, 240, 231, 0.66);
-  --reader-ink-muted-strong: rgba(238, 240, 231, 0.82);
-  --reader-paper: #111615;
-  --reader-paper-soft: rgba(28, 34, 32, 0.78);
-  --reader-paper-strong: rgba(35, 42, 39, 0.9);
-  --reader-line: rgba(238, 240, 231, 0.14);
-  --reader-line-strong: rgba(238, 240, 231, 0.34);
-  --reader-note-rule: rgba(156, 201, 207, 0.2);
+  --reader-ink: #f0eef7;
+  --reader-ink-muted: rgba(240, 238, 247, 0.66);
+  --reader-ink-muted-strong: rgba(240, 238, 247, 0.82);
+  --reader-paper: #121119;
+  --reader-paper-soft: rgba(29, 27, 39, 0.78);
+  --reader-paper-strong: rgba(39, 36, 52, 0.9);
+  --reader-line: rgba(240, 238, 247, 0.14);
+  --reader-line-strong: rgba(240, 238, 247, 0.34);
+  --reader-note-rule: rgba(212, 195, 255, 0.26);
   --reader-section-line: rgba(255, 255, 255, 0.86);
   --reader-section-line-hover: rgba(255, 255, 255, 1);
   --reader-section-line-active: rgba(255, 255, 255, 1);
   --reader-section-line-glow: rgba(255, 255, 255, 0.34);
-  --reader-blue: #9cc9cf;
-  --reader-red: #ca6a60;
-  --reader-gold: #d6b15d;
-  --reader-warning: #d69a42;
+  --reader-blue: #d4c3ff;
+  --reader-red: #e0ad62;
+  --reader-gold: #e7bd68;
+  --reader-warning: #e2ad50;
   --reader-danger: #e07d74;
   --reader-shadow: rgba(0, 0, 0, 0.32);
 }
@@ -88,27 +88,17 @@ body {
   overflow-x: hidden;
   color: var(--reader-ink);
   background:
-    radial-gradient(circle at 16% 12%, rgba(164, 124, 56, 0.045), transparent 22%),
-    radial-gradient(circle at 86% 26%, rgba(24, 60, 73, 0.075), transparent 30%),
-    linear-gradient(rgba(31, 39, 36, 0.026) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(31, 39, 36, 0.022) 1px, transparent 1px),
-    linear-gradient(145deg, #fbf8ef, var(--reader-paper) 64%, #e7dcc8);
-  background-size:
-    auto,
-    auto,
-    72px 72px,
-    72px 72px,
-    auto;
+    radial-gradient(circle at 18% 12%, rgba(155, 105, 40, 0.075), transparent 24%),
+    radial-gradient(circle at 86% 26%, rgba(96, 70, 143, 0.14), transparent 32%),
+    linear-gradient(145deg, #fcfbff, var(--reader-paper) 64%, #e1dce9);
   font-family: var(--reader-font);
 }
 
 body[data-theme="dark"] {
   background:
-    radial-gradient(circle at 18% 16%, rgba(108, 70, 60, 0.16), transparent 24%),
-    radial-gradient(circle at 86% 28%, rgba(66, 106, 112, 0.14), transparent 34%),
-    linear-gradient(rgba(238, 240, 231, 0.026) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(238, 240, 231, 0.022) 1px, transparent 1px),
-    linear-gradient(145deg, #101312, #151b19 64%, #1c211e);
+    radial-gradient(circle at 18% 16%, rgba(155, 105, 40, 0.18), transparent 24%),
+    radial-gradient(circle at 86% 28%, rgba(96, 70, 143, 0.28), transparent 34%),
+    linear-gradient(145deg, #111017, #171520 64%, #211e29);
 }
 
 body::before {
@@ -118,10 +108,11 @@ body::before {
   content: "";
   pointer-events: none;
   background:
-    repeating-linear-gradient(8deg, transparent 0 18px, rgba(109, 88, 53, 0.03) 18px 19px),
-    repeating-linear-gradient(96deg, transparent 0 34px, rgba(31, 39, 36, 0.018) 34px 35px);
+    linear-gradient(90deg, transparent 0 13%, rgba(96, 70, 143, 0.075) 13%, transparent calc(13% + 1px)),
+    linear-gradient(180deg, transparent 0 10%, rgba(155, 105, 40, 0.04) 10%, transparent calc(10% + 1px)),
+    radial-gradient(ellipse at 68% 12%, rgba(255, 255, 255, 0.38), transparent 42%);
   mix-blend-mode: multiply;
-  opacity: 0.72;
+  opacity: 0.68;
 }
 
 a {
@@ -891,9 +882,9 @@ body,
   display: flex;
   align-items: center;
   gap: var(--sp-3);
-  border-left: 3px solid var(--reader-red);
+  border: 1px solid rgba(155, 105, 40, 0.22);
   border-radius: var(--radius-sm);
-  background: rgba(166, 67, 56, 0.09);
+  background: rgba(155, 105, 40, 0.08);
   color: var(--reader-ink);
   padding: var(--sp-2);
 }
@@ -958,11 +949,11 @@ body,
 }
 
 .error-card {
-  border-color: rgba(166, 67, 56, 0.22);
+  border-color: rgba(162, 59, 50, 0.24);
 }
 
 .error-priority {
-  color: var(--reader-red);
+  color: var(--reader-danger);
   font-weight: 600;
 }
 
@@ -1005,8 +996,8 @@ body,
 }
 
 .reference-chip[data-kind="error"] {
-  border-color: rgba(166, 67, 56, 0.28);
-  color: var(--reader-red);
+  border-color: rgba(162, 59, 50, 0.28);
+  color: var(--reader-danger);
 }
 
 .reference-chip:focus-visible,
@@ -1139,18 +1130,18 @@ body,
 
 .knowledge-highlight {
   border-radius: var(--radius-sm);
-  background: rgba(166, 67, 56, 0.18);
+  background: rgba(148, 102, 50, 0.18);
   color: inherit;
   cursor: pointer;
 }
 
 .knowledge-highlight.is-note {
-  background: rgba(24, 60, 73, 0.2);
-  box-shadow: inset 0 -1px 0 rgba(24, 60, 73, 0.28);
+  background: rgba(91, 63, 136, 0.24);
+  box-shadow: inset 0 -1px 0 rgba(91, 63, 136, 0.36);
 }
 
 .knowledge-highlight:hover {
-  background: rgba(166, 67, 56, 0.28);
+  background: rgba(148, 102, 50, 0.28);
 }
 
 .annotation-toolbar,
@@ -1430,7 +1421,7 @@ body,
 
 .result-highlight {
   border-radius: var(--radius-sm);
-  background: rgba(166, 67, 56, 0.16);
+  background: rgba(148, 102, 50, 0.16);
   padding: 0 2px;
 }
 
@@ -1603,8 +1594,8 @@ body,
   border: 1px solid var(--reader-line);
   border-radius: var(--radius-md);
   background:
-    linear-gradient(110deg, rgba(166, 67, 56, 0.075), transparent 44%),
-    rgba(255, 255, 255, 0.16);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.08)),
+    rgba(255, 255, 255, 0.12);
   padding: var(--sp-4);
 }
 
@@ -1641,7 +1632,7 @@ body,
   overflow: hidden;
   border: 1px solid var(--reader-line);
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .evidence-ledger-list div {
@@ -1720,7 +1711,7 @@ body,
 .content-card {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.2), transparent),
-    rgba(255, 255, 255, 0.14);
+    rgba(255, 255, 255, 0.12);
 }
 
 .content-card h3 {
