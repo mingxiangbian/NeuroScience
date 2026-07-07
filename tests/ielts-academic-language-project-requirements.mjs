@@ -78,6 +78,10 @@ const projectIndex = read("../projects/language/ielts-academic/index.html");
 const siteJs = read("../projects/language/ielts-academic/site/ielts-reader.js");
 const siteCss = read("../projects/language/ielts-academic/site/ielts-reader.css");
 const buildScript = read("../projects/language/ielts-academic/scripts/build-ielts-data.mjs");
+const buildSources = read("../projects/language/ielts-academic/scripts/build-sources.mjs");
+const buildSchema = read("../projects/language/ielts-academic/scripts/build-schema.mjs");
+const buildReferences = read("../projects/language/ielts-academic/scripts/build-references.mjs");
+const buildMarkdown = read("../projects/language/ielts-academic/scripts/build-markdown.mjs");
 const manifest = JSON.parse(read("../projects/manifest.json"));
 const notesReadme = read("../projects/language/ielts-academic/notes/README.md");
 const journalReadme = read("../projects/language/ielts-academic/journal/README.md");
@@ -186,8 +190,14 @@ assert.doesNotMatch(siteJs, /localStorage\.setItem\(".*score|localStorage\.setIt
 assert.doesNotMatch(siteJs, /localStorage\.setItem\("(?!ieltsReader\.(ui|annotations|tasks)\.v1")/, "IELTS JS should only write allowed IELTS localStorage keys");
 assert.doesNotMatch(siteJs, /githubToken|Authorization|contents\/|repos\/|fetch\("\/api/i, "IELTS JS should not include backend or GitHub write-back signals");
 
-assert.match(buildScript, /function parseFrontmatter/, "build script should parse frontmatter");
-assert.match(buildScript, /function validateReferences/, "build script should validate cross references");
+assert.match(buildScript, /from "\.\/build-sources\.mjs"/, "build script should use source helper module");
+assert.match(buildScript, /from "\.\/build-schema\.mjs"/, "build script should use schema helper module");
+assert.match(buildScript, /from "\.\/build-references\.mjs"/, "build script should use reference helper module");
+assert.match(buildScript, /from "\.\/build-markdown\.mjs"/, "build script should use markdown helper module");
+assert.match(buildSources, /function parseFrontmatter/, "source helper should parse frontmatter");
+assert.match(buildSchema, /function validateSiteDataInputs/, "schema helper should validate site data inputs");
+assert.match(buildReferences, /function buildReferenceIndex/, "reference helper should build cross-reference index");
+assert.match(buildMarkdown, /function markdownToSafeHtml/, "markdown helper should render safe HTML");
 
 const ieltsProject = manifest.find((project) => project.id === "ielts-academic");
 assert.ok(ieltsProject, "projects manifest should include IELTS Academic");
