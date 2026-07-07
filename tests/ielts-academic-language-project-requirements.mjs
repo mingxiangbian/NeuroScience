@@ -135,15 +135,19 @@ assert.match(dryRuns, /Low-workload dry run/, "dry runs should test workload fea
 assert.match(dryRuns, /Single-session mode dry run/, "dry runs should test simulation labeling");
 
 assert.match(projectIndex, /data-page="ielts-academic-reader"/, "IELTS project should expose a dedicated reader page");
+assert.match(projectIndex, /data-theme="light"/, "IELTS reader should start with the light reader theme");
 assert.match(projectIndex, /site\/ielts-reader\.css/, "IELTS reader should load dedicated CSS");
 assert.match(projectIndex, /site\/ielts-reader\.js/, "IELTS reader should load dedicated JS");
-assert.match(projectIndex, /id="dashboard"/, "IELTS reader should include a dashboard region");
-assert.match(projectIndex, /id="swimlane"/, "IELTS reader should include a swimlane region");
-assert.match(projectIndex, /id="errors"/, "IELTS reader should include an errors region");
-assert.match(projectIndex, /id="notes"/, "IELTS reader should include a notes region");
-assert.match(projectIndex, /id="journal"/, "IELTS reader should include a journal region");
-assert.match(projectIndex, /id="prompt-library"/, "IELTS reader should include a prompt library region");
-assert.match(projectIndex, /id="validation"/, "IELTS reader should include a validation region");
+assert.match(projectIndex, /id="reader-shell"/, "IELTS reader should use the Foundations-style reader shell");
+assert.match(projectIndex, /id="reader-toolbar"/, "IELTS reader should include a top toolbar");
+assert.match(projectIndex, /id="global-search"/, "IELTS reader should include global search");
+assert.match(projectIndex, /id="module-directory"/, "IELTS reader should include a module directory");
+assert.match(projectIndex, /id="section-rail"/, "IELTS reader should include a section rail");
+assert.match(projectIndex, /id="module-header"/, "IELTS reader should include a module header");
+assert.match(projectIndex, /id="section-list"/, "IELTS reader should include a section list");
+assert.match(projectIndex, /id="note-panel"/, "IELTS reader should include a right note panel");
+assert.match(projectIndex, /id="mobile-note-drawer"/, "IELTS reader should include a mobile note drawer");
+assert.match(projectIndex, /data-source="site\/ielts-data\.json"/, "IELTS reader should load generated site data through a data-source attribute");
 
 assert.match(siteCss, /\.ielts-shell/, "IELTS CSS should style the reader shell");
 assert.match(siteCss, /\.swimlane-grid/, "IELTS CSS should style the 8-week swimlane");
