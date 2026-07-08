@@ -33,6 +33,18 @@ export function makeReferenceChipFromTarget(target, kind = target?.type ?? "refe
   return renderReferenceChips([{ referenceId: target.id, label: target.label, sourcePath: target.sourcePath }], kind);
 }
 
+function getReferenceTypeLabel(type) {
+  const labels = {
+    error: "错误",
+    note: "笔记",
+    journal: "日志",
+    prompt: "提示词",
+    validation: "验证",
+    reference: "引用",
+  };
+  return labels[type] ?? type;
+}
+
 export function getReferencePanelPayload(data, referenceId) {
   const target = getReferenceTarget(data, referenceId);
   if (!target) return null;
@@ -70,14 +82,14 @@ export function renderReferencePanel(payload) {
     : "";
   return `
     <article class="note-context reference-panel" data-reference-panel="${escapeHtml(payload.target.id)}">
-      <p class="card-kicker">${escapeHtml(payload.target.type)} · ${escapeHtml(payload.target.sourcePath ?? "")}</p>
+      <p class="card-kicker">${escapeHtml(getReferenceTypeLabel(payload.target.type))} · ${escapeHtml(payload.target.sourcePath ?? "")}</p>
       <h3>${escapeHtml(payload.title)}</h3>
       <dl class="reference-panel-meta">
-        <div><dt>Type</dt><dd>${escapeHtml(payload.target.type)}</dd></div>
-        <div><dt>Status</dt><dd>${escapeHtml(payload.status || "n/a")}</dd></div>
-        <div><dt>Skill</dt><dd>${escapeHtml(payload.skill || "n/a")}</dd></div>
-        <div><dt>Date</dt><dd>${escapeHtml(payload.date || "n/a")}</dd></div>
-        <div><dt>Source</dt><dd>${escapeHtml(payload.target.sourcePath || "generated data")}</dd></div>
+        <div><dt>类型</dt><dd>${escapeHtml(getReferenceTypeLabel(payload.target.type))}</dd></div>
+        <div><dt>状态</dt><dd>${escapeHtml(payload.status || "无")}</dd></div>
+        <div><dt>技能</dt><dd>${escapeHtml(payload.skill || "无")}</dd></div>
+        <div><dt>日期</dt><dd>${escapeHtml(payload.date || "无")}</dd></div>
+        <div><dt>来源</dt><dd>${escapeHtml(payload.target.sourcePath || "生成数据")}</dd></div>
       </dl>
       <p class="card-body">${escapeHtml(truncateText(payload.summary))}</p>
       <div class="note-group-body">${payload.body}</div>
@@ -86,7 +98,7 @@ export function renderReferencePanel(payload) {
         ${sourceLink}
       </div>
       <section class="note-block">
-        <h3 class="note-group-title">Related objects</h3>
+        <h3 class="note-group-title">关联对象</h3>
         ${
           payload.relatedObjects.length
             ? renderReferenceChips(payload.relatedObjects, "related")
@@ -94,7 +106,7 @@ export function renderReferencePanel(payload) {
         }
       </section>
       <section class="note-block">
-        <h3 class="note-group-title">Backlinks</h3>
+        <h3 class="note-group-title">反向引用</h3>
         ${
           payload.backlinks.length
             ? renderReferenceChips(payload.backlinks.map((link) => ({ referenceId: link.id, label: link.label })), "backlink")

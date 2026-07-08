@@ -55,6 +55,7 @@ assert.match(entryJs, /function renderEmptyDetailPanel/, "right panel should def
 assert.match(entryJs, /function getPriorityLabel/, "module priority labels should be localized");
 assert.match(entryJs, /成绩档案/, "module priority labels should be Chinese-facing");
 assert.doesNotMatch(entryJs, /"Session bodies"/, "journal module should not render duplicate full session bodies by default");
+assert.doesNotMatch(entryJs, /"Indexed note bodies"|"Prompt bodies"|"Validation bodies"/, "main content should not render full source bodies by default");
 assert.doesNotMatch(entryJs, /renderKnowledgeNotesSection/, "main content should not auto-render parallel notes");
 assert.doesNotMatch(
   entryJs,
@@ -83,6 +84,11 @@ assert.match(renderers, /function getCompactWeekFocusLabel/, "swimlane cells sho
 assert.match(renderers, /class="swimlane-chip"/, "swimlane cells should render compact chips");
 assert.doesNotMatch(renderers, /<h3>\$\{escapeHtml\(error\.description\)\}<\/h3>/, "error cards should not use long descriptions as headings");
 assert.match(renderers, /error-description/, "error cards should demote descriptions to compact body text");
+assert.match(renderers, /function renderCompactDocumentCard/, "document-heavy modules should render compact index cards");
+assert.match(renderers, /compact-document-grid/, "document-heavy modules should use compact index grids");
+assert.match(renderers, /function getErrorStatusLabel/, "error status labels should be localized");
+assert.match(renderers, /暂无匹配错误/, "empty error columns should be Chinese-facing");
+assert.match(renderers, /error-status-strip/, "empty error statuses should collapse into compact status strips");
 
 assert.match(css, /\.score-history/, "CSS should style score history");
 assert.match(css, /\.checkpoint-milestones/, "CSS should style checkpoint milestones");
@@ -92,6 +98,9 @@ assert.match(css, /\.annotation-draft/, "CSS should style annotation journal dra
 assert.match(css, /\.annotation-unresolved/, "CSS should style unresolved annotations");
 assert.match(css, /\.swimlane-chip/, "CSS should style compact swimlane chips");
 assert.match(css, /\.error-description/, "CSS should clamp compact error descriptions");
+assert.match(css, /\.compact-document-grid/, "CSS should style compact document indexes");
+assert.match(css, /\.error-status-strip/, "CSS should style compact error status strips");
+assert.doesNotMatch(css, /grid-template-columns:\s*repeat\(4,\s*minmax\(0,\s*1fr\)\)/, "error board should not force four narrow desktop columns");
 assert.match(css, /--reader-marker: var\(--reader-red\);/, "CSS should expose the IELTS marker token");
 assert.match(css, /--text-display: clamp\(36px, 5vw, 56px\);/, "CSS should expose display type scale token");
 assert.match(css, /--sp-16: 64px;/, "CSS should expose spacing scale tokens");

@@ -80,7 +80,7 @@ function resolveUrl(path) {
 
 async function fetchJson(path) {
   const response = await fetch(resolveUrl(path));
-  if (!response.ok) throw new Error(`Unable to load ${path}`);
+  if (!response.ok) throw new Error(`无法加载 ${path}`);
   return response.json();
 }
 
@@ -121,103 +121,67 @@ function buildReaderModules(data) {
   const target = data.project?.target ?? data.scoreProfile?.target ?? {};
   const lastUpdated = data.scoreProfile?.lastUpdated ?? data.build?.generatedAt ?? "";
   const dashboardSections = {
-    Dashboard: renderModuleSafely("dashboard", "Dashboard", () => renderDashboard(data)),
-    "Score profile": renderModuleSafely("dashboard", "Score profile", () => `
-      <p>${escapeHtml(data.scoreProfile?.currentEstimate?.summary ?? "Diagnostic evidence has not been collected yet.")}</p>
+    总览: renderModuleSafely("dashboard", "总览", () => renderDashboard(data)),
+    成绩档案: renderModuleSafely("dashboard", "成绩档案", () => `
+      <p>${escapeHtml(data.scoreProfile?.currentEstimate?.summary ?? "诊断证据尚未收集。")}</p>
       ${renderRiskList(data.scoreProfile?.risks)}
     `),
-    "Daily training tasks": renderModuleSafely("dashboard", "Daily training tasks", () => renderDailyTasks(data, "dashboard", taskState, saveTaskState)),
+    每日训练任务: renderModuleSafely("dashboard", "每日训练任务", () => renderDailyTasks(data, "dashboard", taskState, saveTaskState)),
   };
 
   const swimlaneSections = {
-    "8-week swimlane": renderModuleSafely("swimlane", "8-week swimlane", () => renderSwimlane(data)),
-    "Checkpoint rules": renderModuleSafely("swimlane", "Checkpoint rules", () => renderCheckpointList(data)),
-    "Daily training tasks": renderModuleSafely("swimlane", "Daily training tasks", () => renderDailyTasks(data, "swimlane", taskState, saveTaskState)),
+    "8周计划": renderModuleSafely("swimlane", "8周计划", () => renderSwimlane(data)),
+    检查点规则: renderModuleSafely("swimlane", "检查点规则", () => renderCheckpointList(data)),
+    每日训练任务: renderModuleSafely("swimlane", "每日训练任务", () => renderDailyTasks(data, "swimlane", taskState, saveTaskState)),
   };
 
   const errorSections = {
-    Errors: renderModuleSafely("errors", "Errors", () => renderErrors(data)),
-    "Regression control": renderModuleSafely("errors", "Regression control", () => {
-      const items = toList(data.errorLog?.errors).map((error) => `${error.id}: verify whether this error is fixed repeatedly or regressed.`);
+    错误看板: renderModuleSafely("errors", "错误看板", () => renderErrors(data)),
+    复发控制: renderModuleSafely("errors", "复发控制", () => {
+      const items = toList(data.errorLog?.errors).map((error) => `${error.id}: 复查这个错误是否已稳定修复，还是出现复发。`);
       return renderTaskChecklist({
         sourceId: "errors:regression-control",
         fieldName: "reviewMethod",
         items,
         taskState,
-        legacyIds: createLegacyTaskIds("errors", "Regression control", items.length),
+        legacyIds: createLegacyTaskIds("errors", "复发控制", items.length),
         onTaskStateMigrated: saveTaskState,
       });
     }),
   };
 
   const noteSections = {
-    Notes: renderModuleSafely("notes", "Notes", () => renderNotes(data)),
-    "Indexed note bodies": renderModuleSafely("notes", "Indexed note bodies", () => `
-      <div class="knowledge-list">
-        ${buildDocumentNotes(data.notes, "note")
-          .map((note) => `
-            <article class="knowledge-card" id="${escapeHtml(note.id)}" data-section-id="${escapeHtml(note.id)}" data-note-id="${escapeHtml(note.id)}" data-section-title="${escapeHtml(note.title)}">
-              <h3>${escapeHtml(note.title)}</h3>
-              <div class="knowledge-card-body">${note.body}</div>
-            </article>
-          `)
-          .join("")}
-      </div>
-    `),
+    笔记索引: renderModuleSafely("notes", "笔记索引", () => renderNotes(data)),
   };
 
   const journalSections = {
-    Journal: renderModuleSafely("journal", "Journal", () => renderJournal(data)),
+    复盘日志: renderModuleSafely("journal", "复盘日志", () => renderJournal(data)),
   };
 
   const promptSections = {
-    "Prompt library": renderModuleSafely("prompt-library", "Prompt library", () => renderPromptLibrary(data)),
-    "Prompt bodies": renderModuleSafely("prompt-library", "Prompt bodies", () => `
-      <div class="knowledge-list">
-        ${buildDocumentNotes(data.promptLibrary, "prompt")
-          .map((note) => `
-            <article class="knowledge-card" id="${escapeHtml(note.id)}" data-section-id="${escapeHtml(note.id)}" data-note-id="${escapeHtml(note.id)}" data-section-title="${escapeHtml(note.title)}">
-              <h3>${escapeHtml(note.title)}</h3>
-              <div class="knowledge-card-body">${note.body}</div>
-            </article>
-          `)
-          .join("")}
-      </div>
-    `),
+    提示词库: renderModuleSafely("prompt-library", "提示词库", () => renderPromptLibrary(data)),
   };
 
   const validationSections = {
-    Validation: renderModuleSafely("validation", "Validation", () => renderValidation(data)),
-    "Validation bodies": renderModuleSafely("validation", "Validation bodies", () => `
-      <div class="knowledge-list">
-        ${buildDocumentNotes(data.validation, "validation")
-          .map((note) => `
-            <article class="knowledge-card" id="${escapeHtml(note.id)}" data-section-id="${escapeHtml(note.id)}" data-note-id="${escapeHtml(note.id)}" data-section-title="${escapeHtml(note.title)}">
-              <h3>${escapeHtml(note.title)}</h3>
-              <div class="knowledge-card-body">${note.body}</div>
-            </article>
-          `)
-          .join("")}
-      </div>
-    `),
+    质量验证: renderModuleSafely("validation", "质量验证", () => renderValidation(data)),
   };
 
   const modules = [
     createReaderModule({
       id: "dashboard",
-      title: "Dashboard",
+      title: "总览",
       status: data.scoreProfile?.state ?? "template",
       priority: "score profile",
       learningProgress: data.scoreProfile?.state === "template" ? 0 : 45,
       lastUpdated,
       sections: dashboardSections,
       knowledgeNotes: [
-        makeKnowledgeNote("dashboard-target", "Target and diagnosis boundary", `<p>${escapeHtml(formatTarget(target))}</p>`),
+        makeKnowledgeNote("dashboard-target", "目标与诊断边界", `<p>${escapeHtml(formatTarget(target))}</p>`),
       ],
     }),
     createReaderModule({
       id: "swimlane",
-      title: "8-week swimlane",
+      title: "8周计划",
       status: "ready",
       priority: "weekly execution",
       learningProgress: 15,
@@ -231,7 +195,7 @@ function buildReaderModules(data) {
     }),
     createReaderModule({
       id: "errors",
-      title: "Errors",
+      title: "错误",
       status: toList(data.errorLog?.errors).length ? "active" : "not-started",
       priority: "high-impact repair",
       learningProgress: 20,
@@ -241,7 +205,7 @@ function buildReaderModules(data) {
     }),
     createReaderModule({
       id: "notes",
-      title: "Notes",
+      title: "笔记",
       status: toList(data.notes).length ? "ready" : "not-started",
       priority: "study memory",
       learningProgress: toList(data.notes).length ? 20 : 0,
@@ -251,7 +215,7 @@ function buildReaderModules(data) {
     }),
     createReaderModule({
       id: "journal",
-      title: "Journal",
+      title: "日志",
       status: toList(data.journal).length ? "ready" : "not-started",
       priority: "weekly review",
       learningProgress: toList(data.journal).length ? 20 : 0,
@@ -261,7 +225,7 @@ function buildReaderModules(data) {
     }),
     createReaderModule({
       id: "prompt-library",
-      title: "Prompt library",
+      title: "提示词库",
       status: "ready",
       priority: "agent operation",
       learningProgress: 40,
@@ -271,7 +235,7 @@ function buildReaderModules(data) {
     }),
     createReaderModule({
       id: "validation",
-      title: "Validation",
+      title: "质量验证",
       status: "ready",
       priority: "quality gate",
       learningProgress: 35,
@@ -477,7 +441,7 @@ function renderCurrentModule() {
   els.moduleHeader.innerHTML = `
     <p class="module-kicker">${escapeHtml(state.data.project.title)} · ${escapeHtml(state.data.project.targetRole)}</p>
     <h1 class="module-title">${escapeHtml(module.title)}</h1>
-    <p class="module-meta">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(getPriorityLabel(module.priority))} · Updated ${escapeHtml(module.lastUpdated)}</p>
+    <p class="module-meta">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(getPriorityLabel(module.priority))} · 更新 ${escapeHtml(module.lastUpdated)}</p>
     ${renderProgressSummary(module)}
   `;
 
@@ -587,7 +551,7 @@ function bindReferencePanelActions(surface) {
 function renderReferenceContext(referenceId) {
   const payload = getReferencePanelPayload(state.data, referenceId);
   const rendered = renderReferencePanel(payload);
-  const label = payload ? `Reference · ${payload.title}` : "Reference";
+  const label = payload ? `引用 · ${payload.title}` : "引用";
   els.noteLabel.textContent = label;
   els.mobileNoteLabel.textContent = label;
   els.noteSurface.innerHTML = rendered;
@@ -779,7 +743,7 @@ function getEntrySnippet(entry, query) {
 function renderSearchResults(results) {
   els.searchResults.hidden = false;
   if (results.length === 0) {
-    els.searchResults.innerHTML = `<p class="result-empty">No results found</p>`;
+    els.searchResults.innerHTML = `<p class="result-empty">没有找到结果</p>`;
     return;
   }
 
@@ -907,7 +871,7 @@ async function init() {
   } catch (error) {
     els.sectionList.innerHTML = `
       <article class="status-panel">
-        <h2>IELTS reader 加载失败</h2>
+        <h2>IELTS 阅读器加载失败</h2>
         <p>${escapeHtml(error.message)}</p>
       </article>
     `;
