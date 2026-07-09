@@ -9,6 +9,7 @@ const outputPath = join(foundationsDir, "roadmap", "roadmap-data.json");
 
 const MODULES = [
   ["overview", "Overview"],
+  ["interview-sprint", "Interview Sprint"],
   ["coding", "Coding"],
   ["llm-systems", "LLM Systems"],
   ["agent-design", "Agent Design"],
@@ -19,7 +20,7 @@ const MODULES = [
   ["logs", "Logs"],
 ];
 
-const VALID_STATUSES = new Set(["not-started", "learning", "review", "done"]);
+const VALID_STATUSES = new Set(["not-started", "in-progress", "learning", "review", "done"]);
 const NOTE_GROUP_LABELS = new Set(["核心理解", "常见误区", "关键提醒", "相关资料", "面试转译", "复习提示"]);
 
 function escapeHtml(value) {

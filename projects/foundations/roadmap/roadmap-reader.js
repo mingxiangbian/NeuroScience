@@ -384,6 +384,7 @@ function getOverallLearningProgress() {
 function getStatusLabel(status) {
   const labels = {
     "not-started": "未开始",
+    "in-progress": "进行中",
     learning: "学习中",
     review: "复习中",
     done: "已完成",
@@ -542,6 +543,7 @@ function renderTaskSection(module, title) {
 function renderOverviewDashboard(module) {
   const dashboardModuleId = state.data.project.dashboardModuleId;
   const learningModules = state.data.modules.filter((item) => item.id !== dashboardModuleId);
+  const stableModules = learningModules.filter((item) => item.id !== "interview-sprint");
   const nextModule = learningModules.find((item) => item.status !== "complete") ?? learningModules[0];
   const moduleRows = learningModules
     .map((item) => `
@@ -580,7 +582,7 @@ function renderOverviewDashboard(module) {
         </section>
         <section class="dashboard-card">
           <p class="dashboard-card-label">主线模块</p>
-          <strong>${escapeHtml(String(learningModules.length))}</strong>
+          <strong>${escapeHtml(String(stableModules.length))}</strong>
         </section>
         <section class="dashboard-card">
           <p class="dashboard-card-label">当前状态</p>
