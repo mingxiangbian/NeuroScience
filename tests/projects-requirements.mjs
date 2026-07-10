@@ -69,10 +69,11 @@ for (const character of new Set(manifest.map((project) => project.title).join(""
 assert.match(topicHtml, /<title>Brain Memory for AI Agents \| NeuroScience x AI<\/title>/, "topic page should use the project title");
 assert.match(topicHtml, /data-page="project-topic"/, "project topic should identify itself as a topic page");
 assert.match(topicHtml, /href="\.\.\/index\.html"[\s\S]*返回项目/, "topic page should link back to the local projects homepage");
-assert.match(topicHtml, /README\.md/, "topic page should link to the existing project README");
-assert.match(topicHtml, /research-roadmap\.md/, "topic page should link to the existing project roadmap");
-assert.match(topicHtml, /hypotheses\.md/, "topic page should link to the existing project hypotheses");
-assert.match(topicHtml, /mechanism-to-agent-design\.md/, "topic page should link to the existing mechanism mapping");
+for (const file of ["README.md", "research-roadmap.md", "hypotheses.md", "mechanism-to-agent-design.md"]) {
+  const renderedUrl = `https://github.com/mingxiangbian/NeuroScience/blob/main/projects/brain-memory-for-ai-agents/${file}`;
+  assert.ok(topicHtml.includes(`href="${renderedUrl}"`), `topic page should open ${file} in GitHub's rendered document view`);
+}
+assert.equal((topicHtml.match(/target="_blank" rel="noopener noreferrer"/g) ?? []).length, 4, "rendered project documents should open safely without replacing the study page");
 assert.match(topicHtml, /href="\.\.\/\.\.\/papers\/brain-memory-for-ai-agents\/"/, "topic page should link to the matching local paper topic page");
 assert.doesNotMatch(topicHtml, /github\.com\/mingxiangbian\/NeuroScience\/tree\/main\/projects/i, "topic page should not send users to the GitHub folder listing");
 

@@ -228,6 +228,10 @@ assert.match(js, /paperData\.categoryZh/, "reader should prefer Chinese paper ca
 assert.match(js, /paperData\.readingFocus/, "reader should render Chinese reading focus metadata");
 assert.match(js, /function openSearchModal/, "reader should isolate opening the search modal");
 assert.match(js, /function closeSearchModal/, "reader should isolate closing the search modal");
+assert.match(js, /function resetReaderPosition[\s\S]*window\.scrollTo\(\{ top: 0, left: 0, behavior: "auto" \}\)/, "switching papers should restore the browser viewport to the reader shell top");
+assert.match(js, /function resetReaderPosition[\s\S]*window\.requestAnimationFrame[\s\S]*els\.main\.scrollTo\(\{ top: 0, left: 0, behavior: "auto" \}\)/, "switching papers should reset the center reader after the new layout is ready");
+assert.match(js, /renderNoChunkPaper\(\);\s*await resetReaderPosition\(\);/, "fallback paper rendering should finish before the reader resets its position");
+assert.match(js, /renderChunks\(reading\);\s*await resetReaderPosition\(\);/, "chunk rendering should finish before the reader resets its position");
 assert.match(js, /function getSearchSnippet/, "reader should build search snippets around query terms");
 assert.match(js, /function highlightSearchTerms/, "reader should highlight matched search terms");
 assert.match(js, /function setSearchLoading/, "reader should expose a small loading state");

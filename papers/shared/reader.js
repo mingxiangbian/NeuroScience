@@ -859,6 +859,16 @@ function observeChunks(reading) {
   updateActiveChunkFromViewport(reading);
 }
 
+function resetReaderPosition() {
+  return new Promise((resolve) => {
+    window.requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      els.main.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      resolve();
+    });
+  });
+}
+
 async function openPaper(paperId) {
   const paper = getPaperById(paperId);
   if (!paper) return;
@@ -872,11 +882,13 @@ async function openPaper(paperId) {
   window.history.replaceState({}, "", url);
   if (!reading) {
     renderNoChunkPaper();
+    await resetReaderPosition();
     return;
   }
   renderPaperHeader(reading);
   renderSectionRail(reading);
   renderChunks(reading);
+  await resetReaderPosition();
 }
 
 function openSearchModal() {
