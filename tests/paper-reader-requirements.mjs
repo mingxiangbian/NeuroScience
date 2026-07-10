@@ -198,6 +198,9 @@ assert.match(js, /const SEMANTIC_SCORE_THRESHOLD = 0\.42/, "semantic-only result
 assert.match(js, /searchDebounceTimer:\s*null/, "reader state should track the search debounce timer");
 assert.match(js, /searchOverlay:\s*document\.querySelector\("#search-overlay"\)/, "reader should bind the search overlay for outside-click dismissal");
 assert.match(js, /fetchJson\("\.\.\/manifest\.json"\)/, "reader should load the parent papers manifest");
+assert.match(js, /const requestedChunk = params\.get\("chunk"\)/, "reader should accept homepage search deep links to indexed chunks");
+assert.match(js, /openPaper\(requested \|\| firstReadable\?\.id \|\| state\.papers\[0\]\?\.id, requestedChunk\)/, "reader should forward the requested chunk while opening a deep-linked paper");
+assert.match(js, /url\.searchParams\.set\("chunk", chunkId\)/, "reader should preserve the active chunk in the URL for durable deep links");
 assert.match(js, /readings\/\$\{paper\.id\}\/paper\.json/, "reader should load per-paper paper.json data");
 assert.match(js, /readings\/\$\{paper\.id\}\/chunks\.json/, "reader should load per-paper chunks.json data");
 assert.match(js, /readings\/\$\{paper\.id\}\/notes\.json/, "reader should load per-paper notes.json data");

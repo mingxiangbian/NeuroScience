@@ -428,6 +428,320 @@
         transform: translate(-50%, -50%) scale(1.035);
       }
 
+      .search-trigger {
+        position: absolute;
+        left: 50%;
+        bottom: clamp(18px, 3.6vh, 36px);
+        z-index: 7;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 28px;
+        width: min(330px, calc(100vw - 40px));
+        min-height: 46px;
+        padding: 0 14px 0 17px;
+        transform: translate(-50%, 8px);
+        border: 1px solid rgba(255, 252, 244, 0.58);
+        border-radius: 4px;
+        color: var(--ink);
+        background:
+          linear-gradient(135deg, rgba(255, 252, 244, 0.52), rgba(232, 220, 200, 0.24)),
+          rgba(244, 239, 227, 0.48);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.74),
+          inset 0 -1px 0 rgba(31, 39, 36, 0.08),
+          0 16px 42px rgba(65, 53, 37, 0.16);
+        opacity: 0;
+        pointer-events: none;
+        cursor: pointer;
+        text-align: left;
+        backdrop-filter: blur(18px) saturate(1.12);
+        -webkit-backdrop-filter: blur(18px) saturate(1.12);
+        transition:
+          opacity 220ms ease,
+          transform 220ms ease,
+          border-color 180ms ease,
+          background 180ms ease;
+      }
+
+      body.brain-expanded .search-trigger {
+        transform: translate(-50%, 0);
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .search-trigger:hover,
+      .search-trigger:focus-visible {
+        border-color: rgba(46, 111, 119, 0.5);
+        background:
+          linear-gradient(135deg, rgba(255, 252, 244, 0.66), rgba(194, 221, 214, 0.28)),
+          rgba(244, 239, 227, 0.56);
+        outline: none;
+      }
+
+      .search-trigger:active {
+        transform: translate(-50%, 1px) scale(0.99);
+      }
+
+      .search-trigger > span {
+        font-size: 0.82rem;
+        font-weight: 680;
+        letter-spacing: 0.01em;
+      }
+
+      .search-trigger kbd,
+      .search-dialog kbd {
+        border: 0;
+        color: rgba(31, 39, 36, 0.58);
+        background: transparent;
+        font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+        font-size: 0.68rem;
+        font-weight: 650;
+        letter-spacing: 0.02em;
+      }
+
+      .search-layer {
+        position: fixed;
+        inset: 0;
+        z-index: 12;
+        display: grid;
+        align-items: start;
+        justify-items: center;
+        padding: min(15vh, 132px) 24px 24px;
+      }
+
+      .search-scrim {
+        position: absolute;
+        inset: 0;
+        border: 0;
+        background: rgba(232, 225, 210, 0.54);
+        cursor: default;
+        backdrop-filter: blur(10px) saturate(0.92);
+        -webkit-backdrop-filter: blur(10px) saturate(0.92);
+      }
+
+      .search-dialog {
+        position: relative;
+        width: min(820px, calc(100vw - 48px));
+        max-height: min(68vh, 650px);
+        overflow: hidden;
+        border: 1px solid rgba(255, 252, 244, 0.72);
+        border-radius: 6px;
+        background:
+          linear-gradient(145deg, rgba(255, 252, 244, 0.7), rgba(224, 218, 205, 0.38)),
+          rgba(244, 239, 227, 0.64);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.82),
+          inset 0 -1px 0 rgba(31, 39, 36, 0.08),
+          0 30px 84px rgba(56, 46, 32, 0.22);
+        backdrop-filter: blur(28px) saturate(1.16);
+        -webkit-backdrop-filter: blur(28px) saturate(1.16);
+      }
+
+      .search-dialog::after {
+        position: absolute;
+        inset: 5px;
+        content: "";
+        border-top: 1px solid rgba(31, 39, 36, 0.12);
+        border-right: 1px solid rgba(46, 111, 119, 0.18);
+        pointer-events: none;
+      }
+
+      .search-dialog-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 20px 10px;
+      }
+
+      .search-dialog-header label {
+        font-family: "Songti SC", "STSong", Georgia, serif;
+        font-size: 1.05rem;
+        font-weight: 720;
+      }
+
+      .search-input-wrap {
+        position: relative;
+        margin: 0 20px;
+      }
+
+      .search-input-wrap input {
+        width: 100%;
+        height: 52px;
+        padding: 0 72px 0 15px;
+        border: 1px solid rgba(31, 39, 36, 0.2);
+        border-radius: 4px;
+        outline: none;
+        color: var(--ink);
+        background: rgba(255, 252, 244, 0.56);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.68),
+          inset 0 -10px 28px rgba(46, 111, 119, 0.025);
+        font: inherit;
+        font-size: 0.95rem;
+      }
+
+      .search-input-wrap input::placeholder {
+        color: rgba(31, 39, 36, 0.52);
+      }
+
+      .search-input-wrap input:focus {
+        border-color: rgba(46, 111, 119, 0.58);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.72),
+          0 0 0 2px rgba(46, 111, 119, 0.1);
+      }
+
+      .search-input-wrap kbd {
+        position: absolute;
+        top: 50%;
+        right: 14px;
+        transform: translateY(-50%);
+      }
+
+      .search-scope {
+        margin: 10px 20px 12px;
+        color: rgba(31, 39, 36, 0.58);
+        font-size: 0.68rem;
+        font-weight: 620;
+        letter-spacing: 0.04em;
+      }
+
+      .search-results {
+        max-height: calc(min(68vh, 650px) - 132px);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding: 0 20px 18px;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(31, 39, 36, 0.2) transparent;
+      }
+
+      .search-result-group + .search-result-group {
+        margin-top: 15px;
+      }
+
+      .search-result-heading {
+        margin: 0;
+        padding: 8px 4px 6px;
+        color: rgba(31, 39, 36, 0.54);
+        font-size: 0.64rem;
+        font-weight: 760;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .search-result-item {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 16px;
+        align-items: center;
+        min-height: 58px;
+        padding: 10px 9px;
+        border-top: 1px solid rgba(31, 39, 36, 0.1);
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .search-result-item:hover,
+      .search-result-item:focus-visible,
+      .search-result-item.is-active {
+        outline: none;
+        background:
+          linear-gradient(90deg, rgba(46, 111, 119, 0.1), transparent 70%),
+          rgba(255, 252, 244, 0.32);
+      }
+
+      .search-result-copy {
+        min-width: 0;
+      }
+
+      .search-result-title,
+      .search-result-description {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .search-result-title {
+        font-size: 0.84rem;
+        font-weight: 720;
+      }
+
+      .search-result-description {
+        margin-top: 4px;
+        color: rgba(31, 39, 36, 0.62);
+        font-size: 0.7rem;
+      }
+
+      .search-result-kind {
+        color: rgba(31, 39, 36, 0.5);
+        font-size: 0.62rem;
+        font-weight: 650;
+        letter-spacing: 0.06em;
+      }
+
+      .search-status {
+        min-height: 178px;
+        display: grid;
+        place-content: center;
+        gap: 8px;
+        padding: 24px;
+        color: rgba(31, 39, 36, 0.62);
+        text-align: center;
+      }
+
+      .search-status strong {
+        color: var(--ink);
+        font-family: "Songti SC", "STSong", Georgia, serif;
+        font-size: 1rem;
+      }
+
+      .search-status span {
+        max-width: 42ch;
+        font-size: 0.76rem;
+        line-height: 1.5;
+      }
+
+      .search-retry {
+        justify-self: center;
+        min-height: 36px;
+        margin-top: 4px;
+        padding: 0 15px;
+        border: 1px solid rgba(31, 39, 36, 0.2);
+        border-radius: 4px;
+        color: var(--ink);
+        background: rgba(255, 252, 244, 0.48);
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.72rem;
+        font-weight: 700;
+      }
+
+      .search-skeleton {
+        padding: 3px 0 12px;
+      }
+
+      .search-skeleton-row {
+        display: grid;
+        gap: 8px;
+        min-height: 62px;
+        padding: 13px 9px;
+        border-top: 1px solid rgba(31, 39, 36, 0.08);
+      }
+
+      .search-skeleton-line {
+        width: min(52%, 320px);
+        height: 8px;
+        border-radius: 999px;
+        background: rgba(31, 39, 36, 0.1);
+      }
+
+      .search-skeleton-line:last-child {
+        width: min(72%, 430px);
+        opacity: 0.68;
+      }
+
       @media (orientation: portrait) {
         .module-label {
           min-width: clamp(104px, 17vw, 132px);
@@ -508,6 +822,56 @@
           font-size: 0.58rem;
         }
 
+        .search-trigger {
+          bottom: 14px;
+          width: min(286px, calc(100vw - 32px));
+          min-height: 44px;
+        }
+
+        .search-layer {
+          align-items: start;
+          padding: 94px 14px 14px;
+        }
+
+        .search-dialog {
+          width: calc(100vw - 28px);
+          max-height: calc(100dvh - 108px);
+        }
+
+        .search-results {
+          max-height: calc(100dvh - 240px);
+          padding-right: 14px;
+          padding-left: 14px;
+        }
+
+        .search-dialog-header,
+        .search-input-wrap,
+        .search-scope {
+          margin-right: 14px;
+          margin-left: 14px;
+        }
+
+        .search-dialog-header {
+          padding-right: 0;
+          padding-left: 0;
+        }
+
+        .search-result-item {
+          gap: 8px;
+          align-items: start;
+        }
+
+        .search-result-title {
+          display: -webkit-box;
+          white-space: normal;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+        }
+
+        .search-result-kind {
+          padding-top: 2px;
+        }
+
       }
 
       @media (orientation: portrait) and (max-width: 520px) {
@@ -546,6 +910,22 @@
           animation-iteration-count: 1 !important;
           scroll-behavior: auto !important;
           transition-duration: 0.01ms !important;
+        }
+      }
+
+      @media (prefers-reduced-transparency: reduce) {
+        .search-trigger,
+        .search-dialog,
+        .search-input-wrap input {
+          background: rgba(244, 239, 227, 0.98);
+          backdrop-filter: none;
+          -webkit-backdrop-filter: none;
+        }
+
+        .search-scrim {
+          background: rgba(232, 225, 210, 0.94);
+          backdrop-filter: none;
+          -webkit-backdrop-filter: none;
         }
       }
     </style>
@@ -645,6 +1025,19 @@
           <span>Hippocampal Glow</span>
         </button>
       </div>
+      <button
+        class="search-trigger"
+        id="global-search-trigger"
+        type="button"
+        aria-controls="global-search-dialog"
+        aria-expanded="false"
+        aria-haspopup="dialog"
+        aria-hidden="true"
+        tabindex="-1"
+      >
+        <span>Search</span>
+        <kbd class="search-trigger-shortcut">⌘K</kbd>
+      </button>
       <svg id="fallback-brain" aria-hidden="true" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid slice">
         <defs>
           <radialGradient id="fallback-tissue" cx="43%" cy="36%" r="68%">
@@ -774,6 +1167,35 @@
       </svg>
     </main>
 
+    <div class="search-layer" id="global-search-layer" hidden>
+      <button class="search-scrim" type="button" aria-label="Close search" data-search-close></button>
+      <section
+        class="search-dialog"
+        id="global-search-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="global-search-label"
+      >
+        <div class="search-dialog-header">
+          <label id="global-search-label" for="global-search-input">Search</label>
+          <kbd>Esc</kbd>
+        </div>
+        <div class="search-input-wrap">
+          <input
+            id="global-search-input"
+            type="search"
+            placeholder="Search"
+            autocomplete="off"
+            aria-controls="global-search-results"
+            aria-autocomplete="list"
+          />
+          <kbd class="search-dialog-shortcut">⌘K</kbd>
+        </div>
+        <p class="search-scope">Indexed: Projects, Papers</p>
+        <div class="search-results" id="global-search-results" role="listbox" aria-live="polite"></div>
+      </section>
+    </div>
+
     <script type="module">
       import * as THREE from "three";
       import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -868,6 +1290,399 @@
           offset: [0.46, -0.64, 0.58],
         },
       ];
+
+      const SEARCH_INDEX_PROVIDERS = [
+        {
+          id: "projects",
+          label: "Projects",
+          kind: "projects",
+          manifestUrl: "projects/manifest.json",
+          basePath: "projects/",
+        },
+        {
+          id: "papers",
+          label: "Papers",
+          kind: "papers",
+          manifestUrl: "papers/manifest.json",
+          basePath: "papers/",
+        },
+      ];
+
+      async function fetchSearchJson(url) {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Unable to load ${url}`);
+        }
+        return response.json();
+      }
+
+      function normalizeSearchText(value) {
+        return String(value ?? "")
+          .normalize("NFKD")
+          .toLocaleLowerCase()
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/\s+/g, " ")
+          .trim();
+      }
+
+      function escapeSearchHtml(value) {
+        return String(value ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#39;");
+      }
+
+      function createSearchRecord({ group, kind, title, description, href, searchText }) {
+        return {
+          group,
+          kind,
+          title,
+          description,
+          href,
+          normalizedTitle: normalizeSearchText(title),
+          normalizedSearchText: normalizeSearchText(`${title} ${description} ${searchText ?? ""}`),
+        };
+      }
+
+      async function loadProjectSearchRecords(provider) {
+        const projects = await fetchSearchJson(provider.manifestUrl);
+        if (!Array.isArray(projects)) {
+          throw new Error("Projects manifest is not an array");
+        }
+        return projects.map((project) => createSearchRecord({
+          group: "Projects",
+          kind: "Project",
+          title: project.title,
+          description: project.summary ?? project.folder,
+          href: `${provider.basePath}${project.folder}`,
+          searchText: `${project.id} ${project.folder} ${project.status ?? ""}`,
+        }));
+      }
+
+      async function loadPaperSearchRecords(provider) {
+        const collections = await fetchSearchJson(provider.manifestUrl);
+        if (!Array.isArray(collections)) {
+          throw new Error("Papers manifest is not an array");
+        }
+
+        const paperRecords = [];
+        const sectionLoads = [];
+
+        collections.forEach((collection) => {
+          (collection.papers ?? []).forEach((paper) => {
+            const paperHref = `${provider.basePath}${collection.folder}?paper=${encodeURIComponent(paper.id)}`;
+            paperRecords.push(createSearchRecord({
+              group: "Papers",
+              kind: "Paper",
+              title: paper.title,
+              description: [paper.authors, paper.year].filter(Boolean).join(" / "),
+              href: paperHref,
+              searchText: `${paper.id} ${paper.shortTitle ?? ""} ${collection.title ?? ""}`,
+            }));
+
+            if (paper.hasReading !== true) return;
+            const chunksUrl = `${provider.basePath}${collection.folder}readings/${paper.id}/chunks.json`;
+            sectionLoads.push(
+              fetchSearchJson(chunksUrl)
+                .then((payload) => (payload.chunks ?? []).map((chunk) => createSearchRecord({
+                  group: "Sections",
+                  kind: "Section",
+                  title: chunk.title || chunk.sectionId || "Untitled section",
+                  description: paper.shortTitle ?? paper.title,
+                  href: `${paperHref}&chunk=${encodeURIComponent(chunk.id)}`,
+                  searchText: [
+                    chunk.sectionId,
+                    chunk.sourceText,
+                    chunk.zhTranslation,
+                    chunk.zhExplanation,
+                    ...(chunk.keywords ?? []),
+                  ].filter(Boolean).join(" "),
+                })))
+                .catch(() => []),
+            );
+          });
+        });
+
+        const sectionRecords = (await Promise.all(sectionLoads)).flat();
+        return [...paperRecords, ...sectionRecords];
+      }
+
+      async function loadSearchProvider(provider) {
+        if (provider.kind === "projects") {
+          return loadProjectSearchRecords(provider);
+        }
+        if (provider.kind === "papers") {
+          return loadPaperSearchRecords(provider);
+        }
+        return [];
+      }
+
+      function scoreSearchRecord(record, normalizedQuery) {
+        const tokens = normalizedQuery.split(" ").filter(Boolean);
+        if (!tokens.every((token) => record.normalizedSearchText.includes(token))) {
+          return 0;
+        }
+        let score = 20 + tokens.length * 4;
+        if (record.normalizedTitle === normalizedQuery) score += 90;
+        else if (record.normalizedTitle.startsWith(normalizedQuery)) score += 62;
+        else if (record.normalizedTitle.includes(normalizedQuery)) score += 44;
+        if (record.group === "Projects") score += 5;
+        if (record.group === "Papers") score += 3;
+        return score;
+      }
+
+      function setupGlobalSearch() {
+        const trigger = document.getElementById("global-search-trigger");
+        const layer = document.getElementById("global-search-layer");
+        const dialog = document.getElementById("global-search-dialog");
+        const input = document.getElementById("global-search-input");
+        const results = document.getElementById("global-search-results");
+        const shortcutLabels = document.querySelectorAll(".search-trigger-shortcut, .search-dialog-shortcut");
+        const isApplePlatform = /Mac|iPhone|iPad|iPod/i.test(navigator.userAgentData?.platform ?? navigator.platform ?? navigator.userAgent);
+        const shortcutLabel = isApplePlatform ? "⌘K" : "Ctrl K";
+        let indexRecords = [];
+        let indexPromise = null;
+        let activeResultIndex = -1;
+        let previousFocus = null;
+
+        shortcutLabels.forEach((label) => {
+          label.textContent = shortcutLabel;
+        });
+
+        function getResultItems() {
+          return [...results.querySelectorAll(".search-result-item")];
+        }
+
+        function setActiveResult(index) {
+          const items = getResultItems();
+          if (!items.length) {
+            activeResultIndex = -1;
+            input.removeAttribute("aria-activedescendant");
+            return;
+          }
+          activeResultIndex = (index + items.length) % items.length;
+          items.forEach((item, itemIndex) => {
+            const active = itemIndex === activeResultIndex;
+            item.classList.toggle("is-active", active);
+            item.setAttribute("aria-selected", String(active));
+          });
+          const activeItem = items[activeResultIndex];
+          input.setAttribute("aria-activedescendant", activeItem.id);
+          activeItem.scrollIntoView({ block: "nearest" });
+        }
+
+        function renderLoading() {
+          results.innerHTML = `
+            <div class="search-skeleton" aria-label="Loading search index">
+              ${Array.from({ length: 4 }, () => `
+                <div class="search-skeleton-row" aria-hidden="true">
+                  <span class="search-skeleton-line"></span>
+                  <span class="search-skeleton-line"></span>
+                </div>
+              `).join("")}
+            </div>
+          `;
+        }
+
+        function renderStatus(title, message, retry = false) {
+          results.innerHTML = `
+            <div class="search-status">
+              <strong>${escapeSearchHtml(title)}</strong>
+              <span>${escapeSearchHtml(message)}</span>
+              ${retry ? '<button class="search-retry" type="button" data-retry-search>Retry</button>' : ""}
+            </div>
+          `;
+          activeResultIndex = -1;
+          input.removeAttribute("aria-activedescendant");
+        }
+
+        function renderMatches(query) {
+          const normalizedQuery = normalizeSearchText(query);
+          if (!normalizedQuery) {
+            renderStatus("Search the archive", "Type a title, author, topic, or indexed section.");
+            return;
+          }
+
+          const matches = indexRecords
+            .map((record) => ({ record, score: scoreSearchRecord(record, normalizedQuery) }))
+            .filter((item) => item.score > 0)
+            .sort((left, right) => right.score - left.score || left.record.title.localeCompare(right.record.title))
+            .slice(0, 36)
+            .map((item) => item.record);
+
+          if (!matches.length) {
+            renderStatus("No matches", "Try a title, author, topic, or a shorter phrase.");
+            return;
+          }
+
+          const groupOrder = ["Projects", "Papers", "Sections"];
+          let resultIndex = 0;
+          results.innerHTML = groupOrder.map((group) => {
+            const groupMatches = matches.filter((record) => record.group === group);
+            if (!groupMatches.length) return "";
+            const rows = groupMatches.map((record) => {
+              const id = `global-search-result-${resultIndex}`;
+              resultIndex += 1;
+              return `
+                <a
+                  class="search-result-item"
+                  id="${id}"
+                  href="${escapeSearchHtml(record.href)}"
+                  role="option"
+                  aria-selected="false"
+                >
+                  <span class="search-result-copy">
+                    <span class="search-result-title">${escapeSearchHtml(record.title)}</span>
+                    <span class="search-result-description">${escapeSearchHtml(record.description)}</span>
+                  </span>
+                  <span class="search-result-kind">${escapeSearchHtml(record.kind)}</span>
+                </a>
+              `;
+            }).join("");
+            return `
+              <section class="search-result-group" aria-label="${group}">
+                <h2 class="search-result-heading">${group}</h2>
+                ${rows}
+              </section>
+            `;
+          }).join("");
+          setActiveResult(0);
+        }
+
+        async function loadIndex({ retry = false } = {}) {
+          if (retry) {
+            indexPromise = null;
+            indexRecords = [];
+          }
+          if (!indexPromise) {
+            indexPromise = Promise.allSettled(SEARCH_INDEX_PROVIDERS.map(loadSearchProvider))
+              .then((providerResults) => {
+                const loaded = providerResults
+                  .filter((result) => result.status === "fulfilled")
+                  .flatMap((result) => result.value);
+                if (!loaded.length) {
+                  throw new Error("No search providers loaded");
+                }
+                indexRecords = loaded;
+                return indexRecords;
+              });
+          }
+          return indexPromise;
+        }
+
+        async function ensureIndex({ retry = false } = {}) {
+          renderLoading();
+          try {
+            await loadIndex({ retry });
+            renderMatches(input.value);
+          } catch (error) {
+            console.warn("Search index unavailable", error);
+            renderStatus("Index unavailable", "The local search files could not be loaded.", true);
+          }
+        }
+
+        function openSearch() {
+          if (!layer.hidden) {
+            input.focus();
+            input.select();
+            return;
+          }
+          previousFocus = document.activeElement;
+          layer.hidden = false;
+          document.body.classList.add("search-open");
+          trigger.setAttribute("aria-expanded", "true");
+          input.value = "";
+          window.requestAnimationFrame(() => input.focus());
+          ensureIndex();
+        }
+
+        function closeSearch() {
+          if (layer.hidden) return;
+          layer.hidden = true;
+          document.body.classList.remove("search-open");
+          trigger.setAttribute("aria-expanded", "false");
+          input.removeAttribute("aria-activedescendant");
+          activeResultIndex = -1;
+          if (previousFocus instanceof HTMLElement && previousFocus.isConnected) {
+            previousFocus.focus({ preventScroll: true });
+          }
+        }
+
+        function trapFocus(event) {
+          const focusable = [...dialog.querySelectorAll('input, button, a[href], [tabindex]:not([tabindex="-1"])')]
+            .filter((element) => !element.hasAttribute("disabled"));
+          if (!focusable.length) return;
+          const first = focusable[0];
+          const last = focusable.at(-1);
+          if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+          } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+          }
+        }
+
+        trigger.addEventListener("click", openSearch);
+        layer.querySelector("[data-search-close]").addEventListener("click", closeSearch);
+        input.addEventListener("input", () => {
+          if (indexRecords.length) renderMatches(input.value);
+        });
+        results.addEventListener("click", (event) => {
+          const retry = event.target.closest("[data-retry-search]");
+          if (retry) ensureIndex({ retry: true });
+        });
+
+        window.addEventListener("keydown", (event) => {
+          const commandSearch = (event.metaKey || event.ctrlKey) && !event.altKey && event.key.toLowerCase() === "k";
+          if (commandSearch) {
+            event.preventDefault();
+            openSearch();
+            return;
+          }
+          if (layer.hidden) return;
+          if (event.key === "Escape") {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            closeSearch();
+            return;
+          }
+          if (event.key === "Tab") {
+            trapFocus(event);
+            return;
+          }
+          if (event.key === "ArrowDown") {
+            event.preventDefault();
+            setActiveResult(activeResultIndex + 1);
+            return;
+          }
+          if (event.key === "ArrowUp") {
+            event.preventDefault();
+            setActiveResult(activeResultIndex - 1);
+            return;
+          }
+          if (event.key === "Enter" && document.activeElement === input) {
+            const activeItem = getResultItems()[activeResultIndex];
+            if (activeItem) {
+              event.preventDefault();
+              activeItem.click();
+            }
+          }
+        });
+
+        return {
+          open: openSearch,
+          close: closeSearch,
+          setExpanded(expanded) {
+            trigger.setAttribute("aria-hidden", String(!expanded));
+            trigger.tabIndex = expanded ? 0 : -1;
+          },
+        };
+      }
+
+      const searchUi = setupGlobalSearch();
 
       function getModuleHomepageUrl(module) {
         return module.homepagePath ?? `${GITHUB_FOLDER_BASE}${module.folder}`;
@@ -1286,10 +2101,10 @@
             inverseMatrix.copy(brainRoot.matrixWorld).invert();
 
             moduleEntries.forEach((entry) => {
-              const selectedFocus = !state.selected || state.selected === entry.module.id ? 1 : 0.28;
+              const selectedFocus = 1;
               entry.wrapper.visible = eased > 0.015 || state.expanded;
               entry.wrapper.position.copy(entry.wrapper.userData.offset).multiplyScalar(eased);
-              entry.wrapper.scale.setScalar(0.985 + eased * (state.selected === entry.module.id ? 0.075 : 0.02));
+              entry.wrapper.scale.setScalar(0.985 + eased * (state.selected === entry.module.id ? 0.045 : 0.02));
               entry.materials.forEach((material) => {
                 material.opacity = (material.userData.baseOpacity ?? material.opacity ?? 1) * selectedFocus * eased;
                 if (material.uniforms) {
@@ -1317,15 +2132,19 @@
         const state = {
           expanded: false,
           selected: null,
+          previewed: null,
         };
 
         function sync() {
+          const activeModule = state.previewed ?? state.selected;
           document.body.classList.toggle("brain-expanded", state.expanded);
           moduleButtons.forEach((button) => {
             button.setAttribute("aria-pressed", String(button.dataset.module === state.selected));
+            button.toggleAttribute("data-active", button.dataset.module === activeModule);
           });
+          searchUi.setExpanded(state.expanded);
           explodedView?.setExpanded(state.expanded);
-          explodedView?.setSelected(state.selected);
+          explodedView?.setSelected(activeModule);
         }
 
         function selectModule(id) {
@@ -1333,10 +2152,31 @@
           if (!module) return;
           state.expanded = true;
           state.selected = id;
+          state.previewed = null;
+          sync();
+        }
+
+        function previewModule(id) {
+          if (!MODULES.some((candidate) => candidate.id === id)) return;
+          state.previewed = id;
+          sync();
+        }
+
+        function clearPreview(id) {
+          if (state.previewed !== id) return;
+          state.previewed = null;
           sync();
         }
 
         moduleButtons.forEach((button) => {
+          button.addEventListener("pointerenter", () => previewModule(button.dataset.module));
+          button.addEventListener("pointerleave", () => {
+            if (document.activeElement !== button) clearPreview(button.dataset.module);
+          });
+          button.addEventListener("focus", () => previewModule(button.dataset.module));
+          button.addEventListener("blur", () => {
+            if (!button.matches(":hover")) clearPreview(button.dataset.module);
+          });
           button.addEventListener("click", (event) => {
             event.stopPropagation();
             const module = MODULES.find((candidate) => candidate.id === button.dataset.module);
@@ -1353,6 +2193,7 @@
           if (event.key === "Escape") {
             state.expanded = false;
             state.selected = null;
+            state.previewed = null;
             sync();
           }
         });
@@ -1362,6 +2203,7 @@
           toggleExpanded() {
             state.expanded = !state.expanded;
             state.selected = null;
+            state.previewed = null;
             sync();
           },
           selectModule,
@@ -2431,7 +3273,7 @@
         return display;
       }
 
-      function setDisplayModuleState(component, module, expanded, selected, dimmed, time = 0) {
+      function setDisplayModuleState(component, module, expanded, selected, time = 0) {
         const mode = selected ? "selected" : expanded ? "expanded" : "idle";
         const display = component.userData.display;
         if (display) {
@@ -2454,7 +3296,7 @@
         }
         if (display?.material) {
           const targetOpacity = selected ? 1 : expanded ? 1 : 0.96;
-          display.material.opacity = targetOpacity * (dimmed ? 0.62 : 1);
+          display.material.opacity = targetOpacity;
         }
       }
 
@@ -2518,8 +3360,8 @@
         group.add(edge);
 
         group.userData.display = display;
-        group.userData.setDisplayState = (expanded, selected, dimmed, time) => {
-          setDisplayModuleState(group, module, expanded, selected, dimmed, time);
+        group.userData.setDisplayState = (expanded, selected, time) => {
+          setDisplayModuleState(group, module, expanded, selected, time);
         };
         group.userData.setConnectorSide = setConnectorSide;
         group.userData.getConnectorSide = () => currentConnectorSide;
@@ -2841,10 +3683,10 @@
           currentFlowPaths = flowPaths.length ? flowPaths : [currentSegmentPairs];
         };
 
-        group.userData.setCircuitState = (expanded, selected, dimmed, time) => {
-          const traceOpacity = expanded ? selected ? 0.34 : dimmed ? 0.055 : 0.13 : 0;
-          const terminalOpacity = expanded ? selected ? 0.5 : dimmed ? 0.07 : 0.17 : 0;
-          const particleOpacity = expanded ? selected ? 0.78 : dimmed ? 0 : 0.28 : 0;
+        group.userData.setCircuitState = (expanded, selected, time) => {
+          const traceOpacity = expanded ? selected ? 0.15 : 0.13 : 0;
+          const terminalOpacity = expanded ? selected ? 0.2 : 0.17 : 0;
+          const particleOpacity = expanded ? selected ? 0.36 : 0.28 : 0;
           traceMaterial.opacity = traceOpacity;
           terminalMaterial.opacity = terminalOpacity;
           particleMaterial.opacity = particleOpacity;
@@ -2869,7 +3711,7 @@
           group.visible = traceOpacity > 0.01 || terminalOpacity > 0.01 || particleOpacity > 0.01;
         };
 
-        group.userData.setCircuitState(false, false, false, 0);
+        group.userData.setCircuitState(false, false, 0);
         return group;
       }
 
@@ -2965,6 +3807,8 @@
           update(time, interactionState) {
             const expanded = Boolean(interactionState?.expanded);
             const selected = interactionState?.selected ?? null;
+            const previewed = interactionState?.previewed ?? null;
+            const activeModule = previewed ?? selected;
             const mode = getChipLayoutMode();
             const target = expanded ? 1 : 0;
             state.active += (target - state.active) * (prefersReducedMotion ? 1 : 0.075);
@@ -2974,16 +3818,15 @@
             allCoreMaterials.forEach((material) => {
               setChipMaterialState(material, (material.userData.baseOpacity ?? 0.08) * (1 + eased * 2.1));
             });
-            computeCore.scale.setScalar(1 + eased * 0.06 + (selected ? 0.03 : 0));
+            computeCore.scale.setScalar(1 + eased * 0.06 + (activeModule ? 0.02 : 0));
 
             channels.forEach((entry) => {
-              const selectedFocus = !selected || selected === entry.module.id ? 1 : 0.22;
-              const componentOpacity = (0.32 + eased * (selected === entry.module.id ? 0.52 : 0.26)) * selectedFocus;
-              const componentGlow = 0.08 + eased * (selected === entry.module.id ? 0.34 : 0.12);
+              const active = activeModule === entry.module.id;
+              const componentOpacity = 0.32 + eased * (active ? 0.3 : 0.26);
+              const componentGlow = 0.08 + eased * (active ? 0.15 : 0.12);
               entry.component.userData.setDisplayState?.(
                 expanded,
-                selected === entry.module.id,
-                Boolean(selected && selected !== entry.module.id),
+                active,
                 time,
               );
 
@@ -2996,12 +3839,11 @@
               });
 
               const baseScale = entry.component.userData.baseScale ?? 1;
-              entry.component.scale.setScalar(baseScale * (1 + eased * (selected === entry.module.id ? 0.32 : 0.03)));
+              entry.component.scale.setScalar(baseScale * (1 + eased * (active ? 0.08 : 0.03)));
               syncCircuitRoute(entry, mode);
               entry.route.userData.setCircuitState?.(
                 expanded,
-                selected === entry.module.id,
-                Boolean(selected && selected !== entry.module.id),
+                active,
                 time,
               );
             });

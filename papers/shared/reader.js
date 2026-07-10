@@ -869,7 +869,7 @@ function resetReaderPosition() {
   });
 }
 
-async function openPaper(paperId) {
+async function openPaper(paperId, chunkId = null) {
   const paper = getPaperById(paperId);
   if (!paper) return;
   state.currentPaper = paper;
@@ -879,6 +879,11 @@ async function openPaper(paperId) {
   state.currentReading = reading;
   const url = new URL(window.location.href);
   url.searchParams.set("paper", paper.id);
+  if (chunkId) {
+    url.searchParams.set("chunk", chunkId);
+  } else {
+    url.searchParams.delete("chunk");
+  }
   window.history.replaceState({}, "", url);
   if (!reading) {
     renderNoChunkPaper();
@@ -889,6 +894,14 @@ async function openPaper(paperId) {
   renderSectionRail(reading);
   renderChunks(reading);
   await resetReaderPosition();
+  if (chunkId) {
+    await new Promise((resolve) => window.requestAnimationFrame(resolve));
+    const requestedChunk = document.getElementById(chunkId);
+    if (requestedChunk) {
+      requestedChunk.scrollIntoView({ behavior: "auto", block: "start" });
+      setActiveChunk(reading, chunkId);
+    }
+  }
 }
 
 function openSearchModal() {
@@ -1235,8 +1248,9 @@ async function initReader() {
   await loadAllSearchItems();
   const params = new URLSearchParams(window.location.search);
   const requested = params.get("paper");
+  const requestedChunk = params.get("chunk");
   const firstReadable = state.papers.find((paper) => state.allReadings.get(paper.id));
-  await openPaper(requested || firstReadable?.id || state.papers[0]?.id);
+  await openPaper(requested || firstReadable?.id || state.papers[0]?.id, requestedChunk);
 }
 
 initReader().catch((error) => {

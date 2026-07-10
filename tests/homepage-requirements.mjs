@@ -74,6 +74,19 @@ assert.match(html, /\.module-label\[data-module="hippocampal"\]\s*\{[\s\S]*?righ
 assert.match(html, /@media \(orientation: portrait\) and \(max-width: 520px\)/, "narrow phones should get compact label controls");
 assert.match(html, /@media \(orientation: portrait\) and \(max-width: 520px\)[\s\S]*?min-height:\s*44px/, "narrow phone module labels should keep a 44px touch target");
 
+assert.match(body, /id="global-search-trigger"/, "homepage should expose a compact Search command after the brain expands");
+assert.match(body, /id="global-search-dialog"[\s\S]*role="dialog"[\s\S]*aria-modal="true"/, "homepage search should use an accessible modal dialog");
+assert.match(body, /<span>Search<\/span>[\s\S]*class="search-trigger-shortcut"/, "search trigger should keep the future-proof Search label and a keyboard hint");
+assert.match(html, /body\.brain-expanded \.search-trigger/, "search trigger should appear with the expanded research modules");
+assert.match(body, /const SEARCH_INDEX_PROVIDERS = \[/, "homepage search should use an extensible provider registry");
+assert.match(body, /manifestUrl:\s*"projects\/manifest\.json"/, "homepage search should index the projects manifest");
+assert.match(body, /manifestUrl:\s*"papers\/manifest\.json"/, "homepage search should index the papers manifest");
+assert.match(body, /group:\s*"Sections"/, "homepage search should expose indexed paper sections as deep links");
+assert.match(body, /Indexed: Projects, Papers/, "search scope should be explained inside the dialog instead of encoded in the trigger label");
+assert.match(body, /event\.metaKey \|\| event\.ctrlKey/, "homepage search should support Command K and Control K");
+assert.match(body, /previewed:\s*null/, "module interaction state should separate hover or focus preview from persistent selection");
+assert.match(body, /const activeModule = state\.previewed \?\? state\.selected/, "hover and keyboard focus should enhance the active module path without changing click navigation semantics");
+
 assert.equal(modelHeader, "glTF", "local brain model should be a binary glTF asset");
 assert.ok(modelStats.size > 10_000_000, "local brain model should be the high-detail asset, not a tiny placeholder");
 assert.match(attribution, /NIH 3D/, "asset attribution should cite NIH 3D");
@@ -190,7 +203,9 @@ assert.doesNotMatch(body, /\[routeEnd\.clone\(\),\s*busPoint\.clone\(\)\],\s*\[b
 assert.match(body, /circuit-flow-particle/, "selected routes should use moving particles instead of flashing the whole wire");
 assert.match(body, /sampleCircuitRoutePath/, "particle flow should sample positions along the route path");
 assert.match(body, /currentFlowPaths/, "route particles should use per-pin outward paths instead of one stitched branch path");
-assert.match(body, /const particleOpacity = expanded \? selected \? 0\.78 : dimmed \? 0 : 0\.28 : 0/, "expanded brain state should send subtle particles from the core to both sides before a project is selected");
+assert.match(body, /const traceOpacity = expanded \? selected \? 0\.15 : 0\.13 : 0/, "active routes should receive a small additive lift without reducing the baseline connector visibility");
+assert.match(body, /const particleOpacity = expanded \? selected \? 0\.36 : 0\.28 : 0/, "active route particles should strengthen without hiding the other outward paths");
+assert.doesNotMatch(body, /selectedFocus = !selected \|\| selected === entry\.module\.id \? 1 : 0\.22/, "focusing one display should not globally dim the other displays");
 assert.match(body, /const flowCycleLength = 1\.35/, "route particles should pause and restart at the center instead of visually flowing backward");
 assert.match(body, /progress > 1/, "route particles should disappear after reaching the endpoint before restarting at the core");
 assert.match(body, /particle\.position\.copy\(point\)/, "route particles should move only to sampled outward path points");
@@ -251,7 +266,7 @@ assert.match(body, /const DISPLAY_SELECTED_SENTENCE_FONT_SIZE = 50/, "selected d
 assert.match(body, /const DISPLAY_IDLE_FOLDER_FONT_SIZE = 108/, "idle display screens should prioritize a large readable folder label in portrait views");
 assert.match(body, /760 \$\{DISPLAY_EXPANDED_FOLDER_FONT_SIZE\}px \$\{DISPLAY_FONT_STACK\}/, "expanded display labels should use the larger readable brush-style typography constant");
 assert.match(body, /560 \$\{DISPLAY_SELECTED_SENTENCE_FONT_SIZE\}px \$\{DISPLAY_FONT_STACK\}/, "selected display sentences should use the shared readable paper-screen typography constant");
-assert.match(body, /selected === entry\.module\.id \? 0\.32 : 0\.03/, "selected display modules should enlarge enough to read screen details");
+assert.match(body, /active \? 0\.08 : 0\.03/, "active display modules should receive a restrained additive scale lift without shrinking the other modules");
 assert.match(body, /display-module-pin/, "display modules should expose multiple pins");
 assert.doesNotMatch(body, /display-module-pin-pad/, "display modules should not keep unused top or bottom pin pads");
 assert.match(body, /setDisplayModuleState/, "display modules should react to expanded and selected project state");
