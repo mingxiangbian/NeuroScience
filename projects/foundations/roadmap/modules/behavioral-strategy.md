@@ -1,9 +1,9 @@
 ---
 id: behavioral-strategy
 title: Behavioral / Strategy
-status: not-started
+status: learning
 learning_progress: 0
-last_updated: 2026-07-05
+last_updated: 2026-07-10
 priority: high
 ---
 
@@ -13,7 +13,7 @@ priority: high
 
 ## 当前状态
 
-第二优先级是面试表达。coding 和 system design 内容必须最终转成可讲述的故事，否则准备会停留在“做过一些练习”。
+已开始 Cyrene project deep dive 与升学/可实习性表达训练。当前仍需在不看稿、没有引导的情况下完成 2 分钟项目介绍并正确限定 benchmark 证据，达到 readiness level 2 前进度保持 0%。
 
 ## 核心知识
 
@@ -98,6 +98,19 @@ Weekly target：
 
 - Project deep dive 模板：Problem and users、Constraints、Architecture、Hardest tradeoff、Failure mode、Eval or verification、What I would improve。
 - 每个 mini drill 都要能讲成 project evidence。
+
+Cyrene D1 叙事：
+
+- Problem：解决 Agent 在长上下文任务、跨 session 和跨项目工作中遗忘用户偏好与项目工作流的问题，同时降低错误或过期 memory 污染上下文的风险。
+- Lifecycle：candidate → actual-use count → weekly AI maintenance → promote/update/revoke → project/global store → retrieval；单纯 retrieval hit 或 context injection 不计为实际使用。
+- Ownership：负责问题定义、架构、系统边界和 benchmark 设计；使用 AI 辅助实现，并负责 review、测试结果检查和 release gate。
+- Evidence boundary：archived full deterministic profile 是 59 passed、8 skipped、0 failed；它是项目 regression suite，不代表生产准确率。
+- Availability：计划申请 2027 Fall 硕士；最早两周内到岗，可连续实习 6 个月、每周 5 天。
+
+复习提示：
+
+- 调用次数代表 memory 被模型实际采用，不代表内容正确；AI 同时参与晋升与撤销判断，因此仍需 attribution、冲突检查和独立 regression cases。
+- 不把 coached 后的流畅表达当作独立通过；D+2 使用冲突偏好、错误 memory 反复使用和周度撤销的变式追问。
 
 面试转译：
 

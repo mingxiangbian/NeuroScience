@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-09T00:00:00.000Z",
+  "generatedAt": "2026-07-10T00:00:00.000Z",
   "project": {
     "id": "foundations",
     "title": "基石",
@@ -80,15 +80,15 @@
       "title": "Interview Sprint",
       "status": "in-progress",
       "learningProgress": 0,
-      "lastUpdated": "2026-07-09",
+      "lastUpdated": "2026-07-10",
       "priority": "high",
       "sections": {
-        "目标": "<p>7 天内把字节三个已投岗位（Coze 上下文工程 / Agent Infra 计算 / Agent 评测）的面试准备到可作战状态。本模块是时间驾驶舱：每天打开即知昨天学了什么、今天学什么；知识本体一律沉淀到对应能力模块，这里不存知识。</p>",
-        "当前状态": "<p>2026-07-09 三岗全部投出（均带内推码）。冲刺从 D1 开始，任何一天约到面试则切换为 Mock 日，课表顺延。冲刺结束本模块归档（status: done），foundations 恢复原节奏。</p>",
-        "核心知识": "<ul><li>每日四段循环（90 分钟）：冷启动自测 15 → 主题学习 35 → 手撕/case 25 → 沉淀输出 15。全程由 AI 会话主持，契约见本地 interview_prep 文件夹 AGENTS.md。</li><li>学习材料在本地面试包（01-07），本站只收两样东西：每日冲刺卡（本模块时间线）+ 消化后的知识笔记（对应能力模块）。</li><li>七个补丁项优先级：计算机八股 &gt; Node event loop &gt; SFT/RLHF 概念 &gt; 手撕实战协议 &gt; 评测 case 演练 &gt; 升学答案 &gt; 面试反馈回路。</li></ul>",
-        "任务": "<p>每日仪式：</p>\n<ol><li>打开本模块时间线：看昨天的冲刺卡（学了什么/答崩什么）和今天的任务行。</li><li>开 AI 会话，说「今天 Day N」，AI 按本地 AGENTS.md 接管四段循环。</li><li>会话结束：AI 产出今日冲刺卡 + 2-3 张知识笔记 → 更新本模块时间线和对应能力模块 → 构建推送。</li><li>面试日：早上只看目标模块的「面试转译」栏；面后 30 分钟内问题清单进 Logs。</li></ol>",
-        "时间线": "<ul><li>D1（2026-07-10）：Cyrene 主线叙事 + 升学答案 → 更新 Behavioral/Strategy（Project deep dive）</li><li>D2（2026-07-11）：Coze 上下文工程 + SFT/RLHF 概念层 → 更新 LLM Systems、RAG &amp; Memory</li><li>D3（2026-07-12）：Agent Infra + 计算机八股 + Node event loop → 更新 Coding（新增两张笔记）</li><li>D4（2026-07-13）：Agent 评测 + bad case 演练 ×2 → 更新 Evals &amp; Debugging</li><li>D5（2026-07-14）：Mock 1：Coze 全真 60 分钟 → 答崩回填对应模块</li><li>D6（2026-07-15）：Mock 2+3：Infra 40 分钟 + 评测 40 分钟 → 答崩回填</li><li>D7（2026-07-16）：全题库抽查 + 反问定稿 + 全站「面试转译」过一遍 → Logs 写 weekly review</li></ul>",
-        "知识笔记": "<h3>冲刺卡格式</h3>\n<p>核心理解：</p>\n<ul><li>每天一张卡追加到本模块时间线对应日期行后，格式：<code>学了{主题}；答崩：{清单}；已回填：{模块/笔记名}；明天：{主题}</code>。</li><li>冲刺卡是复盘线索不是知识本体；月底按 Logs 的惯例决定哪些沉淀回模块正文。</li></ul>\n<p>复习提示：</p>\n<ul><li>若某天崩盘，不要重排整个冲刺：当天只完成①自测和④沉淀两段，其余顺延一天。</li></ul>"
+        "目标": "<p>7 天内把字节三个已投岗位（Coze 上下文工程 / Agent Infra 计算 / Agent 评测）准备到可独立作答和验证的状态。本模块是横向时间驾驶舱：显示今天练什么、留下什么 artifact、下一次复测何时到期；知识本体一律沉淀到对应能力模块，这里不复制知识正文。</p>",
+        "当前状态": "<p>D1 盲测基线已完成并保留原始 artifact。当前独立 readiness 为 Coding 0、System Design 0、Project Deep Dive 1，因此 coding 与 system/case hard gate 仍为 fail；后续 coached 重构不能覆盖该结论。Two Sum 与 Valid Parentheses 已由用户确认运行通过。D2 转入 Coze 上下文工程与 post-training，D1 三项弱点在 2026-07-12 做 D+2 变式复测。</p>",
+        "核心知识": "<ul><li>时间合同：标准日 180 分钟（D2/D4/D5/D7），重日 210 分钟（D1/D3/D6），休息另算。</li><li>盲测与教学隔离：interviewer 不预读答案，不提示；结束后由独立 evaluator 评分。</li><li>学习循环：先尝试 → 精准补缺 → 合资料重构 → 换场景迁移 → D+2/D+7 复测。</li><li>hard gate：coding 与 system/case 必须分别独立通过，不能被表达或知识题平均掉。</li><li>站内每天只收一张冲刺卡和一张最重要弱项知识卡；原始错答、hint 和评分留在本地 eval ledger。</li></ul>",
+        "任务": "<p>每日仪式：</p>\n<ol><li>看时间线和上一张冲刺卡，确认今日预算与到期复测。</li><li>开 AI 会话，说「今天 Day N」；blind、coach、evaluator 使用不同会话。</li><li>coding 在本地或 judge 实际运行；system design 留下白板/文字 artifact。</li><li>收尾更新本地 ledger、今日冲刺卡和最多一张能力模块知识卡。</li><li>面试后 30 分钟内记录原题、原答、failure tag 与 D+2/D+7。</li></ol>",
+        "时间线": "<ul><li>D1（2026-07-10）：已完成；三项 baseline + 精准补缺 + Cyrene 叙事/升学回答 + Two Sum/Valid Parentheses；hard gate 仍为 fail；D+2 复测 2026-07-12</li><li>D2（2026-07-11）：未开始；180 min；Coze 上下文工程 + Transformer/post-training + 两道 coding → 更新 LLM Systems、RAG &amp; Memory</li><li>D3（2026-07-12）：未开始；210 min；Agent Infra + canonical system design + Tool Router + 计算机基础/Node event loop → 更新 Agent Design、Coding</li><li>D4（2026-07-13）：未开始；180 min；Agent 评测 + unseen bad case ×2 + 两道 coding → 更新 Evals &amp; Debugging</li><li>D5（2026-07-14）：未开始；180 min；Mock 1：Coze 盲测 + 独立评分 + 两道 coding → 最弱项回填</li><li>D6（2026-07-15）：未开始；210 min；Infra/Eval 双盲测 + 行为证据库 + 两道 coding → 最弱项回填</li><li>D7（2026-07-16）：未开始；180 min；平行盲测 + hard-gate 对比 + 反问/复测归档 → Logs weekly review</li></ul>",
+        "知识笔记": "<h3>D1 冲刺卡</h3>\n<p>核心理解：</p>\n<ul><li>完成三份原始 baseline：Coding readiness 0、System Design readiness 0、Project Deep Dive readiness 1。</li><li>coached 阶段重构 <code>max_running_robots</code>，固定用例和 randomized differential tests 通过；该结果证明补缺有效，但不改写 blind baseline。</li><li>Agent Runtime 被识别为尚未系统学习，而不是一次应用失误；已回填 Agent Design 的四层架构与 reliable tool execution 知识卡。</li><li>Cyrene 叙事已校正为 actual-use count + weekly AI maintenance；晋升、更新和撤销都以周为周期，敏感或高风险内容走人工审核例外路径。</li><li>Two Sum 与 Valid Parentheses 由用户确认运行通过；代码未保留在公开冲刺卡中。</li></ul>\n<p>复习提示：</p>\n<ul><li>2026-07-12 分别复测 sliding-window 变式、Agent Runtime 前置知识和 Cyrene 冲突/撤销场景。只有未提示独立通过，才能提高 readiness。</li></ul>\n<h3>冲刺卡格式</h3>\n<p>核心理解：</p>\n<ul><li>每日格式：<code>D{N}：完成{artifact}；hard gate：{结果}；主要 failure：{tag}；已回填：{模块/笔记}；下一次复测：{日期}</code>。</li><li>冲刺卡记录训练轨迹，不承载知识正文；未完成项直接顺延，不缩短题目时间。</li></ul>\n<p>复习提示：</p>\n<ul><li>D1 原始 baseline 必须保留。D7 使用平行题比较 readiness、用时、hint 和 failure tag，而不是比较润色后的答案。</li></ul>"
       },
       "sectionIds": {
         "目标": "interview-sprint-目标",
@@ -100,20 +100,38 @@
       },
       "knowledgeNotes": [
         {
-          "id": "interview-sprint-冲刺卡格式",
-          "title": "冲刺卡格式",
-          "body": "<p>核心理解：</p>\n<ul><li>每天一张卡追加到本模块时间线对应日期行后，格式：<code>学了{主题}；答崩：{清单}；已回填：{模块/笔记名}；明天：{主题}</code>。</li><li>冲刺卡是复盘线索不是知识本体；月底按 Logs 的惯例决定哪些沉淀回模块正文。</li></ul>\n<p>复习提示：</p>\n<ul><li>若某天崩盘，不要重排整个冲刺：当天只完成①自测和④沉淀两段，其余顺延一天。</li></ul>",
-          "text": "核心理解： - 每天一张卡追加到本模块时间线对应日期行后，格式： 学了{主题}；答崩：{清单}；已回填：{模块/笔记名}；明天：{主题} 。 - 冲刺卡是复盘线索不是知识本体；月底按 Logs 的惯例决定哪些沉淀回模块正文。 复习提示： - 若某天崩盘，不要重排整个冲刺：当天只完成①自测和④沉淀两段，其余顺延一天。",
+          "id": "interview-sprint-d1-冲刺卡",
+          "title": "D1 冲刺卡",
+          "body": "<p>核心理解：</p>\n<ul><li>完成三份原始 baseline：Coding readiness 0、System Design readiness 0、Project Deep Dive readiness 1。</li><li>coached 阶段重构 <code>max_running_robots</code>，固定用例和 randomized differential tests 通过；该结果证明补缺有效，但不改写 blind baseline。</li><li>Agent Runtime 被识别为尚未系统学习，而不是一次应用失误；已回填 Agent Design 的四层架构与 reliable tool execution 知识卡。</li><li>Cyrene 叙事已校正为 actual-use count + weekly AI maintenance；晋升、更新和撤销都以周为周期，敏感或高风险内容走人工审核例外路径。</li><li>Two Sum 与 Valid Parentheses 由用户确认运行通过；代码未保留在公开冲刺卡中。</li></ul>\n<p>复习提示：</p>\n<ul><li>2026-07-12 分别复测 sliding-window 变式、Agent Runtime 前置知识和 Cyrene 冲突/撤销场景。只有未提示独立通过，才能提高 readiness。</li></ul>",
+          "text": "核心理解： - 完成三份原始 baseline：Coding readiness 0、System Design readiness 0、Project Deep Dive readiness 1。 - coached 阶段重构 max running robots ，固定用例和 randomized differential tests 通过；该结果证明补缺有效，但不改写 blind baseline。 - Agent Runtime 被识别为尚未系统学习，而不是一次应用失误；已回填 Agent Design 的四层架构与 reliable tool execution 知识卡。 - Cyrene 叙事已校正为 actual-use count + weekly AI maintenance；晋升、更新和撤销都以周为周期，敏感或高风险内容走人工审核例外路径。 - Two Sum 与 Valid Parentheses 由用户确认运行通过；代码未保留在公开冲刺卡中。 复习提示： - 2026-07-12 分别复测 sliding-window 变式、Agent Runtime 前置知识和 Cyrene 冲突/撤销场景。只有未提示独立通过，才能提高 readiness。",
           "groups": [
             {
               "label": "核心理解",
-              "body": "<ul><li>每天一张卡追加到本模块时间线对应日期行后，格式：<code>学了{主题}；答崩：{清单}；已回填：{模块/笔记名}；明天：{主题}</code>。</li><li>冲刺卡是复盘线索不是知识本体；月底按 Logs 的惯例决定哪些沉淀回模块正文。</li></ul>",
-              "text": "- 每天一张卡追加到本模块时间线对应日期行后，格式： 学了{主题}；答崩：{清单}；已回填：{模块/笔记名}；明天：{主题} 。 - 冲刺卡是复盘线索不是知识本体；月底按 Logs 的惯例决定哪些沉淀回模块正文。"
+              "body": "<ul><li>完成三份原始 baseline：Coding readiness 0、System Design readiness 0、Project Deep Dive readiness 1。</li><li>coached 阶段重构 <code>max_running_robots</code>，固定用例和 randomized differential tests 通过；该结果证明补缺有效，但不改写 blind baseline。</li><li>Agent Runtime 被识别为尚未系统学习，而不是一次应用失误；已回填 Agent Design 的四层架构与 reliable tool execution 知识卡。</li><li>Cyrene 叙事已校正为 actual-use count + weekly AI maintenance；晋升、更新和撤销都以周为周期，敏感或高风险内容走人工审核例外路径。</li><li>Two Sum 与 Valid Parentheses 由用户确认运行通过；代码未保留在公开冲刺卡中。</li></ul>",
+              "text": "- 完成三份原始 baseline：Coding readiness 0、System Design readiness 0、Project Deep Dive readiness 1。 - coached 阶段重构 max running robots ，固定用例和 randomized differential tests 通过；该结果证明补缺有效，但不改写 blind baseline。 - Agent Runtime 被识别为尚未系统学习，而不是一次应用失误；已回填 Agent Design 的四层架构与 reliable tool execution 知识卡。 - Cyrene 叙事已校正为 actual-use count + weekly AI maintenance；晋升、更新和撤销都以周为周期，敏感或高风险内容走人工审核例外路径。 - Two Sum 与 Valid Parentheses 由用户确认运行通过；代码未保留在公开冲刺卡中。"
             },
             {
               "label": "复习提示",
-              "body": "<ul><li>若某天崩盘，不要重排整个冲刺：当天只完成①自测和④沉淀两段，其余顺延一天。</li></ul>",
-              "text": "- 若某天崩盘，不要重排整个冲刺：当天只完成①自测和④沉淀两段，其余顺延一天。"
+              "body": "<ul><li>2026-07-12 分别复测 sliding-window 变式、Agent Runtime 前置知识和 Cyrene 冲突/撤销场景。只有未提示独立通过，才能提高 readiness。</li></ul>",
+              "text": "- 2026-07-12 分别复测 sliding-window 变式、Agent Runtime 前置知识和 Cyrene 冲突/撤销场景。只有未提示独立通过，才能提高 readiness。"
+            }
+          ]
+        },
+        {
+          "id": "interview-sprint-冲刺卡格式",
+          "title": "冲刺卡格式",
+          "body": "<p>核心理解：</p>\n<ul><li>每日格式：<code>D{N}：完成{artifact}；hard gate：{结果}；主要 failure：{tag}；已回填：{模块/笔记}；下一次复测：{日期}</code>。</li><li>冲刺卡记录训练轨迹，不承载知识正文；未完成项直接顺延，不缩短题目时间。</li></ul>\n<p>复习提示：</p>\n<ul><li>D1 原始 baseline 必须保留。D7 使用平行题比较 readiness、用时、hint 和 failure tag，而不是比较润色后的答案。</li></ul>",
+          "text": "核心理解： - 每日格式： D{N}：完成{artifact}；hard gate：{结果}；主要 failure：{tag}；已回填：{模块/笔记}；下一次复测：{日期} 。 - 冲刺卡记录训练轨迹，不承载知识正文；未完成项直接顺延，不缩短题目时间。 复习提示： - D1 原始 baseline 必须保留。D7 使用平行题比较 readiness、用时、hint 和 failure tag，而不是比较润色后的答案。",
+          "groups": [
+            {
+              "label": "核心理解",
+              "body": "<ul><li>每日格式：<code>D{N}：完成{artifact}；hard gate：{结果}；主要 failure：{tag}；已回填：{模块/笔记}；下一次复测：{日期}</code>。</li><li>冲刺卡记录训练轨迹，不承载知识正文；未完成项直接顺延，不缩短题目时间。</li></ul>",
+              "text": "- 每日格式： D{N}：完成{artifact}；hard gate：{结果}；主要 failure：{tag}；已回填：{模块/笔记}；下一次复测：{日期} 。 - 冲刺卡记录训练轨迹，不承载知识正文；未完成项直接顺延，不缩短题目时间。"
+            },
+            {
+              "label": "复习提示",
+              "body": "<ul><li>D1 原始 baseline 必须保留。D7 使用平行题比较 readiness、用时、hint 和 failure tag，而不是比较润色后的答案。</li></ul>",
+              "text": "- D1 原始 baseline 必须保留。D7 使用平行题比较 readiness、用时、hint 和 failure tag，而不是比较润色后的答案。"
             }
           ]
         }
@@ -122,47 +140,47 @@
         {
           "id": "timeline-1",
           "label": "D1（2026-07-10）",
-          "text": "Cyrene 主线叙事 + 升学答案 → 更新 Behavioral/Strategy（Project deep dive）",
+          "text": "已完成；三项 baseline + 精准补缺 + Cyrene 叙事/升学回答 + Two Sum/Valid Parentheses；hard gate 仍为 fail；D+2 复测 2026-07-12",
           "status": "done"
         },
         {
           "id": "timeline-2",
           "label": "D2（2026-07-11）",
-          "text": "Coze 上下文工程 + SFT/RLHF 概念层 → 更新 LLM Systems、RAG & Memory",
-          "status": "done"
+          "text": "未开始；180 min；Coze 上下文工程 + Transformer/post-training + 两道 coding → 更新 LLM Systems、RAG & Memory",
+          "status": "open"
         },
         {
           "id": "timeline-3",
           "label": "D3（2026-07-12）",
-          "text": "Agent Infra + 计算机八股 + Node event loop → 更新 Coding（新增两张笔记）",
+          "text": "未开始；210 min；Agent Infra + canonical system design + Tool Router + 计算机基础/Node event loop → 更新 Agent Design、Coding",
           "status": "open"
         },
         {
           "id": "timeline-4",
           "label": "D4（2026-07-13）",
-          "text": "Agent 评测 + bad case 演练 ×2 → 更新 Evals & Debugging",
+          "text": "未开始；180 min；Agent 评测 + unseen bad case ×2 + 两道 coding → 更新 Evals & Debugging",
           "status": "open"
         },
         {
           "id": "timeline-5",
           "label": "D5（2026-07-14）",
-          "text": "Mock 1：Coze 全真 60 分钟 → 答崩回填对应模块",
+          "text": "未开始；180 min；Mock 1：Coze 盲测 + 独立评分 + 两道 coding → 最弱项回填",
           "status": "open"
         },
         {
           "id": "timeline-6",
           "label": "D6（2026-07-15）",
-          "text": "Mock 2+3：Infra 40 分钟 + 评测 40 分钟 → 答崩回填",
+          "text": "未开始；210 min；Infra/Eval 双盲测 + 行为证据库 + 两道 coding → 最弱项回填",
           "status": "open"
         },
         {
           "id": "timeline-7",
           "label": "D7（2026-07-16）",
-          "text": "全题库抽查 + 反问定稿 + 全站「面试转译」过一遍 → Logs 写 weekly review",
+          "text": "未开始；180 min；平行盲测 + hard-gate 对比 + 反问/复测归档 → Logs weekly review",
           "status": "open"
         }
       ],
-      "searchText": "Interview Sprint 目标 7 天内把字节三个已投岗位（Coze 上下文工程 / Agent Infra 计算 / Agent 评测）的面试准备到可作战状态。本模块是时间驾驶舱：每天打开即知昨天学了什么、今天学什么；知识本体一律沉淀到对应能力模块，这里不存知识。 当前状态 2026-07-09 三岗全部投出（均带内推码）。冲刺从 D1 开始，任何一天约到面试则切换为 Mock 日，课表顺延。冲刺结束本模块归档（status: done），foundations 恢复原节奏。 核心知识 - 每日四段循环（90 分钟）：冷启动自测 15 → 主题学习 35 → 手撕/case 25 → 沉淀输出 15。全程由 AI 会话主持，契约见本地 interview prep 文件夹 AGENTS.md。 - 学习材料在本地面试包（01-07），本站只收两样东西：每日冲刺卡（本模块时间线）+ 消化后的知识笔记（对应能力模块）。 - 七个补丁项优先级：计算机八股 Node event loop SFT/RLHF 概念 手撕实战协议 评测 case 演练 升学答案 面试反馈回路。 任务 每日仪式： 1. 打开本模块时间线：看昨天的冲刺卡（学了什么/答崩什么）和今天的任务行。 2. 开 AI 会话，说「今天 Day N」，AI 按本地 AGENTS.md 接管四段循环。 3. 会话结束：AI 产出今日冲刺卡 + 2-3 张知识笔记 → 更新本模块时间线和对应能力模块 → 构建推送。 4. 面试日：早上只看目标模块的「面试转译」栏；面后 30 分钟内问题清单进 Logs。 时间线 - D1（2026-07-10）：Cyrene 主线叙事 + 升学答案 → 更新 Behavioral/Strategy（Project deep dive） - D2（2026-07-11）：Coze 上下文工程 + SFT/RLHF 概念层 → 更新 LLM Systems、RAG & Memory - D3（2026-07-12）：Agent Infra + 计算机八股 + Node event loop → 更新 Coding（新增两张笔记） - D4（2026-07-13）：Agent 评测 + bad case 演练 ×2 → 更新 Evals & Debugging - D5（2026-07-14）：Mock 1：Coze 全真 60 分钟 → 答崩回填对应模块 - D6（2026-07-15）：Mock 2+3：Infra 40 分钟 + 评测 40 分钟 → 答崩回填 - D7（2026-07-16）：全题库抽查 + 反问定稿 + 全站「面试转译」过一遍 → Logs 写 weekly review 知识笔记 冲刺卡格式 核心理解： - 每天一张卡追加到本模块时间线对应日期行后，格式： 学了{主题}；答崩：{清单}；已回填：{模块/笔记名}；明天：{主题} 。 - 冲刺卡是复盘线索不是知识本体；月底按 Logs 的惯例决定哪些沉淀回模块正文。 复习提示： - 若某天崩盘，不要重排整个冲刺：当天只完成①自测和④沉淀两段，其余顺延一天。",
+      "searchText": "Interview Sprint 目标 7 天内把字节三个已投岗位（Coze 上下文工程 / Agent Infra 计算 / Agent 评测）准备到可独立作答和验证的状态。本模块是横向时间驾驶舱：显示今天练什么、留下什么 artifact、下一次复测何时到期；知识本体一律沉淀到对应能力模块，这里不复制知识正文。 当前状态 D1 盲测基线已完成并保留原始 artifact。当前独立 readiness 为 Coding 0、System Design 0、Project Deep Dive 1，因此 coding 与 system/case hard gate 仍为 fail；后续 coached 重构不能覆盖该结论。Two Sum 与 Valid Parentheses 已由用户确认运行通过。D2 转入 Coze 上下文工程与 post-training，D1 三项弱点在 2026-07-12 做 D+2 变式复测。 核心知识 - 时间合同：标准日 180 分钟（D2/D4/D5/D7），重日 210 分钟（D1/D3/D6），休息另算。 - 盲测与教学隔离：interviewer 不预读答案，不提示；结束后由独立 evaluator 评分。 - 学习循环：先尝试 → 精准补缺 → 合资料重构 → 换场景迁移 → D+2/D+7 复测。 - hard gate：coding 与 system/case 必须分别独立通过，不能被表达或知识题平均掉。 - 站内每天只收一张冲刺卡和一张最重要弱项知识卡；原始错答、hint 和评分留在本地 eval ledger。 任务 每日仪式： 1. 看时间线和上一张冲刺卡，确认今日预算与到期复测。 2. 开 AI 会话，说「今天 Day N」；blind、coach、evaluator 使用不同会话。 3. coding 在本地或 judge 实际运行；system design 留下白板/文字 artifact。 4. 收尾更新本地 ledger、今日冲刺卡和最多一张能力模块知识卡。 5. 面试后 30 分钟内记录原题、原答、failure tag 与 D+2/D+7。 时间线 - D1（2026-07-10）：已完成；三项 baseline + 精准补缺 + Cyrene 叙事/升学回答 + Two Sum/Valid Parentheses；hard gate 仍为 fail；D+2 复测 2026-07-12 - D2（2026-07-11）：未开始；180 min；Coze 上下文工程 + Transformer/post-training + 两道 coding → 更新 LLM Systems、RAG & Memory - D3（2026-07-12）：未开始；210 min；Agent Infra + canonical system design + Tool Router + 计算机基础/Node event loop → 更新 Agent Design、Coding - D4（2026-07-13）：未开始；180 min；Agent 评测 + unseen bad case ×2 + 两道 coding → 更新 Evals & Debugging - D5（2026-07-14）：未开始；180 min；Mock 1：Coze 盲测 + 独立评分 + 两道 coding → 最弱项回填 - D6（2026-07-15）：未开始；210 min；Infra/Eval 双盲测 + 行为证据库 + 两道 coding → 最弱项回填 - D7（2026-07-16）：未开始；180 min；平行盲测 + hard-gate 对比 + 反问/复测归档 → Logs weekly review 知识笔记 D1 冲刺卡 核心理解： - 完成三份原始 baseline：Coding readiness 0、System Design readiness 0、Project Deep Dive readiness 1。 - coached 阶段重构 max running robots ，固定用例和 randomized differential tests 通过；该结果证明补缺有效，但不改写 blind baseline。 - Agent Runtime 被识别为尚未系统学习，而不是一次应用失误；已回填 Agent Design 的四层架构与 reliable tool execution 知识卡。 - Cyrene 叙事已校正为 actual-use count + weekly AI maintenance；晋升、更新和撤销都以周为周期，敏感或高风险内容走人工审核例外路径。 - Two Sum 与 Valid Parentheses 由用户确认运行通过；代码未保留在公开冲刺卡中。 复习提示： - 2026-07-12 分别复测 sliding-window 变式、Agent Runtime 前置知识和 Cyrene 冲突/撤销场景。只有未提示独立通过，才能提高 readiness。 冲刺卡格式 核心理解： - 每日格式： D{N}：完成{artifact}；hard gate：{结果}；主要 failure：{tag}；已回填：{模块/笔记}；下一次复测：{日期} 。 - 冲刺卡记录训练轨迹，不承载知识正文；未完成项直接顺延，不缩短题目时间。 复习提示： - D1 原始 baseline 必须保留。D7 使用平行题比较 readiness、用时、hint 和 failure tag，而不是比较润色后的答案。",
       "searchEntries": [
         {
           "id": "interview-sprint-目标",
@@ -170,7 +188,7 @@
           "moduleId": "interview-sprint",
           "moduleTitle": "Interview Sprint",
           "sectionTitle": "目标",
-          "text": "7 天内把字节三个已投岗位（Coze 上下文工程 / Agent Infra 计算 / Agent 评测）的面试准备到可作战状态。本模块是时间驾驶舱：每天打开即知昨天学了什么、今天学什么；知识本体一律沉淀到对应能力模块，这里不存知识。"
+          "text": "7 天内把字节三个已投岗位（Coze 上下文工程 / Agent Infra 计算 / Agent 评测）准备到可独立作答和验证的状态。本模块是横向时间驾驶舱：显示今天练什么、留下什么 artifact、下一次复测何时到期；知识本体一律沉淀到对应能力模块，这里不复制知识正文。"
         },
         {
           "id": "interview-sprint-当前状态",
@@ -178,7 +196,7 @@
           "moduleId": "interview-sprint",
           "moduleTitle": "Interview Sprint",
           "sectionTitle": "当前状态",
-          "text": "2026-07-09 三岗全部投出（均带内推码）。冲刺从 D1 开始，任何一天约到面试则切换为 Mock 日，课表顺延。冲刺结束本模块归档（status: done），foundations 恢复原节奏。"
+          "text": "D1 盲测基线已完成并保留原始 artifact。当前独立 readiness 为 Coding 0、System Design 0、Project Deep Dive 1，因此 coding 与 system/case hard gate 仍为 fail；后续 coached 重构不能覆盖该结论。Two Sum 与 Valid Parentheses 已由用户确认运行通过。D2 转入 Coze 上下文工程与 post-training，D1 三项弱点在 2026-07-12 做 D+2 变式复测。"
         },
         {
           "id": "interview-sprint-核心知识",
@@ -186,7 +204,7 @@
           "moduleId": "interview-sprint",
           "moduleTitle": "Interview Sprint",
           "sectionTitle": "核心知识",
-          "text": "- 每日四段循环（90 分钟）：冷启动自测 15 → 主题学习 35 → 手撕/case 25 → 沉淀输出 15。全程由 AI 会话主持，契约见本地 interview prep 文件夹 AGENTS.md。 - 学习材料在本地面试包（01-07），本站只收两样东西：每日冲刺卡（本模块时间线）+ 消化后的知识笔记（对应能力模块）。 - 七个补丁项优先级：计算机八股 Node event loop SFT/RLHF 概念 手撕实战协议 评测 case 演练 升学答案 面试反馈回路。"
+          "text": "- 时间合同：标准日 180 分钟（D2/D4/D5/D7），重日 210 分钟（D1/D3/D6），休息另算。 - 盲测与教学隔离：interviewer 不预读答案，不提示；结束后由独立 evaluator 评分。 - 学习循环：先尝试 → 精准补缺 → 合资料重构 → 换场景迁移 → D+2/D+7 复测。 - hard gate：coding 与 system/case 必须分别独立通过，不能被表达或知识题平均掉。 - 站内每天只收一张冲刺卡和一张最重要弱项知识卡；原始错答、hint 和评分留在本地 eval ledger。"
         },
         {
           "id": "interview-sprint-任务",
@@ -194,7 +212,7 @@
           "moduleId": "interview-sprint",
           "moduleTitle": "Interview Sprint",
           "sectionTitle": "任务",
-          "text": "每日仪式： 1. 打开本模块时间线：看昨天的冲刺卡（学了什么/答崩什么）和今天的任务行。 2. 开 AI 会话，说「今天 Day N」，AI 按本地 AGENTS.md 接管四段循环。 3. 会话结束：AI 产出今日冲刺卡 + 2-3 张知识笔记 → 更新本模块时间线和对应能力模块 → 构建推送。 4. 面试日：早上只看目标模块的「面试转译」栏；面后 30 分钟内问题清单进 Logs。"
+          "text": "每日仪式： 1. 看时间线和上一张冲刺卡，确认今日预算与到期复测。 2. 开 AI 会话，说「今天 Day N」；blind、coach、evaluator 使用不同会话。 3. coding 在本地或 judge 实际运行；system design 留下白板/文字 artifact。 4. 收尾更新本地 ledger、今日冲刺卡和最多一张能力模块知识卡。 5. 面试后 30 分钟内记录原题、原答、failure tag 与 D+2/D+7。"
         },
         {
           "id": "interview-sprint-时间线",
@@ -202,7 +220,7 @@
           "moduleId": "interview-sprint",
           "moduleTitle": "Interview Sprint",
           "sectionTitle": "时间线",
-          "text": "- D1（2026-07-10）：Cyrene 主线叙事 + 升学答案 → 更新 Behavioral/Strategy（Project deep dive） - D2（2026-07-11）：Coze 上下文工程 + SFT/RLHF 概念层 → 更新 LLM Systems、RAG & Memory - D3（2026-07-12）：Agent Infra + 计算机八股 + Node event loop → 更新 Coding（新增两张笔记） - D4（2026-07-13）：Agent 评测 + bad case 演练 ×2 → 更新 Evals & Debugging - D5（2026-07-14）：Mock 1：Coze 全真 60 分钟 → 答崩回填对应模块 - D6（2026-07-15）：Mock 2+3：Infra 40 分钟 + 评测 40 分钟 → 答崩回填 - D7（2026-07-16）：全题库抽查 + 反问定稿 + 全站「面试转译」过一遍 → Logs 写 weekly review"
+          "text": "- D1（2026-07-10）：已完成；三项 baseline + 精准补缺 + Cyrene 叙事/升学回答 + Two Sum/Valid Parentheses；hard gate 仍为 fail；D+2 复测 2026-07-12 - D2（2026-07-11）：未开始；180 min；Coze 上下文工程 + Transformer/post-training + 两道 coding → 更新 LLM Systems、RAG & Memory - D3（2026-07-12）：未开始；210 min；Agent Infra + canonical system design + Tool Router + 计算机基础/Node event loop → 更新 Agent Design、Coding - D4（2026-07-13）：未开始；180 min；Agent 评测 + unseen bad case ×2 + 两道 coding → 更新 Evals & Debugging - D5（2026-07-14）：未开始；180 min；Mock 1：Coze 盲测 + 独立评分 + 两道 coding → 最弱项回填 - D6（2026-07-15）：未开始；210 min；Infra/Eval 双盲测 + 行为证据库 + 两道 coding → 最弱项回填 - D7（2026-07-16）：未开始；180 min；平行盲测 + hard-gate 对比 + 反问/复测归档 → Logs weekly review"
         },
         {
           "id": "interview-sprint-知识笔记",
@@ -210,7 +228,15 @@
           "moduleId": "interview-sprint",
           "moduleTitle": "Interview Sprint",
           "sectionTitle": "知识笔记",
-          "text": "冲刺卡格式 核心理解： - 每天一张卡追加到本模块时间线对应日期行后，格式： 学了{主题}；答崩：{清单}；已回填：{模块/笔记名}；明天：{主题} 。 - 冲刺卡是复盘线索不是知识本体；月底按 Logs 的惯例决定哪些沉淀回模块正文。 复习提示： - 若某天崩盘，不要重排整个冲刺：当天只完成①自测和④沉淀两段，其余顺延一天。"
+          "text": "D1 冲刺卡 核心理解： - 完成三份原始 baseline：Coding readiness 0、System Design readiness 0、Project Deep Dive readiness 1。 - coached 阶段重构 max running robots ，固定用例和 randomized differential tests 通过；该结果证明补缺有效，但不改写 blind baseline。 - Agent Runtime 被识别为尚未系统学习，而不是一次应用失误；已回填 Agent Design 的四层架构与 reliable tool execution 知识卡。 - Cyrene 叙事已校正为 actual-use count + weekly AI maintenance；晋升、更新和撤销都以周为周期，敏感或高风险内容走人工审核例外路径。 - Two Sum 与 Valid Parentheses 由用户确认运行通过；代码未保留在公开冲刺卡中。 复习提示： - 2026-07-12 分别复测 sliding-window 变式、Agent Runtime 前置知识和 Cyrene 冲突/撤销场景。只有未提示独立通过，才能提高 readiness。 冲刺卡格式 核心理解： - 每日格式： D{N}：完成{artifact}；hard gate：{结果}；主要 failure：{tag}；已回填：{模块/笔记}；下一次复测：{日期} 。 - 冲刺卡记录训练轨迹，不承载知识正文；未完成项直接顺延，不缩短题目时间。 复习提示： - D1 原始 baseline 必须保留。D7 使用平行题比较 readiness、用时、hint 和 failure tag，而不是比较润色后的答案。"
+        },
+        {
+          "id": "interview-sprint-d1-冲刺卡",
+          "type": "knowledge-note",
+          "moduleId": "interview-sprint",
+          "moduleTitle": "Interview Sprint",
+          "sectionTitle": "D1 冲刺卡",
+          "text": "核心理解： - 完成三份原始 baseline：Coding readiness 0、System Design readiness 0、Project Deep Dive readiness 1。 - coached 阶段重构 max running robots ，固定用例和 randomized differential tests 通过；该结果证明补缺有效，但不改写 blind baseline。 - Agent Runtime 被识别为尚未系统学习，而不是一次应用失误；已回填 Agent Design 的四层架构与 reliable tool execution 知识卡。 - Cyrene 叙事已校正为 actual-use count + weekly AI maintenance；晋升、更新和撤销都以周为周期，敏感或高风险内容走人工审核例外路径。 - Two Sum 与 Valid Parentheses 由用户确认运行通过；代码未保留在公开冲刺卡中。 复习提示： - 2026-07-12 分别复测 sliding-window 变式、Agent Runtime 前置知识和 Cyrene 冲突/撤销场景。只有未提示独立通过，才能提高 readiness。"
         },
         {
           "id": "interview-sprint-冲刺卡格式",
@@ -218,7 +244,7 @@
           "moduleId": "interview-sprint",
           "moduleTitle": "Interview Sprint",
           "sectionTitle": "冲刺卡格式",
-          "text": "核心理解： - 每天一张卡追加到本模块时间线对应日期行后，格式： 学了{主题}；答崩：{清单}；已回填：{模块/笔记名}；明天：{主题} 。 - 冲刺卡是复盘线索不是知识本体；月底按 Logs 的惯例决定哪些沉淀回模块正文。 复习提示： - 若某天崩盘，不要重排整个冲刺：当天只完成①自测和④沉淀两段，其余顺延一天。"
+          "text": "核心理解： - 每日格式： D{N}：完成{artifact}；hard gate：{结果}；主要 failure：{tag}；已回填：{模块/笔记}；下一次复测：{日期} 。 - 冲刺卡记录训练轨迹，不承载知识正文；未完成项直接顺延，不缩短题目时间。 复习提示： - D1 原始 baseline 必须保留。D7 使用平行题比较 readiness、用时、hint 和 failure tag，而不是比较润色后的答案。"
         }
       ]
     },
@@ -652,17 +678,17 @@
     {
       "id": "agent-design",
       "title": "Agent Design",
-      "status": "not-started",
+      "status": "learning",
       "learningProgress": 0,
-      "lastUpdated": "2026-07-05",
+      "lastUpdated": "2026-07-10",
       "priority": "high",
       "sections": {
         "目标": "<p>掌握 Agent runtime 的核心组件和 failure modes，并能把 tool calling、planner loop、safe execution、trace 和 user workflow 讲成完整 system design。</p>",
-        "当前状态": "<p>Agent 是目标岗位主线之一。当前准备要避免只讲“planner + tools”的空泛架构，必须落到 schema validation、timeouts、permission model、human approval、observability 和 eval。</p>",
-        "核心知识": "<h3>Agent Systems</h3>\n<p>核心组件：</p>\n<ul><li>planner / policy loop</li><li>tool registry</li><li>tool router</li><li>execution sandbox</li><li>short-term context</li><li>long-term memory</li><li>trace logger</li><li>eval harness</li><li>human approval gate</li></ul>\n<p>核心风险：</p>\n<ul><li>tool hallucination</li><li>prompt injection</li><li>stale memory</li><li>runaway loops</li><li>hidden state mismatch</li><li>eval overfitting</li><li>latency explosion</li></ul>",
+        "当前状态": "<p>Agent 是目标岗位主线之一。当前自评只接触过 Reasoning 层的 planner、tool use 等表层概念；Runtime、Platform、Evals / Security 尚未系统学习。当前进入学习状态，但在未见 system design 中独立达到 readiness level 2 前，学习进度保持 0%。</p>",
+        "核心知识": "<h3>Agent Systems</h3>\n<p>核心组件：</p>\n<ul><li>planner / policy loop</li><li>tool registry</li><li>tool router</li><li>execution sandbox</li><li>short-term context</li><li>long-term memory</li><li>trace logger</li><li>eval harness</li><li>human approval gate</li></ul>\n<p>核心风险：</p>\n<ul><li>tool hallucination</li><li>prompt injection</li><li>stale memory</li><li>runaway loops</li><li>hidden state mismatch</li><li>eval overfitting</li><li>latency explosion</li></ul>\n<h3>Production Agent Architecture Layers</h3>\n<ul><li>Reasoning：planning、task decomposition、tool selection、memory retrieval。</li><li>Runtime / Orchestration：state machine、idempotency、timeout、retry、cancellation、human approval。</li><li>Platform：queue、multi-tenant isolation、authorization、audit、scaling。</li><li>Evals / Security：trace、regression eval、prompt injection、tool abuse、rollback criteria。</li></ul>\n<p>关键边界：LLM 可以提出下一步行动，但幂等、权限、状态转换和安全策略必须由确定性的 Runtime / Platform 层强制执行。</p>",
         "任务": "<h3>Case 2: Design An Agent Runtime With Tool Calling</h3>\n<p>必须覆盖：</p>\n<ul><li>tool registry</li><li>schema validation</li><li>planner loop</li><li>execution timeout</li><li>retry policy</li><li>trace logger</li><li>human approval for risky tools</li><li>eval: tool selection accuracy, task success, loop failures</li></ul>\n<h3>Case 6: Design A Safe Tool Execution Layer</h3>\n<p>必须覆盖：</p>\n<ul><li>permission model</li><li>sandboxing</li><li>file/network restrictions</li><li>approval gates</li><li>audit logs</li><li>abuse cases</li><li>recovery from partial execution</li></ul>\n<h3>Drill 1: Tool Router</h3>\n<p>Build：</p>\n<ul><li>Python tool registry</li><li>JSON schema validation</li><li>timeout wrapper</li><li>trace event for each call</li></ul>\n<p>Interview story：</p>\n<ul><li>tool calling needs validation, permissions, timeouts, and observability.</li></ul>\n<h3>Drill 6: TypeScript Agent Interface</h3>\n<p>Build：</p>\n<ul><li><code>ToolCall</code></li><li><code>ToolResult</code></li><li><code>AgentState</code></li><li><code>AgentTrace</code></li><li><code>EvalCase</code></li></ul>\n<p>Interview story：</p>\n<ul><li>typed interfaces clarify boundaries between model, tools, runtime, and UI.</li></ul>\n<h3>Drill 7: Streaming Wrapper</h3>\n<p>Build：</p>\n<ul><li>async token stream simulator</li><li>cancellation</li><li>partial output handling</li><li>error event</li></ul>\n<p>Interview story：</p>\n<ul><li>user experience and runtime control matter for production LLM systems.</li></ul>",
         "时间线": "<ul><li>Week 1：写 50-100 行 Python tool router；练 <code>How would you design a tool-calling agent?</code></li><li>Week 1 stretch：用 TypeScript 写 tool schema interface。</li><li>Week 4：把 Week 1-3 drills 包装成 project narrative。</li><li>Days 31-45：加一个 multi-agent workflow case：planner-worker-reviewer。</li><li>Days 46-60：如果需要 capstone，把 Agent runtime、trace、eval 合成 Agent eval and trace workbench。</li></ul>",
-        "知识笔记": "<h3>Agent Runtime With Tool Calling</h3>\n<p>核心理解：</p>\n<ul><li>Agent runtime 不是一个简单 loop，而是 tool registry、router、executor、trace logger、approval gate 的组合。</li><li>Tool calling 必须覆盖 schema validation、execution timeout、retry policy、trace logger、risky-tool approval。</li><li>eval 至少包括 tool selection accuracy、task success、loop failures。</li></ul>\n<p>常见误区：</p>\n<ul><li>把 tools 当成 prompt 里的字符串，而不是 typed, permissioned interfaces。</li><li>只画 planner + tools，不讲权限、timeout、partial execution 和可复现 trace。</li></ul>\n<p>面试转译：</p>\n<ul><li>“I would treat tools as typed, permissioned interfaces, not just strings in a prompt.”</li></ul>\n<h3>Safe Tool Execution Layer</h3>\n<p>核心理解：</p>\n<ul><li>Safe Tool Execution Layer 要覆盖 permission model、sandboxing、file/network restrictions、approval gates、audit logs、abuse cases 和 recovery。</li><li>Risky tools need approval gates and audit logs; safe tools can be executed automatically with timeout and retry policy。</li></ul>\n<p>常见误区：</p>\n<ul><li>只说 sandbox，但不说明什么操作需要用户批准、日志怎样审计、失败后如何恢复。</li></ul>\n<p>面试转译：</p>\n<ul><li>“Every model/tool/retrieval step needs a trace span, otherwise debugging multi-step failures becomes guesswork.”</li></ul>\n<h3>Tool Router</h3>\n<p>核心理解：</p>\n<ul><li>Drill 1: Tool Router 包含 Python tool registry、JSON schema validation、timeout wrapper、trace event for each call。</li><li>TypeScript Agent Interface 包含 <code>ToolCall</code>、<code>ToolResult</code>、<code>AgentState</code>、<code>AgentTrace</code>、<code>EvalCase</code>。</li></ul>\n<p>相关资料：</p>\n<ul><li>Tool use：ReAct、Toolformer。Need to know：reasoning + acting、tool selection。</li><li>Agent memory：Generative Agents、MemGPT、LLM agent memory surveys。Need to know：memory write/read、reflection、context management。</li></ul>\n<p>复习提示：</p>\n<ul><li>Agent design 的强信号不是“我会写一个 loop”，而是知道 loop 会怎样坏掉：错误 tool、错误参数、无限循环、权限越界、partial execution、不可复现 trace。</li></ul>"
+        "知识笔记": "<h3>Reliable Tool Execution</h3>\n<p>核心理解：</p>\n<ul><li>幂等的目标是让同一个逻辑 operation 即使被重复投递，也最多产生一次有效副作用。</li><li><code>operation_id</code> 标识逻辑操作，<code>attempt_id</code> 标识单次调用尝试，<code>idempotency_key</code> 把重复请求映射回同一个 operation。</li><li>调用超时只表示调用方不知道结果，应进入 <code>UNKNOWN / RECONCILING</code>，不能直接当作 <code>FAILED</code> 重试。</li><li>重复事件命中唯一键后返回已有 operation；reconciler 再根据下游的 <code>SUCCEEDED / RUNNING / NOT_FOUND</code> 状态完成确认或使用相同 key 重试。</li><li>工具端若不支持幂等键和状态查询，就无法完全消除“副作用已发生但响应丢失”的不确定性。</li></ul>\n<p>常见误区：</p>\n<ul><li>用语义相似度代替稳定 event / command ID 判断重复投递。</li><li>把 timeout 当作 failure，直接重试有副作用的工具。</li><li>为每次网络重试创建新的 operation，导致重复执行和审计状态分裂。</li><li>声称天然 exactly-once；更准确的目标是通过去重、幂等和对账实现 effectively-once。</li></ul>\n<p>面试转译：</p>\n<ul><li>“I separate a logical operation from its network attempts. A timeout moves the operation into an unknown state, and a reconciler resolves it before any retry with the same idempotency key.”</li></ul>\n<p>复习提示：</p>\n<ul><li>后续继续学习 transactional outbox、retry/backoff、circuit breaker、compensation、idempotency retention 和跨租户 operation store。</li><li>D+2 先做结构化学习检查点：复述四层架构、operation state machine 和 reliable tool execution，并完成第一份 guided artifact，不判 hard gate。</li><li>完成前置学习后，再用未见场景复测：工具已产生副作用但响应超时，同时发生重复投递和跨租户恶意指令。</li></ul>\n<h3>Agent Runtime With Tool Calling</h3>\n<p>核心理解：</p>\n<ul><li>Agent runtime 不是一个简单 loop，而是 tool registry、router、executor、trace logger、approval gate 的组合。</li><li>Tool calling 必须覆盖 schema validation、execution timeout、retry policy、trace logger、risky-tool approval。</li><li>eval 至少包括 tool selection accuracy、task success、loop failures。</li></ul>\n<p>常见误区：</p>\n<ul><li>把 tools 当成 prompt 里的字符串，而不是 typed, permissioned interfaces。</li><li>只画 planner + tools，不讲权限、timeout、partial execution 和可复现 trace。</li></ul>\n<p>面试转译：</p>\n<ul><li>“I would treat tools as typed, permissioned interfaces, not just strings in a prompt.”</li></ul>\n<h3>Safe Tool Execution Layer</h3>\n<p>核心理解：</p>\n<ul><li>Safe Tool Execution Layer 要覆盖 permission model、sandboxing、file/network restrictions、approval gates、audit logs、abuse cases 和 recovery。</li><li>Risky tools need approval gates and audit logs; safe tools can be executed automatically with timeout and retry policy。</li></ul>\n<p>常见误区：</p>\n<ul><li>只说 sandbox，但不说明什么操作需要用户批准、日志怎样审计、失败后如何恢复。</li></ul>\n<p>面试转译：</p>\n<ul><li>“Every model/tool/retrieval step needs a trace span, otherwise debugging multi-step failures becomes guesswork.”</li></ul>\n<h3>Tool Router</h3>\n<p>核心理解：</p>\n<ul><li>Drill 1: Tool Router 包含 Python tool registry、JSON schema validation、timeout wrapper、trace event for each call。</li><li>TypeScript Agent Interface 包含 <code>ToolCall</code>、<code>ToolResult</code>、<code>AgentState</code>、<code>AgentTrace</code>、<code>EvalCase</code>。</li></ul>\n<p>相关资料：</p>\n<ul><li>Tool use：ReAct、Toolformer。Need to know：reasoning + acting、tool selection。</li><li>Agent memory：Generative Agents、MemGPT、LLM agent memory surveys。Need to know：memory write/read、reflection、context management。</li></ul>\n<p>复习提示：</p>\n<ul><li>Agent design 的强信号不是“我会写一个 loop”，而是知道 loop 会怎样坏掉：错误 tool、错误参数、无限循环、权限越界、partial execution、不可复现 trace。</li></ul>"
       },
       "sectionIds": {
         "目标": "agent-design-目标",
@@ -673,6 +699,34 @@
         "知识笔记": "agent-design-知识笔记"
       },
       "knowledgeNotes": [
+        {
+          "id": "agent-design-reliable-tool-execution",
+          "title": "Reliable Tool Execution",
+          "body": "<p>核心理解：</p>\n<ul><li>幂等的目标是让同一个逻辑 operation 即使被重复投递，也最多产生一次有效副作用。</li><li><code>operation_id</code> 标识逻辑操作，<code>attempt_id</code> 标识单次调用尝试，<code>idempotency_key</code> 把重复请求映射回同一个 operation。</li><li>调用超时只表示调用方不知道结果，应进入 <code>UNKNOWN / RECONCILING</code>，不能直接当作 <code>FAILED</code> 重试。</li><li>重复事件命中唯一键后返回已有 operation；reconciler 再根据下游的 <code>SUCCEEDED / RUNNING / NOT_FOUND</code> 状态完成确认或使用相同 key 重试。</li><li>工具端若不支持幂等键和状态查询，就无法完全消除“副作用已发生但响应丢失”的不确定性。</li></ul>\n<p>常见误区：</p>\n<ul><li>用语义相似度代替稳定 event / command ID 判断重复投递。</li><li>把 timeout 当作 failure，直接重试有副作用的工具。</li><li>为每次网络重试创建新的 operation，导致重复执行和审计状态分裂。</li><li>声称天然 exactly-once；更准确的目标是通过去重、幂等和对账实现 effectively-once。</li></ul>\n<p>面试转译：</p>\n<ul><li>“I separate a logical operation from its network attempts. A timeout moves the operation into an unknown state, and a reconciler resolves it before any retry with the same idempotency key.”</li></ul>\n<p>复习提示：</p>\n<ul><li>后续继续学习 transactional outbox、retry/backoff、circuit breaker、compensation、idempotency retention 和跨租户 operation store。</li><li>D+2 先做结构化学习检查点：复述四层架构、operation state machine 和 reliable tool execution，并完成第一份 guided artifact，不判 hard gate。</li><li>完成前置学习后，再用未见场景复测：工具已产生副作用但响应超时，同时发生重复投递和跨租户恶意指令。</li></ul>",
+          "text": "核心理解： - 幂等的目标是让同一个逻辑 operation 即使被重复投递，也最多产生一次有效副作用。 - operation id 标识逻辑操作， attempt id 标识单次调用尝试， idempotency key 把重复请求映射回同一个 operation。 - 调用超时只表示调用方不知道结果，应进入 UNKNOWN / RECONCILING ，不能直接当作 FAILED 重试。 - 重复事件命中唯一键后返回已有 operation；reconciler 再根据下游的 SUCCEEDED / RUNNING / NOT FOUND 状态完成确认或使用相同 key 重试。 - 工具端若不支持幂等键和状态查询，就无法完全消除“副作用已发生但响应丢失”的不确定性。 常见误区： - 用语义相似度代替稳定 event / command ID 判断重复投递。 - 把 timeout 当作 failure，直接重试有副作用的工具。 - 为每次网络重试创建新的 operation，导致重复执行和审计状态分裂。 - 声称天然 exactly-once；更准确的目标是通过去重、幂等和对账实现 effectively-once。 面试转译： - “I separate a logical operation from its network attempts. A timeout moves the operation into an unknown state, and a reconciler resolves it before any retry with the same idempotency key.” 复习提示： - 后续继续学习 transactional outbox、retry/backoff、circuit breaker、compensation、idempotency retention 和跨租户 operation store。 - D+2 先做结构化学习检查点：复述四层架构、operation state machine 和 reliable tool execution，并完成第一份 guided artifact，不判 hard gate。 - 完成前置学习后，再用未见场景复测：工具已产生副作用但响应超时，同时发生重复投递和跨租户恶意指令。",
+          "groups": [
+            {
+              "label": "核心理解",
+              "body": "<ul><li>幂等的目标是让同一个逻辑 operation 即使被重复投递，也最多产生一次有效副作用。</li><li><code>operation_id</code> 标识逻辑操作，<code>attempt_id</code> 标识单次调用尝试，<code>idempotency_key</code> 把重复请求映射回同一个 operation。</li><li>调用超时只表示调用方不知道结果，应进入 <code>UNKNOWN / RECONCILING</code>，不能直接当作 <code>FAILED</code> 重试。</li><li>重复事件命中唯一键后返回已有 operation；reconciler 再根据下游的 <code>SUCCEEDED / RUNNING / NOT_FOUND</code> 状态完成确认或使用相同 key 重试。</li><li>工具端若不支持幂等键和状态查询，就无法完全消除“副作用已发生但响应丢失”的不确定性。</li></ul>",
+              "text": "- 幂等的目标是让同一个逻辑 operation 即使被重复投递，也最多产生一次有效副作用。 - operation id 标识逻辑操作， attempt id 标识单次调用尝试， idempotency key 把重复请求映射回同一个 operation。 - 调用超时只表示调用方不知道结果，应进入 UNKNOWN / RECONCILING ，不能直接当作 FAILED 重试。 - 重复事件命中唯一键后返回已有 operation；reconciler 再根据下游的 SUCCEEDED / RUNNING / NOT FOUND 状态完成确认或使用相同 key 重试。 - 工具端若不支持幂等键和状态查询，就无法完全消除“副作用已发生但响应丢失”的不确定性。"
+            },
+            {
+              "label": "常见误区",
+              "body": "<ul><li>用语义相似度代替稳定 event / command ID 判断重复投递。</li><li>把 timeout 当作 failure，直接重试有副作用的工具。</li><li>为每次网络重试创建新的 operation，导致重复执行和审计状态分裂。</li><li>声称天然 exactly-once；更准确的目标是通过去重、幂等和对账实现 effectively-once。</li></ul>",
+              "text": "- 用语义相似度代替稳定 event / command ID 判断重复投递。 - 把 timeout 当作 failure，直接重试有副作用的工具。 - 为每次网络重试创建新的 operation，导致重复执行和审计状态分裂。 - 声称天然 exactly-once；更准确的目标是通过去重、幂等和对账实现 effectively-once。"
+            },
+            {
+              "label": "面试转译",
+              "body": "<ul><li>“I separate a logical operation from its network attempts. A timeout moves the operation into an unknown state, and a reconciler resolves it before any retry with the same idempotency key.”</li></ul>",
+              "text": "- “I separate a logical operation from its network attempts. A timeout moves the operation into an unknown state, and a reconciler resolves it before any retry with the same idempotency key.”"
+            },
+            {
+              "label": "复习提示",
+              "body": "<ul><li>后续继续学习 transactional outbox、retry/backoff、circuit breaker、compensation、idempotency retention 和跨租户 operation store。</li><li>D+2 先做结构化学习检查点：复述四层架构、operation state machine 和 reliable tool execution，并完成第一份 guided artifact，不判 hard gate。</li><li>完成前置学习后，再用未见场景复测：工具已产生副作用但响应超时，同时发生重复投递和跨租户恶意指令。</li></ul>",
+              "text": "- 后续继续学习 transactional outbox、retry/backoff、circuit breaker、compensation、idempotency retention 和跨租户 operation store。 - D+2 先做结构化学习检查点：复述四层架构、operation state machine 和 reliable tool execution，并完成第一份 guided artifact，不判 hard gate。 - 完成前置学习后，再用未见场景复测：工具已产生副作用但响应超时，同时发生重复投递和跨租户恶意指令。"
+            }
+          ]
+        },
         {
           "id": "agent-design-agent-runtime-with-tool-calling",
           "title": "Agent Runtime With Tool Calling",
@@ -775,7 +829,7 @@
           "status": "open"
         }
       ],
-      "searchText": "Agent Design 目标 掌握 Agent runtime 的核心组件和 failure modes，并能把 tool calling、planner loop、safe execution、trace 和 user workflow 讲成完整 system design。 当前状态 Agent 是目标岗位主线之一。当前准备要避免只讲“planner + tools”的空泛架构，必须落到 schema validation、timeouts、permission model、human approval、observability 和 eval。 核心知识 Agent Systems 核心组件： - planner / policy loop - tool registry - tool router - execution sandbox - short-term context - long-term memory - trace logger - eval harness - human approval gate 核心风险： - tool hallucination - prompt injection - stale memory - runaway loops - hidden state mismatch - eval overfitting - latency explosion 任务 Case 2: Design An Agent Runtime With Tool Calling 必须覆盖： - tool registry - schema validation - planner loop - execution timeout - retry policy - trace logger - human approval for risky tools - eval: tool selection accuracy, task success, loop failures Case 6: Design A Safe Tool Execution Layer 必须覆盖： - permission model - sandboxing - file/network restrictions - approval gates - audit logs - abuse cases - recovery from partial execution Drill 1: Tool Router Build： - Python tool registry - JSON schema validation - timeout wrapper - trace event for each call Interview story： - tool calling needs validation, permissions, timeouts, and observability. Drill 6: TypeScript Agent Interface Build： - ToolCall - ToolResult - AgentState - AgentTrace - EvalCase Interview story： - typed interfaces clarify boundaries between model, tools, runtime, and UI. Drill 7: Streaming Wrapper Build： - async token stream simulator - cancellation - partial output handling - error event Interview story： - user experience and runtime control matter for production LLM systems. 时间线 - Week 1：写 50-100 行 Python tool router；练 How would you design a tool-calling agent? - Week 1 stretch：用 TypeScript 写 tool schema interface。 - Week 4：把 Week 1-3 drills 包装成 project narrative。 - Days 31-45：加一个 multi-agent workflow case：planner-worker-reviewer。 - Days 46-60：如果需要 capstone，把 Agent runtime、trace、eval 合成 Agent eval and trace workbench。 知识笔记 Agent Runtime With Tool Calling 核心理解： - Agent runtime 不是一个简单 loop，而是 tool registry、router、executor、trace logger、approval gate 的组合。 - Tool calling 必须覆盖 schema validation、execution timeout、retry policy、trace logger、risky-tool approval。 - eval 至少包括 tool selection accuracy、task success、loop failures。 常见误区： - 把 tools 当成 prompt 里的字符串，而不是 typed, permissioned interfaces。 - 只画 planner + tools，不讲权限、timeout、partial execution 和可复现 trace。 面试转译： - “I would treat tools as typed, permissioned interfaces, not just strings in a prompt.” Safe Tool Execution Layer 核心理解： - Safe Tool Execution Layer 要覆盖 permission model、sandboxing、file/network restrictions、approval gates、audit logs、abuse cases 和 recovery。 - Risky tools need approval gates and audit logs; safe tools can be executed automatically with timeout and retry policy。 常见误区： - 只说 sandbox，但不说明什么操作需要用户批准、日志怎样审计、失败后如何恢复。 面试转译： - “Every model/tool/retrieval step needs a trace span, otherwise debugging multi-step failures becomes guesswork.” Tool Router 核心理解： - Drill 1: Tool Router 包含 Python tool registry、JSON schema validation、timeout wrapper、trace event for each call。 - TypeScript Agent Interface 包含 ToolCall 、 ToolResult 、 AgentState 、 AgentTrace 、 EvalCase 。 相关资料： - Tool use：ReAct、Toolformer。Need to know：reasoning + acting、tool selection。 - Agent memory：Generative Agents、MemGPT、LLM agent memory surveys。Need to know：memory write/read、reflection、context management。 复习提示： - Agent design 的强信号不是“我会写一个 loop”，而是知道 loop 会怎样坏掉：错误 tool、错误参数、无限循环、权限越界、partial execution、不可复现 trace。",
+      "searchText": "Agent Design 目标 掌握 Agent runtime 的核心组件和 failure modes，并能把 tool calling、planner loop、safe execution、trace 和 user workflow 讲成完整 system design。 当前状态 Agent 是目标岗位主线之一。当前自评只接触过 Reasoning 层的 planner、tool use 等表层概念；Runtime、Platform、Evals / Security 尚未系统学习。当前进入学习状态，但在未见 system design 中独立达到 readiness level 2 前，学习进度保持 0%。 核心知识 Agent Systems 核心组件： - planner / policy loop - tool registry - tool router - execution sandbox - short-term context - long-term memory - trace logger - eval harness - human approval gate 核心风险： - tool hallucination - prompt injection - stale memory - runaway loops - hidden state mismatch - eval overfitting - latency explosion Production Agent Architecture Layers - Reasoning：planning、task decomposition、tool selection、memory retrieval。 - Runtime / Orchestration：state machine、idempotency、timeout、retry、cancellation、human approval。 - Platform：queue、multi-tenant isolation、authorization、audit、scaling。 - Evals / Security：trace、regression eval、prompt injection、tool abuse、rollback criteria。 关键边界：LLM 可以提出下一步行动，但幂等、权限、状态转换和安全策略必须由确定性的 Runtime / Platform 层强制执行。 任务 Case 2: Design An Agent Runtime With Tool Calling 必须覆盖： - tool registry - schema validation - planner loop - execution timeout - retry policy - trace logger - human approval for risky tools - eval: tool selection accuracy, task success, loop failures Case 6: Design A Safe Tool Execution Layer 必须覆盖： - permission model - sandboxing - file/network restrictions - approval gates - audit logs - abuse cases - recovery from partial execution Drill 1: Tool Router Build： - Python tool registry - JSON schema validation - timeout wrapper - trace event for each call Interview story： - tool calling needs validation, permissions, timeouts, and observability. Drill 6: TypeScript Agent Interface Build： - ToolCall - ToolResult - AgentState - AgentTrace - EvalCase Interview story： - typed interfaces clarify boundaries between model, tools, runtime, and UI. Drill 7: Streaming Wrapper Build： - async token stream simulator - cancellation - partial output handling - error event Interview story： - user experience and runtime control matter for production LLM systems. 时间线 - Week 1：写 50-100 行 Python tool router；练 How would you design a tool-calling agent? - Week 1 stretch：用 TypeScript 写 tool schema interface。 - Week 4：把 Week 1-3 drills 包装成 project narrative。 - Days 31-45：加一个 multi-agent workflow case：planner-worker-reviewer。 - Days 46-60：如果需要 capstone，把 Agent runtime、trace、eval 合成 Agent eval and trace workbench。 知识笔记 Reliable Tool Execution 核心理解： - 幂等的目标是让同一个逻辑 operation 即使被重复投递，也最多产生一次有效副作用。 - operation id 标识逻辑操作， attempt id 标识单次调用尝试， idempotency key 把重复请求映射回同一个 operation。 - 调用超时只表示调用方不知道结果，应进入 UNKNOWN / RECONCILING ，不能直接当作 FAILED 重试。 - 重复事件命中唯一键后返回已有 operation；reconciler 再根据下游的 SUCCEEDED / RUNNING / NOT FOUND 状态完成确认或使用相同 key 重试。 - 工具端若不支持幂等键和状态查询，就无法完全消除“副作用已发生但响应丢失”的不确定性。 常见误区： - 用语义相似度代替稳定 event / command ID 判断重复投递。 - 把 timeout 当作 failure，直接重试有副作用的工具。 - 为每次网络重试创建新的 operation，导致重复执行和审计状态分裂。 - 声称天然 exactly-once；更准确的目标是通过去重、幂等和对账实现 effectively-once。 面试转译： - “I separate a logical operation from its network attempts. A timeout moves the operation into an unknown state, and a reconciler resolves it before any retry with the same idempotency key.” 复习提示： - 后续继续学习 transactional outbox、retry/backoff、circuit breaker、compensation、idempotency retention 和跨租户 operation store。 - D+2 先做结构化学习检查点：复述四层架构、operation state machine 和 reliable tool execution，并完成第一份 guided artifact，不判 hard gate。 - 完成前置学习后，再用未见场景复测：工具已产生副作用但响应超时，同时发生重复投递和跨租户恶意指令。 Agent Runtime With Tool Calling 核心理解： - Agent runtime 不是一个简单 loop，而是 tool registry、router、executor、trace logger、approval gate 的组合。 - Tool calling 必须覆盖 schema validation、execution timeout、retry policy、trace logger、risky-tool approval。 - eval 至少包括 tool selection accuracy、task success、loop failures。 常见误区： - 把 tools 当成 prompt 里的字符串，而不是 typed, permissioned interfaces。 - 只画 planner + tools，不讲权限、timeout、partial execution 和可复现 trace。 面试转译： - “I would treat tools as typed, permissioned interfaces, not just strings in a prompt.” Safe Tool Execution Layer 核心理解： - Safe Tool Execution Layer 要覆盖 permission model、sandboxing、file/network restrictions、approval gates、audit logs、abuse cases 和 recovery。 - Risky tools need approval gates and audit logs; safe tools can be executed automatically with timeout and retry policy。 常见误区： - 只说 sandbox，但不说明什么操作需要用户批准、日志怎样审计、失败后如何恢复。 面试转译： - “Every model/tool/retrieval step needs a trace span, otherwise debugging multi-step failures becomes guesswork.” Tool Router 核心理解： - Drill 1: Tool Router 包含 Python tool registry、JSON schema validation、timeout wrapper、trace event for each call。 - TypeScript Agent Interface 包含 ToolCall 、 ToolResult 、 AgentState 、 AgentTrace 、 EvalCase 。 相关资料： - Tool use：ReAct、Toolformer。Need to know：reasoning + acting、tool selection。 - Agent memory：Generative Agents、MemGPT、LLM agent memory surveys。Need to know：memory write/read、reflection、context management。 复习提示： - Agent design 的强信号不是“我会写一个 loop”，而是知道 loop 会怎样坏掉：错误 tool、错误参数、无限循环、权限越界、partial execution、不可复现 trace。",
       "searchEntries": [
         {
           "id": "agent-design-目标",
@@ -791,7 +845,7 @@
           "moduleId": "agent-design",
           "moduleTitle": "Agent Design",
           "sectionTitle": "当前状态",
-          "text": "Agent 是目标岗位主线之一。当前准备要避免只讲“planner + tools”的空泛架构，必须落到 schema validation、timeouts、permission model、human approval、observability 和 eval。"
+          "text": "Agent 是目标岗位主线之一。当前自评只接触过 Reasoning 层的 planner、tool use 等表层概念；Runtime、Platform、Evals / Security 尚未系统学习。当前进入学习状态，但在未见 system design 中独立达到 readiness level 2 前，学习进度保持 0%。"
         },
         {
           "id": "agent-design-核心知识",
@@ -799,7 +853,7 @@
           "moduleId": "agent-design",
           "moduleTitle": "Agent Design",
           "sectionTitle": "核心知识",
-          "text": "Agent Systems 核心组件： - planner / policy loop - tool registry - tool router - execution sandbox - short-term context - long-term memory - trace logger - eval harness - human approval gate 核心风险： - tool hallucination - prompt injection - stale memory - runaway loops - hidden state mismatch - eval overfitting - latency explosion"
+          "text": "Agent Systems 核心组件： - planner / policy loop - tool registry - tool router - execution sandbox - short-term context - long-term memory - trace logger - eval harness - human approval gate 核心风险： - tool hallucination - prompt injection - stale memory - runaway loops - hidden state mismatch - eval overfitting - latency explosion Production Agent Architecture Layers - Reasoning：planning、task decomposition、tool selection、memory retrieval。 - Runtime / Orchestration：state machine、idempotency、timeout、retry、cancellation、human approval。 - Platform：queue、multi-tenant isolation、authorization、audit、scaling。 - Evals / Security：trace、regression eval、prompt injection、tool abuse、rollback criteria。 关键边界：LLM 可以提出下一步行动，但幂等、权限、状态转换和安全策略必须由确定性的 Runtime / Platform 层强制执行。"
         },
         {
           "id": "agent-design-任务",
@@ -823,7 +877,15 @@
           "moduleId": "agent-design",
           "moduleTitle": "Agent Design",
           "sectionTitle": "知识笔记",
-          "text": "Agent Runtime With Tool Calling 核心理解： - Agent runtime 不是一个简单 loop，而是 tool registry、router、executor、trace logger、approval gate 的组合。 - Tool calling 必须覆盖 schema validation、execution timeout、retry policy、trace logger、risky-tool approval。 - eval 至少包括 tool selection accuracy、task success、loop failures。 常见误区： - 把 tools 当成 prompt 里的字符串，而不是 typed, permissioned interfaces。 - 只画 planner + tools，不讲权限、timeout、partial execution 和可复现 trace。 面试转译： - “I would treat tools as typed, permissioned interfaces, not just strings in a prompt.” Safe Tool Execution Layer 核心理解： - Safe Tool Execution Layer 要覆盖 permission model、sandboxing、file/network restrictions、approval gates、audit logs、abuse cases 和 recovery。 - Risky tools need approval gates and audit logs; safe tools can be executed automatically with timeout and retry policy。 常见误区： - 只说 sandbox，但不说明什么操作需要用户批准、日志怎样审计、失败后如何恢复。 面试转译： - “Every model/tool/retrieval step needs a trace span, otherwise debugging multi-step failures becomes guesswork.” Tool Router 核心理解： - Drill 1: Tool Router 包含 Python tool registry、JSON schema validation、timeout wrapper、trace event for each call。 - TypeScript Agent Interface 包含 ToolCall 、 ToolResult 、 AgentState 、 AgentTrace 、 EvalCase 。 相关资料： - Tool use：ReAct、Toolformer。Need to know：reasoning + acting、tool selection。 - Agent memory：Generative Agents、MemGPT、LLM agent memory surveys。Need to know：memory write/read、reflection、context management。 复习提示： - Agent design 的强信号不是“我会写一个 loop”，而是知道 loop 会怎样坏掉：错误 tool、错误参数、无限循环、权限越界、partial execution、不可复现 trace。"
+          "text": "Reliable Tool Execution 核心理解： - 幂等的目标是让同一个逻辑 operation 即使被重复投递，也最多产生一次有效副作用。 - operation id 标识逻辑操作， attempt id 标识单次调用尝试， idempotency key 把重复请求映射回同一个 operation。 - 调用超时只表示调用方不知道结果，应进入 UNKNOWN / RECONCILING ，不能直接当作 FAILED 重试。 - 重复事件命中唯一键后返回已有 operation；reconciler 再根据下游的 SUCCEEDED / RUNNING / NOT FOUND 状态完成确认或使用相同 key 重试。 - 工具端若不支持幂等键和状态查询，就无法完全消除“副作用已发生但响应丢失”的不确定性。 常见误区： - 用语义相似度代替稳定 event / command ID 判断重复投递。 - 把 timeout 当作 failure，直接重试有副作用的工具。 - 为每次网络重试创建新的 operation，导致重复执行和审计状态分裂。 - 声称天然 exactly-once；更准确的目标是通过去重、幂等和对账实现 effectively-once。 面试转译： - “I separate a logical operation from its network attempts. A timeout moves the operation into an unknown state, and a reconciler resolves it before any retry with the same idempotency key.” 复习提示： - 后续继续学习 transactional outbox、retry/backoff、circuit breaker、compensation、idempotency retention 和跨租户 operation store。 - D+2 先做结构化学习检查点：复述四层架构、operation state machine 和 reliable tool execution，并完成第一份 guided artifact，不判 hard gate。 - 完成前置学习后，再用未见场景复测：工具已产生副作用但响应超时，同时发生重复投递和跨租户恶意指令。 Agent Runtime With Tool Calling 核心理解： - Agent runtime 不是一个简单 loop，而是 tool registry、router、executor、trace logger、approval gate 的组合。 - Tool calling 必须覆盖 schema validation、execution timeout、retry policy、trace logger、risky-tool approval。 - eval 至少包括 tool selection accuracy、task success、loop failures。 常见误区： - 把 tools 当成 prompt 里的字符串，而不是 typed, permissioned interfaces。 - 只画 planner + tools，不讲权限、timeout、partial execution 和可复现 trace。 面试转译： - “I would treat tools as typed, permissioned interfaces, not just strings in a prompt.” Safe Tool Execution Layer 核心理解： - Safe Tool Execution Layer 要覆盖 permission model、sandboxing、file/network restrictions、approval gates、audit logs、abuse cases 和 recovery。 - Risky tools need approval gates and audit logs; safe tools can be executed automatically with timeout and retry policy。 常见误区： - 只说 sandbox，但不说明什么操作需要用户批准、日志怎样审计、失败后如何恢复。 面试转译： - “Every model/tool/retrieval step needs a trace span, otherwise debugging multi-step failures becomes guesswork.” Tool Router 核心理解： - Drill 1: Tool Router 包含 Python tool registry、JSON schema validation、timeout wrapper、trace event for each call。 - TypeScript Agent Interface 包含 ToolCall 、 ToolResult 、 AgentState 、 AgentTrace 、 EvalCase 。 相关资料： - Tool use：ReAct、Toolformer。Need to know：reasoning + acting、tool selection。 - Agent memory：Generative Agents、MemGPT、LLM agent memory surveys。Need to know：memory write/read、reflection、context management。 复习提示： - Agent design 的强信号不是“我会写一个 loop”，而是知道 loop 会怎样坏掉：错误 tool、错误参数、无限循环、权限越界、partial execution、不可复现 trace。"
+        },
+        {
+          "id": "agent-design-reliable-tool-execution",
+          "type": "knowledge-note",
+          "moduleId": "agent-design",
+          "moduleTitle": "Agent Design",
+          "sectionTitle": "Reliable Tool Execution",
+          "text": "核心理解： - 幂等的目标是让同一个逻辑 operation 即使被重复投递，也最多产生一次有效副作用。 - operation id 标识逻辑操作， attempt id 标识单次调用尝试， idempotency key 把重复请求映射回同一个 operation。 - 调用超时只表示调用方不知道结果，应进入 UNKNOWN / RECONCILING ，不能直接当作 FAILED 重试。 - 重复事件命中唯一键后返回已有 operation；reconciler 再根据下游的 SUCCEEDED / RUNNING / NOT FOUND 状态完成确认或使用相同 key 重试。 - 工具端若不支持幂等键和状态查询，就无法完全消除“副作用已发生但响应丢失”的不确定性。 常见误区： - 用语义相似度代替稳定 event / command ID 判断重复投递。 - 把 timeout 当作 failure，直接重试有副作用的工具。 - 为每次网络重试创建新的 operation，导致重复执行和审计状态分裂。 - 声称天然 exactly-once；更准确的目标是通过去重、幂等和对账实现 effectively-once。 面试转译： - “I separate a logical operation from its network attempts. A timeout moves the operation into an unknown state, and a reconciler resolves it before any retry with the same idempotency key.” 复习提示： - 后续继续学习 transactional outbox、retry/backoff、circuit breaker、compensation、idempotency retention 和跨租户 operation store。 - D+2 先做结构化学习检查点：复述四层架构、operation state machine 和 reliable tool execution，并完成第一份 guided artifact，不判 hard gate。 - 完成前置学习后，再用未见场景复测：工具已产生副作用但响应超时，同时发生重复投递和跨租户恶意指令。"
         },
         {
           "id": "agent-design-agent-runtime-with-tool-calling",
@@ -1434,17 +1496,17 @@
     {
       "id": "behavioral-strategy",
       "title": "Behavioral / Strategy",
-      "status": "not-started",
+      "status": "learning",
       "learningProgress": 0,
-      "lastUpdated": "2026-07-05",
+      "lastUpdated": "2026-07-10",
       "priority": "high",
       "sections": {
         "目标": "<p>把准备内容转成面试官能识别的强信号：结构化表达、清楚 tradeoff、真实 failure story、可验证 project evidence。</p>",
-        "当前状态": "<p>第二优先级是面试表达。coding 和 system design 内容必须最终转成可讲述的故事，否则准备会停留在“做过一些练习”。</p>",
+        "当前状态": "<p>已开始 Cyrene project deep dive 与升学/可实习性表达训练。当前仍需在不看稿、没有引导的情况下完成 2 分钟项目介绍并正确限定 benchmark 证据，达到 readiness level 2 前进度保持 0%。</p>",
         "核心知识": "<p>表达训练重点：</p>\n<ul><li>clarify requirements</li><li>state assumptions</li><li>compare tradeoffs</li><li>identify failure modes</li><li>propose evals</li><li>tell evidence-backed stories</li><li>avoid vague claims</li></ul>",
         "任务": "<h3>Behavioral And Project Deep Dive</h3>\n<ol><li>Tell me about a project where requirements were ambiguous。</li><li>Tell me about a time you debugged a difficult issue。</li><li>Tell me about a tradeoff you made between speed and correctness。</li><li>Tell me about a time you changed your mind after evidence。</li><li>Walk me through a system you built and what you would improve。</li></ol>\n<h3>Strategy Rubric</h3>\n<p>Score yourself weekly from 1 to 5:</p>\n<ul><li>Coding correctness：1 = Cannot finish medium；3 = Finishes with hints；5 = Finishes cleanly and explains。</li><li>Coding communication：1 = Silent or scattered；3 = Explains main idea；5 = Clarifies, narrates, tests。</li><li>LLM systems：1 = Knows terms；3 = Explains components；5 = Designs with tradeoffs and evals。</li><li>Agent design：1 = Generic loop；3 = Names tools/memory；5 = Handles safety, trace, failure。</li><li>Research depth：1 = Name-drops papers；3 = Explains claims；5 = Connects papers to systems。</li><li>Behavioral：1 = Vague stories；3 = STAR-ish；5 = Crisp, evidence-backed, reflective。</li><li>Project evidence：1 = No artifacts；3 = Small scripts；5 = Drills tied to interview stories。</li></ul>\n<p>Weekly target：</p>\n<ul><li>Week 1：average 2.5</li><li>Week 2：average 3</li><li>Week 3：average 3.5</li><li>Week 4：average 4</li><li>Day 45+：push weakest two dimensions toward 4</li><li>Day 60+：one standout dimension should reach 5</li></ul>",
         "时间线": "<ul><li>Week 1：练一个 2 分钟 tool-calling agent 设计回答。</li><li>Week 3：写 1 个 behavioral story：如何在 ambiguity 下做取舍。</li><li>Week 4：整理 5 个 behavioral stories；做 2 次 system design mock；做一轮 full loop mock。</li><li>Days 31-45：简历项目叙事和 mock interview iteration。</li><li>Days 46-60：3 次 full mock，并按 rubric 复盘。</li></ul>",
-        "知识笔记": "<h3>STAR and evidence</h3>\n<p>核心理解：</p>\n<ul><li>STAR 可以用，但不要僵硬。Situation、Task、Action、Result、Reflection 都要有具体证据。</li><li>Strong signal 是清楚地说出“我做了什么、为什么这样设计、怎么验证、哪里失败过、我如何改进”。</li><li>Weak signal 是只说“我了解 RAG/Agent/RLHF”、只背论文名、只画组件不讲 failure recovery。</li></ul>\n<p>面试转译：</p>\n<ul><li>“The strongest version of this story is not that the project was complex; it is the specific tradeoff I made and how I verified it.”</li></ul>\n<h3>Strategy Rubric</h3>\n<p>核心理解：</p>\n<ul><li>Strategy Rubric 每周从 Coding correctness、Coding communication、LLM systems、Agent design、Research depth、Behavioral、Project evidence 七个维度打分。</li><li>目标不是包装，而是 being perceived as strong through evidence。</li><li>真正强信号来自可验证的行为：限时写代码、实现小组件、设计 eval、复盘失败、清楚表达取舍。</li></ul>\n<p>复习提示：</p>\n<ul><li>每次 mock 后记录“哪个回答听起来 vague”，再把它改成 evidence-backed answer。</li></ul>\n<h3>Project deep dive</h3>\n<p>核心理解：</p>\n<ul><li>Project deep dive 模板：Problem and users、Constraints、Architecture、Hardest tradeoff、Failure mode、Eval or verification、What I would improve。</li><li>每个 mini drill 都要能讲成 project evidence。</li></ul>\n<p>面试转译：</p>\n<ul><li>“I did not build a large demo first; I decomposed it into tool router, retrieval evaluator, memory store, trace logger, and eval harness because each maps to a measurable interview signal.”</li></ul>"
+        "知识笔记": "<h3>STAR and evidence</h3>\n<p>核心理解：</p>\n<ul><li>STAR 可以用，但不要僵硬。Situation、Task、Action、Result、Reflection 都要有具体证据。</li><li>Strong signal 是清楚地说出“我做了什么、为什么这样设计、怎么验证、哪里失败过、我如何改进”。</li><li>Weak signal 是只说“我了解 RAG/Agent/RLHF”、只背论文名、只画组件不讲 failure recovery。</li></ul>\n<p>面试转译：</p>\n<ul><li>“The strongest version of this story is not that the project was complex; it is the specific tradeoff I made and how I verified it.”</li></ul>\n<h3>Strategy Rubric</h3>\n<p>核心理解：</p>\n<ul><li>Strategy Rubric 每周从 Coding correctness、Coding communication、LLM systems、Agent design、Research depth、Behavioral、Project evidence 七个维度打分。</li><li>目标不是包装，而是 being perceived as strong through evidence。</li><li>真正强信号来自可验证的行为：限时写代码、实现小组件、设计 eval、复盘失败、清楚表达取舍。</li></ul>\n<p>复习提示：</p>\n<ul><li>每次 mock 后记录“哪个回答听起来 vague”，再把它改成 evidence-backed answer。</li></ul>\n<h3>Project deep dive</h3>\n<p>核心理解：</p>\n<ul><li>Project deep dive 模板：Problem and users、Constraints、Architecture、Hardest tradeoff、Failure mode、Eval or verification、What I would improve。</li><li>每个 mini drill 都要能讲成 project evidence。</li></ul>\n<p>Cyrene D1 叙事：</p>\n<ul><li>Problem：解决 Agent 在长上下文任务、跨 session 和跨项目工作中遗忘用户偏好与项目工作流的问题，同时降低错误或过期 memory 污染上下文的风险。</li><li>Lifecycle：candidate → actual-use count → weekly AI maintenance → promote/update/revoke → project/global store → retrieval；单纯 retrieval hit 或 context injection 不计为实际使用。</li><li>Ownership：负责问题定义、架构、系统边界和 benchmark 设计；使用 AI 辅助实现，并负责 review、测试结果检查和 release gate。</li><li>Evidence boundary：archived full deterministic profile 是 59 passed、8 skipped、0 failed；它是项目 regression suite，不代表生产准确率。</li><li>Availability：计划申请 2027 Fall 硕士；最早两周内到岗，可连续实习 6 个月、每周 5 天。</li></ul>\n<p>复习提示：</p>\n<ul><li>调用次数代表 memory 被模型实际采用，不代表内容正确；AI 同时参与晋升与撤销判断，因此仍需 attribution、冲突检查和独立 regression cases。</li><li>不把 coached 后的流畅表达当作独立通过；D+2 使用冲突偏好、错误 memory 反复使用和周度撤销的变式追问。</li></ul>\n<p>面试转译：</p>\n<ul><li>“I did not build a large demo first; I decomposed it into tool router, retrieval evaluator, memory store, trace logger, and eval harness because each maps to a measurable interview signal.”</li></ul>"
       },
       "sectionIds": {
         "目标": "behavioral-strategy-目标",
@@ -1494,13 +1556,18 @@
         {
           "id": "behavioral-strategy-project-deep-dive",
           "title": "Project deep dive",
-          "body": "<p>核心理解：</p>\n<ul><li>Project deep dive 模板：Problem and users、Constraints、Architecture、Hardest tradeoff、Failure mode、Eval or verification、What I would improve。</li><li>每个 mini drill 都要能讲成 project evidence。</li></ul>\n<p>面试转译：</p>\n<ul><li>“I did not build a large demo first; I decomposed it into tool router, retrieval evaluator, memory store, trace logger, and eval harness because each maps to a measurable interview signal.”</li></ul>",
-          "text": "核心理解： - Project deep dive 模板：Problem and users、Constraints、Architecture、Hardest tradeoff、Failure mode、Eval or verification、What I would improve。 - 每个 mini drill 都要能讲成 project evidence。 面试转译： - “I did not build a large demo first; I decomposed it into tool router, retrieval evaluator, memory store, trace logger, and eval harness because each maps to a measurable interview signal.”",
+          "body": "<p>核心理解：</p>\n<ul><li>Project deep dive 模板：Problem and users、Constraints、Architecture、Hardest tradeoff、Failure mode、Eval or verification、What I would improve。</li><li>每个 mini drill 都要能讲成 project evidence。</li></ul>\n<p>Cyrene D1 叙事：</p>\n<ul><li>Problem：解决 Agent 在长上下文任务、跨 session 和跨项目工作中遗忘用户偏好与项目工作流的问题，同时降低错误或过期 memory 污染上下文的风险。</li><li>Lifecycle：candidate → actual-use count → weekly AI maintenance → promote/update/revoke → project/global store → retrieval；单纯 retrieval hit 或 context injection 不计为实际使用。</li><li>Ownership：负责问题定义、架构、系统边界和 benchmark 设计；使用 AI 辅助实现，并负责 review、测试结果检查和 release gate。</li><li>Evidence boundary：archived full deterministic profile 是 59 passed、8 skipped、0 failed；它是项目 regression suite，不代表生产准确率。</li><li>Availability：计划申请 2027 Fall 硕士；最早两周内到岗，可连续实习 6 个月、每周 5 天。</li></ul>\n<p>复习提示：</p>\n<ul><li>调用次数代表 memory 被模型实际采用，不代表内容正确；AI 同时参与晋升与撤销判断，因此仍需 attribution、冲突检查和独立 regression cases。</li><li>不把 coached 后的流畅表达当作独立通过；D+2 使用冲突偏好、错误 memory 反复使用和周度撤销的变式追问。</li></ul>\n<p>面试转译：</p>\n<ul><li>“I did not build a large demo first; I decomposed it into tool router, retrieval evaluator, memory store, trace logger, and eval harness because each maps to a measurable interview signal.”</li></ul>",
+          "text": "核心理解： - Project deep dive 模板：Problem and users、Constraints、Architecture、Hardest tradeoff、Failure mode、Eval or verification、What I would improve。 - 每个 mini drill 都要能讲成 project evidence。 Cyrene D1 叙事： - Problem：解决 Agent 在长上下文任务、跨 session 和跨项目工作中遗忘用户偏好与项目工作流的问题，同时降低错误或过期 memory 污染上下文的风险。 - Lifecycle：candidate → actual-use count → weekly AI maintenance → promote/update/revoke → project/global store → retrieval；单纯 retrieval hit 或 context injection 不计为实际使用。 - Ownership：负责问题定义、架构、系统边界和 benchmark 设计；使用 AI 辅助实现，并负责 review、测试结果检查和 release gate。 - Evidence boundary：archived full deterministic profile 是 59 passed、8 skipped、0 failed；它是项目 regression suite，不代表生产准确率。 - Availability：计划申请 2027 Fall 硕士；最早两周内到岗，可连续实习 6 个月、每周 5 天。 复习提示： - 调用次数代表 memory 被模型实际采用，不代表内容正确；AI 同时参与晋升与撤销判断，因此仍需 attribution、冲突检查和独立 regression cases。 - 不把 coached 后的流畅表达当作独立通过；D+2 使用冲突偏好、错误 memory 反复使用和周度撤销的变式追问。 面试转译： - “I did not build a large demo first; I decomposed it into tool router, retrieval evaluator, memory store, trace logger, and eval harness because each maps to a measurable interview signal.”",
           "groups": [
             {
               "label": "核心理解",
-              "body": "<ul><li>Project deep dive 模板：Problem and users、Constraints、Architecture、Hardest tradeoff、Failure mode、Eval or verification、What I would improve。</li><li>每个 mini drill 都要能讲成 project evidence。</li></ul>",
-              "text": "- Project deep dive 模板：Problem and users、Constraints、Architecture、Hardest tradeoff、Failure mode、Eval or verification、What I would improve。 - 每个 mini drill 都要能讲成 project evidence。"
+              "body": "<ul><li>Project deep dive 模板：Problem and users、Constraints、Architecture、Hardest tradeoff、Failure mode、Eval or verification、What I would improve。</li><li>每个 mini drill 都要能讲成 project evidence。</li></ul>\n<p>Cyrene D1 叙事：</p>\n<ul><li>Problem：解决 Agent 在长上下文任务、跨 session 和跨项目工作中遗忘用户偏好与项目工作流的问题，同时降低错误或过期 memory 污染上下文的风险。</li><li>Lifecycle：candidate → actual-use count → weekly AI maintenance → promote/update/revoke → project/global store → retrieval；单纯 retrieval hit 或 context injection 不计为实际使用。</li><li>Ownership：负责问题定义、架构、系统边界和 benchmark 设计；使用 AI 辅助实现，并负责 review、测试结果检查和 release gate。</li><li>Evidence boundary：archived full deterministic profile 是 59 passed、8 skipped、0 failed；它是项目 regression suite，不代表生产准确率。</li><li>Availability：计划申请 2027 Fall 硕士；最早两周内到岗，可连续实习 6 个月、每周 5 天。</li></ul>",
+              "text": "- Project deep dive 模板：Problem and users、Constraints、Architecture、Hardest tradeoff、Failure mode、Eval or verification、What I would improve。 - 每个 mini drill 都要能讲成 project evidence。 Cyrene D1 叙事： - Problem：解决 Agent 在长上下文任务、跨 session 和跨项目工作中遗忘用户偏好与项目工作流的问题，同时降低错误或过期 memory 污染上下文的风险。 - Lifecycle：candidate → actual-use count → weekly AI maintenance → promote/update/revoke → project/global store → retrieval；单纯 retrieval hit 或 context injection 不计为实际使用。 - Ownership：负责问题定义、架构、系统边界和 benchmark 设计；使用 AI 辅助实现，并负责 review、测试结果检查和 release gate。 - Evidence boundary：archived full deterministic profile 是 59 passed、8 skipped、0 failed；它是项目 regression suite，不代表生产准确率。 - Availability：计划申请 2027 Fall 硕士；最早两周内到岗，可连续实习 6 个月、每周 5 天。"
+            },
+            {
+              "label": "复习提示",
+              "body": "<ul><li>调用次数代表 memory 被模型实际采用，不代表内容正确；AI 同时参与晋升与撤销判断，因此仍需 attribution、冲突检查和独立 regression cases。</li><li>不把 coached 后的流畅表达当作独立通过；D+2 使用冲突偏好、错误 memory 反复使用和周度撤销的变式追问。</li></ul>",
+              "text": "- 调用次数代表 memory 被模型实际采用，不代表内容正确；AI 同时参与晋升与撤销判断，因此仍需 attribution、冲突检查和独立 regression cases。 - 不把 coached 后的流畅表达当作独立通过；D+2 使用冲突偏好、错误 memory 反复使用和周度撤销的变式追问。"
             },
             {
               "label": "面试转译",
@@ -1542,7 +1609,7 @@
           "status": "open"
         }
       ],
-      "searchText": "Behavioral / Strategy 目标 把准备内容转成面试官能识别的强信号：结构化表达、清楚 tradeoff、真实 failure story、可验证 project evidence。 当前状态 第二优先级是面试表达。coding 和 system design 内容必须最终转成可讲述的故事，否则准备会停留在“做过一些练习”。 核心知识 表达训练重点： - clarify requirements - state assumptions - compare tradeoffs - identify failure modes - propose evals - tell evidence-backed stories - avoid vague claims 任务 Behavioral And Project Deep Dive 1. Tell me about a project where requirements were ambiguous。 2. Tell me about a time you debugged a difficult issue。 3. Tell me about a tradeoff you made between speed and correctness。 4. Tell me about a time you changed your mind after evidence。 5. Walk me through a system you built and what you would improve。 Strategy Rubric Score yourself weekly from 1 to 5: - Coding correctness：1 = Cannot finish medium；3 = Finishes with hints；5 = Finishes cleanly and explains。 - Coding communication：1 = Silent or scattered；3 = Explains main idea；5 = Clarifies, narrates, tests。 - LLM systems：1 = Knows terms；3 = Explains components；5 = Designs with tradeoffs and evals。 - Agent design：1 = Generic loop；3 = Names tools/memory；5 = Handles safety, trace, failure。 - Research depth：1 = Name-drops papers；3 = Explains claims；5 = Connects papers to systems。 - Behavioral：1 = Vague stories；3 = STAR-ish；5 = Crisp, evidence-backed, reflective。 - Project evidence：1 = No artifacts；3 = Small scripts；5 = Drills tied to interview stories。 Weekly target： - Week 1：average 2.5 - Week 2：average 3 - Week 3：average 3.5 - Week 4：average 4 - Day 45+：push weakest two dimensions toward 4 - Day 60+：one standout dimension should reach 5 时间线 - Week 1：练一个 2 分钟 tool-calling agent 设计回答。 - Week 3：写 1 个 behavioral story：如何在 ambiguity 下做取舍。 - Week 4：整理 5 个 behavioral stories；做 2 次 system design mock；做一轮 full loop mock。 - Days 31-45：简历项目叙事和 mock interview iteration。 - Days 46-60：3 次 full mock，并按 rubric 复盘。 知识笔记 STAR and evidence 核心理解： - STAR 可以用，但不要僵硬。Situation、Task、Action、Result、Reflection 都要有具体证据。 - Strong signal 是清楚地说出“我做了什么、为什么这样设计、怎么验证、哪里失败过、我如何改进”。 - Weak signal 是只说“我了解 RAG/Agent/RLHF”、只背论文名、只画组件不讲 failure recovery。 面试转译： - “The strongest version of this story is not that the project was complex; it is the specific tradeoff I made and how I verified it.” Strategy Rubric 核心理解： - Strategy Rubric 每周从 Coding correctness、Coding communication、LLM systems、Agent design、Research depth、Behavioral、Project evidence 七个维度打分。 - 目标不是包装，而是 being perceived as strong through evidence。 - 真正强信号来自可验证的行为：限时写代码、实现小组件、设计 eval、复盘失败、清楚表达取舍。 复习提示： - 每次 mock 后记录“哪个回答听起来 vague”，再把它改成 evidence-backed answer。 Project deep dive 核心理解： - Project deep dive 模板：Problem and users、Constraints、Architecture、Hardest tradeoff、Failure mode、Eval or verification、What I would improve。 - 每个 mini drill 都要能讲成 project evidence。 面试转译： - “I did not build a large demo first; I decomposed it into tool router, retrieval evaluator, memory store, trace logger, and eval harness because each maps to a measurable interview signal.”",
+      "searchText": "Behavioral / Strategy 目标 把准备内容转成面试官能识别的强信号：结构化表达、清楚 tradeoff、真实 failure story、可验证 project evidence。 当前状态 已开始 Cyrene project deep dive 与升学/可实习性表达训练。当前仍需在不看稿、没有引导的情况下完成 2 分钟项目介绍并正确限定 benchmark 证据，达到 readiness level 2 前进度保持 0%。 核心知识 表达训练重点： - clarify requirements - state assumptions - compare tradeoffs - identify failure modes - propose evals - tell evidence-backed stories - avoid vague claims 任务 Behavioral And Project Deep Dive 1. Tell me about a project where requirements were ambiguous。 2. Tell me about a time you debugged a difficult issue。 3. Tell me about a tradeoff you made between speed and correctness。 4. Tell me about a time you changed your mind after evidence。 5. Walk me through a system you built and what you would improve。 Strategy Rubric Score yourself weekly from 1 to 5: - Coding correctness：1 = Cannot finish medium；3 = Finishes with hints；5 = Finishes cleanly and explains。 - Coding communication：1 = Silent or scattered；3 = Explains main idea；5 = Clarifies, narrates, tests。 - LLM systems：1 = Knows terms；3 = Explains components；5 = Designs with tradeoffs and evals。 - Agent design：1 = Generic loop；3 = Names tools/memory；5 = Handles safety, trace, failure。 - Research depth：1 = Name-drops papers；3 = Explains claims；5 = Connects papers to systems。 - Behavioral：1 = Vague stories；3 = STAR-ish；5 = Crisp, evidence-backed, reflective。 - Project evidence：1 = No artifacts；3 = Small scripts；5 = Drills tied to interview stories。 Weekly target： - Week 1：average 2.5 - Week 2：average 3 - Week 3：average 3.5 - Week 4：average 4 - Day 45+：push weakest two dimensions toward 4 - Day 60+：one standout dimension should reach 5 时间线 - Week 1：练一个 2 分钟 tool-calling agent 设计回答。 - Week 3：写 1 个 behavioral story：如何在 ambiguity 下做取舍。 - Week 4：整理 5 个 behavioral stories；做 2 次 system design mock；做一轮 full loop mock。 - Days 31-45：简历项目叙事和 mock interview iteration。 - Days 46-60：3 次 full mock，并按 rubric 复盘。 知识笔记 STAR and evidence 核心理解： - STAR 可以用，但不要僵硬。Situation、Task、Action、Result、Reflection 都要有具体证据。 - Strong signal 是清楚地说出“我做了什么、为什么这样设计、怎么验证、哪里失败过、我如何改进”。 - Weak signal 是只说“我了解 RAG/Agent/RLHF”、只背论文名、只画组件不讲 failure recovery。 面试转译： - “The strongest version of this story is not that the project was complex; it is the specific tradeoff I made and how I verified it.” Strategy Rubric 核心理解： - Strategy Rubric 每周从 Coding correctness、Coding communication、LLM systems、Agent design、Research depth、Behavioral、Project evidence 七个维度打分。 - 目标不是包装，而是 being perceived as strong through evidence。 - 真正强信号来自可验证的行为：限时写代码、实现小组件、设计 eval、复盘失败、清楚表达取舍。 复习提示： - 每次 mock 后记录“哪个回答听起来 vague”，再把它改成 evidence-backed answer。 Project deep dive 核心理解： - Project deep dive 模板：Problem and users、Constraints、Architecture、Hardest tradeoff、Failure mode、Eval or verification、What I would improve。 - 每个 mini drill 都要能讲成 project evidence。 Cyrene D1 叙事： - Problem：解决 Agent 在长上下文任务、跨 session 和跨项目工作中遗忘用户偏好与项目工作流的问题，同时降低错误或过期 memory 污染上下文的风险。 - Lifecycle：candidate → actual-use count → weekly AI maintenance → promote/update/revoke → project/global store → retrieval；单纯 retrieval hit 或 context injection 不计为实际使用。 - Ownership：负责问题定义、架构、系统边界和 benchmark 设计；使用 AI 辅助实现，并负责 review、测试结果检查和 release gate。 - Evidence boundary：archived full deterministic profile 是 59 passed、8 skipped、0 failed；它是项目 regression suite，不代表生产准确率。 - Availability：计划申请 2027 Fall 硕士；最早两周内到岗，可连续实习 6 个月、每周 5 天。 复习提示： - 调用次数代表 memory 被模型实际采用，不代表内容正确；AI 同时参与晋升与撤销判断，因此仍需 attribution、冲突检查和独立 regression cases。 - 不把 coached 后的流畅表达当作独立通过；D+2 使用冲突偏好、错误 memory 反复使用和周度撤销的变式追问。 面试转译： - “I did not build a large demo first; I decomposed it into tool router, retrieval evaluator, memory store, trace logger, and eval harness because each maps to a measurable interview signal.”",
       "searchEntries": [
         {
           "id": "behavioral-strategy-目标",
@@ -1558,7 +1625,7 @@
           "moduleId": "behavioral-strategy",
           "moduleTitle": "Behavioral / Strategy",
           "sectionTitle": "当前状态",
-          "text": "第二优先级是面试表达。coding 和 system design 内容必须最终转成可讲述的故事，否则准备会停留在“做过一些练习”。"
+          "text": "已开始 Cyrene project deep dive 与升学/可实习性表达训练。当前仍需在不看稿、没有引导的情况下完成 2 分钟项目介绍并正确限定 benchmark 证据，达到 readiness level 2 前进度保持 0%。"
         },
         {
           "id": "behavioral-strategy-核心知识",
@@ -1590,7 +1657,7 @@
           "moduleId": "behavioral-strategy",
           "moduleTitle": "Behavioral / Strategy",
           "sectionTitle": "知识笔记",
-          "text": "STAR and evidence 核心理解： - STAR 可以用，但不要僵硬。Situation、Task、Action、Result、Reflection 都要有具体证据。 - Strong signal 是清楚地说出“我做了什么、为什么这样设计、怎么验证、哪里失败过、我如何改进”。 - Weak signal 是只说“我了解 RAG/Agent/RLHF”、只背论文名、只画组件不讲 failure recovery。 面试转译： - “The strongest version of this story is not that the project was complex; it is the specific tradeoff I made and how I verified it.” Strategy Rubric 核心理解： - Strategy Rubric 每周从 Coding correctness、Coding communication、LLM systems、Agent design、Research depth、Behavioral、Project evidence 七个维度打分。 - 目标不是包装，而是 being perceived as strong through evidence。 - 真正强信号来自可验证的行为：限时写代码、实现小组件、设计 eval、复盘失败、清楚表达取舍。 复习提示： - 每次 mock 后记录“哪个回答听起来 vague”，再把它改成 evidence-backed answer。 Project deep dive 核心理解： - Project deep dive 模板：Problem and users、Constraints、Architecture、Hardest tradeoff、Failure mode、Eval or verification、What I would improve。 - 每个 mini drill 都要能讲成 project evidence。 面试转译： - “I did not build a large demo first; I decomposed it into tool router, retrieval evaluator, memory store, trace logger, and eval harness because each maps to a measurable interview signal.”"
+          "text": "STAR and evidence 核心理解： - STAR 可以用，但不要僵硬。Situation、Task、Action、Result、Reflection 都要有具体证据。 - Strong signal 是清楚地说出“我做了什么、为什么这样设计、怎么验证、哪里失败过、我如何改进”。 - Weak signal 是只说“我了解 RAG/Agent/RLHF”、只背论文名、只画组件不讲 failure recovery。 面试转译： - “The strongest version of this story is not that the project was complex; it is the specific tradeoff I made and how I verified it.” Strategy Rubric 核心理解： - Strategy Rubric 每周从 Coding correctness、Coding communication、LLM systems、Agent design、Research depth、Behavioral、Project evidence 七个维度打分。 - 目标不是包装，而是 being perceived as strong through evidence。 - 真正强信号来自可验证的行为：限时写代码、实现小组件、设计 eval、复盘失败、清楚表达取舍。 复习提示： - 每次 mock 后记录“哪个回答听起来 vague”，再把它改成 evidence-backed answer。 Project deep dive 核心理解： - Project deep dive 模板：Problem and users、Constraints、Architecture、Hardest tradeoff、Failure mode、Eval or verification、What I would improve。 - 每个 mini drill 都要能讲成 project evidence。 Cyrene D1 叙事： - Problem：解决 Agent 在长上下文任务、跨 session 和跨项目工作中遗忘用户偏好与项目工作流的问题，同时降低错误或过期 memory 污染上下文的风险。 - Lifecycle：candidate → actual-use count → weekly AI maintenance → promote/update/revoke → project/global store → retrieval；单纯 retrieval hit 或 context injection 不计为实际使用。 - Ownership：负责问题定义、架构、系统边界和 benchmark 设计；使用 AI 辅助实现，并负责 review、测试结果检查和 release gate。 - Evidence boundary：archived full deterministic profile 是 59 passed、8 skipped、0 failed；它是项目 regression suite，不代表生产准确率。 - Availability：计划申请 2027 Fall 硕士；最早两周内到岗，可连续实习 6 个月、每周 5 天。 复习提示： - 调用次数代表 memory 被模型实际采用，不代表内容正确；AI 同时参与晋升与撤销判断，因此仍需 attribution、冲突检查和独立 regression cases。 - 不把 coached 后的流畅表达当作独立通过；D+2 使用冲突偏好、错误 memory 反复使用和周度撤销的变式追问。 面试转译： - “I did not build a large demo first; I decomposed it into tool router, retrieval evaluator, memory store, trace logger, and eval harness because each maps to a measurable interview signal.”"
         },
         {
           "id": "behavioral-strategy-star-and-evidence",
@@ -1614,7 +1681,7 @@
           "moduleId": "behavioral-strategy",
           "moduleTitle": "Behavioral / Strategy",
           "sectionTitle": "Project deep dive",
-          "text": "核心理解： - Project deep dive 模板：Problem and users、Constraints、Architecture、Hardest tradeoff、Failure mode、Eval or verification、What I would improve。 - 每个 mini drill 都要能讲成 project evidence。 面试转译： - “I did not build a large demo first; I decomposed it into tool router, retrieval evaluator, memory store, trace logger, and eval harness because each maps to a measurable interview signal.”"
+          "text": "核心理解： - Project deep dive 模板：Problem and users、Constraints、Architecture、Hardest tradeoff、Failure mode、Eval or verification、What I would improve。 - 每个 mini drill 都要能讲成 project evidence。 Cyrene D1 叙事： - Problem：解决 Agent 在长上下文任务、跨 session 和跨项目工作中遗忘用户偏好与项目工作流的问题，同时降低错误或过期 memory 污染上下文的风险。 - Lifecycle：candidate → actual-use count → weekly AI maintenance → promote/update/revoke → project/global store → retrieval；单纯 retrieval hit 或 context injection 不计为实际使用。 - Ownership：负责问题定义、架构、系统边界和 benchmark 设计；使用 AI 辅助实现，并负责 review、测试结果检查和 release gate。 - Evidence boundary：archived full deterministic profile 是 59 passed、8 skipped、0 failed；它是项目 regression suite，不代表生产准确率。 - Availability：计划申请 2027 Fall 硕士；最早两周内到岗，可连续实习 6 个月、每周 5 天。 复习提示： - 调用次数代表 memory 被模型实际采用，不代表内容正确；AI 同时参与晋升与撤销判断，因此仍需 attribution、冲突检查和独立 regression cases。 - 不把 coached 后的流畅表达当作独立通过；D+2 使用冲突偏好、错误 memory 反复使用和周度撤销的变式追问。 面试转译： - “I did not build a large demo first; I decomposed it into tool router, retrieval evaluator, memory store, trace logger, and eval harness because each maps to a measurable interview signal.”"
         }
       ]
     },

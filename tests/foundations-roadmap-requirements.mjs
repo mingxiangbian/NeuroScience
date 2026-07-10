@@ -36,7 +36,10 @@ for (const [id] of requiredModules) {
   assert.match(moduleMarkdown, /status: (not-started|in-progress|learning|review|done)/, `module ${id} should declare an allowed learning status`);
   assert.match(moduleMarkdown, /learning_progress: [0-9]+/, `module ${id} should declare learning progress`);
   assert.doesNotMatch(moduleMarkdown, /^progress: /m, `module ${id} should not use legacy progress`);
-  assert.match(moduleMarkdown, new RegExp(`last_updated: ${id === "interview-sprint" ? "2026-07-09" : "2026-07-05"}`), `module ${id} should declare a last updated date`);
+  const expectedLastUpdated = ["interview-sprint", "agent-design", "behavioral-strategy"].includes(id)
+    ? "2026-07-10"
+    : "2026-07-05";
+  assert.match(moduleMarkdown, new RegExp(`last_updated: ${expectedLastUpdated}`), `module ${id} should declare a last updated date`);
   if (id === "overview") {
     assert.match(moduleMarkdown, /## Dashboard/, "overview should be a dashboard source");
     assert.match(moduleMarkdown, /## Interview Signal/, "overview should include interview signal calibration");
@@ -45,10 +48,25 @@ for (const [id] of requiredModules) {
   } else if (id === "interview-sprint") {
     assert.match(moduleMarkdown, /时间驾驶舱|D1（2026-07-10）|D7（2026-07-16）/, "interview sprint should stay a seven-day cockpit module");
     assert.match(moduleMarkdown, /知识本体一律沉淀到对应能力模块/, "interview sprint should not duplicate knowledge modules");
+    assert.match(moduleMarkdown, /标准日 180 分钟/, "interview sprint should expose its standard-day training budget");
+    assert.match(moduleMarkdown, /重日 210 分钟/, "interview sprint should expose its heavy-day training budget");
+    assert.match(moduleMarkdown, /盲测基线/, "interview sprint should start with an unseen baseline");
+    assert.match(moduleMarkdown, /learning_progress: 0[\s\S]*D1 冲刺卡/, "interview sprint should record D1 without inflating mastery progress");
+    assert.doesNotMatch(moduleMarkdown, /90 分钟/, "interview sprint should not keep the impossible 90-minute contract");
     assert.match(moduleMarkdown, /## 目标[\s\S]*## 当前状态[\s\S]*## 核心知识[\s\S]*## 任务[\s\S]*## 时间线[\s\S]*## 知识笔记/, "interview sprint should use the knowledge-base section contract");
   } else {
     assert.match(moduleMarkdown, /## 目标[\s\S]*## 当前状态[\s\S]*## 核心知识[\s\S]*## 任务[\s\S]*## 时间线[\s\S]*## 知识笔记/, `module ${id} should use the knowledge-base section contract`);
     assert.doesNotMatch(moduleMarkdown, /## 资源|## 反思|## 面试表达|## 验收标准|## 下一步/, `module ${id} should not keep old side-note or project-management sections`);
+  }
+  if (id === "agent-design") {
+    assert.match(moduleMarkdown, /status: learning[\s\S]*learning_progress: 0/, "agent design should be learning without claiming completion");
+    assert.match(moduleMarkdown, /Production Agent Architecture Layers/, "agent design should record the four-layer architecture gap");
+    assert.match(moduleMarkdown, /Reliable Tool Execution/, "agent design should retain the reliable tool execution note");
+    assert.match(moduleMarkdown, /idempotency_key[\s\S]*UNKNOWN \/ RECONCILING[\s\S]*effectively-once/, "agent design should retain idempotency and reconciliation boundaries");
+  }
+  if (id === "behavioral-strategy") {
+    assert.match(moduleMarkdown, /status: learning[\s\S]*learning_progress: 0/, "behavioral strategy should be learning without claiming independent readiness");
+    assert.match(moduleMarkdown, /Cyrene D1 叙事[\s\S]*actual-use count[\s\S]*weekly AI maintenance/, "behavioral strategy should retain the corrected Cyrene narrative");
   }
 }
 
@@ -204,6 +222,8 @@ const byId = Object.fromEntries(data.modules.map((module) => [module.id, module]
 assert.ok(byId["agent-design"].timeline.length >= 3, "agent design should expose timeline items for visual rendering");
 assert.equal(byId["interview-sprint"].status, "in-progress", "interview sprint should be marked as the active seven-day sprint");
 assert.equal(byId["interview-sprint"].timeline.length, 7, "interview sprint should expose a D1-D7 cockpit timeline");
+assert.equal(byId["interview-sprint"].timeline[0].status, "done", "interview sprint should mark D1 as completed");
+assert.ok(byId["interview-sprint"].timeline.slice(1).every((item) => item.status === "open"), "interview sprint should keep D2-D7 open after D1");
 assert.match(byId["interview-sprint"].searchText, /Coze 上下文工程|Node event loop|Mock 1/, "interview sprint should preserve the seven-day interview schedule");
 assert.ok(byId["rag-memory"].knowledgeNotes.length >= 2, "RAG and memory should expose concept-centric notes");
 assert.ok(byId["rag-memory"].knowledgeNotes.some((note) => note.title === "RAG evaluation"), "RAG and memory should include a RAG evaluation note");

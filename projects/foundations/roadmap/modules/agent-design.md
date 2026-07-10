@@ -1,9 +1,9 @@
 ---
 id: agent-design
 title: Agent Design
-status: not-started
+status: learning
 learning_progress: 0
-last_updated: 2026-07-05
+last_updated: 2026-07-10
 priority: high
 ---
 
@@ -13,7 +13,7 @@ priority: high
 
 ## 当前状态
 
-Agent 是目标岗位主线之一。当前准备要避免只讲“planner + tools”的空泛架构，必须落到 schema validation、timeouts、permission model、human approval、observability 和 eval。
+Agent 是目标岗位主线之一。当前自评只接触过 Reasoning 层的 planner、tool use 等表层概念；Runtime、Platform、Evals / Security 尚未系统学习。当前进入学习状态，但在未见 system design 中独立达到 readiness level 2 前，学习进度保持 0%。
 
 ## 核心知识
 
@@ -40,6 +40,15 @@ Agent 是目标岗位主线之一。当前准备要避免只讲“planner + tool
 - hidden state mismatch
 - eval overfitting
 - latency explosion
+
+### Production Agent Architecture Layers
+
+- Reasoning：planning、task decomposition、tool selection、memory retrieval。
+- Runtime / Orchestration：state machine、idempotency、timeout、retry、cancellation、human approval。
+- Platform：queue、multi-tenant isolation、authorization、audit、scaling。
+- Evals / Security：trace、regression eval、prompt injection、tool abuse、rollback criteria。
+
+关键边界：LLM 可以提出下一步行动，但幂等、权限、状态转换和安全策略必须由确定性的 Runtime / Platform 层强制执行。
 
 ## 任务
 
@@ -117,6 +126,33 @@ Interview story：
 - Days 46-60：如果需要 capstone，把 Agent runtime、trace、eval 合成 Agent eval and trace workbench。
 
 ## 知识笔记
+
+### Reliable Tool Execution
+
+核心理解：
+
+- 幂等的目标是让同一个逻辑 operation 即使被重复投递，也最多产生一次有效副作用。
+- `operation_id` 标识逻辑操作，`attempt_id` 标识单次调用尝试，`idempotency_key` 把重复请求映射回同一个 operation。
+- 调用超时只表示调用方不知道结果，应进入 `UNKNOWN / RECONCILING`，不能直接当作 `FAILED` 重试。
+- 重复事件命中唯一键后返回已有 operation；reconciler 再根据下游的 `SUCCEEDED / RUNNING / NOT_FOUND` 状态完成确认或使用相同 key 重试。
+- 工具端若不支持幂等键和状态查询，就无法完全消除“副作用已发生但响应丢失”的不确定性。
+
+常见误区：
+
+- 用语义相似度代替稳定 event / command ID 判断重复投递。
+- 把 timeout 当作 failure，直接重试有副作用的工具。
+- 为每次网络重试创建新的 operation，导致重复执行和审计状态分裂。
+- 声称天然 exactly-once；更准确的目标是通过去重、幂等和对账实现 effectively-once。
+
+面试转译：
+
+- “I separate a logical operation from its network attempts. A timeout moves the operation into an unknown state, and a reconciler resolves it before any retry with the same idempotency key.”
+
+复习提示：
+
+- 后续继续学习 transactional outbox、retry/backoff、circuit breaker、compensation、idempotency retention 和跨租户 operation store。
+- D+2 先做结构化学习检查点：复述四层架构、operation state machine 和 reliable tool execution，并完成第一份 guided artifact，不判 hard gate。
+- 完成前置学习后，再用未见场景复测：工具已产生副作用但响应超时，同时发生重复投递和跨租户恶意指令。
 
 ### Agent Runtime With Tool Calling
 

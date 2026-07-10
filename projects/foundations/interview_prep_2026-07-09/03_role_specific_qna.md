@@ -119,3 +119,57 @@ Cyrene 可对应 memory retrieval：系统是否在合适时机召回正确 memo
 - 团队目前更关注工具调用准确性、检索质量，还是复杂任务规划？
 - Agent eval 结果会反馈给 prompt、数据生产、模型训练，还是产品策略？
 - 实习生会负责 eval case 设计、自动化框架，还是评测任务管理？
+
+## D. Canonical System Design：Multi-tenant Agent Memory Runtime
+
+题面：为团队设计一个 production Agent runtime。多个用户和项目共享平台；Agent 可读写 memory、调用有副作用工具、暂停等待人工审批，并能从失败中恢复。
+
+### 30 分钟回答骨架
+
+1. **Clarify**：用户/tenant、核心任务、读写比例、并发、数据保留、允许的失败、latency/cost/privacy 目标。数值是设计假设，必须先说假设再画架构。
+2. **API 与 data model**：`Run`、`Step`、`ToolCall`、`ToolResult`、`MemoryRecord`、`Approval`、`TraceSpan`；每个对象带 tenant/project/user scope、provenance、version 和 idempotency key。
+3. **Execution path**：request → policy/context assembly → planner → tool router → permission/risk gate → executor → state store → trace/eval → response。
+4. **Memory path**：candidate → actual-use count → weekly AI review → promote/update/revoke → scoped store → retrieval/rerank → context；默认 project scope，跨 scope 需要显式 policy，敏感、冲突或高风险候选转人工 review。`actual-use count` 只统计模型在任务执行或答案生成中实际采用该 memory，不统计单纯 retrieval hit 或 context injection；它仍不能单独证明 memory 正确。
+5. **Reliability**：bounded retry 只用于可重试错误；副作用工具先查 idempotency；timeout/cancel 传播到子调用；partial execution 用 checkpoint + compensation/undo，不假装原子事务。
+6. **Observability 与 eval**：每个 model/tool/retrieval/approval step 有 trace；指标覆盖 task success、tool selection/argument、leakage、approval precision、retry loop、latency、cost 和 recovery success。
+7. **Tradeoff**：自动化越高，用户摩擦越低但不可逆风险越高；memory 召回越多，continuity 越好但污染、隐私和 token cost 越高。
+
+### HITL 风险决策表
+
+| 级别 | 例子 | 默认动作 | UX |
+| --- | --- | --- | --- |
+| automatic | 只读、低敏、可重复查询 | 自动执行 | 展示 trace，可取消后续步骤 |
+| confirm | 可逆写入、低金额或低影响变更 | 执行前确认参数 | preview + edit + cancel |
+| human approval | 外发消息、付款、删除、权限变更 | 暂停 run，指定审批人 | approve/reject/edit，超时后安全终止 |
+| block or escalate | 越权、敏感数据外传、来源不可信的高风险指令 | 拒绝或升级安全审核 | 给出原因和安全替代路径 |
+
+### 安全追问必须覆盖
+
+- prompt injection：外部内容只作为 untrusted data；instruction 与 data 分层；tool permission 不由模型自行扩大。
+- memory poisoning：provenance、review/promotion policy、scope isolation、version/conflict、TTL/invalidations。
+- privacy：least privilege、redaction、encryption、retention/deletion、tenant isolation、audit log。
+- partial execution：记录已完成副作用，支持 cancel、compensation、manual repair 和 resume from checkpoint。
+
+常见失分：只画 planner + tools；不问规模；重试所有错误；没有 idempotency；只说 sandbox 不说 approval；只讲 final answer 不讲 trace/eval；把 global memory 当默认共享库。
+
+## E. Behavioral Evidence Bank
+
+先填证据索引，再写 STAR。没有真实事件就更换项目，不编故事。
+
+| 能力 | 首选项目候选 | 必须准备的证据 |
+| --- | --- | --- |
+| ownership | Cyrene | 你主动定义了什么完成标准、产出了什么 artifact、哪里仍未完成 |
+| ambiguity | Cyrene 或机器人车 | 原始需求哪里模糊、你问了什么、如何收窄 scope |
+| failure/debugging | Cyrene benchmark 或 NeRF | 原假设、失败信号、排查顺序、修复与 regression |
+| conflict/collaboration | NeRF/机器人车团队项目 | 分歧双方的合理性、你如何用实验/接口/时间约束收敛；无真实分歧就不用该素材 |
+| changed mind after evidence | Cyrene fixture 或 NeRF ray sampling | 什么新证据推翻原方案、你实际改了什么、结果和限制 |
+
+每个故事准备 15 秒 opening、60-90 秒主体和一句 reflection。结果尽量引用可核对 artifact；没有数字时说具体行为变化，不编百分比。
+
+## F. 升学与可实习性
+
+面试回答：
+
+> 我计划申请 2027 Fall 硕士，后续方向也会继续围绕 Agent 和 AI systems。目前最早可以在两周内到岗，并且可以连续实习 6 个月、每周 5 天。这段实习期间我可以保持完整、稳定的时间投入。
+
+只承诺已经确认的到岗时间和实习周期。若被追问毕业后的长期去向，如实说明当前升学计划，不承诺尚未确定的留任或入职安排。

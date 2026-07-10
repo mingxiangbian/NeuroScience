@@ -2,7 +2,7 @@
 
 ## 代码题清单
 
-每天 2 题，先写出可运行代码，再复述思路和复杂度。
+按 05 的日程完成题目。每题独立计时 25 分钟，先写可运行代码并在本地或 judge 实际执行，再复述思路、边界和复杂度；AI 的口头判断不能替代运行结果。
 
 | 主题 | 题目 |
 | --- | --- |
@@ -34,6 +34,17 @@
 - self-attention 的 Q/K/V。
 - attention score 为什么要除以 $\sqrt{d_k}$。
 - decoder-only LLM 为什么适合 next-token prediction。
+- 训练时 teacher forcing 与推理时 autoregressive decoding 的差别。
+- KV cache 为什么减少重复计算，但会占用随 context/batch 增长的显存。
+
+### Post-training
+
+要能画清两条路径，不把 DPO 塞进 PPO 链路：
+
+- `pretrain → SFT → preference data → explicit reward model → PPO-style RLHF`。
+- `pretrain → SFT → preference pairs + fixed reference policy → DPO`；经典 DPO 用 chosen/rejected pairs 和固定 reference policy 直接优化 policy，不单独训练显式 reward model，也不需要 PPO-style online rollouts。
+
+只需讲清数据、优化对象、工程复杂度和 eval，不需要推 PPO 公式。
 
 ### RAG
 
@@ -61,6 +72,31 @@
 - function schema 描述函数名、参数、类型和约束。
 - 模型输出结构化调用请求，程序执行函数。
 - 需要处理参数校验、权限、超时、错误恢复。
+
+## Component Implementation Drill
+
+优先做 Python Tool Router；若岗位明确深挖 TypeScript，再做 async executor。目标不是大项目，而是一份 60-120 行、可测试、可讲 tradeoff 的实现。
+
+### Python Tool Router
+
+必须包含：
+
+- typed registry 和 JSON schema validation。
+- timeout 与 cancellation boundary。
+- bounded retry；副作用工具使用 idempotency key，不能盲重试。
+- risk level 与 approval gate。
+- structured trace：tool、arguments hash、start/end、result/error、retry count。
+- 测试：unknown tool、invalid args、timeout、retryable error、duplicate idempotency key、approval required。
+
+### TypeScript async executor（可选替代）
+
+必须包含：
+
+- `ToolCall` / `ToolResult` / `TraceSpan` interfaces。
+- `Promise` rejection、`AbortSignal`、timeout、partial result。
+- 至少一个可重试只读工具和一个不可自动重试的副作用工具。
+
+完成判据：测试实际通过；能解释为什么某个错误可重试、为什么某个操作必须审批、如何避免重复副作用。
 
 ### Memory
 

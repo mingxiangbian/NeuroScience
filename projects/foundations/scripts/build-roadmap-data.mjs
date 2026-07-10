@@ -223,11 +223,20 @@ function extractTimelineItems(markdown) {
     .map((line, index) => {
       const text = line.replace(/^- /, "").trim();
       const labelMatch = text.match(/^(Week \d+|Days \d+-\d+|Day \d+\+|Days \d+\+|[^：:]{1,18})[：:]\s*(.+)$/);
+      const itemText = labelMatch?.[2] ?? text;
       return {
         id: `timeline-${index + 1}`,
         label: labelMatch?.[1] ?? `Step ${index + 1}`,
-        text: labelMatch?.[2] ?? text,
-        status: /进行中|current|in-progress/i.test(text) ? "current" : index < 2 ? "done" : "open",
+        text: itemText,
+        status: /^(?:已完成|done)(?:[；;:\s]|$)/i.test(itemText)
+          ? "done"
+          : /^(?:进行中|current|in-progress)(?:[；;:\s]|$)/i.test(itemText)
+            ? "current"
+            : /^(?:未开始|pending|open)(?:[；;:\s]|$)/i.test(itemText)
+              ? "open"
+              : index < 2
+                ? "done"
+                : "open",
       };
     });
 }
