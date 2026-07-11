@@ -14,15 +14,15 @@
 
 ## 时间合同
 
-- D2、D4、D5、D7：标准日 180 分钟。
-- D1、D3、D6：重日 210 分钟。
-- 都是净训练时间，休息另算。当天中断就顺延，不压缩单题或 Mock 来伪造完成。
+- D1 的 210 分钟是已完成的 baseline 记录。
+- D2-D7 每天两个必修 90 分钟块，共 180 分钟；理解和精力允许时增加第三个 90 分钟块。
+- 每天至少切换两个主题：Python 基础 + 当前岗位主线。休息另算，当天中断就整块顺延，不压缩讲解、worked example 或独立重构。
 
 ## 每日仪式
 
 1. 打开 Interview Sprint 模块，看今日主题和昨日冲刺卡。
 2. 读 [05](05_7_day_schedule.md) 的当日时间块；让 AI 按 [AGENTS.md](AGENTS.md) 主持。
-3. 先输出再学习：attempt → targeted review → reconstruct → transfer。
+3. 先判断是已有基础还是 `unlearned`：已有基础走 attempt → targeted review → reconstruct → transfer；`unlearned` 先走概念 → 具体 trace → guided reconstruction → 小型独立变式。
 4. 将原答、用时、hint、readiness level、failure tag 和 D+2/D+7 写入 gitignored 的 `09_eval_ledger.local.md`；格式见 [09](09_eval_ledger.md)。
 5. 收尾只发布一张冲刺卡 + 一张最重要弱项知识卡；勾掉真正完成的项。
 
@@ -77,4 +77,4 @@ D1 必须先做 blind baseline。约到面试后，使用 07 Prompt D 开 interv
 
 ## 并行求职小回路
 
-每两天最多额外花 15 分钟核对投递、JD-CV 和公开作品链接。面试前做一次 fresh-clone preflight；该检查不占 180/210 分钟训练预算。
+每两天最多额外花 15 分钟核对投递、JD-CV 和公开作品链接。面试前做一次 fresh-clone preflight；该检查不占两个必修 90 分钟块。

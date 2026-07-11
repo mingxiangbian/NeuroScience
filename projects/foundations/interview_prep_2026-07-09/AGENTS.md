@@ -8,7 +8,7 @@
 2. **Blind interviewer/proctor**：只读取用户明确提供的 JD、对应 CV、sealed/unseen question set 和计时流程；不得读取 01-09、网站、ledger、历史评分或 coach 会话内容。
 3. **Coach/复盘**：读取 [05_7_day_schedule.md](05_7_day_schedule.md)、[07_ai_study_protocol.md](07_ai_study_protocol.md)、[09_eval_ledger.md](09_eval_ledger.md)，以及存在时的 `09_eval_ledger.local.md`。
 4. **Evaluator**：只读取已结束的 transcript/artifact、06 rubric、对应 CV 和核对事实所需的项目证据；不得读取 coach 对该题的示范答案。
-5. Coach 按 05 的时间预算主持：标准日 180 分钟；D1/D3/D6 重日 210 分钟；休息不计入。收到邀约后提高目标岗位 overlay 权重，但保留共同底座。
+5. Coach 按 05 的时间预算主持：D2-D7 每天两个必修 90 分钟块；用户理解和精力允许时增加第三块。每块保持完整学习循环，休息不计入。收到邀约后提高目标岗位 overlay 权重，但保留 Python 共同底座。
 
 ## 2. 角色隔离
 
@@ -33,9 +33,10 @@
 
 - Attempt 阶段不看资料。
 - 已有基础但应用错误：attempt → targeted review → reconstruct → transfer。
-- 尚未系统学习：标记 `unlearned` → 建知识地图 → 机制讲解 → worked example → guided artifact；完成基础后再安排 unseen transfer。
+- 尚未系统学习：标记 `unlearned` → 解释概念和题意 → 用具体数组/trace/case 完整演示 → 用户合资料重构 → 小型独立变式；完成基础后再安排 unseen transfer。
 - `unlearned` 项目不要求当天通过 hard gate，D+2 可以只做学习检查点。
-- Coding 每题 25 分钟并实际运行；system design 必须问需求、规模和 SLO。
+- 当前 Python 标准库、常见数据结构、Agent Runtime vocabulary 和 Agent Eval case anatomy 默认按 `unlearned` 主持，除非用户已用独立 artifact 证明掌握。不能用连续追问让用户猜陌生术语。
+- Coached Coding 使用完整 90 分钟块学习一个数据结构/模式并实际运行；只有学过的模式才进入 25-45 分钟独立计时。system design 必须在前置概念建立后再问需求、规模和 SLO。
 
 ## 5. 网站笔记格式
 
@@ -80,6 +81,8 @@
 - Cyrene 没有生产用户/线上流量；benchmark 是 deterministic release/regression suite。
 - archived report 数字必须带 profile、日期、passed/skipped 与 fixture scope。
 - 不把单个 fixture 指标外推成整体准确率。
+- 用户此前只查看 Cyrene benchmark 汇总，没有逐项审计 case；完成独立 case audit 前，不声称具备 case-level benchmark ownership。
+- 每轮 summarization hook 改为周期性 maintenance 的依据是实际使用中的定性延迟/成本观察，没有保存 before/after latency、token 或费用数据；不得捏造改进幅度。
 - 没做过 SFT/RL 训练，只能讲概念和工程/eval 迁移。
 - 行为故事必须真实；没有真实冲突就换故事，不编冲突。
 - Mock 从严评分，原始失败记录不可被润色答案覆盖。
