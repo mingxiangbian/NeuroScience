@@ -7,10 +7,29 @@ const {
   groupAnnotations,
   migrateLegacyAnnotations,
   normalizeAnnotation,
+  parseStoredAnnotations,
 } = annotationModel;
 
 assert.equal(typeof migrateLegacyAnnotations, "function", "annotation model should export a pure legacy migration helper");
 assert.equal(typeof getAnnotationArchiveNoteId, "function", "annotation model should export stable archive note ids");
+assert.equal(typeof parseStoredAnnotations, "function", "annotation model should expose recoverable storage parsing");
+
+const malformedStore = parseStoredAnnotations("{not-json");
+assert.equal(malformedStore.canPersist, false, "malformed storage should not be overwritten by an empty fallback");
+assert.deepEqual(malformedStore.store, { version: 1, items: [] });
+
+const invalidStore = parseStoredAnnotations(JSON.stringify({ version: 1, items: "not-an-array" }));
+assert.equal(invalidStore.canPersist, false, "invalid storage shapes should remain recoverable");
+
+const validStore = parseStoredAnnotations(JSON.stringify({
+  version: 1,
+  items: [
+    { id: "keep", projectId: "foundations", mode: "note", note: "保留" },
+    { id: "ignore", projectId: "another-project", mode: "note", note: "忽略" },
+  ],
+}));
+assert.equal(validStore.canPersist, true);
+assert.deepEqual(validStore.store.items.map((item) => item.id), ["keep"]);
 
 assert.deepEqual(ANNOTATION_CATEGORIES.map((item) => item.id), [
   "understanding",

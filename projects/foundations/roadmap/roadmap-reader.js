@@ -3,7 +3,7 @@ import {
   getAnnotationArchiveNoteId,
   groupAnnotations,
   migrateLegacyAnnotations,
-  normalizeAnnotation,
+  parseStoredAnnotations,
 } from "./annotation-model.js";
 
 const ANNOTATION_STORAGE_KEY = "foundationsReader.annotations.v1";
@@ -75,18 +75,10 @@ function createEmptyAnnotationStore() {
 function loadAnnotations() {
   try {
     const raw = window.localStorage.getItem(ANNOTATION_STORAGE_KEY);
-    if (!raw) return createEmptyAnnotationStore();
-    const parsed = JSON.parse(raw);
-    if (!parsed || !Array.isArray(parsed.items)) return createEmptyAnnotationStore();
-    return {
-      version: 1,
-      items: parsed.items
-        .filter((item) => item && item.projectId === "foundations")
-        .map(normalizeAnnotation),
-    };
+    return parseStoredAnnotations(raw);
   } catch (error) {
     console.warn("Unable to load Foundations annotations", error);
-    return createEmptyAnnotationStore();
+    return { store: createEmptyAnnotationStore(), canPersist: false };
   }
 }
 
@@ -891,6 +883,10 @@ function setActiveSection(sectionId) {
 }
 
 function getActiveSectionFromScroll(sections) {
+  const remainingScroll = els.main.scrollHeight - els.main.clientHeight - els.main.scrollTop;
+  if (remainingScroll <= 64) {
+    return sections.at(-1);
+  }
   const anchorTop = els.main.getBoundingClientRect().top + els.main.clientHeight * 0.24;
   let activeSection = sections[0];
   for (const section of sections) {
@@ -1196,9 +1192,10 @@ function bindEvents() {
 async function init() {
   try {
     state.data = await fetchJson("roadmap/roadmap-data.json");
-    const migratedAnnotations = migrateLegacyAnnotations(loadAnnotations(), state.data.modules);
+    const annotationLoad = loadAnnotations();
+    const migratedAnnotations = migrateLegacyAnnotations(annotationLoad.store, state.data.modules);
     state.annotations = migratedAnnotations;
-    saveAnnotations(migratedAnnotations);
+    if (annotationLoad.canPersist) saveAnnotations(migratedAnnotations);
     bindEvents();
     setTheme("light");
     openModule(getInitialModuleId(), { syncUrl: false });

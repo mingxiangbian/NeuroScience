@@ -10,6 +10,31 @@ const CATEGORY_LABELS = new Map([
   ...ANNOTATION_CATEGORIES.map((item) => [item.id, item.label]),
 ]);
 
+function createEmptyStore() {
+  return { version: 1, items: [] };
+}
+
+export function parseStoredAnnotations(raw) {
+  if (!raw) return { store: createEmptyStore(), canPersist: true };
+  try {
+    const parsed = JSON.parse(raw);
+    if (!parsed || !Array.isArray(parsed.items)) {
+      return { store: createEmptyStore(), canPersist: false };
+    }
+    return {
+      store: {
+        version: 1,
+        items: parsed.items
+          .filter((item) => item && item.projectId === "foundations")
+          .map(normalizeAnnotation),
+      },
+      canPersist: true,
+    };
+  } catch {
+    return { store: createEmptyStore(), canPersist: false };
+  }
+}
+
 export function getAnnotationArchiveNoteId(moduleId) {
   return `${moduleId}-legacy-annotations`;
 }

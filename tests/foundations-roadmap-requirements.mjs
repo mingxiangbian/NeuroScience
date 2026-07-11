@@ -204,6 +204,7 @@ assert.match(js, /function setActiveSection/, "roadmap JS should update collapse
 assert.match(js, /function syncActiveSectionFromScroll/, "roadmap JS should actively sync rail state from reader scroll position");
 assert.match(js, /addEventListener\("scroll", state\.sectionScrollHandler, \{ passive: true \}\)/, "reader scroll should drive collapsed rail active state");
 assert.match(js, /els\.main\.clientHeight \* 0\.24/, "active rail state should switch near the upper reading anchor");
+assert.match(js, /const remainingScroll = els\.main\.scrollHeight - els\.main\.clientHeight - els\.main\.scrollTop;[\s\S]*remainingScroll <= 64/, "the final short section should become active near the reader bottom despite browser scroll rounding");
 assert.doesNotMatch(js, /rootMargin:\s*"-16% 0px -68% 0px"/, "active rail state should not depend on the old narrow intersection band");
 assert.match(js, /data-section-id/, "roadmap JS should render stable section targets for search and rail navigation");
 assert.match(js, /section-tooltip/, "roadmap JS should render collapsed rail tooltips");
@@ -230,8 +231,9 @@ assert.match(js, /function applyHighlights/, "Foundations reader should restore 
 assert.match(js, /function updateAnnotationNote/, "Foundations reader should update local study-note text");
 assert.match(js, /function deleteAnnotation/, "Foundations reader should support deleting highlights and annotations");
 assert.match(js, /from "\.\/annotation-model\.js"/, "Foundations reader should import the annotation model");
-assert.match(js, /migrateLegacyAnnotations\(loadAnnotations\(\), state\.data\.modules\)/, "reader init should migrate annotations after current article data loads");
+assert.match(js, /const annotationLoad = loadAnnotations\(\);[\s\S]*migrateLegacyAnnotations\(annotationLoad\.store, state\.data\.modules\)/, "reader init should migrate annotations after current article data loads");
 assert.match(js, /state\.annotations = migratedAnnotations;[\s\S]*saveAnnotations\(migratedAnnotations\);/, "reader init should persist migrated records to the same v1 store");
+assert.match(js, /if \(annotationLoad\.canPersist\) saveAnnotations\(migratedAnnotations\);/, "reader init should not overwrite malformed or unreadable local annotation data");
 assert.match(js, /function updateAnnotationCategory/, "Foundations reader should update annotation categories");
 assert.match(js, /data-annotation-category/, "Foundations reader should render annotation category controls");
 assert.match(js, /groupAnnotations\(annotations\)/, "Foundations reader should group active local annotations");
