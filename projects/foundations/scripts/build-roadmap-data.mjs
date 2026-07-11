@@ -98,6 +98,7 @@ function extractTimelineItems(markdown) {
 
 function buildSearchEntries(id, title, rawSections, knowledgeNotes) {
   const sectionEntries = Object.entries(rawSections)
+    .filter(([sectionTitle]) => sectionTitle !== "知识笔记")
     .map(([sectionTitle, sectionMarkdown]) => {
       const rendered = markdownToSafeHtml(sectionMarkdown);
       return {

@@ -38,6 +38,21 @@ assert.match(codingDefinitionHtml, /<strong>Queue（队列）<\/strong>/, "Codin
 assert.match(codingDefinitionHtml, /<strong>Deque（双端队列）<\/strong>/, "Coding definitions should render Deque emphasis as strong HTML");
 assert.doesNotMatch(codingDefinitionHtml, /\*\*Stack/, "Coding definition HTML should not retain raw Stack emphasis markers");
 
+const searchEntries = roadmapData.modules.flatMap((module) => module.searchEntries);
+assert.equal(
+  searchEntries.some((entry) => entry.type === "section" && entry.sectionTitle === "知识笔记"),
+  false,
+  "Search entries should not include the raw 知识笔记 section",
+);
+assert.ok(
+  searchEntries.some((entry) => entry.type === "knowledge-note" && entry.articleTitle === "deque、stack 与 queue"),
+  "Search entries should retain knowledge article entries",
+);
+assert.ok(
+  searchEntries.some((entry) => entry.type === "knowledge-section" && entry.sectionTitle === "核心定义"),
+  "Search entries should retain internal knowledge-section entries",
+);
+
 const sprint = readModule("interview-sprint");
 assert.match(sprint, /^## 学习记录$/m);
 assert.doesNotMatch(sprint, /^## 知识笔记$/m);

@@ -55,6 +55,33 @@ assert.deepEqual(
 assert.match(articles[0].sections[4].body, /class="language-python"/);
 assert.match(articles[0].text, /每个索引最多入队和出队一次/);
 
+const tildeFenceArticle = parseKnowledgeArticles(
+  "coding",
+  completeArticle.replace(
+    "```python\nqueue.popleft()\n```",
+    "~~~python\n#### 假小节\n1. 假步骤\n2. 假步骤\n~~~",
+  ),
+)[0];
+assert.equal(tildeFenceArticle.sections.find((section) => section.title === "假小节"), undefined);
+assert.match(tildeFenceArticle.sections.find((section) => section.kind === "code").body, /#### 假小节/);
+
+const fourBacktickArticle = parseKnowledgeArticles(
+  "coding",
+  completeArticle.replace(
+    "```python\nqueue.popleft()\n```",
+    "````markdown\n```python\n#### 假小节\n```\n````",
+  ),
+)[0];
+assert.equal(fourBacktickArticle.sections.find((section) => section.title === "假小节"), undefined);
+assert.match(fourBacktickArticle.sections.find((section) => section.kind === "code").body, /#### 假小节/);
+
+const completeArticleBody = completeArticle.replace(/^### 单调队列\n+/, "");
+const articleWithFencedFakeArticle = parseKnowledgeArticles(
+  "coding",
+  `${completeArticle}\n\n~~~markdown\n### 假文章\n${completeArticleBody}\n~~~`,
+);
+assert.equal(articleWithFencedFakeArticle.length, 1);
+
 const articleWithUnknownSection = parseKnowledgeArticles(
   "coding",
   completeArticle.replace(
@@ -98,6 +125,13 @@ assert.throws(
   () => parseKnowledgeArticles("coding", completeArticle.replace(
     "1. 新索引进入窗口\n2. 删除队尾候选\n3. 清理过期队首",
     "1. 新索引进入窗口",
+  )),
+  /程序流程.*at least two ordered steps/i,
+);
+assert.throws(
+  () => parseKnowledgeArticles("coding", completeArticle.replace(
+    "1. 新索引进入窗口\n2. 删除队尾候选\n3. 清理过期队首",
+    "1. 新索引进入窗口\n\n```text\n1. 假步骤\n2. 假步骤\n```",
   )),
   /程序流程.*at least two ordered steps/i,
 );

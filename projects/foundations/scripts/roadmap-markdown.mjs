@@ -60,59 +60,53 @@ function slugifyTitle(title) {
     .replace(/^-+|-+$/g, "");
 }
 
-function splitHeadingBlocks(markdown, level) {
-  const marker = `${"#".repeat(level)} `;
+function tokensToMarkdown(tokens) {
+  return tokens.map((token) => token.raw ?? "").join("").trim();
+}
+
+function splitHeadingBlocks(tokens, level) {
   const blocks = [];
   let title = "";
-  let lines = [];
-  let inCode = false;
+  let contentTokens = [];
   const flush = () => {
     if (!title) return;
-    blocks.push({ title, markdown: lines.join("\n").trim() });
-    lines = [];
+    blocks.push({ title, markdown: tokensToMarkdown(contentTokens), tokens: contentTokens });
+    contentTokens = [];
   };
-  for (const line of String(markdown ?? "").split("\n")) {
-    if (line.startsWith("```") ) inCode = !inCode;
-    if (!inCode && line.startsWith(marker)) {
+  for (const token of tokens) {
+    if (token.type === "heading" && token.depth === level) {
       flush();
-      title = line.slice(marker.length).trim();
+      title = token.text.trim();
       continue;
     }
-    if (title) lines.push(line);
+    if (title) contentTokens.push(token);
   }
   flush();
   return blocks;
 }
 
-function splitArticleBody(markdown) {
-  const lines = String(markdown ?? "").split("\n");
-  let inCode = false;
-  let firstSectionIndex = lines.length;
-  for (let index = 0; index < lines.length; index += 1) {
-    if (lines[index].startsWith("```") ) inCode = !inCode;
-    if (!inCode && lines[index].startsWith("#### ")) {
-      firstSectionIndex = index;
-      break;
-    }
-  }
+function splitArticleBody(tokens) {
+  const firstSectionIndex = tokens.findIndex((token) => token.type === "heading" && token.depth === 4);
   return {
-    introMarkdown: lines.slice(0, firstSectionIndex).join("\n").trim(),
-    sectionBlocks: splitHeadingBlocks(lines.slice(firstSectionIndex).join("\n"), 4),
+    introMarkdown: tokensToMarkdown(tokens.slice(0, firstSectionIndex === -1 ? tokens.length : firstSectionIndex)),
+    sectionBlocks: splitHeadingBlocks(tokens.slice(firstSectionIndex === -1 ? tokens.length : firstSectionIndex), 4),
   };
 }
 
-function countOrderedSteps(markdown) {
-  return String(markdown ?? "").split("\n").filter((line) => /^\d+\.\s+/.test(line)).length;
+function countOrderedSteps(tokens) {
+  return tokens
+    .filter((token) => token.type === "list" && token.ordered)
+    .reduce((count, token) => count + token.items.length, 0);
 }
 
 export function parseKnowledgeArticles(moduleId, markdown) {
   const ids = new Set();
-  return splitHeadingBlocks(markdown, 3).map((articleBlock) => {
+  return splitHeadingBlocks(marked.lexer(String(markdown ?? "")), 3).map((articleBlock) => {
     const id = `${moduleId}-${slugifyTitle(articleBlock.title) || "article"}`;
     if (ids.has(id)) throw new Error(`${moduleId}: duplicate knowledge article id ${id}`);
     ids.add(id);
 
-    const { introMarkdown, sectionBlocks } = splitArticleBody(articleBlock.markdown);
+    const { introMarkdown, sectionBlocks } = splitArticleBody(articleBlock.tokens);
     const sectionByTitle = new Map(sectionBlocks.map((section) => [section.title, section]));
     for (const requiredTitle of REQUIRED_KNOWLEDGE_SECTIONS) {
       const required = sectionByTitle.get(requiredTitle);
@@ -124,7 +118,7 @@ export function parseKnowledgeArticles(moduleId, markdown) {
 
     const sections = sectionBlocks.map((sectionBlock) => {
       const kind = SECTION_KINDS.get(sectionBlock.title) ?? "generic";
-      if (kind === "flow" && countOrderedSteps(sectionBlock.markdown) < 2) {
+      if (kind === "flow" && countOrderedSteps(sectionBlock.tokens) < 2) {
         throw new Error(`${moduleId} / ${articleBlock.title} / 程序流程 requires at least two ordered steps`);
       }
       const rendered = markdownToSafeHtml(sectionBlock.markdown);
