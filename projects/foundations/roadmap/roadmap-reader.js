@@ -1,5 +1,6 @@
 const ANNOTATION_STORAGE_KEY = "foundationsReader.annotations.v1";
 const TASK_STORAGE_KEY = "foundationsReader.tasks.v1";
+const MERMAID_MODULE_URL = "https://cdn.jsdelivr.net/npm/mermaid@11.12.2/dist/mermaid.esm.min.mjs";
 
 const state = {
   data: null,
@@ -109,9 +110,9 @@ function getAnnotationsForNote(moduleId, noteId) {
   return state.annotations.items.filter((item) => item.moduleId === moduleId && item.noteId === noteId);
 }
 
-function getKnowledgeCardFromNode(node) {
+function getKnowledgeArticleFromNode(node) {
   const element = node?.nodeType === Node.ELEMENT_NODE ? node : node?.parentElement;
-  return element?.closest?.(".knowledge-card") ?? null;
+  return element?.closest?.(".knowledge-article") ?? null;
 }
 
 function countTextOccurrences(text, needle) {
@@ -133,16 +134,16 @@ function getSelectionAnnotationContext() {
   if (selectedText.length < 2) return null;
   if (range.startContainer !== range.endContainer) return null;
 
-  const startCard = getKnowledgeCardFromNode(range.startContainer);
-  const endCard = getKnowledgeCardFromNode(range.endContainer);
-  if (!startCard || startCard !== endCard) return null;
+  const startArticle = getKnowledgeArticleFromNode(range.startContainer);
+  const endArticle = getKnowledgeArticleFromNode(range.endContainer);
+  if (!startArticle || startArticle !== endArticle) return null;
 
-  const noteId = startCard.dataset.noteId;
+  const noteId = startArticle.dataset.noteId;
   const moduleId = state.currentModule?.id;
   if (!moduleId || !noteId) return null;
 
   const beforeRange = document.createRange();
-  beforeRange.selectNodeContents(startCard);
+  beforeRange.selectNodeContents(startArticle);
   beforeRange.setEnd(range.startContainer, range.startOffset);
 
   return {
@@ -326,9 +327,9 @@ function applyHighlights() {
   ));
   const resolvedHighlights = [];
   for (const annotation of activeAnnotations) {
-    const card = els.sectionList.querySelector(`.knowledge-card[data-note-id="${CSS.escape(annotation.noteId)}"]`);
-    if (!card) continue;
-    const range = findTextRange(card, annotation.selectedText, annotation.matchIndex);
+    const article = els.sectionList.querySelector(`.knowledge-article[data-note-id="${CSS.escape(annotation.noteId)}"]`);
+    if (!article) continue;
+    const range = findTextRange(article, annotation.selectedText, annotation.matchIndex);
     if (!range) continue;
     resolvedHighlights.push({
       annotation,
@@ -616,19 +617,27 @@ function renderOverviewDashboard(module) {
     .join("");
 }
 
+function renderKnowledgeArticleSection(section) {
+  return `
+    <section class="knowledge-article-section is-${escapeHtml(section.kind)}" id="${escapeHtml(section.id)}" data-section-id="${escapeHtml(section.id)}" data-section-title="${escapeHtml(section.title)}">
+      <h4>${escapeHtml(section.title)}</h4>
+      <div class="knowledge-article-section-body">${section.body}</div>
+    </section>
+  `;
+}
+
 function renderKnowledgeNotesSection(module) {
   const notes = module.knowledgeNotes ?? [];
-  if (notes.length === 0) return `<p class="note-empty">这个模块还没有知识笔记。</p>`;
-  return `
-    <div class="knowledge-list">
-      ${notes.map((note) => `
-        <article class="knowledge-card" id="${escapeHtml(note.id)}" data-section-id="${escapeHtml(note.id)}" data-section-title="${escapeHtml(note.title)}" data-note-id="${escapeHtml(note.id)}">
-          <h3>${escapeHtml(note.title)}</h3>
-          <div class="knowledge-card-body">${note.body}</div>
-        </article>
-      `).join("")}
-    </div>
-  `;
+  if (notes.length === 0) return "";
+  return `<div class="knowledge-articles">${notes.map((note) => `
+    <article class="knowledge-article" id="${escapeHtml(note.id)}" data-section-id="${escapeHtml(note.id)}" data-section-title="${escapeHtml(note.title)}" data-note-id="${escapeHtml(note.id)}">
+      <header class="knowledge-article-header">
+        <h3 class="knowledge-article-title">${escapeHtml(note.title)}</h3>
+        <div class="knowledge-article-intro">${note.intro}</div>
+      </header>
+      ${note.sections.map(renderKnowledgeArticleSection).join("")}
+    </article>
+  `).join("")}</div>`;
 }
 
 function renderCurrentModule() {
@@ -648,7 +657,7 @@ function renderCurrentModule() {
     return;
   }
 
-  const mainSections = ["目标", "当前状态", "核心知识", "任务", "时间线", "知识笔记"];
+  const mainSections = ["目标", "当前状态", "核心知识", "任务", "时间线", "学习记录", "知识笔记"];
   const blocks = mainSections
     .map((title) => {
       const body = title === "时间线"
@@ -677,8 +686,8 @@ function renderCurrentModule() {
     </article>
   `;
 
-  els.sectionList.querySelectorAll(".knowledge-card").forEach((card) => {
-    card.addEventListener("click", () => setActiveKnowledgeContext(card.dataset.noteId));
+  els.sectionList.querySelectorAll(".knowledge-article").forEach((article) => {
+    article.addEventListener("click", () => setActiveKnowledgeContext(article.dataset.noteId));
   });
 
   els.sectionList.querySelectorAll("[data-task-id]").forEach((checkbox) => {
@@ -691,15 +700,36 @@ function renderCurrentModule() {
   });
 }
 
+async function renderMermaidDiagrams(root = els.sectionList) {
+  const blocks = [...root.querySelectorAll("pre code.language-mermaid")];
+  if (blocks.length === 0) return;
+  try {
+    const { default: mermaid } = await import(MERMAID_MODULE_URL);
+    mermaid.initialize({ startOnLoad: false, securityLevel: "strict", theme: "neutral" });
+    for (const [index, code] of blocks.entries()) {
+      try {
+        const { svg } = await mermaid.render(`foundations-mermaid-${Date.now()}-${index}`, code.textContent);
+        const figure = document.createElement("figure");
+        figure.className = "knowledge-diagram";
+        figure.innerHTML = svg;
+        code.closest("pre")?.replaceWith(figure);
+      } catch (error) {
+        console.warn("Unable to render Foundations Mermaid diagram", error);
+      }
+    }
+  } catch (error) {
+    console.warn("Unable to load Foundations Mermaid renderer", error);
+  }
+}
+
 function getKnowledgeNoteById(module, noteId) {
   return (module.knowledgeNotes ?? []).find((note) => note.id === noteId);
 }
 
-function getKnowledgeNoteForSection(module, sectionId) {
-  const directNote = getKnowledgeNoteById(module, sectionId);
-  if (directNote) return directNote;
-  if (sectionId !== getSectionId(module, "知识笔记")) return null;
-  return getKnowledgeNoteById(module, state.activeKnowledgeNoteId) ?? null;
+function getKnowledgeArticleForTarget(module, targetId) {
+  return (module.knowledgeNotes ?? []).find((note) => (
+    note.id === targetId || note.sections?.some((section) => section.id === targetId)
+  )) ?? null;
 }
 
 function renderLocalAnnotations(note) {
@@ -724,17 +754,7 @@ function renderLocalAnnotations(note) {
 
 function renderContextualNotePanel(note) {
   const module = state.currentModule;
-  const noteGroups = note?.groups?.length
-    ? note.groups.map((group) => `
-      <section class="note-block" data-note-group="${escapeHtml(group.label)}">
-        <h3 class="note-group-title">${escapeHtml(group.label)}</h3>
-        <div class="note-group-body">${group.body}</div>
-      </section>
-    `).join("")
-    : note?.body ? `<section class="note-block"><div class="note-group-body">${note.body}</div></section>` : "";
-  const renderedNotes = note
-    ? `<article class="note-context"><h3>${escapeHtml(note.title)}</h3>${noteGroups}${renderLocalAnnotations(note)}</article>`
-    : "";
+  const renderedNotes = renderLocalAnnotations(note);
 
   const label = `学习过程记录 · ${module.title}`;
   els.noteLabel.textContent = label;
@@ -759,7 +779,7 @@ function renderContextualNotePanel(note) {
 
 function setActiveKnowledgeContext(sectionId) {
   const module = state.currentModule;
-  const note = getKnowledgeNoteForSection(module, sectionId);
+  const note = getKnowledgeArticleForTarget(module, sectionId);
   state.activeKnowledgeNoteId = note?.id ?? "";
   renderContextualNotePanel(note);
 }
@@ -773,8 +793,10 @@ function updateUrl(moduleId) {
 
 function setActiveSection(sectionId) {
   state.activeSectionId = sectionId;
+  const article = getKnowledgeArticleForTarget(state.currentModule, sectionId);
+  const railSectionId = article?.id ?? sectionId;
   els.sectionLines.querySelectorAll(".section-line").forEach((button) => {
-    const isActive = button.dataset.sectionId === sectionId;
+    const isActive = button.dataset.sectionId === railSectionId;
     button.classList.toggle("is-active", isActive);
     button.setAttribute("aria-current", isActive ? "true" : "false");
   });
@@ -840,6 +862,7 @@ function openModule(moduleId, { syncUrl = true, targetSectionId = "" } = {}) {
   if (syncUrl) updateUrl(nextModule.id);
   renderModuleNav();
   renderCurrentModule();
+  void renderMermaidDiagrams();
   renderContextualNotePanel(null);
   renderSectionRail(nextModule);
   applyHighlights();
@@ -957,15 +980,20 @@ function renderSearchResults(results) {
   }
 
   els.searchResults.innerHTML = results
-    .map(({ module, entry }) => `
+    .map(({ module, entry }) => {
+      const resultTitle = entry.articleTitle && entry.articleTitle !== entry.sectionTitle
+        ? `${entry.articleTitle} / ${entry.sectionTitle}`
+        : entry.sectionTitle;
+      return `
       <button class="result-item" type="button" data-module-id="${escapeHtml(module.id)}" data-section-id="${escapeHtml(entry.id)}">
         <span>
-          <span class="result-title">${highlightTerms(entry.sectionTitle, state.searchQuery)}</span>
+          <span class="result-title">${highlightTerms(resultTitle, state.searchQuery)}</span>
           <span class="result-snippet">${highlightTerms(getEntrySnippet(entry, state.searchQuery), state.searchQuery)}</span>
         </span>
         <span class="result-meta">${escapeHtml(module.title)}</span>
       </button>
-    `)
+    `;
+    })
     .join("");
 
   els.searchResults.querySelectorAll("[data-module-id]").forEach((button) => {
@@ -1047,7 +1075,7 @@ function bindEvents() {
     if (state.annotationDeletePopover && !isDeletePopoverClick) hideAnnotationDeletePopover();
     if (isDeletePopoverClick) return;
     if (state.annotationToolbar?.contains(event.target)) return;
-    if (!getKnowledgeCardFromNode(event.target)) hideAnnotationToolbar();
+    if (!getKnowledgeArticleFromNode(event.target)) hideAnnotationToolbar();
   });
 
   window.addEventListener("keydown", (event) => {
