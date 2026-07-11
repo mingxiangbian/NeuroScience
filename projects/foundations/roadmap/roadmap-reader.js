@@ -1,3 +1,9 @@
+import {
+  ANNOTATION_CATEGORIES,
+  groupAnnotations,
+  normalizeAnnotation,
+} from "./annotation-model.js";
+
 const ANNOTATION_STORAGE_KEY = "foundationsReader.annotations.v1";
 const TASK_STORAGE_KEY = "foundationsReader.tasks.v1";
 const MERMAID_MODULE_URL = "https://cdn.jsdelivr.net/npm/mermaid@11.12.2/dist/mermaid.esm.min.mjs";
@@ -72,7 +78,9 @@ function loadAnnotations() {
     if (!parsed || !Array.isArray(parsed.items)) return createEmptyAnnotationStore();
     return {
       version: 1,
-      items: parsed.items.filter((item) => item && item.projectId === "foundations"),
+      items: parsed.items
+        .filter((item) => item && item.projectId === "foundations")
+        .map(normalizeAnnotation),
     };
   } catch (error) {
     console.warn("Unable to load Foundations annotations", error);
@@ -189,6 +197,7 @@ function createAnnotationFromSelection(mode) {
   const context = state.pendingAnnotation;
   if (!context?.moduleId || !context?.noteId) return;
   const now = new Date().toISOString();
+  const annotationMode = mode === "note" ? "note" : "highlight";
   const annotation = {
     id: createAnnotationId(),
     projectId: "foundations",
@@ -196,7 +205,8 @@ function createAnnotationFromSelection(mode) {
     noteId: context.noteId,
     selectedText: context.selectedText,
     matchIndex: context.matchIndex,
-    mode: mode === "note" ? "note" : "highlight",
+    mode: annotationMode,
+    category: annotationMode === "note" ? "understanding" : "highlight",
     note: "",
     highlightActive: true,
     createdAt: now,
@@ -216,6 +226,16 @@ function updateAnnotationNote(annotationId, value) {
   annotation.note = value;
   annotation.updatedAt = new Date().toISOString();
   saveAnnotations();
+}
+
+function updateAnnotationCategory(annotationId, category) {
+  if (!ANNOTATION_CATEGORIES.some((item) => item.id === category)) return;
+  const annotation = state.annotations.items.find((item) => item.id === annotationId);
+  if (!annotation) return;
+  annotation.category = category;
+  annotation.updatedAt = new Date().toISOString();
+  saveAnnotations();
+  renderContextualNotePanel(getKnowledgeNoteById(state.currentModule, state.activeKnowledgeNoteId));
 }
 
 function deleteAnnotation(annotationId, behavior) {
@@ -736,18 +756,36 @@ function getKnowledgeArticleForTarget(module, targetId) {
 function renderLocalAnnotations(note) {
   if (!state.currentModule || !note) return "";
   const annotations = getAnnotationsForNote(state.currentModule.id, note.id)
-    .filter((annotation) => annotation.mode === "note" || annotation.note || !annotation.highlightActive);
+    .filter((annotation) => annotation.mode === "note" || annotation.note || annotation.highlightActive);
   if (annotations.length === 0) return "";
+  const groups = groupAnnotations(annotations);
 
   return `
     <section class="note-block local-annotation-list">
       <h3 class="note-group-title">本地学习笔记</h3>
-      ${annotations.map((annotation) => `
-        <article class="local-annotation${annotation.highlightActive ? "" : " is-detached"}" data-annotation-id="${escapeHtml(annotation.id)}">
-          <p class="local-annotation-quote">${escapeHtml(annotation.selectedText)}</p>
-          <textarea class="local-annotation-editor" rows="4" data-annotation-editor="${escapeHtml(annotation.id)}" placeholder="写下理解、反思或面试表达">${escapeHtml(annotation.note)}</textarea>
-          ${annotation.highlightActive ? "" : `<p class="local-annotation-status">原文高亮已删除，笔记仍保留。</p>`}
-        </article>
+      ${groups.map((group) => `
+        <section class="local-annotation-group" data-annotation-group="${escapeHtml(group.key)}">
+          <h4 class="note-group-title">${escapeHtml(group.label)}</h4>
+          ${group.items.map((annotation) => {
+            if (group.key === "highlight") {
+              return `
+                <article class="local-annotation" data-annotation-id="${escapeHtml(annotation.id)}">
+                  <p class="local-annotation-quote">${escapeHtml(annotation.selectedText)}</p>
+                </article>
+              `;
+            }
+            return `
+              <article class="local-annotation${annotation.highlightActive ? "" : " is-detached"}" data-annotation-id="${escapeHtml(annotation.id)}">
+                <p class="local-annotation-quote">${escapeHtml(annotation.selectedText)}</p>
+                <select class="local-annotation-category" data-annotation-category="${escapeHtml(annotation.id)}" aria-label="笔记分类">
+                  ${ANNOTATION_CATEGORIES.map((category) => `<option value="${escapeHtml(category.id)}"${annotation.category === category.id ? " selected" : ""}>${escapeHtml(category.label)}</option>`).join("")}
+                </select>
+                <textarea class="local-annotation-editor" rows="4" data-annotation-editor="${escapeHtml(annotation.id)}" placeholder="写下自己的理解、问题、反思或补充资料">${escapeHtml(annotation.note)}</textarea>
+                ${annotation.highlightActive ? "" : `<p class="local-annotation-status">原文高亮已删除，笔记仍保留。</p>`}
+              </article>
+            `;
+          }).join("")}
+        </section>
       `).join("")}
     </section>
   `;
@@ -763,6 +801,11 @@ function renderContextualNotePanel(note) {
   els.noteSurface.innerHTML = renderedNotes;
   els.mobileNoteSurface.innerHTML = renderedNotes;
   for (const surface of [els.noteSurface, els.mobileNoteSurface]) {
+    surface.querySelectorAll("[data-annotation-category]").forEach((select) => {
+      select.addEventListener("change", () => {
+        updateAnnotationCategory(select.dataset.annotationCategory, select.value);
+      });
+    });
     surface.querySelectorAll("[data-annotation-editor]").forEach((editor) => {
       editor.addEventListener("input", () => {
         const annotationId = editor.dataset.annotationEditor;

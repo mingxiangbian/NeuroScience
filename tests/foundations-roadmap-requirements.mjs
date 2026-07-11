@@ -198,6 +198,13 @@ assert.match(js, /function createAnnotationFromSelection/, "Foundations reader s
 assert.match(js, /function applyHighlights/, "Foundations reader should restore highlights inside knowledge articles");
 assert.match(js, /function updateAnnotationNote/, "Foundations reader should update local study-note text");
 assert.match(js, /function deleteAnnotation/, "Foundations reader should support deleting highlights and annotations");
+assert.match(js, /from "\.\/annotation-model\.js"/, "Foundations reader should import the annotation model");
+assert.match(js, /function updateAnnotationCategory/, "Foundations reader should update annotation categories");
+assert.match(js, /data-annotation-category/, "Foundations reader should render annotation category controls");
+assert.match(js, /groupAnnotations\(annotations\)/, "Foundations reader should group active local annotations");
+assert.doesNotMatch(js, /noteGroups/, "Foundations reader should not render legacy note groups");
+assert.doesNotMatch(js, /note\?\.body/, "Foundations reader should not render fallback article copy");
+assert.doesNotMatch(js, /面试表达/, "Foundations reader should not render legacy interview-expression copy");
 assert.match(js, /\.knowledge-article/, "annotation selection should be scoped to knowledge articles");
 assert.doesNotMatch(js, /knowledge-card/, "roadmap JS should not retain legacy knowledge-card selectors");
 assert.match(js, /data-note-id/, "annotations should anchor to stable knowledge note ids");
