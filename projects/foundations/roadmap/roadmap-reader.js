@@ -8,6 +8,7 @@ const state = {
   searchQuery: "",
   activeSectionId: "",
   activeKnowledgeNoteId: "",
+  moduleRenderVersion: 0,
   sectionScrollHandler: null,
   sectionScrollFrame: 0,
   annotations: { version: 1, items: [] },
@@ -855,7 +856,7 @@ function clearSearch() {
 
 function openModule(moduleId, { syncUrl = true, targetSectionId = "" } = {}) {
   const nextModule = getModuleById(moduleId) ?? state.data.modules[0];
-  const openedModuleId = nextModule.id;
+  const moduleRenderVersion = ++state.moduleRenderVersion;
   state.currentModule = nextModule;
   state.activeKnowledgeNoteId = "";
   hideAnnotationDeletePopover();
@@ -864,12 +865,12 @@ function openModule(moduleId, { syncUrl = true, targetSectionId = "" } = {}) {
   renderModuleNav();
   renderCurrentModule();
   void renderMermaidDiagrams().then(() => {
-    if (state.currentModule?.id !== openedModuleId) return;
+    if (state.moduleRenderVersion !== moduleRenderVersion) return;
     applyHighlights();
     observeSections();
     if (targetSectionId) {
       requestAnimationFrame(() => {
-        if (state.currentModule?.id !== openedModuleId) return;
+        if (state.moduleRenderVersion !== moduleRenderVersion) return;
         document.querySelector(`#${CSS.escape(targetSectionId)}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
         setActiveSection(targetSectionId);
       });
@@ -882,7 +883,7 @@ function openModule(moduleId, { syncUrl = true, targetSectionId = "" } = {}) {
   observeSections();
   if (targetSectionId) {
     requestAnimationFrame(() => {
-      if (state.currentModule?.id !== openedModuleId) return;
+      if (state.moduleRenderVersion !== moduleRenderVersion) return;
       document.querySelector(`#${CSS.escape(targetSectionId)}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
       setActiveSection(targetSectionId);
     });
