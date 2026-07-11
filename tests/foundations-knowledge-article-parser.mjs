@@ -84,6 +84,13 @@ assert.throws(
   /coding.*单调队列.*一句话总结/,
 );
 assert.throws(
+  () => parseKnowledgeArticles(
+    "coding",
+    completeArticle.replace("队列保存候选索引。", "<script>alert(1)</script>"),
+  ),
+  /coding.*单调队列.*核心定义/,
+);
+assert.throws(
   () => parseKnowledgeArticles("coding", `${completeArticle}\n\n${completeArticle}`),
   /duplicate knowledge article id/i,
 );

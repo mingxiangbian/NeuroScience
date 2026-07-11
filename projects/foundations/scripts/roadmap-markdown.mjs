@@ -116,7 +116,8 @@ export function parseKnowledgeArticles(moduleId, markdown) {
     const sectionByTitle = new Map(sectionBlocks.map((section) => [section.title, section]));
     for (const requiredTitle of REQUIRED_KNOWLEDGE_SECTIONS) {
       const required = sectionByTitle.get(requiredTitle);
-      if (!required || !required.markdown.trim()) {
+      const rendered = required ? markdownToSafeHtml(required.markdown) : null;
+      if (!required || !rendered?.text) {
         throw new Error(`${moduleId} / ${articleBlock.title} is missing required section ${requiredTitle}`);
       }
     }
