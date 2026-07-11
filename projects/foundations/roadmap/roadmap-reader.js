@@ -855,6 +855,7 @@ function clearSearch() {
 
 function openModule(moduleId, { syncUrl = true, targetSectionId = "" } = {}) {
   const nextModule = getModuleById(moduleId) ?? state.data.modules[0];
+  const openedModuleId = nextModule.id;
   state.currentModule = nextModule;
   state.activeKnowledgeNoteId = "";
   hideAnnotationDeletePopover();
@@ -862,7 +863,18 @@ function openModule(moduleId, { syncUrl = true, targetSectionId = "" } = {}) {
   if (syncUrl) updateUrl(nextModule.id);
   renderModuleNav();
   renderCurrentModule();
-  void renderMermaidDiagrams();
+  void renderMermaidDiagrams().then(() => {
+    if (state.currentModule?.id !== openedModuleId) return;
+    applyHighlights();
+    observeSections();
+    if (targetSectionId) {
+      requestAnimationFrame(() => {
+        if (state.currentModule?.id !== openedModuleId) return;
+        document.querySelector(`#${CSS.escape(targetSectionId)}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+        setActiveSection(targetSectionId);
+      });
+    }
+  });
   renderContextualNotePanel(null);
   renderSectionRail(nextModule);
   applyHighlights();
@@ -870,6 +882,7 @@ function openModule(moduleId, { syncUrl = true, targetSectionId = "" } = {}) {
   observeSections();
   if (targetSectionId) {
     requestAnimationFrame(() => {
+      if (state.currentModule?.id !== openedModuleId) return;
       document.querySelector(`#${CSS.escape(targetSectionId)}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
       setActiveSection(targetSectionId);
     });

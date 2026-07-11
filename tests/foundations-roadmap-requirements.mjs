@@ -147,6 +147,7 @@ assert.match(js, /function getKnowledgeArticleForTarget/);
 assert.match(js, /entry\.articleTitle/);
 assert.match(js, /MERMAID_MODULE_URL = "https:\/\/cdn\.jsdelivr\.net\/npm\/mermaid@11\.12\.2\/dist\/mermaid\.esm\.min\.mjs"/);
 assert.match(js, /async function renderMermaidDiagrams/);
+assert.match(js, /const openedModuleId = nextModule\.id;[\s\S]*renderMermaidDiagrams\(\)\.then\(\(\) => \{[\s\S]*if \(state\.currentModule\?\.id !== openedModuleId\) return;[\s\S]*applyHighlights\(\);[\s\S]*observeSections\(\);[\s\S]*if \(targetSectionId\)/, "Mermaid completion should resync the current module without allowing stale renders to affect a newer module");
 assert.doesNotMatch(js, /note\?\.groups/);
 assert.doesNotMatch(js, /note\?\.body/);
 assert.doesNotMatch(js, /这个模块还没有知识笔记/);
