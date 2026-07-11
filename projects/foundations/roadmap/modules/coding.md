@@ -123,9 +123,9 @@ TypeScript 不作为算法主语言，主要用于 Agent interfaces：
 
 #### 核心定义
 
-- **Stack（栈）**遵循后进先出（Last In, First Out, LIFO）。最后加入的元素最先离开。Python 中通常用 `list.append()` 入栈、`list.pop()` 出栈。
-- **Queue（队列）**遵循先进先出（First In, First Out, FIFO）。最早加入的元素最先离开。Python 中通常用 `deque.append()` 入队、`deque.popleft()` 出队。
-- **Deque（双端队列）**允许从左右两端加入或删除元素。它既能实现 stack，也能实现 queue，还能支持需要同时维护两端的算法。
+- **Stack（栈）** 遵循后进先出（Last In, First Out, LIFO）。最后加入的元素最先离开。Python 中通常用 `list.append()` 入栈、`list.pop()` 出栈。
+- **Queue（队列）** 遵循先进先出（First In, First Out, FIFO）。最早加入的元素最先离开。Python 中通常用 `deque.append()` 入队、`deque.popleft()` 出队。
+- **Deque（双端队列）** 允许从左右两端加入或删除元素。它既能实现 stack，也能实现 queue，还能支持需要同时维护两端的算法。
 
 | 需求 | 推荐操作 | 典型复杂度 |
 | --- | --- | --- |

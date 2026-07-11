@@ -27,6 +27,17 @@ function assertCompleteArticles(markdown, expectedTitles) {
 assertCompleteArticles(readModule("coding"), ["deque、stack 与 queue", "单调队列"]);
 assertCompleteArticles(readModule("evals-debugging"), ["Eval Case 的六层结构", "Benchmark 与 Agent Behavior Eval"]);
 
+const roadmapData = JSON.parse(readFileSync(new URL("../projects/foundations/roadmap/roadmap-data.json", import.meta.url), "utf8"));
+const codingArticle = roadmapData.modules
+  .find((module) => module.id === "coding")
+  .knowledgeNotes
+  .find((article) => article.title === "deque、stack 与 queue");
+const codingDefinitionHtml = codingArticle.sections.find((section) => section.kind === "definition").body;
+assert.match(codingDefinitionHtml, /<strong>Stack（栈）<\/strong>/, "Coding definitions should render Stack emphasis as strong HTML");
+assert.match(codingDefinitionHtml, /<strong>Queue（队列）<\/strong>/, "Coding definitions should render Queue emphasis as strong HTML");
+assert.match(codingDefinitionHtml, /<strong>Deque（双端队列）<\/strong>/, "Coding definitions should render Deque emphasis as strong HTML");
+assert.doesNotMatch(codingDefinitionHtml, /\*\*Stack/, "Coding definition HTML should not retain raw Stack emphasis markers");
+
 const sprint = readModule("interview-sprint");
 assert.match(sprint, /^## 学习记录$/m);
 assert.doesNotMatch(sprint, /^## 知识笔记$/m);
