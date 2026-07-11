@@ -1,6 +1,8 @@
 import {
   ANNOTATION_CATEGORIES,
+  getAnnotationArchiveNoteId,
   groupAnnotations,
+  migrateLegacyAnnotations,
   normalizeAnnotation,
 } from "./annotation-model.js";
 
@@ -119,6 +121,10 @@ function getAnnotationsForNote(moduleId, noteId) {
   return state.annotations.items.filter((item) => item.moduleId === moduleId && item.noteId === noteId);
 }
 
+function getArchivedAnnotations(moduleId) {
+  return getAnnotationsForNote(moduleId, getAnnotationArchiveNoteId(moduleId));
+}
+
 function getKnowledgeArticleFromNode(node) {
   const element = node?.nodeType === Node.ELEMENT_NODE ? node : node?.parentElement;
   return element?.closest?.(".knowledge-article") ?? null;
@@ -235,7 +241,7 @@ function updateAnnotationCategory(annotationId, category) {
   annotation.category = category;
   annotation.updatedAt = new Date().toISOString();
   saveAnnotations();
-  renderContextualNotePanel(getKnowledgeNoteById(state.currentModule, state.activeKnowledgeNoteId));
+  renderActiveContextualNotePanel();
 }
 
 function deleteAnnotation(annotationId, behavior) {
@@ -250,7 +256,7 @@ function deleteAnnotation(annotationId, behavior) {
   saveAnnotations();
   hideAnnotationDeletePopover();
   applyHighlights();
-  renderContextualNotePanel(getKnowledgeNoteById(state.currentModule, annotation.noteId));
+  renderActiveContextualNotePanel();
 }
 
 function hideAnnotationDeletePopover() {
@@ -448,7 +454,10 @@ function getRailTargets(module) {
     id: note.id,
     title: note.title,
   }));
-  return [...sectionTargets, ...noteTargets];
+  const archiveTargets = getArchivedAnnotations(module.id).length > 0
+    ? [{ id: getAnnotationArchiveNoteId(module.id), title: "历史笔记" }]
+    : [];
+  return [...sectionTargets, ...noteTargets, ...archiveTargets];
 }
 
 function renderSectionRail(module) {
@@ -661,6 +670,17 @@ function renderKnowledgeNotesSection(module) {
   `).join("")}</div>`;
 }
 
+function renderLegacyAnnotationArchive(module) {
+  if (getArchivedAnnotations(module.id).length === 0) return "";
+  const archiveId = getAnnotationArchiveNoteId(module.id);
+  return `
+    <article class="module-section legacy-annotation-archive" id="${escapeHtml(archiveId)}" data-section-id="${escapeHtml(archiveId)}" data-section-title="历史笔记" data-legacy-annotation-archive>
+      <h2>历史笔记</h2>
+      <p>旧版来源已变更，原文高亮无法恢复；选中文本与笔记已完整保留在右侧。</p>
+    </article>
+  `;
+}
+
 function renderCurrentModule() {
   const module = state.currentModule;
   els.moduleHeader.innerHTML = `
@@ -700,7 +720,9 @@ function renderCurrentModule() {
     .filter(Boolean)
     .join("");
 
-  els.sectionList.innerHTML = blocks || `
+  const archiveBlock = renderLegacyAnnotationArchive(module);
+  const content = `${blocks}${archiveBlock}`;
+  els.sectionList.innerHTML = content || `
     <article class="status-panel">
       <h2>${escapeHtml(module.title)}</h2>
       <p>这个模块还没有可展示内容。</p>
@@ -709,6 +731,9 @@ function renderCurrentModule() {
 
   els.sectionList.querySelectorAll(".knowledge-article").forEach((article) => {
     article.addEventListener("click", () => setActiveKnowledgeContext(article.dataset.noteId));
+  });
+  els.sectionList.querySelector("[data-legacy-annotation-archive]")?.addEventListener("click", (event) => {
+    setActiveSection(event.currentTarget.dataset.sectionId);
   });
 
   els.sectionList.querySelectorAll("[data-task-id]").forEach((checkbox) => {
@@ -757,12 +782,20 @@ function renderLocalAnnotations(note) {
   if (!state.currentModule || !note) return "";
   const annotations = getAnnotationsForNote(state.currentModule.id, note.id)
     .filter((annotation) => annotation.mode === "note" || annotation.note || annotation.highlightActive);
+  return renderAnnotationList(annotations, "本地学习笔记");
+}
+
+function renderArchivedAnnotations(module) {
+  return renderAnnotationList(getArchivedAnnotations(module.id), "历史笔记");
+}
+
+function renderAnnotationList(annotations, title) {
   if (annotations.length === 0) return "";
   const groups = groupAnnotations(annotations);
 
   return `
     <section class="note-block local-annotation-list">
-      <h3 class="note-group-title">本地学习笔记</h3>
+      <h3 class="note-group-title">${escapeHtml(title)}</h3>
       ${groups.map((group) => `
         <section class="local-annotation-group" data-annotation-group="${escapeHtml(group.key)}">
           <h4 class="note-group-title">${escapeHtml(group.label)}</h4>
@@ -791,11 +824,11 @@ function renderLocalAnnotations(note) {
   `;
 }
 
-function renderContextualNotePanel(note) {
+function renderContextualNotePanel(note, { archived = false } = {}) {
   const module = state.currentModule;
-  const renderedNotes = renderLocalAnnotations(note);
+  const renderedNotes = archived ? renderArchivedAnnotations(module) : renderLocalAnnotations(note);
 
-  const label = `学习过程记录 · ${module.title}`;
+  const label = `${archived ? "历史笔记" : "学习过程记录"} · ${module.title}`;
   els.noteLabel.textContent = label;
   els.mobileNoteLabel.textContent = label;
   els.noteSurface.innerHTML = renderedNotes;
@@ -821,11 +854,21 @@ function renderContextualNotePanel(note) {
   }
 }
 
+function renderActiveContextualNotePanel() {
+  const module = state.currentModule;
+  const archiveId = getAnnotationArchiveNoteId(module.id);
+  const archived = state.activeKnowledgeNoteId === archiveId && getArchivedAnnotations(module.id).length > 0;
+  const note = getKnowledgeNoteById(module, state.activeKnowledgeNoteId);
+  renderContextualNotePanel(note, { archived });
+}
+
 function setActiveKnowledgeContext(sectionId) {
   const module = state.currentModule;
   const note = getKnowledgeArticleForTarget(module, sectionId);
-  state.activeKnowledgeNoteId = note?.id ?? "";
-  renderContextualNotePanel(note);
+  const archiveId = getAnnotationArchiveNoteId(module.id);
+  const archived = sectionId === archiveId && getArchivedAnnotations(module.id).length > 0;
+  state.activeKnowledgeNoteId = archived ? archiveId : note?.id ?? "";
+  renderContextualNotePanel(note, { archived });
 }
 
 function updateUrl(moduleId) {
@@ -1092,7 +1135,7 @@ function bindEvents() {
   });
 
   els.toggleNote.addEventListener("click", () => {
-    if (window.matchMedia("(max-width: 860px)").matches) {
+    if (window.matchMedia("(max-width: 1100px)").matches) {
       els.shell.classList.toggle("is-mobile-note-open");
       return;
     }
@@ -1153,7 +1196,9 @@ function bindEvents() {
 async function init() {
   try {
     state.data = await fetchJson("roadmap/roadmap-data.json");
-    state.annotations = loadAnnotations();
+    const migratedAnnotations = migrateLegacyAnnotations(loadAnnotations(), state.data.modules);
+    state.annotations = migratedAnnotations;
+    saveAnnotations(migratedAnnotations);
     bindEvents();
     setTheme("light");
     openModule(getInitialModuleId(), { syncUrl: false });

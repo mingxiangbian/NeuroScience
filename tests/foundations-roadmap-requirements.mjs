@@ -129,6 +129,7 @@ assert.match(css, /\.local-annotation-list/, "right note panel should style loca
 assert.match(css, /\.local-annotation-quote/, "right note panel should style copied source excerpts");
 assert.match(css, /\.local-annotation-editor/, "right note panel should style editable study notes");
 assert.match(css, /\.local-annotation\.is-detached/, "right note panel should expose detached annotation state");
+assert.match(css, /\.legacy-annotation-archive\s*\{[\s\S]*padding:\s*14px 0 0/, "legacy annotation archive should remain a compact module section");
 assert.match(css, /\.section-line:hover/, "roadmap CSS should style collapsed rail hover state");
 assert.match(css, /\.section-line:hover \+ \.section-line/, "collapsed rail should grow neighboring lines on hover");
 assert.match(css, /\.section-line\[aria-current="true"\]/, "roadmap CSS should expose active collapsed rail state");
@@ -143,6 +144,12 @@ assert.match(css, /\.section-tooltip/, "collapsed rail should expose section too
 assert.match(css, /\.result-meta/, "roadmap CSS should show module and section metadata in search results");
 assert.match(css, /\.reader-shell\.is-searching \.reader-toolbar\s*\{[\s\S]*z-index:\s*4[0-9]/, "search toolbar and results should sit above the search overlay");
 assert.match(css, /@media \(max-width:\s*860px\)/, "roadmap CSS should include mobile layout rules");
+const tabletMediaStart = css.indexOf("@media (max-width: 1100px)");
+const mobileMediaStart = css.indexOf("@media (max-width: 860px)", tabletMediaStart);
+const tabletMediaRules = css.slice(tabletMediaStart, mobileMediaStart);
+assert.ok(tabletMediaStart >= 0 && mobileMediaStart > tabletMediaStart, "tablet and mobile breakpoints should remain distinct");
+assert.match(tabletMediaRules, /\.mobile-note-drawer\s*\{[\s\S]*position:\s*fixed/, "tablet rules should activate the note drawer without changing the main shell breakpoint");
+assert.match(tabletMediaRules, /\.reader-shell\.is-mobile-note-open \.mobile-note-drawer\s*\{[\s\S]*display:\s*block/, "tablet rules should expose the opened note drawer");
 assert.doesNotMatch(css, /border-radius:\s*24px|border-radius:\s*28px/, "roadmap reader should avoid oversized card radii");
 
 assert.match(js, /fetchJson\("roadmap\/roadmap-data\.json"\)/, "roadmap JS should load generated JSON");
@@ -171,6 +178,15 @@ assert.doesNotMatch(js, /note\?\.body/);
 assert.doesNotMatch(js, /这个模块还没有知识笔记/);
 assert.match(js, /function renderContextualNotePanel/, "roadmap JS should render context-aware right notes");
 assert.match(js, /function setActiveKnowledgeContext/, "roadmap JS should sync right notes with active knowledge context");
+assert.match(js, /function renderLegacyAnnotationArchive/, "roadmap JS should render a concise center archive explanation");
+assert.match(js, /原文高亮无法恢复/, "legacy archive copy should explain the lost source highlighting explicitly");
+assert.match(js, /选中文本与笔记已完整保留/, "legacy archive copy should confirm preserved annotation content");
+assert.match(js, /function getArchivedAnnotations/, "roadmap JS should identify archived records per module");
+assert.match(js, /getArchivedAnnotations\(module\.id\)\.length > 0/, "archive sections should only appear for modules with archived annotations");
+assert.match(js, /title:\s*"历史笔记"/, "modules with archived records should expose a section-rail target");
+assert.match(js, /function renderArchivedAnnotations/, "the right panel should render archived highlights as well as written notes");
+assert.match(js, /function renderActiveContextualNotePanel/, "annotation edits should preserve the active article or archive panel");
+assert.match(js, /function updateAnnotationCategory[\s\S]*renderActiveContextualNotePanel\(\);/, "category changes should keep archived annotations visible");
 assert.match(js, /function runSearch/, "roadmap JS should implement local keyword search");
 assert.match(js, /function setTheme/, "roadmap JS should support theme switching");
 assert.match(js, /function renderProgressSummary/, "roadmap JS should render labeled module and overall learning progress");
@@ -200,7 +216,7 @@ assert.doesNotMatch(js, /资源", "反思", "面试表达"/, "right notes should
 assert.doesNotMatch(js, /if \(sectionId === getSectionId\(module, "知识笔记"\)\) return module\.knowledgeNotes\?\.\[0\];/, "knowledge note section should not default to the first note");
 assert.doesNotMatch(js, /return getKnowledgeNoteById\(module, state\.activeKnowledgeNoteId\) \?\? module\.knowledgeNotes\?\.\[0\];/, "ordinary sections should not fall back to stale or first knowledge notes");
 assert.match(js, /const note = getKnowledgeArticleForTarget\(module, sectionId\);/, "knowledge article sections should map back to their parent article");
-assert.match(js, /const renderedNotes = renderLocalAnnotations\(note\);/, "right note panel should render only local annotations");
+assert.match(js, /const renderedNotes = archived \? renderArchivedAnnotations\(module\) : renderLocalAnnotations\(note\);/, "right note panel should render local annotations only for an explicit article or archive target");
 assert.match(js, /const railSectionId = article\?\.id \?\? sectionId;/, "nested article sections should keep the parent article active in the rail");
 assert.match(js, /renderContextualNotePanel\(null\);/, "module switches should start with an empty right note panel");
 assert.doesNotMatch(js, /renderContextualNotePanel\(nextModule\.knowledgeNotes\?\.\[0\]\);/, "module switches should not default the right panel to the first knowledge note");
@@ -214,6 +230,8 @@ assert.match(js, /function applyHighlights/, "Foundations reader should restore 
 assert.match(js, /function updateAnnotationNote/, "Foundations reader should update local study-note text");
 assert.match(js, /function deleteAnnotation/, "Foundations reader should support deleting highlights and annotations");
 assert.match(js, /from "\.\/annotation-model\.js"/, "Foundations reader should import the annotation model");
+assert.match(js, /migrateLegacyAnnotations\(loadAnnotations\(\), state\.data\.modules\)/, "reader init should migrate annotations after current article data loads");
+assert.match(js, /state\.annotations = migratedAnnotations;[\s\S]*saveAnnotations\(migratedAnnotations\);/, "reader init should persist migrated records to the same v1 store");
 assert.match(js, /function updateAnnotationCategory/, "Foundations reader should update annotation categories");
 assert.match(js, /data-annotation-category/, "Foundations reader should render annotation category controls");
 assert.match(js, /groupAnnotations\(annotations\)/, "Foundations reader should group active local annotations");
@@ -230,6 +248,8 @@ assert.match(js, /高亮和笔记一起删除/, "delete confirmation should allo
 assert.doesNotMatch(js, /PROJECT_ID = "brain-memory-for-ai-agents"|paperReader\.annotations\.v1/, "Foundations annotations should not reuse paper-reader project state");
 assert.doesNotMatch(js, /githubToken|Authorization|contents\/|repos\/|gitHub|fetch\(\"\/api/i, "Foundations annotations should not write to GitHub or backend APIs");
 assert.doesNotMatch(js, /embeddings\.json|cosineSimilarity|PROJECT_ID = "brain-memory-for-ai-agents"/, "Foundations reader JS should not reuse paper-specific semantic search state");
+assert.match(js, /els\.toggleNote\.addEventListener\("click", \(\) => \{[\s\S]*matchMedia\("\(max-width: 1100px\)"\)/, "note-toggle JS should use the same tablet breakpoint as the drawer CSS");
+assert.match(js, /els\.toggleLeftControls\.forEach\([\s\S]*matchMedia\("\(max-width: 860px\)"\)/, "left navigation should keep the one-column mobile breakpoint at 860px");
 
 assert.equal(data.project.id, "foundations", "generated data should identify the Foundations project");
 assert.equal(data.project.targetRole, "Agent / LLM Systems Engineer", "generated data should keep the target role");

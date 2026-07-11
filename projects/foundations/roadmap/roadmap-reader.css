@@ -726,6 +726,23 @@ body,
   padding: 22px 0 4px;
 }
 
+.legacy-annotation-archive {
+  padding: 14px 0 0;
+  cursor: pointer;
+}
+
+.legacy-annotation-archive h2 {
+  margin-bottom: 6px;
+  font-size: 18px;
+}
+
+.legacy-annotation-archive p {
+  margin: 0;
+  color: var(--reader-ink-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
 .module-section h2,
 .status-panel h2 {
   margin: 0 0 14px;
@@ -1469,6 +1486,31 @@ body,
   .note-panel {
     display: none;
   }
+
+  .mobile-note-drawer {
+    position: fixed;
+    inset: auto 14px 14px;
+    z-index: 38;
+    display: none;
+    max-height: min(70dvh, 520px);
+    overflow: auto;
+    border: 1px solid var(--reader-glass-edge);
+    border-radius: 16px;
+    background: var(--reader-glass-strong);
+    padding: 16px;
+    backdrop-filter: var(--reader-panel-blur);
+    -webkit-backdrop-filter: var(--reader-panel-blur);
+    box-shadow: 0 26px 64px var(--reader-glass-shadow);
+  }
+
+  .reader-shell.is-mobile-note-open .mobile-note-drawer {
+    display: block;
+  }
+
+  .mobile-note-drawer .local-annotation-editor,
+  .mobile-note-drawer .local-annotation-category {
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 860px) {
@@ -1565,26 +1607,6 @@ body,
     display: none;
   }
 
-  .mobile-note-drawer {
-    position: fixed;
-    inset: auto 14px 14px;
-    z-index: 38;
-    display: none;
-    max-height: min(70dvh, 520px);
-    overflow: auto;
-    border: 1px solid var(--reader-glass-edge);
-    border-radius: 16px;
-    background: var(--reader-glass-strong);
-    padding: 16px;
-    backdrop-filter: var(--reader-panel-blur);
-    -webkit-backdrop-filter: var(--reader-panel-blur);
-    box-shadow: 0 26px 64px var(--reader-glass-shadow);
-  }
-
-  .reader-shell.is-mobile-note-open .mobile-note-drawer {
-    display: block;
-  }
-
   .knowledge-article-title {
     font-size: 32px;
   }
@@ -1621,10 +1643,6 @@ body,
     padding-bottom: 13px;
   }
 
-  .mobile-note-drawer .local-annotation-editor,
-  .mobile-note-drawer .local-annotation-category {
-    max-width: 100%;
-  }
 }
 
 /* Route ledger refinement */
