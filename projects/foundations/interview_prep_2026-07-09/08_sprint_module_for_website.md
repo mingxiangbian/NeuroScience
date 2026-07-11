@@ -59,11 +59,11 @@ D1 盲测基线已完成并保留原始 artifact。当前独立 readiness 为 Co
 - D6（2026-07-15）：未开始；180 core / +90 optional；BFS + Agent Eval mini mock；可选 Coze overlay → Coding、Evals & Debugging、LLM Systems
 - D7（2026-07-16）：未开始；180 core / +90 optional；parallel post-test + 下一阶段分流 → Logs weekly review
 
-## 知识笔记
+## 学习记录
 
 ### D1 冲刺卡
 
-核心理解：
+完成记录：
 
 - 完成三份原始 baseline：Coding readiness 0、System Design readiness 0、Project Deep Dive readiness 1。
 - coached 阶段重构 `max_running_robots`，固定用例和 randomized differential tests 通过；该结果证明补缺有效，但不改写 blind baseline。
@@ -72,13 +72,13 @@ D1 盲测基线已完成并保留原始 artifact。当前独立 readiness 为 Co
 - Cyrene benchmark 的用户 ownership 已进一步校正：最初关注回答结束后的 summarization hook latency，并参考 MemGPT；用户只查看过归档汇总，没有逐项审计 case，也没有保存架构改造前后的量化对照。
 - Two Sum 与 Valid Parentheses 由用户确认运行通过；代码未保留在公开冲刺卡中。
 
-复习提示：
+后续检查：
 
 - 2026-07-12 对 sliding-window 做学习检查点，并检查 Context/Agent Runtime 的前置概念关系；尚未教学的内容不做盲目 hard gate。只有学过后在未见变式中独立通过，才能提高 readiness。
 
 ### D2 冲刺卡
 
-核心理解：
+完成记录：
 
 - Python 容器块完成 `list`、stack、queue、`deque` 的用途和复杂度学习；`list.pop(0)` 会移动后续元素，而 `deque.popleft()` 从左端常数时间移除。用户重写双队列 `service_order` 并确认测试通过；单调队列中右端 `pop()` 删除被新值支配的候选，左端 `popleft()` 只删除过期候选。
 - Eval 块区分 system performance benchmark 与 Agent behavior eval，并用 input、expected、actual、assertion、metric、evidence 六部分审计 `T0-MODE-FAST`。当前 case 缺少 Active Memory 的正向断言；Evidence 的多个零值只由 Fast Summary 是否存在决定；`continuityGetP95FastMs` 实际只有一次计时；`fastTokenOverhead` 是字符数除以四的估算。
@@ -86,18 +86,18 @@ D1 盲测基线已完成并保留原始 artifact。当前独立 readiness 为 Co
 - Context 块区分每轮同步 summarization hook 与周期维护：前者 freshness 高但增加前台等待和调用成本；后者移除同步关键路径开销，但引入可用延迟。项目偏好每日演化，全局记忆按周或更长周期更新，因此 time-to-availability 必须按 scope 分开测。
 - 项目叙事的证据边界保持不变：同步 Hook 的延迟和成本来自定性使用观察，没有保留改造前后的量化对照；后续应比较新增前台延迟、总 Token 成本、scope-specific availability、Memory Precision/Recall 和下游任务成功率。
 
-复习提示：
+后续检查：
 
 - D2 三个块均为 coached readiness 1，不代表独立通过。2026-07-13 做概念与 guided artifact 检查；D5 独立审计未见 Cyrene case；2026-07-18 对仍低于 readiness 2 的内容做 D+7 迁移复测。
 
 ### 冲刺卡格式
 
-核心理解：
+完成记录：
 
 - 每日格式：`D{N}：完成{artifact}；hard gate：{结果}；主要 failure：{tag}；已回填：{模块/笔记}；下一次复测：{日期}`。
 - 冲刺卡记录训练轨迹，不承载知识正文；未完成项直接顺延，不缩短题目时间。
 
-复习提示：
+后续检查：
 
 - D1 原始 baseline 必须保留。D7 使用平行题比较 readiness、用时、hint 和 failure tag，而不是比较润色后的答案。
 ```
