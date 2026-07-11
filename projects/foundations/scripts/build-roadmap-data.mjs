@@ -1,6 +1,10 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  markdownToSafeHtml,
+  parseKnowledgeArticles,
+} from "./roadmap-markdown.mjs";
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const foundationsDir = dirname(scriptDir);
@@ -21,16 +25,6 @@ const MODULES = [
 ];
 
 const VALID_STATUSES = new Set(["not-started", "in-progress", "learning", "review", "done"]);
-const NOTE_GROUP_LABELS = new Set(["核心理解", "常见误区", "关键提醒", "相关资料", "面试转译", "复习提示"]);
-
-function escapeHtml(value) {
-  return String(value ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
-}
 
 function parseFrontmatter(markdown, fileLabel) {
   const match = markdown.match(/^---\n(?<body>[\s\S]*?)\n---\n(?<content>[\s\S]*)$/);
@@ -60,150 +54,11 @@ function splitSections(content) {
   return sections;
 }
 
-function splitSubsections(markdown) {
-  const blocks = [];
-  let currentTitle = "";
-  let currentLines = [];
-  let inCode = false;
-
-  function flush() {
-    if (!currentTitle) return;
-    blocks.push({
-      title: currentTitle,
-      markdown: currentLines.join("\n").trim(),
-    });
-    currentLines = [];
-  }
-
-  for (const line of String(markdown ?? "").split("\n")) {
-    if (line.startsWith("```")) inCode = !inCode;
-    if (!inCode && line.startsWith("### ")) {
-      flush();
-      currentTitle = line.replace(/^### /, "").trim();
-      continue;
-    }
-    if (currentTitle) currentLines.push(line);
-  }
-
-  flush();
-  return blocks;
-}
-
-function renderInline(text) {
-  return escapeHtml(text)
-    .replace(/`([^`]+)`/g, "<code>$1</code>")
-    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
-}
-
-function renderMarkdown(markdown) {
-  const lines = String(markdown ?? "").split("\n");
-  const blocks = [];
-  let paragraph = [];
-  let list = [];
-  let orderedList = [];
-  let inCode = false;
-  let codeLines = [];
-  let codeLanguage = "";
-
-  function flushParagraph() {
-    if (paragraph.length === 0) return;
-    blocks.push(`<p>${renderInline(paragraph.join(" "))}</p>`);
-    paragraph = [];
-  }
-
-  function flushList() {
-    if (list.length > 0) {
-      blocks.push(`<ul>${list.map((item) => `<li>${renderInline(item)}</li>`).join("")}</ul>`);
-      list = [];
-    }
-    if (orderedList.length > 0) {
-      blocks.push(`<ol>${orderedList.map((item) => `<li>${renderInline(item)}</li>`).join("")}</ol>`);
-      orderedList = [];
-    }
-  }
-
-  for (const line of lines) {
-    if (line.startsWith("```")) {
-      if (inCode) {
-        blocks.push(`<pre><code data-language="${escapeHtml(codeLanguage)}">${escapeHtml(codeLines.join("\n"))}</code></pre>`);
-        inCode = false;
-        codeLines = [];
-        codeLanguage = "";
-      } else {
-        flushParagraph();
-        flushList();
-        inCode = true;
-        codeLanguage = line.slice(3).trim();
-      }
-      continue;
-    }
-
-    if (inCode) {
-      codeLines.push(line);
-      continue;
-    }
-
-    if (/^### /.test(line)) {
-      flushParagraph();
-      flushList();
-      blocks.push(`<h3>${renderInline(line.replace(/^### /, ""))}</h3>`);
-      continue;
-    }
-
-    const taskMatch = line.match(/^- \[( |x)\] (.+)$/i);
-    const listMatch = line.match(/^- (.+)$/);
-    const orderedMatch = line.match(/^\d+\. (.+)$/);
-    if (taskMatch) {
-      flushParagraph();
-      orderedList = [];
-      list.push(`${taskMatch[1].toLowerCase() === "x" ? "Done: " : "Open: "}${taskMatch[2]}`);
-      continue;
-    }
-    if (listMatch) {
-      flushParagraph();
-      orderedList = [];
-      list.push(listMatch[1]);
-      continue;
-    }
-    if (orderedMatch) {
-      flushParagraph();
-      list = [];
-      orderedList.push(orderedMatch[1]);
-      continue;
-    }
-
-    if (line.trim() === "") {
-      flushParagraph();
-      flushList();
-      continue;
-    }
-
-    paragraph.push(line.trim());
-  }
-
-  flushParagraph();
-  flushList();
-  return blocks.join("\n");
-}
-
 function stripMarkdown(markdown) {
   return String(markdown ?? "")
     .replace(/^---[\s\S]*?---/, "")
     .replace(/```[\s\S]*?```/g, " ")
     .replace(/[#>*_`\[\]()]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function stripHtml(html) {
-  return String(html ?? "")
-    .replace(/<[^>]*>/g, " ")
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -241,72 +96,42 @@ function extractTimelineItems(markdown) {
     });
 }
 
-function splitNoteGroups(markdown) {
-  const groups = [];
-  let currentLabel = "";
-  let currentLines = [];
-  let inCode = false;
-
-  function flush() {
-    if (!currentLabel) return;
-    const markdownBody = currentLines.join("\n").trim();
-    groups.push({
-      label: currentLabel,
-      body: renderMarkdown(markdownBody),
-      text: stripMarkdown(markdownBody),
-    });
-    currentLines = [];
-  }
-
-  for (const line of String(markdown ?? "").split("\n")) {
-    if (line.startsWith("```")) inCode = !inCode;
-    const labelMatch = !inCode ? line.match(/^([^：:]{2,12})[：:]$/) : null;
-    if (labelMatch && NOTE_GROUP_LABELS.has(labelMatch[1])) {
-      flush();
-      currentLabel = labelMatch[1];
-      continue;
-    }
-    if (currentLabel) currentLines.push(line);
-  }
-
-  flush();
-  return groups;
-}
-
-function buildKnowledgeNotes(moduleId, knowledgeMarkdown) {
-  return splitSubsections(knowledgeMarkdown).map((block) => {
-    const text = stripMarkdown(block.markdown);
-    return {
-      id: `${moduleId}-${slugifySection(block.title) || "note"}`,
-      title: block.title,
-      body: renderMarkdown(block.markdown),
-      text,
-      groups: splitNoteGroups(block.markdown),
-    };
-  });
-}
-
 function buildSearchEntries(id, title, rawSections, knowledgeNotes) {
   const sectionEntries = Object.entries(rawSections)
-    .map(([sectionTitle, sectionMarkdown]) => ({
-      id: `${id}-${slugifySection(sectionTitle) || "section"}`,
-      type: "section",
-      moduleId: id,
-      moduleTitle: title,
-      sectionTitle,
-      text: stripMarkdown(sectionMarkdown),
-    }))
+    .map(([sectionTitle, sectionMarkdown]) => {
+      const rendered = markdownToSafeHtml(sectionMarkdown);
+      return {
+        id: `${id}-${slugifySection(sectionTitle) || "section"}`,
+        type: "section",
+        moduleId: id,
+        moduleTitle: title,
+        articleTitle: "",
+        sectionTitle,
+        text: rendered.text,
+      };
+    })
     .filter((entry) => entry.text.length > 20);
 
-  const noteEntries = knowledgeNotes
-    .map((note) => ({
+  const noteEntries = knowledgeNotes.flatMap((note) => [
+    {
       id: note.id,
       type: "knowledge-note",
       moduleId: id,
       moduleTitle: title,
+      articleTitle: note.title,
       sectionTitle: note.title,
       text: note.text,
-    }))
+    },
+    ...note.sections.map((section) => ({
+      id: section.id,
+      type: "knowledge-section",
+      moduleId: id,
+      moduleTitle: title,
+      articleTitle: note.title,
+      sectionTitle: section.title,
+      text: section.text,
+    })),
+  ])
     .filter((entry) => entry.text.length > 20);
 
   return [...sectionEntries, ...noteEntries];
@@ -332,7 +157,7 @@ function buildModule([id, title]) {
   const parsed = parseFrontmatter(markdown, `${id}.md`);
   const rawSections = splitSections(parsed.content);
   const sections = Object.fromEntries(
-    Object.entries(rawSections).map(([sectionTitle, sectionMarkdown]) => [sectionTitle, renderMarkdown(sectionMarkdown)]),
+    Object.entries(rawSections).map(([sectionTitle, sectionMarkdown]) => [sectionTitle, markdownToSafeHtml(sectionMarkdown).html]),
   );
   const sectionIds = Object.fromEntries(
     Object.keys(rawSections).map((sectionTitle) => [sectionTitle, `${id}-${slugifySection(sectionTitle) || "section"}`]),
@@ -346,7 +171,7 @@ function buildModule([id, title]) {
     priority: parsed.data.priority ?? "medium",
     sections,
     sectionIds,
-    knowledgeNotes: buildKnowledgeNotes(id, rawSections["知识笔记"] ?? ""),
+    knowledgeNotes: parseKnowledgeArticles(id, rawSections["知识笔记"] ?? ""),
     timeline: extractTimelineItems(rawSections["时间线"] ?? ""),
     searchText: `${title} ${stripMarkdown(parsed.content)}`,
   };

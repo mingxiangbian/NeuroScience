@@ -57,24 +57,21 @@ for (const [id] of requiredModules) {
     assert.match(moduleMarkdown, /learning_progress: 0[\s\S]*D1 冲刺卡/, "interview sprint should record D1 without inflating mastery progress");
     assert.match(moduleMarkdown, /D2（2026-07-11）：已完成 coached 学习[\s\S]*D2 冲刺卡/, "interview sprint should record the completed D2 coached blocks");
     assert.doesNotMatch(moduleMarkdown, /标准日 180 分钟|重日 210 分钟/, "interview sprint should not keep the superseded standard/heavy-day contract");
-    assert.match(moduleMarkdown, /## 目标[\s\S]*## 当前状态[\s\S]*## 核心知识[\s\S]*## 任务[\s\S]*## 时间线[\s\S]*## 知识笔记/, "interview sprint should use the knowledge-base section contract");
+    assert.match(moduleMarkdown, /## 目标[\s\S]*## 当前状态[\s\S]*## 核心知识[\s\S]*## 任务[\s\S]*## 时间线[\s\S]*## 学习记录/, "interview sprint should retain its sprint learning record");
+    assert.doesNotMatch(moduleMarkdown, /^## 知识笔记$/m, "interview sprint should not publish knowledge articles");
   } else {
-    assert.match(moduleMarkdown, /## 目标[\s\S]*## 当前状态[\s\S]*## 核心知识[\s\S]*## 任务[\s\S]*## 时间线[\s\S]*## 知识笔记/, `module ${id} should use the knowledge-base section contract`);
+    assert.match(moduleMarkdown, /## 目标[\s\S]*## 当前状态[\s\S]*## 核心知识[\s\S]*## 任务[\s\S]*## 时间线/, `module ${id} should preserve the core roadmap sections`);
     assert.doesNotMatch(moduleMarkdown, /## 资源|## 反思|## 面试表达|## 验收标准|## 下一步/, `module ${id} should not keep old side-note or project-management sections`);
   }
   if (id === "agent-design") {
     assert.match(moduleMarkdown, /status: learning[\s\S]*learning_progress: 0/, "agent design should be learning without claiming completion");
     assert.match(moduleMarkdown, /Production Agent Architecture Layers/, "agent design should record the four-layer architecture gap");
-    assert.match(moduleMarkdown, /Reliable Tool Execution/, "agent design should retain the reliable tool execution note");
-    assert.match(moduleMarkdown, /idempotency_key[\s\S]*UNKNOWN \/ RECONCILING[\s\S]*effectively-once/, "agent design should retain idempotency and reconciliation boundaries");
   }
   if (id === "behavioral-strategy") {
     assert.match(moduleMarkdown, /status: learning[\s\S]*learning_progress: 0/, "behavioral strategy should be learning without claiming independent readiness");
-    assert.match(moduleMarkdown, /Cyrene D1 叙事[\s\S]*actual-use count[\s\S]*weekly AI maintenance/, "behavioral strategy should retain the corrected Cyrene narrative");
   }
   if (id === "evals-debugging") {
     assert.match(moduleMarkdown, /status: learning[\s\S]*learning_progress: 0/, "evals should be learning without claiming independent readiness");
-    assert.match(moduleMarkdown, /Eval Case Anatomy — D2/, "evals should retain the D2 case-anatomy knowledge card");
     assert.match(moduleMarkdown, /input[\s\S]*expected[\s\S]*actual[\s\S]*assertion[\s\S]*metric[\s\S]*evidence/, "the D2 eval note should retain the six-part case anatomy");
   }
 }
@@ -214,12 +211,13 @@ for (const module of data.modules) {
   assert.equal(Object.hasOwn(module.sections, "下一步"), false, `${module.id} should not render 下一步 as a section`);
   if (module.id !== "overview") {
     assert.equal(Object.hasOwn(module.sections, "时间线"), true, `${module.id} should preserve 时间线`);
-    assert.equal(Object.hasOwn(module.sections, "知识笔记"), true, `${module.id} should include 知识笔记`);
   }
   assert.ok(Array.isArray(module.searchEntries), `${module.id} should include section-level search entries`);
   assert.ok(module.searchEntries.length > 0, `${module.id} should expose searchable sections`);
   assert.ok(module.searchEntries.every((entry) => entry.moduleId === module.id), `${module.id} search entries should point back to the module`);
   assert.ok(module.searchEntries.every((entry) => typeof entry.sectionTitle === "string" && entry.sectionTitle.length > 0), `${module.id} search entries should include section titles`);
+  assert.ok(module.searchEntries.every((entry) => typeof entry.articleTitle === "string"), `${module.id} search entries should include article titles`);
+  assert.ok(module.searchEntries.filter((entry) => entry.type === "section").every((entry) => entry.articleTitle === ""), `${module.id} ordinary section entries should have no article title`);
   assert.ok(module.searchEntries.every((entry) => typeof entry.text === "string" && entry.text.length > 20), `${module.id} search entries should include useful text`);
   assert.ok(Array.isArray(module.knowledgeNotes), `${module.id} should include knowledge notes`);
   assert.ok(module.knowledgeNotes.every((note) => typeof note.id === "string" && note.id.startsWith(module.id)), `${module.id} knowledge notes should have stable ids`);
@@ -235,9 +233,29 @@ assert.equal(byId["interview-sprint"].timeline[0].status, "done", "interview spr
 assert.equal(byId["interview-sprint"].timeline[1].status, "done", "interview sprint should mark D2 coached learning as completed");
 assert.ok(byId["interview-sprint"].timeline.slice(2).every((item) => item.status === "open"), "interview sprint should keep D3-D7 open after D2");
 assert.match(byId["interview-sprint"].searchText, /Agent Eval|Python 容器|Context Engineering|parallel post-test/, "interview sprint should preserve the reprioritized seven-day schedule");
-assert.ok(byId["rag-memory"].knowledgeNotes.length >= 2, "RAG and memory should expose concept-centric notes");
-assert.ok(byId["rag-memory"].knowledgeNotes.some((note) => note.title === "RAG evaluation"), "RAG and memory should include a RAG evaluation note");
-assert.ok(byId["rag-memory"].searchEntries.some((entry) => entry.type === "knowledge-note"), "search should include knowledge-note entries");
+assert.deepEqual(byId.coding.knowledgeNotes.map((note) => note.title), ["deque、stack 与 queue", "单调队列"]);
+assert.deepEqual(byId["evals-debugging"].knowledgeNotes.map((note) => note.title), [
+  "Eval Case 的六层结构",
+  "Benchmark 与 Agent Behavior Eval",
+]);
+for (const id of ["interview-sprint", "agent-design", "llm-systems", "rag-memory", "research-reading", "behavioral-strategy", "logs"]) {
+  assert.equal(byId[id].knowledgeNotes.length, 0, `${id} should not expose shallow knowledge notes`);
+}
+for (const id of ["coding", "evals-debugging"]) {
+  for (const article of byId[id].knowledgeNotes) {
+    assert.equal(typeof article.intro, "string");
+    assert.ok(Array.isArray(article.sections));
+    assert.deepEqual(
+      article.sections.filter((section) => ["definition", "mechanism", "example", "boundary", "summary"].includes(section.kind)).map((section) => section.kind),
+      ["definition", "mechanism", "example", "boundary", "summary"],
+    );
+  }
+}
+assert.equal(Object.hasOwn(byId["interview-sprint"].sections, "学习记录"), true);
+assert.equal(Object.hasOwn(byId["interview-sprint"].sections, "知识笔记"), false);
+assert.ok(byId.coding.searchEntries.some((entry) => (
+  entry.type === "knowledge-section" && entry.articleTitle === "单调队列" && entry.sectionTitle === "核心机制"
+)));
 assert.match(byId.overview.searchText, /30\/45\/60-Day Plan|Project Recommendations|Weekly Review Checklist/, "overview should preserve timeline and project recommendation content");
 assert.match(byId.overview.searchText, /Interview Signal|真实 baseline|Agent system design mock/, "overview should preserve interview signal calibration content");
 assert.match(byId.coding.searchText, /Coding Plan|Python Standards|TypeScript Standards|Optional Rust Log Parser/, "coding should preserve implementation training content");
