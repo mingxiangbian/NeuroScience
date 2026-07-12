@@ -42,7 +42,14 @@ typography:
     fontSize: "12px"
     fontWeight: 500
     lineHeight: 1.4
+  code:
+    fontFamily: "\"IBM Plex Mono\", \"SFMono-Regular\", \"Cascadia Code\", Consolas, monospace"
+    fontSize: "13.5px"
+    fontWeight: 400
+    lineHeight: 1.65
 rounded:
+  code-inline: "3px"
+  code-control: "4px"
   sm: "6px"
   md: "12px"
   reader-toolbar: "16px"
@@ -138,6 +145,7 @@ The palette is a paper-and-ink system with research accents, not a generic warm 
 **Display Font:** "Songti SC", "STSong", "Noto Serif SC", Georgia, serif
 **Body Font:** "Inter", "SF Pro Text", "PingFang SC", "Noto Sans SC", system-ui, sans-serif
 **Label/Mono Font:** "SFMono-Regular", "Cascadia Code", "Roboto Mono", Consolas, monospace
+**Code Font:** "IBM Plex Mono", "SFMono-Regular", "Cascadia Code", Consolas, monospace
 
 **Character:** The type system pairs a research-notebook serif voice with utilitarian product controls. Display typography can feel crafted; labels and controls must stay legible and familiar.
 
@@ -147,6 +155,7 @@ The palette is a paper-and-ink system with research accents, not a generic warm 
 - **Title** (600, 18px, 1.35): Navigation groups, note headings, and compact dashboard titles.
 - **Body** (400, 15px, 1.78): Long reader text. Keep prose comfortable; avoid dense paragraph walls without section structure.
 - **Label** (600, 12px, 0.02em): Kicker, metadata, compact tags, keyboard hints, and module progress.
+- **Code** (400, 13.5px, 1.65): Fenced source listings and compact inline technical tokens. IBM Plex Mono is locally hosted; Chinese glyphs use the reader fallback stack.
 
 ### Named Rules
 
@@ -197,6 +206,12 @@ Depth is mostly tonal and structural: translucent paper panels, thin borders, in
 - **Style:** Reader navigation is a three-column shell: module directory, main reading surface, context note panel.
 - **States:** Active nav items need both color and positional/state indication. Collapsed sidebars must preserve orientation through rail markers or tooltips.
 - **Mobile:** Mobile should collapse side and note panels into drawers without losing search or current-module awareness.
+
+### Code Listings
+- **Shape:** One 6px outer frame with no shadow and no nested code border. Inline code uses a compact 3px tint; the icon-only copy control uses 4px.
+- **Typography:** Locally hosted IBM Plex Mono at 13.5px/1.65 for desktop listings, with restrained syntax colors derived from ink, green, blue, gold, and cinnabar roles.
+- **Chrome:** A quiet language label and stable 40-42px copy target sit in one header. Line numbers appear only for four or more logical lines and never enter copied or annotated text.
+- **Mobile:** Source scrolls inside the listing; the page itself must not gain horizontal overflow.
 
 ### Signature Component
 

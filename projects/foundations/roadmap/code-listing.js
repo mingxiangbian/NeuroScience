@@ -91,12 +91,12 @@ export function enhanceCodeListings(root, {
     const body = ownerDocument.createElement("div");
     body.className = "code-listing-body";
     if (model.lineNumbers.length > 0) {
-      const gutter = ownerDocument.createElement("ol");
+      const gutter = ownerDocument.createElement("div");
       gutter.className = "code-listing-gutter";
       gutter.dataset.annotationExclude = "true";
       gutter.setAttribute("aria-hidden", "true");
       for (const lineNumber of model.lineNumbers) {
-        const item = ownerDocument.createElement("li");
+        const item = ownerDocument.createElement("span");
         item.textContent = String(lineNumber);
         gutter.append(item);
       }

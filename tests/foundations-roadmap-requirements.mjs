@@ -7,6 +7,9 @@ const buildScriptUrl = new URL("../projects/foundations/scripts/build-roadmap-da
 const dataUrl = new URL("../projects/foundations/roadmap/roadmap-data.json", import.meta.url);
 const cssUrl = new URL("../projects/foundations/roadmap/roadmap-reader.css", import.meta.url);
 const jsUrl = new URL("../projects/foundations/roadmap/roadmap-reader.js", import.meta.url);
+const regularCodeFontUrl = new URL("../projects/foundations/assets/fonts/ibm-plex-mono/IBMPlexMono-Regular.woff2", import.meta.url);
+const mediumCodeFontUrl = new URL("../projects/foundations/assets/fonts/ibm-plex-mono/IBMPlexMono-Medium.woff2", import.meta.url);
+const codeFontLicenseUrl = new URL("../projects/foundations/assets/fonts/ibm-plex-mono/LICENSE", import.meta.url);
 const modulesDirUrl = new URL("../projects/foundations/roadmap/modules/", import.meta.url);
 
 const requiredModules = [
@@ -27,6 +30,9 @@ assert.equal(existsSync(buildScriptUrl), true, "Foundations should include a roa
 assert.equal(existsSync(dataUrl), true, "Foundations should include generated roadmap data");
 assert.equal(existsSync(cssUrl), true, "Foundations should include dedicated roadmap reader CSS");
 assert.equal(existsSync(jsUrl), true, "Foundations should include dedicated roadmap reader JS");
+assert.equal(existsSync(regularCodeFontUrl), true, "Foundations should vendor IBM Plex Mono Regular");
+assert.equal(existsSync(mediumCodeFontUrl), true, "Foundations should vendor IBM Plex Mono Medium");
+assert.equal(existsSync(codeFontLicenseUrl), true, "Foundations should retain the local code font license");
 
 for (const [id] of requiredModules) {
   const moduleUrl = new URL(`${id}.md`, modulesDirUrl);
@@ -109,7 +115,23 @@ assert.match(css, /\.module-section\s+\.knowledge-article-title\s*\{[\s\S]*font-
 assert.match(css, /@media \(max-width:\s*860px\)[\s\S]*\.module-section\s+\.knowledge-article-title\s*\{[\s\S]*font-size:\s*32px/, "knowledge article titles should retain the fixed mobile title size");
 assert.match(css, /\.knowledge-article-section\.is-definition/, "knowledge articles should style definition sections");
 assert.match(css, /\.knowledge-article-section\.is-mechanism\s+ol/, "knowledge articles should style mechanism steps");
-assert.match(css, /grid-template-columns:\s*42px minmax\(0,\s*1fr\)/, "mechanism steps should reserve a fixed marker column");
+const mechanismItemRule = css.match(/\.knowledge-article-section\.is-mechanism li\s*\{(?<body>[\s\S]*?)\}/)?.groups.body ?? "";
+const mechanismMarkerRule = css.match(/\.knowledge-article-section\.is-mechanism li::before\s*\{(?<body>[\s\S]*?)\}/)?.groups.body ?? "";
+assert.match(mechanismItemRule, /position:\s*relative/, "mechanism text should retain normal document flow");
+assert.match(mechanismItemRule, /padding-inline-start:\s*54px/, "mechanism steps should reserve marker space with padding");
+assert.doesNotMatch(mechanismItemRule, /display:\s*(grid|flex)|grid-template-columns/, "mechanism text should not become a second grid column");
+assert.match(mechanismMarkerRule, /position:\s*absolute/, "mechanism markers should not participate in text layout");
+assert.match(mechanismMarkerRule, /inset-inline-start:\s*0/, "mechanism markers should remain at the start edge");
+assert.match(css, /@font-face\s*\{[\s\S]*font-family:\s*"IBM Plex Mono"/, "code should use a locally declared IBM Plex Mono face");
+assert.match(css, /\.knowledge-article-section-body code:not\(pre code\)/, "inline code should be styled separately from fenced code");
+assert.match(css, /\.code-listing\s*\{/, "fenced code should render as one listing frame");
+assert.match(css, /\.code-listing-header\s*\{/, "code listings should expose a compact header");
+assert.match(css, /\.code-listing-gutter\s*\{/, "long code listings should support a line-number gutter");
+const listingCodeRule = css.match(/\.code-listing pre > code\s*\{(?<body>[\s\S]*?)\}/)?.groups.body ?? "";
+assert.match(listingCodeRule, /border:\s*0/, "code content should not add a second frame");
+assert.match(listingCodeRule, /background:\s*transparent/, "code content should inherit the listing surface");
+assert.match(css, /\.hljs-keyword/, "code listings should expose restrained syntax roles");
+assert.match(css, /@media \(max-width:\s*860px\)[\s\S]*\.code-listing-copy/, "copy controls should retain a mobile rule");
 assert.match(css, /\.knowledge-article-section\.is-flow\s+ol/, "knowledge articles should style process flows");
 const desktopFlowRule = css.match(/\.knowledge-article-section\.is-flow\s+ol\s*\{(?<body>[\s\S]*?)\}/)?.groups.body ?? "";
 assert.match(desktopFlowRule, /grid-auto-flow:\s*column/, "desktop knowledge flows should keep every step in one row");
