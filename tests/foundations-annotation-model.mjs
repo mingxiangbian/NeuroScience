@@ -18,6 +18,9 @@ const malformedStore = parseStoredAnnotations("{not-json");
 assert.equal(malformedStore.canPersist, false, "malformed storage should not be overwritten by an empty fallback");
 assert.deepEqual(malformedStore.store, { version: 1, items: [] });
 
+const emptyStringStore = parseStoredAnnotations("");
+assert.equal(emptyStringStore.canPersist, false, "a present empty-string payload is malformed, not a missing store");
+
 const invalidStore = parseStoredAnnotations(JSON.stringify({ version: 1, items: "not-an-array" }));
 assert.equal(invalidStore.canPersist, false, "invalid storage shapes should remain recoverable");
 
@@ -30,6 +33,9 @@ const validStore = parseStoredAnnotations(JSON.stringify({
 }));
 assert.equal(validStore.canPersist, true);
 assert.deepEqual(validStore.store.items.map((item) => item.id), ["keep"]);
+
+const missingStore = parseStoredAnnotations(null);
+assert.equal(missingStore.canPersist, true, "a genuinely missing store may initialize normally");
 
 assert.deepEqual(ANNOTATION_CATEGORIES.map((item) => item.id), [
   "understanding",
@@ -174,6 +180,25 @@ assert.deepEqual(migratedStore.items[3], {
   legacyNoteId: "coding-typescript-standards",
   highlightActive: false,
 }, "unrecoverable written notes should preserve their quote, note, category, and timestamps");
+
+const renamedModules = structuredClone(modules);
+renamedModules[0].knowledgeNotes[0].id = "coding-deque-stack-queue-v2";
+const migratedAfterSecondRename = migrateLegacyAnnotations(migratedStore, renamedModules);
+assert.equal(
+  migratedAfterSecondRename.items[1].noteId,
+  "coding-deque-stack-queue-v2",
+  "an annotation migrated before should follow a second unambiguous article rename",
+);
+assert.equal(
+  migratedAfterSecondRename.items[1].legacyNoteId,
+  "coding-python-standards",
+  "sequential migrations should retain the original legacy id",
+);
+assert.deepEqual(
+  migratedAfterSecondRename.items[2],
+  migratedStore.items[2],
+  "records already in the explicit archive should remain stable across later builds",
+);
 assert.deepEqual(
   migrateLegacyAnnotations(migratedStore, modules),
   migratedStore,

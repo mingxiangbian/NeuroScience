@@ -17,9 +17,11 @@ const state = {
   activeSectionId: "",
   activeKnowledgeNoteId: "",
   moduleRenderVersion: 0,
+  navigationVersion: 0,
   sectionScrollHandler: null,
   sectionScrollFrame: 0,
   annotations: { version: 1, items: [] },
+  annotationPersistenceAllowed: true,
   pendingAnnotation: null,
   annotationToolbar: null,
   annotationDeletePopover: null,
@@ -83,6 +85,7 @@ function loadAnnotations() {
 }
 
 function saveAnnotations(annotations = state.annotations) {
+  if (!state.annotationPersistenceAllowed) return;
   try {
     window.localStorage.setItem(ANNOTATION_STORAGE_KEY, JSON.stringify(annotations));
   } catch (error) {
@@ -464,6 +467,7 @@ function renderSectionRail(module) {
     button.setAttribute("aria-current", "false");
     button.innerHTML = `<span class="section-tooltip">${escapeHtml(target.title)}</span>`;
     button.addEventListener("click", () => {
+      invalidateDeferredNavigation();
       document.querySelector(`#${CSS.escape(target.id)}`)?.scrollIntoView({
         behavior: "smooth",
         block: "start",
@@ -936,9 +940,14 @@ function clearSearch() {
   els.searchResults.innerHTML = "";
 }
 
+function invalidateDeferredNavigation() {
+  state.navigationVersion += 1;
+}
+
 function openModule(moduleId, { syncUrl = true, targetSectionId = "" } = {}) {
   const nextModule = getModuleById(moduleId) ?? state.data.modules[0];
   const moduleRenderVersion = ++state.moduleRenderVersion;
+  const navigationVersion = ++state.navigationVersion;
   state.currentModule = nextModule;
   state.activeKnowledgeNoteId = "";
   hideAnnotationDeletePopover();
@@ -950,9 +959,13 @@ function openModule(moduleId, { syncUrl = true, targetSectionId = "" } = {}) {
     if (state.moduleRenderVersion !== moduleRenderVersion) return;
     applyHighlights();
     observeSections();
-    if (targetSectionId) {
+    if (targetSectionId && state.navigationVersion === navigationVersion && state.activeSectionId === targetSectionId) {
       requestAnimationFrame(() => {
-        if (state.moduleRenderVersion !== moduleRenderVersion) return;
+        if (
+          state.moduleRenderVersion !== moduleRenderVersion
+          || state.navigationVersion !== navigationVersion
+          || state.activeSectionId !== targetSectionId
+        ) return;
         document.querySelector(`#${CSS.escape(targetSectionId)}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
         setActiveSection(targetSectionId);
       });
@@ -1152,6 +1165,10 @@ function bindEvents() {
   els.searchInput.addEventListener("input", () => runSearch(els.searchInput.value));
   els.searchOverlay.addEventListener("click", closeSearchModal);
 
+  els.main.addEventListener("pointerdown", invalidateDeferredNavigation);
+  els.main.addEventListener("wheel", invalidateDeferredNavigation, { passive: true });
+  els.main.addEventListener("touchstart", invalidateDeferredNavigation, { passive: true });
+
   els.main.addEventListener("mouseup", () => {
     requestAnimationFrame(() => {
       const context = getSelectionAnnotationContext();
@@ -1195,6 +1212,7 @@ async function init() {
     const annotationLoad = loadAnnotations();
     const migratedAnnotations = migrateLegacyAnnotations(annotationLoad.store, state.data.modules);
     state.annotations = migratedAnnotations;
+    state.annotationPersistenceAllowed = annotationLoad.canPersist;
     if (annotationLoad.canPersist) saveAnnotations(migratedAnnotations);
     bindEvents();
     setTheme("light");

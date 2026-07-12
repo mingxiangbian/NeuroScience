@@ -15,7 +15,7 @@ function createEmptyStore() {
 }
 
 export function parseStoredAnnotations(raw) {
-  if (!raw) return { store: createEmptyStore(), canPersist: true };
+  if (raw === null) return { store: createEmptyStore(), canPersist: true };
   try {
     const parsed = JSON.parse(raw);
     if (!parsed || !Array.isArray(parsed.items)) {
@@ -79,7 +79,8 @@ export function migrateLegacyAnnotations(store, modules) {
       const module = moduleById.get(annotation.moduleId);
       const articles = module?.knowledgeNotes ?? [];
       if (articles.some((article) => article.id === annotation.noteId)) return annotation;
-      if (annotation.legacyNoteId) return annotation;
+      const archiveNoteId = getAnnotationArchiveNoteId(annotation.moduleId);
+      if (annotation.noteId === archiveNoteId) return annotation;
 
       const selectedText = normalizeComparableText(annotation.selectedText);
       const matchingArticles = selectedText
@@ -89,14 +90,14 @@ export function migrateLegacyAnnotations(store, modules) {
         return {
           ...annotation,
           noteId: matchingArticles[0].id,
-          legacyNoteId: annotation.noteId,
+          legacyNoteId: annotation.legacyNoteId ?? annotation.noteId,
         };
       }
 
       return {
         ...annotation,
-        noteId: getAnnotationArchiveNoteId(annotation.moduleId),
-        legacyNoteId: annotation.noteId,
+        noteId: archiveNoteId,
+        legacyNoteId: annotation.legacyNoteId ?? annotation.noteId,
         highlightActive: false,
       };
     }),
