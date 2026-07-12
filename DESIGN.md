@@ -38,15 +38,10 @@ typography:
     lineHeight: 1.6
     letterSpacing: "0.02em"
   mono:
-    fontFamily: "\"SFMono-Regular\", \"Cascadia Code\", \"Roboto Mono\", Consolas, monospace"
+    fontFamily: "\"IBM Plex Mono\", \"SFMono-Regular\", \"Cascadia Code\", Consolas, monospace"
     fontSize: "12px"
     fontWeight: 500
     lineHeight: 1.4
-  code:
-    fontFamily: "\"IBM Plex Mono\", \"SFMono-Regular\", \"Cascadia Code\", Consolas, monospace"
-    fontSize: "13.5px"
-    fontWeight: 400
-    lineHeight: 1.65
 rounded:
   code-inline: "3px"
   code-control: "4px"
@@ -144,8 +139,7 @@ The palette is a paper-and-ink system with research accents, not a generic warm 
 
 **Display Font:** "Songti SC", "STSong", "Noto Serif SC", Georgia, serif
 **Body Font:** "Inter", "SF Pro Text", "PingFang SC", "Noto Sans SC", system-ui, sans-serif
-**Label/Mono Font:** "SFMono-Regular", "Cascadia Code", "Roboto Mono", Consolas, monospace
-**Code Font:** "IBM Plex Mono", "SFMono-Regular", "Cascadia Code", Consolas, monospace
+**Label/Mono Font:** "IBM Plex Mono", "SFMono-Regular", "Cascadia Code", Consolas, monospace
 
 **Character:** The type system pairs a research-notebook serif voice with utilitarian product controls. Display typography can feel crafted; labels and controls must stay legible and familiar.
 
