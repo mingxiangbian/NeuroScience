@@ -27,7 +27,8 @@ const completeArticle = `### 单调队列
 
 #### 代码实现
 \`\`\`python
-queue.popleft()
+while ready:
+    print("ready")
 \`\`\`
 
 #### 边界与常见错误
@@ -52,13 +53,17 @@ assert.deepEqual(
     ["一句话总结", "summary"],
   ],
 );
-assert.match(articles[0].sections[4].body, /class="language-python"/);
+const highlightedCode = articles[0].sections[4].body;
+assert.match(highlightedCode, /class="hljs language-python"/);
+assert.match(highlightedCode, /class="hljs-keyword">while<\/span>/);
+assert.match(highlightedCode, /class="hljs-string">"ready"<\/span>/);
+assert.doesNotMatch(highlightedCode, /<script|onclick=/i);
 assert.match(articles[0].text, /每个索引最多入队和出队一次/);
 
 const tildeFenceArticle = parseKnowledgeArticles(
   "coding",
   completeArticle.replace(
-    "```python\nqueue.popleft()\n```",
+    "```python\nwhile ready:\n    print(\"ready\")\n```",
     "~~~python\n#### 假小节\n1. 假步骤\n2. 假步骤\n~~~",
   ),
 )[0];
@@ -68,7 +73,7 @@ assert.match(tildeFenceArticle.sections.find((section) => section.kind === "code
 const fourBacktickArticle = parseKnowledgeArticles(
   "coding",
   completeArticle.replace(
-    "```python\nqueue.popleft()\n```",
+    "```python\nwhile ready:\n    print(\"ready\")\n```",
     "````markdown\n```python\n#### 假小节\n```\n````",
   ),
 )[0];
@@ -105,6 +110,14 @@ const safe = markdownToSafeHtml(`> lead
 assert.match(safe.html, /<blockquote>/);
 assert.match(safe.html, /<table>/);
 assert.doesNotMatch(safe.html, /<script|javascript:/i);
+
+const unsupported = markdownToSafeHtml("```unknown\n<unsafe>\n```");
+assert.match(unsupported.html, /class="language-unknown"/);
+assert.match(unsupported.html, /&lt;unsafe&gt;/);
+assert.doesNotMatch(unsupported.html, /class="hljs /);
+
+const authoredHighlightClass = markdownToSafeHtml('<span class="hljs-keyword evil">fake</span>');
+assert.doesNotMatch(authoredHighlightClass.html, /\bevil\b/);
 
 assert.throws(
   () => parseKnowledgeArticles("coding", completeArticle.replace("#### 一句话总结", "#### 结论")),
