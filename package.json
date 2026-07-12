@@ -4,8 +4,9 @@
   "scripts": {
     "build:ielts": "node projects/language/ielts-academic/scripts/build-ielts-data.mjs",
     "test:projects": "node tests/projects-requirements.mjs",
+    "test:foundations": "node tests/foundations-annotation-model.mjs && node tests/foundations-code-listing-model.mjs && node tests/foundations-knowledge-article-parser.mjs && node tests/foundations-knowledge-content-requirements.mjs && node tests/foundations-roadmap-requirements.mjs && git diff --exit-code -- projects/foundations/roadmap/roadmap-data.json",
     "test:ielts": "node tests/ielts-academic-language-project-requirements.mjs && node tests/ielts-academic-site-data-requirements.mjs && node tests/ielts-build-data-requirements.mjs && node tests/ielts-reader-data-consumption-requirements.mjs",
-    "test:all": "npm run test:projects && npm run test:ielts"
+    "test:all": "npm run test:projects && npm run test:foundations && npm run test:ielts"
   },
   "dependencies": {
     "highlight.js": "11.11.1",

@@ -51,6 +51,7 @@ function setCopyButtonState(button, state) {
 export function enhanceCodeListings(root, {
   clipboard = globalThis.navigator?.clipboard,
   schedule = globalThis.setTimeout,
+  cancelSchedule = globalThis.clearTimeout,
 } = {}) {
   if (!root?.querySelectorAll) return;
   const ownerDocument = root.ownerDocument ?? globalThis.document;
@@ -76,14 +77,28 @@ export function enhanceCodeListings(root, {
     copyButton.className = "code-listing-copy";
     copyButton.type = "button";
     setCopyButtonState(copyButton, "idle");
+    let copyAttemptVersion = 0;
+    let resetTimerId = null;
     copyButton.addEventListener("click", async () => {
+      const copyAttempt = ++copyAttemptVersion;
+      if (resetTimerId !== null && typeof cancelSchedule === "function") {
+        cancelSchedule(resetTimerId);
+        resetTimerId = null;
+      }
+      let nextState;
       try {
         await copyCodeListingSource(model.source, clipboard);
-        setCopyButtonState(copyButton, "success");
+        nextState = "success";
       } catch {
-        setCopyButtonState(copyButton, "error");
+        nextState = "error";
       }
-      schedule(() => setCopyButtonState(copyButton, "idle"), COPY_RESET_DELAY_MS);
+      if (copyAttempt !== copyAttemptVersion) return;
+      setCopyButtonState(copyButton, nextState);
+      resetTimerId = schedule(() => {
+        if (copyAttempt !== copyAttemptVersion) return;
+        setCopyButtonState(copyButton, "idle");
+        resetTimerId = null;
+      }, COPY_RESET_DELAY_MS);
     });
 
     header.append(label, copyButton);

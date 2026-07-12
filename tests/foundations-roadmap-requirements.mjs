@@ -12,6 +12,7 @@ const regularCodeFontUrl = new URL("../projects/foundations/assets/fonts/ibm-ple
 const mediumCodeFontUrl = new URL("../projects/foundations/assets/fonts/ibm-plex-mono/IBMPlexMono-Medium.woff2", import.meta.url);
 const codeFontLicenseUrl = new URL("../projects/foundations/assets/fonts/ibm-plex-mono/LICENSE", import.meta.url);
 const modulesDirUrl = new URL("../projects/foundations/roadmap/modules/", import.meta.url);
+const packageJsonUrl = new URL("../package.json", import.meta.url);
 
 const requiredModules = [
   ["overview", "Overview"],
@@ -91,6 +92,20 @@ const css = readFileSync(cssUrl, "utf8");
 const js = readFileSync(jsUrl, "utf8");
 const codeListingJs = readFileSync(codeListingJsUrl, "utf8");
 const data = JSON.parse(readFileSync(dataUrl, "utf8"));
+const packageJson = JSON.parse(readFileSync(packageJsonUrl, "utf8"));
+
+const foundationsTestScript = packageJson.scripts?.["test:foundations"] ?? "";
+for (const testFile of [
+  "foundations-annotation-model.mjs",
+  "foundations-code-listing-model.mjs",
+  "foundations-knowledge-article-parser.mjs",
+  "foundations-knowledge-content-requirements.mjs",
+  "foundations-roadmap-requirements.mjs",
+]) {
+  assert.match(foundationsTestScript, new RegExp(testFile.replaceAll(".", "\\.")), `Pages CI should run ${testFile}`);
+}
+assert.match(foundationsTestScript, /git diff --exit-code -- projects\/foundations\/roadmap\/roadmap-data\.json/, "Foundations tests should reject stale generated roadmap data");
+assert.match(packageJson.scripts?.["test:all"] ?? "", /npm run test:foundations/, "the Pages test entrypoint should include Foundations tests");
 
 assert.match(html, /data-page="foundations-roadmap-reader"/, "Foundations page should identify itself as the roadmap reader");
 assert.match(html, /id="reader-shell"/, "Foundations page should include a reader shell");
@@ -192,6 +207,9 @@ assert.match(codeListingJs, /classList\.contains\("language-mermaid"\)/, "the li
 assert.match(codeListingJs, /dataset\.annotationExclude = "true"/, "listing chrome should stay outside annotation text");
 assert.match(codeListingJs, /lineCount >= 4/, "line numbers should start at the four-line threshold");
 assert.match(codeListingJs, /COPY_RESET_DELAY_MS = 1500/, "copy feedback should reset without changing button geometry");
+assert.match(codeListingJs, /cancelSchedule = globalThis\.clearTimeout/, "copy feedback should support cancelling an earlier reset");
+assert.match(codeListingJs, /const copyAttempt = \+\+copyAttemptVersion/, "copy feedback should let the latest activation own the visible state");
+assert.match(codeListingJs, /cancelSchedule\(resetTimerId\)/, "copy feedback should cancel an earlier reset before starting a new attempt");
 assert.match(js, /function renderOverviewDashboard/, "roadmap JS should render overview as a dashboard");
 assert.match(js, /\["Interview Signal",\s*getSection\(module, "Interview Signal"\)\]/, "overview dashboard should render the interview signal section");
 assert.match(js, /stableModules = learningModules\.filter\(\(item\) => item\.id !== "interview-sprint"\)/, "overview dashboard should keep sprint out of the stable module count");
