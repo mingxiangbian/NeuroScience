@@ -7,6 +7,7 @@ const buildScriptUrl = new URL("../projects/foundations/scripts/build-roadmap-da
 const dataUrl = new URL("../projects/foundations/roadmap/roadmap-data.json", import.meta.url);
 const cssUrl = new URL("../projects/foundations/roadmap/roadmap-reader.css", import.meta.url);
 const jsUrl = new URL("../projects/foundations/roadmap/roadmap-reader.js", import.meta.url);
+const codeListingJsUrl = new URL("../projects/foundations/roadmap/code-listing.js", import.meta.url);
 const regularCodeFontUrl = new URL("../projects/foundations/assets/fonts/ibm-plex-mono/IBMPlexMono-Regular.woff2", import.meta.url);
 const mediumCodeFontUrl = new URL("../projects/foundations/assets/fonts/ibm-plex-mono/IBMPlexMono-Medium.woff2", import.meta.url);
 const codeFontLicenseUrl = new URL("../projects/foundations/assets/fonts/ibm-plex-mono/LICENSE", import.meta.url);
@@ -30,6 +31,7 @@ assert.equal(existsSync(buildScriptUrl), true, "Foundations should include a roa
 assert.equal(existsSync(dataUrl), true, "Foundations should include generated roadmap data");
 assert.equal(existsSync(cssUrl), true, "Foundations should include dedicated roadmap reader CSS");
 assert.equal(existsSync(jsUrl), true, "Foundations should include dedicated roadmap reader JS");
+assert.equal(existsSync(codeListingJsUrl), true, "Foundations should include the code listing enhancer");
 assert.equal(existsSync(regularCodeFontUrl), true, "Foundations should vendor IBM Plex Mono Regular");
 assert.equal(existsSync(mediumCodeFontUrl), true, "Foundations should vendor IBM Plex Mono Medium");
 assert.equal(existsSync(codeFontLicenseUrl), true, "Foundations should retain the local code font license");
@@ -87,6 +89,7 @@ execFileSync(process.execPath, [buildScriptUrl.pathname], { stdio: "pipe" });
 const html = readFileSync(foundationsPageUrl, "utf8");
 const css = readFileSync(cssUrl, "utf8");
 const js = readFileSync(jsUrl, "utf8");
+const codeListingJs = readFileSync(codeListingJsUrl, "utf8");
 const data = JSON.parse(readFileSync(dataUrl, "utf8"));
 
 assert.match(html, /data-page="foundations-roadmap-reader"/, "Foundations page should identify itself as the roadmap reader");
@@ -177,6 +180,18 @@ assert.doesNotMatch(css, /border-radius:\s*24px|border-radius:\s*28px/, "roadmap
 assert.match(js, /fetchJson\("roadmap\/roadmap-data\.json"\)/, "roadmap JS should load generated JSON");
 assert.match(js, /function renderModuleNav/, "roadmap JS should isolate module navigation rendering");
 assert.match(js, /function renderCurrentModule/, "roadmap JS should isolate module content rendering");
+assert.match(js, /import \{ enhanceCodeListings \} from "\.\/code-listing\.js"/, "roadmap JS should import the code listing enhancer");
+assert.match(js, /renderCurrentModule\(\);[\s\S]*enhanceCodeListings\(els\.sectionList\);[\s\S]*renderMermaidDiagrams/, "code listings should enhance before Mermaid starts");
+assert.match(js, /closest\("\[data-annotation-exclude\]"\)/, "annotation text should exclude listing controls and line numbers");
+assert.doesNotMatch(js, /range\.startContainer !== range\.endContainer/, "annotations should support selections across syntax spans");
+assert.match(js, /function getTextOffset/, "annotation selection should resolve absolute text offsets");
+assert.match(js, /function getTextPosition/, "annotation restoration should map offsets back to text nodes");
+assert.match(js, /const combinedText = nodes\.map/, "annotation restoration should search across syntax nodes");
+assert.match(js, /mark\.replaceWith\(\.\.\.mark\.childNodes\)/, "clearing a highlight should preserve nested syntax spans");
+assert.match(codeListingJs, /classList\.contains\("language-mermaid"\)/, "the listing enhancer should leave Mermaid blocks untouched");
+assert.match(codeListingJs, /dataset\.annotationExclude = "true"/, "listing chrome should stay outside annotation text");
+assert.match(codeListingJs, /lineCount >= 4/, "line numbers should start at the four-line threshold");
+assert.match(codeListingJs, /COPY_RESET_DELAY_MS = 1500/, "copy feedback should reset without changing button geometry");
 assert.match(js, /function renderOverviewDashboard/, "roadmap JS should render overview as a dashboard");
 assert.match(js, /\["Interview Signal",\s*getSection\(module, "Interview Signal"\)\]/, "overview dashboard should render the interview signal section");
 assert.match(js, /stableModules = learningModules\.filter\(\(item\) => item\.id !== "interview-sprint"\)/, "overview dashboard should keep sprint out of the stable module count");

@@ -5,6 +5,7 @@ import {
   migrateLegacyAnnotations,
   parseStoredAnnotations,
 } from "./annotation-model.js";
+import { enhanceCodeListings } from "./code-listing.js";
 
 const ANNOTATION_STORAGE_KEY = "foundationsReader.annotations.v1";
 const TASK_STORAGE_KEY = "foundationsReader.tasks.v1";
@@ -121,9 +122,23 @@ function getArchivedAnnotations(moduleId) {
   return getAnnotationsForNote(moduleId, getAnnotationArchiveNoteId(moduleId));
 }
 
-function getKnowledgeArticleFromNode(node) {
+function getElementFromNode(node) {
   const element = node?.nodeType === Node.ELEMENT_NODE ? node : node?.parentElement;
-  return element?.closest?.(".knowledge-article") ?? null;
+  return element ?? null;
+}
+
+function getKnowledgeArticleFromNode(node) {
+  return getElementFromNode(node)?.closest?.(".knowledge-article") ?? null;
+}
+
+function isAnnotationExcludedPosition(node) {
+  return Boolean(getElementFromNode(node)?.closest("[data-annotation-exclude]"));
+}
+
+function getAnnotationTextScope(node, article) {
+  return getElementFromNode(node)?.closest(
+    "p, li, pre, td, th, blockquote, .knowledge-article-intro",
+  ) ?? article;
 }
 
 function countTextOccurrences(text, needle) {
@@ -141,27 +156,37 @@ function getSelectionAnnotationContext() {
   const selection = window.getSelection();
   if (!selection || selection.rangeCount === 0 || selection.isCollapsed) return null;
   const range = selection.getRangeAt(0);
-  const selectedText = selection.toString().trim();
+  const rawSelectedText = selection.toString();
+  const selectedText = rawSelectedText.trim();
   if (selectedText.length < 2) return null;
-  if (range.startContainer !== range.endContainer) return null;
+  if (
+    isAnnotationExcludedPosition(range.startContainer)
+    || isAnnotationExcludedPosition(range.endContainer)
+  ) return null;
 
   const startArticle = getKnowledgeArticleFromNode(range.startContainer);
   const endArticle = getKnowledgeArticleFromNode(range.endContainer);
   if (!startArticle || startArticle !== endArticle) return null;
+  if (
+    getAnnotationTextScope(range.startContainer, startArticle)
+    !== getAnnotationTextScope(range.endContainer, endArticle)
+  ) return null;
 
   const noteId = startArticle.dataset.noteId;
   const moduleId = state.currentModule?.id;
   if (!moduleId || !noteId) return null;
 
-  const beforeRange = document.createRange();
-  beforeRange.selectNodeContents(startArticle);
-  beforeRange.setEnd(range.startContainer, range.startOffset);
+  const rangeStartOffset = getTextOffset(startArticle, range.startContainer, range.startOffset);
+  if (rangeStartOffset < 0) return null;
+  const leadingWhitespace = rawSelectedText.length - rawSelectedText.trimStart().length;
+  const selectedStartOffset = rangeStartOffset + leadingWhitespace;
+  const articleText = getTextNodes(startArticle).map((node) => node.nodeValue).join("");
 
   return {
     moduleId,
     noteId,
     selectedText,
-    matchIndex: countTextOccurrences(beforeRange.toString(), selectedText),
+    matchIndex: countTextOccurrences(articleText.slice(0, selectedStartOffset), selectedText),
     rect: range.getBoundingClientRect(),
   };
 }
@@ -294,8 +319,9 @@ function showAnnotationDeletePopover(annotationId, rect) {
 function getTextNodes(root) {
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
     acceptNode(node) {
-      if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
-      if (node.parentElement?.closest(".knowledge-highlight")) return NodeFilter.FILTER_REJECT;
+      if (node.parentElement?.closest("[data-annotation-exclude]")) {
+        return NodeFilter.FILTER_REJECT;
+      }
       return NodeFilter.FILTER_ACCEPT;
     },
   });
@@ -306,29 +332,53 @@ function getTextNodes(root) {
 
 function clearHighlights() {
   els.sectionList.querySelectorAll(".knowledge-highlight").forEach((mark) => {
-    mark.replaceWith(document.createTextNode(mark.textContent));
+    mark.replaceWith(...mark.childNodes);
   });
   els.sectionList.normalize();
+}
+
+function getTextOffset(root, targetNode, targetOffset) {
+  let absoluteOffset = 0;
+  for (const node of getTextNodes(root)) {
+    if (node === targetNode) return absoluteOffset + targetOffset;
+    absoluteOffset += node.nodeValue.length;
+  }
+  return -1;
+}
+
+function getTextPosition(nodes, absoluteOffset, bias) {
+  let traversed = 0;
+  for (const [index, node] of nodes.entries()) {
+    const next = traversed + node.nodeValue.length;
+    if (
+      absoluteOffset < next
+      || (absoluteOffset === next && (bias === "end" || index === nodes.length - 1))
+    ) {
+      return { node, offset: absoluteOffset - traversed };
+    }
+    traversed = next;
+  }
+  return null;
 }
 
 function findTextRange(root, selectedText, matchIndex) {
   if (!selectedText) return null;
   const nodes = getTextNodes(root);
+  const combinedText = nodes.map((node) => node.nodeValue).join("");
   let occurrence = 0;
-  for (const node of nodes) {
-    let index = node.nodeValue.indexOf(selectedText);
-    while (index !== -1) {
-      if (occurrence === matchIndex) {
-        const range = document.createRange();
-        range.setStart(node, index);
-        range.setEnd(node, index + selectedText.length);
-        return range;
-      }
-      occurrence += 1;
-      index = node.nodeValue.indexOf(selectedText, index + selectedText.length);
-    }
+  let start = combinedText.indexOf(selectedText);
+  while (start !== -1 && occurrence < matchIndex) {
+    occurrence += 1;
+    start = combinedText.indexOf(selectedText, start + selectedText.length);
   }
-  return null;
+  if (start === -1) return null;
+  const startPosition = getTextPosition(nodes, start, "start");
+  const endPosition = getTextPosition(nodes, start + selectedText.length, "end");
+  if (!startPosition || !endPosition) return null;
+  const range = document.createRange();
+  range.setStart(startPosition.node, startPosition.offset);
+  range.setEnd(endPosition.node, endPosition.offset);
+  return range;
 }
 
 function getRangeDocumentOrder(range) {
@@ -961,6 +1011,7 @@ function openModule(moduleId, { syncUrl = true, targetSectionId = "" } = {}) {
   if (syncUrl) updateUrl(nextModule.id);
   renderModuleNav();
   renderCurrentModule();
+  enhanceCodeListings(els.sectionList);
   void renderMermaidDiagrams().then(() => {
     if (state.moduleRenderVersion !== moduleRenderVersion) return;
     applyHighlights();
