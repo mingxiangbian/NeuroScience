@@ -177,6 +177,8 @@ assert.match(js, /renderMermaidDiagrams\(\)\.then\(\(\) => \{[\s\S]*if \(state\.
 assert.match(js, /state\.navigationVersion !== navigationVersion/, "Mermaid completion should not restore a target after later same-module navigation");
 assert.match(js, /state\.activeSectionId === targetSectionId/, "Mermaid completion should only restore the still-active target");
 assert.match(js, /function invalidateDeferredNavigation/, "reader interactions should invalidate delayed navigation restoration");
+assert.match(js, /const KEYBOARD_NAVIGATION_KEYS = new Set/, "reader should define keyboard scrolling inputs that cancel delayed navigation");
+assert.match(js, /KEYBOARD_NAVIGATION_KEYS\.has\(event\.key\) && !isTextEntryTarget\(event\.target\)/, "keyboard scrolling should cancel delayed navigation without intercepting text entry");
 assert.doesNotMatch(js, /openedModuleId|state\.currentModule\?\.id !== openedModuleId/, "Mermaid completion should not rely on module identity alone");
 assert.doesNotMatch(js, /note\?\.groups/);
 assert.doesNotMatch(js, /note\?\.body/);

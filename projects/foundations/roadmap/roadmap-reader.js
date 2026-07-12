@@ -9,6 +9,7 @@ import {
 const ANNOTATION_STORAGE_KEY = "foundationsReader.annotations.v1";
 const TASK_STORAGE_KEY = "foundationsReader.tasks.v1";
 const MERMAID_MODULE_URL = "https://cdn.jsdelivr.net/npm/mermaid@11.12.2/dist/mermaid.esm.min.mjs";
+const KEYBOARD_NAVIGATION_KEYS = new Set(["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "]);
 
 const state = {
   data: null,
@@ -944,6 +945,11 @@ function invalidateDeferredNavigation() {
   state.navigationVersion += 1;
 }
 
+function isTextEntryTarget(target) {
+  return target instanceof Element
+    && (target.matches("input, textarea, select") || target.isContentEditable);
+}
+
 function openModule(moduleId, { syncUrl = true, targetSectionId = "" } = {}) {
   const nextModule = getModuleById(moduleId) ?? state.data.modules[0];
   const moduleRenderVersion = ++state.moduleRenderVersion;
@@ -1192,6 +1198,9 @@ function bindEvents() {
   });
 
   window.addEventListener("keydown", (event) => {
+    if (KEYBOARD_NAVIGATION_KEYS.has(event.key) && !isTextEntryTarget(event.target)) {
+      invalidateDeferredNavigation();
+    }
     if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
       event.preventDefault();
       openSearchModal();
