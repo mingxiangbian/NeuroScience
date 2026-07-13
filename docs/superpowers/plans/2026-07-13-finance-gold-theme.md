@@ -165,6 +165,7 @@ assert.ok(sharedCssIndex >= 0 && financeThemeIndex > sharedCssIndex, "finance th
 assert.match(financeHtml, /class="directory-kicker">学习路径<\/p>/, "finance directory chrome should use Chinese copy");
 assert.match(financeTheme, /body\[data-page="finance-roadmap-reader"\]/, "finance theme should be page-scoped");
 assert.match(financeTheme, /oklch\(/, "finance theme should use the approved perceptual color space");
+assert.match(financeTheme, /body\[data-page="finance-roadmap-reader"\]\[data-theme="dark"\]\s+\.route-ledger-label\s*\{\s*color:\s*var\(--reader-ink\);\s*\}/, "dark finance ledger labels should use dedicated high-contrast text");
 assert.match(financeTheme, /--reader-panel-blur:\s*blur\(18px\)/, "finance should reduce the inherited glass blur");
 assert.match(financeTheme, /\.toolbar-search:focus-within/, "finance search should expose a visible focus state");
 assert.match(financeTheme, /@media \(max-width:\s*480px\)/, "finance should have a narrow-toolbar layout");
@@ -279,6 +280,10 @@ body[data-page="finance-roadmap-reader"][data-theme="dark"] {
     radial-gradient(circle at 16% 14%, oklch(48% 0.07 80 / 0.2), transparent 27%),
     radial-gradient(circle at 86% 28%, oklch(38% 0.045 80 / 0.18), transparent 35%),
     linear-gradient(145deg, oklch(14% 0.013 75), var(--reader-paper) 64%, oklch(20% 0.02 76));
+}
+
+body[data-page="finance-roadmap-reader"][data-theme="dark"] .route-ledger-label {
+  color: var(--reader-ink);
 }
 
 body[data-page="finance-roadmap-reader"]::before {
@@ -598,6 +603,7 @@ Add:
 
 ```js
 const closeSearchSource = sharedReader.match(/function closeSearchModal\(\) \{([\s\S]*?)\n\}/)?.[1] ?? "";
+const escapeKeySource = sharedReader.match(/if \(event\.key === "Escape"\) \{([\s\S]*?)\n    \}/)?.[1] ?? "";
 
 assert.match(sharedReader, /function renderFinanceOverviewDashboard\(module\)[\s\S]*?getFinanceReentryState\(learningModules\)/, "finance dashboard should consume the tested re-entry view state");
 assert.match(sharedReader, /financeReentry\.nextStepLabel/, "finance dashboard should render the tested all-complete copy");
@@ -607,6 +613,8 @@ assert.match(sharedReader, /PROJECT_ID === "finance" \? "未找到结果" : "No 
 assert.match(sharedReader, /进入任一概念模块底部的「知识笔记」，选中文字即可添加本地批注。批注只保存在当前浏览器。/, "empty note panels should explain the actual annotation boundary");
 assert.match(closeSearchSource, /els\.searchResults\.hidden = true;/, "closing search should always hide results");
 assert.doesNotMatch(closeSearchSource, /if \(!state\.searchQuery\)/, "closing search should not depend on an empty query");
+assert.match(escapeKeySource, /if \(els\.shell\.classList\.contains\("is-searching"\)\) event\.preventDefault\(\);[\s\S]*closeSearchModal\(\);/, "Escape should prevent the native search-input default only while search is open, before preserving and hiding results");
+assert.match(escapeKeySource, /if \(els\.shell\.classList\.contains\("is-searching"\)\) els\.searchInput\.blur\(\);[\s\S]*closeSearchModal\(\);/, "Escape should blur the search input only while search is open so one click can restore preserved results");
 assert.doesNotMatch(sharedReader, /status !== "(?:done|complete)"\) \?\? learningModules\[0\]/, "completed dashboards should not fall back to their first module");
 ```
 
@@ -745,6 +753,21 @@ function closeSearchModal() {
 
 Do not clear `state.searchQuery`, the input value, or `searchResults.innerHTML`: reopening the still-populated input should reveal the preserved result set.
 
+In the global `keydown` handler, guard the native Escape interception with the open-search state, prevent the browser's native `<input type="search">` clearing, and blur before closing:
+
+```js
+if (event.key === "Escape") {
+  if (els.shell.classList.contains("is-searching")) event.preventDefault();
+  if (els.shell.classList.contains("is-searching")) els.searchInput.blur();
+  hideAnnotationDeletePopover();
+  hideAnnotationToolbar();
+  closeSearchModal();
+  els.shell.classList.remove("is-mobile-left-open", "is-mobile-note-open");
+}
+```
+
+Regression expectation: with search open and `估值` populated, Escape must leave `state.searchQuery`, the input value, and `searchResults.innerHTML` intact while hiding the overlay and result list. Refocusing search must reveal the same retained results. When search is not open, Escape must not suppress the browser default solely because the handler exists.
+
 In the empty branch of `renderSearchResults`, replace the hard-coded English sentence with:
 
 ```js
@@ -837,7 +860,7 @@ Verify:
 
 - Desktop 1280×720 light: no visible green background; gold is restrained; note panel accurately points to the concept modules’ 「知识笔记」 section.
 - Desktop dark: charcoal paper, legible text, muted gold emphasis, no bright yellow-on-black luxury styling.
-- Mobile 390×844 light: toolbar uses two rows, directory opens below it, search and note controls remain reachable. Type `估值`, press Escape, confirm both the overlay and result list hide, then refocus and confirm the preserved results reappear. Replace the query with `zzzz-no-match` and confirm the empty result reads `未找到结果`.
+- Mobile 390×844 light: toolbar uses two rows, directory opens below it, search and note controls remain reachable. Type `估值`, press Escape, confirm the input still contains `估值` and the retained result DOM remains intact while both the overlay and result list hide, then refocus and confirm the same preserved results reappear. Replace the query with `zzzz-no-match` and confirm the empty result reads `未找到结果`.
 - Mobile 320×700 light: search input width is at least 44px, all primary toolbar controls are 44×44px, and `document.documentElement.scrollWidth === document.documentElement.clientWidth`.
 - Keyboard: tab focus is visible on return, directory, theme, note, search, module, and dashboard controls.
 - Completion behavior remains covered by the pure all-`done` Finance re-entry view-state test and the shared-reader rendering contract; do not mutate generated project data during visual QA.
