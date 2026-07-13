@@ -1,0 +1,80 @@
+{
+  "paperId": "yang-2026-selfmem",
+  "figures": [
+    {
+      "id": "fig-001",
+      "label": "Figure 2",
+      "file": "figures/figure-2-selfmem-overview.png",
+      "sourcePage": 2,
+      "sourceFigure": "Figure 2",
+      "cropMode": "semantic-crop",
+      "publicCropPolicy": "minimal-necessary",
+      "sourceUrl": "https://arxiv.org/abs/2607.03726",
+      "sourceAnchor": "Figure 2",
+      "bbox": { "x": 135, "y": 105, "width": 925, "height": 700 },
+      "canonicalSectionId": "sec-framework",
+      "status": "cropped",
+      "caption": "SelfMem keeps the raw transcript as an immutable source of truth while the agent inspects evidence, manages a memory workspace, reviews quality, and answers with retrieved support."
+    },
+    {
+      "id": "fig-002",
+      "label": "Table 1",
+      "file": "figures/table-1-beam-results.png",
+      "sourcePage": 7,
+      "sourceFigure": "Table 1",
+      "cropMode": "semantic-crop",
+      "publicCropPolicy": "minimal-necessary",
+      "sourceUrl": "https://arxiv.org/abs/2607.03726",
+      "sourceAnchor": "Table 1",
+      "bbox": { "x": 135, "y": 100, "width": 925, "height": 910 },
+      "canonicalSectionId": "sec-results",
+      "status": "cropped",
+      "caption": "Main BEAM results at 100K, 500K, and 1M conversation scales, including score, pass rate, cost, cache use, and request counts."
+    },
+    {
+      "id": "fig-003",
+      "label": "Figure 3",
+      "file": "figures/figure-3-question-types.png",
+      "sourcePage": 8,
+      "sourceFigure": "Figure 3",
+      "cropMode": "semantic-crop",
+      "publicCropPolicy": "minimal-necessary",
+      "sourceUrl": "https://arxiv.org/abs/2607.03726",
+      "sourceAnchor": "Figure 3",
+      "bbox": { "x": 120, "y": 100, "width": 950, "height": 460 },
+      "canonicalSectionId": "sec-results",
+      "status": "cropped",
+      "caption": "BEAM question-type results showing where SelfMem is strong and where its advantage is less consistent across scales."
+    },
+    {
+      "id": "fig-004",
+      "label": "Figure 4",
+      "file": "figures/figure-4-strategy-optimization.png",
+      "sourcePage": 8,
+      "sourceFigure": "Figure 4",
+      "cropMode": "semantic-crop",
+      "publicCropPolicy": "minimal-necessary",
+      "sourceUrl": "https://arxiv.org/abs/2607.03726",
+      "sourceAnchor": "Figure 4",
+      "bbox": { "x": 120, "y": 580, "width": 480, "height": 650 },
+      "canonicalSectionId": "sec-optimization",
+      "status": "cropped",
+      "caption": "Held-out score across optimizer iterations and training-set sizes; the best strategy appears at an intermediate point rather than the maximum search budget."
+    },
+    {
+      "id": "fig-005",
+      "label": "Table 2",
+      "file": "figures/table-2-method-positioning.png",
+      "sourcePage": 12,
+      "sourceFigure": "Table 2",
+      "cropMode": "semantic-crop",
+      "publicCropPolicy": "minimal-necessary",
+      "sourceUrl": "https://arxiv.org/abs/2607.03726",
+      "sourceAnchor": "Table 2",
+      "bbox": { "x": 120, "y": 100, "width": 950, "height": 780 },
+      "canonicalSectionId": "sec-positioning",
+      "status": "cropped",
+      "caption": "Author-side positioning of SelfMem against retrieval, compression, hierarchical memory, structured notes, and production memory systems."
+    }
+  ]
+}
