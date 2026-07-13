@@ -192,7 +192,7 @@ assert.match(tabletMediaRules, /\.mobile-note-drawer\s*\{[\s\S]*position:\s*fixe
 assert.match(tabletMediaRules, /\.reader-shell\.is-mobile-note-open \.mobile-note-drawer\s*\{[\s\S]*display:\s*block/, "tablet rules should expose the opened note drawer");
 assert.doesNotMatch(css, /border-radius:\s*24px|border-radius:\s*28px/, "roadmap reader should avoid oversized card radii");
 
-assert.match(js, /fetchJson\("roadmap\/roadmap-data\.json"\)/, "roadmap JS should load generated JSON");
+assert.match(js, /fetchJson\(ROADMAP_DATA_SOURCE\)/, "shared reader should load the generated JSON source supplied by its page");
 assert.match(js, /function renderModuleNav/, "roadmap JS should isolate module navigation rendering");
 assert.match(js, /function renderCurrentModule/, "roadmap JS should isolate module content rendering");
 assert.match(js, /import \{ enhanceCodeListings \} from "\.\/code-listing\.js"/, "roadmap JS should import the code listing enhancer");
@@ -283,7 +283,10 @@ assert.match(js, /const renderedNotes = archived \? renderArchivedAnnotations\(m
 assert.match(js, /const railSectionId = article\?\.id \?\? sectionId;/, "nested article sections should keep the parent article active in the rail");
 assert.match(js, /renderContextualNotePanel\(null\);/, "module switches should start with an empty right note panel");
 assert.doesNotMatch(js, /renderContextualNotePanel\(nextModule\.knowledgeNotes\?\.\[0\]\);/, "module switches should not default the right panel to the first knowledge note");
-assert.match(js, /ANNOTATION_STORAGE_KEY = "foundationsReader\.annotations\.v1"/, "Foundations reader should define a versioned local annotation storage key");
+assert.match(html, /data-project-id="foundations"/, "Foundations should identify its local reader state");
+assert.match(js, /const PROJECT_ID = document\.body\.dataset\.projectId \?\? "foundations";/, "shared reader should default to the Foundations project id");
+assert.match(js, /const ANNOTATION_STORAGE_KEY = `\$\{PROJECT_ID\}Reader\.annotations\.v1`;/, "shared reader should define project-scoped annotation storage");
+assert.match(js, /const ROADMAP_DATA_SOURCE = READER_SCRIPT\?\.dataset\.source \?\? "roadmap\/roadmap-data\.json";/, "shared reader should accept the page data source");
 assert.match(js, /function createEmptyAnnotationStore/, "Foundations reader should create an empty annotation store");
 assert.match(js, /function loadAnnotations/, "Foundations reader should load local annotations from localStorage");
 assert.match(js, /function saveAnnotations/, "Foundations reader should save local annotations to localStorage");

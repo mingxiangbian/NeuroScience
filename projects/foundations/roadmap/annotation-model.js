@@ -14,7 +14,7 @@ function createEmptyStore() {
   return { version: 1, items: [] };
 }
 
-export function parseStoredAnnotations(raw) {
+export function parseStoredAnnotations(raw, projectId = "foundations") {
   if (raw === null) return { store: createEmptyStore(), canPersist: true };
   try {
     const parsed = JSON.parse(raw);
@@ -25,7 +25,7 @@ export function parseStoredAnnotations(raw) {
       store: {
         version: 1,
         items: parsed.items
-          .filter((item) => item && item.projectId === "foundations")
+          .filter((item) => item && item.projectId === projectId)
           .map(normalizeAnnotation),
       },
       canPersist: true,

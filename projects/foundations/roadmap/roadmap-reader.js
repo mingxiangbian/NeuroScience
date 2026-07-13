@@ -7,8 +7,11 @@ import {
 } from "./annotation-model.js";
 import { enhanceCodeListings } from "./code-listing.js";
 
-const ANNOTATION_STORAGE_KEY = "foundationsReader.annotations.v1";
-const TASK_STORAGE_KEY = "foundationsReader.tasks.v1";
+const READER_SCRIPT = document.querySelector("script[data-source][src$='roadmap-reader.js']");
+const PROJECT_ID = document.body.dataset.projectId ?? "foundations";
+const ROADMAP_DATA_SOURCE = READER_SCRIPT?.dataset.source ?? "roadmap/roadmap-data.json";
+const ANNOTATION_STORAGE_KEY = `${PROJECT_ID}Reader.annotations.v1`;
+const TASK_STORAGE_KEY = `${PROJECT_ID}Reader.tasks.v1`;
 const MERMAID_MODULE_URL = "https://cdn.jsdelivr.net/npm/mermaid@11.12.2/dist/mermaid.esm.min.mjs";
 const KEYBOARD_NAVIGATION_KEYS = new Set(["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "]);
 
@@ -79,9 +82,9 @@ function createEmptyAnnotationStore() {
 function loadAnnotations() {
   try {
     const raw = window.localStorage.getItem(ANNOTATION_STORAGE_KEY);
-    return parseStoredAnnotations(raw);
+    return parseStoredAnnotations(raw, PROJECT_ID);
   } catch (error) {
-    console.warn("Unable to load Foundations annotations", error);
+    console.warn(`Unable to load ${PROJECT_ID} annotations`, error);
     return { store: createEmptyAnnotationStore(), canPersist: false };
   }
 }
@@ -217,7 +220,7 @@ function renderAnnotationToolbar(context) {
 }
 
 function createAnnotationId() {
-  return `foundation-ann-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+  return `${PROJECT_ID}-ann-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
 function createAnnotationFromSelection(mode) {
@@ -227,7 +230,7 @@ function createAnnotationFromSelection(mode) {
   const annotationMode = mode === "note" ? "note" : "highlight";
   const annotation = {
     id: createAnnotationId(),
-    projectId: "foundations",
+    projectId: PROJECT_ID,
     moduleId: context.moduleId,
     noteId: context.noteId,
     selectedText: context.selectedText,
@@ -619,6 +622,7 @@ function renderTaskSection(module, title) {
 }
 
 function renderOverviewDashboard(module) {
+  if (state.data.project.id === "finance") return renderFinanceOverviewDashboard(module);
   const dashboardModuleId = state.data.project.dashboardModuleId;
   const learningModules = state.data.modules.filter((item) => item.id !== dashboardModuleId);
   const stableModules = learningModules.filter((item) => item.id !== "interview-sprint");
@@ -677,6 +681,84 @@ function renderOverviewDashboard(module) {
     `],
     ["计划节奏", getSection(module, "计划节奏")],
     ["待补知识", getSection(module, "待补知识")],
+  ];
+
+  return blocks
+    .map(([title, body]) => {
+      if (!body) return "";
+      const sectionId = getSectionId(module, title);
+      return `
+        <article class="module-section" id="${escapeHtml(sectionId)}" data-section-id="${escapeHtml(sectionId)}" data-section-title="${escapeHtml(title)}">
+          <h2>${escapeHtml(title)}</h2>
+          <div class="section-body">${body}</div>
+        </article>
+      `;
+    })
+    .filter(Boolean)
+    .join("");
+}
+
+function renderFinanceOverviewDashboard(module) {
+  const dashboardModuleId = state.data.project.dashboardModuleId;
+  const learningModules = state.data.modules.filter((item) => item.id !== dashboardModuleId);
+  const nextModule = learningModules.find((item) => item.status !== "done") ?? learningModules[0];
+  const glossaryModule = getModuleById(state.data.project.glossaryModuleId);
+  const moduleRows = learningModules
+    .map((item) => `
+      <button class="dashboard-module-row" type="button" data-dashboard-module-id="${escapeHtml(item.id)}">
+        <span>
+          <strong>${escapeHtml(item.title)}</strong>
+          <small>${escapeHtml(getStatusLabel(item.status))} · ${escapeHtml(item.priority)}</small>
+        </span>
+        <span class="dashboard-module-progress">${escapeHtml(String(getLearningProgress(item)))}%</span>
+      </button>
+    `)
+    .join("");
+  const blocks = [
+    ["Dashboard", `
+      <div class="route-ledger" aria-label="Finance learning dashboard">
+        <div class="route-ledger-row">
+          <span class="route-ledger-label">下一步</span>
+          ${nextModule ? `
+            <button class="route-ledger-target" type="button" data-dashboard-module-id="${escapeHtml(nextModule.id)}">
+              <strong>${escapeHtml(nextModule.title)}</strong>
+              <span>${escapeHtml(nextModule.priority)}</span>
+            </button>
+          ` : "<strong>暂无下一模块</strong>"}
+        </div>
+        <div class="route-ledger-row">
+          <span class="route-ledger-label">当前计划</span>
+          <strong>${escapeHtml(state.data.project.dashboardFocus ?? "从第一模块开始建立学习边界。")}</strong>
+        </div>
+        ${glossaryModule ? `
+          <div class="route-ledger-row">
+            <span class="route-ledger-label">快速查阅</span>
+            <button class="route-ledger-target" type="button" data-dashboard-module-id="${escapeHtml(glossaryModule.id)}">
+              <strong>${escapeHtml(glossaryModule.title)}</strong>
+              <span>术语</span>
+            </button>
+          </div>
+        ` : ""}
+      </div>
+      ${getSection(module, "Dashboard")}
+      <div class="dashboard-grid" aria-label="Finance progress dashboard">
+        <section class="dashboard-card">
+          <p class="dashboard-card-label">整体学习进度</p>
+          <strong>${escapeHtml(String(getOverallLearningProgress()))}%</strong>
+        </section>
+        <section class="dashboard-card">
+          <p class="dashboard-card-label">概念模块</p>
+          <strong>${escapeHtml(String(learningModules.length))}</strong>
+        </section>
+        <section class="dashboard-card">
+          <p class="dashboard-card-label">当前状态</p>
+          <strong>${escapeHtml(getStatusLabel(nextModule?.status ?? "not-started"))}</strong>
+        </section>
+      </div>
+    `],
+    ["模块总览", `<div class="dashboard-module-list" aria-label="投资学习模块状态">${moduleRows}</div>`],
+    ["学习边界", getSection(module, "学习边界")],
+    ["使用方式", getSection(module, "使用方式")],
   ];
 
   return blocks
@@ -801,17 +883,17 @@ async function renderMermaidDiagrams(root = els.sectionList) {
     mermaid.initialize({ startOnLoad: false, securityLevel: "strict", theme: "neutral" });
     for (const [index, code] of blocks.entries()) {
       try {
-        const { svg } = await mermaid.render(`foundations-mermaid-${Date.now()}-${index}`, code.textContent);
+        const { svg } = await mermaid.render(`${PROJECT_ID}-mermaid-${Date.now()}-${index}`, code.textContent);
         const figure = document.createElement("figure");
         figure.className = "knowledge-diagram";
         figure.innerHTML = svg;
         code.closest("pre")?.replaceWith(figure);
       } catch (error) {
-        console.warn("Unable to render Foundations Mermaid diagram", error);
+        console.warn(`Unable to render ${PROJECT_ID} Mermaid diagram`, error);
       }
     }
   } catch (error) {
-    console.warn("Unable to load Foundations Mermaid renderer", error);
+    console.warn(`Unable to load ${PROJECT_ID} Mermaid renderer`, error);
   }
 }
 
@@ -1268,7 +1350,7 @@ function bindEvents() {
 
 async function init() {
   try {
-    state.data = await fetchJson("roadmap/roadmap-data.json");
+    state.data = await fetchJson(ROADMAP_DATA_SOURCE);
     const annotationLoad = loadAnnotations();
     const migratedAnnotations = migrateLegacyAnnotations(annotationLoad.store, state.data.modules);
     state.annotations = migratedAnnotations;
