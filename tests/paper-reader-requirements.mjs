@@ -378,6 +378,11 @@ for (const paperId of readingPaperIds) {
     assert.ok(selfMemFigures.every((figure) => Number.isInteger(figure.sourcePage) && figure.sourcePage > 0), "SelfMem figures should record positive source PDF pages");
     assert.ok(selfMemFigures.every((figure) => figure.bbox && ["x", "y", "width", "height"].every((field) => Number.isFinite(figure.bbox[field])) && figure.bbox.width > 0 && figure.bbox.height > 0), "SelfMem figures should include positive crop bbox metadata");
     assert.ok(selfMemFigures.every((figure) => figure.publicCropPolicy === "minimal-necessary"), "SelfMem figures should use minimal necessary crops");
+    for (const figure of selfMemFigures) {
+      const size = getPngSize(new URL(figure.file, readingBase));
+      assert.deepEqual(size, { width: figure.bbox.width, height: figure.bbox.height }, `SelfMem ${figure.id} PNG dimensions should match its crop bbox`);
+      assert.ok(size.width < 1191 && size.height < 1684, `SelfMem ${figure.id} should be materially smaller than the 144-DPI A4 source page`);
+    }
   }
   const notesArePublic = notesData.noteMode === "public";
   if (paperId === "zhang-2024-memory-mechanism-llm-agents") {
