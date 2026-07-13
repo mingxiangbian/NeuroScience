@@ -3,6 +3,13 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 
 function getPngSize(fileUrl) {
   const buffer = readFileSync(fileUrl);
+  assert.ok(buffer.length >= 24, "PNG should include its signature and IHDR header");
+  assert.deepEqual(
+    [...buffer.subarray(0, 8)],
+    [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a],
+    "PNG should use the standard 8-byte signature"
+  );
+  assert.equal(buffer.toString("ascii", 12, 16), "IHDR", "PNG first chunk should be IHDR");
   return {
     width: buffer.readUInt32BE(16),
     height: buffer.readUInt32BE(20)
@@ -381,7 +388,7 @@ for (const paperId of readingPaperIds) {
     for (const figure of selfMemFigures) {
       const size = getPngSize(new URL(figure.file, readingBase));
       assert.deepEqual(size, { width: figure.bbox.width, height: figure.bbox.height }, `SelfMem ${figure.id} PNG dimensions should match its crop bbox`);
-      assert.ok(size.width < 1191 && size.height < 1684, `SelfMem ${figure.id} should be materially smaller than the 144-DPI A4 source page`);
+      assert.ok(size.width * size.height <= 1191 * 1684 * 0.75, `SelfMem ${figure.id} should stay within 75% of the 144-DPI A4 source-page area`);
     }
   }
   const notesArePublic = notesData.noteMode === "public";
