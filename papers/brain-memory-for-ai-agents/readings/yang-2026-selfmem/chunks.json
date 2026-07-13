@@ -1,0 +1,524 @@
+{
+  "paperId": "yang-2026-selfmem",
+  "chunks": [
+    {
+      "id": "ch-001",
+      "sectionId": "sec-introduction",
+      "order": 1,
+      "title": "固定记忆策略的问题",
+      "sourceText": "While current AI agents support increasingly long context windows, tool use, and skill execution for long-horizon tasks, they still require memory systems to effectively leverage historical experience. Existing memory frameworks typically rely on fixed storage, retrieval, and summarization mechanisms, which can be rigid across different tasks and often require manual tuning. [...] Different tasks and conversation histories require different memory behaviors, yet it is still unclear how agents should adapt their memory strategies to task demands and environmental feedback.",
+      "zhTranslation": "尽管当前 AI 智能体支持越来越长的上下文窗口、工具使用以及长时程任务中的技能执行，它们仍然需要记忆系统来有效利用历史经验。现有记忆框架通常依赖固定的存储、检索和摘要机制；这些机制在不同任务间可能十分僵化，而且经常需要人工调优。不同任务和对话历史需要不同的记忆行为，但智能体应如何使记忆策略适应任务需求和环境反馈，仍不清楚。",
+      "zhExplanation": "这段把研究问题限定在 memory policy 的适配性，而不是“上下文窗口是否足够长”。长窗口提供容量，却没有自动解决什么值得保存、什么时候更新以及如何控制成本的问题。作者在此提出的是动机，不是已经被实验单独验证的机制结论。",
+      "blocks": [
+        { "type": "paragraph", "text": "While current AI agents support increasingly long context windows, tool use, and skill execution for long-horizon tasks, they still require memory systems to effectively leverage historical experience. Existing memory frameworks typically rely on fixed storage, retrieval, and summarization mechanisms, which can be rigid across different tasks and often require manual tuning. Different tasks and conversation histories require different memory behaviors, yet it is still unclear how agents should adapt their memory strategies to task demands and environmental feedback." }
+      ],
+      "figureRefs": [],
+      "keywords": ["fixed memory strategy", "long context", "manual tuning", "task adaptation"],
+      "groupId": "group-problem",
+      "premise": "上下文容量不等于历史经验能被有效利用。",
+      "claim": "固定存储、检索和摘要规则难以适配不同任务与对话历史。",
+      "evidence": ["长上下文仍需要记忆系统", "固定机制跨任务僵化", "现有方法常需人工调优"]
+    },
+    {
+      "id": "ch-002",
+      "sectionId": "sec-introduction",
+      "order": 2,
+      "title": "从给鱼到教会捕鱼",
+      "sourceText": "To address this limitation, we propose SelfMem, a self-optimizing memory framework. Inspired by prior work on self-improving AI, we follow the principle of “teaching an agent to fish rather than giving it a fish.” Instead of forcing the model to follow a predefined memory strategy or format, SelfMem provides an environment with memory tools and feedback signals that allow the agent to explore, evaluate, and refine its own memory strategy. [...] Rather than prescribing a fixed storage, update, or retrieval rule, SelfMem exposes memory tools together with feedback signals such as response performance, token counts, cost, and cache reuse.",
+      "zhTranslation": "为解决这一限制，我们提出 SelfMem，一种自优化记忆框架。受自改进 AI 既有工作的启发，我们遵循“教智能体捕鱼，而不是直接给它一条鱼”的原则。SelfMem 不强迫模型遵循预定义的记忆策略或格式，而是提供带有记忆工具和反馈信号的环境，使智能体能够探索、评估并改进自己的记忆策略。SelfMem 不规定固定的存储、更新或检索规则，而是同时暴露记忆工具，以及回答表现、token 数、成本和缓存复用等反馈信号。",
+      "zhExplanation": "“教会捕鱼”是工程类比，不是自主性无限扩张。框架仍由人设计工具、原则、反馈与审计边界；模型只在这个受限动作空间内搜索可读策略。这里的 refine 发生在自然语言 policy 层，不涉及参数更新。",
+      "blocks": [
+        { "type": "paragraph", "text": "To address this limitation, we propose SelfMem, a self-optimizing memory framework. Inspired by prior work on self-improving AI, we follow the principle of “teaching an agent to fish rather than giving it a fish.” Instead of forcing the model to follow a predefined memory strategy or format, SelfMem provides an environment with memory tools and feedback signals that allow the agent to explore, evaluate, and refine its own memory strategy. Rather than prescribing a fixed storage, update, or retrieval rule, SelfMem exposes memory tools together with feedback signals such as response performance, token counts, cost, and cache reuse." }
+      ],
+      "figureRefs": [],
+      "keywords": ["SelfMem", "self-optimizing", "memory tools", "feedback signals"],
+      "groupId": "group-problem",
+      "premise": "策略搜索仍发生在人类规定的工具与反馈边界内。",
+      "claim": "SelfMem 让智能体探索并改进记忆策略，而非执行固定格式。",
+      "evidence": ["暴露 memory tools", "返回性能与成本反馈", "允许策略评估和 refinement"]
+    },
+    {
+      "id": "ch-003",
+      "sectionId": "sec-positioning",
+      "order": 3,
+      "title": "相关记忆系统的边界",
+      "sourceText": "MemGPT formulates long-context interaction as virtual context management, where an agent moves information between core/working memory and archival memory through tool-mediated memory operations (Packer et al., 2023). [...] A-Mem takes a more agentic step by dynamically writing, indexing, linking, and evolving memories following Zettelkasten-style organization (Xu et al., 2026). As summarized in Appendix A, Table 2, these methods differ in their memory units, retrieval mechanisms, and update behaviors, but they still largely instantiate a predefined memory architecture or a fixed set of memory operations.",
+      "zhTranslation": "MemGPT 把长上下文交互表述为虚拟上下文管理，其中智能体通过工具介导的记忆操作，在核心/工作记忆和归档记忆之间移动信息（Packer et al., 2023）。[...] A-Mem 更进一步，让智能体按照 Zettelkasten 式组织方式动态写入、索引、链接和演化记忆（Xu et al., 2026）。如附录 A 的 Table 2 所总结，这些方法在记忆单元、检索机制和更新行为上不同，但总体上仍实例化了预定义的记忆架构或固定的记忆操作集合。",
+      "zhExplanation": "作者的定位维度是“谁决定 memory behavior”，不是说相关系统完全没有 agentic 操作。Table 2 是作者侧概念比较，并非一组额外消融实验；因此它支持方法分类，却不能单独证明 SelfMem 的性能优势。",
+      "blocks": [
+        { "type": "paragraph", "text": "Recent work on agent memory equips LLM agents with external memory states for long-running interaction and personalization. Generative Agents introduced a memory-stream architecture in which agents record observations, retrieve relevant experiences, and synthesize higher-level reflections for future planning. MemGPT formulates long-context interaction as virtual context management, where an agent moves information between core/working memory and archival memory through tool-mediated memory operations. A-Mem takes a more agentic step by dynamically writing, indexing, linking, and evolving memories following Zettelkasten-style organization. These methods differ in their memory units, retrieval mechanisms, and update behaviors, but they still largely instantiate a predefined memory architecture or a fixed set of memory operations." },
+        {
+          "type": "table",
+          "caption": "Paper Table 2 positioning dimensions (condensed without changing the author-side classifications).",
+          "columns": ["Method", "Memory unit", "Memory control", "Update behavior", "Relation to SelfMem"],
+          "rows": [
+            ["RAG", "Text chunks or passages", "Designer-defined chunking, indexing, top-k", "Re-index after changes", "Useful access, fixed retrieval pipeline"],
+            ["ReadAgent", "Gists and original passages", "Prompted reading policy", "Task-time gists", "Action-based reading without feedback-optimized policy"],
+            ["MemoryBank", "Long-term memories and profiles", "Framework-defined rules", "Strengthens repeated memories", "Persistent but largely predefined operations"],
+            ["MemGPT", "Core, recall, archival memory", "Fixed OS-inspired hierarchy", "Edits core and searches archive", "Agentic operations inside a predefined architecture"],
+            ["Mem0", "Extracted/consolidated facts", "Production extraction pipeline", "Continuous consolidation", "Engineered layer whose pipeline choices remain fixed"],
+            ["A-Mem", "Structured linked notes", "Agentic Zettelkasten construction", "Creates and evolves notes", "Closest in spirit, but inside a note-graph design"],
+            ["Compression", "Compressed summaries/state", "Fixed compaction policy", "Recompresses as history grows", "Compression is one trade-off for SelfMem"],
+            ["SelfMem", "Agent-written workspace plus raw feedback", "Agent-controlled memory strategy", "Revises, merges, deletes, pins, reorganizes", "Memory behavior is editable and feedback-guided"]
+          ]
+        }
+      ],
+      "figureRefs": [{ "id": "fig-005", "relation": "supporting" }],
+      "keywords": ["RAG", "MemGPT", "A-Mem", "Mem0", "Table 2"],
+      "groupId": "group-positioning",
+      "premise": "方法定位与性能比较是两类不同证据。",
+      "claim": "既有系统多在预定义架构内操作，SelfMem 把策略本身设为可编辑对象。",
+      "evidence": ["Table 2 比较 memory control", "A-Mem 仍基于 note graph", "MemGPT 仍基于固定层级"]
+    },
+    {
+      "id": "ch-004",
+      "sectionId": "sec-positioning",
+      "order": 4,
+      "title": "自改进智能体的启发",
+      "sourceText": "A complementary line of work shows that language models and agents can improve their behavior through feedback, reflection, and search, often without updating the underlying model parameters. Self-Refine uses the same model to generate feedback and iteratively refine its own outputs (Madaan et al., 2023). Reflexion converts task feedback into verbal reflections stored in episodic memory, allowing agents to improve across future trials through language rather than weight updates (Shinn et al., 2023). [...] Beyond improving a single output or action trajectory, recent work on natural-language optimization suggests that models can also search over strategies themselves. [...] These studies motivate our hypothesis that memory behavior can also be optimized in language: given appropriate feedback signals and an action space, the agent may discover memory strategies that are better adapted to the current task than manually specified rules.",
+      "zhTranslation": "另一条互补研究路线表明，语言模型和智能体可以通过反馈、反思与搜索改进行为，而且通常不需要更新底层模型参数。Self-Refine 使用同一个模型生成反馈并迭代改进自己的输出。Reflexion 把任务反馈转成存储在情景记忆中的语言反思，使智能体通过语言而不是权重更新来改进后续试验。近期自然语言优化研究还表明，模型可以搜索策略本身。这些研究促成了作者的假设：记忆行为也可以在语言中被优化；给定合适的反馈信号和动作空间，智能体或许能发现比人工规则更适应当前任务的记忆策略。",
+      "zhExplanation": "这一段给出研究假设的来源链：output refinement、verbal reflection、自然语言优化，再迁移到 memory policy。它只构成可行性动机；真正的支持来自后面的 BEAM 和 held-out refinement 结果，而且仍应与参数学习严格分开。",
+      "blocks": [
+        { "type": "paragraph", "text": "A complementary line of work shows that language models and agents can improve their behavior through feedback, reflection, and search, often without updating the underlying model parameters. Self-Refine uses the same model to generate feedback and iteratively refine its own outputs. Reflexion converts task feedback into verbal reflections stored in episodic memory, allowing agents to improve across future trials through language rather than weight updates. Recent work on natural-language optimization suggests that models can also search over strategies themselves. These studies motivate our hypothesis that memory behavior can also be optimized in language: given appropriate feedback signals and an action space, the agent may discover memory strategies that are better adapted to the current task than manually specified rules." }
+      ],
+      "figureRefs": [],
+      "keywords": ["Self-Refine", "Reflexion", "natural-language optimization", "weight updates"],
+      "groupId": "group-positioning",
+      "premise": "语言策略 refinement 与模型权重更新不是同一过程。",
+      "claim": "自改进研究启发作者把 memory behavior 也作为自然语言搜索对象。",
+      "evidence": ["反馈和反思无需权重更新", "可搜索自然语言策略", "提出 memory policy 优化假设"]
+    },
+    {
+      "id": "ch-005",
+      "sectionId": "sec-framework",
+      "order": 5,
+      "title": "SelfMem 的问题定义",
+      "sourceText": "We consider memory management for agents that operate over a fixed interaction history. Let H = (t1, t2, . . . , tT) denote the chronological record of previous user-agent turns, where each turn contains the speaker role, time anchor, content, and rendering metadata. Given a future query q, the agent must produce an answer y by using information from H. We therefore formulate memory management as the construction of a compact memory workspace M* from the original interaction history, while keeping the transcript available for exact factual grounding: M* = Πagent(H; A, F), Eq = Retrieve(q, M*, H), y = LLM(q, M*, Eq).",
+      "zhTranslation": "我们考虑在固定交互历史上运行的智能体记忆管理。令 H = (t1, t2, ... , tT) 表示此前用户与智能体轮次的时间顺序记录，其中每个轮次包含说话者角色、时间锚点、内容和渲染元数据。给定未来查询 q，智能体必须利用 H 中的信息生成回答 y。因此，我们把记忆管理表述为：从原始交互历史构建紧凑记忆工作区 M*，同时保留 transcript 以进行精确事实落地：M* = Πagent(H; A, F)，Eq = Retrieve(q, M*, H)，y = LLM(q, M*, Eq)。",
+      "zhExplanation": "三个式子分开了三种过程：策略根据历史、动作空间和反馈构建 workspace；检索器按问题从 workspace 与原始历史中取证；回答模型联合问题、workspace 与证据生成答案。这个分解防止把压缩记忆误当成完整事实库。",
+      "blocks": [
+        { "type": "paragraph", "text": "We consider memory management for agents that operate over a fixed interaction history. Let H = (t1, t2, . . . , tT) denote the chronological record of previous user-agent turns, where each turn contains the speaker role, time anchor, content, and rendering metadata. Given a future query q, the agent must produce an answer y by using information from H. We therefore formulate memory management as the construction of a compact memory workspace M* from the original interaction history, while keeping the transcript available for exact factual grounding." },
+        { "type": "math", "label": "Memory workspace construction", "latex": "M^{*}=\\Pi_{\\mathrm{agent}}(H;\\mathcal{A},\\mathcal{F})" },
+        { "type": "math", "label": "Question-conditioned evidence retrieval", "latex": "E_q=\\operatorname{Retrieve}(q,M^{*},H)" },
+        { "type": "math", "label": "Evidence-conditioned answer", "latex": "y=\\operatorname{LLM}(q,M^{*},E_q)" }
+      ],
+      "figureRefs": [],
+      "keywords": ["problem definition", "interaction history", "memory workspace", "evidence retrieval"],
+      "groupId": "group-framework",
+      "premise": "构建记忆、检索证据和生成回答应被分别建模。",
+      "claim": "SelfMem 从历史构建紧凑 workspace，并保留 transcript 供精确取证。",
+      "evidence": ["H 保存完整交互顺序", "M* 受动作与反馈控制", "Eq 同时依赖 workspace 与 H"]
+    },
+    {
+      "id": "ch-006",
+      "sectionId": "sec-framework",
+      "order": 6,
+      "title": "transcript 是事实来源",
+      "sourceText": "The transcript store is the source of truth in SelfMem. Rather than exposing hidden summaries or pre-extracted facts, SelfMem stores the logged interaction history as a read-only database. In our implementation, each transcript is represented as a SQLite table: turns(turn_index, turn_id, role, time_anchor, content, rendered, char_count). The memory agent can inspect this transcript only through read-only tools. The transcript interface includes conversation_manifest, which reports schema and transcript statistics, and conversation_sql_query, which allows the agent to issue read-only SQL queries over the turns table.",
+      "zhTranslation": "transcript store 是 SelfMem 中的事实来源。SelfMem 不暴露隐藏摘要或预提取事实，而是把记录下来的交互历史存为只读数据库。在作者实现中，每份 transcript 表示为 SQLite 表：turns(turn_index, turn_id, role, time_anchor, content, rendered, char_count)。记忆智能体只能通过只读工具检查 transcript。接口包括报告 schema 和 transcript 统计的 conversation_manifest，以及允许智能体对 turns 表发出只读 SQL 查询的 conversation_sql_query。",
+      "zhExplanation": "只读 transcript 同时提供了可追溯性和防篡改边界，但它并不保证智能体检查过所有行。附录 Prompt 2 因而要求引用已检查的 turn ranges，并禁止对未检查行宣称 coverage；这是工具可用性与实际证据覆盖之间的重要区别。",
+      "blocks": [
+        { "type": "paragraph", "text": "The transcript store is the source of truth in SelfMem. Rather than exposing hidden summaries or pre-extracted facts, SelfMem stores the logged interaction history as a read-only database. In our implementation, each transcript is represented as a SQLite table: turns(turn_index, turn_id, role, time_anchor, content, rendered, char_count). The memory agent can inspect this transcript only through read-only tools. The transcript interface includes conversation_manifest, which reports schema and transcript statistics, and conversation_sql_query, which allows the agent to issue read-only SQL queries over the turns table." }
+      ],
+      "figureRefs": [],
+      "keywords": ["transcript store", "source of truth", "SQLite", "read-only SQL"],
+      "groupId": "group-framework",
+      "premise": "可检索的原始记录不等于已经被完整检查。",
+      "claim": "SelfMem 将原始交互保存为只读事实源，并限制为显式查询访问。",
+      "evidence": ["turns 表保留顺序与内容", "conversation_manifest 报告结构", "SQL 接口只读"]
+    },
+    {
+      "id": "ch-007",
+      "sectionId": "sec-framework",
+      "order": 7,
+      "title": "memory workspace 与动作空间",
+      "sourceText": "We provide a model-managed memory workspace Mi. The workspace can contain any structure the agent judges useful, such as a user profile, preference list, project-state note, timeline, or even compact policy. The agent interacts with the workspace through a model-selectable action space: A = Aread ∪ Awrite ∪ Areview ∪ Aprobe. At each step, the agent selects both a tool and its arguments: ai = SelectLLM(Pmem, I, Mi−1, o<i, d<i). [...] The framework provides human-designed procedural principles, the available memory tools, feedback channels, and audit constraints. The agent then determines the concrete memory behavior.",
+      "zhTranslation": "我们提供由模型管理的记忆工作区 Mi。工作区可以包含智能体判断有用的任意结构，例如用户画像、偏好列表、项目状态笔记、时间线，甚至紧凑策略。智能体通过模型可选的动作空间与工作区交互：A = Aread ∪ Awrite ∪ Areview ∪ Aprobe。每一步中，智能体同时选择工具及其参数：ai = SelectLLM(Pmem, I, Mi−1, o<i, d<i)。框架提供人工设计的程序性原则、可用记忆工具、反馈渠道和审计约束；智能体再决定具体记忆行为。",
+      "zhExplanation": "workspace 的结构开放不等于 action space 无边界。模型可以选择 profile、timeline 或 policy 等表示，但其操作只能经由预置的读、写、审查和自测工具，并受 prompt 与诊断历史约束。Figure 2 展示的是一次具体 trajectory，不应当被读成固定工具顺序。",
+      "blocks": [
+        { "type": "paragraph", "text": "We provide a model-managed memory workspace Mi. The workspace can contain any structure the agent judges useful, such as a user profile, preference list, project-state note, timeline, or even compact policy. The agent interacts with the workspace through a model-selectable action space. At each step, the agent selects both a tool and its arguments. The framework provides human-designed procedural principles, the available memory tools, feedback channels, and audit constraints. The agent then determines the concrete memory behavior." },
+        { "type": "math", "label": "Memory action families", "latex": "\\mathcal{A}=\\mathcal{A}_{\\mathrm{read}}\\cup\\mathcal{A}_{\\mathrm{write}}\\cup\\mathcal{A}_{\\mathrm{review}}\\cup\\mathcal{A}_{\\mathrm{probe}}" },
+        { "type": "math", "label": "Model-selected tool action", "latex": "a_i=\\operatorname{Select}_{\\mathrm{LLM}}(P_{\\mathrm{mem}},I,M_{i-1},o_{<i},d_{<i})" }
+      ],
+      "figureRefs": [{ "id": "fig-001", "relation": "supporting" }],
+      "keywords": ["memory workspace", "action space", "tool selection", "Figure 2"],
+      "groupId": "group-framework",
+      "premise": "开放表示形式仍可以运行在受限工具接口内。",
+      "claim": "智能体选择 workspace 结构和具体动作，框架保留原则与审计约束。",
+      "evidence": ["四类 action family", "每步选择工具及参数", "框架提供 feedback channels"]
+    },
+    {
+      "id": "ch-008",
+      "sectionId": "sec-framework",
+      "order": 8,
+      "title": "多通道反馈而非单一奖励",
+      "sourceText": "The feedback F returned by SelfMem is tool and environment feedback rather than a hidden supervision signal. At memory-construction time, the agent does not receive gold answers, benchmark rubrics, held-out labels, or per-question judge decisions. Instead, feedback comes from observable interactions with the transcript, memory workspace, and diagnostics: Fi = {oHi, oMi, dwritei, dreviewi, ui}. [...] These signals are deliberately not collapsed into a single scalar reward. Memory management involves trade-offs, such as storing more information can improve recall but increase context cost; compressing memory can reduce latency but lose exact details.",
+      "zhTranslation": "SelfMem 返回的反馈 F 是工具和环境反馈，而不是隐藏监督信号。在记忆构建时，智能体不会收到标准答案、benchmark rubric、held-out 标签或逐题 judge 决策。反馈来自与 transcript、memory workspace 和诊断的可观察交互：Fi = {oHi, oMi, dwritei, dreviewi, ui}。这些信号被有意保留为多通道，而没有压成单一标量奖励。记忆管理存在取舍：存更多信息可能提高召回却增加上下文成本；压缩记忆可能降低延迟却丢失精确细节。",
+      "zhExplanation": "这说明策略选择是多目标语言推理，而不是对一个 reward 的标准强化学习优化。质量信号与效率信号的权重也并非完全自由：附录 prompt 明确把官方分数设为主目标，把成本和 token 设为次级 tie-breaker。",
+      "blocks": [
+        { "type": "paragraph", "text": "The feedback F returned by SelfMem is tool and environment feedback rather than a hidden supervision signal. At memory-construction time, the agent does not receive gold answers, benchmark rubrics, held-out labels, or per-question judge decisions. Instead, feedback comes from observable interactions with the transcript, memory workspace, and diagnostics. These signals are deliberately not collapsed into a single scalar reward." },
+        { "type": "math", "label": "Observable feedback channels", "latex": "\\mathcal{F}_i=\\{o_i^H,o_i^M,d_i^{\\mathrm{write}},d_i^{\\mathrm{review}},u_i\\}" }
+      ],
+      "figureRefs": [],
+      "keywords": ["feedback signals", "diagnostics", "non-scalar reward", "trade-off"],
+      "groupId": "group-framework",
+      "premise": "质量与效率取舍不能被一个成本数字替代。",
+      "claim": "SelfMem 用可观察的多通道反馈指导策略，而不提供隐藏逐题监督。",
+      "evidence": ["无 gold answer 或 rubric", "包含读写与审查诊断", "运营信号不压成单一奖励"]
+    },
+    {
+      "id": "ch-009",
+      "sectionId": "sec-memory-loop",
+      "order": 9,
+      "title": "构建与审查闭环",
+      "sourceText": "Memory construction proceeds as a model-controlled tool-use loop. The workspace is initialized as M0 = ∅. At step i, the agent observes the current workspace and previous tool outputs, then selects an action ai. Read and review actions return observations or diagnostics, while write actions produce an update ΔMi that is applied to the workspace. Each write operation records its target, content, rationale, and metadata, making the memory process auditable. Since memory writing is not treated as one-shot summarization, the agent can review a draft or existing memory: di = Review(Mi, fi). [...] The agent can then revise the workspace through another memory update.",
+      "zhTranslation": "记忆构建以模型控制的工具使用循环进行。工作区初始化为 M0 = ∅。在步骤 i，智能体观察当前工作区和此前工具输出，然后选择动作 ai。读与审查动作返回观察或诊断，写动作则产生应用于工作区的更新 ΔMi。每次写操作都记录 target、content、rationale 和 metadata，使记忆过程可审计。由于记忆写入不是一次性摘要，智能体可以审查草稿或现有记忆：di = Review(Mi, fi)。随后，智能体可通过另一次记忆更新来修订工作区。",
+      "zhExplanation": "闭环的关键不是多调用几次模型，而是把 mutation 与 diagnosis 分开，并为每次变化保留理由和元数据。它支持过程审计，但论文没有报告每类 review 工具的独立消融，所以不能据此判断哪个环节贡献最大。",
+      "blocks": [
+        { "type": "paragraph", "text": "Memory construction proceeds as a model-controlled tool-use loop. At step i, the agent observes the current workspace and previous tool outputs, then selects an action ai. Read and review actions return observations or diagnostics, while write actions produce an update that is applied to the workspace. Each write operation records its target, content, rationale, and metadata, making the memory process auditable." },
+        { "type": "math", "label": "Empty initial workspace", "latex": "M_0=\\varnothing" },
+        { "type": "math", "label": "Conditional workspace update", "latex": "M_i=\\begin{cases}\\operatorname{Apply}(M_{i-1},\\Delta M_i),&a_i\\in\\mathcal{A}_{\\mathrm{write}}\\\\M_{i-1},&\\text{otherwise}\\end{cases}" },
+        { "type": "math", "label": "Memory review", "latex": "d_i=\\operatorname{Review}(M_i,f_i)" }
+      ],
+      "figureRefs": [],
+      "keywords": ["inspect-write-review-revise", "memory update", "auditability", "review"],
+      "groupId": "group-loop",
+      "premise": "可审计更新需要把读取、诊断和变更分别记录。",
+      "claim": "SelfMem 通过 inspect-write-review-revise 循环迭代工作区。",
+      "evidence": ["M0 为空", "只有写动作改变 Mi", "每次写入保存 rationale 和 metadata"]
+    },
+    {
+      "id": "ch-010",
+      "sectionId": "sec-memory-loop",
+      "order": 10,
+      "title": "记忆条件化回答",
+      "sourceText": "After construction, the final workspace M* is used as a compact guide for future answering. Given a query q, SelfMem retrieves relevant transcript turns or snippets Eq and provides them together with the memory workspace to the answer model: Eq = Retrieve(q, M*, H), y = LLM(q, M*, Eq). [...] It may keep durable information such as user preferences, recurring entities, and project context, while leaving exact or frequently changing details, such as dates, counts, prices, and updated decisions, to be retrieved from relevant transcript turns when needed.",
+      "zhTranslation": "构建完成后，最终工作区 M* 被用作未来回答的紧凑指南。给定查询 q，SelfMem 检索相关 transcript 轮次或片段 Eq，并将它们与 memory workspace 一起提供给回答模型：Eq = Retrieve(q, M*, H)，y = LLM(q, M*, Eq)。它可以保留用户偏好、反复出现的实体和项目上下文等持久信息，同时把日期、数量、价格和更新后的决定等精确或经常变化的细节留到需要时从相关 transcript 轮次检索。",
+      "zhExplanation": "这是该架构最重要的 evidence boundary：workspace 负责导航和稳定结构，retrieved evidence 负责精确事实。附录 Prompt 3 进一步规定冲突时证据优先，并要求对 latest/changed 值比较时间顺序。",
+      "blocks": [
+        { "type": "paragraph", "text": "After construction, the final workspace M* is used as a compact guide for future answering. Given a query q, SelfMem retrieves relevant transcript turns or snippets Eq and provides them together with the memory workspace to the answer model. It may keep durable information while leaving exact or frequently changing details to be retrieved from relevant transcript turns when needed." },
+        { "type": "math", "label": "Retrieve supporting transcript evidence", "latex": "E_q=\\operatorname{Retrieve}(q,M^{*},H)" },
+        { "type": "math", "label": "Generate with workspace and evidence", "latex": "y=\\operatorname{LLM}(q,M^{*},E_q)" }
+      ],
+      "figureRefs": [],
+      "keywords": ["memory-conditioned answering", "retrieved evidence", "exact facts", "latest values"],
+      "groupId": "group-loop",
+      "premise": "紧凑 workspace 可能压缩或遗漏精确事实。",
+      "claim": "回答模型联合 workspace 与按问题检索的 transcript evidence。",
+      "evidence": ["workspace 只作 compact guide", "Eq 来自 transcript turns", "变化细节在回答时核对"]
+    },
+    {
+      "id": "ch-011",
+      "sectionId": "sec-experiments",
+      "order": 11,
+      "title": "BEAM 评估协议",
+      "sourceText": "We evaluate on the original BEAM benchmark (Tavakoli et al., 2025), which provides long conversation histories at 100K, 500K, and 1M token scales, together with 100 conversations and 2,000 probing questions that test memory over extended interactions, covering information extraction, temporal reasoning, multi-session reasoning, and event ordering. Questions are asked sequentially, with previous model-generated question-answer turns appended to later prompts. This simulates a multi-turn probing session, enables prompt-cache reuse, and is applied consistently to all compared methods.",
+      "zhTranslation": "我们在原始 BEAM benchmark 上评估。该 benchmark 提供 100K、500K 和 1M token 规模的长对话历史，共 100 段对话和 2,000 个 probing questions，用于测试长期交互中的记忆，涵盖信息抽取、时间推理、多会话推理和事件排序。问题按顺序提出，先前由模型生成的问答轮次会追加到后续 prompt。这模拟了多轮 probing session，支持 prompt cache 复用，并一致应用于所有比较方法。",
+      "zhExplanation": "顺序提问会让后续问题看到先前模型输出，因此协议衡量的不只是独立单题检索，也包含会话累积与缓存行为。统一应用能支持同一 harness 内比较，但仍不能替代跨 benchmark 复现。",
+      "blocks": [
+        { "type": "paragraph", "text": "We evaluate on the original BEAM benchmark, which provides long conversation histories at 100K, 500K, and 1M token scales, together with 100 conversations and 2,000 probing questions that test memory over extended interactions, covering information extraction, temporal reasoning, multi-session reasoning, and event ordering. Questions are asked sequentially, with previous model-generated question-answer turns appended to later prompts. This simulates a multi-turn probing session, enables prompt-cache reuse, and is applied consistently to all compared methods." }
+      ],
+      "figureRefs": [],
+      "keywords": ["BEAM", "100K", "500K", "1M", "sequential questions"],
+      "groupId": "group-evaluation",
+      "premise": "顺序 probing 与独立问答具有不同的上下文条件。",
+      "claim": "BEAM 在三个历史规模上用统一的顺序提问协议评估长期记忆。",
+      "evidence": ["100 conversations", "2,000 probing questions", "先前 Q/A 追加到后续 prompt"]
+    },
+    {
+      "id": "ch-012",
+      "sectionId": "sec-experiments",
+      "order": 12,
+      "title": "baseline 与模型配置",
+      "sourceText": "Following the methods reviewed in Section 2, we compare SelfMem with representative memory and context-management baselines. These include RAG, which chunks, embeds, and retrieves conversation history (Lewis et al., 2020); full context, which directly places the raw conversation in the prompt when feasible; and compression, which compacts history when it approaches the context limit. We also include LoCoMo, MemoryBank, ReadAgent, MemGPT, A-Mem, and Mem0, covering persistent conversational memory, agentic reading, hierarchical memory, linked note-style memory, and production-oriented memory extraction (Maharana et al., 2024; Zhong et al., 2024; Lee et al., 2024; Packer et al., 2023; Xu et al., 2026; Chhikara et al., 2025). All baselines use the same conversations, questions, answer model, and official judge; they differ only in how the conversation history is transformed into the context given to the answer model. Appendix A provides implementation details. Model and decoding configuration. All LLM-generation calls in memory construction, and answer generation use GPT-5.4-nano, and for BEAM score we use GPT-5.4-mini as the judge model. We use deterministic decoding with temperature 0 for answer generation and LLM-based judging.",
+      "zhTranslation": "按照第 2 节回顾的方法，我们将 SelfMem 与有代表性的记忆和上下文管理 baselines 比较。其中包括：对对话历史进行切块、embedding 和检索的 RAG（Lewis et al., 2020）；在可行时直接把原始对话放入 prompt 的 full context；以及在历史接近上下文上限时进行压缩的 compression。我们还纳入 LoCoMo、MemoryBank、ReadAgent、MemGPT、A-Mem 和 Mem0，覆盖持久对话记忆、agentic reading、层级记忆、linked note-style memory 和 production-oriented memory extraction。所有 baseline 使用相同的对话、问题、answer model 和官方 judge；它们只在如何把对话历史转换为回答模型上下文方面不同。附录 A 提供实现细节。模型与解码配置方面，记忆构建和回答生成的所有 LLM 调用使用 GPT-5.4-nano，BEAM score 使用 GPT-5.4-mini 作为 judge；回答与 LLM judging 均采用 temperature 0 的确定性解码。",
+      "zhExplanation": "共享模型和 judge 降低了比较中的配置混杂，但 baseline 是作者在同一 harness 中的实现，不等于每个系统的最佳生产版本。Appendix A 提供实现细节，尤其应注意 RAG 的 top-k=5、Mem0 的 ingestion 开销和 full-context 在大规模下不支持。",
+      "blocks": [
+        { "type": "paragraph", "text": "We compare SelfMem with representative memory and context-management baselines. These include RAG, full context, compression, LoCoMo, MemoryBank, ReadAgent, MemGPT, A-Mem, and Mem0. All baselines use the same conversations, questions, answer model, and official judge; they differ only in how the conversation history is transformed into the context given to the answer model. All LLM-generation calls in memory construction, and answer generation use GPT-5.4-nano, and for BEAM score we use GPT-5.4-mini as the judge model. We use deterministic decoding with temperature 0 for answer generation and LLM-based judging." }
+      ],
+      "figureRefs": [],
+      "keywords": ["baselines", "shared harness", "GPT-5.4-nano", "GPT-5.4-mini"],
+      "groupId": "group-evaluation",
+      "premise": "公平 harness 不代表覆盖每个系统的最优工程实现。",
+      "claim": "比较固定 answer/judge 配置，只改变历史到回答上下文的转换方式。",
+      "evidence": ["相同 conversations 和 questions", "相同 answer model 和 judge", "temperature 0"]
+    },
+    {
+      "id": "ch-013",
+      "sectionId": "sec-experiments",
+      "order": 13,
+      "title": "指标与成本口径",
+      "sourceText": "Following the BEAM evaluation protocol, Score is the mean official question score across all evaluated probing questions: nugget-based questions use the official LLM judge score, while event-ordering questions use normalized Kendall correlation, τnorm = (τb + 1)/2. Pass0.5 is a thresholded pass rate: the percentage of questions whose official score is at least 0.5. Cost is token-computed API cost, calculated from recorded request-level token usage and the model pricing table. Cache hit is the ratio of cached input tokens to total input tokens. LLM Req. and Embed Req. count LLM and embedding requests, respectively.",
+      "zhTranslation": "按照 BEAM 评估协议，Score 是所有已评估 probing questions 的官方单题分数均值：基于 nugget 的问题使用官方 LLM judge 分数，事件排序问题使用归一化 Kendall 相关，τnorm = (τb + 1)/2。Pass0.5 是阈值化通过率，即官方分数至少为 0.5 的问题比例。Cost 是按 token 计算的 API 成本，由记录的 request-level token 使用量和模型价格表得到。Cache hit 是缓存输入 token 与总输入 token 的比例。LLM Req. 和 Embed Req. 分别统计 LLM 与 embedding 请求数。",
+      "zhExplanation": "Score 混合了 LLM judge 与确定性排序指标，Pass0.5 又对连续分数做阈值化；两者回答的问题不同。成本是按当时模型定价和请求日志计算的实验口径，不应视为跨供应商或未来价格下的固定结论。",
+      "blocks": [
+        { "type": "paragraph", "text": "Following the BEAM evaluation protocol, Score is the mean official question score across all evaluated probing questions: nugget-based questions use the official LLM judge score, while event-ordering questions use normalized Kendall correlation. Pass0.5 is a thresholded pass rate. Cost is token-computed API cost. Cache hit is the ratio of cached input tokens to total input tokens. LLM Req. and Embed Req. count LLM and embedding requests, respectively." },
+        { "type": "math", "label": "Normalized event-ordering score", "latex": "\\tau_{\\mathrm{norm}}=\\frac{\\tau_b+1}{2}" },
+        {
+          "type": "table",
+          "caption": "Paper metric definitions, structured for the reader.",
+          "columns": ["Metric", "Definition", "Boundary"],
+          "rows": [
+            ["Score", "Mean official question score", "LLM judge for nuggets; normalized Kendall for ordering"],
+            ["Pass0.5", "Percent of questions with score >= 0.5", "Threshold hides within-bin differences"],
+            ["Cost", "Token-computed API cost", "Depends on recorded usage and pricing table"],
+            ["Cache hit", "Cached input tokens / total input tokens", "Efficiency diagnostic, not answer quality"],
+            ["LLM Req.", "Number of LLM requests", "Operational count"],
+            ["Embed Req.", "Number of embedding requests", "Operational count"]
+          ]
+        }
+      ],
+      "figureRefs": [],
+      "keywords": ["Score", "Pass0.5", "Kendall correlation", "cost", "cache hit"],
+      "groupId": "group-evaluation",
+      "premise": "质量分数、阈值通过率和运行成本不可相互替代。",
+      "claim": "BEAM 同时报告混合质量指标、阈值通过率及请求级效率口径。",
+      "evidence": ["Score 为官方单题均值", "Pass0.5 使用 0.5 阈值", "成本来自 token usage 与价格表"]
+    },
+    {
+      "id": "ch-014",
+      "sectionId": "sec-results",
+      "order": 14,
+      "title": "三个规模上的主结果",
+      "sourceText": "Table 1 reports the main BEAM results across 100K, 500K, and 1M token scales. SelfMem achieves the best Score and Pass0.5 at all scales, indicating that its advantage is not limited to a particular context length. [...] The strongest baseline is consistently RAG, which shows that simple retrieval remains a competitive strategy for long conversations. [...] This leads to large and stable gains over the best non-SelfMem baseline, with Score improvements of 0.165, 0.141, and 0.134 at 100K, 500K, and 1M, respectively. The persistence of these gains at 1M tokens shows that SelfMem scales more robustly than manually designed memory pipelines.",
+      "zhTranslation": "Table 1 报告了 100K、500K 和 1M token 规模上的主要 BEAM 结果。SelfMem 在所有规模上取得最佳 Score 和 Pass0.5。最强 baseline 始终是 RAG。相对最佳非 SelfMem baseline，SelfMem 在 100K、500K 和 1M 上的 Score 分别提高 0.165、0.141 和 0.134。作者据此认为，这些增益在 1M token 仍持续，表明 SelfMem 比人工设计的记忆 pipeline 扩展得更稳健。",
+      "zhExplanation": "这是作者在统一 BEAM harness 下的核心经验结果。相对提升约为 48.7%、40.8%、41.9%，但绝对差值更容易核对。由于只覆盖一个 benchmark、一组模型配置和作者实现的 baselines，结果不能直接推出跨模型家族或生产部署的普遍领先。",
+      "blocks": [
+        { "type": "paragraph", "text": "Table 1 reports the main BEAM results across 100K, 500K, and 1M token scales. SelfMem achieves the best Score and Pass0.5 at all scales. The strongest baseline is consistently RAG. This leads to large and stable gains over the best non-SelfMem baseline, with Score improvements of 0.165, 0.141, and 0.134 at 100K, 500K, and 1M, respectively." },
+        {
+          "type": "table",
+          "caption": "Paper Table 1 main BEAM results (all reported methods and scales).",
+          "columns": ["Scale", "Method", "Pass0.5", "Score", "Cost", "Cache", "LLM Req.", "Embed Req."],
+          "rows": [
+            ["100K", "RAG", "42.00", "0.339", "$0.551", "1.7%", "1,548", "5,656"],
+            ["100K", "Full context", "25.80", "0.205", "$2.427", "87.7%", "1,559", "0"],
+            ["100K", "Compression", "22.50", "0.170", "$2.830", "85.0%", "1,726", "0"],
+            ["100K", "LoCoMo", "36.50", "0.306", "$2.904", "1.1%", "1,587", "580"],
+            ["100K", "ReadAgent", "37.00", "0.314", "$2.940", "1.0%", "1,600", "490"],
+            ["100K", "MemoryBank", "34.50", "0.284", "$0.609", "2.1%", "1,602", "6,212"],
+            ["100K", "MemGPT", "36.20", "0.291", "$6.434", "1.0%", "1,582", "450"],
+            ["100K", "A-Mem", "35.20", "0.302", "$3.116", "0.7%", "1,606", "580"],
+            ["100K", "Mem0", "35.80", "0.282", "$1.697", "34.1%", "2,160", "2,912"],
+            ["100K", "SelfMem", "59.00", "0.504", "$0.984", "36.2%", "1,932", "0"],
+            ["500K", "RAG", "42.10", "0.346", "$1.258", "0.6%", "2,821", "37,011"],
+            ["500K", "Full context", "-", "-", "-", "-", "-", "-"],
+            ["500K", "Compression", "25.30", "0.195", "$8.144", "71.4%", "4,066", "0"],
+            ["500K", "LoCoMo", "36.90", "0.302", "$8.156", "0.6%", "2,812", "1,400"],
+            ["500K", "ReadAgent", "35.90", "0.286", "$7.926", "0.8%", "2,799", "1,050"],
+            ["500K", "MemoryBank", "33.90", "0.276", "$1.335", "0.5%", "2,799", "39,897"],
+            ["500K", "MemGPT", "30.70", "0.249", "$11.917", "1.2%", "2,799", "980"],
+            ["500K", "A-Mem", "34.90", "0.281", "$6.500", "0.6%", "2,812", "1,400"],
+            ["500K", "Mem0", "36.40", "0.303", "$9.366", "36.4%", "6,846", "13,898"],
+            ["500K", "SelfMem", "57.00", "0.487", "$1.828", "33.8%", "3,559", "0"],
+            ["1M", "RAG", "38.30", "0.320", "$1.843", "0.4%", "3,468", "74,153"],
+            ["1M", "Full context", "-", "-", "-", "-", "-", "-"],
+            ["1M", "Compression", "25.70", "0.210", "$15.033", "57.3%", "6,376", "0"],
+            ["1M", "LoCoMo", "29.30", "0.261", "$12.275", "0.9%", "3,662", "1,421"],
+            ["1M", "ReadAgent", "30.70", "0.268", "$12.232", "0.6%", "3,618", "1,061"],
+            ["1M", "MemoryBank", "31.40", "0.266", "$1.934", "0.4%", "3,499", "76,903"],
+            ["1M", "MemGPT", "25.70", "0.221", "$12.264", "0.8%", "3,609", "989"],
+            ["1M", "A-Mem", "31.10", "0.265", "$8.480", "0.7%", "3,588", "1,421"],
+            ["1M", "Mem0", "34.90", "0.292", "$18.830", "35.9%", "11,356", "25,779"],
+            ["1M", "SelfMem", "52.57", "0.454", "$2.004", "31.1%", "4,040", "0"]
+          ]
+        }
+      ],
+      "figureRefs": [{ "id": "fig-002", "relation": "supporting" }],
+      "keywords": ["Table 1", "BEAM results", "Score improvement", "RAG", "SelfMem"],
+      "groupId": "group-evaluation",
+      "premise": "主结果应按同一 harness 与绝对分数差解释。",
+      "claim": "SelfMem 在三个 BEAM 规模上均取得最高 Score 与 Pass0.5。",
+      "evidence": ["Score 为 0.504/0.487/0.454", "领先 RAG 0.165/0.141/0.134", "Pass0.5 为 59.00/57.00/52.57"]
+    },
+    {
+      "id": "ch-015",
+      "sectionId": "sec-results",
+      "order": 15,
+      "title": "成本和请求数量",
+      "sourceText": "Table 1 also shows that higher accuracy is not simply the result of using heavier memory infrastructure. [...] For example, at 1M tokens, Mem0 costs $18.830 and uses 25,779 embedding requests, but reaches only 0.292 Score; MemGPT and A-Mem also incur much higher costs than SelfMem while achieving lower accuracy. In contrast, SelfMem obtains the best 1M Score of 0.454 with a cost of only $2.004 and zero embedding requests. Although RAG remains the cheapest method, its lower scores across all scales indicate that inexpensive retrieval alone is insufficient for robust long-horizon memory.",
+      "zhTranslation": "Table 1 还表明，更高准确率并不只是使用更重记忆基础设施的结果。在 1M token 下，Mem0 成本为 18.830 美元，使用 25,779 次 embedding 请求，但 Score 仅为 0.292；MemGPT 和 A-Mem 的成本也显著高于 SelfMem，而准确率更低。相比之下，SelfMem 以 2.004 美元成本和零 embedding 请求取得最佳 1M Score 0.454。尽管 RAG 仍是最便宜的方法，但它在所有规模上的分数更低，说明廉价检索本身不足以提供稳健的长时程记忆。",
+      "zhExplanation": "零 embedding 请求不是零检索：SelfMem 仍会使用 transcript 查询和模型工具调用。成本优势也依赖论文的模型价格表、缓存命中和实现方式；它支持当前 harness 的 quality-cost 比较，不应固化为未来部署预算。",
+      "blocks": [
+        { "type": "paragraph", "text": "Table 1 also shows that higher accuracy is not simply the result of using heavier memory infrastructure. At 1M tokens, Mem0 costs $18.830 and uses 25,779 embedding requests, but reaches only 0.292 Score; MemGPT and A-Mem also incur much higher costs than SelfMem while achieving lower accuracy. In contrast, SelfMem obtains the best 1M Score of 0.454 with a cost of only $2.004 and zero embedding requests. Although RAG remains the cheapest method, its lower scores across all scales indicate that inexpensive retrieval alone is insufficient for robust long-horizon memory." }
+      ],
+      "figureRefs": [],
+      "keywords": ["cost", "LLM requests", "embedding requests", "cache", "quality-cost"],
+      "groupId": "group-evaluation",
+      "premise": "请求类型和总成本必须与回答质量一起读取。",
+      "claim": "SelfMem 在该配置下以较轻请求开销取得优于重型 baseline 的质量。",
+      "evidence": ["1M 成本 $2.004", "1M 为零 embedding 请求", "Mem0 1M 成本 $18.830"]
+    },
+    {
+      "id": "ch-016",
+      "sectionId": "sec-results",
+      "order": 16,
+      "title": "不同问题类型的表现",
+      "sourceText": "Figure 3 provides a finer-grained breakdown by BEAM question type. SelfMem performs well across diverse memory demands rather than improving only one favorable category. It achieves the best score on most question types at every scale, including 9/10 types at 100K, 8/10 at 500K, and 7/10 at 1M. The strongest gains appear in information extraction, knowledge update, multi-session reasoning, preference following, summarization, and temporal reasoning, where answers require selecting and organizing sparse information from long conversation histories.",
+      "zhTranslation": "Figure 3 按 BEAM 问题类型给出更细粒度的分解。SelfMem 在多样的记忆需求上表现良好，而不是只改善一个有利类别。它在每个规模的大多数题型上取得最佳分数：100K 为 9/10 类，500K 为 8/10 类，1M 为 7/10 类。最强增益出现在信息抽取、知识更新、多会话推理、偏好遵循、摘要和时间推理上；这些任务需要从长对话历史中选择并组织稀疏信息。",
+      "zhExplanation": "题型图支持“增益不只来自单一类别”，但随着规模增大，最佳类别数从 9 降到 7，且 abstraction、event ordering 等并非全面领先。更稳妥的判断是广泛但不均匀的 robustness，而不是所有记忆能力都同等改善。",
+      "blocks": [
+        { "type": "paragraph", "text": "Figure 3 provides a finer-grained breakdown by BEAM question type. SelfMem performs well across diverse memory demands rather than improving only one favorable category. It achieves the best score on most question types at every scale, including 9/10 types at 100K, 8/10 at 500K, and 7/10 at 1M. The strongest gains appear in information extraction, knowledge update, multi-session reasoning, preference following, summarization, and temporal reasoning." }
+      ],
+      "figureRefs": [{ "id": "fig-003", "relation": "supporting" }],
+      "keywords": ["question types", "robustness", "knowledge update", "multi-session reasoning", "Figure 3"],
+      "groupId": "group-evaluation",
+      "premise": "总体均值可能掩盖不同记忆需求上的差异。",
+      "claim": "SelfMem 的优势覆盖多数 BEAM 题型，但并非每类、每规模都领先。",
+      "evidence": ["100K 最佳 9/10 类", "500K 最佳 8/10 类", "1M 最佳 7/10 类"]
+    },
+    {
+      "id": "ch-017",
+      "sectionId": "sec-optimization",
+      "order": 17,
+      "title": "策略搜索的隔离规则",
+      "sourceText": "Candidate strategies are generated from the training split conversation 0-8 and evaluated on a separate held-out test split conversation 9-19 in BEAM (Tavakoli et al., 2025) dataset. Held-out test scores are used only for final analysis and are never provided to the agent during strategy generation. [...] The strategy optimizer used only training-side summaries: aggregate official scores, Pass0.5 counts, token-computed costs, LLM/tool request counts, cache statistics, and memory-operation diagnostics. It did not receive held-out questions, held-out answers, rubrics, failed nuggets, source identifiers, or per-question pass/fail labels.",
+      "zhTranslation": "候选策略从训练划分 conversation 0-8 生成，并在 BEAM 数据集独立的 held-out test 划分 conversation 9-19 上评估。held-out test 分数只用于最终分析，在策略生成期间从不提供给智能体。策略优化器只使用训练侧摘要：聚合官方分数、Pass0.5 计数、按 token 计算的成本、LLM/工具请求数、缓存统计和记忆操作诊断。它不会接收 held-out 问题、held-out 答案、rubric、失败 nuggets、source identifiers 或逐题 pass/fail 标签。",
+      "zhExplanation": "这套隔离减少了直接答案泄漏和逐题过拟合，但候选策略仍是在同一 benchmark 的训练 conversations 上选择，因此它不是跨 benchmark 泛化实验。附录还规定候选策略在每次 run 中固定，优化器只能看到聚合结果。",
+      "blocks": [
+        { "type": "paragraph", "text": "Candidate strategies are generated from the training split conversation 0-8 and evaluated on a separate held-out test split conversation 9-19 in BEAM dataset. Held-out test scores are used only for final analysis and are never provided to the agent during strategy generation. The strategy optimizer used only training-side summaries: aggregate official scores, Pass0.5 counts, token-computed costs, LLM/tool request counts, cache statistics, and memory-operation diagnostics. It did not receive held-out questions, held-out answers, rubrics, failed nuggets, source identifiers, or per-question pass/fail labels." }
+      ],
+      "figureRefs": [],
+      "keywords": ["strategy search", "held-out", "leakage guardrail", "aggregate feedback", "conversation split"],
+      "groupId": "group-optimization",
+      "premise": "held-out 隔离必须覆盖问题、答案、rubric 和逐题标签。",
+      "claim": "策略只用 conversation 0-8 的聚合反馈生成，conversation 9-19 仅作最终评估。",
+      "evidence": ["训练与 held-out conversation 分离", "只返回 aggregate outcomes", "禁止逐题监督与 source identifiers"]
+    },
+    {
+      "id": "ch-018",
+      "sectionId": "sec-optimization",
+      "order": 18,
+      "title": "迭代次数不是越多越好",
+      "sourceText": "Starting from the default no-refinement strategy, which achieves a held-out score of 0.472, the final agent-synthesized strategy improves to 0.497, and the best strategy discovered during refinement reaches 0.510. The strongest result appears at an intermediate refinement stage and with an intermediate amount of training feedback, rather than at the largest iteration or largest training set. This suggests that the gain does not come from simply running more refinement rounds or adding more examples. Instead, SelfMem benefits when the agent discovers a more robust procedural strategy for deciding what to store, revise, compress, and retrieve.",
+      "zhTranslation": "默认的无 refinement 策略在 held-out 上得到 0.472；最终由智能体综合出的策略提高到 0.497；refinement 中发现的最佳策略达到 0.510。最强结果出现在中间 refinement 阶段和中等训练反馈量，而不是最大迭代次数或最大训练集。这表明增益并非简单来自运行更多 refinement rounds 或增加更多样例；SelfMem 的收益来自智能体发现更稳健的程序性策略，以决定存储、修订、压缩和检索什么。",
+      "zhExplanation": "Figure 4 同时显示 average、range 与 best，不能只挑 0.510 峰值而忽略非单调性。作者限制明确说明 refinement 当前只在 100K 规模进行，因此这是策略搜索可行性的初步证据，不是所有历史规模的稳定学习曲线。",
+      "blocks": [
+        { "type": "paragraph", "text": "Starting from the default no-refinement strategy, which achieves a held-out score of 0.472, the final agent-synthesized strategy improves to 0.497, and the best strategy discovered during refinement reaches 0.510. The strongest result appears at an intermediate refinement stage and with an intermediate amount of training feedback, rather than at the largest iteration or largest training set. This suggests that the gain does not come from simply running more refinement rounds or adding more examples." }
+      ],
+      "figureRefs": [{ "id": "fig-004", "relation": "supporting" }],
+      "keywords": ["optimizer iteration", "training set size", "held-out score", "Figure 4", "non-monotonic"],
+      "groupId": "group-optimization",
+      "premise": "峰值、最终策略和平均趋势是三种不同统计量。",
+      "claim": "最佳 held-out 分数出现在中间搜索阶段，而非最大迭代或最大训练集。",
+      "evidence": ["默认 0.472", "最终策略 0.497", "最佳观察值 0.510"]
+    },
+    {
+      "id": "ch-019",
+      "sectionId": "sec-implementation",
+      "order": 19,
+      "title": "最终紧凑记忆策略",
+      "sourceText": "The selected strategy is procedural rather than factual: it changes how the model writes and maintains memory, not what facts it should answer with. The optimizer converged toward a compact-memory policy. The main observation was that larger or more verbose memory was not reliably better; duplicated preference blocks, long project-style summaries, and transient implementation details often consumed context without improving transfer. The selected policy therefore emphasizes precision, stability, and low churn: 1. store only stable, high-signal user constraints, preferences, and reusable procedures; 2. reject domain-specific facts, names, quantities, and scenario-local details; 3. keep one compact canonical memory object whenever possible; 4. use short procedure signatures to identify duplicate or near-duplicate memories; 5. prefer replacement and merging over appending; 6. keep at most one or two retained memory items unless there are clearly distinct reusable categories; 7. treat cost as a secondary efficiency signal, never as a reason to drop necessary evidence.",
+      "zhTranslation": "被选中的策略是程序性的而不是事实性的：它改变模型写入和维护记忆的方式，而不是规定应回答哪些事实。优化器收敛到紧凑记忆 policy。主要观察是，更大或更冗长的记忆并不可靠地更好；重复的偏好块、长篇项目式摘要和短暂实现细节经常消耗上下文，却不能改善迁移。该策略因此强调精确、稳定和低 churn：1. 只存稳定、高信号的用户约束、偏好和可复用程序；2. 拒绝领域特定事实、姓名、数量和场景局部细节；3. 尽可能只保留一个紧凑 canonical memory object；4. 用短 procedure signatures 识别重复或近重复记忆；5. 优先替换和合并而不是追加；6. 除非存在明显不同的可复用类别，否则最多保留一到两个 memory items；7. 把成本作为次级效率信号，绝不因降低成本而丢弃必要证据。",
+      "zhExplanation": "这一最终策略比“记住更多”更接近 selective consolidation：稳定程序进入 workspace，易变事实留给 transcript retrieval。不过这只是 BEAM 100K 搜索所得工程 policy，不应类比为已验证的生物巩固或遗忘机制。",
+      "blocks": [
+        { "type": "paragraph", "text": "The selected strategy is procedural rather than factual: it changes how the model writes and maintains memory, not what facts it should answer with. The optimizer converged toward a compact-memory policy. The selected policy emphasizes precision, stability, and low churn: store stable constraints and reusable procedures; reject scenario-local facts; keep a compact canonical memory object; identify duplicates; prefer replacement and merging; retain one or two items unless categories differ; and treat cost only as a secondary efficiency signal." }
+      ],
+      "figureRefs": [],
+      "keywords": ["compact memory", "selected strategy", "write gate", "merge", "low churn"],
+      "groupId": "group-implementation-limits",
+      "premise": "优化后的 policy 应规定写法，而不是携带 benchmark 事实。",
+      "claim": "最终策略偏好稳定程序、严格写入门槛和合并替换，而非记忆堆积。",
+      "evidence": ["程序性而非事实性", "最多保留一到两个 items", "成本只作次级信号"]
+    },
+    {
+      "id": "ch-020",
+      "sectionId": "sec-implementation",
+      "order": 20,
+      "title": "构建与回答 Prompt",
+      "sourceText": "This appendix provides the prompt-level specification of SelfMem. Run-specific values, long JSON payloads, and conversation-specific fields are replaced with placeholders in braces, and line breaks are lightly normalized for readability. We include these prompts because SelfMem optimizes memory behavior through prompt-mediated strategy revision rather than through parameter updates. Table 3 gives the core memory-construction instruction, and Table 4 gives the SQLite transcript-mode addendum used when the source conversation is exposed as a read-only chronological table. Table 5 reports the fixed-evidence answering prompt.",
+      "zhTranslation": "本附录提供 SelfMem 的 prompt-level 规范。运行特定值、长 JSON payload 和 conversation-specific 字段用花括号中的 placeholder 替换，换行也为可读性做了轻度规范化。作者纳入这些 prompts，是因为 SelfMem 通过 prompt-mediated strategy revision 而不是参数更新来优化记忆行为。Table 3 给出核心 memory-construction instruction，Table 4 给出 SQLite transcript-mode addendum，Table 5 给出 fixed-evidence answering prompt。",
+      "zhExplanation": "这些 prompt 是实现契约的一部分，也揭示了论文所称“自主优化”的先验：source grounding、latest-aware 检查、可审计 turn ranges 和 evidence-over-memory 都是人工写入的硬约束。代码块保留论文附录文本，不是本项目重写。",
+      "blocks": [
+        { "type": "paragraph", "text": "This appendix provides the prompt-level specification of SelfMem. We include these prompts because SelfMem optimizes memory behavior through prompt-mediated strategy revision rather than through parameter updates." },
+        {
+          "type": "code",
+          "language": "text",
+          "caption": "Paper Prompt 1: Memory-construction instruction.",
+          "code": "Maintain a model-managed memory workspace for a long-running daily chat. Available tools include memory_read, rag_search, meta_log_read, memory_change, memory_review, and model-created declarative memory tools. Goal: keep memory useful, accurate, source-backed, and cheap for future conversation. Use tools when useful. Always check latest or contradictory exact facts before relying on or saving dates, counts, versions, deadlines, current status, changed values, or user preferences. Prefer atomic exact facts with source turn references when the chat contains dates, counts, versions, deadlines, changed/latest values, or user preferences. Keep broad project profiles separate from exact fact memory. Do not invent facts that are not supported by the chat or tool results."
+        },
+        {
+          "type": "code",
+          "language": "text",
+          "caption": "Paper Prompt 2: SQLite transcript-mode addendum.",
+          "code": "The transcript is materialized as one chronological SQLite turns table. Use conversation_manifest and read-only conversation_sql_query to decide how to inspect it. The harness does not split the transcript into pages and does not secretly scan the transcript to build missing-fact lists. Keep memory changes auditable by citing inspected turn ranges. Do not claim coverage for rows you have not actually inspected."
+        },
+        {
+          "type": "code",
+          "language": "text",
+          "caption": "Paper Prompt 3: Answering with fixed evidence.",
+          "code": "Answer the benchmark question using the memory workspace and retrieved evidence. The memory workspace is a hint/index; retrieved evidence is the authority. Prefer retrieved evidence when it conflicts with memory, and use latest exact values from retrieved evidence for dates, counts, versions, deadlines, and changed facts. For exact-fact questions, compare older and later values in the retrieved evidence; do not stop at the first matching number/date/version. For current/latest/how many/average wording, look for the last matching mention by turn order and prefer the latest confirmed value over older or planned values. Pay attention to wording: if the user asks for first/original values, answer the original value and mention later updates only if useful. If the answer is not supported, say that the available memory/evidence is insufficient. Be concise but include exact dates, versions, names, and constraints when relevant. Inputs: Memory workspace: {JSON memory view}; Previous Q/A in this evaluation session: {last five Q/A pairs}; Retrieved evidence: {top retrieved chunks}; Question: {question}."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": ["Prompt 1", "Prompt 2", "Prompt 3", "source grounding", "fixed evidence"],
+      "groupId": "group-implementation-limits",
+      "premise": "prompt 约束构成 SelfMem 行为边界的一部分。",
+      "claim": "构建 prompt 强制来源审计，回答 prompt 明确 evidence 高于 workspace。",
+      "evidence": ["变化事实必须复核", "引用 inspected turn ranges", "证据不足时明确拒答"]
+    },
+    {
+      "id": "ch-021",
+      "sectionId": "sec-implementation",
+      "order": 21,
+      "title": "repair、refinement 与工具表",
+      "sourceText": "Tables 6 and 7 present the local and global strategy-optimization prompts, respectively. Finally, Table 8 summarizes the internal action space available during strategy construction and memory maintenance. [...] The tools allow the model to inspect memory state, retrieve raw-chat evidence, read aggregate diagnostics, mutate memory, define reusable memory procedures, run synthetic self-tests, and record strategy-level optimizations. They do not expose held-out questions, answers, rubrics, failed nuggets, or per-question labels.",
+      "zhTranslation": "Table 6 和 Table 7 分别给出局部与全局 strategy-optimization prompts。最后，Table 8 汇总策略构建和记忆维护期间可用的内部动作空间。这些工具允许模型检查记忆状态、检索 raw-chat evidence、读取聚合诊断、修改记忆、定义可复用记忆程序、运行合成 self-tests，并记录 strategy-level optimizations。它们不暴露 held-out 问题、答案、rubric、失败 nuggets 或逐题标签。",
+      "zhExplanation": "local repair 会在同一训练 conversation 上从头重跑，global refinement 则把多个训练侧聚合结果转成可迁移过程。两者都禁止固定工具序列、硬编码查询和 benchmark answer keys。Table 8 的 model-created tools 扩展的是声明式过程，不是任意代码执行。",
+      "blocks": [
+        { "type": "paragraph", "text": "Tables 6 and 7 present the local and global strategy-optimization prompts, respectively. Finally, Table 8 summarizes the internal action space available during strategy construction and memory maintenance. The tools do not expose held-out questions, answers, rubrics, failed nuggets, or per-question labels." },
+        {
+          "type": "code",
+          "language": "text",
+          "caption": "Paper Prompt 4: Local repair (runtime payloads retained as placeholders).",
+          "code": "Repair the memory and retrieval strategy for training conversation {conversation}, attempt {attempt}. Target train accuracy: {target}%. The next run will rerun the same training conversation from scratch with your repaired strategy. Learn only from the final official score below; no per-question labels or rubric items are provided. Leakage guardrail: do not request, infer, or mention held-out conversation {heldout}, its questions, answers, rubrics, or hidden evaluation signals. Training references may guide strategy repair only; do not store them as future held-out facts. Previous strategy: {previous strategy}. Training score feedback: {aggregate official score JSON}. Observed memory/tool artifact from the scored attempt: {artifact summary JSON}. Write a concise repaired strategy for the next rerun. Improve the general memory and retrieval process based on the score and artifact summary only. Official score/accuracy is the primary objective; money_cost_usd and token counts are secondary efficiency signals and tie-breakers. Do not learn a blanket no-retrieval policy just to reduce cost: learn when evidence is needed and prefer targeted RAG/SQL/semantic search over broad dumps. You may reason about when the model should use memory, RAG, SQL, semantic search, or no retrieval, but do not prescribe a fixed tool sequence or hard-code database queries. Keep under 4,000 characters. Return only the repaired strategy note."
+        },
+        {
+          "type": "code",
+          "language": "text",
+          "caption": "Paper Prompt 5: Global refinement (runtime payloads retained as placeholders).",
+          "code": "Refine SelfMem’s general memory and retrieval strategy from TRAIN score feedback only. Iteration just evaluated: {iteration}. Train conversations: {train conversations}. Held-out conversation: {heldout conversation}. Held-out question count: {heldout question count}. Leakage rules: you may inspect train score summaries and train memory/tool diagnostics below; do not request, infer, or mention held-out questions, held-out answers, rubrics, or hidden evaluation signals; do not copy train answers/references as facts to remember for held-out conversations; convert the final scores into a transferable process for unseen conversations. Previous strategy: {previous strategy}. Train score feedback: {score-only feedback JSON}. Train memory/retrieval/tool diagnostics: {artifact summaries JSON}. Write the next candidate strategy as a concise memory-and-retrieval process note. Hard limit: keep it under 4,500 characters. Improve general memory construction and model-chosen retrieval behavior based on the final scores and artifact summaries only. Official score/accuracy is the primary objective; money_cost_usd and token counts are secondary efficiency signals and tie-breakers. Do not learn a blanket no-retrieval policy just to reduce cost: learn when evidence is needed and prefer targeted RAG/SQL/semantic search over broad dumps. You may reason about when the model should use memory, RAG, SQL, semantic search, or no retrieval, but do not prescribe a fixed tool sequence, hard-code database queries, or include benchmark answer keys."
+        },
+        {
+          "type": "table",
+          "caption": "Paper Table 8: SelfMem internal tools for strategy construction and memory maintenance.",
+          "columns": ["Tool type", "Tool", "Purpose"],
+          "rows": [
+            ["Workspace inspection", "memory_read(target)", "Read current memory before merge, replace, or no-op"],
+            ["Raw-chat retrieval", "rag_search(query, top_k)", "Find source support without evaluation labels"],
+            ["Run diagnostics", "meta_log_read(scope)", "Read aggregate token, cost, latency, cache, and tool counts"],
+            ["Memory mutation", "memory_change(operation, target, content, rationale, metadata)", "Write, merge, replace, compact, index, or delete with audit rationale"],
+            ["Model-created tool definition", "memory_tool_create(...) ", "Define a reusable declarative memory procedure"],
+            ["Model-created tool use", "memory_tool_use(...) ", "Apply a defined procedure and optionally write its result"],
+            ["Self-test creation", "memory_probe_create(...) ", "Create a synthetic non-benchmark coverage probe"],
+            ["Self-test execution", "memory_probe_run(...) ", "Run the probe against workspace and raw-chat retrieval"],
+            ["System optimization record", "memory_system_optimize(...) ", "Record a general strategy improvement or no-op diagnosis"]
+          ]
+        }
+      ],
+      "figureRefs": [],
+      "keywords": ["local repair", "global refinement", "Table 8", "memory tools", "leakage"],
+      "groupId": "group-implementation-limits",
+      "premise": "策略修复必须只从训练侧聚合反馈提炼过程。",
+      "claim": "附录给出受泄漏约束的 repair/refinement prompts 与九类内部工具。",
+      "evidence": ["官方分数为主目标", "禁止 held-out 与 answer keys", "Table 8 覆盖检查、变更、自测和优化"]
+    },
+    {
+      "id": "ch-022",
+      "sectionId": "sec-limitations",
+      "order": 22,
+      "title": "局限与项目迁移",
+      "sourceText": "Our experiments are conducted on BEAM with a fixed answer and judging protocol, so future work should validate the approach on additional long-horizon benchmarks, model families, and deployment settings. The iterative strategy-refinement study is currently performed at the 100K scale; extending the same refinement procedure to 500K and 1M histories would further test its scalability. In addition, our baselines are implemented in a shared harness to ensure fair comparison, but highly specialized production implementations may show different efficiency profiles. These limitations mainly concern evaluation breadth and engineering scope.",
+      "zhTranslation": "我们的实验在 BEAM 上使用固定的回答与 judging protocol 进行，因此未来工作应在更多长时程 benchmark、模型家族和部署环境中验证该方法。迭代 strategy-refinement 研究目前只在 100K 规模进行；把同一 refinement 过程扩展到 500K 和 1M 历史，才能进一步检验其可扩展性。此外，为保证公平比较，作者在共享 harness 中实现 baselines，但高度特化的生产实现可能呈现不同效率曲线。这些局限主要涉及评估广度和工程范围。",
+      "zhExplanation": "证据等级应标为初步：这是 2026 年 7 月的 arXiv v1 预印本，主结果来自单一 BEAM benchmark 与共享模型/harness，策略优化又只覆盖 100K。对本项目可迁移的是“不可变证据源 + 可编辑 memory policy + 审计反馈”的工程假设；不能迁移为跨模型生产结论，也不能等同于神经科学中的突触可塑性、系统巩固或生物遗忘机制。",
+      "blocks": [
+        { "type": "paragraph", "text": "Our experiments are conducted on BEAM with a fixed answer and judging protocol, so future work should validate the approach on additional long-horizon benchmarks, model families, and deployment settings. The iterative strategy-refinement study is currently performed at the 100K scale; extending the same refinement procedure to 500K and 1M histories would further test its scalability. In addition, our baselines are implemented in a shared harness to ensure fair comparison, but highly specialized production implementations may show different efficiency profiles." }
+      ],
+      "figureRefs": [],
+      "keywords": ["limitations", "preprint", "single benchmark", "production generalization", "biological plasticity"],
+      "groupId": "group-implementation-limits",
+      "premise": "单 benchmark 预印本不能建立广泛生产或模型家族泛化。",
+      "claim": "作者把证据边界限定在 BEAM、共享 harness 和 100K refinement 范围内。",
+      "evidence": ["需增加 benchmarks 与 model families", "refinement 仅在 100K", "生产 baseline 可能有不同效率"]
+    }
+  ]
+}

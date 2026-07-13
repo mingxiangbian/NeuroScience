@@ -1,0 +1,121 @@
+{
+  "id": "yang-2026-selfmem",
+  "title": "SelfMem: Self-Optimizing Memory for AI Agents",
+  "shortTitle": "SelfMem",
+  "authors": "Shu Yang, Junchao Wu, Derek F. Wong, and Di Wang",
+  "year": 2026,
+  "category": "AI agent memory and natural-language strategy optimization",
+  "categoryZh": "AI 智能体记忆与自然语言策略优化",
+  "relation": "Tests whether an agent can improve a prompt-mediated memory policy while retaining the raw transcript as evidence.",
+  "relationZh": "这篇论文把可编辑的记忆管理策略作为优化对象，同时保留原始 transcript 作为事实依据，直接对应本项目的智能体长期记忆与证据追踪问题。",
+  "description": "A July 2026 arXiv v1 preprint that exposes memory tools, diagnostics, and feedback so an agent can construct and refine its own memory workspace on BEAM.",
+  "descriptionZh": "这是一篇 2026 年 7 月发布的 arXiv v1 预印本。作者在 BEAM 的统一评估框架中，让智能体通过工具、诊断和反馈构建并迭代记忆工作区，而不是遵循固定的存储或摘要格式。",
+  "readingFocus": [
+    "先区分不可变 transcript、可变 memory workspace 与回答时 evidence retrieval。",
+    "把 self-optimizing 理解为自然语言记忆策略 refinement，而不是模型参数训练。",
+    "阅读 BEAM 结果时同时核对 Score、Pass0.5、成本和共享 harness 的边界。",
+    "重点查看附录 B-C：数据隔离、最终紧凑策略、prompts 与内部工具动作空间。",
+    "不要把单 benchmark、单模型配置和 100K 优化实验外推为生产级普适结论。"
+  ],
+  "source": "https://arxiv.org/abs/2607.03726v1",
+  "sourceMode": "verbatim",
+  "license": "CC BY 4.0",
+  "sourceFile": "../../pdfs/2026-yang-selfmem.pdf",
+  "sections": [
+    { "id": "sec-introduction", "title": "Introduction", "titleZh": "引言" },
+    { "id": "sec-positioning", "title": "Related Work", "titleZh": "相关工作与方法定位" },
+    { "id": "sec-framework", "title": "SelfMem Framework", "titleZh": "SelfMem 框架" },
+    { "id": "sec-memory-loop", "title": "Memory Construction and Answering", "titleZh": "记忆闭环与回答" },
+    { "id": "sec-experiments", "title": "Experiments", "titleZh": "实验协议" },
+    { "id": "sec-results", "title": "Results", "titleZh": "主要结果" },
+    { "id": "sec-optimization", "title": "Optimization and Generalization Analysis", "titleZh": "策略优化与泛化分析" },
+    { "id": "sec-implementation", "title": "Implementation Appendices", "titleZh": "实现附录" },
+    { "id": "sec-limitations", "title": "Limitations", "titleZh": "局限与迁移边界" }
+  ],
+  "readingGroups": [
+    {
+      "id": "group-problem",
+      "title": "固定策略为何不够",
+      "summary": "长上下文并未消除历史利用问题，而预定义存储、检索和摘要策略也难以适配不同任务。"
+    },
+    {
+      "id": "group-positioning",
+      "title": "从记忆系统到自改进策略",
+      "summary": "相关方法提供检索、层级记忆或结构化笔记，SelfMem 则尝试把记忆行为本身暴露为可修改策略。"
+    },
+    {
+      "id": "group-framework",
+      "title": "证据、工作区与反馈",
+      "summary": "不可变 transcript 提供事实锚点，可变 workspace 提供紧凑指南，工具动作与多通道反馈约束智能体的选择。"
+    },
+    {
+      "id": "group-loop",
+      "title": "构建、审查与回答闭环",
+      "summary": "智能体通过 inspect-write-review-revise 改写工作区，回答时仍以按问题检索的 transcript evidence 为权威。"
+    },
+    {
+      "id": "group-evaluation",
+      "title": "BEAM 协议与结果",
+      "summary": "统一 conversations、questions、answer model 和 judge 后，比较不同记忆转换方式的质量、成本与请求开销。"
+    },
+    {
+      "id": "group-optimization",
+      "title": "隔离条件下的策略搜索",
+      "summary": "优化器只接收训练侧聚合分数与诊断，候选策略固定运行，held-out 数据仅用于最终分析。"
+    },
+    {
+      "id": "group-implementation-limits",
+      "title": "实现规范与证据边界",
+      "summary": "附录给出紧凑策略、prompt 和工具表；局限则约束跨 benchmark、模型、规模和生产实现的外推。"
+    }
+  ],
+  "premises": [
+    {
+      "title": "优化对象是策略而非权重",
+      "body": "SelfMem 更新的是可读的自然语言记忆管理策略；论文没有训练或修改底层模型参数。"
+    },
+    {
+      "title": "transcript 与 workspace 不同权",
+      "body": "raw transcript 是不可变事实来源，memory workspace 是可能遗漏、压缩或过时的工作指南。"
+    },
+    {
+      "title": "自主性仍有框架边界",
+      "body": "智能体选择具体记忆结构与动作，但工具集合、反馈渠道、原则和审计约束由人类设计。"
+    },
+    {
+      "title": "反馈不是单一奖励",
+      "body": "质量、成本、检索结果、写入诊断与审查信号共同描述取舍，不能只按最低成本解释策略。"
+    },
+    {
+      "title": "实验优势是条件化结论",
+      "body": "BEAM 统一 harness 的结果支持该配置下的比较，但不建立跨 benchmark、模型家族或生产系统的普遍优势。"
+    }
+  ],
+  "narrativeSpine": [
+    { "groupId": "group-problem", "summary": "先说明固定 memory pipeline 在长历史和任务变化下的结构性限制。" },
+    { "groupId": "group-positioning", "summary": "再定位 SelfMem 与检索、压缩、层级记忆和 self-improving agents 的差异。" },
+    { "groupId": "group-framework", "summary": "随后形式化 transcript、workspace、动作空间和多通道反馈。" },
+    { "groupId": "group-loop", "summary": "接着追踪记忆如何被构建、审查、修订并用于证据条件化回答。" },
+    { "groupId": "group-evaluation", "summary": "然后检查 BEAM 共享协议、baseline 公平性、指标、主结果和题型差异。" },
+    { "groupId": "group-optimization", "summary": "再审计策略 refinement 的训练与 held-out 隔离以及非单调优化结果。" },
+    { "groupId": "group-implementation-limits", "summary": "最后用附录 prompts、工具和作者局限界定可复现内容与项目迁移范围。" }
+  ],
+  "misreadings": [
+    {
+      "groupId": "group-framework",
+      "text": "不要把 self-optimizing 误读为参数学习；这里优化的是 prompt-mediated memory policy。"
+    },
+    {
+      "groupId": "group-loop",
+      "text": "不要把 memory workspace 当作事实权威；论文明确要求 retrieved evidence 优先。"
+    },
+    {
+      "groupId": "group-evaluation",
+      "text": "不要把共享 harness 下击败这些实现解释为击败所有高度特化的生产系统。"
+    },
+    {
+      "groupId": "group-optimization",
+      "text": "不要把 BEAM 单 benchmark 且集中于 100K 的 refinement 结果外推到所有规模与模型。"
+    }
+  ]
+}
