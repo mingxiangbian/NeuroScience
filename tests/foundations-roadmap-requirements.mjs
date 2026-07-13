@@ -100,6 +100,7 @@ for (const testFile of [
   "foundations-code-listing-model.mjs",
   "foundations-knowledge-article-parser.mjs",
   "foundations-knowledge-content-requirements.mjs",
+  "foundations-reader-state-model.mjs",
   "foundations-roadmap-requirements.mjs",
 ]) {
   assert.match(foundationsTestScript, new RegExp(testFile.replaceAll(".", "\\.")), `Pages CI should run ${testFile}`);
@@ -211,6 +212,8 @@ assert.match(codeListingJs, /cancelSchedule = globalThis\.clearTimeout/, "copy f
 assert.match(codeListingJs, /const copyAttempt = \+\+copyAttemptVersion/, "copy feedback should let the latest activation own the visible state");
 assert.match(codeListingJs, /cancelSchedule\(resetTimerId\)/, "copy feedback should cancel an earlier reset before starting a new attempt");
 assert.match(js, /function renderOverviewDashboard/, "roadmap JS should render overview as a dashboard");
+assert.match(js, /getNextIncompleteModule\(learningModules\)/, "Foundations overview should use the tested done-status selector");
+assert.doesNotMatch(js, /status !== "complete"/, "Foundations should not use a status rejected by its builder");
 assert.match(js, /\["Interview Signal",\s*getSection\(module, "Interview Signal"\)\]/, "overview dashboard should render the interview signal section");
 assert.match(js, /stableModules = learningModules\.filter\(\(item\) => item\.id !== "interview-sprint"\)/, "overview dashboard should keep sprint out of the stable module count");
 assert.match(js, /String\(stableModules\.length\)/, "overview dashboard should count stable modules instead of temporary sprint modules");

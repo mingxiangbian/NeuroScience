@@ -9,6 +9,7 @@ const financeBuildUrl = new URL("../projects/finance/scripts/build-roadmap-data.
 const financeDataUrl = new URL("../projects/finance/roadmap/roadmap-data.json", import.meta.url);
 const financeModulesUrl = new URL("../projects/finance/roadmap/modules/", import.meta.url);
 const originalGuideUrl = new URL("../projects/finance/investment_beginner_guide_zh.md", import.meta.url);
+const sharedReaderUrl = new URL("../projects/foundations/roadmap/roadmap-reader.js", import.meta.url);
 
 const expectedModules = [
   ["overview", "学习总览"],
@@ -40,6 +41,8 @@ const financeTheme = readFileSync(financeThemeUrl, "utf8");
 const financeReadme = readFileSync(financeReadmeUrl, "utf8");
 const builder = readFileSync(financeBuildUrl, "utf8");
 const data = JSON.parse(readFileSync(financeDataUrl, "utf8"));
+const sharedReader = readFileSync(sharedReaderUrl, "utf8");
+const closeSearchSource = sharedReader.match(/function closeSearchModal\(\) \{([\s\S]*?)\n\}/)?.[1] ?? "";
 
 assert.match(financeHtml, /<title>投资 \| NeuroScience x AI<\/title>/, "finance page should use the project title");
 assert.match(financeHtml, /data-page="finance-roadmap-reader"/, "finance page should identify the reader");
@@ -64,6 +67,15 @@ assert.match(financeReadme, /不保存持仓、交易、账户或个人财务信
 assert.ok(data.modules[0].sections["学习导航"], "finance overview should expose the Chinese navigation section");
 assert.equal(data.modules[0].sections.Dashboard, undefined, "finance should not retain the visible Dashboard heading");
 assert.match(builder, /throw new Error/, "finance builder should reject malformed modules");
+assert.match(sharedReader, /function renderFinanceOverviewDashboard\(module\)[\s\S]*?getFinanceReentryState\(learningModules\)/, "finance dashboard should consume the tested re-entry view state");
+assert.match(sharedReader, /financeReentry\.nextStepLabel/, "finance dashboard should render the tested all-complete copy");
+assert.match(sharedReader, /getStatusLabel\(financeReentry\.status\)/, "finance dashboard should render the tested re-entry status");
+assert.match(sharedReader, /PROJECT_ID\s*!==\s*"finance"/, "finance metadata should hide redundant raw priority");
+assert.match(sharedReader, /PROJECT_ID === "finance" \? "未找到结果" : "No results found"/, "finance empty search results should use Chinese copy");
+assert.match(sharedReader, /进入任一概念模块底部的「知识笔记」，选中文字即可添加本地批注。批注只保存在当前浏览器。/, "empty note panels should explain the actual annotation boundary");
+assert.match(closeSearchSource, /els\.searchResults\.hidden = true;/, "closing search should always hide results");
+assert.doesNotMatch(closeSearchSource, /if \(!state\.searchQuery\)/, "closing search should not depend on an empty query");
+assert.doesNotMatch(sharedReader, /status !== "(?:done|complete)"\) \?\? learningModules\[0\]/, "completed dashboards should not fall back to their first module");
 
 assert.equal(data.project.id, "finance", "generated data should identify the finance project");
 assert.equal(data.project.title, "投资", "generated data should use the visible project title");

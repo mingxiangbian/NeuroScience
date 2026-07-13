@@ -6,6 +6,10 @@ import {
   parseStoredAnnotations,
 } from "./annotation-model.js";
 import { enhanceCodeListings } from "./code-listing.js";
+import {
+  getFinanceReentryState,
+  getNextIncompleteModule,
+} from "./reader-state-model.js";
 
 const READER_SCRIPT = document.querySelector("script[data-source][src$='roadmap-reader.js']");
 const PROJECT_ID = document.body.dataset.projectId ?? "foundations";
@@ -469,6 +473,15 @@ function getStatusLabel(status) {
   return labels[status] ?? status;
 }
 
+function getModuleMeta(module, { includeDate = false } = {}) {
+  const parts = [getStatusLabel(module.status)];
+  if (PROJECT_ID !== "finance" && module.priority) parts.push(module.priority);
+  if (includeDate && module.lastUpdated) {
+    parts.push(PROJECT_ID === "finance" ? `更新于 ${module.lastUpdated}` : `Updated ${module.lastUpdated}`);
+  }
+  return parts.join(" · ");
+}
+
 function setTheme(theme) {
   const normalized = theme === "dark" ? "dark" : "light";
   document.body.dataset.theme = normalized;
@@ -487,7 +500,7 @@ function renderModuleNav() {
     button.innerHTML = `
       <span class="module-nav-title">${escapeHtml(module.title)}</span>
       <span class="module-nav-progress">${escapeHtml(String(progress))}%</span>
-      <span class="module-nav-meta">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(module.priority)}</span>
+      <span class="module-nav-meta">${escapeHtml(getModuleMeta(module))}</span>
     `;
     button.addEventListener("click", () => openModule(module.id));
     els.nav.append(button);
@@ -542,7 +555,7 @@ function renderProgressSummary(module) {
       </div>
       <div class="progress-copy">
         <p class="progress-label">本模块学习进度</p>
-        <p class="progress-status">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(module.priority)}</p>
+        <p class="progress-status">${escapeHtml(getModuleMeta(module))}</p>
       </div>
       <div class="overall-progress-card" aria-label="整体学习进度 ${overallProgress}%">
         <span class="overall-progress-tag">全部模块</span>
@@ -626,13 +639,13 @@ function renderOverviewDashboard(module) {
   const dashboardModuleId = state.data.project.dashboardModuleId;
   const learningModules = state.data.modules.filter((item) => item.id !== dashboardModuleId);
   const stableModules = learningModules.filter((item) => item.id !== "interview-sprint");
-  const nextModule = learningModules.find((item) => item.status !== "complete") ?? learningModules[0];
+  const nextModule = getNextIncompleteModule(learningModules);
   const moduleRows = learningModules
     .map((item) => `
       <button class="dashboard-module-row" type="button" data-dashboard-module-id="${escapeHtml(item.id)}">
         <span>
           <strong>${escapeHtml(item.title)}</strong>
-          <small>${escapeHtml(getStatusLabel(item.status))} · ${escapeHtml(item.priority)}</small>
+          <small>${escapeHtml(getModuleMeta(item))}</small>
         </span>
         <span class="dashboard-module-progress">${escapeHtml(String(getLearningProgress(item)))}%</span>
       </button>
@@ -701,30 +714,30 @@ function renderOverviewDashboard(module) {
 function renderFinanceOverviewDashboard(module) {
   const dashboardModuleId = state.data.project.dashboardModuleId;
   const learningModules = state.data.modules.filter((item) => item.id !== dashboardModuleId);
-  const nextModule = learningModules.find((item) => item.status !== "done") ?? learningModules[0];
+  const financeReentry = getFinanceReentryState(learningModules);
+  const { nextModule } = financeReentry;
   const glossaryModule = getModuleById(state.data.project.glossaryModuleId);
   const moduleRows = learningModules
     .map((item) => `
       <button class="dashboard-module-row" type="button" data-dashboard-module-id="${escapeHtml(item.id)}">
         <span>
           <strong>${escapeHtml(item.title)}</strong>
-          <small>${escapeHtml(getStatusLabel(item.status))} · ${escapeHtml(item.priority)}</small>
+          <small>${escapeHtml(getModuleMeta(item))}</small>
         </span>
         <span class="dashboard-module-progress">${escapeHtml(String(getLearningProgress(item)))}%</span>
       </button>
     `)
     .join("");
   const blocks = [
-    ["Dashboard", `
-      <div class="route-ledger" aria-label="Finance learning dashboard">
+    ["学习导航", `
+      <div class="route-ledger" aria-label="投资学习导航">
         <div class="route-ledger-row">
           <span class="route-ledger-label">下一步</span>
           ${nextModule ? `
             <button class="route-ledger-target" type="button" data-dashboard-module-id="${escapeHtml(nextModule.id)}">
-              <strong>${escapeHtml(nextModule.title)}</strong>
-              <span>${escapeHtml(nextModule.priority)}</span>
+              <strong>${escapeHtml(financeReentry.nextStepLabel)}</strong>
             </button>
-          ` : "<strong>暂无下一模块</strong>"}
+          ` : `<strong>${escapeHtml(financeReentry.nextStepLabel)}</strong>`}
         </div>
         <div class="route-ledger-row">
           <span class="route-ledger-label">当前计划</span>
@@ -740,8 +753,8 @@ function renderFinanceOverviewDashboard(module) {
           </div>
         ` : ""}
       </div>
-      ${getSection(module, "Dashboard")}
-      <div class="dashboard-grid" aria-label="Finance progress dashboard">
+      ${getSection(module, "学习导航")}
+      <div class="dashboard-grid" aria-label="投资学习进度">
         <section class="dashboard-card">
           <p class="dashboard-card-label">整体学习进度</p>
           <strong>${escapeHtml(String(getOverallLearningProgress()))}%</strong>
@@ -752,7 +765,7 @@ function renderFinanceOverviewDashboard(module) {
         </section>
         <section class="dashboard-card">
           <p class="dashboard-card-label">当前状态</p>
-          <strong>${escapeHtml(getStatusLabel(nextModule?.status ?? "not-started"))}</strong>
+          <strong>${escapeHtml(getStatusLabel(financeReentry.status))}</strong>
         </section>
       </div>
     `],
@@ -815,7 +828,7 @@ function renderCurrentModule() {
   els.moduleHeader.innerHTML = `
     <p class="module-kicker">${escapeHtml(state.data.project.title)} · ${escapeHtml(state.data.project.targetRole)}</p>
     <h1 class="module-title">${escapeHtml(module.title)}</h1>
-    <p class="module-meta">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(module.priority)} · Updated ${escapeHtml(module.lastUpdated)}</p>
+    <p class="module-meta">${escapeHtml(getModuleMeta(module, { includeDate: true }))}</p>
     ${renderProgressSummary(module)}
   `;
 
@@ -956,12 +969,15 @@ function renderAnnotationList(annotations, title) {
 function renderContextualNotePanel(note, { archived = false } = {}) {
   const module = state.currentModule;
   const renderedNotes = archived ? renderArchivedAnnotations(module) : renderLocalAnnotations(note);
+  const noteContent = renderedNotes || (PROJECT_ID === "finance"
+    ? '<p class="note-empty-state">进入任一概念模块底部的「知识笔记」，选中文字即可添加本地批注。批注只保存在当前浏览器。</p>'
+    : "");
 
   const label = `${archived ? "历史笔记" : "学习过程记录"} · ${module.title}`;
   els.noteLabel.textContent = label;
   els.mobileNoteLabel.textContent = label;
-  els.noteSurface.innerHTML = renderedNotes;
-  els.mobileNoteSurface.innerHTML = renderedNotes;
+  els.noteSurface.innerHTML = noteContent;
+  els.mobileNoteSurface.innerHTML = noteContent;
   for (const surface of [els.noteSurface, els.mobileNoteSurface]) {
     surface.querySelectorAll("[data-annotation-category]").forEach((select) => {
       select.addEventListener("change", () => {
@@ -1134,10 +1150,7 @@ function openSearchModal() {
 
 function closeSearchModal() {
   els.shell.classList.remove("is-searching");
-  if (!state.searchQuery) {
-    els.searchResults.hidden = true;
-    els.searchResults.innerHTML = "";
-  }
+  els.searchResults.hidden = true;
 }
 
 function getSearchTerms(query) {
@@ -1223,7 +1236,8 @@ function getMatchedSection(module, query) {
 function renderSearchResults(results) {
   els.searchResults.hidden = false;
   if (results.length === 0) {
-    els.searchResults.innerHTML = `<p class="result-empty">No results found</p>`;
+    const emptyMessage = PROJECT_ID === "finance" ? "未找到结果" : "No results found";
+    els.searchResults.innerHTML = `<p class="result-empty">${emptyMessage}</p>`;
     return;
   }
 
