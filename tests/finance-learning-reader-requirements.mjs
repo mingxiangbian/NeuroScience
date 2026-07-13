@@ -113,6 +113,8 @@ assert.deepEqual(data.modules.map((module) => [module.id, module.title]), expect
 assert.equal((renderedSectionHtml.match(/class="math-display"/g) ?? []).length, sourceDisplayMathCount, "every display formula should survive generated HTML exactly once");
 assert.equal((renderedSectionHtml.match(/class="math-inline"/g) ?? []).length, sourceInlineMathCount, "every inline formula should survive generated HTML exactly once");
 assert.doesNotMatch(renderedSectionHtml, /<h1>\s*\[/, "Finance display formulas should not be corrupted into Setext headings");
+assert.doesNotMatch(renderedSectionHtml, /<h1(?:\s|>)/, "Finance section body headings should remain below the reader's module h2");
+assert.match(renderedSectionHtml, /<h3>1\. 投资究竟是什么？<\/h3>/, "authored Finance chapter headings should be retained at the nested h3 level");
 
 for (const module of data.modules) {
   assert.equal(module.learningProgress, 0, `${module.id} should start with zero progress`);

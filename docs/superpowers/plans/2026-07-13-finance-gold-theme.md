@@ -949,3 +949,9 @@ git diff --check
 ```
 
 At `?module=valuation`, confirm a previously omitted numbered section is visible, every formula placeholder renders without a KaTeX error, and the document has no horizontal overflow at 1280px, 390px, or 320px. At 320px, confirm an intentionally wide formula scrolls inside its own container.
+
+- [ ] **Step 6: Preserve the reader heading hierarchy**
+
+Add a Finance contract that rejects `<h1>` inside generated section bodies and requires a representative authored chapter heading to survive as `<h3>`. Because the reader owns the page `<h1>` and each module section heading is `<h2>`, normalize sanitized Finance section-body `<h1>` elements to `<h3>` during the Finance build. Keep headings shown inside fenced Markdown templates as code.
+
+Rebuild and confirm generated Finance data contains no `<h1>`, the complete suite passes, and browser inspection reports no page-level headings inside `.section-body`.

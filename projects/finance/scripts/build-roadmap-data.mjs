@@ -105,6 +105,11 @@ function extractTimelineItems(markdown) {
     });
 }
 
+function renderSectionHtml(markdown) {
+  const html = markdownToSafeHtml(markdown).html;
+  return html.replace(/<(\/?)h1>/g, "<$1h3>");
+}
+
 function buildSearchEntries(id, title, rawSections, knowledgeNotes) {
   const sectionEntries = Object.entries(rawSections)
     .filter(([sectionTitle]) => sectionTitle !== "知识笔记")
@@ -165,7 +170,7 @@ function buildModule([id, title]) {
   const parsed = parseFrontmatter(markdown, `${id}.md`);
   const rawSections = splitSections(parsed.content);
   const sections = Object.fromEntries(
-    Object.entries(rawSections).map(([sectionTitle, markdown]) => [sectionTitle, markdownToSafeHtml(markdown).html]),
+    Object.entries(rawSections).map(([sectionTitle, markdown]) => [sectionTitle, renderSectionHtml(markdown)]),
   );
   const record = {
     id: parsed.data.id,
