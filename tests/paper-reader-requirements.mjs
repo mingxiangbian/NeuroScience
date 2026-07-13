@@ -321,7 +321,7 @@ assert.equal(selfMemPaper.title, "SelfMem: Self-Optimizing Memory for AI Agents"
 assert.equal(selfMemPaper.shortTitle, "SelfMem", "SelfMem should use a compact reader title");
 assert.equal(selfMemPaper.authors, "Yang et al.", "SelfMem should use compact author metadata");
 assert.equal(selfMemPaper.year, 2026, "SelfMem should use the source year");
-assert.equal(selfMemPaper.source, "https://arxiv.org/abs/2607.03726", "SelfMem should link to arXiv");
+assert.equal(selfMemPaper.source, "https://arxiv.org/abs/2607.03726v1", "SelfMem should link to the arXiv v1 source");
 assert.equal(selfMemPaper.localFile, "pdfs/2026-yang-selfmem.pdf", "SelfMem should keep the source PDF locally");
 assert.equal(selfMemPaper.hasReading, true, "SelfMem should expose a completed reading package");
 
@@ -367,11 +367,17 @@ for (const paperId of readingPaperIds) {
   assert.ok(Array.isArray(figuresData.figures), `${paperId} figures.json should include a figures array`);
   if (paperId === "yang-2026-selfmem") {
     assert.equal(paperData.sourceMode, "verbatim", "SelfMem should use verbatim PDF mode");
+    assert.equal(paperData.source, "https://arxiv.org/abs/2607.03726v1", "SelfMem paper.json should preserve arXiv v1 provenance");
+    assert.equal(paperData.sourceFile, "../../pdfs/2026-yang-selfmem.pdf", "SelfMem paper.json should bind to the intended local PDF");
     assert.equal(paperData.license, "CC BY 4.0", "SelfMem should record its source license");
     assert.equal(paperData.readingGroups.length, 7, "SelfMem should define seven reading groups");
-    assert.equal(chunkData.chunks.length, 22, "SelfMem should cover the main paper and implementation appendices in 22 chunks");
-    assert.ok(figuresData.figures.filter((figure) => figure.file).length >= 5, "SelfMem should include five real source crops");
-    assert.ok(figuresData.figures.every((figure) => figure.publicCropPolicy === "minimal-necessary"), "SelfMem figures should use minimal necessary crops");
+    assert.deepEqual(chunkData.chunks.map((chunk) => chunk.id), Array.from({ length: 22 }, (_, index) => `ch-${String(index + 1).padStart(3, "0")}`), "SelfMem should lock the exact ch-001 through ch-022 chunk ids");
+    const selfMemFigures = figuresData.figures.filter((figure) => figure.file);
+    assert.equal(selfMemFigures.length, 5, "SelfMem should include exactly five local source crops");
+    assert.ok(selfMemFigures.every((figure) => figure.cropMode === "semantic-crop"), "SelfMem figures should use semantic-crop mode");
+    assert.ok(selfMemFigures.every((figure) => Number.isInteger(figure.sourcePage) && figure.sourcePage > 0), "SelfMem figures should record positive source PDF pages");
+    assert.ok(selfMemFigures.every((figure) => figure.bbox && ["x", "y", "width", "height"].every((field) => Number.isFinite(figure.bbox[field])) && figure.bbox.width > 0 && figure.bbox.height > 0), "SelfMem figures should include positive crop bbox metadata");
+    assert.ok(selfMemFigures.every((figure) => figure.publicCropPolicy === "minimal-necessary"), "SelfMem figures should use minimal necessary crops");
   }
   const notesArePublic = notesData.noteMode === "public";
   if (paperId === "zhang-2024-memory-mechanism-llm-agents") {
