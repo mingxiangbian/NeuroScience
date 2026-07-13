@@ -297,6 +297,7 @@ assert.doesNotMatch(js, /\/api\/|localhost|127\.0\.0\.1|openai|anthropic|generat
 const readingPapers = project.papers.filter((paper) => paper.hasReading === true);
 const readingPaperIds = readingPapers.map((paper) => paper.id);
 const workspacePaper = project.papers.find((paper) => paper.id === "gurnee-2026-global-workspace-language-models");
+const selfMemPaper = project.papers.find((paper) => paper.id === "yang-2026-selfmem");
 
 for (const paper of project.papers) {
   assert.equal(typeof paper.shortTitle, "string", `paper ${paper.id} should include shortTitle`);
@@ -314,6 +315,15 @@ assert.equal(workspacePaper.authors, "Gurnee et al.", "global workspace paper sh
 assert.equal(workspacePaper.year, 2026, "global workspace paper should use the source publication year");
 assert.equal(workspacePaper.source, "https://transformer-circuits.pub/2026/workspace/index.html", "global workspace paper should link to the Transformer Circuits source page");
 assert.equal(workspacePaper.hasReading, true, "global workspace paper should expose a completed source-linked reading package");
+
+assert.ok(selfMemPaper, "project manifest should register SelfMem");
+assert.equal(selfMemPaper.title, "SelfMem: Self-Optimizing Memory for AI Agents", "SelfMem should use the source title");
+assert.equal(selfMemPaper.shortTitle, "SelfMem", "SelfMem should use a compact reader title");
+assert.equal(selfMemPaper.authors, "Yang et al.", "SelfMem should use compact author metadata");
+assert.equal(selfMemPaper.year, 2026, "SelfMem should use the source year");
+assert.equal(selfMemPaper.source, "https://arxiv.org/abs/2607.03726", "SelfMem should link to arXiv");
+assert.equal(selfMemPaper.localFile, "pdfs/2026-yang-selfmem.pdf", "SelfMem should keep the source PDF locally");
+assert.equal(selfMemPaper.hasReading, true, "SelfMem should expose a completed reading package");
 
 for (const paperId of readingPaperIds) {
   const readingBase = new URL(`../papers/${projectId}/readings/${paperId}/`, import.meta.url);
@@ -348,13 +358,21 @@ for (const paperId of readingPaperIds) {
   assert.ok(Array.isArray(chunkData.chunks) && chunkData.chunks.length >= 8, `${paperId} should include a substantive reading package`);
   assert.equal(notesData.paperId, paperId, `${paperId} notes.json should use the paper id`);
   assert.equal(embeddingsData.paperId, paperId, `${paperId} embeddings.json should use the paper id`);
-  if (paperId === "gurnee-2026-global-workspace-language-models") {
-    assert.deepEqual(embeddingsData.indexedFields, ["sourceText", "zhTranslation", "zhExplanation", "premise", "claim", "evidence"], "Gurnee 2026 embeddings should include deep reading searchable fields");
-  } else {
-    assert.deepEqual(embeddingsData.indexedFields, ["sourceText", "zhTranslation", "zhExplanation"], `${paperId} embeddings should index sourceText, zhTranslation, and zhExplanation`);
-  }
+  const isDeepReading = Array.isArray(paperData.readingGroups);
+  const expectedIndexedFields = isDeepReading
+    ? ["sourceText", "zhTranslation", "zhExplanation", "premise", "claim", "evidence"]
+    : ["sourceText", "zhTranslation", "zhExplanation"];
+  assert.deepEqual(embeddingsData.indexedFields, expectedIndexedFields, `${paperId} embeddings should match its reading depth`);
   assert.equal(figuresData.paperId, paperId, `${paperId} figures.json should use the paper id`);
   assert.ok(Array.isArray(figuresData.figures), `${paperId} figures.json should include a figures array`);
+  if (paperId === "yang-2026-selfmem") {
+    assert.equal(paperData.sourceMode, "verbatim", "SelfMem should use verbatim PDF mode");
+    assert.equal(paperData.license, "CC BY 4.0", "SelfMem should record its source license");
+    assert.equal(paperData.readingGroups.length, 7, "SelfMem should define seven reading groups");
+    assert.equal(chunkData.chunks.length, 22, "SelfMem should cover the main paper and implementation appendices in 22 chunks");
+    assert.ok(figuresData.figures.filter((figure) => figure.file).length >= 5, "SelfMem should include five real source crops");
+    assert.ok(figuresData.figures.every((figure) => figure.publicCropPolicy === "minimal-necessary"), "SelfMem figures should use minimal necessary crops");
+  }
   const notesArePublic = notesData.noteMode === "public";
   if (paperId === "zhang-2024-memory-mechanism-llm-agents") {
     assert.equal(notesArePublic, true, "Zhang 2024 should publish the polished local annotations as stable public notes");

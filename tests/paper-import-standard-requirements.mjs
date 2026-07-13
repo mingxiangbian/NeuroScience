@@ -45,5 +45,5 @@ const validatorOutput = execFileSync(process.execPath, [fileURLToPath(validatorU
   encoding: "utf8"
 });
 
-assert.match(validatorOutput, /Validated 10 reading packages for brain-memory-for-ai-agents/, "validator should check every current reading package");
+assert.match(validatorOutput, /Validated 11 reading packages for brain-memory-for-ai-agents/, "validator should check every current reading package");
 assert.match(validatorOutput, /0 errors/, "validator should report a clean package set");
