@@ -3,13 +3,15 @@ import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const financePageUrl = new URL("../projects/finance/index.html", import.meta.url);
+const financeThemeUrl = new URL("../projects/finance/finance-theme.css", import.meta.url);
+const financeReadmeUrl = new URL("../projects/finance/README.md", import.meta.url);
 const financeBuildUrl = new URL("../projects/finance/scripts/build-roadmap-data.mjs", import.meta.url);
 const financeDataUrl = new URL("../projects/finance/roadmap/roadmap-data.json", import.meta.url);
 const financeModulesUrl = new URL("../projects/finance/roadmap/modules/", import.meta.url);
 const originalGuideUrl = new URL("../projects/finance/investment_beginner_guide_zh.md", import.meta.url);
 
 const expectedModules = [
-  ["overview", "Overview"],
+  ["overview", "学习总览"],
   ["investment-basics", "投资的本质与前提"],
   ["asset-classes", "资产类别"],
   ["risk-allocation", "风险与配置"],
@@ -25,6 +27,8 @@ assert.equal(existsSync(financePageUrl), true, "finance should expose a static r
 assert.equal(existsSync(financeBuildUrl), true, "finance should expose a roadmap data builder");
 assert.equal(existsSync(financeDataUrl), true, "finance should expose generated roadmap data");
 assert.equal(existsSync(originalGuideUrl), false, "the monolithic guide should be replaced by modules");
+assert.equal(existsSync(financeThemeUrl), true, "finance should expose a project-scoped gold theme");
+assert.equal(existsSync(financeReadmeUrl), true, "finance should document its use and privacy boundary");
 
 for (const [id] of expectedModules) {
   const moduleUrl = new URL(`${id}.md`, financeModulesUrl);
@@ -32,6 +36,8 @@ for (const [id] of expectedModules) {
 }
 
 const financeHtml = readFileSync(financePageUrl, "utf8");
+const financeTheme = readFileSync(financeThemeUrl, "utf8");
+const financeReadme = readFileSync(financeReadmeUrl, "utf8");
 const builder = readFileSync(financeBuildUrl, "utf8");
 const data = JSON.parse(readFileSync(financeDataUrl, "utf8"));
 
@@ -41,6 +47,22 @@ assert.match(financeHtml, /data-project-id="finance"/, "finance annotations shou
 assert.match(financeHtml, /src="\.\.\/foundations\/roadmap\/roadmap-reader\.js"/, "finance should reuse the maintained reader");
 assert.match(financeHtml, /data-source="roadmap\/roadmap-data\.json"/, "finance reader should load finance-generated data");
 assert.match(financeHtml, /href="\.\.\/index\.html" aria-label="返回项目"/, "finance should return to the project directory");
+const sharedCssIndex = financeHtml.indexOf('../foundations/roadmap/roadmap-reader.css');
+const financeThemeIndex = financeHtml.indexOf('finance-theme.css');
+assert.ok(sharedCssIndex >= 0 && financeThemeIndex > sharedCssIndex, "finance theme should load after shared reader CSS");
+assert.match(financeHtml, /class="directory-kicker">学习路径<\/p>/, "finance directory chrome should use Chinese copy");
+assert.match(financeTheme, /body\[data-page="finance-roadmap-reader"\]/, "finance theme should be page-scoped");
+assert.match(financeTheme, /oklch\(/, "finance theme should use the approved perceptual color space");
+assert.match(financeTheme, /--reader-panel-blur:\s*blur\(18px\)/, "finance should reduce the inherited glass blur");
+assert.match(financeTheme, /\.toolbar-search:focus-within/, "finance search should expose a visible focus state");
+assert.match(financeTheme, /@media \(max-width:\s*480px\)/, "finance should have a narrow-toolbar layout");
+assert.match(financeTheme, /grid-template-rows:\s*auto auto/, "narrow finance toolbar should use two rows");
+assert.match(financeTheme, /width:\s*44px[\s\S]*height:\s*44px/, "narrow finance controls should expose 44px targets");
+assert.doesNotMatch(financeTheme, /#2e704d|rgba\(46,\s*112,\s*77|rgba\(152,\s*217,\s*166/, "finance theme should not retain the inherited visible green palette");
+assert.match(financeReadme, /本地批注只保存在当前浏览器/, "README should explain annotation persistence");
+assert.match(financeReadme, /不保存持仓、交易、账户或个人财务信息/, "README should preserve the public privacy boundary");
+assert.ok(data.modules[0].sections["学习导航"], "finance overview should expose the Chinese navigation section");
+assert.equal(data.modules[0].sections.Dashboard, undefined, "finance should not retain the visible Dashboard heading");
 assert.match(builder, /throw new Error/, "finance builder should reject malformed modules");
 
 assert.equal(data.project.id, "finance", "generated data should identify the finance project");

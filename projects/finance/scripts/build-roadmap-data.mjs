@@ -12,7 +12,7 @@ const modulesDir = join(financeDir, "roadmap", "modules");
 const outputPath = join(financeDir, "roadmap", "roadmap-data.json");
 
 const MODULES = [
-  ["overview", "Overview"],
+  ["overview", "学习总览"],
   ["investment-basics", "投资的本质与前提"],
   ["asset-classes", "资产类别"],
   ["risk-allocation", "风险与配置"],

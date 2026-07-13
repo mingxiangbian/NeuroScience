@@ -1,13 +1,13 @@
 ---
 id: overview
-title: Overview
+title: 学习总览
 status: not-started
 learning_progress: 0
 last_updated: 2026-07-13
 priority: high
 ---
 
-## Dashboard
+## 学习导航
 
 这里是投资学习的再入点：先看下一模块，再回到需要复习的概念。进度只表示已经能够解释和复述的内容，不表示页面是否已经读过。
 

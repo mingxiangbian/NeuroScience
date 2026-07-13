@@ -1,0 +1,222 @@
+body[data-page="finance-roadmap-reader"] {
+  --reader-ink: oklch(24% 0.018 72);
+  --reader-ink-muted: oklch(43% 0.025 75);
+  --reader-paper: oklch(96% 0.012 92);
+  --reader-paper-soft: oklch(97% 0.01 92 / 0.88);
+  --reader-paper-strong: oklch(98% 0.006 92 / 0.96);
+  --reader-line: oklch(35% 0.025 75 / 0.16);
+  --reader-line-strong: oklch(35% 0.025 75 / 0.36);
+  --reader-glass: oklch(97% 0.012 92 / 0.78);
+  --reader-glass-strong: oklch(98% 0.008 92 / 0.92);
+  --reader-glass-highlight: oklch(100% 0 0 / 0.72);
+  --reader-glass-edge: oklch(64% 0.05 82 / 0.34);
+  --reader-glass-shadow: oklch(28% 0.035 72 / 0.12);
+  --reader-note-rule: oklch(52% 0.11 80 / 0.28);
+  --reader-section-line: oklch(35% 0.025 75 / 0.2);
+  --reader-section-line-hover: oklch(42% 0.085 78);
+  --reader-section-line-active: oklch(52% 0.11 80);
+  --reader-blue: oklch(52% 0.11 80);
+  --reader-red: oklch(42% 0.085 78);
+  --reader-shadow: oklch(28% 0.035 72 / 0.12);
+  --reader-code-surface: oklch(94% 0.014 88 / 0.9);
+  --reader-code-header: oklch(42% 0.04 76 / 0.06);
+  --reader-code-border: oklch(42% 0.04 76 / 0.24);
+  --reader-code-inline: oklch(52% 0.11 80 / 0.1);
+  --reader-code-ink: oklch(28% 0.02 72);
+  --reader-code-gutter: oklch(43% 0.025 75 / 0.68);
+  --reader-code-keyword: oklch(42% 0.085 78);
+  --reader-code-literal: oklch(45% 0.08 52);
+  --reader-code-comment: oklch(43% 0.025 75 / 0.78);
+  --reader-code-type: oklch(40% 0.06 235);
+  --reader-code-function: oklch(44% 0.08 82);
+  --reader-code-error: oklch(46% 0.12 28);
+  --reader-panel-blur: blur(18px) saturate(1.08);
+  --finance-gold-text: oklch(42% 0.085 78);
+  --finance-gold-graphic: oklch(52% 0.11 80);
+  --finance-gold-wash: oklch(91% 0.035 84);
+  --finance-hover: oklch(91% 0.035 84 / 0.48);
+  --finance-selected: oklch(91% 0.035 84 / 0.68);
+  --finance-focus-ring: oklch(52% 0.11 80 / 0.24);
+  background:
+    radial-gradient(circle at 14% 10%, oklch(78% 0.08 82 / 0.18), transparent 25%),
+    radial-gradient(circle at 86% 26%, oklch(87% 0.045 88 / 0.2), transparent 34%),
+    linear-gradient(145deg, oklch(98% 0.006 92), var(--reader-paper) 62%, oklch(92% 0.022 88));
+}
+
+body[data-page="finance-roadmap-reader"][data-theme="dark"] {
+  --reader-ink: oklch(93% 0.012 88);
+  --reader-ink-muted: oklch(76% 0.022 84);
+  --reader-paper: oklch(16% 0.015 75);
+  --reader-paper-soft: oklch(18% 0.017 75 / 0.88);
+  --reader-paper-strong: oklch(20% 0.018 75 / 0.96);
+  --reader-line: oklch(90% 0.015 84 / 0.14);
+  --reader-line-strong: oklch(90% 0.015 84 / 0.34);
+  --reader-glass: oklch(19% 0.018 75 / 0.82);
+  --reader-glass-strong: oklch(22% 0.02 75 / 0.94);
+  --reader-glass-highlight: oklch(100% 0 0 / 0.12);
+  --reader-glass-edge: oklch(78% 0.06 83 / 0.24);
+  --reader-glass-shadow: oklch(6% 0.01 75 / 0.42);
+  --reader-note-rule: oklch(78% 0.11 83 / 0.28);
+  --reader-section-line: oklch(93% 0.012 88 / 0.28);
+  --reader-section-line-hover: oklch(86% 0.08 83);
+  --reader-section-line-active: oklch(78% 0.11 83);
+  --reader-blue: oklch(78% 0.11 83);
+  --reader-red: oklch(78% 0.11 83);
+  --reader-shadow: oklch(6% 0.01 75 / 0.36);
+  --reader-code-surface: oklch(18% 0.017 75 / 0.94);
+  --reader-code-header: oklch(93% 0.012 88 / 0.06);
+  --reader-code-border: oklch(93% 0.012 88 / 0.2);
+  --reader-code-inline: oklch(78% 0.11 83 / 0.12);
+  --reader-code-ink: oklch(90% 0.012 88);
+  --reader-code-gutter: oklch(76% 0.022 84 / 0.66);
+  --reader-code-keyword: oklch(82% 0.09 83);
+  --reader-code-literal: oklch(76% 0.09 55);
+  --reader-code-comment: oklch(70% 0.02 82 / 0.72);
+  --reader-code-type: oklch(75% 0.06 235);
+  --reader-code-function: oklch(80% 0.08 82);
+  --reader-code-error: oklch(72% 0.12 28);
+  --finance-gold-text: oklch(82% 0.09 83);
+  --finance-gold-graphic: oklch(78% 0.11 83);
+  --finance-gold-wash: oklch(34% 0.045 78);
+  --finance-hover: oklch(34% 0.045 78 / 0.42);
+  --finance-selected: oklch(34% 0.045 78 / 0.58);
+  --finance-focus-ring: oklch(78% 0.11 83 / 0.28);
+  background:
+    radial-gradient(circle at 16% 14%, oklch(48% 0.07 80 / 0.2), transparent 27%),
+    radial-gradient(circle at 86% 28%, oklch(38% 0.045 80 / 0.18), transparent 35%),
+    linear-gradient(145deg, oklch(14% 0.013 75), var(--reader-paper) 64%, oklch(20% 0.02 76));
+}
+
+body[data-page="finance-roadmap-reader"]::before {
+  background:
+    linear-gradient(102deg, transparent 0 34%, oklch(52% 0.11 80 / 0.035) 34.2%, transparent 35%),
+    linear-gradient(17deg, transparent 0 56%, oklch(42% 0.085 78 / 0.03) 56.2%, transparent 57%),
+    radial-gradient(ellipse at 18% 30%, oklch(100% 0 0 / 0.28), transparent 40%);
+}
+
+body[data-page="finance-roadmap-reader"] :is(a, button, select, textarea):focus-visible {
+  outline: 2px solid var(--finance-gold-text);
+  outline-offset: 2px;
+}
+
+body[data-page="finance-roadmap-reader"] .toolbar-search:focus-within {
+  border-color: var(--finance-gold-text);
+  box-shadow: 0 0 0 3px var(--finance-focus-ring);
+}
+
+body[data-page="finance-roadmap-reader"] .toolbar-search input:focus-visible {
+  outline: 0;
+}
+
+body[data-page="finance-roadmap-reader"] :is(.toolbar-controls, .toolbar-search) {
+  box-shadow:
+    inset 0 1px 0 var(--reader-glass-highlight),
+    inset 0 -1px 0 oklch(35% 0.025 75 / 0.08),
+    0 14px 36px var(--reader-glass-shadow);
+}
+
+body[data-page="finance-roadmap-reader"] .module-nav-item[aria-current="true"] {
+  grid-template-columns: minmax(0, 1fr) auto;
+  border-color: var(--finance-gold-text);
+  background: var(--finance-selected);
+}
+
+body[data-page="finance-roadmap-reader"] .module-nav-item[aria-current="true"]::before {
+  content: none;
+}
+
+body[data-page="finance-roadmap-reader"] :is(.icon-button:hover, .module-nav-item:hover, .dashboard-module-row:hover, .result-item:hover) {
+  background: var(--finance-hover);
+}
+
+body[data-page="finance-roadmap-reader"] .progress-fill {
+  background: var(--finance-gold-graphic);
+}
+
+body[data-page="finance-roadmap-reader"] .progress-ring {
+  background:
+    radial-gradient(circle at center, var(--reader-paper-strong) 0 56%, transparent 57%),
+    conic-gradient(var(--finance-gold-graphic) calc(var(--progress) * 1%), oklch(35% 0.015 75 / 0.12) 0);
+}
+
+body[data-page="finance-roadmap-reader"] .result-highlight {
+  background: var(--finance-selected);
+}
+
+body[data-page="finance-roadmap-reader"] .knowledge-highlight {
+  background: var(--finance-hover);
+}
+
+body[data-page="finance-roadmap-reader"] .knowledge-highlight.is-note {
+  background: var(--finance-selected);
+  box-shadow: inset 0 -1px 0 var(--finance-gold-text);
+}
+
+body[data-page="finance-roadmap-reader"] .knowledge-highlight:hover,
+body[data-page="finance-roadmap-reader"] .knowledge-highlight.is-note:hover {
+  background: var(--finance-gold-wash);
+}
+
+body[data-page="finance-roadmap-reader"] .note-empty-state {
+  margin: 0;
+  max-width: 28ch;
+  color: var(--reader-ink-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+@media (max-width: 480px) {
+  body[data-page="finance-roadmap-reader"] .reader-toolbar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 8px;
+  }
+
+  body[data-page="finance-roadmap-reader"] .toolbar-left {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  body[data-page="finance-roadmap-reader"] .toolbar-right {
+    display: contents;
+  }
+
+  body[data-page="finance-roadmap-reader"] .toolbar-controls {
+    grid-row: 1;
+    grid-column: 2;
+    justify-self: end;
+    height: 52px;
+    padding: 4px;
+  }
+
+  body[data-page="finance-roadmap-reader"] .toolbar-search {
+    grid-row: 2;
+    grid-column: 1 / -1;
+    width: 100%;
+    height: 44px;
+  }
+
+  body[data-page="finance-roadmap-reader"] :is(.project-mark, .icon-button) {
+    width: 44px;
+    height: 44px;
+  }
+
+  body[data-page="finance-roadmap-reader"] .search-shortcut {
+    display: none;
+  }
+
+  body[data-page="finance-roadmap-reader"] .reader-shell.is-searching .toolbar-search {
+    top: 120px;
+    width: calc(100vw - 28px);
+  }
+
+  body[data-page="finance-roadmap-reader"] .reader-shell.is-searching .search-results {
+    top: 174px;
+    width: calc(100vw - 28px);
+  }
+
+  body[data-page="finance-roadmap-reader"] .reader-shell.is-mobile-left-open .reader-sidebar {
+    inset: 124px 14px auto;
+  }
+}
