@@ -8,13 +8,13 @@
   "categoryZh": "AI 机制可解释性与全局工作空间",
   "relation": "Maps verbalizable internal representations to workspace-like access, report, reasoning, and auditing functions in language models.",
   "relationZh": "这篇不是记忆主线论文，而是当前项目的 workspace/internal reasoning 分支：它帮助区分长期记忆、工作空间、可报告表征和内部推理通道。",
-  "description": "A source-linked reading package for the Transformer Circuits essay on the Jacobian Lens, J-space, workspace-like functional evidence, alignment auditing, and counterfactual reflection training.",
-  "descriptionZh": "这份精读包把原网页压缩成可核对的阅读锚点：重点看 J-lens 怎样读出可 verbalize 的表征，J-space 为什么被解释为功能性 global workspace，以及这些表征如何服务内部推理、审计和训练干预。",
+  "description": "A source-linked evidence review of the Jacobian Lens and J-space: method scope, causal workspace tests, structural bottlenecks, alignment audits, post-training changes, and counterfactual reflection training.",
+  "descriptionZh": "这份精读包按原网页重建完整证据链：先限定 J-lens 的模型与线性近似范围，再逐项核对可报告性、定向调制、内部推理、灵活泛化、选择性、容量与广播，并把审计案例、后训练差异、反事实反思训练及其失败边界分开呈现。",
   "readingFocus": [
-    "先区分 memory、working memory、workspace 和 verbal report，不要把它们合成一个概念。",
-    "把 global workspace 当作功能通达假设阅读，不把它直接等同于主观意识或脑机制复现。",
-    "重点核对 J-lens / J-space 的方法定义，以及 report、modulation、reasoning、generalization、selectivity 五类证据。",
-    "把 alignment auditing 和 counterfactual reflection 读作方法应用，不把它们当成已经解决对齐问题。"
+    "先确认实验使用的 Claude 型号、层范围、干预对象和对照，不把 J-lens 读出当作无条件真值。",
+    "逐项核对任务、干预、control、数值结果和失败条件，尤其关注小方差 J-space 成分是否真的承担因果作用。",
+    "把 alignment auditing 的观察案例、黑邮件因果消融、两类 model organism 和 reflection training 分成不同证据等级。",
+    "把 global workspace 限定为功能与计算类比，不外推为主观意识或人脑实现层等同。"
   ],
   "source": "https://transformer-circuits.pub/2026/workspace/index.html",
   "sourceMode": "source-linked",
@@ -150,6 +150,10 @@
     {
       "groupId": "group-project-fit",
       "text": "不要把 global workspace 直接读成主观意识或人脑机制复现。"
+    },
+    {
+      "groupId": "group-method",
+      "text": "不要把 Sonnet 4.5 为主的平均线性读出外推为所有模型、所有层和所有内部概念的完整表示。"
     },
     {
       "groupId": "group-workspace-evidence",

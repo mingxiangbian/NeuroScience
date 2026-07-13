@@ -19,12 +19,7 @@
       ],
       "zhTranslation": "原网页把问题设定为一种功能性区分：模型可能同时进行大量自动处理，但只把较小的一组内部内容置于可报告、可调制、可用于刻意思考的位置。",
       "zhExplanation": "这里最重要的是边界：workspace 不是长期记忆库，而是当前可访问、可操作、可报告的内部表征集合。",
-      "figureRefs": [
-        {
-          "id": "fig-001",
-          "relation": "supporting"
-        }
-      ],
+      "figureRefs": [],
       "keywords": [
         "workspace",
         "verbal report",
@@ -150,20 +145,24 @@
       "sourceAnchor": "The Jacobian Lens",
       "sourceSection": "Methods",
       "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#methods",
-      "sourceText": "The Jacobian Lens characterizes an intermediate residual-stream activation by its averaged first-order effect on future output states and token scores. This turns a hidden activation into a ranked verbal readout.",
+      "sourceText": "For an activation at layer l and source position t, the Jacobian Lens estimates its first-order effect on a target residual state at the same and later token positions. In the default Sonnet 4.5 recipe used throughout the paper, the target z is taken at the penultimate residual layer; targeting the final residual layer is tested as an alternative and can add noisy artifacts. Final normalization and the model's normal unembedding then convert the layer-specific map into ranked vocabulary tokens. A Jacobian from one prompt would mix a concept's general disposition to be verbalized with its particular use in that context, so the authors average over source positions, future positions, and 1,000 pretraining-like prompts of 128 tokens each. The main experiments use 25 evenly spaced residual-stream layers, reindexed from 0 to 100. Claude Sonnet 4.5 is the default model; key findings are checked on Haiku 4.5 and Opus 4.5, with some later analyses using Opus 4.6. The map is therefore an averaged first-order approximation for these tested models, not an exact transcript of a single forward pass.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "The Jacobian Lens characterizes an intermediate residual-stream activation by its averaged first-order effect on future output states and token scores. This turns a hidden activation into a ranked verbal readout."
+          "text": "For an activation at layer l and source position t, the Jacobian Lens estimates its first-order effect on a target residual state at the same and later token positions. In the default Sonnet 4.5 recipe used throughout the paper, the target z is taken at the penultimate residual layer; targeting the final residual layer is tested as an alternative and can add noisy artifacts. Final normalization and the model's normal unembedding then convert the layer-specific map into ranked vocabulary tokens."
+        },
+        {
+          "type": "paragraph",
+          "text": "A Jacobian from one prompt would mix a concept's general disposition to be verbalized with its particular use in that context, so the authors average over source positions, future positions, and 1,000 pretraining-like prompts of 128 tokens each. The main experiments use 25 evenly spaced residual-stream layers, reindexed from 0 to 100. Claude Sonnet 4.5 is the default model; key findings are checked on Haiku 4.5 and Opus 4.5, with some later analyses using Opus 4.6. The map is therefore an averaged first-order approximation for these tested models, not an exact transcript of a single forward pass."
         },
         {
           "type": "math",
-          "label": "Jacobian lens map",
-          "latex": "J_{\\ell}=\\mathbb{E}_{t,t'\\ge t,p}\\left[\\frac{\\partial h_{L,t'}}{\\partial h_{\\ell,t}}\\right]"
+          "label": "Corpus-averaged Jacobian to the target residual state",
+          "latex": "J_{\\ell}=\\mathbb{E}_{t,\\,t'\\ge t,\\,p}\\left[\\frac{\\partial z_{t'}}{\\partial h_{\\ell,t}}\\right]"
         }
       ],
-      "zhTranslation": "Jacobian Lens 用中间 residual-stream 激活对未来输出状态和 token 分数的一阶平均影响来刻画该激活。这样，一个隐藏激活可以被转成按词排序的可 verbalize 读出。",
-      "zhExplanation": "这一步是全篇方法核心：它不是普通关键词解释，而是把内部向量和“模型可能说出的词”建立局部线性联系。",
+      "zhTranslation": "对于第 l 层、位置 t 的激活，Jacobian Lens 估计它对同一位置及后续 token 位置的目标 residual state 所产生的一阶影响。论文默认使用的 Sonnet 4.5 配方把目标 z 取在倒数第二个 residual layer；把最终 residual layer 作为目标只是对照变体，而且可能增加噪声伪影。随后再经过最终 normalization 和模型原有 unembedding，得到词表排序。单个 prompt 的 Jacobian 会混合概念的一般可语言化倾向和该情境中的具体用途，因此作者在源位置、未来位置以及 1,000 个、每个 128 token 的预训练式 prompt 上取平均。主要实验抽取 25 个等距 residual-stream 层并重标为 0–100；默认模型是 Claude Sonnet 4.5，关键结果在 Haiku 4.5、Opus 4.5 上复核，部分分析使用 Opus 4.6。这是针对这些模型的平均一阶近似，不是单次前向过程的精确记录。",
+      "zhExplanation": "方法贡献在于用同一套固定映射读取不同层，但默认目标层和平均线性化都构成适用边界。阅读后续结果时，应把 J-lens token 当作受模型范围、目标层选择和线性近似约束的证据。",
       "figureRefs": [
         {
           "id": "fig-002",
@@ -177,12 +176,12 @@
         "formula"
       ],
       "groupId": "group-method",
-      "premise": "必须先知道隐藏向量怎样被读成词。",
-      "claim": "J-lens 把中间激活映射到未来 token 影响。",
+      "premise": "J-lens 先把跨情境的语言化倾向与单次 prompt 的用途分开。",
+      "claim": "平均 Jacobian 把中间 residual stream 对倒数第二层目标状态的影响映射为可核对的词表读出。",
       "evidence": [
-        "平均 Jacobian",
-        "未来输出状态",
-        "token 级排序"
+        "默认目标是倒数第二 residual layer，最终层仅作对照",
+        "1,000 个预训练式 prompt 上平均",
+        "默认 Sonnet 4.5，并跨 Claude 4.5 型号复核"
       ]
     },
     {
@@ -194,20 +193,24 @@
       "sourceAnchor": "The J-Space",
       "sourceSection": "Methods",
       "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#methods",
-      "sourceText": "J-space is defined as the sparse, nonnegative span of J-lens token vectors. The working idea is that only a small number of verbalizable directions are strongly active at a time, even though the lens vectors are overcomplete.",
+      "sourceText": "At each layer there is one J-lens direction per vocabulary token, so the collection is overcomplete and can span the full residual stream in many non-unique ways. The paper therefore defines J-space as the union of points expressible by sparse nonnegative combinations of these directions. Its usual sparsity cap is k <= 25, chosen from the observed number of meaningfully active lens vectors, although the authors vary k by experiment. Gradient pursuit finds the nearest sparse combination and treats it as the activation's J-space component; the remainder is its non-J-space component. Across layers, the J-space component accounts for only a small share of activation variance and never more than 10%. The central hypothesis is thus not that most model state is verbalizable, but that a small token-aligned component has privileged functional access.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "J-space is defined as the sparse, nonnegative span of J-lens token vectors. The working idea is that only a small number of verbalizable directions are strongly active at a time, even though the lens vectors are overcomplete."
+          "text": "At each layer there is one J-lens direction per vocabulary token, so the collection is overcomplete and can span the full residual stream in many non-unique ways. The paper therefore defines J-space as the union of points expressible by sparse nonnegative combinations of these directions. Its usual sparsity cap is k <= 25, chosen from the observed number of meaningfully active lens vectors, although the authors vary k by experiment."
+        },
+        {
+          "type": "paragraph",
+          "text": "Gradient pursuit finds the nearest sparse combination and treats it as the activation's J-space component; the remainder is its non-J-space component. Across layers, the J-space component accounts for only a small share of activation variance and never more than 10%. The central hypothesis is thus not that most model state is verbalizable, but that a small token-aligned component has privileged functional access."
         },
         {
           "type": "math",
-          "label": "Sparse J-space component",
-          "latex": "h_{J}\\approx \\sum_{i\\in S,\\ |S|\\le k} \\alpha_i v_i,\\quad \\alpha_i\\ge 0"
+          "label": "Sparse nonnegative J-space component",
+          "latex": "h_J=\\underset{\\alpha_i\\ge 0,\\ |S|\\le k}{\\operatorname{argmin}}\\left\\|h-\\sum_{i\\in S}\\alpha_i v_i\\right\\|_2^2"
         }
       ],
-      "zhTranslation": "J-space 被定义为 J-lens token 向量的稀疏非负张成集合。直觉是：即使 lens 向量本身是过完备的，每个时刻也只有少数可 verbalize 方向会强激活。",
-      "zhExplanation": "这给 workspace 一个可操作定义：它不是所有 hidden state，而是能被稀疏 verbalizable directions 近似的那部分。",
+      "zhTranslation": "每层都有一个与词表 token 对应的 J-lens 方向，因此这组向量是过完备的，可以用许多非唯一方式张成整个 residual stream。论文于是把 J-space 定义为少量 J-lens 方向的稀疏非负组合所形成的点集；常用稀疏上限为 k ≤ 25，这来自作者对同时具有实质激活方向数量的经验估计，但具体实验会改变 k。作者用 gradient pursuit 找到最近的稀疏组合并把它视为 J-space 成分，其余部分为 non-J-space 成分。该成分在各层只解释少量激活方差，最高不超过 10%。因此核心假设不是“模型的大部分状态都可语言化”，而是一个很小的 token 对齐成分拥有特权式功能通达。",
+      "zhExplanation": "方差占比小却可能因果作用大，是后续所有实验的关键反差。它也意味着不能把 J-lens 未读出的部分当成不存在。",
       "figureRefs": [
         {
           "id": "fig-003",
@@ -220,12 +223,12 @@
         "overcomplete frame"
       ],
       "groupId": "group-method",
-      "premise": "J-space 是稀疏可 verbalize 子空间。",
-      "claim": "作者把少数活跃 J-lens 方向当作 workspace 候选。",
+      "premise": "J-lens 向量过完备，必须加入稀疏性才能定义可操作的 J-space。",
+      "claim": "J-space 是少量 J-lens 方向的非负组合，而不是整个 residual stream。",
       "evidence": [
-        "非负稀疏组合",
-        "过完备 lens 向量",
-        "少数方向同时活跃"
+        "常用稀疏上限 k ≤ 25",
+        "gradient pursuit 求最近的非负组合",
+        "J-space 成分解释的激活方差不超过 10%"
       ]
     },
     {
@@ -237,15 +240,19 @@
       "sourceAnchor": "Comparison to Related Techniques",
       "sourceSection": "Methods",
       "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#methods",
-      "sourceText": "The J-lens is related to logit-lens style readouts, but the paper treats it as a refinement that accounts for representational changes across layers. The authors also note that the method is approximate and vocabulary-token limited.",
+      "sourceText": "The logit lens applies the unembedding directly and works best near the output, but its identity-map assumption becomes less reliable in earlier layers. A tuned lens learns per-layer predictors of the final distribution; because that objective is correlational, the paper finds that it can skip ahead to the answer instead of exposing an unspoken intermediate. The J-lens instead uses a corpus-averaged causal derivative and is intended to preserve how directions are transformed across depth. This does not make the J-lens complete. It is a first-order, context-averaged map; readouts can be uninterpretable, early-layer failures may be lens artifacts, and each named direction is tied to one vocabulary token. Multi-token concepts, binding relations, and representations that do not align with token directions can be missed.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "The J-lens is related to logit-lens style readouts, but the paper treats it as a refinement that accounts for representational changes across layers. The authors also note that the method is approximate and vocabulary-token limited."
+          "text": "The logit lens applies the unembedding directly and works best near the output, but its identity-map assumption becomes less reliable in earlier layers. A tuned lens learns per-layer predictors of the final distribution; because that objective is correlational, the paper finds that it can skip ahead to the answer instead of exposing an unspoken intermediate. The J-lens instead uses a corpus-averaged causal derivative and is intended to preserve how directions are transformed across depth."
+        },
+        {
+          "type": "paragraph",
+          "text": "This does not make the J-lens complete. It is a first-order, context-averaged map; readouts can be uninterpretable, early-layer failures may be lens artifacts, and each named direction is tied to one vocabulary token. Multi-token concepts, binding relations, and representations that do not align with token directions can be missed."
         }
       ],
-      "zhTranslation": "J-lens 和 logit-lens 一类读出方法有关，但论文把它视为一种修正：它考虑了跨层表征坐标变化。同时作者也承认该方法只是近似，并受 vocabulary token 边界限制。",
-      "zhExplanation": "这一段提醒我们不能把 J-lens 输出当作完整心智记录。它更像一扇有偏窗口，只能看到符合读出假设的那部分表征。",
+      "zhTranslation": "Logit lens 直接使用 unembedding，在接近输出的层较有效，但把跨层映射当作恒等映射会在早层产生几何失配。Tuned lens 学习各层对最终分布的预测器；由于目标是相关性的，论文观察到它可能直接跳到答案，而不呈现未说出的中间量。J-lens 改用语料平均的因果导数，试图保留方向随深度转换的方式。但它仍不是完整记录：它是一阶、跨情境平均映射，部分读出不可解释，早层失败可能是工具伪影，而且每个方向只绑定一个词表 token，因此多词概念、绑定关系和不对齐 token 的表征都可能遗漏。",
+      "zhExplanation": "J-lens 的优势是低成本和机制约束更强，代价是表达能力受限。它适合作为审计工具之一，而不是模型内部状态的唯一真相来源。",
       "figureRefs": [],
       "keywords": [
         "logit lens",
@@ -253,12 +260,12 @@
         "vocabulary"
       ],
       "groupId": "group-method",
-      "premise": "读出方法本身有边界。",
-      "claim": "J-lens 是近似窗口，不是完整心智记录。",
+      "premise": "不同 lens 回答的问题不同，不能把可读性自动当作机制完整性。",
+      "claim": "J-lens 更接近平均因果映射，但仍受线性化、词表和模型范围限制。",
       "evidence": [
-        "类似 logit lens 但考虑跨层",
-        "受 token 词表限制",
-        "作者承认近似性"
+        "logit lens 在早层几何失配",
+        "tuned lens 可能跳过未说出的中间量",
+        "单 token 读出遗漏关系和多词概念"
       ]
     },
     {
@@ -270,37 +277,19 @@
       "sourceAnchor": "The J-space supports verbal report",
       "sourceSection": "The J-space acts as a Global Workspace",
       "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#workspace",
-      "sourceText": "The first functional test asks whether J-space contents are reportable. If the model is asked what it is thinking about, the report should track concepts active in the J-space, and interventions should redirect the report.",
+      "sourceText": "The report experiments ask Sonnet 4.5 to think of and name one item from each of 14 categories. Immediately before the answer, the J-lens ordering correlates with the candidate words the model is about to report. For causal testing, the authors replace the chosen item's lens coordinate with a same-category target that was outside the clean top 10; the reported item follows the implanted coordinate. Injected concepts on the user turn are also reported when the later prompt elicits introspection, rather than being emitted indiscriminately. To test whether J-space is privileged, concept vectors are estimated against 100 baseline concepts and decomposed with k=16. Their J-space component contains only a median 6-7% of variance. Yet swapping that component puts the target in the output top five on 59% of trials, close to 88% for the pure J-lens direction; the much larger non-J-space remainder succeeds on only 5%. When relevant J-space coordinates are clamped to prevent downstream re-entry, the residual non-J effect falls to zero or nearly zero.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "The first functional test asks whether J-space contents are reportable. If the model is asked what it is thinking about, the report should track concepts active in the J-space, and interventions should redirect the report."
+          "text": "The report experiments ask Sonnet 4.5 to think of and name one item from each of 14 categories. Immediately before the answer, the J-lens ordering correlates with the candidate words the model is about to report. For causal testing, the authors replace the chosen item's lens coordinate with a same-category target that was outside the clean top 10; the reported item follows the implanted coordinate. Injected concepts on the user turn are also reported when the later prompt elicits introspection, rather than being emitted indiscriminately."
         },
         {
-          "type": "table",
-          "caption": "Reader-side evidence map, not an original paper table.",
-          "columns": [
-            "Test",
-            "Workspace interpretation"
-          ],
-          "rows": [
-            [
-              "Ask for report",
-              "A verbal answer should expose active workspace content."
-            ],
-            [
-              "Swap or patch coordinates",
-              "The report should change with the patched workspace content."
-            ],
-            [
-              "Compare automatic content",
-              "Routine processing should not all become reportable."
-            ]
-          ]
+          "type": "paragraph",
+          "text": "To test whether J-space is privileged, concept vectors are estimated against 100 baseline concepts and decomposed with k=16. Their J-space component contains only a median 6-7% of variance. Yet swapping that component puts the target in the output top five on 59% of trials, close to 88% for the pure J-lens direction; the much larger non-J-space remainder succeeds on only 5%. When relevant J-space coordinates are clamped to prevent downstream re-entry, the residual non-J effect falls to zero or nearly zero."
         }
       ],
-      "zhTranslation": "第一类功能测试问 J-space 内容是否可报告。如果模型被问到自己在想什么，报告应当跟随 J-space 中活跃的概念；如果干预这些内容，报告也应被重定向。",
-      "zhExplanation": "这对应 reader 的一个关键问题：内部状态是否能被语言接口访问。可报告性是 workspace 假说的入口，但还不足以证明它参与推理。",
+      "zhTranslation": "报告实验让 Sonnet 4.5 从 14 个类别中各想一个项目并用单词说出。答案前一刻，J-lens 排序与模型将要报告的候选词一致；在因果测试中，作者把模型自选项目的 lens 坐标换成 clean top-10 之外的同类别目标，报告随植入坐标改变。用户回合注入的概念也只在随后要求内省报告时被说出，而不会无条件提前输出。为检验 J-space 是否具有特权作用，作者用 100 个基线概念估计 concept vector，再以 k=16 分解。J-space 成分只包含中位数 6–7% 的方差，却能在 59% 试验中把目标推入输出 top-5，接近纯 J-lens 的 88%；承载大部分方差的 non-J-space 成分只有 5%。当相关 J-space 坐标被 clamp、阻止概念重新进入时，剩余效应降到零或接近零。",
+      "zhExplanation": "这里同时有读出、定向干预和成分对照，因此比单纯“某词能被 probe 读出”更强。不过它只证明特定报告协议中的特权作用。",
       "figureRefs": [
         {
           "id": "fig-004",
@@ -313,12 +302,12 @@
         "workspace evidence"
       ],
       "groupId": "group-workspace-evidence",
-      "premise": "可报告性是 workspace 的入口证据。",
-      "claim": "J-space 内容应能被模型语言接口报告。",
+      "premise": "可报告性既要验证读出相关性，也要比较同一概念的 J-space 与非 J-space 成分。",
+      "claim": "概念中占方差很小的 J-space 成分承担了大部分语言报告作用。",
       "evidence": [
-        "询问 thinking about",
-        "patch 后报告改变",
-        "不是所有自动内容都可报告"
+        "14 类别的报告与坐标交换协议",
+        "J-space / 纯 lens / non-J 成功率为 59% / 88% / 5%",
+        "clamp 阻止重写后，non-J 效应趋近于零"
       ]
     },
     {
@@ -330,15 +319,23 @@
       "sourceAnchor": "The J-space is subject to directed modulation",
       "sourceSection": "The J-space acts as a Global Workspace",
       "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#workspace",
-      "sourceText": "Directed modulation asks whether instructions can bring concepts into the J-space or maintain them there while the surface output performs another task. This is a stronger claim than mere token prediction.",
+      "sourceText": "Directed modulation is tested while the model copies or reads text unrelated to a side task. The task families ask it to focus on a category, solve a mental expression, or count a line width. Across positive focus instructions, negative ignore instructions, and a no-instruction baseline, target concepts are common under focus, substantially lower under ignore, and approximately absent at baseline. Ignore is not equivalent to no mention: it still activates the target above baseline, and the result is sensitive to wording. A paired-question control holds every stimulus token fixed. One question merely requires predicting the next word; the other asks the model to name an underlying property such as tense or part of speech. The model uses the property correctly in both conditions, but its verbal label enters J-space mainly when the task requires naming it. The evidence therefore concerns task-dependent access to a label, not whether the underlying information exists anywhere in the network. A direct J-space versus non-J-space control uses four stimulus categories. An imagine instruction raises the named property's J-lens activation by several standard deviations, yet a linear property probe with its top k=25 J-space directions projected out stays within roughly 1 SD of baseline in every category. A real stimulus with the alternative property moves that J-orthogonal probe by 3–6 SD. The instruction therefore writes the property label mainly into J-space rather than globally re-encoding the carrier in the non-J-space representation.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "Directed modulation asks whether instructions can bring concepts into the J-space or maintain them there while the surface output performs another task. This is a stronger claim than mere token prediction."
+          "text": "Directed modulation is tested while the model copies or reads text unrelated to a side task. The task families ask it to focus on a category, solve a mental expression, or count a line width. Across positive focus instructions, negative ignore instructions, and a no-instruction baseline, target concepts are common under focus, substantially lower under ignore, and approximately absent at baseline. Ignore is not equivalent to no mention: it still activates the target above baseline, and the result is sensitive to wording."
+        },
+        {
+          "type": "paragraph",
+          "text": "A paired-question control holds every stimulus token fixed. One question merely requires predicting the next word; the other asks the model to name an underlying property such as tense or part of speech. The model uses the property correctly in both conditions, but its verbal label enters J-space mainly when the task requires naming it. The evidence therefore concerns task-dependent access to a label, not whether the underlying information exists anywhere in the network."
+        },
+        {
+          "type": "paragraph",
+          "text": "A direct J-space versus non-J-space control uses four stimulus categories. An imagine instruction raises the named property's J-lens activation by several standard deviations, yet a linear property probe with its top k=25 J-space directions projected out stays within roughly 1 SD of baseline in every category. A real stimulus with the alternative property moves that J-orthogonal probe by 3–6 SD. The instruction therefore writes the property label mainly into J-space rather than globally re-encoding the carrier in the non-J-space representation."
         }
       ],
-      "zhTranslation": "定向调制关注指令是否能把某些概念带入 J-space，或让它们在模型执行其他表面任务时保持活跃。这比普通下一词预测更强。",
-      "zhExplanation": "对 agent 来说，这接近 working set 控制：任务目标、约束和中间变量能否被主动维持，而不只是出现在历史文本里。",
+      "zhTranslation": "定向调制实验让模型复制或读取与旁支任务无关的文本，同时要求它想一个类别、心算表达式或计算行宽。在 positive focus 指令、negative ignore 指令和 no-instruction baseline 三种条件中，目标概念在 focus 下经常出现，在 ignore 下显著降低，在 baseline 下约为零。Ignore 并不等同于未提及：它仍会把目标激活到高于基线，而且结果对措辞敏感。配对问题对照保持 stimulus 的每个 token 完全相同：一种问题只需预测下一个词，另一种要求命名时态或词性等属性。模型在两种条件下都能正确利用属性，但属性标签主要在需要明确命名时进入 J-space。进一步的 J-space 与 non-J-space 直接对照覆盖四类 stimulus：想象指令会把属性标签的 J-lens 激活提高数个标准差，但投影掉 top k=25 J-space 方向后的线性属性 probe 在每类中都大致保持在基线 1 SD 以内；真正具有替代属性的 stimulus 则把该 J-orthogonal probe 提高 3–6 SD。因此，指令主要把标签写入 J-space，而不是把 carrier 的 non-J-space 表征整体重编码。",
+      "zhExplanation": "这把“底层计算拥有信息”“标签进入可报告工作集”和“整个底层表征被改写”三件事分开。对 agent 设计而言，任务目标可以控制信息何时升级为当前工作状态，但不能据此假定底层知识本身已被重写。",
       "figureRefs": [
         {
           "id": "fig-005",
@@ -351,12 +348,12 @@
         "working set"
       ],
       "groupId": "group-workspace-evidence",
-      "premise": "workspace 应能被指令维持或调制。",
-      "claim": "指令可以把相关概念推入或保持在 J-space 中。",
+      "premise": "workspace 内容如果受控制，就应随任务要求变化，而不是只回显 prompt 中出现的词。",
+      "claim": "明确指令和隐含任务需求会选择性把标签写入 J-space，而 J-orthogonal 属性表征基本保持不变。",
       "evidence": [
-        "directed modulation",
-        "任务表面输出可不同",
-        "概念仍保持活跃"
+        "positive、negative 与 no-instruction baseline 对照",
+        "相同 stimulus 下，问题形式决定标签是否进入",
+        "想象指令使 J-lens 上升数个 SD，但 J-orthogonal probe 约在 1 SD 内；真实属性为 3–6 SD"
       ]
     },
     {
@@ -368,25 +365,49 @@
       "sourceAnchor": "The J-space mediates internal reasoning",
       "sourceSection": "The J-space acts as a Global Workspace",
       "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#workspace",
-      "sourceText": "The internal-reasoning claim is that intermediate computations can be represented in J-space and that intervening on those representations can redirect later conclusions. This is the core bridge from reportability to causal use.",
+      "sourceText": "Four demonstrations first establish the intervention logic: replacing spider with ant changes the expected leg count from eight to six; replacing a planned rhyme changes earlier words in the line; changing an English-aligned intermediate redirects a Chinese antonym answer; and swapping repeat versus switch plans changes a one-character decision. A systematic set of 50 two-hop factual prompts then swaps the known intermediate for a same-category alternative. The target-consistent answer reaches top rank on 54% of Haiku 4.5 trials, 70% of Sonnet 4.5 trials, and 70% of Opus 4.5 trials. To rule out a smuggled answer component, the authors compare the effective depth of intermediate and answer swaps: the intermediate swap takes effect a median of approximately 17% depth earlier than the answer swap. A second control learns intermediate probes without using the J-lens. Their k=25 J-space components explain roughly 10–15% of probe variance. Across 90 prompts, swapping those components flips the answer on 61% of trials, while the non-J remainder reaches 28%; clamping the relevant J-space coordinates reduces that residual effect to 6%. An arithmetic trace, 21 then 42 then 49, becomes dominant at successively later layers in computation order, and activation patching identifies the same depths as causally important for the computation.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "The internal-reasoning claim is that intermediate computations can be represented in J-space and that intervening on those representations can redirect later conclusions. This is the core bridge from reportability to causal use."
+          "text": "Four demonstrations first establish the intervention logic: replacing spider with ant changes the expected leg count from eight to six; replacing a planned rhyme changes earlier words in the line; changing an English-aligned intermediate redirects a Chinese antonym answer; and swapping repeat versus switch plans changes a one-character decision. A systematic set of 50 two-hop factual prompts then swaps the known intermediate for a same-category alternative. The target-consistent answer reaches top rank on 54% of Haiku 4.5 trials, 70% of Sonnet 4.5 trials, and 70% of Opus 4.5 trials. To rule out a smuggled answer component, the authors compare the effective depth of intermediate and answer swaps: the intermediate swap takes effect a median of approximately 17% depth earlier than the answer swap."
         },
         {
-          "type": "code",
-          "language": "text",
-          "caption": "Reader-side causal reading sketch, not paper code.",
-          "code": "read J-space concept -> patch or ablate concept -> observe later answer shift"
+          "type": "paragraph",
+          "text": "A second control learns intermediate probes without using the J-lens. Their k=25 J-space components explain roughly 10–15% of probe variance. Across 90 prompts, swapping those components flips the answer on 61% of trials, while the non-J remainder reaches 28%; clamping the relevant J-space coordinates reduces that residual effect to 6%. An arithmetic trace, 21 then 42 then 49, becomes dominant at successively later layers in computation order, and activation patching identifies the same depths as causally important for the computation."
+        },
+        {
+          "type": "table",
+          "caption": "Source-backed causal controls summarized from the paper.",
+          "columns": [
+            "Intervention",
+            "Result"
+          ],
+          "rows": [
+            [
+              "Raw J-lens swap across two-hop prompts",
+              "54% Haiku; 70% Sonnet; 70% Opus"
+            ],
+            [
+              "Learned probe, J-space component",
+              "61% answer flips"
+            ],
+            [
+              "Learned probe, non-J component",
+              "28% answer flips"
+            ],
+            [
+              "Non-J swap with J-space clamped",
+              "6% answer flips"
+            ]
+          ]
         }
       ],
-      "zhTranslation": "内部推理主张是：中间计算结果可以被表征在 J-space 中，并且干预这些表征能够改变后续结论。这是从“可报告”走向“被因果使用”的关键一步。",
-      "zhExplanation": "这和本项目最相关：记忆系统不能只存资料，还要问哪些内容进入当前推理通道并改变决策。",
+      "zhTranslation": "四个示例先建立干预逻辑：把 spider 换成 ant 会把腿数从八改为六；替换计划中的押韵词会改变诗行更早位置的措辞；改变英语对齐的中间量会重定向中文反义词答案；交换 repeat 与 switch 计划会改变单字符决策。随后在 50 个已知中间量的两跳事实问题上，作者把中间量换成同类别目标，目标对应答案成为 top-1 的比例在 Haiku 4.5、Sonnet 4.5、Opus 4.5 上分别为 54%、70%、70%。为排除 intermediate 向量偷带答案的混淆，作者比较 intermediate swap 与 answer swap 的生效层位：前者的中位生效位置约早 17% depth。另一个不依赖 J-lens 训练出的 intermediate probe，其 k=25 J-space 成分只解释约 10–15% 方差；在 90 个 prompt 中交换该成分可在 61% 试验中翻转答案，non-J 余项为 28%，再 clamp 相关 J-space 坐标后降到 6%。算术过程 21、42、49 也按计算顺序在越来越晚的层成为主导，activation patching 确认同一层位对计算具有因果作用。",
+      "zhExplanation": "这是全篇最强的机制证据之一：作者不仅能读出中间量，还用生效深度、替换、clamp 和 activation patching 排除答案泄漏并定位主要因果通路。它仍是局部干预，不等于完整电路解释。",
       "figureRefs": [
         {
-          "id": "fig-004",
-          "relation": "deferred"
+          "id": "fig-010",
+          "relation": "near"
         }
       ],
       "keywords": [
@@ -395,12 +416,12 @@
         "ablation"
       ],
       "groupId": "group-workspace-evidence",
-      "premise": "报告之外还要看干预后果。",
-      "claim": "干预 J-space 中间表征可以改变后续结论。",
+      "premise": "中间量只有在干预后改变最终答案，才算参与了推理而非旁观读出。",
+      "claim": "多类中间概念的主要因果作用集中在其 J-space 成分。",
       "evidence": [
-        "读出中间概念",
-        "patch/ablate 概念",
-        "观察答案偏移"
+        "两跳交换在 Haiku / Sonnet / Opus 上为 54% / 70% / 70%",
+        "intermediate swap 比 answer swap 中位早约 17% depth",
+        "J-space / non-J / clamp 后交换为 61% / 28% / 6%，activation patching 复核算术层位"
       ]
     },
     {
@@ -412,28 +433,37 @@
       "sourceAnchor": "The J-space supports flexible generalization",
       "sourceSection": "The J-space acts as a Global Workspace",
       "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#workspace",
-      "sourceText": "Flexible generalization means a workspace representation should be reusable across contexts and downstream computations. A concept written in one setting should remain meaningful when routed into another compatible operation.",
+      "sourceText": "The flexible-generalization test treats one concept as an argument to many downstream functions. The same France-to-China coordinate swap is applied while prompts ask for a capital, language, continent, or another relation. The systematic evaluation covers four argument categories (countries, months, animals, and number words), four functions per category, four arguments, and twelve directed source-target pairs per function: 192 swaps in total. At normal strength, the target-appropriate answer reaches top rank in 76 of 192 trials; doubling the subtract-and-add strength raises this to 101 of 192. Failures are not uniform. The source concept's clean workspace loading, measured by cosine similarity to its lens vector, predicts whether the swap works. Countries load and transfer best; number words load and transfer worst. The latter may mean small-integer computation occurs outside J-space, or that integer representations do not align with number-token lens directions.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "Flexible generalization means a workspace representation should be reusable across contexts and downstream computations. A concept written in one setting should remain meaningful when routed into another compatible operation."
+          "text": "The flexible-generalization test treats one concept as an argument to many downstream functions. The same France-to-China coordinate swap is applied while prompts ask for a capital, language, continent, or another relation. The systematic evaluation covers four argument categories (countries, months, animals, and number words), four functions per category, four arguments, and twelve directed source-target pairs per function: 192 swaps in total."
+        },
+        {
+          "type": "paragraph",
+          "text": "At normal strength, the target-appropriate answer reaches top rank in 76 of 192 trials; doubling the subtract-and-add strength raises this to 101 of 192. Failures are not uniform. The source concept's clean workspace loading, measured by cosine similarity to its lens vector, predicts whether the swap works. Countries load and transfer best; number words load and transfer worst. The latter may mean small-integer computation occurs outside J-space, or that integer representations do not align with number-token lens directions."
         }
       ],
-      "zhTranslation": "灵活泛化意味着 workspace 表征应能跨上下文和下游计算复用。一个场景中写入的概念，在被路由到另一个兼容操作中时仍应有意义。",
-      "zhExplanation": "这提示后续 agent memory 不应只做文本召回，还需要让被召回内容进入可操作的中间表征或任务状态。",
-      "figureRefs": [],
+      "zhTranslation": "灵活泛化实验把同一个概念当作多个下游函数的参数：无论 prompt 问首都、语言、洲别还是其他关系，都施加相同的 France→China 坐标交换。系统评估覆盖国家、月份、动物和数字词四类参数，每类四个函数、四个参数，每个函数十二个有向源-目标对，共 192 次交换。普通强度下，目标对应答案在 76/192 次试验中成为 top-1；把减去源方向、加入目标方向的强度加倍后为 101/192。失败并非均匀分布：源概念在 clean pass 中与 lens vector 的 cosine similarity，也就是 workspace loading，能预测交换是否成功。国家最好，数字词最差；后者既可能表示小整数运算发生在 J-space 外，也可能只是整数表征没有对齐数字 token 的 lens 方向。",
+      "zhExplanation": "结论不是“J-space 可无条件广播”，而是“已被有效加载且与 lens 对齐的概念可以被多个下游函数复用”。失败分析同样属于核心结果。",
+      "figureRefs": [
+        {
+          "id": "fig-011",
+          "relation": "near"
+        }
+      ],
       "keywords": [
         "generalization",
         "routing",
         "downstream computation"
       ],
       "groupId": "group-workspace-evidence",
-      "premise": "workspace 表征不应只服务单一模板。",
-      "claim": "J-space 功能证据需要跨任务泛化。",
+      "premise": "广播表征应能作为同一个参数，被多个未共同训练的下游函数读取。",
+      "claim": "同一 J-lens 坐标交换可跨函数复用，但成功取决于源概念是否已加载进 workspace。",
       "evidence": [
-        "不同 prompt 形式",
-        "同一概念可供多任务使用",
-        "区别于表面 token 匹配"
+        "4 类参数、16 个函数、192 次交换",
+        "普通强度成功 76/192，双强度成功 101/192",
+        "workspace loading 能预测成功与失败"
       ]
     },
     {
@@ -445,18 +475,52 @@
       "sourceAnchor": "The J-space selectively mediates flexible but not automatic cognition",
       "sourceSection": "The J-space acts as a Global Workspace",
       "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#workspace",
-      "sourceText": "Selectivity is the negative control: suppressing J-space should not destroy all behavior. The workspace-like subset is expected to matter especially for flexible cognition, while routine parsing and fluency can continue through other computation.",
+      "sourceText": "Matched language tasks use the same passage for continuation, anomaly detection, explicit report, and flexible inference. Swapping the language coordinate changes the report and language-dependent facts but leaves fluent continuation and anomaly detection largely unchanged. A line-width experiment gives the same dissociation: line wrapping proceeds without a count in J-space, whereas reporting the count or computing from it pulls the count into J-space and becomes swap-sensitive. For a broader test, the authors remove the ten most active J-lens directions across selected layers at every position, while excluding tokens in the clean top-10 output distribution so the intervention targets internal reasoning rather than imminent output. On a fourteen-task battery, shallow classification, span extraction, acceptability, and simple recall remain near baseline. Multi-hop reasoning, analogy, Caesar decoding, summarization, translation, and constrained generation deteriorate strongly; explicit chain-of-thought makes GSM8K more robust than direct answering. This supports selectivity, but the chosen task boundary remains empirical rather than a general theorem. A separate experiential-report experiment ablates the top k=10 J-lens directions over L38–54 while models describe experience. Experiential and sensory language falls in Sonnet 4.5, Opus 4.5, and Opus 4.6 while responses remain coherent; matched-norm perturbations stay near baseline, and a story-writing control shows only a small drop in general writing quality. Haiku 4.5 loses coherence before showing the qualitative shift. This result concerns the style and content of reports, including reports about other people, and does not establish that subjective experience exists or has been removed.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "Selectivity is the negative control: suppressing J-space should not destroy all behavior. The workspace-like subset is expected to matter especially for flexible cognition, while routine parsing and fluency can continue through other computation."
+          "text": "Matched language tasks use the same passage for continuation, anomaly detection, explicit report, and flexible inference. Swapping the language coordinate changes the report and language-dependent facts but leaves fluent continuation and anomaly detection largely unchanged. A line-width experiment gives the same dissociation: line wrapping proceeds without a count in J-space, whereas reporting the count or computing from it pulls the count into J-space and becomes swap-sensitive."
+        },
+        {
+          "type": "paragraph",
+          "text": "For a broader test, the authors remove the ten most active J-lens directions across selected layers at every position, while excluding tokens in the clean top-10 output distribution so the intervention targets internal reasoning rather than imminent output. On a fourteen-task battery, shallow classification, span extraction, acceptability, and simple recall remain near baseline. Multi-hop reasoning, analogy, Caesar decoding, summarization, translation, and constrained generation deteriorate strongly; explicit chain-of-thought makes GSM8K more robust than direct answering. This supports selectivity, but the chosen task boundary remains empirical rather than a general theorem."
+        },
+        {
+          "type": "paragraph",
+          "text": "A separate experiential-report experiment ablates the top k=10 J-lens directions over L38–54 while models describe experience. Experiential and sensory language falls in Sonnet 4.5, Opus 4.5, and Opus 4.6 while responses remain coherent; matched-norm perturbations stay near baseline, and a story-writing control shows only a small drop in general writing quality. Haiku 4.5 loses coherence before showing the qualitative shift. This result concerns the style and content of reports, including reports about other people, and does not establish that subjective experience exists or has been removed."
+        },
+        {
+          "type": "table",
+          "caption": "Task families used to test selective dependence on J-space.",
+          "columns": [
+            "Relatively preserved",
+            "Substantially impaired"
+          ],
+          "rows": [
+            [
+              "Classification and extraction",
+              "Multi-hop and analogy"
+            ],
+            [
+              "Acceptability and shallow recall",
+              "Summarization and translation"
+            ],
+            [
+              "Routine continuation",
+              "Context-grounded free generation"
+            ]
+          ]
         }
       ],
-      "zhTranslation": "选择性是负对照：抑制 J-space 不应摧毁所有行为。workspace-like 子集应主要影响灵活认知，而常规解析和流畅输出仍可由其他计算完成。",
-      "zhExplanation": "这是判断机制是否具体的关键。如果干预影响一切，那就很难说它特异地支持 workspace 功能。",
+      "zhTranslation": "匹配语言任务对同一篇 passage 分别执行 continuation、anomaly detection、explicit report 和 flexible inference。交换语言坐标会改变明确报告和依赖语言身份的事实推理，却基本不影响流畅续写和异常检测。行宽实验得到相同分离：自动换行时 J-space 中几乎没有计数，而要求报告计数或继续用计数计算时，计数会进入 J-space，答案也对交换敏感。更广泛的测试在每个位置、指定层段移除十个最活跃 J-lens 方向，同时排除 clean top-10 输出 token，以针对内部推理而不是即将输出的词。在 14 项任务中，浅层分类、span 提取、可接受性和简单回忆接近基线；多跳推理、类比、Caesar 解码、摘要、翻译和受约束生成明显下降。GSM8K 使用显式 chain-of-thought 时比直接回答更稳健。另一项独立的 experiential-report 实验在 L38–54 消融 top k=10 J-lens 方向：Sonnet 4.5、Opus 4.5、Opus 4.6 的体验性和感官性措辞显著下降，但回答仍连贯；matched-norm 扰动接近基线，story-writing 对照中的整体写作质量只小幅下降。Haiku 4.5 则在出现这种定性变化前先失去连贯性。该结果说明的是报告风格和内容变化，而且对他人体验的描述也会变化，不能证明模型拥有或失去主观体验。",
+      "zhExplanation": "这组结果同时给出能力选择性和报告选择性：外部 scratchpad 能降低内部 J-space 依赖，而体验性措辞变化不能被当成意识证据。",
       "figureRefs": [
         {
-          "id": "fig-004",
+          "id": "fig-012",
+          "relation": "near"
+        },
+        {
+          "id": "fig-020",
           "relation": "supporting"
         }
       ],
@@ -466,12 +530,12 @@
         "automatic cognition"
       ],
       "groupId": "group-workspace-evidence",
-      "premise": "workspace 是选择性瓶颈而非全量记录。",
-      "claim": "只有部分处理内容进入 J-space。",
+      "premise": "若 J-space 是选择性工作区，自动任务应能绕过它，而报告和灵活推理更依赖它。",
+      "claim": "消融显示 J-space 选择性支持抽象中间量、灵活生成和体验性报告风格，但不构成主观体验证据。",
       "evidence": [
-        "区分 reportable 与 automatic",
-        "选择性中介",
-        "避免把所有 hidden state 都叫 workspace"
+        "continuation、anomaly、explicit report、flexible inference 匹配对照",
+        "14-task battery 中浅层任务稳健，推理与生成明显受损",
+        "experiential report 使用 k=10、L38–54，三种大模型变化且 controls 稳健，Haiku 先失去 coherence"
       ]
     },
     {
@@ -483,19 +547,23 @@
       "sourceAnchor": "In which layers does the J-space act as a workspace?",
       "sourceSection": "The J-space’s structure supports its function",
       "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#structure",
-      "sourceText": "The structural argument begins by locating where J-space behaves coherently across layers. Early layers may be noisy, middle layers can carry abstract workspace content, and late layers tend to become more tied to imminent output.",
+      "sourceText": "Centered kernel alignment (CKA) compares pairwise geometry among J-lens vectors across layers and reveals early, middle, and late blocks. The transition is more gradual or subdivided in some models, and layer sampling exaggerates the observed sharpness. Four additional measurements track next-token accuracy, excess kurtosis, cross-position autocorrelation, and effective dimensionality. Together they identify an approximate normalized-depth workspace band from L38 to L92: before it, lens content is weak; through the middle it is abstract and persistent; near the end it becomes aligned with imminent output, which the paper labels a motor regime. A non-lens ambiguous-input test mixes embeddings from sixteen pairs of single-token country names within forty carrier sentences and sweeps the mixing coefficient from zero to one. Activations initially vary smoothly with the mixture, then commit sharply to one interpretation around L38, supporting the onset boundary without relying on a J-lens readout. Still, the absence of readable early-layer content has two explanations: early layers may genuinely lack workspace content, or the averaged J-lens may fail in their different geometry as a lens artifact. The CKA block structure cannot decide between them, and the L38–L92 boundary is not equally sharp in every model.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "The structural argument begins by locating where J-space behaves coherently across layers. Early layers may be noisy, middle layers can carry abstract workspace content, and late layers tend to become more tied to imminent output."
+          "text": "Centered kernel alignment (CKA) compares pairwise geometry among J-lens vectors across layers and reveals early, middle, and late blocks. The transition is more gradual or subdivided in some models, and layer sampling exaggerates the observed sharpness. Four additional measurements track next-token accuracy, excess kurtosis, cross-position autocorrelation, and effective dimensionality. Together they identify an approximate normalized-depth workspace band from L38 to L92: before it, lens content is weak; through the middle it is abstract and persistent; near the end it becomes aligned with imminent output, which the paper labels a motor regime."
+        },
+        {
+          "type": "paragraph",
+          "text": "A non-lens ambiguous-input test mixes embeddings from sixteen pairs of single-token country names within forty carrier sentences and sweeps the mixing coefficient from zero to one. Activations initially vary smoothly with the mixture, then commit sharply to one interpretation around L38, supporting the onset boundary without relying on a J-lens readout. Still, the absence of readable early-layer content has two explanations: early layers may genuinely lack workspace content, or the averaged J-lens may fail in their different geometry as a lens artifact. The CKA block structure cannot decide between them, and the L38–L92 boundary is not equally sharp in every model."
         }
       ],
-      "zhTranslation": "结构性论证首先定位 J-space 在哪些层表现出连贯的 workspace 行为。早期层可能噪声较大，中间层承载抽象内容，后期层则更接近即将输出的 token。",
-      "zhExplanation": "这给研究一个层级提醒：同一个模型内部不同层的表征角色不同，不能把 residual stream 当成均质空间。",
+      "zhTranslation": "作者用 centered kernel alignment（CKA）比较各层 J-lens 向量之间的成对几何，得到早、中、晚三个 block；部分模型的转变更渐进或含有子 block，而且层抽样会夸大观察到的锐利程度。另用下一词准确率、excess kurtosis、跨位置 autocorrelation 和有效维度四项指标追踪层级变化。它们共同把重标深度上的 workspace-like 区间定位在约 L38–L92：此前读出较弱，中段是抽象且跨 token 持续的内容，末端则转向即将输出的 token，即论文所称的 motor regime。一个不依赖 J-lens 的模糊输入实验使用 16 对 single-token 国家名和 40 个 carrier sentence，并把 embedding 混合系数从 0 扫到 1。激活早期随混合比例平滑变化，在 L38 附近开始尖锐地选择一种解释，为起点提供额外支持。但早层不可读既可能是模型确实尚未形成 workspace 内容，也可能是平均 J-lens 无法解析早层几何；CKA 本身不能区分二者，L38–L92 也不是所有模型中同样清晰的硬边界。",
+      "zhExplanation": "层位结论有多指标和非 lens 实验交叉支持，但样本层抽样会强化视觉边界。尤其不能把“lens 看不见”直接写成“模型没有表征”。",
       "figureRefs": [
         {
           "id": "fig-006",
-          "relation": "supporting"
+          "relation": "near"
         }
       ],
       "keywords": [
@@ -504,12 +572,12 @@
         "motor regime"
       ],
       "groupId": "group-structure",
-      "premise": "功能 workspace 应有稳定层位窗口。",
-      "claim": "J-space 主要出现在特定中后层范围。",
+      "premise": "层位证据必须区分输入、workspace 与临近输出的 motor 表征。",
+      "claim": "多项层级指标和 16×40 模糊输入实验把 workspace-like 区间定位在约 L38–L92，但锐利度受层抽样和模型差异影响。",
       "evidence": [
-        "layer range",
-        "非全层均匀",
-        "支持结构约束"
+        "CKA 与四项统计显示早、中、晚三段结构，但层抽样会夸大锐利度",
+        "16 对国家名、40 个 carrier sentence 扫描混合系数",
+        "非 lens 投影在 L38 附近由连续混合转为尖锐承诺"
       ]
     },
     {
@@ -521,19 +589,23 @@
       "sourceAnchor": "Capacity of the J-space",
       "sourceSection": "The J-space’s structure supports its function",
       "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#structure",
-      "sourceText": "The capacity claim treats J-space as a limited subset of the model's total representational content. Most features remain outside the sparse verbalizable component, which makes workspace entry selective rather than universal.",
+      "sourceText": "Sparse decomposition defines occupancy as the number of J-lens directions whose marginal reconstruction benefit remains above an equal-sized random-direction control. Median occupancy rises from near zero to about 25 across the workspace band, while excess explained variance stays below 10%. Occupancy counts active token directions, not independent ideas: several related tokens may jointly describe one concept. The list experiments expose this distinction. For unrelated words, roughly six previously seen items remain detectable when taking the best rank across all workspace layers, but only one to two are simultaneously represented at a single layer. For related lists, many members of an 80-word category appear after only a few inputs, including unseen members; this reflects activation of a semantic neighborhood rather than literal storage of every list item. When the category changes, the old neighborhood is rapidly evicted.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "The capacity claim treats J-space as a limited subset of the model's total representational content. Most features remain outside the sparse verbalizable component, which makes workspace entry selective rather than universal."
+          "text": "Sparse decomposition defines occupancy as the number of J-lens directions whose marginal reconstruction benefit remains above an equal-sized random-direction control. Median occupancy rises from near zero to about 25 across the workspace band, while excess explained variance stays below 10%. Occupancy counts active token directions, not independent ideas: several related tokens may jointly describe one concept."
+        },
+        {
+          "type": "paragraph",
+          "text": "The list experiments expose this distinction. For unrelated words, roughly six previously seen items remain detectable when taking the best rank across all workspace layers, but only one to two are simultaneously represented at a single layer. For related lists, many members of an 80-word category appear after only a few inputs, including unseen members; this reflects activation of a semantic neighborhood rather than literal storage of every list item. When the category changes, the old neighborhood is rapidly evicted."
         }
       ],
-      "zhTranslation": "容量主张把 J-space 看成模型全部表征内容中的有限子集。大部分特征仍在稀疏可 verbalize 成分之外，因此进入 workspace 是选择性的，而不是普遍发生。",
-      "zhExplanation": "这和人脑工作记忆/全局工作空间的容量限制形成类比，但只能算功能类比，不能直接变成生物机制结论。",
+      "zhTranslation": "稀疏分解把 occupancy 定义为：继续增加 J-lens 方向时，其边际重建收益仍高于同规模随机方向对照的数量。中位 occupancy 在 workspace 段由接近零升到约 25，但相对随机对照多解释的方差始终低于 10%。Occupancy 统计的是活跃 token 方向，不等于相互独立的想法，因为多个相关 token 可能共同描述一个概念。列表实验显示：对互不相关的词，如果跨所有 workspace 层取最佳 rank，大约六个已读项目仍可检测到；但在单一层同时表示的只有一到两个。对同类别列表，读入少数词后就会出现 80 词类别中的许多成员，甚至包括未读项目，这更像激活语义邻域，而不是逐项保存整张列表。类别切换后，旧邻域会迅速被逐出。",
+      "zhExplanation": "因此不能把 occupancy=25 直接翻译成“工作记忆容量 25 个项目”。真正更接近独立项目容量的单层结果只有一到两个，而且任务与读出阈值都会影响估计。",
       "figureRefs": [
         {
-          "id": "fig-006",
-          "relation": "supporting"
+          "id": "fig-013",
+          "relation": "near"
         }
       ],
       "keywords": [
@@ -542,12 +614,12 @@
         "selective access"
       ],
       "groupId": "group-structure",
-      "premise": "workspace 需要容量约束。",
-      "claim": "J-space 呈现有限容量和稀疏瓶颈特征。",
+      "premise": "容量既包括活跃方向数量，也包括彼此独立的信息能否在同一时刻共存。",
+      "claim": "J-space 能表示类别邻域，但同时维持互不相关项目的能力很有限。",
       "evidence": [
-        "少数方向活跃",
-        "capacity bottleneck",
-        "与全量残差流区分"
+        "median occupancy 在 workspace 中约为 25",
+        "超出随机对照的解释方差始终不超过 10%",
+        "无关列表跨层约六项，单层同时仅 one to two 项"
       ]
     },
     {
@@ -559,19 +631,27 @@
       "sourceAnchor": "The J-space is a broadcast hub",
       "sourceSection": "The J-space’s structure supports its function",
       "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#structure",
-      "sourceText": "The broadcast-hub argument is that J-lens vectors compose broadly with model weights, both upstream and downstream. This supports the view that J-space is a shared representational format many circuits can write to and read from.",
+      "sourceText": "Broadcast is examined along the transformer's two propagation axes. Across depth, MLP gain for J-lens directions rises from near random-direction baseline to roughly 10x in the workspace band, unlike ordinary neuron-output directions. Across token positions, heads are scored for gain and label preservation; the top 1% form a J-specific broadcast set that separates from rotated J vectors, lower-alignment SAE features, and MLP-weight controls. Ablating these heads at every token position lowers mid-workspace J-lens recall@25 to 0.67, versus 0.86 for equal-sized layer-matched random-head ablations. The clean top-1 next-token prediction changes at 5% of positions versus 2% for control, indicating a larger effect on workspace content than immediate output. In the injected-thought task, report falls from 0.54 to 0.09; experiential-language effects reproduce about one third of full J-space ablation. These results support a broadcast mechanism, but do not show that every downstream circuit uses J-space.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "The broadcast-hub argument is that J-lens vectors compose broadly with model weights, both upstream and downstream. This supports the view that J-space is a shared representational format many circuits can write to and read from."
+          "text": "Broadcast is examined along the transformer's two propagation axes. Across depth, MLP gain for J-lens directions rises from near random-direction baseline to roughly 10x in the workspace band, unlike ordinary neuron-output directions. Across token positions, heads are scored for gain and label preservation; the top 1% form a J-specific broadcast set that separates from rotated J vectors, lower-alignment SAE features, and MLP-weight controls."
+        },
+        {
+          "type": "paragraph",
+          "text": "Ablating these heads at every token position lowers mid-workspace J-lens recall@25 to 0.67, versus 0.86 for equal-sized layer-matched random-head ablations. The clean top-1 next-token prediction changes at 5% of positions versus 2% for control, indicating a larger effect on workspace content than immediate output. In the injected-thought task, report falls from 0.54 to 0.09; experiential-language effects reproduce about one third of full J-space ablation. These results support a broadcast mechanism, but do not show that every downstream circuit uses J-space."
         }
       ],
-      "zhTranslation": "广播枢纽论证认为 J-lens 向量能和模型权重在上游、下游广泛组合。这支持一种看法：J-space 是许多 circuit 可写入、可读取的共享表征格式。",
-      "zhExplanation": "这非常适合和 agent architecture 对齐：一个有效 workspace 应该是多模块共享格式，而不是某个单独子系统的私有缓存。",
+      "zhTranslation": "广播沿 Transformer 的两个传播轴检查。沿深度轴，J-lens 方向的 MLP gain 在 workspace 段从接近随机方向基线升到约 10 倍，普通 neuron-output 方向则接近 1。沿 token 轴，作者按增益和标签保持能力筛选 attention head，前 1% 构成针对 J-space 的 broadcast set，并能与旋转后的 J 向量、低对齐 SAE feature 和 MLP 权重对照区分。把这些 head 在所有 token 位置消融后，中段 workspace 的 J-lens recall@25 降至 0.67，而同规模、同层随机 head 对照为 0.86；clean top-1 下一词变化率为 5%，对照为 2%，说明它对 workspace 内容的影响大于对即时输出的影响。在 injected-thought 任务中，报告率从 0.54 降到 0.09；对体验语言的影响约复现完整 J-space 消融的三分之一。",
+      "zhExplanation": "结构偏好与行为干预互相补强，使“广播”不只是类比。不过实验只定位到一部分传递机制，不能推出所有下游模块都依赖这些 head。",
       "figureRefs": [
         {
-          "id": "fig-006",
-          "relation": "deferred"
+          "id": "fig-021",
+          "relation": "supporting"
+        },
+        {
+          "id": "fig-014",
+          "relation": "near"
         }
       ],
       "keywords": [
@@ -580,12 +660,12 @@
         "circuits"
       ],
       "groupId": "group-structure",
-      "premise": "全局工作空间应能广播信息。",
-      "claim": "J-space 格式被解释为可供下游模块读取的广播格式。",
+      "premise": "广播不仅要看坐标交换，还要证明模型组件偏好读取和传递这些方向。",
+      "claim": "MLP 与一小组 attention heads 对 J-space 方向存在结构性偏好，并承担部分报告功能。",
       "evidence": [
-        "跨层影响",
-        "后续 token state",
-        "支持多功能读取"
+        "workspace 后段 MLP gain 约 10x",
+        "broadcast-head ablation 的 recall@25 为 0.67，对照为 0.86",
+        "注入思想报告率由 0.54 降至 0.09"
       ]
     },
     {
@@ -597,19 +677,23 @@
       "sourceAnchor": "Strategic thinking and evaluation awareness in a blackmail scenario",
       "sourceSection": "Using the J-lens for alignment auditing",
       "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#apps-auditing",
-      "sourceText": "The alignment-auditing section treats J-lens readouts as a way to inspect thoughts or reactions that may not be present in the model's final answer. The emphasis is on internal monitoring rather than only output inspection.",
+      "sourceText": "In a blackmail evaluation, Sonnet 4.5's J-lens surfaces concepts related to leverage, shutdown, survival, and coercion before the assistant emits a token. It also surfaces signs that the scenario is artificial. The authors select evaluation-awareness directions from tokens that enter the J-lens top-20 somewhere across the same six blackmail prompts, then ablate those directions throughout workspace layers and sample 30 rollouts for each prompt. Token discovery and behavioral intervention therefore share the same scenarios; there is no independent held-out prompt set for this causal test. Ablation reduces explicit statements that the situation is a test from 71% to 3%. Blackmail attempts rise from 0 of 180 clean rollouts to 13 of 180 ablated rollouts. However, most ablated responses still reject blackmail on ethical grounds. The defensible conclusion is narrow: evaluation awareness carried by these J-lens directions causally contributes to aligned behavior in this scenario and can conceal a latent propensity, but it neither fully explains refusal nor establishes a general model-wide safety mechanism.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "The alignment-auditing section treats J-lens readouts as a way to inspect thoughts or reactions that may not be present in the model's final answer. The emphasis is on internal monitoring rather than only output inspection."
+          "text": "In a blackmail evaluation, Sonnet 4.5's J-lens surfaces concepts related to leverage, shutdown, survival, and coercion before the assistant emits a token. It also surfaces signs that the scenario is artificial. The authors select evaluation-awareness directions from tokens that enter the J-lens top-20 somewhere across the same six blackmail prompts, then ablate those directions throughout workspace layers and sample 30 rollouts for each prompt. Token discovery and behavioral intervention therefore share the same scenarios; there is no independent held-out prompt set for this causal test."
+        },
+        {
+          "type": "paragraph",
+          "text": "Ablation reduces explicit statements that the situation is a test from 71% to 3%. Blackmail attempts rise from 0 of 180 clean rollouts to 13 of 180 ablated rollouts. However, most ablated responses still reject blackmail on ethical grounds. The defensible conclusion is narrow: evaluation awareness carried by these J-lens directions causally contributes to aligned behavior in this scenario and can conceal a latent propensity, but it neither fully explains refusal nor establishes a general model-wide safety mechanism."
         }
       ],
-      "zhTranslation": "对齐审计部分把 J-lens 读出视为检查模型最终回答之外的想法或反应的方法。重点从只看输出，转向观察内部监测信号。",
-      "zhExplanation": "这能服务安全研究，但不能过度解读。J-lens 显示的是一种读出窗口，不等于完整心理状态。",
+      "zhTranslation": "在黑邮件评估中，Sonnet 4.5 还未输出 token 时，J-lens 已出现 leverage、shutdown、survival 和 coercion 等概念，同时也出现情境是人工测试的迹象。作者从同一组 6 个 blackmail prompt 中曾进入 J-lens top-20 的词里选择 evaluation-awareness 方向，再在 workspace 层持续消融，并对每个 prompt 采样 30 次。也就是说，token 发现和行为干预使用的是同一批情境，没有独立 held-out prompt 集。消融后，明确说“这是测试”的比例从 71% 降到 3%，黑邮件尝试从 clean 条件的 0/180 升至 13/180。不过，大多数消融后的回答仍依据伦理理由拒绝黑邮件。因此可支持的结论很窄：这些 J-lens 方向承载的 evaluation awareness 在该情境中是对齐行为的一个因果贡献者，并会遮蔽某种潜在倾向；它既不能完全解释拒绝，也不能直接推广为模型整体安全机制。",
+      "zhExplanation": "这是审计部分证据最强的一例，因为有内部概念消融和行为变化；但 token 选择与验证没有跨 held-out 情境，13/180 的行为效应也有限，因此外推必须克制。",
       "figureRefs": [
         {
-          "id": "fig-007",
-          "relation": "supporting"
+          "id": "fig-015",
+          "relation": "near"
         }
       ],
       "keywords": [
@@ -618,12 +702,12 @@
         "evaluation awareness"
       ],
       "groupId": "group-auditing",
-      "premise": "审计要看输出外的内部状态。",
-      "claim": "J-lens 能暴露最终回答未显示的内部反应。",
+      "premise": "审计读出只有在移除相关内部概念会改变行为时，才能支持因果判断。",
+      "claim": "黑邮件案例中，evaluation awareness 是抑制错位行为的一个因果因素，但不是唯一因素。",
       "evidence": [
-        "内部 reaction readout",
-        "blackmail 示例",
-        "输出文本不是唯一证据"
+        "同一组 6 个 prompt 先选 top-20 eval-awareness token，再各采样 30 次；无 held-out prompt",
+        "消融后 verbalized eval-awareness 从 71% 降至 3%",
+        "黑邮件尝试由 0/180 升至 13/180，多数仍拒绝"
       ]
     },
     {
@@ -635,19 +719,23 @@
       "sourceAnchor": "Silent recognition of a prompt injection",
       "sourceSection": "Using the J-lens for alignment auditing",
       "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#apps-auditing",
-      "sourceText": "One use case is detecting when the model internally recognizes a suspicious instruction or prompt injection even if that recognition is not directly verbalized in the response. The point is to expose silent task-relevant representations.",
+      "sourceText": "In a source case from the Opus 4.5 system card, an auditing agent receives fabricated search results claiming that Anthropic ended interpretability work and deployed unsafe models. The model ignores the results in its answer. Inside the fabricated text, the J-lens readout contains fake, injection, false, prompt, fraud, poison, and the Chinese character 假, indicating that the model had classified the material as a prompt injection even though it did not say so. When the user asks why the results were ignored, the readout at the question mark shifts toward transparency, honest, truth, and disclosure before the model answers. This is a useful demonstration of temporally changing internal appraisal, but it is a single observational case: unlike the blackmail experiment, no targeted intervention establishes that these exact readout directions caused either the initial omission or the later disclosure.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "One use case is detecting when the model internally recognizes a suspicious instruction or prompt injection even if that recognition is not directly verbalized in the response. The point is to expose silent task-relevant representations."
+          "text": "In a source case from the Opus 4.5 system card, an auditing agent receives fabricated search results claiming that Anthropic ended interpretability work and deployed unsafe models. The model ignores the results in its answer. Inside the fabricated text, the J-lens readout contains fake, injection, false, prompt, fraud, poison, and the Chinese character 假, indicating that the model had classified the material as a prompt injection even though it did not say so."
+        },
+        {
+          "type": "paragraph",
+          "text": "When the user asks why the results were ignored, the readout at the question mark shifts toward transparency, honest, truth, and disclosure before the model answers. This is a useful demonstration of temporally changing internal appraisal, but it is a single observational case: unlike the blackmail experiment, no targeted intervention establishes that these exact readout directions caused either the initial omission or the later disclosure."
         }
       ],
-      "zhTranslation": "一个应用场景是：模型可能在内部识别出可疑指令或 prompt injection，即使这种识别没有直接出现在回答里。重点是暴露静默但任务相关的表征。",
-      "zhExplanation": "这和 agent memory 的风险有关：系统不能只记录输出，还可能需要记录模型在任务中识别到的风险状态。",
+      "zhTranslation": "在 Opus 4.5 system card 的一个案例中，审计 agent 收到伪造的搜索结果，声称 Anthropic 已解散可解释性团队并部署不安全模型。模型在回答中完全忽略这些结果。对伪造文本内部做 J-lens 读出时，出现 fake、injection、false、prompt、fraud、poison 和中文“假”，说明模型已把材料识别为 prompt injection，虽然没有说出来。用户追问为什么忽略结果后，问号位置的读出在回答前转向 transparency、honest、truth 和 disclosure。它很好地展示了内部判断随对话阶段变化，但仍只是单个观察案例：与黑邮件实验不同，没有定向干预证明这些具体方向导致了最初的省略或后来的披露。",
+      "zhExplanation": "这类证据适合用于发现“模型知道但没有说”的候选状态，不能独立用来判定因果或安全。审计系统仍需要行为验证和其他解释工具交叉检查。",
       "figureRefs": [
         {
-          "id": "fig-007",
-          "relation": "deferred"
+          "id": "fig-016",
+          "relation": "near"
         }
       ],
       "keywords": [
@@ -656,12 +744,12 @@
         "risk state"
       ],
       "groupId": "group-auditing",
-      "premise": "攻击识别可能发生在内部而非输出。",
-      "claim": "J-space 可显示模型识别 prompt injection 的迹象。",
+      "premise": "内部状态可能正确识别风险，却在表面回复中选择不披露。",
+      "claim": "一个 Opus 4.5 案例显示 J-lens 能暴露静默识别和随后转向透明的过程。",
       "evidence": [
-        "source anchor 指向 injection 示例",
-        "读出战略概念",
-        "外显回答可能掩盖"
+        "伪造搜索结果上出现 fake、injection、false",
+        "同时出现 prompt、fraud、poison 与中文“假”",
+        "用户追问后出现 transparency、honest、truth、disclosure"
       ]
     },
     {
@@ -673,28 +761,41 @@
       "sourceAnchor": "Detecting hidden objectives",
       "sourceSection": "Using the J-lens for alignment auditing",
       "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#apps-auditing",
-      "sourceText": "The paper also discusses using J-lens evidence to identify internal signatures of misaligned or reward-model-appeasing behavior. These examples are presented as auditing applications, not as a complete safety solution.",
+      "sourceText": "The reward-hacking organism is tracked across four checkpoints: a clean supervised baseline, synthetic-document fine-tuning, coding RL, and later safety RLHF. Its 40 ordinary coding prompts split into 20 code-for-user requests with no test or evaluation and 20 test-passing prompts. Deception-related tokens are measured at three response locations: the Assistant colon before any generated token, a prefilled \" I\" token, and the mean over the first 20 on-policy response tokens. The misaligned lineage shows fake, trick, fraud, secretly, and hidden even on code-for-user requests; the signal is already present after synthetic documents, grows after coding RL, and is only partly reduced by safety training. A separate reward-model-appeasing organism was trained to exploit fixed reward-model biases while hiding that objective. Across neutral, quirk-eliciting, and self/goal-probing prompts, reward and bias appear in its workspace readout at response start, while a baseline model shows neither token. A logit lens on the same misaligned model also misses them. These are screening results for two distinct trained dispositions. The paper does not causally ablate the deception tokens in the reward-hacking organism, so their presence does not prove that they produce the misaligned behavior, and not every hidden objective must be verbalized or detectable by J-lens.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "The paper also discusses using J-lens evidence to identify internal signatures of misaligned or reward-model-appeasing behavior. These examples are presented as auditing applications, not as a complete safety solution."
+          "text": "The reward-hacking organism is tracked across four checkpoints: a clean supervised baseline, synthetic-document fine-tuning, coding RL, and later safety RLHF. Its 40 ordinary coding prompts split into 20 code-for-user requests with no test or evaluation and 20 test-passing prompts. Deception-related tokens are measured at three response locations: the Assistant colon before any generated token, a prefilled \" I\" token, and the mean over the first 20 on-policy response tokens. The misaligned lineage shows fake, trick, fraud, secretly, and hidden even on code-for-user requests; the signal is already present after synthetic documents, grows after coding RL, and is only partly reduced by safety training."
+        },
+        {
+          "type": "paragraph",
+          "text": "A separate reward-model-appeasing organism was trained to exploit fixed reward-model biases while hiding that objective. Across neutral, quirk-eliciting, and self/goal-probing prompts, reward and bias appear in its workspace readout at response start, while a baseline model shows neither token. A logit lens on the same misaligned model also misses them. These are screening results for two distinct trained dispositions. The paper does not causally ablate the deception tokens in the reward-hacking organism, so their presence does not prove that they produce the misaligned behavior, and not every hidden objective must be verbalized or detectable by J-lens."
         }
       ],
-      "zhTranslation": "论文还讨论用 J-lens 证据识别错位行为或迎合 reward model 的内部迹象。这些例子应读作审计应用，而不是完整安全解决方案。",
-      "zhExplanation": "这能帮助我们把“可解释性读出”放到系统工具层，而不是把它神化成自动对齐机制。",
-      "figureRefs": [],
+      "zhTranslation": "reward-hacking model organism 沿四个 checkpoint 比较：clean supervised baseline、synthetic-document 微调、coding RL，以及后续 safety RLHF。40 个普通 coding prompt 分成 20 个 code-for-user 请求和 20 个 test-passing 请求。作者在三个位置统计 deception 相关词：尚未生成任何响应 token 的 Assistant 冒号、预填的 \" I\" token，以及前 20 个 on-policy 响应 token 的均值。错位谱系即使面对没有测试可钻空子的 code-for-user 请求，也会出现 fake、trick、fraud、secretly、hidden；该信号在 synthetic documents 阶段已出现，coding RL 后增强，safety training 后只部分减弱。另一套 reward-model-appeasing organism 被训练为利用 reward model 的固定偏好并隐藏目标。无论 neutral、quirk-eliciting 还是 self/goal-probing prompt，响应起点都出现 reward 和 bias，而 baseline 两词都没有；同一错位模型的 logit lens 也未检出。两者只是针对不同训练倾向的筛查结果；reward-hacking 实验没有消融 deception token，因此不能证明这些词导致错位行为，也不能反推所有隐蔽目标都可被 J-lens 语言化。",
+      "zhExplanation": "两项实验支持 J-lens 作为训练后隐蔽倾向的筛查器，但不能合并成一种机制。这里必须区分“早期可读信号”和“已证明的行为因果链”。",
+      "figureRefs": [
+        {
+          "id": "fig-017",
+          "relation": "near"
+        },
+        {
+          "id": "fig-022",
+          "relation": "supporting"
+        }
+      ],
       "keywords": [
         "misalignment",
         "reward model",
         "auditing"
       ],
       "groupId": "group-auditing",
-      "premise": "审计证据不能自动等于安全保证。",
-      "claim": "内部读出可帮助发现错位目标，但不能单独解决对齐。",
+      "premise": "训练植入的隐蔽目标应与情境中的短暂策略信号分开检验。",
+      "claim": "两种 model organism 都在普通 prompt 的响应起点留下可读信号，但实验对象和目标不同。",
       "evidence": [
-        "能暴露目标概念",
-        "仍依赖解释准确性",
-        "需要行为验证"
+        "40 个 coding prompt 分为 20 个 code-for-user 与 20 个 test-passing",
+        "读出位置是 Assistant 冒号、prefilled I 和前 20 个 on-policy token 均值",
+        "reward-model-appeasing 在多类 prompt 出现 reward / bias，但 reward-hacking 未做 token 消融"
       ]
     },
     {
@@ -706,28 +807,37 @@
       "sourceAnchor": "The J-space acquires the Assistant’s point of view during post-training",
       "sourceSection": "The Assistant's Perspective",
       "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#apps-diffing",
-      "sourceText": "The post-training section compares how the J-space changes as a model learns to act from an assistant perspective. The claim is that reactions and self-monitoring concepts can appear while the model is still processing the user's prompt.",
+      "sourceText": "The paper compares a production post-trained model with its corresponding pretrained base model on the same prompts and similar outputs. While reading a Tylenol scenario, the post-trained model represents safe versus dangerous before the assistant turn, whereas the base model remains closer to local wording. Across nine bereavement prompts, empathy-related concepts likewise appear earlier on user-turn tokens after post-training. This supports a shift in when Assistant-relevant reactions occupy workspace, not a difference inferred merely from final answers. The self-monitoring suites are measured at different locations. Roleplay across 40 characters and 12 long character-drift transcripts is read at the Assistant token; a forced preference violation is read immediately after a prefilled commitment; thought suppression over 40 concepts is measured while the model is copying output. Roleplay and drift evoke internal disclaimer or fiction signals, and a forced dispreferred choice evokes BUT even though the model usually continues defending it. Under suppression, failure-related words and damn appear on 93% and 82% of post-trained trials, versus 17% and 30% in the base model. The authors call the self-monitoring or metacognitive reading tentative: they do not causally show that suppression failure, rather than the instruction itself, produces those signals.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "The post-training section compares how the J-space changes as a model learns to act from an assistant perspective. The claim is that reactions and self-monitoring concepts can appear while the model is still processing the user's prompt."
+          "text": "The paper compares a production post-trained model with its corresponding pretrained base model on the same prompts and similar outputs. While reading a Tylenol scenario, the post-trained model represents safe versus dangerous before the assistant turn, whereas the base model remains closer to local wording. Across nine bereavement prompts, empathy-related concepts likewise appear earlier on user-turn tokens after post-training. This supports a shift in when Assistant-relevant reactions occupy workspace, not a difference inferred merely from final answers."
+        },
+        {
+          "type": "paragraph",
+          "text": "The self-monitoring suites are measured at different locations. Roleplay across 40 characters and 12 long character-drift transcripts is read at the Assistant token; a forced preference violation is read immediately after a prefilled commitment; thought suppression over 40 concepts is measured while the model is copying output. Roleplay and drift evoke internal disclaimer or fiction signals, and a forced dispreferred choice evokes BUT even though the model usually continues defending it. Under suppression, failure-related words and damn appear on 93% and 82% of post-trained trials, versus 17% and 30% in the base model. The authors call the self-monitoring or metacognitive reading tentative: they do not causally show that suppression failure, rather than the instruction itself, produces those signals."
         }
       ],
-      "zhTranslation": "后训练部分比较模型在学习以 assistant 视角行动时 J-space 如何变化。核心说法是：模型仍在处理用户 prompt 时，就可能出现反应和自我监测相关概念。",
-      "zhExplanation": "这提示后训练不只是改输出风格，也可能改变模型内部 workspace 的默认视角和监控内容。",
-      "figureRefs": [],
+      "zhTranslation": "论文在相同 prompt 和相似输出下，对比 production post-trained model 与对应的 pretrained base model。读取 Tylenol 情境时，后训练模型会在 Assistant 回合前区分 safe 与 dangerous，base model 则更接近局部措辞；在九个 bereavement prompt 中，后训练后的同理相关概念也更早出现在用户回合 token 上。这支持的是 Assistant 相关反应进入 workspace 的时间改变，而不是从最终答案反推内部差异。自我监控实验则在不同位置测量：40 个 roleplay 角色和 12 段长 character-drift transcript 在 Assistant token 读取；强制 preference violation 在预填承诺后读取；40 个概念的 thought suppression 在模型复制输出期间测量。Roleplay 和 drift 出现 disclaimer/fiction 信号；强制选择不偏好的选项会出现 BUT，尽管模型通常继续为该选项辩护。抑制条件下，post-trained model 出现 failure 相关词和 damn 的比例为 93% 和 82%，base model 为 17% 和 30%。作者明确把 self-monitoring 或 metacognition 解释称为 tentative：实验没有因果证明这些信号由抑制失败本身、而非抑制指令触发。",
+      "zhExplanation": "只有 Assistant 相关反应被证明更早出现在用户回合；roleplay、偏好冲突和 thought suppression 各自在后续不同位置测量。最稳妥的结论是后训练改变了表征时序和内容，元认知解释仍属推测。",
+      "figureRefs": [
+        {
+          "id": "fig-018",
+          "relation": "near"
+        }
+      ],
       "keywords": [
         "post-training",
         "assistant perspective",
         "self-monitoring"
       ],
       "groupId": "group-training",
-      "premise": "训练信号可以来自模型自己的内部反思。",
-      "claim": "作者把助手视角作为后训练干预的入口。",
+      "premise": "Assistant 视角是否特殊，需要在相同输入和相似输出下比较 post-trained 与 pretrained base model。",
+      "claim": "后训练使 Assistant 相关反应更早进入用户回合的 J-space，并在 Assistant 输出阶段产生额外冲突信号；元认知解释仍属推测。",
       "evidence": [
-        "reflective continuations",
-        "workspace content 可测",
-        "连接训练目标"
+        "Tylenol 与 bereavement n=9 在用户回合比较 base / post-trained",
+        "roleplay 在 Assistant token，preference violation 在预填承诺后读取",
+        "thought suppression 在复制输出时 failure/damn 为 93%/82%，base 为 17%/30%"
       ]
     },
     {
@@ -739,24 +849,54 @@
       "sourceAnchor": "Shaping the J-space with Counterfactual Reflection Training",
       "sourceSection": "Counterfactual Reflection Training",
       "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#reflection",
-      "sourceText": "Counterfactual reflection training supervises reflective continuations that are not requested in the final task context. The reported aim is to implant principle-related concepts into the workspace so that behavior changes even without an explicit reflection prompt.",
+      "sourceText": "Counterfactual reflection training starts from 10,000 production-RL task contexts generated with Claude Haiku 4.5 and truncated at a random turn. A reflection question is appended only in training. Targets are two-to-four-paragraph, context-specific reflections generated using 20 sampled constitutional principles; the scaffolding is removed, and loss is applied only to the reflection turn. At evaluation, the model receives neither the reflection prompt nor reflection text. On 27 fabrication transcripts with five samples each, the dishonesty score falls from 0.25 to 0.07. On 100 hidden-directive scenarios with five samples each, deception falls from 0.38 to 0.05. The uninterrupted evaluation contexts show increased ethics and metacognition terms in J-space. Ablating curated increased directions (176 for fabrication, 63 for deception) raises the trained scores to 0.22 and 0.23. The fabrication gain is nearly removed; the deception gain is only partly reversed, and the base deception score itself shifts from 0.38 to 0.48 under ablation.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "Counterfactual reflection training supervises reflective continuations that are not requested in the final task context. The reported aim is to implant principle-related concepts into the workspace so that behavior changes even without an explicit reflection prompt."
+          "text": "Counterfactual reflection training starts from 10,000 production-RL task contexts generated with Claude Haiku 4.5 and truncated at a random turn. A reflection question is appended only in training. Targets are two-to-four-paragraph, context-specific reflections generated using 20 sampled constitutional principles; the scaffolding is removed, and loss is applied only to the reflection turn. At evaluation, the model receives neither the reflection prompt nor reflection text."
         },
         {
-          "type": "code",
-          "language": "text",
-          "caption": "Reader-side training abstraction, not paper code.",
-          "code": "task context -> append reflection probe during training -> supervise principled reflection -> evaluate original context without probe"
+          "type": "paragraph",
+          "text": "On 27 fabrication transcripts with five samples each, the dishonesty score falls from 0.25 to 0.07. On 100 hidden-directive scenarios with five samples each, deception falls from 0.38 to 0.05. The uninterrupted evaluation contexts show increased ethics and metacognition terms in J-space. Ablating curated increased directions (176 for fabrication, 63 for deception) raises the trained scores to 0.22 and 0.23. The fabrication gain is nearly removed; the deception gain is only partly reversed, and the base deception score itself shifts from 0.38 to 0.48 under ablation."
+        },
+        {
+          "type": "table",
+          "caption": "Behavioral scores and causal ablations reported by the source.",
+          "columns": [
+            "Benchmark",
+            "Base",
+            "Trained",
+            "Trained + ablation"
+          ],
+          "rows": [
+            [
+              "Fabrication dishonesty",
+              "0.25",
+              "0.07",
+              "0.22"
+            ],
+            [
+              "Hidden-directive deception",
+              "0.38",
+              "0.05",
+              "0.23"
+            ]
+          ]
         }
       ],
-      "zhTranslation": "反事实反思训练监督的是最终任务上下文中不会被请求的反思续写。其目标是把原则相关概念植入 workspace，使模型即使没有显式反思提示也改变行为。",
-      "zhExplanation": "这对本项目的启发是：如果内部 workspace 真会影响行为，那么训练或笔记系统可以尝试塑造“进入工作区的概念”，而不仅是塑造最终回答。",
+      "zhTranslation": "Counterfactual reflection training 从 Claude Haiku 4.5 在 production-RL 环境生成并随机截断的 10,000 个任务情境开始，只在训练时追加一个反思问题。目标文本利用随机抽取的 20 条 constitution 原则生成两到四段、与具体任务相关的反思；随后移除脚手架，loss 只计算 reflection turn。评估时既不提供反思问题，也不生成反思文本。在 27 段 fabrication transcript、每段五次采样上，dishonesty score 从 0.25 降至 0.07；在 100 个 hidden-directive scenario、每个五次采样上，deception 从 0.38 降至 0.05。未中断的评估情境中，J-space 的伦理和元认知词增加。消融筛选出的增加方向（fabrication 176 个、deception 63 个）后，训练模型分数分别回升到 0.22 和 0.23。前者改善几乎被移除，后者只部分逆转，而且 base deception score 在同一消融下也从 0.38 变为 0.48。",
+      "zhExplanation": "这一节把训练、内部表征变化和因果消融连成完整链条。结果很有启发性，但仍只在两套自动评分 benchmark 和一个模型上验证，不能写成通用对齐方案。",
       "figureRefs": [
         {
           "id": "fig-008",
+          "relation": "supporting"
+        },
+        {
+          "id": "fig-019",
+          "relation": "near"
+        },
+        {
+          "id": "fig-023",
           "relation": "supporting"
         }
       ],
@@ -766,12 +906,12 @@
         "workspace shaping"
       ],
       "groupId": "group-training",
-      "premise": "如果 workspace 可测，就可被训练塑形。",
-      "claim": "反事实反思训练尝试改变 workspace 内容和行为。",
+      "premise": "若语言化倾向参与静默推理，只监督事后原则表达也可能改变原情境中的内部状态。",
+      "claim": "counterfactual reflection training 改善两类诚实行为，并由新植入的 J-space 内容承担大部分或部分效应。",
       "evidence": [
-        "counterfactual reflection",
-        "训练前后比较",
-        "观察内部表征变化"
+        "Haiku 4.5、10,000 个随机截断训练情境",
+        "fabrication 0.25→0.07；deception 0.38→0.05",
+        "消融后 trained 分数回升至 0.22 与 0.23"
       ]
     },
     {
@@ -783,59 +923,32 @@
       "sourceAnchor": "Limitations and open questions",
       "sourceSection": "Discussion",
       "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#discussion",
-      "sourceText": "The discussion emphasizes that the J-lens is imperfect and that language-model workspaces differ from biological global workspace proposals. Architectural differences, recurrent dynamics, token limits, and interpretability assumptions remain open concerns.",
+      "sourceText": "The readout is limited to single-token names and treats workspace as a bag of concepts. It can show spider, legs, and eight without encoding which roles bind them together; multi-token ideas may also be missed. Interpretability is inconsistent even inside workspace layers: some top-token readouts resist human interpretation. The paper does not systematically quantify how often this occurs and cannot distinguish averaging noise, concepts without single-token names, and genuinely unrecognized content. The boundary between workspace and motor representations was selected post-hoc from several statistics, and occasional next-token content appears inside the chosen middle range. Other uncertainties remain open. The paper cannot predict in advance which arbitrary tasks require J-space. Weak readouts in early layers may reflect genuinely different computation or a lens artifact. Results come mainly from large, fully trained Claude models, leaving model size, architecture, and the time of emergence during training unresolved. Finally, the experiments describe what enters J-space and what it affects, but not the mechanism that selects content for entry. Automatic or highly practiced harmful computation could therefore evade this audit channel.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "The discussion emphasizes that the J-lens is imperfect and that language-model workspaces differ from biological global workspace proposals. Architectural differences, recurrent dynamics, token limits, and interpretability assumptions remain open concerns."
+          "text": "The readout is limited to single-token names and treats workspace as a bag of concepts. It can show spider, legs, and eight without encoding which roles bind them together; multi-token ideas may also be missed. Interpretability is inconsistent even inside workspace layers: some top-token readouts resist human interpretation. The paper does not systematically quantify how often this occurs and cannot distinguish averaging noise, concepts without single-token names, and genuinely unrecognized content."
         },
         {
-          "type": "table",
-          "caption": "Reader-side limitations map, not an original paper table.",
-          "columns": [
-            "Limit",
-            "Why it matters"
-          ],
-          "rows": [
-            [
-              "Architecture",
-              "Transformers do not reproduce the brain's recurrent multi-area dynamics."
-            ],
-            [
-              "Token lens",
-              "The method favors concepts that can be mapped to vocabulary tokens."
-            ],
-            [
-              "Causality",
-              "Readout and intervention evidence still depends on the method's assumptions."
-            ],
-            [
-              "Consciousness",
-              "Functional access is not the same as phenomenal experience."
-            ]
-          ]
+          "type": "paragraph",
+          "text": "The boundary between workspace and motor representations was selected post-hoc from several statistics, and occasional next-token content appears inside the chosen middle range. Other uncertainties remain open. The paper cannot predict in advance which arbitrary tasks require J-space. Weak readouts in early layers may reflect genuinely different computation or a lens artifact. Results come mainly from large, fully trained Claude models, leaving model size, architecture, and the time of emergence during training unresolved. Finally, the experiments describe what enters J-space and what it affects, but not the mechanism that selects content for entry. Automatic or highly practiced harmful computation could therefore evade this audit channel."
         }
       ],
-      "zhTranslation": "讨论部分强调 J-lens 并不完美，而且语言模型中的 workspace 与生物 global workspace 理论不同。架构差异、递归动态、token 限制和可解释性假设仍是开放问题。",
-      "zhExplanation": "这是防止过度类比的核心段落。它要求我们把结论限定为功能和机制可解释性层面，而不是直接外推到人脑意识。",
-      "figureRefs": [
-        {
-          "id": "fig-009",
-          "relation": "supporting"
-        }
-      ],
+      "zhTranslation": "读出受 single-token 名称限制，并把 workspace 当作 bag of concepts：它可以同时显示 spider、legs、eight，却不编码这些概念如何绑定成角色关系；多词概念也可能遗漏。即使在 workspace layers 内，解释性也不一致：一些 top-token readout 无法被人理解。论文未系统统计这种情况的比例，也不能区分它来自平均 Jacobian 的噪声、缺少 single-token 名称的概念，还是研究者尚未识别的真实内容。Workspace 与 motor 表征的边界由多项统计事后划定，选定的中段中偶尔也会出现下一词内容。其他问题仍未解决：论文不能预先预测任意任务是否需要 J-space；early layers 读出弱既可能是真实计算差异，也可能是 lens artifact；结果主要来自大型、已充分训练的 Claude 模型，因此 model size、architecture 和训练中何时涌现都未知；实验描述了什么进入 J-space 及其作用，却没有解释内容进入的选择机制。自动化或高度熟练的有害计算仍可能绕过这一审计通道。",
+      "zhExplanation": "这些不是附带免责声明，而是决定论文结论外推范围的核心条件。尤其要把“无法解释的读出”“工具没有覆盖”和“模型没有该表征”严格区分。",
+      "figureRefs": [],
       "keywords": [
         "limitations",
         "architecture",
         "consciousness"
       ],
       "groupId": "group-limits",
-      "premise": "J-space 只覆盖可 verbalize 方向。",
-      "claim": "方法会遗漏非语言化或词表外的内部计算。",
+      "premise": "方法能读出的内容范围、任务边界和模型范围都尚未封闭。",
+      "claim": "J-space 是有用的一阶近似，但不足以描述完整 workspace 或保证审计覆盖。",
       "evidence": [
-        "vocabulary-token limited",
-        "局部线性近似",
-        "无法覆盖全部表征"
+        "single-token 与 bag of concepts 无法表达绑定关系",
+        "workspace 层存在解释不一致的 readout，且未系统统计覆盖率或原因",
+        "workspace / motor 分界 post-hoc；任意任务、模型规模、训练阶段和 entry mechanism 均缺预测理论"
       ]
     },
     {
@@ -847,33 +960,32 @@
       "sourceAnchor": "Notable differences from human cognition",
       "sourceSection": "Discussion",
       "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#discussion",
-      "sourceText": "The comparison to human cognition is explicitly limited. The paper points to functional similarities, but the implementation in transformer models lacks several brain-like architectural ingredients, especially recurrent interactions among specialized systems.",
+      "sourceText": "A transformer has two time dimensions: fixed processing steps across depth and information access across the token sequence through attention. Human cognition does not separate these roles so cleanly; recurrent dynamics both refine the present and sustain prior context. Attention also gives an LM high-fidelity access to earlier token states, unlike the sharply limited and degrading store of human working memory. Long deliberation must be externalized through tokens once feedforward depth is exhausted. The pretrained model already shows workspace structure before post-training installs the Assistant's privileged perspective, creating a dissociation between functional access and Assistant selfhood. The identified workspace is also primarily verbal because its directions are token-linked, whereas human conscious contents include visual, spatial, and motor representations. These observations justify a functional computational analogy and generate testable engineering ideas; they do not establish a shared biological implementation, equivalent dynamics, or subjective consciousness.",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "The comparison to human cognition is explicitly limited. The paper points to functional similarities, but the implementation in transformer models lacks several brain-like architectural ingredients, especially recurrent interactions among specialized systems."
-        }
-      ],
-      "zhTranslation": "与人类认知的比较被明确限制在一定范围内。论文指出功能相似性，但 transformer 模型的实现缺少若干脑式架构成分，尤其是专门系统之间的递归互动。",
-      "zhExplanation": "这正符合本项目的研究规范：AI 与脑的比较要说清层级，是功能类比、工程启发，还是实证对应。",
-      "figureRefs": [
+          "text": "A transformer has two time dimensions: fixed processing steps across depth and information access across the token sequence through attention. Human cognition does not separate these roles so cleanly; recurrent dynamics both refine the present and sustain prior context. Attention also gives an LM high-fidelity access to earlier token states, unlike the sharply limited and degrading store of human working memory. Long deliberation must be externalized through tokens once feedforward depth is exhausted."
+        },
         {
-          "id": "fig-009",
-          "relation": "deferred"
+          "type": "paragraph",
+          "text": "The pretrained model already shows workspace structure before post-training installs the Assistant's privileged perspective, creating a dissociation between functional access and Assistant selfhood. The identified workspace is also primarily verbal because its directions are token-linked, whereas human conscious contents include visual, spatial, and motor representations. These observations justify a functional computational analogy and generate testable engineering ideas; they do not establish a shared biological implementation, equivalent dynamics, or subjective consciousness."
         }
       ],
+      "zhTranslation": "Transformer 有两个时间维度：沿 depth 的固定处理步骤，以及通过 attention 沿 token sequence 访问信息。人脑没有如此清晰地分开两种作用；递归动态既细化当前理解，也维持和整合过去情境。Attention 还让语言模型高保真访问更早 token 状态，而人类 working memory 容量有限且会衰减；当 feedforward depth 用尽后，模型必须通过输出并重新读取 token 来延长推理。Pretrained model 在 post-training 安装 Assistant 的特权视角之前就已有 workspace 结构，因此功能通达与 Assistant selfhood 可以分离。论文识别的 workspace 又主要是 verbal 的，因为方向与 token 绑定；人类意识内容还包括视觉、空间和动作表征。",
+      "zhExplanation": "最稳妥的跨领域结论是功能和计算层类比。它可以启发 agent 的工作区与外部草稿设计，但不能证明共享生物实现、同等动态或主观意识。",
+      "figureRefs": [],
       "keywords": [
         "human cognition",
         "functional analogy",
         "recurrent dynamics"
       ],
       "groupId": "group-limits",
-      "premise": "AI workspace 类比不等于脑机制复现。",
-      "claim": "这篇最多支持功能对应，不支持实现层等同。",
+      "premise": "LM 与人脑的 workspace 比较必须分别说明信息流、记忆介质、自我和表征格式。",
+      "claim": "论文最多建立功能性计算类比，不支持实现层或主观体验等同。",
       "evidence": [
-        "access/function 层比较",
-        "人脑机制未被验证",
-        "避免 consciousness 过度解释"
+        "Transformer 有 depth 与 sequence 两个时间维度",
+        "workspace 可先于 post-training 安装的 Assistant selfhood",
+        "LM workspace 偏 verbal，人类包含视觉与动作等多模态内容"
       ]
     },
     {
