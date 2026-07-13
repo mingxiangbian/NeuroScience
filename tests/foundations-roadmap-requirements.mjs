@@ -143,6 +143,8 @@ assert.match(mechanismMarkerRule, /position:\s*absolute/, "mechanism markers sho
 assert.match(mechanismMarkerRule, /inset-inline-start:\s*0/, "mechanism markers should remain at the start edge");
 assert.match(css, /@font-face\s*\{[\s\S]*font-family:\s*"IBM Plex Mono"/, "code should use a locally declared IBM Plex Mono face");
 assert.match(css, /\.knowledge-article-section-body code:not\(pre code\)/, "inline code should be styled separately from fenced code");
+assert.match(css, /\.section-list > \.module-section\s*\{[\s\S]*?min-width:\s*0/, "rendered sections should be allowed to shrink around horizontally scrollable formulas");
+assert.match(css, /\.math-display\s*\{[\s\S]*?min-width:\s*0[\s\S]*?overflow-x:\s*auto/, "display formulas should scroll inside their section without widening the document");
 assert.match(css, /\.code-listing\s*\{/, "fenced code should render as one listing frame");
 assert.match(css, /\.code-listing-header\s*\{/, "code listings should expose a compact header");
 assert.match(css, /\.code-listing-gutter\s*\{/, "long code listings should support a line-number gutter");
@@ -222,7 +224,7 @@ assert.match(js, /function renderKnowledgeArticleSection/);
 assert.match(js, /class="knowledge-article"/);
 assert.match(js, /knowledge-article-title/);
 assert.match(js, /knowledge-article-section is-\$\{escapeHtml\(section\.kind\)\}/);
-assert.match(js, /const mainSections = \["目标", "当前状态", "核心知识", "任务", "时间线", "学习记录", "知识笔记"\]/);
+assert.match(js, /const mainSections = getRenderableSectionTitles\(module, PROJECT_ID\)/, "shared reader should select project-scoped renderable sections");
 assert.match(js, /function getKnowledgeArticleForTarget/);
 assert.match(js, /entry\.articleTitle/);
 assert.match(js, /MERMAID_MODULE_URL = "https:\/\/cdn\.jsdelivr\.net\/npm\/mermaid@11\.12\.2\/dist\/mermaid\.esm\.min\.mjs"/);

@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import {
   getFinanceReentryState,
   getNextIncompleteModule,
+  getRenderableSectionTitles,
 } from "../projects/foundations/roadmap/reader-state-model.js";
 
 const modules = [
@@ -25,3 +26,23 @@ assert.deepEqual(completeReentry, {
   nextStepLabel: "全部模块已完成",
   status: "done",
 }, "finance should expose directly testable all-complete copy and status");
+
+const sectionModule = {
+  sections: {
+    目标: "goal",
+    "13.1 P/E：市盈率": "pe",
+    "13.2 PEG：把增长加入 P/E": "peg",
+    知识笔记: "notes",
+  },
+};
+
+assert.deepEqual(
+  getRenderableSectionTitles(sectionModule, "finance"),
+  Object.keys(sectionModule.sections),
+  "finance should render every generated section in source order",
+);
+assert.deepEqual(
+  getRenderableSectionTitles(sectionModule, "foundations"),
+  ["目标", "知识笔记"],
+  "Foundations should keep its curated section contract",
+);

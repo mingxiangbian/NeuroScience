@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { getRenderableSectionTitles } from "../projects/foundations/roadmap/reader-state-model.js";
 
 const financePageUrl = new URL("../projects/finance/index.html", import.meta.url);
 const financeThemeUrl = new URL("../projects/finance/finance-theme.css", import.meta.url);
@@ -10,6 +11,7 @@ const financeDataUrl = new URL("../projects/finance/roadmap/roadmap-data.json", 
 const financeModulesUrl = new URL("../projects/finance/roadmap/modules/", import.meta.url);
 const originalGuideUrl = new URL("../projects/finance/investment_beginner_guide_zh.md", import.meta.url);
 const sharedReaderUrl = new URL("../projects/foundations/roadmap/roadmap-reader.js", import.meta.url);
+const packageUrl = new URL("../package.json", import.meta.url);
 
 const expectedModules = [
   ["overview", "学习总览"],
@@ -31,9 +33,14 @@ assert.equal(existsSync(originalGuideUrl), false, "the monolithic guide should b
 assert.equal(existsSync(financeThemeUrl), true, "finance should expose a project-scoped gold theme");
 assert.equal(existsSync(financeReadmeUrl), true, "finance should document its use and privacy boundary");
 
+let sourceDisplayMathCount = 0;
+let sourceInlineMathCount = 0;
 for (const [id] of expectedModules) {
   const moduleUrl = new URL(`${id}.md`, financeModulesUrl);
   assert.equal(existsSync(moduleUrl), true, `finance should keep ${id}.md as source content`);
+  const source = readFileSync(moduleUrl, "utf8");
+  sourceDisplayMathCount += [...source.matchAll(/\\\[[\s\S]*?\\\]/g)].length;
+  sourceInlineMathCount += [...source.matchAll(/\\\([^\n]*?\\\)/g)].length;
 }
 
 const financeHtml = readFileSync(financePageUrl, "utf8");
@@ -42,14 +49,25 @@ const financeReadme = readFileSync(financeReadmeUrl, "utf8");
 const builder = readFileSync(financeBuildUrl, "utf8");
 const data = JSON.parse(readFileSync(financeDataUrl, "utf8"));
 const sharedReader = readFileSync(sharedReaderUrl, "utf8");
+const packageJson = JSON.parse(readFileSync(packageUrl, "utf8"));
 const closeSearchSource = sharedReader.match(/function closeSearchModal\(\) \{([\s\S]*?)\n\}/)?.[1] ?? "";
 const escapeKeySource = sharedReader.match(/if \(event\.key === "Escape"\) \{([\s\S]*?)\n    \}/)?.[1] ?? "";
+const renderedSectionHtml = data.modules.flatMap((module) => Object.values(module.sections ?? {})).join("\n");
+
+assert.equal(
+  packageJson.scripts["test:finance"],
+  "node projects/finance/scripts/build-roadmap-data.mjs && node tests/finance-learning-reader-requirements.mjs && git diff --exit-code -- projects/finance/roadmap/roadmap-data.json",
+  "Finance tests should rebuild canonical Markdown data before validation and reject stale generated JSON afterward",
+);
+assert.match(packageJson.scripts["test:all"], /npm run test:finance/, "the complete suite should retain the Finance freshness gate");
 
 assert.match(financeHtml, /<title>投资 \| NeuroScience x AI<\/title>/, "finance page should use the project title");
 assert.match(financeHtml, /data-page="finance-roadmap-reader"/, "finance page should identify the reader");
 assert.match(financeHtml, /data-project-id="finance"/, "finance annotations should be project-scoped");
 assert.match(financeHtml, /src="\.\.\/foundations\/roadmap\/roadmap-reader\.js"/, "finance should reuse the maintained reader");
 assert.match(financeHtml, /data-source="roadmap\/roadmap-data\.json"/, "finance reader should load finance-generated data");
+assert.match(financeHtml, /katex@0\.16\.11\/dist\/katex\.min\.css/, "finance should load the established KaTeX stylesheet");
+assert.match(financeHtml, /katex@0\.16\.11\/dist\/katex\.min\.js/, "finance should load the established KaTeX renderer before the shared reader");
 assert.match(financeHtml, /href="\.\.\/index\.html" aria-label="返回项目"/, "finance should return to the project directory");
 const sharedCssIndex = financeHtml.indexOf('../foundations/roadmap/roadmap-reader.css');
 const financeThemeIndex = financeHtml.indexOf('finance-theme.css');
@@ -75,6 +93,10 @@ assert.match(sharedReader, /getStatusLabel\(financeReentry\.status\)/, "finance 
 assert.match(sharedReader, /PROJECT_ID\s*!==\s*"finance"/, "finance metadata should hide redundant raw priority");
 assert.match(sharedReader, /PROJECT_ID === "finance" \? "未找到结果" : "No results found"/, "finance empty search results should use Chinese copy");
 assert.match(sharedReader, /进入任一概念模块底部的「知识笔记」，选中文字即可添加本地批注。批注只保存在当前浏览器。/, "empty note panels should explain the actual annotation boundary");
+assert.match(sharedReader, /function renderMathExpressions\(root = els\.sectionList\)/, "the shared reader should expose a graceful math rendering pass");
+assert.match(sharedReader, /window\.katex\?\.renderToString/, "the math rendering pass should reuse the established KaTeX runtime when available");
+assert.match(sharedReader, /trust:\s*false/, "KaTeX rendering should reject trusted HTML commands from formula source");
+assert.match(sharedReader, /renderCurrentModule\(\);[\s\S]*renderMathExpressions\(els\.sectionList\);/, "math should render after module HTML is mounted");
 assert.match(closeSearchSource, /els\.searchResults\.hidden = true;/, "closing search should always hide results");
 assert.doesNotMatch(closeSearchSource, /if \(!state\.searchQuery\)/, "closing search should not depend on an empty query");
 assert.match(escapeKeySource, /if \(els\.shell\.classList\.contains\("is-searching"\)\) event\.preventDefault\(\);[\s\S]*closeSearchModal\(\);/, "Escape should prevent the native search-input default only while search is open, before preserving and hiding results");
@@ -88,6 +110,9 @@ assert.equal(data.project.glossaryModuleId, "terms-further-reading", "dashboard 
 assert.equal(typeof data.project.dashboardFocus, "string", "dashboard should have a re-entry action");
 assert.equal(data.project.overallLearningProgress, 0, "initial finance progress should be zero");
 assert.deepEqual(data.modules.map((module) => [module.id, module.title]), expectedModules, "finance modules should follow the approved concept order");
+assert.equal((renderedSectionHtml.match(/class="math-display"/g) ?? []).length, sourceDisplayMathCount, "every display formula should survive generated HTML exactly once");
+assert.equal((renderedSectionHtml.match(/class="math-inline"/g) ?? []).length, sourceInlineMathCount, "every inline formula should survive generated HTML exactly once");
+assert.doesNotMatch(renderedSectionHtml, /<h1>\s*\[/, "Finance display formulas should not be corrupted into Setext headings");
 
 for (const module of data.modules) {
   assert.equal(module.learningProgress, 0, `${module.id} should start with zero progress`);
@@ -95,6 +120,13 @@ for (const module of data.modules) {
   assert.ok(Array.isArray(module.searchEntries) && module.searchEntries.length > 0, `${module.id} should expose section-level search`);
   assert.ok(module.searchEntries.every((entry) => entry.moduleId === module.id), `${module.id} search entries should retain their module`);
   assert.ok(Array.isArray(module.knowledgeNotes), `${module.id} should expose knowledge articles for local annotations`);
+  if (module.id !== data.project.dashboardModuleId) {
+    const renderableTitles = getRenderableSectionTitles(module, data.project.id);
+    assert.deepEqual(renderableTitles, Object.keys(module.sections), `${module.id} should render every generated section in source order`);
+    const renderableIds = renderableTitles.map((title) => module.sectionIds[title]);
+    assert.ok(renderableIds.every(Boolean), `${module.id} should expose a DOM id for every renderable section`);
+    assert.equal(new Set(renderableIds).size, renderableIds.length, `${module.id} section DOM ids should be unique`);
+  }
 }
 
 const termsModule = data.modules.find((module) => module.id === "terms-further-reading");

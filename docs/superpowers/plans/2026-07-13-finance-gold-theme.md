@@ -886,3 +886,66 @@ git commit -m "docs: record verified finance theme delivery"
 ```
 
 Expected: the commit includes only the approved plan and verified spec status; unrelated worktree files remain unstaged.
+
+---
+
+### Task 4: Close Final Whole-Branch Review Regressions
+
+**Files:**
+- Modify: `package.json`
+- Modify: `projects/finance/index.html`
+- Modify: `projects/finance/roadmap/roadmap-data.json`
+- Modify: `projects/foundations/roadmap/reader-state-model.js`
+- Modify: `projects/foundations/roadmap/roadmap-reader.css`
+- Modify: `projects/foundations/roadmap/roadmap-reader.js`
+- Modify: `projects/foundations/scripts/roadmap-markdown.mjs`
+- Modify: `tests/finance-learning-reader-requirements.mjs`
+- Modify: `tests/foundations-reader-state-model.mjs`
+- Modify: `tests/foundations-roadmap-requirements.mjs`
+- Create: `tests/foundations-roadmap-markdown-math.mjs`
+
+**Interfaces:**
+- Consumes: canonical Finance Markdown modules and the shared Foundations reader.
+- Produces: complete Finance section rendering, safe searchable math placeholders enhanced by KaTeX, and a deterministic generated-data freshness gate.
+
+- [ ] **Step 1: Prove the missing-section and malformed-formula regressions**
+
+Add focused tests that require Finance to return every generated section title in source order while Foundations keeps its curated seven-title contract. Add Markdown tests for display and inline math, fenced and inline code, escaped unsafe input, searchable fallback text, and the Setext-heading regression.
+
+Expected: the new tests fail against the reviewed branch before implementation.
+
+- [ ] **Step 2: Select renderable sections per project**
+
+Move the established Foundations title list into `reader-state-model.js` and expose `getRenderableSectionTitles(module, projectId)`. Return every generated section key for Finance and the existing curated subset for other projects. Use the selector from `renderCurrentModule` without changing dashboard or special section renderers.
+
+Expected: every Finance rail/search section ID has a rendered DOM target; Foundations ordering stays unchanged.
+
+- [ ] **Step 3: Preserve and progressively render roadmap formulas**
+
+Use an independent `Marked` instance with block `\\[...\\]` and inline `\\(...\\)` extensions. Emit escaped `math-display` or `math-inline` placeholders whose `data-latex` and visible fallback text survive sanitization and search extraction. Do not transform fenced or inline code.
+
+Load KaTeX 0.16.11 only on the Finance page, before the shared reader. After module HTML mounts, render placeholders with `trust: false`, retain fallback text when KaTeX is unavailable, and constrain wide display formulas to an internal horizontal scroller so they cannot widen the document.
+
+- [ ] **Step 4: Make Finance generated data self-checking**
+
+Change `test:finance` to run:
+
+```bash
+node projects/finance/scripts/build-roadmap-data.mjs
+node tests/finance-learning-reader-requirements.mjs
+git diff --exit-code -- projects/finance/roadmap/roadmap-data.json
+```
+
+Extend the Finance contract to compare source formulas with generated placeholders, reject formula-created Setext headings, verify KaTeX load order and safe runtime options, and require every non-dashboard section to expose a unique renderable ID.
+
+- [ ] **Step 5: Verify representative content and narrow-screen containment**
+
+Run:
+
+```bash
+node projects/finance/scripts/build-roadmap-data.mjs
+npm run test:all
+git diff --check
+```
+
+At `?module=valuation`, confirm a previously omitted numbered section is visible, every formula placeholder renders without a KaTeX error, and the document has no horizontal overflow at 1280px, 390px, or 320px. At 320px, confirm an intentionally wide formula scrolls inside its own container.

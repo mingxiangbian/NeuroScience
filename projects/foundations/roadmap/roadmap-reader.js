@@ -9,6 +9,7 @@ import { enhanceCodeListings } from "./code-listing.js";
 import {
   getFinanceReentryState,
   getNextIncompleteModule,
+  getRenderableSectionTitles,
 } from "./reader-state-model.js";
 
 const READER_SCRIPT = document.querySelector("script[data-source][src$='roadmap-reader.js']");
@@ -840,7 +841,7 @@ function renderCurrentModule() {
     return;
   }
 
-  const mainSections = ["目标", "当前状态", "核心知识", "任务", "时间线", "学习记录", "知识笔记"];
+  const mainSections = getRenderableSectionTitles(module, PROJECT_ID);
   const blocks = mainSections
     .map((title) => {
       const body = title === "时间线"
@@ -885,6 +886,27 @@ function renderCurrentModule() {
       saveTaskState(taskState);
       checkbox.closest(".task-item")?.classList.toggle("is-done", checkbox.checked);
     });
+  });
+}
+
+function renderMathExpressions(root = els.sectionList) {
+  const renderToString = window.katex?.renderToString;
+  if (typeof renderToString !== "function") return;
+
+  root.querySelectorAll(".math-display[data-latex], .math-inline[data-latex]").forEach((element) => {
+    if (element.dataset.mathRendered === "true") return;
+    try {
+      const rendered = renderToString(element.dataset.latex ?? "", {
+        displayMode: element.classList.contains("math-display"),
+        throwOnError: false,
+        strict: "ignore",
+        trust: false,
+      });
+      element.innerHTML = rendered;
+      element.dataset.mathRendered = "true";
+    } catch (error) {
+      console.warn(`Unable to render ${PROJECT_ID} formula`, error);
+    }
   });
 }
 
@@ -1109,6 +1131,7 @@ function openModule(moduleId, { syncUrl = true, targetSectionId = "" } = {}) {
   if (syncUrl) updateUrl(nextModule.id);
   renderModuleNav();
   renderCurrentModule();
+  renderMathExpressions(els.sectionList);
   enhanceCodeListings(els.sectionList);
   void renderMermaidDiagrams().then(() => {
     if (state.moduleRenderVersion !== moduleRenderVersion) return;
