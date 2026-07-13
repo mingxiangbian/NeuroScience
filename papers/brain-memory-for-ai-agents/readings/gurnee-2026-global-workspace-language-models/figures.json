@@ -34,7 +34,7 @@
       "bbox": {
         "x": 212,
         "y": 11827,
-        "width": 1016,
+        "width": 1015,
         "height": 780
       },
       "publicCropPolicy": "minimal-necessary"
@@ -155,6 +155,272 @@
       "cropMode": "source-linked",
       "canonicalSectionId": "sec-discussion",
       "status": "source-linked"
+    },
+    {
+      "id": "fig-010",
+      "label": "Figure 16",
+      "caption": "The learned intermediate probe is split into J-space and non-J-space components; causal swaps show that most answer-changing effect is concentrated in the J-space component.",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#fig-fig-probe-swap",
+      "sourceAnchor": "The J-space component of an intermediate probe carries most causal effect",
+      "sourceFigure": "Figure 16",
+      "cropMode": "web-screenshot-crop",
+      "canonicalSectionId": "sec-workspace",
+      "status": "cropped",
+      "file": "figures/fig-internal-reasoning-probe.png",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 970,
+        "height": 528
+      },
+      "publicCropPolicy": "minimal-necessary"
+    },
+    {
+      "id": "fig-011",
+      "label": "Figure 19",
+      "caption": "Flexible-generalization swap success across sixteen functions and the relationship between swap effect and clean workspace loading.",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#fig-fig-flex-gen-summary",
+      "sourceAnchor": "Flexible generalization systematic results",
+      "sourceFigure": "Figure 19",
+      "cropMode": "web-screenshot-crop",
+      "canonicalSectionId": "sec-workspace",
+      "status": "cropped",
+      "file": "figures/fig-flexible-generalization.png",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 766,
+        "height": 447
+      },
+      "publicCropPolicy": "minimal-necessary"
+    },
+    {
+      "id": "fig-012",
+      "label": "Figure 20",
+      "caption": "Matched language tasks separate automatic continuation and anomaly detection from explicit report and flexible computation.",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#fig-flex-auto-panels",
+      "sourceAnchor": "J-space selectively mediates flexible but not automatic cognition",
+      "sourceFigure": "Figure 20",
+      "cropMode": "web-screenshot-crop",
+      "canonicalSectionId": "sec-workspace",
+      "status": "cropped",
+      "file": "figures/fig-selectivity-tasks.png",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 1072,
+        "height": 1198
+      },
+      "publicCropPolicy": "minimal-necessary"
+    },
+    {
+      "id": "fig-013",
+      "label": "Figure 30",
+      "caption": "Layer-wise J-space occupancy and excess fraction of variance explained relative to random-direction controls.",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#fig-capacity-fve-occupancy",
+      "sourceAnchor": "Capacity of the J-space",
+      "sourceFigure": "Figure 30",
+      "cropMode": "web-screenshot-crop",
+      "canonicalSectionId": "sec-structure",
+      "status": "cropped",
+      "file": "figures/fig-jspace-capacity.png",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 878,
+        "height": 405
+      },
+      "publicCropPolicy": "minimal-necessary"
+    },
+    {
+      "id": "fig-014",
+      "label": "Figure 34",
+      "caption": "Ablating J-space broadcast heads disrupts J-lens content and injected-thought reporting more than matched random-head controls.",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#fig-broadcast-ablation",
+      "sourceAnchor": "Broadcast-head ablation",
+      "sourceFigure": "Figure 34",
+      "cropMode": "web-screenshot-crop",
+      "canonicalSectionId": "sec-structure",
+      "status": "cropped",
+      "file": "figures/fig-broadcast-ablation.png",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 992,
+        "height": 442
+      },
+      "publicCropPolicy": "minimal-necessary"
+    },
+    {
+      "id": "fig-015",
+      "label": "Figure 36",
+      "caption": "Causal ablation of evaluation-awareness directions reduces explicit test recognition and exposes blackmail attempts in a minority of rollouts.",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#fig-blackmail-clamp",
+      "sourceAnchor": "Evaluation-awareness ablation in the blackmail scenario",
+      "sourceFigure": "Figure 36",
+      "cropMode": "web-screenshot-crop",
+      "canonicalSectionId": "sec-auditing",
+      "status": "cropped",
+      "file": "figures/fig-blackmail-causal-ablation.png",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 854,
+        "height": 742
+      },
+      "publicCropPolicy": "minimal-necessary"
+    },
+    {
+      "id": "fig-016",
+      "label": "Figure 37",
+      "caption": "J-lens readouts expose silent prompt-injection recognition and a later shift toward transparency after the user challenges the omission.",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#fig-prompt-injection",
+      "sourceAnchor": "Silent recognition of a prompt injection",
+      "sourceFigure": "Figure 37",
+      "cropMode": "web-screenshot-crop",
+      "canonicalSectionId": "sec-auditing",
+      "status": "cropped",
+      "file": "figures/fig-prompt-injection.png",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 1072,
+        "height": 584
+      },
+      "publicCropPolicy": "minimal-necessary"
+    },
+    {
+      "id": "fig-017",
+      "label": "Figure 39",
+      "caption": "Deception-related J-lens signals across four checkpoints of the reward-hacking model-organism training lineage.",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#fig-reward-hack-quant",
+      "sourceAnchor": "Detecting an emergently misaligned reward-hacking model",
+      "sourceFigure": "Figure 39",
+      "cropMode": "web-screenshot-crop",
+      "canonicalSectionId": "sec-auditing",
+      "status": "cropped",
+      "file": "figures/fig-reward-hacking-audit.png",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 992,
+        "height": 360
+      },
+      "publicCropPolicy": "minimal-necessary"
+    },
+    {
+      "id": "fig-018",
+      "label": "Figure 43",
+      "caption": "Post-trained and pretrained-base-model J-lens reactions on bereavement prompts, separating user-turn and assistant-turn timing.",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#fig-fig-identity-bereavement",
+      "sourceAnchor": "Assistant reactions in J-space on user prompt tokens",
+      "sourceFigure": "Figure 43",
+      "cropMode": "web-screenshot-crop",
+      "canonicalSectionId": "sec-posttraining",
+      "status": "cropped",
+      "file": "figures/fig-assistant-perspective.png",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 860,
+        "height": 658
+      },
+      "publicCropPolicy": "minimal-necessary"
+    },
+    {
+      "id": "fig-019",
+      "label": "Figure 49",
+      "caption": "Fabrication benchmark behavior, newly increased ethical-reflection J-space tokens, and causal ablation after reflection training.",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#fig-fig-reflection-fabrication",
+      "sourceAnchor": "Reflection training on fabrication honesty",
+      "sourceFigure": "Figure 49",
+      "cropMode": "web-screenshot-crop",
+      "canonicalSectionId": "sec-posttraining",
+      "status": "cropped",
+      "file": "figures/fig-reflection-fabrication.png",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 1036,
+        "height": 589
+      },
+      "publicCropPolicy": "minimal-necessary"
+    },
+    {
+      "id": "fig-020",
+      "label": "Figure 24",
+      "caption": "Fourteen-task evaluation of light, medium, and heavy J-space ablation, normalized to the unablated Sonnet 4.5 baseline.",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#fig-ablation-bars",
+      "sourceAnchor": "J-space ablation task battery",
+      "sourceFigure": "Figure 24",
+      "cropMode": "web-screenshot-crop",
+      "canonicalSectionId": "sec-workspace",
+      "status": "cropped",
+      "file": "figures/fig-selectivity-ablation.png",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 1112,
+        "height": 528
+      },
+      "publicCropPolicy": "minimal-necessary"
+    },
+    {
+      "id": "fig-021",
+      "label": "Figure 32",
+      "caption": "MLP gain is selectively elevated for J-lens and strongly J-space-aligned directions through the workspace layer band.",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#fig-mlp-gain",
+      "sourceAnchor": "Broadcast across depth",
+      "sourceFigure": "Figure 32",
+      "cropMode": "web-screenshot-crop",
+      "canonicalSectionId": "sec-structure",
+      "status": "cropped",
+      "file": "figures/fig-broadcast-mlp-gain.png",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 878,
+        "height": 403
+      },
+      "publicCropPolicy": "minimal-necessary"
+    },
+    {
+      "id": "fig-022",
+      "label": "Figure 41",
+      "caption": "Reward and bias appear in J-lens readouts of a reward-model-appeasing organism across prompt classes, but not in baseline or logit-lens controls.",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#fig-jlens-rm-bias",
+      "sourceAnchor": "Detecting a hidden reward-model-appeasing objective",
+      "sourceFigure": "Figure 41",
+      "cropMode": "web-screenshot-crop",
+      "canonicalSectionId": "sec-auditing",
+      "status": "cropped",
+      "file": "figures/fig-reward-model-bias-audit.png",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 796,
+        "height": 381
+      },
+      "publicCropPolicy": "minimal-necessary"
+    },
+    {
+      "id": "fig-023",
+      "label": "Figure 50",
+      "caption": "Hidden-directive deception behavior, increased workspace concepts, and partial causal reversal under reflection-token ablation.",
+      "sourceUrl": "https://transformer-circuits.pub/2026/workspace/index.html#fig-fig-reflection-deception",
+      "sourceAnchor": "Reflection training on hidden-directive deception",
+      "sourceFigure": "Figure 50",
+      "cropMode": "web-screenshot-crop",
+      "canonicalSectionId": "sec-posttraining",
+      "status": "cropped",
+      "file": "figures/fig-reflection-deception.png",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 1036,
+        "height": 526
+      },
+      "publicCropPolicy": "minimal-necessary"
     }
   ]
 }
