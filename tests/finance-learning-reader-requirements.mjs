@@ -43,6 +43,7 @@ const builder = readFileSync(financeBuildUrl, "utf8");
 const data = JSON.parse(readFileSync(financeDataUrl, "utf8"));
 const sharedReader = readFileSync(sharedReaderUrl, "utf8");
 const closeSearchSource = sharedReader.match(/function closeSearchModal\(\) \{([\s\S]*?)\n\}/)?.[1] ?? "";
+const escapeKeySource = sharedReader.match(/if \(event\.key === "Escape"\) \{([\s\S]*?)\n    \}/)?.[1] ?? "";
 
 assert.match(financeHtml, /<title>投资 \| NeuroScience x AI<\/title>/, "finance page should use the project title");
 assert.match(financeHtml, /data-page="finance-roadmap-reader"/, "finance page should identify the reader");
@@ -76,6 +77,8 @@ assert.match(sharedReader, /PROJECT_ID === "finance" \? "未找到结果" : "No 
 assert.match(sharedReader, /进入任一概念模块底部的「知识笔记」，选中文字即可添加本地批注。批注只保存在当前浏览器。/, "empty note panels should explain the actual annotation boundary");
 assert.match(closeSearchSource, /els\.searchResults\.hidden = true;/, "closing search should always hide results");
 assert.doesNotMatch(closeSearchSource, /if \(!state\.searchQuery\)/, "closing search should not depend on an empty query");
+assert.match(escapeKeySource, /if \(els\.shell\.classList\.contains\("is-searching"\)\) event\.preventDefault\(\);[\s\S]*closeSearchModal\(\);/, "Escape should prevent the native search-input default only while search is open, before preserving and hiding results");
+assert.match(escapeKeySource, /if \(els\.shell\.classList\.contains\("is-searching"\)\) els\.searchInput\.blur\(\);[\s\S]*closeSearchModal\(\);/, "Escape should blur the search input only while search is open so one click can restore preserved results");
 assert.doesNotMatch(sharedReader, /status !== "(?:done|complete)"\) \?\? learningModules\[0\]/, "completed dashboards should not fall back to their first module");
 
 assert.equal(data.project.id, "finance", "generated data should identify the finance project");

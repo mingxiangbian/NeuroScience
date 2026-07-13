@@ -1354,6 +1354,8 @@ function bindEvents() {
       els.searchInput.focus();
     }
     if (event.key === "Escape") {
+      if (els.shell.classList.contains("is-searching")) event.preventDefault();
+      if (els.shell.classList.contains("is-searching")) els.searchInput.blur();
       hideAnnotationDeletePopover();
       hideAnnotationToolbar();
       closeSearchModal();
