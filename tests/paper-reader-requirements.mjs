@@ -448,12 +448,72 @@ for (const paperId of readingPaperIds) {
     assert.match(conclusionChunk.zhExplanation, /不能据此声称参数学习，也不能类比为已验证的生物可塑性/, "SelfMem ch-022 should reject parameter-learning and biological-plasticity overclaims");
     assert.equal(selfMemSourceParagraph("ch-022"), conclusionChunk.sourceText, "SelfMem ch-022 visible paragraph should equal sourceText");
     assert.equal(countOmissions(conclusionChunk.zhTranslation), countOmissions(conclusionChunk.sourceText), "SelfMem ch-022 translation should mirror source omission markers");
-    assert.ok(selfMemChunks.get("ch-020").blocks.some((block) => block.caption?.includes("Prompt 1") && block.code?.includes("model-managed memory workspace")), "SelfMem ch-020 should retain the key memory-construction prompt");
-    assert.ok(selfMemChunks.get("ch-020").blocks.some((block) => block.caption?.includes("Prompt 3") && block.code?.includes("retrieved evidence is the authority")), "SelfMem ch-020 should retain the key fixed-evidence answering prompt");
-    assert.ok(selfMemChunks.get("ch-021").blocks.some((block) => block.type === "table" && block.caption?.includes("Table 8") && block.rows?.some((row) => row.some((cell) => cell.trim() === "memory_system_optimize(...)"))), "SelfMem ch-021 should retain key Table 8 tool coverage");
-    const substantiveSelfMemText = chunkData.chunks.map((chunk) => chunk.sourceText).join("\n");
-    assert.doesNotMatch(substantiveSelfMemText, /\bReferences\b/, "SelfMem references should not be promoted into substantive chunks");
-    assert.doesNotMatch(substantiveSelfMemText, /For this paper, we leveraged GPT-5\.4/, "SelfMem author LLM disclosure should not be promoted into substantive chunks");
+    const selfMemPromptBlocks = ["ch-020", "ch-021"]
+      .flatMap((chunkId) => selfMemChunks.get(chunkId).blocks)
+      .filter((block) => block.type === "code");
+    const expectedSelfMemPrompts = [
+      {
+        caption: "Paper Prompt 1: Memory-construction instruction.",
+        markers: [/Maintain a model-managed memory workspace/, /Do not invent facts that are not supported by the chat or tool results/],
+      },
+      {
+        caption: "Paper Prompt 2: SQLite transcript-mode addendum.",
+        markers: [/chronological SQLite turns table/, /auditable by citing inspected turn ranges/],
+      },
+      {
+        caption: "Paper Prompt 3: Answering with fixed evidence.",
+        markers: [/retrieved evidence is the authority/, /available memory\/evidence is insufficient/],
+      },
+      {
+        caption: "Paper Prompt 4: Local repair (runtime payloads retained as placeholders).",
+        markers: [/Repair the memory and retrieval strategy for training conversation \{conversation\}, attempt \{attempt\}/, /no per-question labels or rubric items are provided/],
+      },
+      {
+        caption: "Paper Prompt 5: Global refinement (runtime payloads retained as placeholders).",
+        markers: [/Refine SelfMem’s general memory and retrieval strategy from TRAIN score feedback only/, /do not request, infer, or mention held-out questions/],
+      },
+    ];
+    assert.deepEqual(selfMemPromptBlocks.map((block) => block.caption), expectedSelfMemPrompts.map((prompt) => prompt.caption), "SelfMem Appendix C should preserve all five prompt captions in order");
+    for (const [index, prompt] of expectedSelfMemPrompts.entries()) {
+      for (const marker of prompt.markers) {
+        assert.match(selfMemPromptBlocks[index].code, marker, `SelfMem ${prompt.caption} should preserve its stable prompt marker`);
+      }
+    }
+    const selfMemTable8 = selfMemChunks.get("ch-021").blocks.find((block) => block.type === "table" && block.caption?.includes("Paper Table 8"));
+    assert.ok(selfMemTable8, "SelfMem ch-021 should retain the rendered Paper Table 8 block");
+    assert.deepEqual(
+      selfMemTable8.rows.map(([, signature, action]) => [signature.trim(), action]),
+      [
+        ["memory_read(target)", "Read current memory before merge, replace, or no-op"],
+        ["rag_search(query, top_k)", "Find source support without evaluation labels"],
+        ["meta_log_read(scope)", "Read aggregate token, cost, latency, cache, and tool counts"],
+        ["memory_change(operation, target, content, rationale, metadata)", "Write, merge, replace, compact, index, or delete with audit rationale"],
+        ["memory_tool_create(...)", "Define a reusable declarative memory procedure"],
+        ["memory_tool_use(...)", "Apply a defined procedure and optionally write its result"],
+        ["memory_probe_create(...)", "Create a synthetic non-benchmark coverage probe"],
+        ["memory_probe_run(...)", "Run the probe against workspace and raw-chat retrieval"],
+        ["memory_system_optimize(...)", "Record a general strategy improvement or no-op diagnosis"],
+      ],
+      "SelfMem Table 8 should preserve exactly nine tool signatures and actions",
+    );
+    const readerVisibleSelfMemChunks = chunkData.chunks.map((chunk) => ({
+      id: chunk.id,
+      text: [
+        chunk.sourceText,
+        chunk.zhTranslation,
+        chunk.zhExplanation,
+        chunk.premise,
+        chunk.claim,
+        ...(chunk.evidence ?? []),
+        JSON.stringify(chunk.blocks ?? []),
+      ].filter((value) => typeof value === "string").join("\n"),
+    }));
+    const backMatterHeadingPattern = /(?:^|[\n\r]|\\n|["':])\s*(?:References|参考文献|Author Contributions?|作者贡献|(?:[A-Z]\s+)?The Use of Large Language Models|大语言模型的使用)\s*(?=$|[\n\r]|\\n|["',}:.-]|\s+(?:[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?[,.:]|For this paper))/im;
+    const authorDisclosurePattern = /For this paper, we leveraged GPT-5\.4|technical ideas, experimental designs, analyses, conclusions, and writing were developed and carried out entirely by the authors|authors have full responsibility for the final text/i;
+    for (const chunk of readerVisibleSelfMemChunks) {
+      assert.doesNotMatch(chunk.text, backMatterHeadingPattern, `SelfMem ${chunk.id} should not promote References or author-contribution headings into reader-visible content`);
+      assert.doesNotMatch(chunk.text, authorDisclosurePattern, `SelfMem ${chunk.id} should not promote the author LLM-use disclosure into reader-visible content`);
+    }
     const selfMemFigures = figuresData.figures.filter((figure) => figure.file);
     assert.equal(selfMemFigures.length, 5, "SelfMem should include exactly five local source crops");
     assert.ok(selfMemFigures.every((figure) => figure.sourceUrl === "https://arxiv.org/abs/2607.03726v1"), "SelfMem figure provenance should lock all five crops to arXiv v1");
