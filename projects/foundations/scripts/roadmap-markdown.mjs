@@ -1,4 +1,4 @@
-import { marked, Renderer } from "marked";
+import { Marked, Renderer } from "marked";
 import sanitizeHtml from "sanitize-html";
 import hljs from "highlight.js/lib/core";
 import bash from "highlight.js/lib/languages/bash";
@@ -43,6 +43,66 @@ markdownRenderer.code = (token) => {
   return `<pre><code class="hljs language-${language}">${highlighted}\n</code></pre>`;
 };
 
+function escapeMathHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function renderMathPlaceholder(className, latex) {
+  const escapedLatex = escapeMathHtml(latex);
+  return `<span class="${className}" data-latex="${escapedLatex}">${escapedLatex}</span>`;
+}
+
+const displayMathExtension = {
+  name: "roadmapDisplayMath",
+  level: "block",
+  start(source) {
+    const match = source.match(/^ {0,3}\\\[[ \t]*$/m);
+    return match?.index;
+  },
+  tokenizer(source) {
+    const match = /^ {0,3}\\\[[ \t]*\r?\n([\s\S]*?)\r?\n {0,3}\\\][ \t]*(?:(?:\r?\n)+|$)/.exec(source);
+    if (!match) return undefined;
+    return {
+      type: "roadmapDisplayMath",
+      raw: match[0],
+      latex: match[1].trim(),
+    };
+  },
+  renderer(token) {
+    return `${renderMathPlaceholder("math-display", token.latex)}\n`;
+  },
+};
+
+const inlineMathExtension = {
+  name: "roadmapInlineMath",
+  level: "inline",
+  start(source) {
+    const index = source.indexOf("\\(");
+    return index === -1 ? undefined : index;
+  },
+  tokenizer(source) {
+    const match = /^\\\(([^\n]+?)\\\)/.exec(source);
+    if (!match) return undefined;
+    return {
+      type: "roadmapInlineMath",
+      raw: match[0],
+      latex: match[1],
+    };
+  },
+  renderer(token) {
+    return renderMathPlaceholder("math-inline", token.latex);
+  },
+};
+
+const roadmapMarkdown = new Marked({
+  extensions: [displayMathExtension, inlineMathExtension],
+});
+
 export const REQUIRED_KNOWLEDGE_SECTIONS = [
   "核心定义",
   "核心机制",
@@ -74,18 +134,18 @@ const allowedTags = [
 const allowedAttributes = {
   a: ["href", "title", "rel"],
   code: ["class"],
-  span: ["class"],
+  span: ["class", "data-latex"],
   th: ["align"],
   td: ["align"],
 };
 
 const allowedClasses = {
   code: ["hljs", /^language-[a-z0-9_+-]+$/],
-  span: [/^hljs-[a-z0-9_-]+$/],
+  span: ["math-display", "math-inline", /^hljs-[a-z0-9_-]+$/],
 };
 
 export function markdownToSafeHtml(markdown) {
-  const rawHtml = marked.parse(String(markdown ?? ""), {
+  const rawHtml = roadmapMarkdown.parse(String(markdown ?? ""), {
     async: false,
     gfm: true,
     breaks: false,
@@ -155,7 +215,7 @@ function countOrderedSteps(tokens) {
 
 export function parseKnowledgeArticles(moduleId, markdown) {
   const ids = new Set();
-  return splitHeadingBlocks(marked.lexer(String(markdown ?? "")), 3).map((articleBlock) => {
+  return splitHeadingBlocks(roadmapMarkdown.lexer(String(markdown ?? "")), 3).map((articleBlock) => {
     const id = `${moduleId}-${slugifyTitle(articleBlock.title) || "article"}`;
     if (ids.has(id)) throw new Error(`${moduleId}: duplicate knowledge article id ${id}`);
     ids.add(id);

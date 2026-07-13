@@ -100,6 +100,7 @@ for (const testFile of [
   "foundations-code-listing-model.mjs",
   "foundations-knowledge-article-parser.mjs",
   "foundations-knowledge-content-requirements.mjs",
+  "foundations-reader-state-model.mjs",
   "foundations-roadmap-requirements.mjs",
 ]) {
   assert.match(foundationsTestScript, new RegExp(testFile.replaceAll(".", "\\.")), `Pages CI should run ${testFile}`);
@@ -142,6 +143,8 @@ assert.match(mechanismMarkerRule, /position:\s*absolute/, "mechanism markers sho
 assert.match(mechanismMarkerRule, /inset-inline-start:\s*0/, "mechanism markers should remain at the start edge");
 assert.match(css, /@font-face\s*\{[\s\S]*font-family:\s*"IBM Plex Mono"/, "code should use a locally declared IBM Plex Mono face");
 assert.match(css, /\.knowledge-article-section-body code:not\(pre code\)/, "inline code should be styled separately from fenced code");
+assert.match(css, /\.section-list > \.module-section\s*\{[\s\S]*?min-width:\s*0/, "rendered sections should be allowed to shrink around horizontally scrollable formulas");
+assert.match(css, /\.math-display\s*\{[\s\S]*?min-width:\s*0[\s\S]*?overflow-x:\s*auto/, "display formulas should scroll inside their section without widening the document");
 assert.match(css, /\.code-listing\s*\{/, "fenced code should render as one listing frame");
 assert.match(css, /\.code-listing-header\s*\{/, "code listings should expose a compact header");
 assert.match(css, /\.code-listing-gutter\s*\{/, "long code listings should support a line-number gutter");
@@ -192,7 +195,7 @@ assert.match(tabletMediaRules, /\.mobile-note-drawer\s*\{[\s\S]*position:\s*fixe
 assert.match(tabletMediaRules, /\.reader-shell\.is-mobile-note-open \.mobile-note-drawer\s*\{[\s\S]*display:\s*block/, "tablet rules should expose the opened note drawer");
 assert.doesNotMatch(css, /border-radius:\s*24px|border-radius:\s*28px/, "roadmap reader should avoid oversized card radii");
 
-assert.match(js, /fetchJson\("roadmap\/roadmap-data\.json"\)/, "roadmap JS should load generated JSON");
+assert.match(js, /fetchJson\(ROADMAP_DATA_SOURCE\)/, "shared reader should load the generated JSON source supplied by its page");
 assert.match(js, /function renderModuleNav/, "roadmap JS should isolate module navigation rendering");
 assert.match(js, /function renderCurrentModule/, "roadmap JS should isolate module content rendering");
 assert.match(js, /import \{ enhanceCodeListings \} from "\.\/code-listing\.js"/, "roadmap JS should import the code listing enhancer");
@@ -211,6 +214,8 @@ assert.match(codeListingJs, /cancelSchedule = globalThis\.clearTimeout/, "copy f
 assert.match(codeListingJs, /const copyAttempt = \+\+copyAttemptVersion/, "copy feedback should let the latest activation own the visible state");
 assert.match(codeListingJs, /cancelSchedule\(resetTimerId\)/, "copy feedback should cancel an earlier reset before starting a new attempt");
 assert.match(js, /function renderOverviewDashboard/, "roadmap JS should render overview as a dashboard");
+assert.match(js, /getNextIncompleteModule\(learningModules\)/, "Foundations overview should use the tested done-status selector");
+assert.doesNotMatch(js, /status !== "complete"/, "Foundations should not use a status rejected by its builder");
 assert.match(js, /\["Interview Signal",\s*getSection\(module, "Interview Signal"\)\]/, "overview dashboard should render the interview signal section");
 assert.match(js, /stableModules = learningModules\.filter\(\(item\) => item\.id !== "interview-sprint"\)/, "overview dashboard should keep sprint out of the stable module count");
 assert.match(js, /String\(stableModules\.length\)/, "overview dashboard should count stable modules instead of temporary sprint modules");
@@ -219,7 +224,7 @@ assert.match(js, /function renderKnowledgeArticleSection/);
 assert.match(js, /class="knowledge-article"/);
 assert.match(js, /knowledge-article-title/);
 assert.match(js, /knowledge-article-section is-\$\{escapeHtml\(section\.kind\)\}/);
-assert.match(js, /const mainSections = \["目标", "当前状态", "核心知识", "任务", "时间线", "学习记录", "知识笔记"\]/);
+assert.match(js, /const mainSections = getRenderableSectionTitles\(module, PROJECT_ID\)/, "shared reader should select project-scoped renderable sections");
 assert.match(js, /function getKnowledgeArticleForTarget/);
 assert.match(js, /entry\.articleTitle/);
 assert.match(js, /MERMAID_MODULE_URL = "https:\/\/cdn\.jsdelivr\.net\/npm\/mermaid@11\.12\.2\/dist\/mermaid\.esm\.min\.mjs"/);
@@ -283,7 +288,10 @@ assert.match(js, /const renderedNotes = archived \? renderArchivedAnnotations\(m
 assert.match(js, /const railSectionId = article\?\.id \?\? sectionId;/, "nested article sections should keep the parent article active in the rail");
 assert.match(js, /renderContextualNotePanel\(null\);/, "module switches should start with an empty right note panel");
 assert.doesNotMatch(js, /renderContextualNotePanel\(nextModule\.knowledgeNotes\?\.\[0\]\);/, "module switches should not default the right panel to the first knowledge note");
-assert.match(js, /ANNOTATION_STORAGE_KEY = "foundationsReader\.annotations\.v1"/, "Foundations reader should define a versioned local annotation storage key");
+assert.match(html, /data-project-id="foundations"/, "Foundations should identify its local reader state");
+assert.match(js, /const PROJECT_ID = document\.body\.dataset\.projectId \?\? "foundations";/, "shared reader should default to the Foundations project id");
+assert.match(js, /const ANNOTATION_STORAGE_KEY = `\$\{PROJECT_ID\}Reader\.annotations\.v1`;/, "shared reader should define project-scoped annotation storage");
+assert.match(js, /const ROADMAP_DATA_SOURCE = READER_SCRIPT\?\.dataset\.source \?\? "roadmap\/roadmap-data\.json";/, "shared reader should accept the page data source");
 assert.match(js, /function createEmptyAnnotationStore/, "Foundations reader should create an empty annotation store");
 assert.match(js, /function loadAnnotations/, "Foundations reader should load local annotations from localStorage");
 assert.match(js, /function saveAnnotations/, "Foundations reader should save local annotations to localStorage");

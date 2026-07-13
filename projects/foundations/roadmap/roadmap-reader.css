@@ -762,6 +762,10 @@ body,
   gap: 18px;
 }
 
+.section-list > .module-section {
+  min-width: 0;
+}
+
 .module-section,
 .status-panel {
   border-top: 1px solid var(--reader-line);
@@ -835,6 +839,38 @@ body,
 
 .section-body li + li {
   margin-top: 5px;
+}
+
+.math-inline,
+.math-display {
+  color: inherit;
+}
+
+.math-inline:not([data-math-rendered="true"]),
+.math-display:not([data-math-rendered="true"]) {
+  font-family: var(--reader-mono);
+  font-size: 0.9em;
+}
+
+.math-display {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0 0 15px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.35em 0;
+  white-space: pre-wrap;
+}
+
+.math-display[data-math-rendered="true"] {
+  white-space: normal;
+}
+
+.math-display .katex-display {
+  min-width: max-content;
+  margin: 0.35em 0;
 }
 
 .section-body code {

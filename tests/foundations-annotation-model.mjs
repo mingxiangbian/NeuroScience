@@ -37,6 +37,15 @@ assert.deepEqual(validStore.store.items.map((item) => item.id), ["keep"]);
 const missingStore = parseStoredAnnotations(null);
 assert.equal(missingStore.canPersist, true, "a genuinely missing store may initialize normally");
 
+const financeStore = parseStoredAnnotations(JSON.stringify({
+  version: 1,
+  items: [
+    { id: "foundations-note", projectId: "foundations", mode: "note", note: "隔离" },
+    { id: "finance-note", projectId: "finance", mode: "note", note: "保留" },
+  ],
+}), "finance");
+assert.deepEqual(financeStore.store.items.map((item) => item.id), ["finance-note"], "storage parsing should isolate the active project");
+
 assert.deepEqual(ANNOTATION_CATEGORIES.map((item) => item.id), [
   "understanding",
   "question",
