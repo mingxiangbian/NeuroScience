@@ -499,6 +499,7 @@ for (const paperId of readingPaperIds) {
     const readerVisibleSelfMemChunks = chunkData.chunks.map((chunk) => ({
       id: chunk.id,
       text: [
+        chunk.title,
         chunk.sourceText,
         chunk.zhTranslation,
         chunk.zhExplanation,
