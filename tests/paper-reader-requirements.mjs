@@ -379,8 +379,84 @@ for (const paperId of readingPaperIds) {
     assert.equal(paperData.license, "CC BY 4.0", "SelfMem should record its source license");
     assert.equal(paperData.readingGroups.length, 7, "SelfMem should define seven reading groups");
     assert.deepEqual(chunkData.chunks.map((chunk) => chunk.id), Array.from({ length: 22 }, (_, index) => `ch-${String(index + 1).padStart(3, "0")}`), "SelfMem should lock the exact ch-001 through ch-022 chunk ids");
+    assert.deepEqual(
+      chunkData.chunks.map(({ id, sectionId, groupId }) => [id, sectionId, groupId]),
+      [
+        ["ch-001", "sec-introduction", "group-problem"],
+        ["ch-002", "sec-introduction", "group-problem"],
+        ["ch-003", "sec-positioning", "group-positioning"],
+        ["ch-004", "sec-positioning", "group-positioning"],
+        ["ch-005", "sec-framework", "group-framework"],
+        ["ch-006", "sec-framework", "group-framework"],
+        ["ch-007", "sec-framework", "group-framework"],
+        ["ch-008", "sec-framework", "group-framework"],
+        ["ch-009", "sec-memory-loop", "group-loop"],
+        ["ch-010", "sec-memory-loop", "group-loop"],
+        ["ch-011", "sec-experiments", "group-evaluation"],
+        ["ch-012", "sec-experiments", "group-evaluation"],
+        ["ch-013", "sec-experiments", "group-evaluation"],
+        ["ch-014", "sec-results", "group-evaluation"],
+        ["ch-015", "sec-results", "group-evaluation"],
+        ["ch-016", "sec-results", "group-evaluation"],
+        ["ch-017", "sec-optimization", "group-optimization"],
+        ["ch-018", "sec-optimization", "group-optimization"],
+        ["ch-019", "sec-implementation", "group-implementation-limits"],
+        ["ch-020", "sec-implementation", "group-implementation-limits"],
+        ["ch-021", "sec-implementation", "group-implementation-limits"],
+        ["ch-022", "sec-limitations", "group-implementation-limits"],
+      ],
+      "SelfMem should preserve the approved section and reading-group map",
+    );
+    const selfMemChunks = new Map(chunkData.chunks.map((chunk) => [chunk.id, chunk]));
+    const selfMemSourceParagraph = (chunkId) => selfMemChunks.get(chunkId)?.blocks?.find((block) => block.type === "paragraph")?.text;
+    const countOmissions = (text) => text.match(/\[\.\.\.\]/g)?.length ?? 0;
+    const costChunk = selfMemChunks.get("ch-013");
+    assert.match(costChunk.sourceText, /Cost includes answer-generation and judge calls; token-count requests are excluded\./, "SelfMem ch-013 should preserve the complete Table 1 cost boundary");
+    assert.match(JSON.stringify(costChunk.blocks), /answer-generation and judge calls/, "SelfMem ch-013 should render the Table 1 cost inclusions");
+    assert.match(JSON.stringify(costChunk.blocks), /token-count requests are excluded/, "SelfMem ch-013 should render the Table 1 cost exclusion");
+    assert.equal(selfMemSourceParagraph("ch-013"), costChunk.sourceText, "SelfMem ch-013 visible paragraph should equal sourceText");
+    assert.equal(countOmissions(costChunk.zhTranslation), countOmissions(costChunk.sourceText), "SelfMem ch-013 translation should mirror source omission markers");
+    const optimizationChunk = selfMemChunks.get("ch-017");
+    assert.match(optimizationChunk.sourceText, /Iteration 0 is the first model-generated strategy/, "SelfMem ch-017 should explain the iteration-zero procedure");
+    assert.match(optimizationChunk.sourceText, /Each candidate strategy is then held fixed/, "SelfMem ch-017 should preserve the fixed-candidate rule");
+    for (const marker of [
+      /1\. propose a procedural memory strategy/,
+      /2\. run SelfMem with that fixed strategy/,
+      /3\. summarize the run using aggregate score, cost, and memory\/tool diagnostics/,
+      /4\. revise the strategy without seeing per-question supervision/,
+      /5\. repeat for the next optimization iteration/,
+    ]) {
+      assert.match(optimizationChunk.sourceText, marker, "SelfMem ch-017 should preserve all five Appendix B loop steps");
+    }
+    assert.equal(selfMemSourceParagraph("ch-017"), optimizationChunk.sourceText, "SelfMem ch-017 visible paragraph should equal sourceText");
+    assert.equal(countOmissions(optimizationChunk.zhTranslation), countOmissions(optimizationChunk.sourceText), "SelfMem ch-017 translation should mirror source omission markers");
+    const strategyChunk = selfMemChunks.get("ch-019");
+    assert.match(strategyChunk.sourceText, /The final strategy uses a strict write gate/, "SelfMem ch-019 should preserve the final strict write gate");
+    assert.match(strategyChunk.sourceText, /replaces or merges the older item instead of appending another copy/, "SelfMem ch-019 should preserve overlap merge and replace behavior");
+    assert.match(strategyChunk.sourceText, /Because answer-time retrieval is fixed/, "SelfMem ch-019 should preserve the fixed read-time retrieval implication");
+    assert.equal(selfMemSourceParagraph("ch-019"), strategyChunk.sourceText, "SelfMem ch-019 visible paragraph should equal sourceText");
+    assert.equal(countOmissions(strategyChunk.zhTranslation), countOmissions(strategyChunk.sourceText), "SelfMem ch-019 translation should mirror source omission markers");
+    const conclusionChunk = selfMemChunks.get("ch-022");
+    assert.equal(paperData.sections.find((section) => section.id === "sec-limitations")?.titleZh, "结论与局限", "SelfMem sec-limitations should explicitly represent conclusion and limitations");
+    assert.equal(conclusionChunk.title, "结论与局限", "SelfMem ch-022 should explicitly present conclusion and limitations");
+    assert.match(conclusionChunk.sourceText, /^We introduced SelfMem, a self-optimizing memory framework for AI agents\./, "SelfMem ch-022 should begin with the paper's Section 6 conclusion");
+    assert.match(conclusionChunk.sourceText, /Together, these results indicate that providing the model with an environment for learning and exploring memory strategies is more effective than directly prescribing a fixed memory pattern\./, "SelfMem ch-022 should preserve the paper's conclusion claim");
+    assert.match(conclusionChunk.sourceText, /Our experiments are conducted on BEAM with a fixed answer and judging protocol/, "SelfMem ch-022 should retain the limitations evidence boundary");
+    assert.match(conclusionChunk.sourceText, /additional long-horizon benchmarks, model families, and deployment settings/, "SelfMem ch-022 should retain the model-family and deployment validation boundary");
+    assert.match(conclusionChunk.sourceText, /highly specialized production implementations may show different efficiency profiles/, "SelfMem ch-022 should retain the production efficiency boundary");
+    assert.match(conclusionChunk.zhExplanation, /证据等级仍应标为初步：[\s\S]*策略 refinement 只覆盖 100K/, "SelfMem ch-022 should keep 100K refinement evidence preliminary");
+    assert.match(conclusionChunk.zhExplanation, /不能据此声称参数学习，也不能类比为已验证的生物可塑性/, "SelfMem ch-022 should reject parameter-learning and biological-plasticity overclaims");
+    assert.equal(selfMemSourceParagraph("ch-022"), conclusionChunk.sourceText, "SelfMem ch-022 visible paragraph should equal sourceText");
+    assert.equal(countOmissions(conclusionChunk.zhTranslation), countOmissions(conclusionChunk.sourceText), "SelfMem ch-022 translation should mirror source omission markers");
+    assert.ok(selfMemChunks.get("ch-020").blocks.some((block) => block.caption?.includes("Prompt 1") && block.code?.includes("model-managed memory workspace")), "SelfMem ch-020 should retain the key memory-construction prompt");
+    assert.ok(selfMemChunks.get("ch-020").blocks.some((block) => block.caption?.includes("Prompt 3") && block.code?.includes("retrieved evidence is the authority")), "SelfMem ch-020 should retain the key fixed-evidence answering prompt");
+    assert.ok(selfMemChunks.get("ch-021").blocks.some((block) => block.type === "table" && block.caption?.includes("Table 8") && block.rows?.some((row) => row.some((cell) => cell.trim() === "memory_system_optimize(...)"))), "SelfMem ch-021 should retain key Table 8 tool coverage");
+    const substantiveSelfMemText = chunkData.chunks.map((chunk) => chunk.sourceText).join("\n");
+    assert.doesNotMatch(substantiveSelfMemText, /\bReferences\b/, "SelfMem references should not be promoted into substantive chunks");
+    assert.doesNotMatch(substantiveSelfMemText, /For this paper, we leveraged GPT-5\.4/, "SelfMem author LLM disclosure should not be promoted into substantive chunks");
     const selfMemFigures = figuresData.figures.filter((figure) => figure.file);
     assert.equal(selfMemFigures.length, 5, "SelfMem should include exactly five local source crops");
+    assert.ok(selfMemFigures.every((figure) => figure.sourceUrl === "https://arxiv.org/abs/2607.03726v1"), "SelfMem figure provenance should lock all five crops to arXiv v1");
     assert.ok(selfMemFigures.every((figure) => figure.cropMode === "semantic-crop"), "SelfMem figures should use semantic-crop mode");
     assert.ok(selfMemFigures.every((figure) => Number.isInteger(figure.sourcePage) && figure.sourcePage > 0), "SelfMem figures should record positive source PDF pages");
     assert.ok(selfMemFigures.every((figure) => figure.bbox && ["x", "y", "width", "height"].every((field) => Number.isFinite(figure.bbox[field])) && figure.bbox.width > 0 && figure.bbox.height > 0), "SelfMem figures should include positive crop bbox metadata");
