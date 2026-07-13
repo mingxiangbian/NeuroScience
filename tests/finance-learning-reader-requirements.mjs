@@ -56,6 +56,7 @@ assert.ok(sharedCssIndex >= 0 && financeThemeIndex > sharedCssIndex, "finance th
 assert.match(financeHtml, /class="directory-kicker">学习路径<\/p>/, "finance directory chrome should use Chinese copy");
 assert.match(financeTheme, /body\[data-page="finance-roadmap-reader"\]/, "finance theme should be page-scoped");
 assert.match(financeTheme, /oklch\(/, "finance theme should use the approved perceptual color space");
+assert.match(financeTheme, /body\[data-page="finance-roadmap-reader"\]\[data-theme="dark"\]\s+\.route-ledger-label\s*\{\s*color:\s*var\(--reader-ink\);\s*\}/, "dark finance ledger labels should use dedicated high-contrast text");
 assert.match(financeTheme, /--reader-panel-blur:\s*blur\(18px\)/, "finance should reduce the inherited glass blur");
 assert.match(financeTheme, /\.toolbar-search:focus-within/, "finance search should expose a visible focus state");
 assert.match(financeTheme, /@media \(max-width:\s*480px\)/, "finance should have a narrow-toolbar layout");
