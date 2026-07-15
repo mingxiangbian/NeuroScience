@@ -5,6 +5,9 @@ status: not-started
 learning_progress: 0
 last_updated: 2026-07-13
 priority: high
+decision_role: 确认资金、期限与风险边界，判断是否具备进入投资决策的前提。
+graph_role: concept
+knowledge_relations: []
 ---
 
 ## 目标

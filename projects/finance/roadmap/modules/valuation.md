@@ -5,6 +5,9 @@ status: not-started
 learning_progress: 0
 last_updated: 2026-07-13
 priority: high
+decision_role: 把业务与现金流假设压缩为价格判断及安全边际。
+graph_role: concept
+knowledge_relations: [{"prerequisiteId":"risk-allocation","type":"prerequisite","rationale":"估值的贴现率与安全边际必须受风险承受和配置约束。"},{"prerequisiteId":"fund-company-analysis","type":"prerequisite","rationale":"估值必须建立在对基金底层或公司业务、报表与现金流的理解上。"}]
 ---
 
 ## 目标

@@ -1,9 +1,25 @@
 import assert from "node:assert/strict";
 import {
+  getDefaultNotePanelCollapsed,
   getFinanceReentryState,
   getNextIncompleteModule,
+  getReaderPanelStorageKey,
+  getReaderThemeStorageKey,
   getRenderableSectionTitles,
+  resolveInitialTheme,
 } from "../projects/foundations/roadmap/reader-state-model.js";
+
+assert.equal(getReaderThemeStorageKey("finance"), "financeReader.theme.v1", "theme storage should be project-scoped");
+assert.equal(getReaderThemeStorageKey("foundations"), "foundationsReader.theme.v1", "projects should not share theme storage");
+assert.equal(getReaderPanelStorageKey("finance", "notes"), "financeReader.notes.v1", "panel preferences should be project-scoped");
+assert.equal(getDefaultNotePanelCollapsed("finance"), true, "Finance should default to a compact note rail");
+assert.equal(getDefaultNotePanelCollapsed("foundations"), false, "Foundations should preserve its expanded desktop note panel");
+
+assert.equal(resolveInitialTheme({ projectId: "finance", htmlTheme: "dark" }), "dark", "Finance should use its dark HTML default");
+assert.equal(resolveInitialTheme({ projectId: "foundations", htmlTheme: "light" }), "light", "Foundations should preserve its light default");
+assert.equal(resolveInitialTheme({ projectId: "finance", htmlTheme: "dark", storedTheme: "light" }), "light", "a valid saved theme should win");
+assert.equal(resolveInitialTheme({ projectId: "finance", htmlTheme: "dark", storedTheme: "sepia" }), "dark", "an invalid saved theme should fall back to the HTML project default");
+assert.equal(resolveInitialTheme({ projectId: "finance", htmlTheme: "sepia" }), "dark", "invalid markup should fall back to the project default");
 
 const modules = [
   { id: "one", title: "第一模块", status: "done" },

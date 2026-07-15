@@ -5,6 +5,9 @@ status: not-started
 learning_progress: 0
 last_updated: 2026-07-13
 priority: high
+decision_role: 把目标、期限和承受能力转化为可解释的资产配置约束。
+graph_role: concept
+knowledge_relations: [{"prerequisiteId":"investment-basics","type":"prerequisite","rationale":"配置决策必须继承资金用途、期限和损失承受边界。"},{"prerequisiteId":"asset-classes","type":"prerequisite","rationale":"只有先理解各类资产的回报与风险，才能进行配置。"}]
 ---
 
 ## 目标

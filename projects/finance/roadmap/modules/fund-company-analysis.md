@@ -5,6 +5,9 @@ status: not-started
 learning_progress: 0
 last_updated: 2026-07-13
 priority: high
+decision_role: 判断基金或公司是否值得进入进一步研究。
+graph_role: concept
+knowledge_relations: [{"prerequisiteId":"asset-classes","type":"prerequisite","rationale":"基金和股票分析首先依赖对底层资产权利与回报来源的理解。"}]
 ---
 
 ## 目标

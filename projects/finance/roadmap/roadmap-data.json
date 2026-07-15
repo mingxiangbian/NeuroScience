@@ -7,7 +7,226 @@
     "dashboardModuleId": "overview",
     "glossaryModuleId": "terms-further-reading",
     "dashboardFocus": "从第 1 周开始：确认个人财务安全边界，再学习收益、风险与复利。",
-    "overallLearningProgress": 0
+    "overallLearningProgress": 0,
+    "knowledgeGraph": {
+      "version": 1,
+      "nodes": [
+        {
+          "id": "investment-basics",
+          "title": "投资的本质与前提",
+          "decisionRole": "确认资金、期限与风险边界，判断是否具备进入投资决策的前提。",
+          "graphRole": "concept",
+          "relations": []
+        },
+        {
+          "id": "asset-classes",
+          "title": "资产类别",
+          "decisionRole": "识别资产代表的权利、现金流来源与主要风险。",
+          "graphRole": "concept",
+          "relations": [
+            {
+              "prerequisiteId": "investment-basics",
+              "type": "prerequisite",
+              "rationale": "先建立投资与财务安全边界，再比较不同资产的权利与回报。"
+            }
+          ]
+        },
+        {
+          "id": "risk-allocation",
+          "title": "风险与配置",
+          "decisionRole": "把目标、期限和承受能力转化为可解释的资产配置约束。",
+          "graphRole": "concept",
+          "relations": [
+            {
+              "prerequisiteId": "investment-basics",
+              "type": "prerequisite",
+              "rationale": "配置决策必须继承资金用途、期限和损失承受边界。"
+            },
+            {
+              "prerequisiteId": "asset-classes",
+              "type": "prerequisite",
+              "rationale": "只有先理解各类资产的回报与风险，才能进行配置。"
+            }
+          ]
+        },
+        {
+          "id": "fund-company-analysis",
+          "title": "基金与公司分析",
+          "decisionRole": "判断基金或公司是否值得进入进一步研究。",
+          "graphRole": "concept",
+          "relations": [
+            {
+              "prerequisiteId": "asset-classes",
+              "type": "prerequisite",
+              "rationale": "基金和股票分析首先依赖对底层资产权利与回报来源的理解。"
+            }
+          ]
+        },
+        {
+          "id": "valuation",
+          "title": "估值",
+          "decisionRole": "把业务与现金流假设压缩为价格判断及安全边际。",
+          "graphRole": "concept",
+          "relations": [
+            {
+              "prerequisiteId": "risk-allocation",
+              "type": "prerequisite",
+              "rationale": "估值的贴现率与安全边际必须受风险承受和配置约束。"
+            },
+            {
+              "prerequisiteId": "fund-company-analysis",
+              "type": "prerequisite",
+              "rationale": "估值必须建立在对基金底层或公司业务、报表与现金流的理解上。"
+            }
+          ]
+        },
+        {
+          "id": "trading-execution",
+          "title": "交易与执行",
+          "decisionRole": "把既定配置和估值判断转化为订单、定投与再平衡规则。",
+          "graphRole": "concept",
+          "relations": [
+            {
+              "prerequisiteId": "risk-allocation",
+              "type": "prerequisite",
+              "rationale": "交易与再平衡应执行既定配置，而不是反过来决定配置。"
+            },
+            {
+              "prerequisiteId": "valuation",
+              "type": "prerequisite",
+              "rationale": "买入与卖出规则需要对价格、假设和安全边际有明确判断。"
+            }
+          ]
+        },
+        {
+          "id": "behavior-process",
+          "title": "行为与流程",
+          "decisionRole": "用流程、清单与复盘约束偏差并校验决策质量。",
+          "graphRole": "concept",
+          "relations": [
+            {
+              "prerequisiteId": "risk-allocation",
+              "type": "prerequisite",
+              "rationale": "只有先明确配置约束，才能识别行为是在执行还是偏离计划。"
+            },
+            {
+              "prerequisiteId": "fund-company-analysis",
+              "type": "prerequisite",
+              "rationale": "流程检查需要复核候选资产的质量、结构与关键风险。"
+            },
+            {
+              "prerequisiteId": "valuation",
+              "type": "prerequisite",
+              "rationale": "复盘必须区分企业判断错误与买入价格错误。"
+            },
+            {
+              "prerequisiteId": "trading-execution",
+              "type": "prerequisite",
+              "rationale": "行为纠偏需要落到具体交易、再平衡和复盘规则上。"
+            }
+          ]
+        },
+        {
+          "id": "study-plan-tools",
+          "title": "学习计划与工具",
+          "decisionRole": "把前述判断框架组织为可持续学习、复习与记录系统。",
+          "graphRole": "support",
+          "relations": []
+        },
+        {
+          "id": "terms-further-reading",
+          "title": "术语速查与延伸",
+          "decisionRole": "作为跨模块术语和资料索引，支持即时查阅与继续学习。",
+          "graphRole": "support",
+          "relations": []
+        }
+      ],
+      "edges": [
+        {
+          "sourceId": "investment-basics",
+          "targetId": "asset-classes",
+          "type": "prerequisite",
+          "rationale": "先建立投资与财务安全边界，再比较不同资产的权利与回报。"
+        },
+        {
+          "sourceId": "investment-basics",
+          "targetId": "risk-allocation",
+          "type": "prerequisite",
+          "rationale": "配置决策必须继承资金用途、期限和损失承受边界。"
+        },
+        {
+          "sourceId": "asset-classes",
+          "targetId": "risk-allocation",
+          "type": "prerequisite",
+          "rationale": "只有先理解各类资产的回报与风险，才能进行配置。"
+        },
+        {
+          "sourceId": "asset-classes",
+          "targetId": "fund-company-analysis",
+          "type": "prerequisite",
+          "rationale": "基金和股票分析首先依赖对底层资产权利与回报来源的理解。"
+        },
+        {
+          "sourceId": "risk-allocation",
+          "targetId": "valuation",
+          "type": "prerequisite",
+          "rationale": "估值的贴现率与安全边际必须受风险承受和配置约束。"
+        },
+        {
+          "sourceId": "fund-company-analysis",
+          "targetId": "valuation",
+          "type": "prerequisite",
+          "rationale": "估值必须建立在对基金底层或公司业务、报表与现金流的理解上。"
+        },
+        {
+          "sourceId": "risk-allocation",
+          "targetId": "trading-execution",
+          "type": "prerequisite",
+          "rationale": "交易与再平衡应执行既定配置，而不是反过来决定配置。"
+        },
+        {
+          "sourceId": "valuation",
+          "targetId": "trading-execution",
+          "type": "prerequisite",
+          "rationale": "买入与卖出规则需要对价格、假设和安全边际有明确判断。"
+        },
+        {
+          "sourceId": "risk-allocation",
+          "targetId": "behavior-process",
+          "type": "prerequisite",
+          "rationale": "只有先明确配置约束，才能识别行为是在执行还是偏离计划。"
+        },
+        {
+          "sourceId": "fund-company-analysis",
+          "targetId": "behavior-process",
+          "type": "prerequisite",
+          "rationale": "流程检查需要复核候选资产的质量、结构与关键风险。"
+        },
+        {
+          "sourceId": "valuation",
+          "targetId": "behavior-process",
+          "type": "prerequisite",
+          "rationale": "复盘必须区分企业判断错误与买入价格错误。"
+        },
+        {
+          "sourceId": "trading-execution",
+          "targetId": "behavior-process",
+          "type": "prerequisite",
+          "rationale": "行为纠偏需要落到具体交易、再平衡和复盘规则上。"
+        }
+      ],
+      "topologicalOrder": [
+        "investment-basics",
+        "asset-classes",
+        "risk-allocation",
+        "fund-company-analysis",
+        "valuation",
+        "trading-execution",
+        "behavior-process",
+        "study-plan-tools",
+        "terms-further-reading"
+      ]
+    }
   },
   "modules": [
     {
