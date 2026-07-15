@@ -5,6 +5,9 @@ status: not-started
 learning_progress: 0
 last_updated: 2026-07-13
 priority: high
+decision_role: 把前述判断框架组织为可持续学习、复习与记录系统。
+graph_role: support
+knowledge_relations: []
 ---
 
 ## 目标

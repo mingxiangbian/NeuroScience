@@ -176,12 +176,12 @@ assert.match(css, /\.legacy-annotation-archive\s*\{[\s\S]*padding:\s*14px 0 0/, 
 assert.match(css, /\.section-line:hover/, "roadmap CSS should style collapsed rail hover state");
 assert.match(css, /\.section-line:hover \+ \.section-line/, "collapsed rail should grow neighboring lines on hover");
 assert.match(css, /\.section-line\[aria-current="true"\]/, "roadmap CSS should expose active collapsed rail state");
-assert.match(css, /\.section-line\[aria-current="true"\]:hover,\s*\.section-line\.is-active:hover\s*\{[\s\S]*background:\s*var\(--reader-section-line-hover\)/, "active collapsed rail line should show a distinct hover state");
-const activeRailRule = css.match(/\.section-line\[aria-current="true"\],\s*\.section-line\.is-active\s*\{(?<body>[\s\S]*?)\}/)?.groups.body ?? "";
-const activeRailHoverRule = css.match(/\.section-line\[aria-current="true"\]:hover,\s*\.section-line\.is-active:hover\s*\{(?<body>[\s\S]*?)\}/)?.groups.body ?? "";
+assert.match(css, /\.section-line\[aria-current="true"\]:hover::before,[\s\S]*background:\s*var\(--reader-section-line-hover\)/, "active collapsed rail line should show a distinct hover state");
+const activeRailRule = css.match(/\.section-line\[aria-current="true"\]::before,\s*\.section-line\.is-active::before\s*\{(?<body>[\s\S]*?)\}/)?.groups.body ?? "";
+const activeRailHoverRule = css.match(/\.section-line\[aria-current="true"\]:hover::before,[\s\S]*?\.section-line\.is-active:focus-visible::before\s*\{(?<body>[\s\S]*?)\}/)?.groups.body ?? "";
 assert.ok(activeRailRule, "active collapsed rail rule should be inspectable");
 assert.ok(activeRailHoverRule, "active collapsed rail hover rule should be inspectable");
-assert.doesNotMatch(activeRailRule, /width\s*:/, "active collapsed rail state should not lengthen the current line");
+assert.match(activeRailRule, /width:\s*24px/, "active collapsed rail state should lengthen the visual line without shrinking its hit target");
 assert.match(activeRailHoverRule, /width:\s*36px/, "active collapsed rail hover state should lengthen the current line");
 assert.match(css, /\.section-tooltip/, "collapsed rail should expose section tooltips");
 assert.match(css, /\.result-meta/, "roadmap CSS should show module and section metadata in search results");
@@ -200,7 +200,10 @@ assert.match(js, /function renderModuleNav/, "roadmap JS should isolate module n
 assert.match(js, /function renderCurrentModule/, "roadmap JS should isolate module content rendering");
 assert.match(js, /import \{ enhanceCodeListings \} from "\.\/code-listing\.js"/, "roadmap JS should import the code listing enhancer");
 assert.match(js, /renderCurrentModule\(\);[\s\S]*enhanceCodeListings\(els\.sectionList\);[\s\S]*renderMermaidDiagrams/, "code listings should enhance before Mermaid starts");
-assert.match(js, /closest\("\[data-annotation-exclude\]"\)/, "annotation text should exclude listing controls and line numbers");
+assert.match(js, /const ANNOTATION_EXCLUDED_SELECTOR = \[[\s\S]*"\[data-annotation-exclude\]"[\s\S]*"a\[href\]"[\s\S]*"label"[\s\S]*"\.knowledge-highlight"/, "annotation selections should exclude listing chrome and interactive descendants");
+assert.match(js, /function selectionContainsExcludedContent\(range\)[\s\S]*range\.cloneContents\(\)[\s\S]*ANNOTATION_EXCLUDED_SELECTOR/, "annotation validation should inspect the complete selected range");
+assert.match(js, /function rangeContainsExcludedContent\(range\)[\s\S]*isAnnotationExcludedPosition\(range\.startContainer\)[\s\S]*selectionContainsExcludedContent\(range\)/, "annotation validation should combine endpoint and full-range exclusions");
+assert.match(js, /function applyHighlights\(\)[\s\S]*rangeContainsExcludedContent\(range\)/, "restored annotations should not recreate nested interactive controls");
 assert.doesNotMatch(js, /range\.startContainer !== range\.endContainer/, "annotations should support selections across syntax spans");
 assert.match(js, /function getTextOffset/, "annotation selection should resolve absolute text offsets");
 assert.match(js, /function getTextPosition/, "annotation restoration should map offsets back to text nodes");
@@ -270,8 +273,10 @@ assert.match(js, /function getSearchScore/, "roadmap JS should rank search entri
 assert.match(js, /function setActiveSection/, "roadmap JS should update collapsed rail active state dynamically");
 assert.match(js, /function syncActiveSectionFromScroll/, "roadmap JS should actively sync rail state from reader scroll position");
 assert.match(js, /addEventListener\("scroll", state\.sectionScrollHandler, \{ passive: true \}\)/, "reader scroll should drive collapsed rail active state");
-assert.match(js, /els\.main\.clientHeight \* 0\.24/, "active rail state should switch near the upper reading anchor");
-assert.match(js, /const remainingScroll = els\.main\.scrollHeight - els\.main\.clientHeight - els\.main\.scrollTop;[\s\S]*remainingScroll <= 64/, "the final short section should become active near the reader bottom despite browser scroll rounding");
+assert.match(js, /function getReaderScrollOwner/, "roadmap JS should resolve the element that actually owns scrolling at the current breakpoint");
+assert.match(js, /const clientHeight = isDocumentOwner \? window\.innerHeight : owner\.clientHeight;/, "active rail state should use the current scroll owner's viewport height");
+assert.match(js, /owner\.getBoundingClientRect\(\)\.top \+ owner\.clientHeight \* 0\.24/, "active rail state should switch near the upper reading anchor of the current scroll owner");
+assert.match(js, /const remainingScroll = owner\.scrollHeight - clientHeight - owner\.scrollTop;[\s\S]*remainingScroll <= 64/, "the final short section should become active near the current scroll owner's bottom despite browser scroll rounding");
 assert.doesNotMatch(js, /rootMargin:\s*"-16% 0px -68% 0px"/, "active rail state should not depend on the old narrow intersection band");
 assert.match(js, /data-section-id/, "roadmap JS should render stable section targets for search and rail navigation");
 assert.match(js, /section-tooltip/, "roadmap JS should render collapsed rail tooltips");
@@ -323,8 +328,12 @@ assert.match(js, /高亮和笔记一起删除/, "delete confirmation should allo
 assert.doesNotMatch(js, /PROJECT_ID = "brain-memory-for-ai-agents"|paperReader\.annotations\.v1/, "Foundations annotations should not reuse paper-reader project state");
 assert.doesNotMatch(js, /githubToken|Authorization|contents\/|repos\/|gitHub|fetch\(\"\/api/i, "Foundations annotations should not write to GitHub or backend APIs");
 assert.doesNotMatch(js, /embeddings\.json|cosineSimilarity|PROJECT_ID = "brain-memory-for-ai-agents"/, "Foundations reader JS should not reuse paper-specific semantic search state");
-assert.match(js, /els\.toggleNote\.addEventListener\("click", \(\) => \{[\s\S]*matchMedia\("\(max-width: 1100px\)"\)/, "note-toggle JS should use the same tablet breakpoint as the drawer CSS");
+assert.match(js, /function toggleNotePanel\(control\) \{[\s\S]*matchMedia\("\(max-width: 1100px\)"\)/, "note-toggle JS should use the same tablet breakpoint as the drawer CSS");
 assert.match(js, /els\.toggleLeftControls\.forEach\([\s\S]*matchMedia\("\(max-width: 860px\)"\)/, "left navigation should keep the one-column mobile breakpoint at 860px");
+assert.match(js, /function setMobileNoteOpen[\s\S]*classList\.remove\("is-mobile-left-open"\)/, "opening mobile notes should close the directory in the shared setter");
+assert.match(js, /function setMobileDirectoryOpen[\s\S]*classList\.remove\("is-mobile-note-open"\)/, "opening the mobile directory should close notes in the shared setter");
+assert.match(js, /function trapMobileDrawerFocus\(event\)[\s\S]*state\.annotationDeletePopover[\s\S]*els\.mobileNoteDrawer[\s\S]*els\.sidebar/, "mobile focus trapping should cover nested annotation dialogs and both drawers");
+assert.match(js, /trapMobileDrawerFocus\(event\);/, "the shared keyboard handler should run the mobile drawer focus trap");
 
 assert.equal(data.project.id, "foundations", "generated data should identify the Foundations project");
 assert.equal(data.project.targetRole, "Agent / LLM Systems Engineer", "generated data should keep the target role");

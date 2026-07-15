@@ -5,6 +5,9 @@ status: not-started
 learning_progress: 0
 last_updated: 2026-07-13
 priority: high
+decision_role: 用流程、清单与复盘约束偏差并校验决策质量。
+graph_role: concept
+knowledge_relations: [{"prerequisiteId":"risk-allocation","type":"prerequisite","rationale":"只有先明确配置约束，才能识别行为是在执行还是偏离计划。"},{"prerequisiteId":"fund-company-analysis","type":"prerequisite","rationale":"流程检查需要复核候选资产的质量、结构与关键风险。"},{"prerequisiteId":"valuation","type":"prerequisite","rationale":"复盘必须区分企业判断错误与买入价格错误。"},{"prerequisiteId":"trading-execution","type":"prerequisite","rationale":"行为纠偏需要落到具体交易、再平衡和复盘规则上。"}]
 ---
 
 ## 目标

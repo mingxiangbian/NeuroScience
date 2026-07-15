@@ -5,6 +5,9 @@ status: not-started
 learning_progress: 0
 last_updated: 2026-07-13
 priority: high
+decision_role: 作为跨模块术语和资料索引，支持即时查阅与继续学习。
+graph_role: support
+knowledge_relations: []
 ---
 
 ## 目标

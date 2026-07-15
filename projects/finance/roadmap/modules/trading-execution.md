@@ -5,6 +5,9 @@ status: not-started
 learning_progress: 0
 last_updated: 2026-07-13
 priority: high
+decision_role: 把既定配置和估值判断转化为订单、定投与再平衡规则。
+graph_role: concept
+knowledge_relations: [{"prerequisiteId":"risk-allocation","type":"prerequisite","rationale":"交易与再平衡应执行既定配置，而不是反过来决定配置。"},{"prerequisiteId":"valuation","type":"prerequisite","rationale":"买入与卖出规则需要对价格、假设和安全边际有明确判断。"}]
 ---
 
 ## 目标

@@ -5,6 +5,9 @@ status: not-started
 learning_progress: 0
 last_updated: 2026-07-13
 priority: high
+decision_role: 识别资产代表的权利、现金流来源与主要风险。
+graph_role: concept
+knowledge_relations: [{"prerequisiteId":"investment-basics","type":"prerequisite","rationale":"先建立投资与财务安全边界，再比较不同资产的权利与回报。"}]
 ---
 
 ## 目标
