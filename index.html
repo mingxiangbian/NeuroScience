@@ -442,7 +442,7 @@
         padding: 0 14px 0 17px;
         transform: translate(-50%, 8px);
         border: 1px solid rgba(255, 252, 244, 0.58);
-        border-radius: 4px;
+        border-radius: 999px;
         color: var(--ink);
         background:
           linear-gradient(135deg, rgba(255, 252, 244, 0.52), rgba(232, 220, 200, 0.24)),
@@ -2969,11 +2969,11 @@
       const DISPLAY_TEXT_INK = "rgba(18, 23, 21, 0.94)";
       const DISPLAY_TEXT_INK_MUTED = "rgba(18, 23, 21, 0.82)";
       const DISPLAY_TEXT_INK_IDLE = "rgba(18, 23, 21, 0.76)";
-      const DISPLAY_SELECTED_REGION_FONT_SIZE = 78;
+      const DISPLAY_SELECTED_REGION_FONT_SIZE = 46;
       const DISPLAY_SELECTED_FOLDER_FONT_SIZE = 58;
       const DISPLAY_SELECTED_SENTENCE_FONT_SIZE = 50;
       const DISPLAY_EXPANDED_FOLDER_FONT_SIZE = 66;
-      const DISPLAY_EXPANDED_REGION_FONT_SIZE = 43;
+      const DISPLAY_EXPANDED_REGION_FONT_SIZE = 34;
       const DISPLAY_IDLE_FOLDER_FONT_SIZE = 108;
       const DISPLAY_IDLE_STATE_FONT_SIZE = 35;
 
@@ -3171,17 +3171,6 @@
         });
       }
 
-      function fitDisplayFont(context, text, weight, preferredSize, minSize, maxWidth) {
-        let size = preferredSize;
-        do {
-          context.font = `${weight} ${size}px ${DISPLAY_FONT_STACK}`;
-          if (context.measureText(text).width <= maxWidth) return size;
-          size -= 1;
-        } while (size >= minSize);
-        context.font = `${weight} ${minSize}px ${DISPLAY_FONT_STACK}`;
-        return minSize;
-      }
-
       function getSelectedDisplayCharacterCount(module) {
         return module.region.length + module.folder.length + module.sentence.length;
       }
@@ -3216,14 +3205,14 @@
           const folderText = sliceDisplayText(module.folder, folderReveal);
           const sentenceText = sliceDisplayText(module.sentence, sentenceReveal);
           const typing = selectedReveal < getSelectedDisplayCharacterCount(module);
-          fitDisplayFont(context, module.region, "760", DISPLAY_SELECTED_REGION_FONT_SIZE, 42, DISPLAY_TEXTURE_WIDTH - 94);
-          context.fillText(regionText, 56, 28);
+          context.font = `760 ${DISPLAY_SELECTED_REGION_FONT_SIZE}px ${DISPLAY_FONT_STACK}`;
+          drawWrappedDisplayLine(context, regionText, 56, 24, DISPLAY_TEXTURE_WIDTH - 94, 48, 2);
           context.font = `680 ${DISPLAY_SELECTED_FOLDER_FONT_SIZE}px ${DISPLAY_FONT_STACK}`;
           context.fillStyle = accent;
-          context.fillText(folderText, 56, 118);
+          context.fillText(folderText, 56, 128);
           context.font = `560 ${DISPLAY_SELECTED_SENTENCE_FONT_SIZE}px ${DISPLAY_FONT_STACK}`;
           context.fillStyle = DISPLAY_TEXT_INK_MUTED;
-          drawWrappedDisplayLine(context, sentenceText, 56, 186, DISPLAY_TEXTURE_WIDTH - 92, 54, 3);
+          drawWrappedDisplayLine(context, sentenceText, 56, 194, DISPLAY_TEXTURE_WIDTH - 92, 52, 3);
           if (typing) {
             context.fillStyle = accent;
             context.globalAlpha = 0.74 + Math.sin(performance.now() * 0.012) * 0.18;
@@ -3233,11 +3222,11 @@
         } else if (active) {
           context.font = `760 ${DISPLAY_EXPANDED_FOLDER_FONT_SIZE}px ${DISPLAY_FONT_STACK}`;
           context.fillText(module.folder, 56, 58);
-          fitDisplayFont(context, module.region.replace(" Region", ""), "560", DISPLAY_EXPANDED_REGION_FONT_SIZE, 28, DISPLAY_TEXTURE_WIDTH - 94);
+          context.font = `560 ${DISPLAY_EXPANDED_REGION_FONT_SIZE}px ${DISPLAY_FONT_STACK}`;
           context.fillStyle = DISPLAY_TEXT_INK_MUTED;
           context.fillText(module.region.replace(" Region", ""), 56, 142);
         } else {
-          fitDisplayFont(context, module.folder, "760", DISPLAY_IDLE_FOLDER_FONT_SIZE, 50, DISPLAY_TEXTURE_WIDTH - 94);
+          context.font = `760 ${DISPLAY_IDLE_FOLDER_FONT_SIZE}px ${DISPLAY_FONT_STACK}`;
           context.fillStyle = DISPLAY_TEXT_INK;
           context.fillText(module.folder, 56, 82);
           context.font = `560 ${DISPLAY_IDLE_STATE_FONT_SIZE}px ${DISPLAY_FONT_STACK}`;

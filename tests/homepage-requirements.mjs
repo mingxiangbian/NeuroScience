@@ -253,7 +253,8 @@ assert.match(body, /project-display/, "six folder modules should now map to proj
 assert.match(body, /chip-display-module/, "project modules should render as display modules");
 assert.match(body, /project-display-screen/, "display modules should include a visible screen surface");
 assert.match(body, /project-display-screen-text/, "display modules should render selected project information inside the screen");
-assert.match(body, /fitDisplayFont/, "display text should fit long project titles inside the screen");
+assert.doesNotMatch(body, /fitDisplayFont/, "display titles should not change size according to text length");
+assert.match(body, /760 \$\{DISPLAY_SELECTED_REGION_FONT_SIZE\}px \$\{DISPLAY_FONT_STACK\}[\s\S]*drawWrappedDisplayLine\(context, regionText/, "selected display titles should use one fixed size and wrap when needed");
 assert.match(body, /const DISPLAY_TEXTURE_SCALE = 2/, "display screen text should render on a high-resolution texture for crisp readability");
 assert.match(body, /DISPLAY_FONT_STACK = '"Songti SC", "STSong", "Georgia", serif'/, "display screens should use a clearer paper-reading font stack");
 assert.doesNotMatch(body, /DISPLAY_TEXT_FONT_STACK/, "display typography should not keep duplicate font constants with the same value");
@@ -263,6 +264,8 @@ assert.match(body, /sliceDisplayText/, "display animation should progressively r
 assert.match(body, /paintDisplayTexture\(display, module, mode, revealCharacters = Infinity\)/, "display painting should accept a reveal progress");
 assert.match(body, /revealStartedAt/, "display modules should restart the text reveal when entering selected state");
 assert.match(body, /const DISPLAY_TEXT_INK_STRONG = "rgba\(18,\s*23,\s*21,\s*0\.98\)"/, "display screen text should use darker ink for readability on paper screens");
+assert.match(html, /\.search-trigger\s*\{[\s\S]*?border-radius:\s*999px;/, "expanded search trigger should use a pill-shaped frame");
+assert.match(body, /const DISPLAY_SELECTED_REGION_FONT_SIZE = 46/, "all selected display titles should share one readable fixed size");
 assert.match(body, /const DISPLAY_EXPANDED_FOLDER_FONT_SIZE = 66/, "expanded display folder labels should be large enough to read from the full composition");
 assert.match(body, /const DISPLAY_SELECTED_SENTENCE_FONT_SIZE = 50/, "selected display sentences should be large enough to read inside the paper screen");
 assert.match(body, /const DISPLAY_IDLE_FOLDER_FONT_SIZE = 108/, "idle display screens should prioritize a large readable folder label in portrait views");
