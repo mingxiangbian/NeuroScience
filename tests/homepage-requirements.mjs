@@ -14,9 +14,39 @@ const parietalChipLayout = chipLayout.match(/\{\s*id: "parietal"[\s\S]*?\n\s*\},
 const leftDisplayColumnCount = body.match(/position: \[-3\.45,/g)?.length ?? 0;
 const rightDisplayColumnCount = body.match(/position: \[3\.45,/g)?.length ?? 0;
 const modelUrl = new URL("../assets/brain-human.glb", import.meta.url);
-const modelHeader = readFileSync(modelUrl).subarray(0, 4).toString("utf8");
+const modelBuffer = readFileSync(modelUrl);
+const modelHeader = modelBuffer.subarray(0, 4).toString("utf8");
 const modelStats = statSync(modelUrl);
 const attribution = readFileSync(new URL("../assets/brain-human-attribution.md", import.meta.url), "utf8");
+
+function readGlbJson(buffer) {
+  assert.equal(buffer.readUInt32LE(0), 0x46546c67, "brain model should keep the binary glTF magic header");
+  assert.equal(buffer.readUInt32LE(4), 2, "brain model should use glTF 2.0");
+  assert.equal(buffer.readUInt32LE(8), buffer.length, "brain model GLB length should match the file length");
+
+  let offset = 12;
+  while (offset + 8 <= buffer.length) {
+    const chunkLength = buffer.readUInt32LE(offset);
+    const chunkType = buffer.readUInt32LE(offset + 4);
+    if (chunkType === 0x4e4f534a) {
+      return JSON.parse(buffer.subarray(offset + 8, offset + 8 + chunkLength).toString("utf8").replace(/\0+$/, ""));
+    }
+    offset += 8 + chunkLength;
+  }
+
+  assert.fail("brain model should include a JSON chunk");
+}
+
+const modelJson = readGlbJson(modelBuffer);
+const modelPrimitives = modelJson.meshes.flatMap((mesh) => mesh.primitives);
+const positionAccessorIds = [...new Set(modelPrimitives.map((primitive) => primitive.attributes.POSITION))];
+const indexAccessorIds = [...new Set(modelPrimitives.map((primitive) => primitive.indices))];
+const modelPositionCount = positionAccessorIds.reduce((total, accessorId) => total + modelJson.accessors[accessorId].count, 0);
+const modelIndexCount = indexAccessorIds.reduce((total, accessorId) => total + modelJson.accessors[accessorId].count, 0);
+const modelExtensions = new Set([...(modelJson.extensionsUsed ?? []), ...(modelJson.extensionsRequired ?? [])]);
+const observatoryCode = body.match(/function createNeuralObservatoryLayer\([\s\S]*?(?=\n {6}(?:async )?function |\n {6}async function boot)/)?.[0] ?? "";
+const moduleAnalogyLabelCount = visibleBody.match(/class="module-analogy"/g)?.length ?? 0;
+const sulcalFlowDefinitionCount = body.match(/function createSulcalActivityFlow\(/g)?.length ?? 0;
 
 assert.match(html, /<html lang="en">/, "homepage should remain English-only");
 assert.match(html, /data-visual-style="cyber-ink-paper"/, "homepage should expose the Cyber Ink rice-paper visual style for local review");
@@ -87,8 +117,60 @@ assert.match(body, /event\.metaKey \|\| event\.ctrlKey/, "homepage search should
 assert.match(body, /previewed:\s*null/, "module interaction state should separate hover or focus preview from persistent selection");
 assert.match(body, /const activeModule = state\.previewed \?\? state\.selected/, "hover and keyboard focus should enhance the active module path without changing click navigation semantics");
 
+assert.match(body, /function createNeuralObservatoryLayer\(/, "homepage should build the Neural Observatory as one coordinated visual layer");
+assert.match(observatoryCode, /neural-observatory-orbit/, "Neural Observatory should include a named scene-level orbit for visual debugging");
+assert.match(observatoryCode, /twin-arc-orbit-left/, "observatory orbit should extend the organic left half of the twin-arc identity");
+assert.match(observatoryCode, /twin-arc-orbit-right/, "observatory orbit should pair the organic arc with a precise right-hand arc");
+assert.match(observatoryCode, /external-connectome-field/, "Neural Observatory should include a named sparse external connectome field");
+assert.match(observatoryCode, /connectome-filament/, "external connectome should render explicit reusable filament geometry");
+assert.match(observatoryCode, /depthTest:\s*true[\s\S]*depthWrite:\s*false/, "connectome filaments should be occluded by the brain without writing over later transparent layers");
+assert.match(observatoryCode, /getConnectomeFilamentLimit/, "external connectome should adapt its filament budget to the viewport");
+assert.match(observatoryCode, /compact[\s\S]{0,160}12[\s\S]{0,160}portrait[\s\S]{0,160}16[\s\S]{0,160}24|24[\s\S]{0,160}16[\s\S]{0,160}12/, "connectome should cap visible filaments at 24 desktop, 16 portrait, and 12 compact");
+assert.match(body, /view\.scene\.add\(observatory\.group\)/, "twin-arc observatory should be a scene sibling instead of rotating with the brain");
+assert.doesNotMatch(body, /view\.brain\.add\([^)]*observatory/, "observatory orbit should not inherit brain drag rotation");
+assert.doesNotMatch(observatoryCode, /requestAnimationFrame\(/, "observatory should consume the existing render loop instead of starting a second loop");
+
+assert.match(body, /id="brain-canvas-host"[\s\S]*id="atlas-hud"[\s\S]*class="module-layer"/, "Atlas HUD should sit between the WebGL canvas host and module controls");
+assert.match(body, /id="atlas-hud"[^>]*aria-hidden="true"/, "Atlas HUD should remain decorative to avoid duplicate accessible names");
+assert.match(html, /\.atlas-hud\s*\{[\s\S]*pointer-events:\s*none/, "Atlas HUD should never intercept brain or module interactions");
+assert.match(visibleBody, /WORKSPACE REGION/, "Atlas HUD should identify the selected workspace-region analogy");
+assert.match(visibleBody, /ANALOGICAL MAP/, "Atlas HUD should state that the workspace mapping is analogical");
+assert.match(body, /function setupAtlasHud\(/, "Atlas HUD should have a dedicated projection and collision-avoidance coordinator");
+assert.match(body, /getModuleWorldAnchor\(id\)[\s\S]{0,260}getWorldPosition/, "Atlas HUD should obtain a real 3D workspace-region anchor instead of following a static DOM label");
+assert.match(body, /projectWorldPointToScreen\([\s\S]{0,120}anchorWorld,[\s\S]{0,120}view\.camera,[\s\S]{0,120}view\.renderer/, "Atlas HUD should reproject its active brain-region anchor through the live camera");
+assert.match(body, /avoidanceRects[\s\S]{0,420}displayRect/, "Atlas HUD placement should consider projected display geometry as an avoidance region");
+assert.match(body, /state\.expanded\s*&&\s*activeModule/, "Atlas HUD should appear only for an active module in the expanded state");
+assert.doesNotMatch(body, /atlasHud\.addEventListener|atlas-hud[^\n]*onclick/, "Atlas HUD should consume module state without registering duplicate interactions");
+assert.doesNotMatch(visibleBody, /\bMNI\b|Brodmann|firing rate|anatomical probability/i, "workspace analogy should not present invented neuroscience measurements");
+assert.equal(moduleAnalogyLabelCount, 6, "compact module controls should each contain one ANALOGICAL MAP status line");
+assert.match(html, /@media \([^)]*max-width:\s*520px[^)]*\)[\s\S]*?\.atlas-hud\s*\{[\s\S]*?display:\s*none/, "compact view should merge Atlas HUD into module labels instead of adding a second floating label");
+assert.match(html, /\.module-label\[data-active="true"\] \.module-analogy\s*\{[\s\S]*?display:\s*(?:block|inline|inline-block)/, "compact ANALOGICAL MAP status should appear only on the active module label");
+
+assert.equal(sulcalFlowDefinitionCount, 1, "semantic flow should upgrade the existing sulcal flow instead of creating a second flow system");
+assert.match(body, /const EXPANDED_SURFACE_FLOW_FLOOR = 0\.(?:2|25|3)\b/, "expanded brain should retain 20–30% of the surface activity field");
+assert.doesNotMatch(body, /activityFlow\.visible = eased < 0\.96/, "surface activity should hand off by reducing intensity instead of abruptly disappearing");
+assert.match(body, /const interactionState = moduleUi\.getState\(\)/, "render loop should read one shared module interaction state");
+assert.match(body, /activityFlow\.userData\.update\(elapsed,\s*interactionState\)/, "semantic sulcal flow should consume the shared active-module state");
+assert.match(body, /observatory\.update\(elapsed,\s*interactionState\)/, "orbit, connectome, region focus, and HUD should update from the same active-module state");
+assert.match(observatoryCode, /activeModule\s*=\s*state\.previewed\s*\?\?\s*state\.selected/, "observatory preview should use the same previewed-over-selected precedence as module UI");
+assert.match(observatoryCode, /searchOpen[\s\S]{0,240}0\.3|0\.3[\s\S]{0,240}searchOpen/, "opening Search should reduce nonessential Observatory motion to about 30%");
+assert.match(observatoryCode, /prefersReducedMotion[\s\S]{0,240}(?:motionScale|orbitMotion|pulseMotion)[\s\S]{0,160}0|(?:motionScale|orbitMotion|pulseMotion)[\s\S]{0,160}prefersReducedMotion\s*\?\s*0/, "reduced motion should stop orbit and connectome motion while retaining their static geometry");
+assert.match(observatoryCode, /getConnectomeDisplayAnchors[\s\S]{0,900}displayAnchors\.get\(module\.id\)/, "connectome paths should terminate at the matching live project display anchor");
+assert.match(observatoryCode, /geometryDirty[\s\S]{0,2200}filamentPositionAttribute\.needsUpdate = true/, "connectome should upload its dynamic vertex buffer only when brain or display transforms change");
+assert.match(body, /elapsed - lastAtlasProjectionAt >= 1 \/ 12/, "Atlas HUD projection and layout reads should be throttled to about 12 Hz");
+assert.match(observatoryCode, /activeVisible\s*=\s*activeSignal\s*\*\s*step\(vStrandIndex,\s*3\.5\)/, "the active module should retain four highlighted filaments at every viewport budget");
+assert.match(body, /button\.tabIndex = state\.expanded \? 0 : -1/, "collapsed invisible module controls should be removed from the keyboard tab order");
+
 assert.equal(modelHeader, "glTF", "local brain model should be a binary glTF asset");
-assert.ok(modelStats.size > 10_000_000, "local brain model should be the high-detail asset, not a tiny placeholder");
+assert.ok(modelStats.size > 500_000, "local brain model should remain a substantive asset rather than a tiny placeholder");
+assert.ok(modelStats.size <= 6_500_000, "optimized brain model should stay within the approved 6.5 MB delivery budget");
+assert.ok(modelJson.meshes.length >= 4, "optimized brain model should preserve all source mesh regions");
+assert.ok(modelPrimitives.length >= 4, "optimized brain model should preserve the source primitive structure");
+assert.ok(modelPositionCount >= 200_000, "optimized brain model should preserve the high-detail position baseline");
+assert.ok(modelIndexCount >= 1_100_000, "optimized brain model should preserve the high-detail index baseline without first-pass decimation");
+assert.equal(modelExtensions.has("KHR_materials_pbrSpecularGlossiness"), false, "optimized brain model should use standard metallic-roughness materials");
+assert.ok(modelExtensions.has("EXT_meshopt_compression") || modelExtensions.has("KHR_draco_mesh_compression"), "optimized brain model should use Meshopt or Draco geometry compression");
+assert.match(body, /MeshoptDecoder|DRACOLoader/, "homepage loader should configure the decoder required by the optimized brain model");
 assert.match(attribution, /NIH 3D/, "asset attribution should cite NIH 3D");
 assert.match(attribution, /CC-BY/, "asset attribution should record the listed license");
 assert.match(body, /loadBrainModel/, "homepage should load a dedicated brain model");
@@ -100,6 +182,7 @@ assert.match(body, /createSulcalSurfaceFlowSkin[\s\S]*cyberInkSpread/, "surface 
 assert.match(body, /flowPalette = \[[\s\S]*CYBER_INK_PALETTE\.flowerBlue[\s\S]*CYBER_INK_PALETTE\.cinnabar/, "activity flow should use flower-blue and cinnabar ink accents");
 assert.match(body, /const SULCAL_SURFACE_FLOW_ALPHA = 0\.88/, "surface activity should be strong enough to read as ink moving over the brain folds");
 assert.match(body, /const SULCAL_RIBBON_OPACITY = prefersReducedMotion \? 0\.07 : 0\.15/, "sulcal ribbons should be visible on the rice-paper background instead of disappearing as faint texture");
+assert.match(body, /const shimmer = prefersReducedMotion\s*\? 0\.68\s*:\s*0\.68 \+ Math\.sin/, "reduced motion should freeze the surface-flow shimmer instead of leaving a continuous pulse");
 assert.match(body, /mix\(color,\s*cinnabar,\s*b \* 0\.72\)/, "cinnabar accents should be strong enough to register as deliberate flow highlights");
 assert.match(body, /paintInkPaperDisplayBackground/, "project display screens should render as ink-paper displays");
 assert.match(body, /paintInkBleedDisplayEdge/, "project display screens should add a subtle ink-bleed edge so panels feel embedded in paper");
@@ -282,7 +365,7 @@ assert.match(body, /window\.location\.assign\(moduleTarget\.userData\.moduleUrl\
 assert.match(body, /state\.expanded && state\.selected === button\.dataset\.module[\s\S]*navigateToModuleHomepage\(module\)/, "clicking an already-selected module label should enter that module page");
 assert.doesNotMatch(body, /memory-array|layered-evidence-stack|control-core|uncertainty-gate|ring-buffer|io-port/, "old abstract chip symbols should not remain after switching to display modules");
 assert.match(body, /view\.scene\.add\(gpuPedestal\.group\)/, "GPU pedestal should be added without replacing the brain group");
-assert.match(body, /gpuPedestal\.update\(elapsed, moduleUi\.getState\(\)\)/, "GPU pedestal should follow the existing expanded and selected module state");
+assert.match(body, /gpuPedestal\?\.update\(elapsed, interactionState\)/, "GPU pedestal should consume the same expanded and selected module state as the Observatory layers");
 assert.match(body, /gpuPedestal\.resize\(\)/, "GPU pedestal should adapt to viewport size");
 assert.match(body, /const MODULES = \[/, "homepage should define the six research modules for the exploded view");
 assert.match(body, /createExplodedResearchModules/, "homepage should build an exploded research-module view");
