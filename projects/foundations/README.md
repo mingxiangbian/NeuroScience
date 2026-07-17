@@ -25,15 +25,17 @@
 
 ## How To Use This Folder
 
-1. 先读 `llm-agent-engineer-roadmap.md`，从 Week 1 的 `minimum` 任务开始。
+1. 先读 `ai-professional-roadmap.md` 确认方向（战略层），再读 `llm-agent-engineer-roadmap.md`，从 Week 1 的 `minimum` 任务开始。
 2. 每周用 roadmap 里的 review checklist 复盘一次。
 3. 需要重新生成计划时，使用 `multi-agent-planner.md`，更新输入字段后重新跑 6-agent 流程。
 4. 后续如果要做大型展示项目，再从 roadmap 的 mini drills 中挑一个扩展。
 
 ## Files
 
+- `ai-professional-roadmap.md`：战略层——从现在到"贾维斯"的职业路线图（六子系统 × 四阶段 + 结算制运行系统），对应 reader 里的 Career Roadmap 模块。
+- `ledger.md`：结算台账——活动单元、断点续传、结算记录、撞墙记录。数字只涨不跌，空窗不记债。
 - `multi-agent-planner.md`：可复用的 6-agent planner 模板。
-- `llm-agent-engineer-roadmap.md`：本次实际准备路线。
+- `llm-agent-engineer-roadmap.md`：战术层——面试准备路线。
 - `README.md`：当前入口说明。
 
 ## First Day
