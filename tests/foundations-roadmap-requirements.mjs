@@ -16,6 +16,7 @@ const packageJsonUrl = new URL("../package.json", import.meta.url);
 
 const requiredModules = [
   ["overview", "Overview"],
+  ["career-roadmap", "Career Roadmap"],
   ["interview-sprint", "Interview Sprint"],
   ["coding", "Coding"],
   ["llm-systems", "LLM Systems"],
@@ -46,6 +47,7 @@ for (const [id] of requiredModules) {
   assert.match(moduleMarkdown, /learning_progress: [0-9]+/, `module ${id} should declare learning progress`);
   assert.doesNotMatch(moduleMarkdown, /^progress: /m, `module ${id} should not use legacy progress`);
   const expectedLastUpdated = {
+    "career-roadmap": "2026-07-17",
     "interview-sprint": "2026-07-11",
     "evals-debugging": "2026-07-11",
     "agent-design": "2026-07-10",

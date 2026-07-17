@@ -13,6 +13,7 @@ const outputPath = join(foundationsDir, "roadmap", "roadmap-data.json");
 
 const MODULES = [
   ["overview", "Overview"],
+  ["career-roadmap", "Career Roadmap"],
   ["interview-sprint", "Interview Sprint"],
   ["coding", "Coding"],
   ["llm-systems", "LLM Systems"],
