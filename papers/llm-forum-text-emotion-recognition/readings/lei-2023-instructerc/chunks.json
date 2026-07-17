@@ -1,0 +1,228 @@
+{
+  "paperId": "lei-2023-instructerc",
+  "chunks": [
+    {
+      "id": "ch-001",
+      "sectionId": "sec-reformulation",
+      "order": 1,
+      "title": "把分类改造成文本生成",
+      "sourceText": "InstructERC reformulates emotion recognition in conversation as a sequence-to-sequence task for a large language model. Instead of attaching a discriminative head to an encoder, the model receives a structured textual prompt and generates one label from the allowed emotion set.",
+      "zhTranslation": "InstructERC 将对话情感识别重构为大语言模型的序列到序列任务。模型不再使用编码器后的判别分类头，而是接收结构化文本提示，并从允许的情绪集合中生成一个标签。",
+      "zhExplanation": "生成式接口便于复用大模型，但输出仍受固定标签集约束。因此评估的核心还是分类正确性，不应把自然语言输出误当作开放情感推理。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "InstructERC reformulates emotion recognition in conversation as a sequence-to-sequence task for a large language model. Instead of attaching a discriminative head to an encoder, the model receives a structured textual prompt and generates one label from the allowed emotion set."
+        },
+        {
+          "type": "figure",
+          "id": "fig-001",
+          "relation": "nearby"
+        }
+      ],
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "near"
+        }
+      ],
+      "keywords": [
+        "generative ERC",
+        "sequence-to-sequence",
+        "LLM",
+        "label generation"
+      ]
+    },
+    {
+      "id": "ch-002",
+      "sectionId": "sec-reformulation",
+      "order": 2,
+      "title": "标签声明约束输出空间",
+      "sourceText": "The prompt explicitly states the candidate emotion labels and the required answer format. This label statement narrows generation to the benchmark ontology, reducing free-form variation and making the output comparable with conventional ERC classifiers.",
+      "zhTranslation": "提示中明确列出候选情绪标签与要求的答案格式。标签声明把生成限制在基准标签体系内，减少自由文本变体，使输出能够与传统 ERC 分类器比较。",
+      "zhExplanation": "实际实现需要严格解析输出并记录无效标签率。不能把无法解析的回答静默映射为正确类别，否则会高估模型性能。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The prompt explicitly states the candidate emotion labels and the required answer format. This label statement narrows generation to the benchmark ontology, reducing free-form variation and making the output comparable with conventional ERC classifiers."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "label statement",
+        "constrained generation",
+        "output parsing",
+        "classification"
+      ]
+    },
+    {
+      "id": "ch-003",
+      "sectionId": "sec-retrieval",
+      "order": 3,
+      "title": "检索模板由四部分组成",
+      "sourceText": "Each main-task input concatenates four components: an instruction, a window of historical dialogue with speaker information, a label statement, and a retrieved demonstration. The historical window is a tunable choice rather than an assumption that all previous turns are equally useful.",
+      "zhTranslation": "主任务输入拼接四部分：任务指令、带说话人信息的历史对话窗口、标签声明和检索示例。历史窗口是可调参数，并不假设此前所有发言都同样有用。",
+      "zhExplanation": "论坛版本可把历史窗口替换为父回复路径，并比较无历史、固定轮数和回复路径三种设置，避免长线程成本失控。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Each main-task input concatenates four components: an instruction, a window of historical dialogue with speaker information, a label statement, and a retrieved demonstration. The historical window is a tunable choice rather than an assumption that all previous turns are equally useful."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "retrieval template",
+        "historical context",
+        "speaker information",
+        "prompt"
+      ]
+    },
+    {
+      "id": "ch-004",
+      "sectionId": "sec-retrieval",
+      "order": 4,
+      "title": "SBERT 召回相似示例",
+      "sourceText": "The demonstration module builds a balanced domain base from training examples and uses SBERT embeddings with cosine similarity to retrieve the most similar utterance. Speaker identity is removed from the retrieval base to reduce dependence on particular character distributions.",
+      "zhTranslation": "示例检索模块从训练样本构建平衡的领域库，使用 SBERT 向量和余弦相似度召回最相似发言。检索库去除具体说话人身份，以减弱对特定角色分布的依赖。",
+      "zhExplanation": "复现时检索库只能来自训练集。验证和测试样本若被加入向量库，会造成直接数据泄漏；索引构建脚本需要固定并可审计。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The demonstration module builds a balanced domain base from training examples and uses SBERT embeddings with cosine similarity to retrieve the most similar utterance. Speaker identity is removed from the retrieval base to reduce dependence on particular character distributions."
+        },
+        {
+          "type": "math",
+          "label": "Most similar demonstration",
+          "latex": "d_i^{r}=\\operatorname*{argmax}_{d_j\\in D_{domain}}\\cos(E(u_i),E(d_j))"
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "SBERT retrieval",
+        "demonstration",
+        "cosine similarity",
+        "data leakage"
+      ]
+    },
+    {
+      "id": "ch-005",
+      "sectionId": "sec-multitask",
+      "order": 5,
+      "title": "说话人识别作为预热任务",
+      "sourceText": "The speaker-identification auxiliary task asks the model to generate which speaker produced an utterance. It is intended to make the model capture speaker-specific expression patterns before the main ERC stage, using a predefined speaker label set for each dataset.",
+      "zhTranslation": "说话人识别辅助任务要求模型生成某条发言属于哪位说话人，目的是在主 ERC 阶段前学习说话人特有的表达模式；每个数据集使用预定义的说话人标签集合。",
+      "zhExplanation": "论坛用户数量远大于影视对话角色，无法直接预测具体用户 ID。更可行的替代任务是判断当前作者是否与父帖作者相同，或学习匿名作者表示。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The speaker-identification auxiliary task asks the model to generate which speaker produced an utterance. It is intended to make the model capture speaker-specific expression patterns before the main ERC stage, using a predefined speaker label set for each dataset."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "speaker identification",
+        "auxiliary task",
+        "speaker modeling",
+        "forum"
+      ]
+    },
+    {
+      "id": "ch-006",
+      "sectionId": "sec-multitask",
+      "order": 6,
+      "title": "预测历史对下一轮的情绪影响",
+      "sourceText": "A second auxiliary task predicts the target speaker's emotion from historical turns that exclude the current utterance. Joint training is meant to expose how preceding dialogue constrains future emotion, while avoiding an explicit graph-preprocessing pipeline.",
+      "zhTranslation": "第二个辅助任务仅根据不含当前发言的历史轮次，预测目标说话人的情绪。联合训练旨在让模型学习先前对话如何约束后续情绪，同时避免显式图预处理流程。",
+      "zhExplanation": "这个任务比主分类更难，也可能只学到标签先验。应通过去掉辅助任务的消融，以及不同历史长度结果，判断它是否真正提供信息。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "A second auxiliary task predicts the target speaker's emotion from historical turns that exclude the current utterance. Joint training is meant to expose how preceding dialogue constrains future emotion, while avoiding an explicit graph-preprocessing pipeline."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "emotion impact prediction",
+        "multi-task learning",
+        "dialogue history"
+      ]
+    },
+    {
+      "id": "ch-007",
+      "sectionId": "sec-results",
+      "order": 7,
+      "title": "LoRA 降低微调成本",
+      "sourceText": "The experiments use ChatGLM and LLaMA-family backbones with LoRA parameter-efficient fine-tuning. Only a small fraction of parameters is trained, making six-to-seven-billion-parameter models more feasible, although memory, retrieval, and inference costs remain materially higher than encoder baselines.",
+      "zhTranslation": "实验以 ChatGLM 与 LLaMA 系列为骨干，使用 LoRA 参数高效微调，只训练少量参数，使 60 亿到 70 亿参数模型更可行；但其显存、检索和推理成本仍明显高于编码器基线。",
+      "zhExplanation": "毕设预算应先测一批样本的显存、速度和成本，再决定是否全量复现。LoRA 减少可训练参数，不等于推理时无需加载基础模型。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The experiments use ChatGLM and LLaMA-family backbones with LoRA parameter-efficient fine-tuning. Only a small fraction of parameters is trained, making six-to-seven-billion-parameter models more feasible, although memory, retrieval, and inference costs remain materially higher than encoder baselines."
+        },
+        {
+          "type": "math",
+          "label": "Low-rank weight update",
+          "latex": "W'=W+BA,\\quad B\\in\\mathbb{R}^{d\\times r},\\ A\\in\\mathbb{R}^{r\\times k},\\ r\\ll\\min(d,k)"
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "LoRA",
+        "ChatGLM",
+        "LLaMA",
+        "parameter-efficient fine-tuning",
+        "LLM"
+      ]
+    },
+    {
+      "id": "ch-008",
+      "sectionId": "sec-results",
+      "order": 8,
+      "title": "强结果仍需检查边界",
+      "sourceText": "InstructERC reports improvements on IEMOCAP, MELD, and EmoryNLP and uses ablations for retrieval, auxiliary alignment, and tuning choices. However, training-time retrieval can restrict demonstrations by the known gold label while inference cannot, creating a distribution difference that should be reproduced and analyzed carefully.",
+      "zhTranslation": "InstructERC 在 IEMOCAP、MELD 和 EmoryNLP 上报告提升，并对检索、辅助对齐和微调方式进行消融。但训练时可以依据已知真实标签限制示例，而推理时无法这样做，形成需要谨慎复现与分析的分布差异。",
+      "zhExplanation": "论坛实验应加入无检索、随机示例、相似示例三个对照，并确保检索库只含训练数据。这样才能判断提升来自语义示例还是额外上下文长度。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "InstructERC reports improvements on IEMOCAP, MELD, and EmoryNLP and uses ablations for retrieval, auxiliary alignment, and tuning choices. However, training-time retrieval can restrict demonstrations by the known gold label while inference cannot, creating a distribution difference that should be reproduced and analyzed carefully."
+        },
+        {
+          "type": "table",
+          "caption": "Minimum retrieval controls for a forum reproduction.",
+          "columns": [
+            "Condition",
+            "Purpose"
+          ],
+          "rows": [
+            [
+              "No demonstration",
+              "Measure the base instruction-tuned model"
+            ],
+            [
+              "Random demonstration",
+              "Control for extra prompt tokens"
+            ],
+            [
+              "Nearest demonstration",
+              "Measure semantic retrieval value"
+            ],
+            [
+              "Gold-label restricted",
+              "Training-only upper-bound and leakage audit"
+            ]
+          ]
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "IEMOCAP",
+        "MELD",
+        "EmoryNLP",
+        "retrieval ablation",
+        "evaluation"
+      ]
+    }
+  ]
+}

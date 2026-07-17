@@ -1,0 +1,219 @@
+{
+  "paperId": "poria-2019-erc-survey",
+  "chunks": [
+    {
+      "id": "ch-001",
+      "sectionId": "sec-framing",
+      "order": 1,
+      "title": "对话情感不是孤立标签",
+      "sourceText": "Emotion recognition in conversation assigns an emotion to each utterance, but the target cannot be interpreted independently of the interaction. Topic, speaker state, intent, prior utterances, and the other participant may jointly shape the expressed emotion.",
+      "zhTranslation": "对话情感识别要为每个发言分配情感标签，但目标发言不能脱离互动独立解释。话题、说话人状态、意图、历史发言以及对方参与者都可能共同塑造最终表达的情绪。",
+      "zhExplanation": "这一定义直接否定了“每个论坛帖子单独分类就足够”的假设；至少要保存回复链和用户身份，才能检验上下文是否带来增益。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Emotion recognition in conversation assigns an emotion to each utterance, but the target cannot be interpreted independently of the interaction. Topic, speaker state, intent, prior utterances, and the other participant may jointly shape the expressed emotion."
+        },
+        {
+          "type": "figure",
+          "id": "fig-001",
+          "relation": "nearby"
+        }
+      ],
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "near"
+        }
+      ],
+      "keywords": [
+        "emotion recognition in conversation",
+        "interaction",
+        "speaker state",
+        "forum"
+      ]
+    },
+    {
+      "id": "ch-002",
+      "sectionId": "sec-framing",
+      "order": 2,
+      "title": "按发言逐步预测",
+      "sourceText": "A practical ERC system receives a sequence of utterances and predicts an emotion label for the current turn from its text and conversational evidence. The formulation may use categorical labels or continuous affect dimensions, and these choices are not directly interchangeable.",
+      "zhTranslation": "实际的对话情感识别系统接收一串发言，并依据当前文本与对话证据预测当前轮次的情绪。任务既可以使用离散类别，也可以使用连续情感维度，但两种标签体系不能直接互换。",
+      "zhExplanation": "毕设要先固定输出空间。论坛项目更适合先做可解释的离散类别；若以后加入强度评分，再把它作为独立目标，而不是混入同一个准确率。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "A practical ERC system receives a sequence of utterances and predicts an emotion label for the current turn from its text and conversational evidence. The formulation may use categorical labels or continuous affect dimensions, and these choices are not directly interchangeable."
+        },
+        {
+          "type": "math",
+          "label": "Turn-level ERC prediction",
+          "latex": "\\hat{y}_t=f(u_t,u_{<t},s_t,s_{<t})"
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "utterance classification",
+        "categorical emotion",
+        "affect dimensions"
+      ]
+    },
+    {
+      "id": "ch-003",
+      "sectionId": "sec-context",
+      "order": 3,
+      "title": "上下文有不同来源",
+      "sourceText": "Conversational context includes nearby and distant utterances, the target speaker's own history, and utterances from other speakers. Local context is often informative, while distant context becomes useful when the current turn refers back to earlier events or unresolved topics.",
+      "zhTranslation": "对话上下文既包括近处和远处的历史发言，也包括目标说话人自己的历史以及其他参与者的发言。局部上下文通常更直接，而当当前发言回指早先事件或未解决话题时，远距离上下文才更有价值。",
+      "zhExplanation": "实现时不要默认把整条长线程全部塞给模型。可以比较当前帖、固定窗口和回复路径三种输入，并记录长上下文是否只是增加噪声。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Conversational context includes nearby and distant utterances, the target speaker's own history, and utterances from other speakers. Local context is often informative, while distant context becomes useful when the current turn refers back to earlier events or unresolved topics."
+        },
+        {
+          "type": "table",
+          "caption": "Reader-side context map based on the survey.",
+          "columns": [
+            "Context source",
+            "Forum implementation"
+          ],
+          "rows": [
+            [
+              "Current utterance",
+              "Post text only"
+            ],
+            [
+              "Local history",
+              "Recent parent and sibling replies"
+            ],
+            [
+              "Speaker history",
+              "Earlier posts by the same author"
+            ],
+            [
+              "Distant context",
+              "Relevant ancestors in the thread"
+            ]
+          ]
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "local context",
+        "distant context",
+        "conversation history"
+      ]
+    },
+    {
+      "id": "ch-004",
+      "sectionId": "sec-context",
+      "order": 4,
+      "title": "说话人依赖与情绪转移",
+      "sourceText": "The survey distinguishes self-dependency from inter-speaker dependency. A person may preserve emotional inertia across turns, while another participant may trigger or alter that state. Emotion shifts are especially difficult because a model must detect when continuity no longer holds.",
+      "zhTranslation": "综述区分自我依赖与说话人之间的依赖：一个人可能在多轮发言中保持情绪惯性，也可能被其他参与者触发并改变状态。情绪转移尤其困难，因为模型必须判断原有连续性何时失效。",
+      "zhExplanation": "论坛里可把同一用户名视为 speaker，把被回复用户视为交互对象。情绪转移可以单独做错误分析，不必一开始就训练复杂动态模型。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The survey distinguishes self-dependency from inter-speaker dependency. A person may preserve emotional inertia across turns, while another participant may trigger or alter that state. Emotion shifts are especially difficult because a model must detect when continuity no longer holds."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "self-dependency",
+        "inter-speaker dependency",
+        "emotion shift",
+        "speaker"
+      ]
+    },
+    {
+      "id": "ch-005",
+      "sectionId": "sec-datasets",
+      "order": 5,
+      "title": "数据集标签并不统一",
+      "sourceText": "ERC benchmarks differ in modality, number of speakers, conversation length, emotion inventory, and annotation style. IEMOCAP, SEMAINE, EmotionLines, MELD, DailyDialog, and EmoContext therefore support different research questions rather than a single interchangeable benchmark.",
+      "zhTranslation": "对话情感数据集在模态、参与者数量、对话长度、情绪类别和标注方式上都不同。IEMOCAP、SEMAINE、EmotionLines、MELD、DailyDialog 与 EmoContext 支持的是不同研究问题，不能视为完全可替换的统一基准。",
+      "zhExplanation": "选择公开数据时要看它是否接近论坛文本，而不是只看规模。自己的数据还必须写清标签映射，否则跨数据集结果无法解释。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "ERC benchmarks differ in modality, number of speakers, conversation length, emotion inventory, and annotation style. IEMOCAP, SEMAINE, EmotionLines, MELD, DailyDialog, and EmoContext therefore support different research questions rather than a single interchangeable benchmark."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "ERC datasets",
+        "IEMOCAP",
+        "MELD",
+        "annotation"
+      ]
+    },
+    {
+      "id": "ch-006",
+      "sectionId": "sec-datasets",
+      "order": 6,
+      "title": "标注缺口限制结论",
+      "sourceText": "Most available datasets provide categorical emotion labels but do not annotate fine-grained topic-level emotion, the cause of an emotion, or the exact contextual utterance that triggered it. As a result, successful classification does not by itself demonstrate emotion reasoning.",
+      "zhTranslation": "多数现有数据集只提供离散情绪标签，却没有标注细粒度的话题情绪、情绪成因，或究竟是哪条上下文触发了当前情绪。因此，分类成功本身并不能证明模型完成了情绪推理。",
+      "zhExplanation": "这是论文写作中的关键边界：如果数据只标情绪，就只能声称做了识别或预测，不能把注意力权重包装成情绪成因解释。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Most available datasets provide categorical emotion labels but do not annotate fine-grained topic-level emotion, the cause of an emotion, or the exact contextual utterance that triggered it. As a result, successful classification does not by itself demonstrate emotion reasoning."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "emotion reasoning",
+        "emotion cause",
+        "annotation limitation"
+      ]
+    },
+    {
+      "id": "ch-007",
+      "sectionId": "sec-methods",
+      "order": 7,
+      "title": "模型围绕三个信息源展开",
+      "sourceText": "Recent ERC approaches combine the target utterance, conversational context, and speaker state through recurrent networks, memories, or attention mechanisms. The survey's comparison suggests that gains often come from representing who spoke and which history matters, not only from a stronger sentence encoder.",
+      "zhTranslation": "当时的对话情感识别方法通过循环网络、记忆模块或注意力机制，结合目标发言、对话上下文与说话人状态。综述表明，性能提升往往来自对“谁在说”和“哪些历史重要”的表示，而不只是更强的句子编码器。",
+      "zhExplanation": "复现路线应按信息增量设计：文本基线、加入上下文、再加入说话人。这样每一步都能通过消融实验说明价值。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Recent ERC approaches combine the target utterance, conversational context, and speaker state through recurrent networks, memories, or attention mechanisms. The survey's comparison suggests that gains often come from representing who spoke and which history matters, not only from a stronger sentence encoder."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "context modeling",
+        "speaker modeling",
+        "attention",
+        "classification"
+      ]
+    },
+    {
+      "id": "ch-008",
+      "sectionId": "sec-methods",
+      "order": 8,
+      "title": "论坛项目的最小研究闭环",
+      "sourceText": "For a forum domain, the survey motivates a staged design: establish an utterance-only baseline, add reply context and speaker identity, examine emotion-shift errors, and report limitations caused by missing multimodal or causal annotations. This preserves a testable scope without claiming full emotional understanding.",
+      "zhTranslation": "面向论坛领域，可以按阶段建立研究闭环：先做单帖基线，再加入回复上下文与用户身份，分析情绪转移错误，并报告缺少多模态或因果标注带来的限制。这样范围可验证，也不会夸大为完整的情绪理解。",
+      "zhExplanation": "这条路线适合开题：每个阶段都有明确输入变化、可复现实验和失败分析，同时为后续大模型适配保留接口。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "For a forum domain, the survey motivates a staged design: establish an utterance-only baseline, add reply context and speaker identity, examine emotion-shift errors, and report limitations caused by missing multimodal or causal annotations. This preserves a testable scope without claiming full emotional understanding."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "forum adaptation",
+        "ablation",
+        "emotion shift",
+        "research design"
+      ]
+    }
+  ]
+}

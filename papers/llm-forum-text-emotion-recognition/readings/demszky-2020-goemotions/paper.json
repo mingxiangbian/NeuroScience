@@ -1,0 +1,44 @@
+{
+  "id": "demszky-2020-goemotions",
+  "title": "GoEmotions: A Dataset of Fine-Grained Emotions",
+  "shortTitle": "GoEmotions",
+  "authors": "Demszky et al.",
+  "year": 2020,
+  "category": "Fine-grained emotion dataset",
+  "categoryZh": "细粒度情感数据集",
+  "relation": "Provides a large Reddit-derived label space and a reproducible transformer baseline close to the forum-text domain.",
+  "relationZh": "GoEmotions 来自 Reddit 评论，领域形态与论坛文本接近，可用于标签体系设计、预训练基线和跨域迁移实验。",
+  "description": "A dataset of 58,009 English Reddit comments labeled with 27 fine-grained emotions or Neutral, accompanied by annotation analyses and BERT baselines.",
+  "descriptionZh": "论文发布 58,009 条英文 Reddit 评论，标注 27 类细粒度情绪或 Neutral，并分析标注一致性、类别关系以及 BERT 基线表现。",
+  "readingFocus": [
+    "关注 27 类加 Neutral 的标签体系如何形成，以及细粒度类别带来的标注歧义。",
+    "记录 Reddit 采样、过滤和人口偏差，避免把该数据集当作通用人类情绪分布。",
+    "把 BERT 多标签基线作为可复现起点，再测试迁移到自己的论坛数据时性能下降多少。"
+  ],
+  "source": "https://aclanthology.org/2020.acl-main.372/",
+  "license": "ACL Anthology source",
+  "sourceFile": "../../pdfs/2020-demszky-goemotions.pdf",
+  "noteFile": "../../reading-route.md#p2-goemotions",
+  "sections": [
+    {
+      "id": "sec-motivation",
+      "title": "Dataset motivation",
+      "titleZh": "数据集动机"
+    },
+    {
+      "id": "sec-data",
+      "title": "Collection and annotation",
+      "titleZh": "采集与标注"
+    },
+    {
+      "id": "sec-analysis",
+      "title": "Taxonomy analysis",
+      "titleZh": "标签体系分析"
+    },
+    {
+      "id": "sec-modeling",
+      "title": "Baseline and transfer",
+      "titleZh": "基线与迁移"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "id": "lei-2023-instructerc",
+  "title": "InstructERC: Reforming Emotion Recognition in Conversation with Multi-task Retrieval-Augmented Large Language Models",
+  "shortTitle": "InstructERC",
+  "authors": "Lei et al.",
+  "year": 2023,
+  "category": "Retrieval-augmented LLM for ERC",
+  "categoryZh": "检索增强大模型对话情感识别",
+  "relation": "Connects the classical ERC problem to instruction tuning, demonstration retrieval, auxiliary tasks, and parameter-efficient LLM adaptation.",
+  "relationZh": "InstructERC 把传统对话情感识别改造成生成式指令任务，并结合示例检索、辅助任务和 LoRA，是“情感与大模型”专题的核心论文。",
+  "description": "A generative ERC framework that builds an instruction template from dialogue history and labels, retrieves a semantically similar demonstration, and aligns speaker and emotion behavior through auxiliary tasks.",
+  "descriptionZh": "框架把历史对话、候选标签和检索示例组成指令模板，并通过说话人识别与情绪影响预测辅助任务对齐大模型，使用参数高效微调完成标签生成。",
+  "readingFocus": [
+    "拆开检索模板的四部分：instruction、historical content、label statement 和 demonstration retrieval。",
+    "区分主 ERC 任务、说话人识别和情绪影响预测，检查多任务训练真正增加了什么监督。",
+    "关注训练时同标签检索与推理时全标签检索的差异，以及它可能造成的泄漏和分布偏移。"
+  ],
+  "source": "https://arxiv.org/abs/2309.11911",
+  "license": "See source",
+  "sourceFile": "../../pdfs/2023-lei-instructerc.pdf",
+  "noteFile": "../../reading-route.md#p6-instructerc",
+  "sections": [
+    {
+      "id": "sec-reformulation",
+      "title": "Generative reformulation",
+      "titleZh": "生成式任务重构"
+    },
+    {
+      "id": "sec-retrieval",
+      "title": "Retrieval template",
+      "titleZh": "检索模板"
+    },
+    {
+      "id": "sec-multitask",
+      "title": "Emotional alignment",
+      "titleZh": "情绪对齐多任务"
+    },
+    {
+      "id": "sec-results",
+      "title": "Training, results, and limits",
+      "titleZh": "训练、结果与局限"
+    }
+  ]
+}

@@ -1,0 +1,255 @@
+{
+  "paperId": "barbieri-2020-tweeteval",
+  "chunks": [
+    {
+      "id": "ch-001",
+      "sectionId": "sec-benchmark",
+      "order": 1,
+      "title": "统一七项推文任务",
+      "sourceText": "TweetEval brings seven heterogeneous tweet classification tasks into a common benchmark: emoji prediction, emotion, hate speech, irony, offensive language, sentiment, and stance. Unified splits and evaluation make model comparisons less dependent on incompatible experimental pipelines.",
+      "zhTranslation": "TweetEval 将七项异构推文分类任务整合为统一基准，包括 emoji 预测、情绪、仇恨言论、反讽、冒犯语言、情感极性和立场。统一切分与评估减少了实验管线不一致对模型比较的干扰。",
+      "zhExplanation": "毕设可借鉴的是统一实验框架：固定数据版本、划分、预处理、随机种子和指标，使后续模型替换仍能公平比较。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "TweetEval brings seven heterogeneous tweet classification tasks into a common benchmark: emoji prediction, emotion, hate speech, irony, offensive language, sentiment, and stance. Unified splits and evaluation make model comparisons less dependent on incompatible experimental pipelines."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "TweetEval",
+        "benchmark",
+        "tweet classification",
+        "evaluation"
+      ]
+    },
+    {
+      "id": "ch-002",
+      "sectionId": "sec-benchmark",
+      "order": 2,
+      "title": "任务规模差异明显",
+      "sourceText": "The benchmark tables show large differences in label counts and train, validation, and test sizes across tasks. A single aggregate score can summarize broad robustness, but it should not conceal which task or class supplies the improvement.",
+      "zhTranslation": "基准统计表显示，各任务的标签数量和训练、验证、测试规模差异很大。一个总分可以概括广泛稳健性，但不能掩盖究竟是哪项任务或哪类标签贡献了提升。",
+      "zhExplanation": "自己的页面应同时呈现宏平均指标和逐类结果。类别不平衡时，只报 accuracy 很容易把多数类优势误当作整体能力。",
+      "blocks": [
+    {
+      "type": "paragraph",
+      "text": "The benchmark tables show large differences in label counts and train, validation, and test sizes across tasks. A single aggregate score can summarize broad robustness, but it should not conceal which task or class supplies the improvement."
+    },
+    {
+      "type": "table",
+      "caption": "Task sizes reported in paper Table 2.",
+      "columns": [
+        "Task",
+        "Labels",
+        "Train",
+        "Validation",
+        "Test"
+      ],
+      "rows": [
+        [
+          "Emoji prediction",
+          "20",
+          "45,000",
+          "5,000",
+          "50,000"
+        ],
+        [
+          "Emotion detection",
+          "4",
+          "3,257",
+          "374",
+          "1,421"
+        ],
+        [
+          "Hate speech",
+          "2",
+          "9,000",
+          "1,000",
+          "2,970"
+        ],
+        [
+          "Irony detection",
+          "2",
+          "2,862",
+          "955",
+          "784"
+        ],
+        [
+          "Offensive language",
+          "2",
+          "11,916",
+          "1,324",
+          "860"
+        ],
+        [
+          "Sentiment analysis",
+          "3",
+          "45,389",
+          "2,000",
+          "11,906"
+        ],
+        [
+          "Stance detection",
+          "3",
+          "2,620",
+          "294",
+          "1,249"
+        ]
+      ]
+    },
+    {
+      "type": "figure",
+      "id": "fig-001",
+          "relation": "nearby"
+        }
+      ],
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "near"
+        }
+      ],
+      "keywords": [
+        "dataset statistics",
+        "class imbalance",
+        "aggregate score"
+      ]
+    },
+    {
+      "id": "ch-003",
+      "sectionId": "sec-emotion",
+      "order": 3,
+      "title": "从多标签改成四分类",
+      "sourceText": "The emotion task starts from SemEval 2018 Affect in Tweets, originally an eleven-emotion multi-label problem. TweetEval keeps only examples with a single label and selects the four most common emotions: anger, joy, sadness, and optimism.",
+      "zhTranslation": "情绪子任务来自 SemEval 2018 Affect in Tweets，原任务包含十一种情绪并允许多标签。TweetEval 只保留单标签样本，并选择最常见的四类：愤怒、喜悦、悲伤和乐观。",
+      "zhExplanation": "这个转换让训练简单且可复现，但主动删除了共存情绪和低频类别。选择它作为基线时应明确说明任务被简化。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The emotion task starts from SemEval 2018 Affect in Tweets, originally an eleven-emotion multi-label problem. TweetEval keeps only examples with a single label and selects the four most common emotions: anger, joy, sadness, and optimism."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "emotion task",
+        "single-label",
+        "anger joy sadness optimism",
+        "multi-label"
+      ]
+    },
+    {
+      "id": "ch-004",
+      "sectionId": "sec-emotion",
+      "order": 4,
+      "title": "单标签假设的代价",
+      "sourceText": "Repurposing the data as multiclass classification creates a clean target but changes the original research question. Tweets expressing more than one emotion disappear, so the resulting model is evaluated on choosing one dominant class rather than recovering the full emotional state.",
+      "zhTranslation": "把数据改造成多分类任务虽然得到清晰目标，却改变了原始研究问题。表达多个情绪的推文被删除，因此模型评估的是选择一个主导类别，而非恢复完整情绪状态。",
+      "zhExplanation": "论坛数据若保留多标签，可将 TweetEval 用作预训练或对照，而不应直接把四分类结果当作最终任务定义。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Repurposing the data as multiclass classification creates a clean target but changes the original research question. Tweets expressing more than one emotion disappear, so the resulting model is evaluated on choosing one dominant class rather than recovering the full emotional state."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "multiclass classification",
+        "dominant emotion",
+        "task definition"
+      ]
+    },
+    {
+      "id": "ch-005",
+      "sectionId": "sec-models",
+      "order": 5,
+      "title": "社交文本需要一致预处理",
+      "sourceText": "TweetEval standardizes common tweet-specific preprocessing, including anonymizing user mentions and handling formatting consistently. Such normalization reduces accidental vocabulary leakage while preserving the short, informal linguistic patterns that distinguish social media from edited prose.",
+      "zhTranslation": "TweetEval 统一了推文特有的预处理，例如匿名化用户提及并一致处理文本格式。这种规范化减少偶然词汇泄漏，同时保留社交媒体区别于正式文本的短句和非正式表达。",
+      "zhExplanation": "论坛项目也应匿名化用户名、URL 和可能的个人信息，但要保留回复结构；结构信息与可识别身份是两个不同问题。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "TweetEval standardizes common tweet-specific preprocessing, including anonymizing user mentions and handling formatting consistently. Such normalization reduces accidental vocabulary leakage while preserving the short, informal linguistic patterns that distinguish social media from edited prose."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "preprocessing",
+        "user anonymization",
+        "social media",
+        "privacy"
+      ]
+    },
+    {
+      "id": "ch-006",
+      "sectionId": "sec-models",
+      "order": 6,
+      "title": "比较通用与领域模型",
+      "sourceText": "The study compares conventional baselines with pretrained language models and Twitter-adapted RoBERTa variants. The results test whether additional in-domain pretraining consistently helps, rather than assuming that every social-media task requires a separate model trained from scratch.",
+      "zhTranslation": "研究比较传统基线、预训练语言模型以及针对 Twitter 适配的 RoBERTa 变体，检验额外领域预训练是否稳定有效，而不是预设每个社交任务都必须从头训练独立模型。",
+      "zhExplanation": "相同思路可用于论坛：比较通用 BERT、社交媒体模型和少量论坛继续预训练。只有增益稳定且成本合理，才能支持领域适配结论。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The study compares conventional baselines with pretrained language models and Twitter-adapted RoBERTa variants. The results test whether additional in-domain pretraining consistently helps, rather than assuming that every social-media task requires a separate model trained from scratch."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "RoBERTa",
+        "domain pretraining",
+        "baseline comparison",
+        "classification"
+      ]
+    },
+    {
+      "id": "ch-007",
+      "sectionId": "sec-evaluation",
+      "order": 7,
+      "title": "宏平均分保护少数类",
+      "sourceText": "Most TweetEval tasks retain the metric used by the original benchmark, commonly macro-averaged F1. Macro averaging gives each class equal weight, making it more informative than raw accuracy when emotion labels have unequal frequencies.",
+      "zhTranslation": "TweetEval 多数任务沿用原基准指标，常见的是宏平均 F1。宏平均让每个类别拥有相同权重，因此在情绪标签频率不均时通常比原始准确率更有信息量。",
+      "zhExplanation": "最终报告至少同时给 macro-F1、每类 precision/recall/F1 和混淆矩阵；若做多标签，再补 micro-F1 与 Jaccard。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Most TweetEval tasks retain the metric used by the original benchmark, commonly macro-averaged F1. Macro averaging gives each class equal weight, making it more informative than raw accuracy when emotion labels have unequal frequencies."
+        },
+        {
+          "type": "math",
+          "label": "Macro-averaged F1",
+          "latex": "F1_{macro}=\\frac{1}{C}\\sum_{c=1}^{C}\\frac{2P_cR_c}{P_c+R_c}"
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "macro F1",
+        "evaluation metric",
+        "class imbalance"
+      ]
+    },
+    {
+      "id": "ch-008",
+      "sectionId": "sec-evaluation",
+      "order": 8,
+      "title": "Twitter 到论坛的迁移检验",
+      "sourceText": "TweetEval offers a disciplined source-domain baseline, but forum transfer remains an empirical question. Longer posts, nested replies, community-specific slang, and different moderation rules can change both lexical cues and label prevalence relative to Twitter.",
+      "zhTranslation": "TweetEval 提供了规范的源领域基线，但迁移到论坛是否有效仍是实证问题。更长的帖子、嵌套回复、社区黑话和不同审核规则都会改变词汇线索与标签分布。",
+      "zhExplanation": "最有价值的实验不是在 TweetEval 上多涨一点分，而是量化同一模型进入自建论坛测试集后下降多少，以及哪些类别受影响最大。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "TweetEval offers a disciplined source-domain baseline, but forum transfer remains an empirical question. Longer posts, nested replies, community-specific slang, and different moderation rules can change both lexical cues and label prevalence relative to Twitter."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "Twitter",
+        "forum transfer",
+        "domain shift",
+        "error analysis"
+      ]
+    }
+  ]
+}

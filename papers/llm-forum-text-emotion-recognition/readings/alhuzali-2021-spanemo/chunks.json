@@ -1,0 +1,220 @@
+{
+  "paperId": "alhuzali-2021-spanemo",
+  "chunks": [
+    {
+      "id": "ch-001",
+      "sectionId": "sec-problem",
+      "order": 1,
+      "title": "情绪可以同时出现",
+      "sourceText": "Multi-label emotion classification allows one sentence to express several emotions at once. SpanEmo is motivated by the observation that independent binary classifiers ignore systematic relations among labels, even though emotions frequently co-occur or exclude one another.",
+      "zhTranslation": "多标签情绪分类允许一句话同时表达多种情绪。SpanEmo 的动机是：相互独立的二分类器忽略了标签之间稳定的关系，而情绪在实际数据中经常共现或相互排斥。",
+      "zhExplanation": "若论坛标注允许“愤怒加失望”，多标签比强迫单选更符合数据；但这也要求标注指南明确哪些组合是允许的。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Multi-label emotion classification allows one sentence to express several emotions at once. SpanEmo is motivated by the observation that independent binary classifiers ignore systematic relations among labels, even though emotions frequently co-occur or exclude one another."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "multi-label emotion",
+        "label correlation",
+        "co-occurrence"
+      ]
+    },
+    {
+      "id": "ch-002",
+      "sectionId": "sec-problem",
+      "order": 2,
+      "title": "将标签写进输入序列",
+      "sourceText": "SpanEmo casts classification as span prediction by prepending the emotion class tokens to the sentence. The output span is the subset of label positions selected as present, not a span of emotion-bearing words copied from the original sentence.",
+      "zhTranslation": "SpanEmo 通过把情绪类别 token 放在句子前面，将分类重构为 span prediction。输出的 span 是被判定存在的标签位置集合，而不是从原句复制出的情绪词片段。",
+      "zhExplanation": "这是最容易误读的地方。模型仍在做分类，只是让标签拥有可参与上下文编码的 token 表示，并从这些位置读出预测。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "SpanEmo casts classification as span prediction by prepending the emotion class tokens to the sentence. The output span is the subset of label positions selected as present, not a span of emotion-bearing words copied from the original sentence."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "span prediction",
+        "label tokens",
+        "classification framing"
+      ]
+    },
+    {
+      "id": "ch-003",
+      "sectionId": "sec-method",
+      "order": 3,
+      "title": "标签与文本共同编码",
+      "sourceText": "The encoder receives two segments: the complete emotion label set and the input sentence. BERT therefore produces contextual representations for both label tokens and words, allowing attention to connect each candidate emotion with evidence in the sentence.",
+      "zhTranslation": "编码器接收两个片段：完整情绪标签集合与输入句子。BERT 同时为标签 token 和文本词生成上下文表示，使注意力可以把每个候选情绪与句中证据连接起来。",
+      "zhExplanation": "标签名称本身会影响模型，因此中英文标签翻译、同义词和顺序都应固定，并在实验配置中保存。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The encoder receives two segments: the complete emotion label set and the input sentence. BERT therefore produces contextual representations for both label tokens and words, allowing attention to connect each candidate emotion with evidence in the sentence."
+        },
+        {
+          "type": "figure",
+          "id": "fig-001",
+          "relation": "nearby"
+        }
+      ],
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "near"
+        }
+      ],
+      "keywords": [
+        "BERT encoder",
+        "label representation",
+        "input sentence"
+      ]
+    },
+    {
+      "id": "ch-004",
+      "sectionId": "sec-method",
+      "order": 4,
+      "title": "在类别位置输出概率",
+      "sourceText": "A feed-forward network with a sigmoid activation maps the contextualized representation at each label position to a probability. Because every class has its own position, several labels can cross the decision threshold for the same sentence.",
+      "zhTranslation": "前馈网络配合 sigmoid 激活，把每个标签位置的上下文表示映射为概率。由于每个类别都有独立位置，同一句话可以有多个标签同时超过判定阈值。",
+      "zhExplanation": "阈值不是无关细节。应在验证集选择统一阈值或逐类阈值，并报告这一选择对宏平均 F1 的影响。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "A feed-forward network with a sigmoid activation maps the contextualized representation at each label position to a probability. Because every class has its own position, several labels can cross the decision threshold for the same sentence."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "feed-forward network",
+        "sigmoid",
+        "decision threshold",
+        "multi-label"
+      ]
+    },
+    {
+      "id": "ch-005",
+      "sectionId": "sec-loss",
+      "order": 5,
+      "title": "相关损失拉开正负标签",
+      "sourceText": "The label-correlation-aware loss compares positive and negative label probabilities for each example. It penalizes cases where an absent emotion receives a higher score than a present emotion, encouraging a ranking that preserves dependencies in the multi-label target.",
+      "zhTranslation": "标签相关感知损失在每个样本内比较正标签与负标签的概率。当不存在的情绪得分高于真实情绪时，模型会受到惩罚，从而学习与多标签目标一致的排序关系。",
+      "zhExplanation": "LCA 并不是显式学习一个固定共现图，而是通过样本内正负标签排序间接保留标签依赖。论文中应准确描述这个机制。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The label-correlation-aware loss compares positive and negative label probabilities for each example. It penalizes cases where an absent emotion receives a higher score than a present emotion, encouraging a ranking that preserves dependencies in the multi-label target."
+        },
+        {
+          "type": "math",
+          "label": "Label-correlation-aware loss",
+          "latex": "L_{LCA}(y,\\hat{y})=\\frac{1}{|y^0||y^1|}\\sum_{(p,q)\\in y^0\\times y^1}\\exp(\\hat{y}_p-\\hat{y}_q)"
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "LCA loss",
+        "positive labels",
+        "negative labels",
+        "ranking"
+      ]
+    },
+    {
+      "id": "ch-006",
+      "sectionId": "sec-loss",
+      "order": 6,
+      "title": "联合目标平衡两种约束",
+      "sourceText": "SpanEmo combines binary cross-entropy with the correlation-aware objective. BCE rewards correct per-label probabilities, while LCA emphasizes the ordering between present and absent emotions; a coefficient alpha controls their contribution during training.",
+      "zhTranslation": "SpanEmo 联合二元交叉熵与标签相关目标。BCE 奖励逐标签概率正确，LCA 强调真实与非真实情绪之间的排序；系数 alpha 控制两部分在训练中的权重。",
+      "zhExplanation": "最关键的消融应包括仅 BCE、仅 LCA 和联合损失，同时保持编码器与训练预算一致，避免把调参差异误判为损失贡献。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "SpanEmo combines binary cross-entropy with the correlation-aware objective. BCE rewards correct per-label probabilities, while LCA emphasizes the ordering between present and absent emotions; a coefficient alpha controls their contribution during training."
+        },
+        {
+          "type": "math",
+          "label": "Joint SpanEmo objective",
+          "latex": "L=(1-\\alpha)L_{BCE}+\\alpha\\sum_{i=1}^{M}L_{LCA}^{(i)}"
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "joint loss",
+        "binary cross-entropy",
+        "alpha",
+        "ablation"
+      ]
+    },
+    {
+      "id": "ch-007",
+      "sectionId": "sec-results",
+      "order": 7,
+      "title": "跨语言多标签评估",
+      "sourceText": "The experiments use SemEval 2018 emotion data in English, Arabic, and Spanish and report micro-F1, macro-F1, and Jaccard score. Ablations examine the label segment and each loss component, making the central mechanism more testable than a result table alone.",
+      "zhTranslation": "实验使用 SemEval 2018 的英语、阿拉伯语和西班牙语情绪数据，并报告 micro-F1、macro-F1 与 Jaccard。消融实验检查标签片段和各损失部分，使核心机制比单一结果表更可检验。",
+      "zhExplanation": "论坛项目至少保留这三类指标，并增加逐类结果。若样本很少，建议多随机种子报告均值与标准差。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The experiments use SemEval 2018 emotion data in English, Arabic, and Spanish and report micro-F1, macro-F1, and Jaccard score. Ablations examine the label segment and each loss component, making the central mechanism more testable than a result table alone."
+        },
+        {
+          "type": "table",
+          "caption": "Minimum multi-label evaluation set.",
+          "columns": [
+            "Metric",
+            "What it emphasizes"
+          ],
+          "rows": [
+            [
+              "Micro-F1",
+              "Overall decisions, dominated by frequent labels"
+            ],
+            [
+              "Macro-F1",
+              "Equal weight for each emotion class"
+            ],
+            [
+              "Jaccard",
+              "Overlap between predicted and gold label sets"
+            ]
+          ]
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "SemEval 2018",
+        "micro F1",
+        "macro F1",
+        "Jaccard",
+        "evaluation"
+      ]
+    },
+    {
+      "id": "ch-008",
+      "sectionId": "sec-results",
+      "order": 8,
+      "title": "扩展到论坛上下文",
+      "sourceText": "For forum data, SpanEmo can remain the label-correlation head while the text input is expanded with a parent reply or thread summary. The extension should be compared against the same encoder without context so that any gain is attributable to conversational evidence.",
+      "zhTranslation": "面向论坛数据，可以保留 SpanEmo 的标签相关预测头，同时把输入扩展为当前帖子加父回复或线程摘要。扩展模型应与不含上下文的同一编码器比较，才能把增益归因于对话证据。",
+      "zhExplanation": "这是一条难度适中的创新路线：先复现原模型，再增加一种上下文编码方式，不必从头发明完整的新架构。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "For forum data, SpanEmo can remain the label-correlation head while the text input is expanded with a parent reply or thread summary. The extension should be compared against the same encoder without context so that any gain is attributable to conversational evidence."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "forum context",
+        "SpanEmo adaptation",
+        "controlled comparison"
+      ]
+    }
+  ]
+}

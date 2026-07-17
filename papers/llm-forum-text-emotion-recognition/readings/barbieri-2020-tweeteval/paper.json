@@ -1,0 +1,44 @@
+{
+  "id": "barbieri-2020-tweeteval",
+  "title": "TweetEval: Unified Benchmark and Comparative Evaluation for Tweet Classification",
+  "shortTitle": "TweetEval",
+  "authors": "Barbieri et al.",
+  "year": 2020,
+  "category": "Social-media NLP benchmark",
+  "categoryZh": "社交媒体文本分类基准",
+  "relation": "Supplies a standardized social-media benchmark and an emotion task useful for establishing a compact, reproducible baseline.",
+  "relationZh": "TweetEval 把多个推文分类任务统一到一致切分和评估流程中，其中情绪子任务适合用来建立紧凑、可复现的社交文本基线。",
+  "description": "A unified benchmark for seven tweet classification tasks, including a four-class emotion recognition subset adapted from SemEval Affect in Tweets.",
+  "descriptionZh": "论文统一整理七项推文分类任务，其中情绪识别子任务由 SemEval Affect in Tweets 改造为愤怒、喜悦、悲伤和乐观四分类。",
+  "readingFocus": [
+    "看清情绪子任务如何从原始多标签数据改造成单标签四分类，以及这一步丢失了哪些信息。",
+    "复用统一的文本预处理、训练切分和宏平均指标，建立可重复的社交文本分类管线。",
+    "把 Twitter 与论坛的文本风格差异作为跨域实验，而不是默认两者等价。"
+  ],
+  "source": "https://aclanthology.org/2020.findings-emnlp.148/",
+  "license": "ACL Anthology source",
+  "sourceFile": "../../pdfs/2020-barbieri-tweeteval.pdf",
+  "noteFile": "../../reading-route.md#p3-tweeteval",
+  "sections": [
+    {
+      "id": "sec-benchmark",
+      "title": "Benchmark design",
+      "titleZh": "基准设计"
+    },
+    {
+      "id": "sec-emotion",
+      "title": "Emotion task",
+      "titleZh": "情绪子任务"
+    },
+    {
+      "id": "sec-models",
+      "title": "Models and preprocessing",
+      "titleZh": "模型与预处理"
+    },
+    {
+      "id": "sec-evaluation",
+      "title": "Evaluation and transfer",
+      "titleZh": "评估与迁移"
+    }
+  ]
+}

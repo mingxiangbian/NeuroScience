@@ -1,4 +1,4 @@
-const PROJECT_ID = "brain-memory-for-ai-agents";
+const PROJECT_ID = document.body.dataset.projectId ?? "brain-memory-for-ai-agents";
 const SEARCH_DEBOUNCE_MS = 260;
 const SEMANTIC_SCORE_THRESHOLD = 0.42;
 const ANNOTATION_STORAGE_PREFIX = "paperReader.annotations.v1";
@@ -430,14 +430,16 @@ function renderLineageControls() {
 }
 
 function getLineagePosition(year) {
-  const boundedYear = Math.max(LINEAGE_YEAR_START, Math.min(LINEAGE_YEAR_END, Number(year) || LINEAGE_YEAR_START));
-  return 8 + ((boundedYear - LINEAGE_YEAR_START) / (LINEAGE_YEAR_END - LINEAGE_YEAR_START)) * 80;
+  const yearStart = Number(state.atlas?.yearStart) || LINEAGE_YEAR_START;
+  const yearEnd = Number(state.atlas?.yearEnd) || LINEAGE_YEAR_END;
+  const boundedYear = Math.max(yearStart, Math.min(yearEnd, Number(year) || yearStart));
+  return 8 + ((boundedYear - yearStart) / Math.max(1, yearEnd - yearStart)) * 80;
 }
 
 function getLineageNodeRow(node, laneNodes) {
   const lastYearByRow = [Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY];
   for (const item of laneNodes) {
-    const year = Number(getPaperById(item.paperId)?.year) || LINEAGE_YEAR_START;
+    const year = Number(getPaperById(item.paperId)?.year) || Number(state.atlas?.yearStart) || LINEAGE_YEAR_START;
     let row = lastYearByRow.findIndex((lastYear) => year - lastYear >= 7);
     if (row === -1) {
       row = lastYearByRow.indexOf(Math.min(...lastYearByRow));
@@ -470,7 +472,9 @@ function renderLineageView() {
   }
   const lanes = state.atlas.lanes ?? [];
   const visibleLanes = lanes.filter((lane) => state.lineageFilter === "all" || lane.id === state.lineageFilter);
-  const years = [1995, 2000, 2005, 2010, 2015, 2020, 2026];
+  const yearStart = Number(state.atlas.yearStart) || LINEAGE_YEAR_START;
+  const yearEnd = Number(state.atlas.yearEnd) || LINEAGE_YEAR_END;
+  const years = state.atlas.years ?? [1995, 2000, 2005, 2010, 2015, 2020, 2026];
   const visibleNodeIds = new Set((state.atlas.nodes ?? [])
     .filter((node) => state.lineageFilter === "all" || node.lane === state.lineageFilter)
     .map((node) => node.paperId));
@@ -481,13 +485,13 @@ function renderLineageView() {
   els.lineageView.innerHTML = `
     <header class="lineage-heading">
       <div>
-        <p class="lineage-kicker">Research atlas · 1995–2026</p>
+        <p class="lineage-kicker">Research atlas · ${escapeHtml(yearStart)}–${escapeHtml(yearEnd)}</p>
         <h1>${escapeHtml(state.atlas.titleZh)}</h1>
         <p class="lineage-subtitle">${escapeHtml(state.atlas.titleEn)}</p>
       </div>
       <p class="lineage-disclaimer">${escapeHtml(state.atlas.disclaimerZh)}</p>
     </header>
-    <div class="lineage-scroll" tabindex="0" aria-label="横向滚动查看 1995 至 2026 概念谱系">
+    <div class="lineage-scroll" tabindex="0" aria-label="横向滚动查看 ${escapeHtml(yearStart)} 至 ${escapeHtml(yearEnd)} 概念谱系">
       <div class="lineage-map">
         <div class="lineage-axis" aria-hidden="true">
           <span class="lineage-axis-label">YEAR</span>
@@ -506,8 +510,8 @@ function renderLineageView() {
                 <h2><span>${escapeHtml(lane.labelZh)}</span><small>${escapeHtml(lane.labelEn)}</small></h2>
                 <div class="lineage-track">
                   ${laneNodes.map((node) => renderLineageNode(node, laneNodes)).join("")}
-                  ${lane.id === "workspace" ? `<p class="workspace-boundary">active workspace / reportability ≠ long-term memory</p>` : ""}
-                  ${lane.id === "agent" ? `<p class="survey-scope">Survey scope · operations synthesis</p>` : ""}
+                  ${lane.id === "workspace" ? `<p class="workspace-boundary">${escapeHtml(lane.note ?? "active workspace / reportability ≠ long-term memory")}</p>` : ""}
+                  ${lane.id === "agent" ? `<p class="survey-scope">${escapeHtml(lane.note ?? "Survey scope · operations synthesis")}</p>` : ""}
                 </div>
               </section>
             `;

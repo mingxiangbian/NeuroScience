@@ -199,7 +199,7 @@ assert.match(css, /\.note-annotation-editor/, "right-side annotation notes shoul
 assert.match(css, /\.note-annotation\.is-detached/, "notes retained after highlight deletion should show detached state");
 assert.match(css, /\.note-free-editor/, "right-side note panel should expose a free local note editor");
 
-assert.match(js, /const PROJECT_ID = "brain-memory-for-ai-agents"/, "reader JS should bind the current project id for this project instance");
+assert.match(js, /const PROJECT_ID = document\.body\.dataset\.projectId \?\? "brain-memory-for-ai-agents"/, "reader JS should support project-scoped data while preserving the original project default");
 assert.match(js, /const SEARCH_DEBOUNCE_MS = 260/, "search debounce duration should stay lightweight");
 assert.match(js, /const SEMANTIC_SCORE_THRESHOLD = 0\.42/, "semantic-only results should use a hard threshold");
 assert.match(js, /searchDebounceTimer:\s*null/, "reader state should track the search debounce timer");

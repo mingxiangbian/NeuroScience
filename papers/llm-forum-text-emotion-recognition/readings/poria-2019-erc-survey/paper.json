@@ -1,0 +1,44 @@
+{
+  "id": "poria-2019-erc-survey",
+  "title": "Emotion Recognition in Conversation: Research Challenges, Datasets, and Recent Advances",
+  "shortTitle": "ERC Survey",
+  "authors": "Poria et al.",
+  "year": 2019,
+  "category": "Emotion recognition in conversation survey",
+  "categoryZh": "对话情感识别综述",
+  "relation": "Defines the conversational factors, datasets, and modeling challenges that a forum-text project must handle.",
+  "relationZh": "这篇综述给出对话情感识别的任务边界、上下文因素和数据集版图，是把普通文本分类扩展到论坛对话的理论入口。",
+  "description": "A survey of emotion recognition in conversation, with emphasis on context, speaker dependencies, emotion shifts, datasets, and open challenges.",
+  "descriptionZh": "文章系统梳理对话情感识别中的上下文、说话人依赖、情绪转移、细粒度标签和多方对话等问题，并比较当时的数据集与建模路线。",
+  "readingFocus": [
+    "先区分单句情感分类与对话情感识别：后者的标签会受到历史发言和说话人状态影响。",
+    "重点阅读 self-dependency、inter-speaker dependency 与 emotion shift，它们决定论坛回复链需要怎样建模。",
+    "把综述中的数据集局限映射到自己的论坛数据采集、标注和评估方案。"
+  ],
+  "source": "https://arxiv.org/abs/1905.02947",
+  "license": "See source",
+  "sourceFile": "../../pdfs/2019-poria-erc-survey.pdf",
+  "noteFile": "../../reading-route.md#p1-erc-survey",
+  "sections": [
+    {
+      "id": "sec-framing",
+      "title": "Task framing",
+      "titleZh": "任务定义"
+    },
+    {
+      "id": "sec-context",
+      "title": "Conversational challenges",
+      "titleZh": "对话挑战"
+    },
+    {
+      "id": "sec-datasets",
+      "title": "Datasets and benchmarks",
+      "titleZh": "数据集与基准"
+    },
+    {
+      "id": "sec-methods",
+      "title": "Methods and open directions",
+      "titleZh": "方法与开放方向"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "id": "alhuzali-2021-spanemo",
+  "title": "SpanEmo: Casting Multi-label Emotion Classification as Span-prediction",
+  "shortTitle": "SpanEmo",
+  "authors": "Alhuzali and Ananiadou",
+  "year": 2021,
+  "category": "Multi-label emotion classification",
+  "categoryZh": "多标签情感分类",
+  "relation": "Offers a reproducible method for correlated, co-occurring emotions without requiring an LLM-sized model.",
+  "relationZh": "SpanEmo 直接建模多种情绪共存与标签相关性，可作为大模型方案之外更轻量、研究问题更清楚的多标签基线。",
+  "description": "A BERT-based model that places emotion labels and input text in one sequence, predicts label-token positions, and combines BCE with a label-correlation-aware loss.",
+  "descriptionZh": "模型把情绪标签和输入文本放入同一 BERT 序列，在标签 token 位置进行预测，并联合二元交叉熵与标签相关感知损失。",
+  "readingFocus": [
+    "理解所谓 span-prediction 实际上如何利用标签 token 表示，而不是把它误读为抽取文本中的情绪词。",
+    "重点复现 BCE 与 LCA 联合损失，并用消融验证标签相关损失是否真的有贡献。",
+    "检查多标签指标和不同语言结果，决定它是否适合作为论坛自建数据的主基线。"
+  ],
+  "source": "https://aclanthology.org/2021.eacl-main.135/",
+  "license": "ACL Anthology source",
+  "sourceFile": "../../pdfs/2021-alhuzali-spanemo.pdf",
+  "noteFile": "../../reading-route.md#p4-spanemo",
+  "sections": [
+    {
+      "id": "sec-problem",
+      "title": "Problem and framing",
+      "titleZh": "问题与任务重构"
+    },
+    {
+      "id": "sec-method",
+      "title": "SpanEmo architecture",
+      "titleZh": "SpanEmo 架构"
+    },
+    {
+      "id": "sec-loss",
+      "title": "Correlation-aware objective",
+      "titleZh": "标签相关损失"
+    },
+    {
+      "id": "sec-results",
+      "title": "Experiments and adaptation",
+      "titleZh": "实验与适配"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "id": "ghosal-2019-dialoguegcn",
+  "title": "DialogueGCN: A Graph Convolutional Neural Network for Emotion Recognition in Conversation",
+  "shortTitle": "DialogueGCN",
+  "authors": "Ghosal et al.",
+  "year": 2019,
+  "category": "Graph-based conversational emotion recognition",
+  "categoryZh": "图结构对话情感识别",
+  "relation": "Provides the clearest architecture for modeling reply context, speaker identity, and directional dependencies as a graph.",
+  "relationZh": "DialogueGCN 用图显式表示上下文方向和说话人关系，是把论坛回复树转化为情绪识别结构的最直接参考。",
+  "description": "A conversational emotion model that first encodes sequential context and then applies relation-aware graph convolutions over utterance nodes before classification.",
+  "descriptionZh": "模型先编码顺序上下文，再把发言作为节点、按说话人与时间方向定义关系边，通过关系感知图卷积得到用于分类的表示。",
+  "readingFocus": [
+    "看清节点、边、关系类型和时间窗口分别表示什么，避免只复现一个黑盒 GCN。",
+    "区分 sequential context encoder 与 speaker-level graph encoder 的作用，并通过消融检查两者。",
+    "思考线性对话图怎样改为论坛回复树，以及匿名用户和长线程会带来哪些边界问题。"
+  ],
+  "source": "https://aclanthology.org/D19-1015/",
+  "license": "ACL Anthology source",
+  "sourceFile": "../../pdfs/2019-ghosal-dialoguegcn.pdf",
+  "noteFile": "../../reading-route.md#p5-dialoguegcn",
+  "sections": [
+    {
+      "id": "sec-motivation",
+      "title": "Conversational dependencies",
+      "titleZh": "对话依赖"
+    },
+    {
+      "id": "sec-graph",
+      "title": "Dialogue graph construction",
+      "titleZh": "对话图构建"
+    },
+    {
+      "id": "sec-model",
+      "title": "Graph encoding and classification",
+      "titleZh": "图编码与分类"
+    },
+    {
+      "id": "sec-results",
+      "title": "Evaluation and forum adaptation",
+      "titleZh": "评估与论坛适配"
+    }
+  ]
+}

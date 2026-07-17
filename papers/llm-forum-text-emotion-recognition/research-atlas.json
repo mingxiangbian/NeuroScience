@@ -1,0 +1,178 @@
+{
+  "version": 1,
+  "titleZh": "情感与大模型：方法谱系",
+  "titleEn": "Emotion and LLMs — methodological lineage, not a citation graph",
+  "disclaimerZh": "这是项目级方法谱系，不是引用图；连线表示复现与扩展关系，不代表论文之间都存在直接引用。",
+  "disclaimerEn": "Links show project-level methodological continuity, not necessarily direct citations.",
+  "yearStart": 2019,
+  "yearEnd": 2023,
+  "years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023
+  ],
+  "visualAbstract": {
+    "paperId": "lei-2023-instructerc",
+    "figureId": "fig-001",
+    "plateNumber": "06",
+    "titleZh": "从判别式分类器到检索增强大模型",
+    "titleEn": "From discriminative ERC to retrieval-augmented LLMs",
+    "summaryZh": "以 InstructERC 为入口，追踪情感识别如何从固定标签分类转向示例检索、辅助任务和参数高效微调。",
+    "anchors": [
+      {
+        "labelZh": "任务重构",
+        "labelEn": "Reformulation",
+        "sectionId": "sec-reformulation"
+      },
+      {
+        "labelZh": "示例检索",
+        "labelEn": "Retrieval",
+        "sectionId": "sec-retrieval"
+      },
+      {
+        "labelZh": "辅助任务",
+        "labelEn": "Multi-tasking",
+        "sectionId": "sec-multitask"
+      },
+      {
+        "labelZh": "效果边界",
+        "labelEn": "Evaluation",
+        "sectionId": "sec-results"
+      }
+    ]
+  },
+  "featuredPlates": [],
+  "lanes": [
+    {
+      "id": "brain",
+      "labelZh": "数据与标签",
+      "labelEn": "Data and labels"
+    },
+    {
+      "id": "workspace",
+      "labelZh": "上下文建模",
+      "labelEn": "Context modeling",
+      "note": "reply path / speaker relation / label dependency"
+    },
+    {
+      "id": "agent",
+      "labelZh": "大模型适配",
+      "labelEn": "LLM adaptation",
+      "note": "retrieval / instruction / parameter-efficient tuning"
+    }
+  ],
+  "nodes": [
+    {
+      "paperId": "demszky-2020-goemotions",
+      "lane": "brain",
+      "paperType": "review-taxonomy",
+      "motifZh": "细粒度 Reddit 情绪标签与标注一致性",
+      "primaryFigureId": "fig-001"
+    },
+    {
+      "paperId": "barbieri-2020-tweeteval",
+      "lane": "brain",
+      "paperType": "system-paper",
+      "motifZh": "统一社交文本任务与四类情绪基线",
+      "primaryFigureId": "fig-001"
+    },
+    {
+      "paperId": "poria-2019-erc-survey",
+      "lane": "workspace",
+      "paperType": "survey",
+      "motifZh": "上下文、说话人依赖与情绪转移",
+      "primaryFigureId": "fig-001"
+    },
+    {
+      "paperId": "ghosal-2019-dialoguegcn",
+      "lane": "workspace",
+      "paperType": "system-paper",
+      "motifZh": "关系图上的说话人与上下文传播",
+      "primaryFigureId": "fig-001"
+    },
+    {
+      "paperId": "alhuzali-2021-spanemo",
+      "lane": "workspace",
+      "paperType": "system-paper",
+      "motifZh": "标签 token 与相关损失的多标签建模",
+      "primaryFigureId": "fig-001"
+    },
+    {
+      "paperId": "lei-2023-instructerc",
+      "lane": "agent",
+      "paperType": "arxiv-v1-preprint",
+      "motifZh": "示例检索、辅助任务与 LoRA 微调",
+      "primaryFigureId": "fig-001"
+    }
+  ],
+  "relations": [
+    {
+      "from": "poria-2019-erc-survey",
+      "to": "ghosal-2019-dialoguegcn",
+      "kind": "conceptual-continuity",
+      "label": "context and speaker dependencies"
+    },
+    {
+      "from": "demszky-2020-goemotions",
+      "to": "alhuzali-2021-spanemo",
+      "kind": "conceptual-continuity",
+      "label": "fine-grained multi-label emotions"
+    },
+    {
+      "from": "barbieri-2020-tweeteval",
+      "to": "alhuzali-2021-spanemo",
+      "kind": "conceptual-continuity",
+      "label": "single-label benchmark → multi-label modeling"
+    },
+    {
+      "from": "poria-2019-erc-survey",
+      "to": "lei-2023-instructerc",
+      "kind": "conceptual-continuity",
+      "label": "ERC framing → instruction formulation"
+    },
+    {
+      "from": "ghosal-2019-dialoguegcn",
+      "to": "lei-2023-instructerc",
+      "kind": "explicit-comparator",
+      "label": "graph relations → instruction alignment"
+    },
+    {
+      "from": "demszky-2020-goemotions",
+      "to": "lei-2023-instructerc",
+      "kind": "conceptual-continuity",
+      "label": "social text → domain adaptation"
+    }
+  ],
+  "bridgeQuestions": [
+    {
+      "sources": [
+        "demszky-2020-goemotions",
+        "barbieri-2020-tweeteval"
+      ],
+      "labelZh": "论坛情绪标签应保留多细，才能兼顾可标注性与可解释性？"
+    },
+    {
+      "sources": [
+        "poria-2019-erc-survey",
+        "ghosal-2019-dialoguegcn"
+      ],
+      "labelZh": "论坛回复树应编码到多深，才不会让上下文噪声压过当前帖子？"
+    },
+    {
+      "sources": [
+        "alhuzali-2021-spanemo",
+        "lei-2023-instructerc"
+      ],
+      "labelZh": "多标签分类与生成单一情绪标签，哪一种更适合论坛数据？"
+    },
+    {
+      "sources": [
+        "ghosal-2019-dialoguegcn",
+        "lei-2023-instructerc"
+      ],
+      "labelZh": "显式图结构和提示词历史，哪一种更容易稳定复现？"
+    }
+  ]
+}

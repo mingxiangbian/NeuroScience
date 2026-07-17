@@ -1,0 +1,219 @@
+{
+  "paperId": "ghosal-2019-dialoguegcn",
+  "chunks": [
+    {
+      "id": "ch-001",
+      "sectionId": "sec-motivation",
+      "order": 1,
+      "title": "上下文与说话人共同决定情绪",
+      "sourceText": "DialogueGCN begins from two conversational dependencies. Self-dependency captures a speaker's emotional inertia across turns, while inter-speaker dependency captures how other participants influence that speaker. Both are needed when the same words change meaning across interactions.",
+      "zhTranslation": "DialogueGCN 从两类对话依赖出发：自我依赖表示同一说话人在多轮中的情绪惯性，说话人间依赖表示其他参与者如何影响该说话人。当相同词语随互动改变含义时，两者都很重要。",
+      "zhExplanation": "论坛图中可分别建立同作者历史边和回复对象边，使这两个假设成为可直接消融的结构，而不是隐含在一个长文本输入里。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "DialogueGCN begins from two conversational dependencies. Self-dependency captures a speaker's emotional inertia across turns, while inter-speaker dependency captures how other participants influence that speaker. Both are needed when the same words change meaning across interactions."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "self-dependency",
+        "inter-speaker dependency",
+        "speaker",
+        "context"
+      ]
+    },
+    {
+      "id": "ch-002",
+      "sectionId": "sec-motivation",
+      "order": 2,
+      "title": "先编码顺序上下文",
+      "sourceText": "The first stage uses a bidirectional gated recurrent encoder to obtain context-aware utterance representations. This sequence model supplies local conversational information before the graph explicitly reorganizes interactions by speaker and temporal relation.",
+      "zhTranslation": "第一阶段使用双向门控循环编码器生成带上下文的发言表示。序列模型先提供局部对话信息，随后图结构再按说话人与时间关系显式重组互动。",
+      "zhExplanation": "这意味着 DialogueGCN 的提升不能简单归因于 GCN。对照实验应包括仅文本编码器、文本加序列上下文、再加图结构。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The first stage uses a bidirectional gated recurrent encoder to obtain context-aware utterance representations. This sequence model supplies local conversational information before the graph explicitly reorganizes interactions by speaker and temporal relation."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "sequential context encoder",
+        "bidirectional GRU",
+        "utterance representation"
+      ]
+    },
+    {
+      "id": "ch-003",
+      "sectionId": "sec-graph",
+      "order": 3,
+      "title": "发言是节点，关系是边",
+      "sourceText": "Each utterance becomes a graph node, and directed edges connect it to utterances inside a context window. Edge relations encode the source speaker, target speaker, and whether the neighboring utterance lies in the past or future of the current turn.",
+      "zhTranslation": "每个发言被构造成图节点，有向边把它连接到上下文窗口内的其他发言。边关系编码源说话人、目标说话人，以及相邻发言位于当前轮次的过去还是未来。",
+      "zhExplanation": "论坛场景不能机械照搬线性窗口。父回复边表达真实交互，时间邻接边补充局部语境，同作者边则表达用户状态连续性。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Each utterance becomes a graph node, and directed edges connect it to utterances inside a context window. Edge relations encode the source speaker, target speaker, and whether the neighboring utterance lies in the past or future of the current turn."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "utterance graph",
+        "directed edge",
+        "relation type",
+        "speaker"
+      ]
+    },
+    {
+      "id": "ch-004",
+      "sectionId": "sec-graph",
+      "order": 4,
+      "title": "注意力决定邻居权重",
+      "sourceText": "DialogueGCN assigns attention-derived weights to neighboring utterances so that not every connected turn contributes equally. The normalized score is computed within the chosen context window, after which relation-specific transformations propagate information across the graph.",
+      "zhTranslation": "DialogueGCN 为邻居发言分配注意力权重，使所有相连轮次不必等量贡献。分数在选定的上下文窗口内归一化，随后由关系特定的变换在图中传播信息。",
+      "zhExplanation": "注意力权重可以用于调试相关上下文，但不能直接解释为情绪成因；它只说明模型在该预测中使用了哪些邻居表示。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "DialogueGCN assigns attention-derived weights to neighboring utterances so that not every connected turn contributes equally. The normalized score is computed within the chosen context window, after which relation-specific transformations propagate information across the graph."
+        },
+        {
+          "type": "math",
+          "label": "Normalized edge attention",
+          "latex": "\\alpha_{ij}=\\frac{\\exp(e_{ij})}{\\sum_{k\\in\\mathcal{N}(i)}\\exp(e_{ik})}"
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "attention weight",
+        "graph neighbor",
+        "context window"
+      ]
+    },
+    {
+      "id": "ch-005",
+      "sectionId": "sec-model",
+      "order": 5,
+      "title": "关系感知图卷积",
+      "sourceText": "Relation-aware graph convolution aggregates messages with parameters tied to edge type, then a second graph layer refines the representation. This design lets the model treat same-speaker history differently from cross-speaker influence instead of collapsing all context into one pool.",
+      "zhTranslation": "关系感知图卷积使用与边类型绑定的参数聚合消息，再通过第二层图网络细化表示。模型因此可以区别处理同一说话人的历史与跨说话人影响，而不是把所有上下文压成一个池。",
+      "zhExplanation": "如果自建数据用户很多，按具体用户定义关系会爆炸。应使用“同作者/不同作者/父回复/时间方向”等可泛化关系类型。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Relation-aware graph convolution aggregates messages with parameters tied to edge type, then a second graph layer refines the representation. This design lets the model treat same-speaker history differently from cross-speaker influence instead of collapsing all context into one pool."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "relation-aware GCN",
+        "message passing",
+        "speaker relation",
+        "graph"
+      ]
+    },
+    {
+      "id": "ch-006",
+      "sectionId": "sec-model",
+      "order": 6,
+      "title": "融合后完成分类",
+      "sourceText": "The final classifier combines sequential context features with graph-refined speaker-level features. The architecture therefore preserves both local order and relational structure, rather than forcing one representation to replace the other.",
+      "zhTranslation": "最终分类器融合顺序上下文特征与图网络细化后的说话人层特征。该架构同时保留局部顺序和关系结构，而不是让一种表示完全替代另一种。",
+      "zhExplanation": "这张总体结构图适合直接指导复现时的张量检查：逐阶段确认 utterance 编码、图节点数、边类型和分类输入维度。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The final classifier combines sequential context features with graph-refined speaker-level features. The architecture therefore preserves both local order and relational structure, rather than forcing one representation to replace the other."
+        },
+        {
+          "type": "figure",
+          "id": "fig-001",
+          "relation": "nearby"
+        }
+      ],
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "near"
+        }
+      ],
+      "keywords": [
+        "feature fusion",
+        "classification",
+        "DialogueGCN architecture"
+      ]
+    },
+    {
+      "id": "ch-007",
+      "sectionId": "sec-results",
+      "order": 7,
+      "title": "结果依赖数据与指标",
+      "sourceText": "DialogueGCN is evaluated on several conversational emotion benchmarks with dataset-specific label spaces and metrics. Its gains support relational modeling on those datasets, but they do not establish that every graph relation transfers unchanged to new communities or asynchronous discussions.",
+      "zhTranslation": "DialogueGCN 在多个对话情绪基准上评估，而各数据集拥有不同的标签空间和指标。结果支持关系建模在这些数据上的价值，但不能证明同样的图关系会原样迁移到新社区或异步讨论。",
+      "zhExplanation": "复现报告必须保留原数据集指标，再单独报告论坛数据。跨数据集标签映射后得到的分数不应与原论文数字直接横比。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "DialogueGCN is evaluated on several conversational emotion benchmarks with dataset-specific label spaces and metrics. Its gains support relational modeling on those datasets, but they do not establish that every graph relation transfers unchanged to new communities or asynchronous discussions."
+        },
+        {
+          "type": "table",
+          "caption": "Graph ablations for the forum extension.",
+          "columns": [
+            "Model",
+            "Question answered"
+          ],
+          "rows": [
+            [
+              "Text only",
+              "How much signal is in the current post?"
+            ],
+            [
+              "Sequence context",
+              "Do nearby turns help?"
+            ],
+            [
+              "Reply graph",
+              "Does explicit interaction structure help?"
+            ],
+            [
+              "Reply graph + author edges",
+              "Does speaker continuity add value?"
+            ]
+          ]
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "ERC benchmark",
+        "dataset-specific metrics",
+        "generalization",
+        "evaluation"
+      ]
+    },
+    {
+      "id": "ch-008",
+      "sectionId": "sec-results",
+      "order": 8,
+      "title": "从线性对话改成回复树",
+      "sourceText": "A forum adaptation can replace the linear dialogue window with a reply tree while retaining utterance nodes and relation-aware propagation. Parent-child direction, same-author continuity, temporal distance, and missing or deleted posts must be defined before training and tested through controlled ablations.",
+      "zhTranslation": "论坛适配可以把线性对话窗口替换为回复树，同时保留发言节点与关系感知传播。父子回复方向、同作者连续性、时间距离以及缺失或删除帖子都必须在训练前定义，并通过受控消融检验。",
+      "zhExplanation": "这是最有研究价值的扩展，但应先做最小图：父回复加同作者两类边。边类型越多，数据稀疏和过拟合风险越高。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "A forum adaptation can replace the linear dialogue window with a reply tree while retaining utterance nodes and relation-aware propagation. Parent-child direction, same-author continuity, temporal distance, and missing or deleted posts must be defined before training and tested through controlled ablations."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "reply tree",
+        "forum graph",
+        "author edge",
+        "adaptation"
+      ]
+    }
+  ]
+}

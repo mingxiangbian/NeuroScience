@@ -1,0 +1,223 @@
+{
+  "paperId": "demszky-2020-goemotions",
+  "chunks": [
+    {
+      "id": "ch-001",
+      "sectionId": "sec-motivation",
+      "order": 1,
+      "title": "论坛语料的细粒度标签",
+      "sourceText": "GoEmotions contains 58,009 English Reddit comments labeled for one or more of 27 emotion categories or Neutral. The dataset was designed to offer broader emotional coverage than resources limited to a few basic emotions or sentiment polarity.",
+      "zhTranslation": "GoEmotions 包含 58,009 条英文 Reddit 评论，每条可标注一个或多个情绪类别，标签空间为 27 类情绪加 Neutral。它的目标是突破只覆盖少数基本情绪或正负面极性的旧数据集。",
+      "zhExplanation": "它和论坛项目最接近的地方是文本形态与互动环境，而不是标签数量。细粒度类别提供候选词表，但最终标签仍要依据自建数据的一致性决定。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "GoEmotions contains 58,009 English Reddit comments labeled for one or more of 27 emotion categories or Neutral. The dataset was designed to offer broader emotional coverage than resources limited to a few basic emotions or sentiment polarity."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "GoEmotions",
+        "Reddit comments",
+        "fine-grained emotion",
+        "forum"
+      ]
+    },
+    {
+      "id": "ch-002",
+      "sectionId": "sec-motivation",
+      "order": 2,
+      "title": "细粒度不等于更可靠",
+      "sourceText": "A richer taxonomy can distinguish emotions such as admiration, approval, disappointment, grief, nervousness, and relief. At the same time, neighboring concepts become harder for annotators to separate, so category coverage must be considered together with agreement and downstream utility.",
+      "zhTranslation": "更丰富的标签体系能够区分赞赏、赞同、失望、悲痛、紧张和宽慰等情绪，但相邻概念也更难被标注者稳定区分。因此，类别覆盖度必须与一致性和下游用途一起评估。",
+      "zhExplanation": "开题时不要用“类别越多越先进”作为理由。若某些类别频繁混淆，合并标签往往比继续堆复杂模型更合理。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "A richer taxonomy can distinguish emotions such as admiration, approval, disappointment, grief, nervousness, and relief. At the same time, neighboring concepts become harder for annotators to separate, so category coverage must be considered together with agreement and downstream utility."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "emotion taxonomy",
+        "fine-grained labels",
+        "annotation agreement"
+      ]
+    },
+    {
+      "id": "ch-003",
+      "sectionId": "sec-data",
+      "order": 3,
+      "title": "Reddit 采样与偏差控制",
+      "sourceText": "The authors sampled Reddit comments from popular English subreddits and applied curation steps for harmful content, profanity, subreddit imbalance, comment length, and predicted emotion balance. These steps improve coverage but do not remove Reddit's demographic and community biases.",
+      "zhTranslation": "作者从热门英文 subreddit 中采样评论，并针对有害内容、粗俗词、社区规模失衡、评论长度和预测情绪分布进行筛选。这些步骤改善了覆盖度，但无法消除 Reddit 的人口与社区偏差。",
+      "zhExplanation": "自己的论坛数据也要记录板块、时间、作者和线程采样方式。过滤规则会改变情绪分布，应在论文方法部分透明报告。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The authors sampled Reddit comments from popular English subreddits and applied curation steps for harmful content, profanity, subreddit imbalance, comment length, and predicted emotion balance. These steps improve coverage but do not remove Reddit's demographic and community biases."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "Reddit sampling",
+        "dataset bias",
+        "data curation",
+        "domain"
+      ]
+    },
+    {
+      "id": "ch-004",
+      "sectionId": "sec-data",
+      "order": 4,
+      "title": "标注规模与一致样本",
+      "sourceText": "The final release reports 82 unique raters, usually three or five ratings per example, and 58,009 examples. Most examples receive one retained label, while a smaller portion remains multi-label; agreement filtering therefore changes both dataset size and label distribution.",
+      "zhTranslation": "最终数据由 82 名独立标注者参与，每个样本通常获得 3 或 5 次判断，共计 58,009 条。多数样本保留一个标签，少量样本保留多标签；一致性过滤会同时改变数据规模与标签分布。",
+      "zhExplanation": "这张表可作为自建数据标注方案的参照：至少保留多位标注者、原始投票与分歧，而不是只保存最终标签。",
+      "blocks": [
+    {
+      "type": "paragraph",
+      "text": "The final release reports 82 unique raters, usually three or five ratings per example, and 58,009 examples. Most examples receive one retained label, while a smaller portion remains multi-label; agreement filtering therefore changes both dataset size and label distribution."
+    },
+    {
+      "type": "table",
+      "caption": "Selected statistics from paper Table 2.",
+      "columns": [
+        "Statistic",
+        "Reported value"
+      ],
+      "rows": [
+        [
+          "Examples",
+          "58,009"
+        ],
+        [
+          "Emotion inventory",
+          "27 + Neutral"
+        ],
+        [
+          "Unique raters",
+          "82"
+        ],
+        [
+          "Examples with one retained label",
+          "83%"
+        ],
+        [
+          "Examples with two retained labels",
+          "15%"
+        ]
+      ]
+    },
+    {
+      "type": "figure",
+      "id": "fig-001",
+          "relation": "nearby"
+        }
+      ],
+      "figureRefs": [
+        {
+          "id": "fig-001",
+          "relation": "near"
+        }
+      ],
+      "keywords": [
+        "raters",
+        "multi-label annotation",
+        "agreement",
+        "dataset"
+      ]
+    },
+    {
+      "id": "ch-005",
+      "sectionId": "sec-analysis",
+      "order": 5,
+      "title": "用一致性判断标签质量",
+      "sourceText": "The paper evaluates inter-rater agreement separately for each emotion and finds substantial variation across labels. Frequency is related to agreement but does not fully explain it, because some common emotions remain ambiguous while some less frequent categories are consistently recognized.",
+      "zhTranslation": "论文逐类评估标注者之间的一致性，发现不同情绪类别差异明显。频率与一致性有关但不能完全解释它，因为有些常见情绪仍然模糊，而某些低频类别反而能被稳定识别。",
+      "zhExplanation": "自建数据应报告每类一致性和混淆对，而不只报告总一致率。这样才能解释模型对某类表现差究竟是模型问题还是标签本身不清。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The paper evaluates inter-rater agreement separately for each emotion and finds substantial variation across labels. Frequency is related to agreement but does not fully explain it, because some common emotions remain ambiguous while some less frequent categories are consistently recognized."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "inter-rater agreement",
+        "label ambiguity",
+        "annotation quality"
+      ]
+    },
+    {
+      "id": "ch-006",
+      "sectionId": "sec-analysis",
+      "order": 6,
+      "title": "情绪类别存在相关结构",
+      "sourceText": "Correlations among emotion ratings reveal clusters that broadly align with sentiment while preserving finer distinctions inside positive, negative, and ambiguous regions. This structure explains why multi-label examples and correlated prediction errors are expected rather than exceptional.",
+      "zhTranslation": "情绪评分之间的相关关系形成若干簇，整体上与正面、负面和模糊情感区域相符，同时仍保留更细的内部差异。这说明多标签样本与相关预测错误是任务本身的一部分，并非异常。",
+      "zhExplanation": "模型评估可增加标签共现矩阵，检查错误是否发生在语义相近类别之间；这比只看单个宏平均分更有解释力。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Correlations among emotion ratings reveal clusters that broadly align with sentiment while preserving finer distinctions inside positive, negative, and ambiguous regions. This structure explains why multi-label examples and correlated prediction errors are expected rather than exceptional."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "emotion correlation",
+        "multi-label",
+        "taxonomy structure"
+      ]
+    },
+    {
+      "id": "ch-007",
+      "sectionId": "sec-modeling",
+      "order": 7,
+      "title": "BERT 多标签基线",
+      "sourceText": "The baseline fine-tunes BERT-base for multi-label prediction and evaluates the full taxonomy as well as coarser emotion groupings. Performance improves when labels are grouped, illustrating the direct trade-off between fine-grained coverage and reliable classification.",
+      "zhTranslation": "论文微调 BERT-base 完成多标签预测，并分别评估完整标签体系与更粗粒度的情绪分组。标签合并后性能提高，直观体现了细粒度覆盖与可靠分类之间的权衡。",
+      "zhExplanation": "复现时先跑公开切分和同一指标，再做标签映射实验。不要只挑合并后更高的分数，而应解释类别粒度发生了什么变化。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The baseline fine-tunes BERT-base for multi-label prediction and evaluates the full taxonomy as well as coarser emotion groupings. Performance improves when labels are grouped, illustrating the direct trade-off between fine-grained coverage and reliable classification."
+        },
+        {
+          "type": "math",
+          "label": "Multi-label binary cross-entropy",
+          "latex": "L_{BCE}=-\\sum_{c=1}^{C}[y_c\\log p_c+(1-y_c)\\log(1-p_c)]"
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "BERT baseline",
+        "multi-label classification",
+        "label grouping",
+        "evaluation"
+      ]
+    },
+    {
+      "id": "ch-008",
+      "sectionId": "sec-modeling",
+      "order": 8,
+      "title": "迁移到自建论坛数据",
+      "sourceText": "GoEmotions can initialize a forum emotion model, but transfer should be measured rather than assumed. Differences in community norms, language, label definitions, thread context, and moderation policy can cause domain shift even when both sources are online discussions.",
+      "zhTranslation": "GoEmotions 可以用于初始化论坛情感模型，但迁移效果必须通过实验验证。即使都属于在线讨论，社区规范、语言、标签定义、线程上下文和审核政策的差异仍会造成领域偏移。",
+      "zhExplanation": "建议比较零样本迁移、少量目标域微调和只用目标域训练三个设置，并固定同一测试集，才能回答公开数据到底帮助了多少。",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "GoEmotions can initialize a forum emotion model, but transfer should be measured rather than assumed. Differences in community norms, language, label definitions, thread context, and moderation policy can cause domain shift even when both sources are online discussions."
+        }
+      ],
+      "figureRefs": [],
+      "keywords": [
+        "domain transfer",
+        "forum adaptation",
+        "GoEmotions",
+        "evaluation"
+      ]
+    }
+  ]
+}
