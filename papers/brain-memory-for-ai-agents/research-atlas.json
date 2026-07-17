@@ -1,0 +1,214 @@
+{
+  "version": 1,
+  "titleZh": "概念谱系",
+  "titleEn": "Conceptual Lineage — not a citation graph",
+  "disclaimerZh": "概念谱系，不是引用图；跨领域映射表示项目级设计问题，不表示生物同构。",
+  "disclaimerEn": "Engineering inspiration is not biological mechanism identity.",
+  "visualAbstract": {
+    "paperId": "zhang-2024-memory-mechanism-llm-agents",
+    "figureId": "fig-004",
+    "plateNumber": "01",
+    "titleZh": "从经验到行动的记忆机制全景",
+    "titleEn": "Memory sources, forms, and operations",
+    "summaryZh": "以真实论文图为入口，沿着来源、形式与操作三层追踪智能体怎样写入、管理、读取并使用记忆。",
+    "anchors": [
+      {
+        "labelZh": "记忆来源",
+        "labelEn": "Sources",
+        "sectionId": "sec-definition"
+      },
+      {
+        "labelZh": "记忆形式",
+        "labelEn": "Forms",
+        "sectionId": "sec-implementation"
+      },
+      {
+        "labelZh": "记忆操作",
+        "labelEn": "Operations",
+        "sectionId": "sec-implementation"
+      },
+      {
+        "labelZh": "评价与行动",
+        "labelEn": "Evaluation",
+        "sectionId": "sec-evaluation"
+      }
+    ]
+  },
+  "featuredPlates": [
+    {
+      "paperId": "mcclelland-1995-complementary-learning-systems",
+      "figureId": "fig-002",
+      "plateNumber": "04",
+      "title": "Focused vs. interleaved learning",
+      "methods": [
+        "simulation",
+        "error measure",
+        "interleaved vs focused"
+      ],
+      "callouts": [
+        {
+          "key": "A",
+          "tone": "evidence",
+          "titleZh": "新信息习得",
+          "bodyZh": "聚焦学习更快降低新信息的误差。"
+        },
+        {
+          "key": "B",
+          "tone": "synthesis",
+          "titleZh": "旧记忆干扰",
+          "bodyZh": "聚焦学习同时增加对既有记忆的干扰。"
+        }
+      ],
+      "analysis": {
+        "claimZh": "聚焦学习可以更快获得新信息，但会增加与已有记忆的干扰。",
+        "evidenceZh": "Figure 11 的模拟比较显示：聚焦条件在新信息误差上下降更快，而既有记忆误差明显上升。",
+        "limitationZh": "这是连接主义模型的仿真结果，不是直接脑测量，也不是 AI agent 基准测试。",
+        "synthesisZh": "对长期记忆架构的启发是区分即时写入与交错巩固，降低稳定性—可塑性冲突。"
+      }
+    }
+  ],
+  "lanes": [
+    {
+      "id": "brain",
+      "labelZh": "脑科学证据",
+      "labelEn": "Brain evidence"
+    },
+    {
+      "id": "workspace",
+      "labelZh": "工作空间支线",
+      "labelEn": "Workspace branch"
+    },
+    {
+      "id": "agent",
+      "labelZh": "智能体工程",
+      "labelEn": "Agent engineering"
+    }
+  ],
+  "nodes": [
+    {
+      "paperId": "mcclelland-1995-complementary-learning-systems",
+      "lane": "brain",
+      "paperType": "theory-simulation",
+      "motifZh": "快慢学习与稳定性—可塑性冲突",
+      "primaryFigureId": "fig-002"
+    },
+    {
+      "paperId": "squire-2004-memory-systems",
+      "lane": "brain",
+      "paperType": "review-taxonomy",
+      "motifZh": "记忆系统分类",
+      "primaryFigureId": "fig-001"
+    },
+    {
+      "paperId": "yassa-stark-2011-pattern-separation",
+      "lane": "brain",
+      "paperType": "mechanism-review",
+      "motifZh": "相似经历的分离与完成",
+      "primaryFigureId": "fig-001"
+    },
+    {
+      "paperId": "rasch-born-2013-sleep-memory",
+      "lane": "brain",
+      "paperType": "review-consolidation",
+      "motifZh": "睡眠、重放与系统巩固",
+      "primaryFigureId": "fig-002"
+    },
+    {
+      "paperId": "squire-dede-2015-conscious-unconscious-memory-systems",
+      "lane": "brain",
+      "paperType": "review-taxonomy",
+      "motifZh": "可意识与不可意识记忆系统",
+      "primaryFigureId": "fig-001"
+    },
+    {
+      "paperId": "guskjolen-cembrowski-2023-engram-neurons",
+      "lane": "brain",
+      "paperType": "lifecycle-review",
+      "motifZh": "编码、巩固、检索与遗忘",
+      "primaryFigureId": "fig-001"
+    },
+    {
+      "paperId": "gurnee-2026-global-workspace-language-models",
+      "lane": "workspace",
+      "paperType": "source-linked-mechanism-study",
+      "motifZh": "主动工作空间与可报告性不等于长时记忆",
+      "primaryFigureId": "fig-001"
+    },
+    {
+      "paperId": "park-2023-generative-agents",
+      "lane": "agent",
+      "paperType": "system-paper",
+      "motifZh": "记忆流、反思与规划",
+      "primaryFigureId": "fig-001"
+    },
+    {
+      "paperId": "packer-2023-memgpt",
+      "lane": "agent",
+      "paperType": "system-paper",
+      "motifZh": "层级记忆与上下文管理",
+      "primaryFigureId": "fig-001"
+    },
+    {
+      "paperId": "zhang-2024-memory-mechanism-llm-agents",
+      "lane": "agent",
+      "paperType": "survey",
+      "motifZh": "记忆写入、管理与读取的操作综合",
+      "primaryFigureId": "fig-003"
+    },
+    {
+      "paperId": "yang-2026-selfmem",
+      "lane": "agent",
+      "paperType": "arxiv-v1-preprint",
+      "motifZh": "记忆策略的自优化",
+      "primaryFigureId": "fig-001"
+    }
+  ],
+  "relations": [
+    {
+      "from": "mcclelland-1995-complementary-learning-systems",
+      "to": "rasch-born-2013-sleep-memory",
+      "kind": "conceptual-continuity",
+      "label": "systems consolidation / replay"
+    },
+    {
+      "from": "squire-2004-memory-systems",
+      "to": "squire-dede-2015-conscious-unconscious-memory-systems",
+      "kind": "taxonomy-refinement",
+      "label": "taxonomy refinement"
+    },
+    {
+      "from": "packer-2023-memgpt",
+      "to": "yang-2026-selfmem",
+      "kind": "explicit-comparator",
+      "label": "explicit prior work / comparator"
+    }
+  ],
+  "bridgeQuestions": [
+    {
+      "sources": [
+        "squire-2004-memory-systems",
+        "squire-dede-2015-conscious-unconscious-memory-systems"
+      ],
+      "labelZh": "不同记忆类型是否需要不同 API？"
+    },
+    {
+      "sources": [
+        "mcclelland-1995-complementary-learning-systems",
+        "rasch-born-2013-sleep-memory"
+      ],
+      "labelZh": "写入与巩固是否应运行在不同时标？"
+    },
+    {
+      "sources": [
+        "yassa-stark-2011-pattern-separation"
+      ],
+      "labelZh": "如何避免近重复记忆的检索碰撞？"
+    },
+    {
+      "sources": [
+        "guskjolen-cembrowski-2023-engram-neurons"
+      ],
+      "labelZh": "检索失败是不存在，还是暂时不可访问？"
+    }
+  ]
+}
