@@ -59,7 +59,7 @@ assert.equal(
   "语言",
   "IELTS Academic should display as the Chinese language bookmark",
 );
-assert.match(fontSources, /ZhiMangXing-Regular\.ttf --text='记忆与智能体基石语言投资'/, "bookmark font subset should include the Chinese project bookmark titles");
+assert.match(fontSources, /ZhiMangXing-Regular\.ttf --text='记忆与智能体基石语言投资情感大模型'/, "bookmark font subset should include the Chinese project and paper directory titles");
 for (const character of new Set(manifest.map((project) => project.title).join(""))) {
   const codePoint = character.codePointAt(0)?.toString(16);
   assert.match(

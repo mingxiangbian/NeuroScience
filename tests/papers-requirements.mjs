@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 
 const paperPageUrl = new URL("../papers/index.html", import.meta.url);
 const manifestUrl = new URL("../papers/manifest.json", import.meta.url);
@@ -26,6 +28,9 @@ assert.equal(
 const html = readFileSync(paperPageUrl, "utf8");
 const manifest = JSON.parse(readFileSync(manifestUrl, "utf8"));
 const fontSources = readFileSync(fontSourcesUrl, "utf8");
+const bookmarkFontCmap = execFileSync("ttx", ["-q", "-t", "cmap", "-o", "-", fileURLToPath(bookmarkFontUrl)], {
+  encoding: "utf8",
+});
 const projectCardAfterCss = html.match(/\.project-card::after\s*\{[\s\S]*?\n      \}/)?.[0] ?? "";
 
 assert.match(html, /<html lang="zh-CN">/, "papers homepage should use Chinese as the default research UI language");
@@ -44,7 +49,7 @@ assert.match(html, /--paper-fiber:\s*rgba\(109,\s*88,\s*53,\s*0\.032\)/, "papers
 assert.match(html, /--paper-speck:\s*rgba\(49,\s*41,\s*30,\s*0\.035\)/, "papers homepage should define subtle paper speckling without image assets");
 assert.match(html, /--dai-blue:\s*#183c49/, "papers homepage should define a dai-blue ink tone for vertical bookmark titles");
 assert.match(html, /@font-face\s*\{[\s\S]*?font-family:\s*"WenXianGe Title";[\s\S]*?url\("\.\.\/assets\/fonts\/MaShanZheng-WenXianGe\.woff2"\)\s*format\("woff2"\);[\s\S]*?font-display:\s*swap;[\s\S]*?font-weight:\s*400;/, "papers homepage should self-host the Ma Shan Zheng subset for the main title");
-assert.match(html, /@font-face\s*\{[\s\S]*?font-family:\s*"WenXianGe Bookmark";[\s\S]*?url\("\.\.\/assets\/fonts\/ZhiMangXing-Bookmark\.woff2"\)\s*format\("woff2"\);[\s\S]*?font-display:\s*swap;[\s\S]*?font-weight:\s*400;/, "papers homepage should self-host the Zhi Mang Xing subset for bookmark titles");
+assert.match(html, /@font-face\s*\{[\s\S]*?font-family:\s*"WenXianGe Bookmark";[\s\S]*?url\("\.\.\/assets\/fonts\/ZhiMangXing-Bookmark\.woff2\?v=20260717-emotion"\)\s*format\("woff2"\);[\s\S]*?font-display:\s*swap;[\s\S]*?font-weight:\s*400;/, "papers homepage should self-host the versioned Zhi Mang Xing subset for bookmark titles");
 assert.match(html, /--title-calligraphy-font:\s*"WenXianGe Title"[\s\S]*?"Ma Shan Zheng"[\s\S]*?serif;/, "main title should have a dedicated title calligraphy font stack");
 assert.match(html, /--bookmark-calligraphy-font:\s*"WenXianGe Bookmark"[\s\S]*?"Zhi Mang Xing"[\s\S]*?serif;/, "bookmark titles should have a dedicated slender calligraphy font stack");
 assert.match(html, /--mist-jade:\s*rgba\(194,\s*221,\s*214,\s*0\.36\)/, "bookmark cards should use a more transparent pale jade glass tone");
@@ -96,9 +101,18 @@ assert.doesNotMatch(html, /SurrealDB|embedding|openai|anthropic|\/api\/|localhos
 assert.match(fontSources, /Ma Shan Zheng[\s\S]*?SIL Open Font License/i, "font notes should document Ma Shan Zheng source and OFL license");
 assert.match(fontSources, /Zhi Mang Xing[\s\S]*?SIL Open Font License/i, "font notes should document Zhi Mang Xing source and OFL license");
 assert.match(fontSources, /pyftsubset[\s\S]*?文献阁[\s\S]*?记忆与智能体/, "font notes should document the subset command intent and included characters");
+assert.match(fontSources, /ZhiMangXing-Regular\.ttf --text='记忆与智能体基石语言投资情感大模型'/, "bookmark font subset should document all project and paper directory title characters");
 
 assert.equal(Array.isArray(manifest), true, "papers/manifest.json should be a plain project array");
 assert.equal(manifest[0]?.title, "记忆与智能体", "current project module should use the Chinese bookmark title");
+for (const character of new Set(manifest.map((project) => project.title).join(""))) {
+  const codePoint = character.codePointAt(0)?.toString(16);
+  assert.match(
+    bookmarkFontCmap,
+    new RegExp(`code="0x${codePoint}"`, "i"),
+    `bookmark font subset should contain the visible paper project character ${character}`,
+  );
+}
 
 const allowedStatuses = new Set(["draft", "active", "paused", "archived"]);
 const ids = new Set();
