@@ -63,7 +63,6 @@ const state = {
   notePanelPreferenceCollapsed: getDefaultNotePanelCollapsed(PROJECT_ID),
   drawerReturnFocus: null,
   careerLastSettledUnitId: "",
-  careerBoardView: "focus",
   financeGraphFocusId: "",
   financeGraphResizeFrame: 0,
   financeGraphResizeObserver: null,
@@ -1028,15 +1027,10 @@ function getRailTargets(module) {
   const sectionTitles = PROJECT_ID === "foundations" && module.id === "career-roadmap"
     ? ["当前状态", "任务", "目标", "核心知识", "时间线"]
     : Object.keys(module.sections ?? {});
-  const sectionTargets = sectionTitles.flatMap((sectionTitle) => [
-    {
-      id: getSectionId(module, sectionTitle),
-      title: sectionTitle,
-    },
-    ...(module.id === "career-roadmap" && sectionTitle === "目标"
-      ? [{ id: `${getSectionId(module, sectionTitle)}-evidence`, title: "能力证据" }]
-      : []),
-  ]);
+  const sectionTargets = sectionTitles.map((sectionTitle) => ({
+    id: getSectionId(module, sectionTitle),
+    title: sectionTitle,
+  }));
   const noteTargets = (module.knowledgeNotes ?? []).map((note) => ({
     id: note.id,
     title: note.title,
@@ -1203,6 +1197,9 @@ function renderCareerWorkbench(module, runtime) {
       </article>
     `;
   }
+  const pathLabel = unit.goalMapping?.pathLabel || "等待校准";
+  const logsModule = getModuleById("logs");
+  const logsTaskSectionId = logsModule ? getSectionId(logsModule, "任务") : "";
   return `
     <article class="career-workbench-section" id="${escapeHtml(sectionId)}" data-section-id="${escapeHtml(sectionId)}" data-section-title="当前状态">
       <h2 class="career-section-label">活动单元 · 单线程，只有这一件活</h2>
@@ -1213,11 +1210,12 @@ function renderCareerWorkbench(module, runtime) {
             <span class="career-chip">${escapeHtml(getCareerSessionLabel(unit))}</span>
           </div>
           <p class="career-unit-title">${escapeHtml(unit.id)} ${escapeHtml(unit.title)}</p>
+          <p class="career-unit-role"><span>当前承担</span><strong>${escapeHtml(pathLabel)}</strong></p>
           <p class="career-unit-next"><span>下一步</span>${escapeHtml(unit.nextAction)}</p>
-          <div class="career-workbench-actions" aria-label="活动单元辅助动作">
-            <button class="career-action" type="button" data-career-log-action="breakpoint">记断点</button>
-            <button class="career-action is-quiet" type="button" data-career-log-action="wall">撞墙了</button>
-          </div>
+          <a class="career-ledger-link" href="?module=logs${logsTaskSectionId ? `#${escapeHtml(logsTaskSectionId)}` : ""}" data-career-module-id="logs" data-career-target-section="${escapeHtml(logsTaskSectionId)}">
+            <span>打开 Ledger &amp; Calibration</span>
+            <small>记录断点、墙记录或校准</small>
+          </a>
         </div>
         <div class="career-seal-slot">
           <button class="career-pending-seal-button" type="button" data-career-settle-unit="${escapeHtml(unit.id)}" aria-label="结算 ${escapeHtml(unit.id)} ${escapeHtml(unit.title)}并落印">
@@ -1236,9 +1234,9 @@ function renderCareerLedger(module, runtime) {
   const seals = runtime.units.map((unit) => {
     const justSettled = unit.runtimeStatus === "settled" && state.careerLastSettledUnitId === unit.id;
     return `
-      <div class="career-unit-seal is-${escapeHtml(unit.runtimeStatus)}${justSettled ? " is-just-settled" : ""}" data-career-unit-seal="${escapeHtml(unit.id)}" role="img" aria-label="${escapeHtml(unit.id)} ${escapeHtml(unit.title)}，${unit.runtimeStatus === "settled" ? "已结算" : unit.runtimeStatus === "active" ? "活动单元，待印" : "冻结"}">
+      <div class="career-unit-seal is-${escapeHtml(unit.runtimeStatus)}${justSettled ? " is-just-settled" : ""}" data-career-unit-seal="${escapeHtml(unit.id)}" role="img" aria-label="${escapeHtml(unit.id)} ${escapeHtml(unit.title)}，${unit.runtimeStatus === "settled" ? "已结算" : unit.runtimeStatus === "active" ? "活动单元，待印" : "冻结"}"${unit.runtimeStatus === "frozen" ? ` title="${escapeHtml(`${unit.id} ${unit.title}`)}"` : ""}>
         <span class="career-unit-seal-id">${escapeHtml(unit.id)}</span>
-        <span class="career-unit-seal-title">${escapeHtml(unit.runtimeStatus === "active" ? "待印" : unit.title)}</span>
+        ${unit.runtimeStatus === "frozen" ? "" : `<span class="career-unit-seal-title">${escapeHtml(unit.runtimeStatus === "active" ? "待印" : unit.title)}</span>`}
       </div>
     `;
   }).join("");
@@ -1275,87 +1273,101 @@ function renderCareerLedger(module, runtime) {
   `;
 }
 
-function renderCareerGoalTrace(runtime) {
-  const unit = runtime.activeUnit;
-  if (!unit) {
+function renderCareerBoardQueue(runtime) {
+  const statusLabels = {
+    settled: "已结算",
+    active: "活动单元",
+    frozen: "未来单元",
+  };
+  return runtime.units.map((unit, index) => {
+    const visualState = unit.runtimeStatus === "frozen" ? "future" : unit.runtimeStatus;
+    const y = 130 + (index * 49);
     return `
-      <div class="career-goal-trace-empty">
-        <strong>这一批单元已经全部结算</strong>
-        <p>下一条路径应在事件触发校准后再写入；主板不会替你自动生成新方向。</p>
-      </div>
+      <g class="career-board-queue-pin is-${escapeHtml(visualState)}" role="listitem" aria-label="${escapeHtml(`${unit.id} ${unit.title}，${statusLabels[unit.runtimeStatus]}`)}">
+        <rect x="38" y="${escapeHtml(String(y - 12))}" width="68" height="24" rx="3" />
+        <text x="72" y="${escapeHtml(String(y + 4))}" text-anchor="middle">${escapeHtml(unit.id)}</text>
+      </g>
     `;
-  }
+  }).join("");
+}
 
-  const mapping = unit.goalMapping ?? {};
-  const subsystemById = new Map((state.data?.project?.subsystems ?? []).map((subsystem) => [subsystem.id, subsystem]));
-  const mappedSubsystems = (mapping.subsystemIds ?? [])
-    .map((subsystemId) => subsystemById.get(subsystemId))
-    .filter(Boolean);
-  const subsystemItems = mappedSubsystems.length > 0
-    ? mappedSubsystems.map((subsystem) => `<li><span>${escapeHtml(subsystem.id)}</span>${escapeHtml(subsystem.title)}</li>`).join("")
-    : "<li>尚未映射子系统</li>";
-  const pathLabel = mapping.pathLabel || "等待路线图映射";
-  const stageLabel = mapping.stageLabel || "当前阶段";
-  const targetGoal = state.data?.project?.targetGoal || "长期目标";
-
+function renderCareerEvidencePads(module, subsystemId, startX, y) {
+  const levels = module.depthLadder?.levels ?? [];
+  const levelById = new Map(levels.map((level) => [level.id, level]));
+  const records = (module.evidenceRecords ?? []).filter((record) => record.subsystemId === subsystemId);
+  if (records.length === 0) return "";
+  const subsystem = state.data?.project?.subsystems?.find((item) => item.id === subsystemId);
+  const pads = records.map((record) => {
+    const level = levelById.get(record.depthLevelId);
+    if (!level) return "";
+    const x = startX + ((level.order - 1) * 23);
+    const label = `${subsystem?.title ?? `子系统 ${subsystemId}`} · ${level.label}：${record.evidenceRef}`;
+    return `
+      <g class="career-board-evidence-pad is-earned" role="listitem" aria-label="${escapeHtml(label)}">
+        <title>${escapeHtml(label)}</title>
+        <circle cx="${escapeHtml(String(x))}" cy="${escapeHtml(String(y))}" r="6" />
+      </g>
+    `;
+  }).join("");
   return `
-    <div class="career-goal-trace" aria-label="当前单元通往长期目标的路径">
-      <p class="career-goal-trace-lede"><strong>${escapeHtml(unit.id)} ${escapeHtml(unit.title)}</strong>现在承担的是“${escapeHtml(pathLabel)}”：它把当前实验接回长期系统目标。</p>
-      <ol class="career-goal-trace-steps">
-        <li class="career-goal-trace-step is-current">
-          <span class="career-goal-trace-label">当前单元</span>
-          <strong>${escapeHtml(unit.id)} ${escapeHtml(unit.title)}</strong>
-          <small>${escapeHtml(unit.type)} · ${escapeHtml(getCareerSessionLabel(unit))}</small>
-        </li>
-        <li class="career-goal-trace-step">
-          <span class="career-goal-trace-label">形成作用</span>
-          <strong>${escapeHtml(pathLabel)}</strong>
-          <small>来自“${escapeHtml(mapping.sourceSection || "行动映射")}”</small>
-        </li>
-        <li class="career-goal-trace-step is-systems">
-          <span class="career-goal-trace-label">作用范围</span>
-          <ul class="career-goal-trace-systems">${subsystemItems}</ul>
-        </li>
-        <li class="career-goal-trace-step">
-          <span class="career-goal-trace-label">结果窗口</span>
-          <strong>${escapeHtml(stageLabel)}</strong>
-          <small>窗口提供远景坐标，不制造日历债</small>
-        </li>
-      </ol>
-      <p class="career-goal-trace-north-star"><span>北极星</span><strong>${escapeHtml(targetGoal)}</strong></p>
-      <p class="career-board-source">路径来自路线图的显式映射；它说明“为什么做”，不代表任何深度已经掌握。</p>
-    </div>
+    <g class="career-board-evidence-pads" role="list" aria-label="${escapeHtml(`${subsystem?.title ?? `子系统 ${subsystemId}`}已有 ${records.length} 层明确证据`)}">
+      ${pads}
+    </g>
   `;
+}
+
+function getCareerEvidenceSummary(module) {
+  const records = module.evidenceRecords ?? [];
+  if (records.length === 0) return "证据焊盘只在结算或校准明确指认后出现；当前没有可显示的证据焊盘。";
+  const subsystemById = new Map((state.data?.project?.subsystems ?? []).map((subsystem) => [subsystem.id, subsystem]));
+  const levelById = new Map((module.depthLadder?.levels ?? []).map((level) => [level.id, level]));
+  return `当前已有证据：${records.map((record) => {
+    const subsystem = subsystemById.get(record.subsystemId);
+    const level = levelById.get(record.depthLevelId);
+    return `${subsystem?.title ?? record.subsystemId}，${level?.label ?? record.depthLevelId}，${record.evidenceRef}`;
+  }).join("；")}`;
 }
 
 function renderCareerBoard(module, runtime) {
   const sectionId = getSectionId(module, "目标");
-  const focusSelected = state.careerBoardView !== "overview";
+  const persona = state.data?.project?.subsystems?.find((subsystem) => subsystem.id === "2");
+  const multimodal = state.data?.project?.subsystems?.find((subsystem) => subsystem.id === "4");
   return `
     <article class="career-board-section" id="${escapeHtml(sectionId)}" data-section-id="${escapeHtml(sectionId)}" data-section-title="目标">
       <div class="career-board-heading">
-        <h2 class="career-section-label">贾维斯 0.x · 当前路径与系统总览</h2>
-        <div class="career-board-view-switch" role="group" aria-label="主板视图">
-          <button type="button" data-career-board-view="focus" aria-pressed="${focusSelected ? "true" : "false"}" aria-controls="career-board-focus">当前路径</button>
-          <button type="button" data-career-board-view="overview" aria-pressed="${focusSelected ? "false" : "true"}" aria-controls="career-board-overview">系统总览</button>
-        </div>
+        <h2 class="career-section-label" id="career-board-title">贾维斯 0.x · 六子系统装配主板</h2>
       </div>
-      <div class="career-board-panel career-board-focus" id="career-board-focus" data-career-board-panel="focus"${focusSelected ? "" : " hidden"}>
-        ${renderCareerGoalTrace(runtime)}
-      </div>
-      <div class="career-board-panel career-board-overview" id="career-board-overview" data-career-board-panel="overview"${focusSelected ? " hidden" : ""}>
-        <div class="career-board-scroll" tabindex="0" aria-label="可横向滚动查看六子系统完整主板">
+      <div class="career-board-scroll" role="region" tabindex="0" aria-labelledby="career-board-title" aria-describedby="career-board-note career-board-evidence-summary">
           <svg class="career-mainboard" viewBox="0 0 900 560" role="group" aria-labelledby="career-mainboard-title career-mainboard-description">
             <title id="career-mainboard-title">贾维斯 0.x 六子系统主板</title>
-            <desc id="career-mainboard-description">六个子系统的长期能力地图。人格与情感、实时多模态是冻结插槽，其余插槽链接到现有学习模块。</desc>
+            <desc id="career-mainboard-description">六个子系统的长期装配图。U-QUEUE 正向人格与情感布线；证据焊盘只在结算或校准中明确登记后出现。</desc>
+            <defs aria-hidden="true">
+              <marker id="career-route-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                <path class="career-board-route-arrow" d="M0 0 L8 4 L0 8 Z" />
+              </marker>
+              <pattern id="career-ground-mesh" width="14" height="14" patternUnits="userSpaceOnUse">
+                <path class="career-board-ground-mesh" d="M0 7 H14 M7 0 V14" />
+              </pattern>
+            </defs>
             <rect class="career-board-outline" x="10" y="10" width="880" height="540" rx="16" />
             <rect class="career-board-inner-outline" x="20" y="20" width="860" height="520" rx="11" />
             <g class="career-board-mounts"><circle cx="34" cy="34" r="6"/><circle cx="866" cy="34" r="6"/><circle cx="34" cy="526" r="6"/><circle cx="866" cy="526" r="6"/></g>
-            <text class="career-board-silkscreen is-title" x="105" y="52">JARVIS 0.x — MAINBOARD REV 0.1</text>
-            <text class="career-board-silkscreen is-caption" x="105" y="70">SINGLE-THREAD ASSEMBLY · SETTLEMENT LEDGER · EST. 2026</text>
-            <text class="career-board-silkscreen is-caption" x="450" y="84" text-anchor="middle">SIX-SYSTEM BACKPLANE</text>
+            <text class="career-board-silkscreen is-title" x="128" y="52">JARVIS 0.x — MAINBOARD REV 0.2</text>
+            <text class="career-board-silkscreen is-caption" x="128" y="70">SINGLE-THREAD ASSEMBLY · SETTLEMENT LEDGER · EST. 2026</text>
             <path class="career-board-backplane" d="M452 148 V463 M428 148 H476 M428 308 H476 M428 463 H476" />
             <g class="career-board-backplane-nodes"><circle cx="452" cy="148" r="4"/><circle cx="452" cy="308" r="4"/><circle cx="452" cy="463" r="4"/></g>
+
+            <g class="career-board-queue" role="list" aria-label="U-QUEUE：U1 到 U7 的单线程装配队列">
+              <text class="career-board-queue-label" x="72" y="101" text-anchor="middle">U-QUEUE</text>
+              <path class="career-board-queue-rail" d="M112 118 V448" aria-hidden="true" />
+              ${renderCareerBoardQueue(runtime)}
+            </g>
+            <g aria-hidden="true">
+              <path class="career-board-route" d="M106 130 H126 V82 H462 V148 H476" marker-end="url(#career-route-arrow)" />
+              <circle class="career-board-route-node" cx="126" cy="130" r="4" />
+              <circle class="career-board-route-node" cx="462" cy="148" r="4" />
+              <text class="career-board-silkscreen is-route" x="500" y="82">ROUTING BUS · U1–U7 → PERSONA</text>
+            </g>
 
             <a class="career-board-link" href="?module=llm-systems" data-career-module-id="llm-systems" aria-label="打开 LLM Systems：基座模型">
               <g class="career-board-slot is-supplied">
@@ -1366,34 +1378,37 @@ function renderCareerBoard(module, runtime) {
               </g>
             </a>
 
-            <g class="career-board-slot is-frozen">
+            <g class="career-board-slot is-routing">
               <rect x="476" y="92" width="278" height="112" rx="8" />
               <text class="career-board-slot-code" x="496" y="124">② PERSONA</text>
               <text class="career-board-slot-title" x="496" y="150">人格与情感</text>
-              <text class="career-board-slot-note" x="496" y="174">冻结 · U4–U6 到队头再定义</text>
+              <text class="career-board-slot-note" x="496" y="174">布线中 ROUTING · ${escapeHtml(persona?.note || "U1–U7 在途")}</text>
+              ${renderCareerEvidencePads(module, "2", 620, 191)}
             </g>
 
             <a class="career-board-link" href="?module=rag-memory" data-career-module-id="rag-memory" aria-label="打开 Lifelong Memory：终身记忆">
-              <g class="career-board-slot">
+              <g class="career-board-slot is-candidate">
                 <rect x="146" y="252" width="282" height="112" rx="8" />
                 <text class="career-board-slot-code" x="166" y="284">③ LIFELONG MEMORY</text>
                 <text class="career-board-slot-title" x="166" y="310">终身记忆</text>
                 <text class="career-board-slot-note" x="166" y="334">写入 · 整合 · 遗忘 · 反思</text>
+                ${renderCareerEvidencePads(module, "3", 284, 351)}
               </g>
             </a>
 
-            <g class="career-board-slot is-frozen">
+            <g class="career-board-slot is-standby">
               <rect x="476" y="252" width="278" height="112" rx="8" />
               <text class="career-board-slot-code" x="496" y="284">④ REALTIME MULTIMODAL</text>
               <text class="career-board-slot-title" x="496" y="310">实时多模态交互</text>
-              <text class="career-board-slot-note" x="496" y="334">冻结 · 到相关单元再定义</text>
+              <text class="career-board-slot-note" x="496" y="334">候选接口 · ${escapeHtml(multimodal?.note || "到相关单元再接入")}</text>
+              ${renderCareerEvidencePads(module, "4", 620, 351)}
             </g>
 
             <a class="career-board-link" href="?module=agent-design" data-career-module-id="agent-design" aria-label="打开 Agent Runtime：Agent 执行">
               <g class="career-board-slot">
-                <rect x="146" y="412" width="282" height="102" rx="8" />
-                <text class="career-board-slot-code" x="166" y="442">⑤ AGENT EXEC</text>
-                <text class="career-board-slot-title" x="166" y="468">Agent 执行 · 安全运行时</text>
+                <rect x="146" y="400" width="282" height="114" rx="8" />
+                <text class="career-board-slot-code" x="166" y="428">⑤ AGENT EXEC</text>
+                <text class="career-board-slot-title" x="166" y="454">Agent 执行 · 安全运行时</text>
                 <rect class="career-board-chip is-archive" x="166" y="480" width="104" height="22" rx="3" />
                 <text class="career-board-chip-text" x="218" y="495" text-anchor="middle">CYRENE 0.0</text>
                 <rect class="career-board-chip is-socket" x="286" y="480" width="122" height="22" rx="3" />
@@ -1401,73 +1416,22 @@ function renderCareerBoard(module, runtime) {
               </g>
             </a>
 
-            <g class="career-board-slot">
-              <rect x="476" y="412" width="278" height="102" rx="8" />
-              <text class="career-board-slot-code" x="496" y="442">⑥ SYSTEM LAYER</text>
-              <text class="career-board-slot-title" x="496" y="468">系统层 · 推理与工程地基</text>
-              <a class="career-board-link is-inline" href="?module=llm-systems" data-career-module-id="llm-systems" aria-label="打开 LLM Systems 系统层内容"><text x="496" y="493">LLM Systems</text></a>
-              <text class="career-board-slot-note" x="582" y="493">+</text>
-              <a class="career-board-link is-inline" href="?module=coding" data-career-module-id="coding" aria-label="打开 Engineering Foundations"><text x="598" y="493">Engineering Foundations</text></a>
+            <g class="career-board-slot is-grounded">
+              <rect x="476" y="400" width="278" height="114" rx="8" />
+              <rect class="career-board-ground-plane" x="480" y="404" width="270" height="106" rx="6" fill="url(#career-ground-mesh)" aria-hidden="true" />
+              <text class="career-board-slot-code" x="496" y="428">⑥ SYSTEM LAYER</text>
+              <text class="career-board-slot-title" x="496" y="454">系统层 · 推理与工程地基</text>
+              <a class="career-board-link is-inline" href="?module=llm-systems" data-career-module-id="llm-systems" aria-label="打开 LLM Systems 系统层内容"><rect class="career-board-inline-hit" x="486" y="460" width="100" height="52" rx="4" /><text x="496" y="493">LLM Systems</text></a>
+              <text class="career-board-slot-note" x="584" y="493">+</text>
+              <a class="career-board-link is-inline" href="?module=coding" data-career-module-id="coding" aria-label="打开 Engineering Foundations"><rect class="career-board-inline-hit" x="590" y="460" width="160" height="52" rx="4" /><text x="598" y="493">Engineering Foundations</text></a>
+              <text class="career-board-ground-label" x="730" y="426" text-anchor="end">GND ⑥</text>
             </g>
 
             <g class="career-board-corner-seal"><rect x="806" y="44" width="48" height="48" rx="4"/><text x="830" y="75" text-anchor="middle">0.x</text></g>
           </svg>
-        </div>
-        <p class="career-board-note">这张总览只表达六个子系统及其现有模块入口；单元队列只保留在台账。②与④仍是冻结插槽。</p>
       </div>
-    </article>
-  `;
-}
-
-function renderCareerEvidenceMatrix(module, runtime) {
-  const matrix = module.evidenceMatrix;
-  if (!matrix?.depthLevels?.length || !matrix?.rows?.length) return "";
-  const subsystemById = new Map((state.data?.project?.subsystems ?? []).map((subsystem) => [subsystem.id, subsystem]));
-  const activeSubsystemIds = new Set(runtime.activeUnit?.goalMapping?.subsystemIds ?? []);
-  const stateLabels = {
-    unassessed: "未登记",
-    observed: "观察中",
-    supported: "有证据",
-    revisit: "需复核",
-  };
-  const headerCells = matrix.depthLevels
-    .map((level) => `<th scope="col">${escapeHtml(level.label)}</th>`)
-    .join("");
-  const rows = matrix.rows.map((row) => {
-    const subsystem = subsystemById.get(row.subsystemId) ?? { id: row.subsystemId, title: `子系统 ${row.subsystemId}` };
-    const cellsByLevel = new Map((row.cells ?? []).map((cell) => [cell.depthLevelId, cell]));
-    const cells = matrix.depthLevels.map((level) => {
-      const cell = cellsByLevel.get(level.id) ?? { state: "unassessed", evidenceRefs: [] };
-      const cellState = stateLabels[cell.state] ? cell.state : "unassessed";
-      const evidenceRefs = Array.isArray(cell.evidenceRefs) ? cell.evidenceRefs.filter(Boolean) : [];
-      const evidenceText = evidenceRefs.length > 0 ? `；${evidenceRefs.join("；")}` : "";
-      return `
-        <td data-evidence-state="${escapeHtml(cellState)}" aria-label="${escapeHtml(subsystem.title)} · ${escapeHtml(level.label)}：${escapeHtml(stateLabels[cellState])}${escapeHtml(evidenceText)}">
-          <span class="career-evidence-mark" aria-hidden="true"></span>
-          <span class="career-evidence-state">${escapeHtml(stateLabels[cellState])}</span>
-        </td>
-      `;
-    }).join("");
-    return `
-      <tr${activeSubsystemIds.has(row.subsystemId) ? ' class="is-current-path"' : ""}>
-        <th scope="row"><span>${escapeHtml(subsystem.id)}</span><strong>${escapeHtml(subsystem.title)}</strong>${activeSubsystemIds.has(row.subsystemId) ? '<small>当前路径</small>' : ""}</th>
-        ${cells}
-      </tr>
-    `;
-  }).join("");
-  return `
-    <article class="career-evidence-section" id="${escapeHtml(`${getSectionId(module, "目标")}-evidence`)}" data-section-id="${escapeHtml(`${getSectionId(module, "目标")}-evidence`)}" data-section-title="能力证据" aria-labelledby="career-evidence-title">
-      <div class="career-evidence-scroll" role="region" tabindex="0" aria-labelledby="career-evidence-title" aria-describedby="career-evidence-note">
-        <table class="career-evidence-matrix">
-          <caption id="career-evidence-title">
-            <strong>能力证据矩阵 · 六系统 × 五深度</strong>
-            <span>只登记结算或校准中明确指认的证据，不计算百分比。</span>
-          </caption>
-          <thead><tr><th scope="col">子系统</th>${headerCells}</tr></thead>
-          <tbody>${rows}</tbody>
-        </table>
-      </div>
-      <p class="career-evidence-note" id="career-evidence-note">空心焊盘表示尚未登记证据，不等于不会。当前路径只标出这项工作作用于哪里，不会提前填入任何深度。</p>
+      <p class="career-board-note" id="career-board-note">朱砂表示当前布线，金色只表示结算或校准中明确指认的证据；没有证据的层级不生成占位。</p>
+      <p class="visually-hidden" id="career-board-evidence-summary">${escapeHtml(getCareerEvidenceSummary(module))}</p>
     </article>
   `;
 }
@@ -1490,7 +1454,7 @@ function renderCareerInsightAndReference(module, runtime) {
         </aside>
       </div>
       <details class="career-reference">
-        <summary>展开完整路线依据与运行规则</summary>
+        <summary><span>展开完整路线依据与运行规则</span><span class="career-reference-toggle" aria-hidden="true"><span class="is-closed">＋</span><span class="is-open">−</span></span></summary>
         <div class="career-reference-body">
           <section><h3>长期目标</h3>${getSection(module, "目标")}</section>
           <section><h3>结算、深度与校准</h3>${getSection(module, "核心知识")}</section>
@@ -1545,7 +1509,6 @@ function renderCareerRoadmap(module) {
       ${renderCareerWorkbench(module, runtime)}
       ${renderCareerLedger(module, runtime)}
       ${renderCareerBoard(module, runtime)}
-      ${renderCareerEvidenceMatrix(module, runtime)}
       ${renderCareerInsightAndReference(module, runtime)}
       ${renderCareerStages(module)}
     </div>
@@ -1569,39 +1532,16 @@ function settleCareerUnit(module, unitId) {
   }, 760);
 }
 
-function setCareerBoardView(view) {
-  if (!["focus", "overview"].includes(view)) return;
-  state.careerBoardView = view;
-  els.sectionList.querySelectorAll("[data-career-board-view]").forEach((button) => {
-    button.setAttribute("aria-pressed", String(button.dataset.careerBoardView === view));
-  });
-  els.sectionList.querySelectorAll("[data-career-board-panel]").forEach((panel) => {
-    panel.hidden = panel.dataset.careerBoardPanel !== view;
-  });
-  announce(view === "focus" ? "已显示当前单元路径" : "已显示六子系统总览");
-}
-
 function bindCareerRoadmap(module) {
   els.sectionList.querySelector("[data-career-settle-unit]")?.addEventListener("click", (event) => {
     settleCareerUnit(module, event.currentTarget.dataset.careerSettleUnit);
   });
-  els.sectionList.querySelectorAll("[data-career-board-view]").forEach((button) => {
-    button.addEventListener("click", () => {
-      setCareerBoardView(button.dataset.careerBoardView);
-    });
-  });
-  els.sectionList.querySelectorAll("[data-career-log-action]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const logsModule = getModuleById("logs");
-      openModule("logs", {
-        targetSectionId: logsModule ? getSectionId(logsModule, "任务") : "",
-      });
-    });
-  });
   els.sectionList.querySelectorAll("[data-career-module-id]").forEach((link) => {
     link.addEventListener("click", (event) => {
       event.preventDefault();
-      openModule(link.dataset.careerModuleId);
+      openModule(link.dataset.careerModuleId, {
+        targetSectionId: link.dataset.careerTargetSection || "",
+      });
     });
   });
 }
@@ -2012,10 +1952,9 @@ function renderCurrentModule() {
     </div>
   ` : isCareerRoadmap ? `
     <div class="career-header">
-      <p class="career-header-kicker">${escapeHtml(state.data.project.title)} · CAREER ROADMAP · 结算制</p>
+      <p class="career-header-kicker">${escapeHtml(state.data.project.title)} · CAREER ROADMAP · 单线程结算制</p>
       <h1 class="career-header-title module-title" tabindex="-1">贾维斯 0.x 装配台</h1>
-      <p class="career-header-meta">单线程 · 台账只涨不跌 · 空窗不记债</p>
-      <p class="career-header-goal">长期目标：${escapeHtml(projectGoal)}</p>
+      <p class="career-header-goal"><span class="career-header-goal-label">长期目标</span><strong>${escapeHtml(projectGoal)}</strong><small>台账只涨不跌 · 空窗不记债</small></p>
     </div>
   ` : `
     <p class="module-kicker">${escapeHtml(state.data.project.title)} · ${escapeHtml(module.planScope === "interview" ? "临时面试突击 · 不改写长期路线" : projectGoal)}</p>

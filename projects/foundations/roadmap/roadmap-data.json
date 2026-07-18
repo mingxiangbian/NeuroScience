@@ -111,9 +111,9 @@
         "key": "persona",
         "title": "人格与情感",
         "englishTitle": "PERSONA",
-        "status": "frozen",
+        "status": "routing",
         "moduleIds": [],
-        "note": "U4–U6 到队头再定义"
+        "note": "U1–U7 在途"
       },
       {
         "id": "3",
@@ -131,9 +131,9 @@
         "key": "multimodal",
         "title": "实时多模态交互",
         "englishTitle": "REALTIME MULTIMODAL",
-        "status": "frozen",
+        "status": "standby",
         "moduleIds": [],
-        "note": "到相关单元再定义"
+        "note": "到相关单元再接入"
       },
       {
         "id": "5",
@@ -404,10 +404,10 @@
           }
         }
       ],
-      "evidenceMatrix": {
-        "basis": "explicit-evidence-only",
+      "depthLadder": {
+        "purpose": "directional-only",
         "sourceSection": "深度阶梯（候选专长的定向仪）",
-        "depthLevels": [
+        "levels": [
           {
             "id": "understand",
             "label": "理解",
@@ -433,190 +433,9 @@
             "label": "综合/创新",
             "order": 5
           }
-        ],
-        "rows": [
-          {
-            "subsystemId": "1",
-            "cells": [
-              {
-                "depthLevelId": "understand",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "implement",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "verify",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "diagnose",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "integrate-innovate",
-                "state": "unassessed",
-                "evidenceRefs": []
-              }
-            ]
-          },
-          {
-            "subsystemId": "2",
-            "cells": [
-              {
-                "depthLevelId": "understand",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "implement",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "verify",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "diagnose",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "integrate-innovate",
-                "state": "unassessed",
-                "evidenceRefs": []
-              }
-            ]
-          },
-          {
-            "subsystemId": "3",
-            "cells": [
-              {
-                "depthLevelId": "understand",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "implement",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "verify",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "diagnose",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "integrate-innovate",
-                "state": "unassessed",
-                "evidenceRefs": []
-              }
-            ]
-          },
-          {
-            "subsystemId": "4",
-            "cells": [
-              {
-                "depthLevelId": "understand",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "implement",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "verify",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "diagnose",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "integrate-innovate",
-                "state": "unassessed",
-                "evidenceRefs": []
-              }
-            ]
-          },
-          {
-            "subsystemId": "5",
-            "cells": [
-              {
-                "depthLevelId": "understand",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "implement",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "verify",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "diagnose",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "integrate-innovate",
-                "state": "unassessed",
-                "evidenceRefs": []
-              }
-            ]
-          },
-          {
-            "subsystemId": "6",
-            "cells": [
-              {
-                "depthLevelId": "understand",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "implement",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "verify",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "diagnose",
-                "state": "unassessed",
-                "evidenceRefs": []
-              },
-              {
-                "depthLevelId": "integrate-innovate",
-                "state": "unassessed",
-                "evidenceRefs": []
-              }
-            ]
-          }
         ]
       },
+      "evidenceRecords": [],
       "outcomeGates": [
         {
           "id": "stage-1",

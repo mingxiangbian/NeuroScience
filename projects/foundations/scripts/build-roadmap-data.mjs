@@ -78,9 +78,9 @@ const NAVIGATION_GROUPS = [
 
 const JARVIS_SUBSYSTEMS = [
   { id: "1", key: "base-model", title: "基座模型", englishTitle: "BASE MODEL", status: "mapped", moduleIds: ["llm-systems"], note: "懂原理、边界与供给约束" },
-  { id: "2", key: "persona", title: "人格与情感", englishTitle: "PERSONA", status: "frozen", moduleIds: [], note: "U4–U6 到队头再定义" },
+  { id: "2", key: "persona", title: "人格与情感", englishTitle: "PERSONA", status: "routing", moduleIds: [], note: "U1–U7 在途" },
   { id: "3", key: "memory", title: "终身记忆", englishTitle: "LIFELONG MEMORY", status: "mapped", moduleIds: ["rag-memory"], note: "写入、整合、遗忘与反思" },
-  { id: "4", key: "multimodal", title: "实时多模态交互", englishTitle: "REALTIME MULTIMODAL", status: "frozen", moduleIds: [], note: "到相关单元再定义" },
+  { id: "4", key: "multimodal", title: "实时多模态交互", englishTitle: "REALTIME MULTIMODAL", status: "standby", moduleIds: [], note: "到相关单元再接入" },
   { id: "5", key: "agent-runtime", title: "Agent 执行", englishTitle: "AGENT EXEC", status: "mapped", moduleIds: ["agent-design"], note: "工具、规划、沙箱与恢复" },
   { id: "6", key: "system-layer", title: "系统层", englishTitle: "SYSTEM LAYER", status: "mapped", moduleIds: ["llm-systems", "coding"], note: "推理、延迟、成本与工程地基" },
 ];
@@ -219,19 +219,11 @@ function extractDepthLevels(markdown) {
   });
 }
 
-function buildEvidenceMatrix(depthLevels) {
+function buildDepthLadder(depthLevels) {
   return {
-    basis: "explicit-evidence-only",
+    purpose: "directional-only",
     sourceSection: "深度阶梯（候选专长的定向仪）",
-    depthLevels,
-    rows: JARVIS_SUBSYSTEMS.map((subsystem) => ({
-      subsystemId: subsystem.id,
-      cells: depthLevels.map((level) => ({
-        depthLevelId: level.id,
-        state: "unassessed",
-        evidenceRefs: [],
-      })),
-    })),
+    levels: depthLevels,
   };
 }
 
@@ -413,14 +405,25 @@ function validateModule(record, expectedId, expectedTitle) {
     if (record.units.some((unit) => !Array.isArray(unit.goalMapping?.subsystemIds) || unit.goalMapping.subsystemIds.length === 0)) {
       throw new Error(`${expectedId} has a settlement unit without an explicit subsystem mapping`);
     }
-    if (record.evidenceMatrix?.basis !== "explicit-evidence-only") throw new Error(`${expectedId} has an invalid evidence basis`);
-    if (record.evidenceMatrix.depthLevels.length !== 5) throw new Error(`${expectedId} must define five depth levels`);
-    if (record.evidenceMatrix.rows.length !== JARVIS_SUBSYSTEMS.length) throw new Error(`${expectedId} must define one evidence row per subsystem`);
-    for (const row of record.evidenceMatrix.rows) {
-      if (row.cells.length !== record.evidenceMatrix.depthLevels.length) throw new Error(`${expectedId} has an incomplete evidence row for subsystem ${row.subsystemId}`);
-      if (row.cells.some((cell) => cell.state !== "unassessed" || cell.evidenceRefs.length !== 0)) {
-        throw new Error(`${expectedId} must not infer evidence states from roadmap prose or unit status`);
+    if (Object.hasOwn(record, "evidenceMatrix")) throw new Error(`${expectedId} must not expose an evidence matrix`);
+    if (record.depthLadder?.purpose !== "directional-only") throw new Error(`${expectedId} has an invalid depth ladder purpose`);
+    if (record.depthLadder.levels.length !== 5) throw new Error(`${expectedId} must define five directional depth levels`);
+    if (!Array.isArray(record.evidenceRecords)) throw new Error(`${expectedId} must expose explicit evidence records`);
+    const candidateSubsystemIds = new Set(["2", "3", "4"]);
+    const depthLevelIds = new Set(record.depthLadder.levels.map((level) => level.id));
+    const evidenceSlots = new Set();
+    for (const evidence of record.evidenceRecords) {
+      if (!candidateSubsystemIds.has(evidence.subsystemId)) throw new Error(`${expectedId} has evidence outside candidate specialties ②③④`);
+      if (!depthLevelIds.has(evidence.depthLevelId)) throw new Error(`${expectedId} has evidence for an unknown depth level`);
+      if (typeof evidence.evidenceRef !== "string" || !evidence.evidenceRef.trim()) {
+        throw new Error(`${expectedId} has an evidence record without an explicit reference`);
       }
+      if (Object.keys(evidence).some((key) => /state|progress|percent|score/i.test(key))) {
+        throw new Error(`${expectedId} must express evidence through positive records, not empty or scored states`);
+      }
+      const slotId = `${evidence.subsystemId}:${evidence.depthLevelId}`;
+      if (evidenceSlots.has(slotId)) throw new Error(`${expectedId} has duplicate evidence for ${slotId}`);
+      evidenceSlots.add(slotId);
     }
     if (record.outcomeGates.length !== 4) throw new Error(`${expectedId} must define four outcome gates`);
     if (record.outcomeGates.some((gate) => gate.window.commitment !== "flexible" || !gate.outcome)) {
@@ -462,7 +465,8 @@ function buildModule([id, title]) {
     const unitGoalMappings = extractUnitGoalMappings(rawSections["核心知识"] ?? "");
     const depthLevels = extractDepthLevels(rawSections["核心知识"] ?? "");
     record.units = extractSettlementUnits(rawSections["任务"] ?? "", unitGoalMappings);
-    record.evidenceMatrix = buildEvidenceMatrix(depthLevels);
+    record.depthLadder = buildDepthLadder(depthLevels);
+    record.evidenceRecords = [];
     record.outcomeGates = extractCareerOutcomeGates(rawSections["时间线"] ?? "");
   }
   record.searchEntries = buildSearchEntries(id, title, rawSections, record.knowledgeNotes);

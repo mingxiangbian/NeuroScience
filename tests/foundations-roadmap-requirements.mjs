@@ -255,21 +255,32 @@ assert.match(js, /module-nav-frozen-slot/, "Foundations navigation should retain
 assert.match(js, /module\.planScope === "interview" \|\| PROJECT_ID === "finance"/, "only interview and Finance navigation should render percentage progress");
 assert.match(js, /isLongTermModule \? `[\s\S]*长期模块不使用百分比[\s\S]*` : renderProgressSummary\(module\)/, "ordinary long-term modules should show their responsibility instead of percentage progress");
 assert.match(js, /function renderCareerBoard\(module, runtime\)[\s\S]*① BASE MODEL[\s\S]*② PERSONA[\s\S]*③ LIFELONG MEMORY[\s\S]*④ REALTIME MULTIMODAL[\s\S]*⑤ AGENT EXEC[\s\S]*⑥ SYSTEM LAYER/, "Career Roadmap should render all six Jarvis subsystem slots");
-assert.doesNotMatch(js, /U-QUEUE|renderCareerDepthPads/, "the system overview should no longer duplicate the settlement queue or depth pads");
-assert.match(js, /function renderCareerGoalTrace\(runtime\)[\s\S]*unit\.goalMapping[\s\S]*pathLabel[\s\S]*subsystemIds/, "the focused board view should derive its path from the generated roadmap mapping");
-assert.match(js, /data-career-board-view="focus"[\s\S]*data-career-board-view="overview"[\s\S]*data-career-board-panel="focus"[\s\S]*data-career-board-panel="overview"/, "Career Roadmap should expose focused and overview board views");
-assert.match(js, /function setCareerBoardView\(view\)[\s\S]*aria-pressed[\s\S]*panel\.hidden/, "board view switching should update accessible state without rerendering the module");
-const careerEvidenceRenderer = js.slice(js.indexOf("function renderCareerEvidenceMatrix"), js.indexOf("function renderCareerInsightAndReference"));
-assert.match(careerEvidenceRenderer, /<table class="career-evidence-matrix">[\s\S]*scope="col"/, "the six-by-five evidence view should render a semantic table with column headers");
-assert.match(careerEvidenceRenderer, /scope="row"/, "the evidence matrix should identify every subsystem through row headers");
-assert.match(careerEvidenceRenderer, /data-evidence-state="\$\{escapeHtml\(cellState\)\}"/, "evidence cells should expose their qualitative state to markup and styling");
-assert.doesNotMatch(careerEvidenceRenderer, /taskState|getLearningProgress|overallLearningProgress/, "the evidence matrix must not infer depth from settlement or percentage state");
-assert.match(js, /title: "能力证据"/, "the section rail should expose the evidence matrix as a navigation target");
+assert.match(js, /U-QUEUE/, "the always-visible Career mainboard should expose the settlement-unit edge connector");
+assert.match(js, /module\.depthLadder/, "the Career mainboard should read the directional depth ladder contract");
+assert.match(js, /module\.evidenceRecords/, "the Career mainboard should render only explicit positive evidence records");
+assert.doesNotMatch(js, /data-career-board-view|data-career-board-panel|function setCareerBoardView|function renderCareerGoalTrace/, "the Career mainboard should remain visible without duplicate board tabs or a focused-path panel");
+assert.doesNotMatch(js, /renderCareerEvidenceMatrix|career-evidence-matrix|title: "能力证据"|未登记/, "Career Roadmap should not render the removed evidence debt wall or its navigation entry");
+const careerWorkbenchRenderer = js.slice(js.indexOf("function renderCareerWorkbench"), js.indexOf("function renderCareerLedger"));
+assert.match(careerWorkbenchRenderer, /goalMapping\?\.pathLabel[\s\S]*当前承担/, "the active-unit workbench should carry the current unit's long-term role");
+assert.match(careerWorkbenchRenderer, /<a class="career-ledger-link" href="\?module=logs/, "the workbench should expose one honest internal Ledger link");
+assert.doesNotMatch(careerWorkbenchRenderer, /data-career-log-action|记断点|撞墙了/, "the workbench should not retain duplicate controls with indistinguishable behavior");
+const careerBoardRenderer = js.slice(js.indexOf("function renderCareerBoard(module, runtime)"), js.indexOf("function renderCareerInsightAndReference"));
+assert.match(careerBoardRenderer, /class="career-board-scroll" role="region" tabindex="0" aria-labelledby=/, "the horizontally scrollable mainboard should be an accessible named region");
+assert.match(careerBoardRenderer, /role="group" aria-labelledby="career-mainboard-title career-mainboard-description"[\s\S]*<title[\s\S]*<desc/, "the linked SVG mainboard should retain its accessible group title and description");
+assert.match(careerBoardRenderer, /布线中 ROUTING · \$\{escapeHtml\(persona\?\.note/, "Persona should be rendered as the active routing direction");
+assert.doesNotMatch(careerBoardRenderer, /冻结/, "the mainboard should reserve frozen semantics for sidebar module placeholders");
+assert.match(careerBoardRenderer, /career-board-ground-plane[\s\S]*career-board-ground-label/, "System Layer should carry a semantic ground-plane treatment");
+assert.match(careerBoardRenderer, /career-board-evidence-summary/, "positive evidence pads should have a non-color screen-reader summary");
+assert.match(js, /function renderCareerEvidencePads[\s\S]*<title>\$\{escapeHtml\(label\)\}<\/title>/, "positive evidence pads should expose their explicit evidence label to pointer users");
+const careerEvidencePointerRule = careerCss.slice(careerCss.indexOf('.career-board-queue,'), careerCss.indexOf('.career-board-queue-rail'));
+assert.doesNotMatch(careerEvidencePointerRule, /career-board-evidence-pads/, "positive evidence pads must remain pointer-readable instead of behaving like decorative traces");
+assert.match(careerBoardRenderer, /career-board-inline-hit" x="486" y="460" width="100" height="52"[\s\S]*career-board-inline-hit" x="590" y="460" width="160" height="52"/, "System Layer links should retain 44px-equivalent hit targets below, not over, the slot title");
+assert.match(js, /<summary><span>展开完整路线依据与运行规则<\/span><span class="career-reference-toggle" aria-hidden="true">/, "the route reference should expose a visible, screen-reader-safe disclosure indicator");
 const careerStagesRenderer = js.slice(js.indexOf("function renderCareerStages"), js.indexOf("function renderCareerRoadmap"));
 assert.match(careerStagesRenderer, /module\.outcomeGates/, "the long-term horizon should use source-backed outcome gates");
 assert.match(careerStagesRenderer, /career-gate-list/, "the long-term horizon should render an ordered outcome-gate rail");
 assert.match(careerStagesRenderer, /aria-current="step"/, "the long-term horizon should identify its current step accessibly");
-assert.match(careerCss, /\.career-evidence-scroll[\s\S]*overflow-x:\s*auto[\s\S]*\.career-evidence-matrix[\s\S]*min-width:\s*(?:680|720)px/, "the evidence matrix should own its horizontal overflow on narrow screens");
+assert.doesNotMatch(careerCss, /\.career-evidence-(?:scroll|matrix|cell)/, "Career Roadmap CSS should not retain the removed evidence debt wall");
 assert.match(careerCss, /\.career-gate-list[\s\S]*grid-template-columns:\s*repeat\(4,[\s\S]*@media \(max-width: 620px\)[\s\S]*\.career-gate-list[\s\S]*grid-template-columns:\s*minmax\(0, 1fr\)/, "outcome gates should change from an ordered desktop rail to a vertical mobile rail");
 const desktopGateRailRule = careerCss.slice(careerCss.indexOf('.career-gate-list::before'), careerCss.indexOf('.career-gate {'));
 assert.match(desktopGateRailRule, /position:\s*absolute/, "the desktop gate connector should overlay the explicit four-column grid instead of consuming its cells");
@@ -440,11 +451,15 @@ for (const subsystem of data.project.subsystems) {
   assert.equal(typeof subsystem.englishTitle, "string", `subsystem ${subsystem.id} should include a board label`);
   assert.ok(Array.isArray(subsystem.moduleIds), `subsystem ${subsystem.id} should include module mappings`);
 }
-for (const id of ["2", "4"]) {
-  const subsystem = data.project.subsystems.find((item) => item.id === id);
-  assert.equal(subsystem.status, "frozen", `subsystem ${id} should remain frozen`);
-  assert.deepEqual(subsystem.moduleIds, [], `frozen subsystem ${id} should not claim a module implementation`);
-}
+assert.ok(data.project.subsystems.every((subsystem) => subsystem.status !== "frozen"), "Career mainboard directions should not reuse the sidebar module-slot frozen state");
+const personaSubsystem = data.project.subsystems.find((item) => item.id === "2");
+assert.equal(personaSubsystem.status, "routing", "Persona should be the active Career mainboard routing direction");
+assert.equal(personaSubsystem.note, "U1–U7 在途", "Persona should identify the complete in-flight unit route");
+assert.deepEqual(personaSubsystem.moduleIds, [], "Persona routing must not fabricate a completed sidebar module");
+const multimodalSubsystem = data.project.subsystems.find((item) => item.id === "4");
+assert.equal(multimodalSubsystem.status, "standby", "the future multimodal direction should remain on board without appearing frozen");
+assert.equal(multimodalSubsystem.note, "到相关单元再接入", "the future multimodal direction should explain when it reconnects");
+assert.deepEqual(multimodalSubsystem.moduleIds, [], "the future multimodal direction should not claim a module implementation");
 
 for (const module of data.modules) {
   assert.equal(typeof module.status, "string", `${module.id} should include status`);
@@ -522,11 +537,12 @@ assert.ok(
   "settlement units should remain isolated to the career roadmap module",
 );
 
-const evidenceMatrix = byId["career-roadmap"].evidenceMatrix;
-assert.equal(evidenceMatrix.basis, "explicit-evidence-only", "the matrix should require explicit evidence instead of inferred progress");
-assert.equal(evidenceMatrix.sourceSection, "深度阶梯（候选专长的定向仪）", "the matrix should identify its roadmap source");
+const careerDepthLadder = byId["career-roadmap"].depthLadder;
+assert.equal(Object.hasOwn(byId["career-roadmap"], "evidenceMatrix"), false, "Career Roadmap should not expose a six-by-five evidence matrix");
+assert.equal(careerDepthLadder.purpose, "directional-only", "the depth ladder should remain a directional instrument, not a tracking grid");
+assert.equal(careerDepthLadder.sourceSection, "深度阶梯（候选专长的定向仪）", "the depth ladder should identify its roadmap source");
 assert.deepEqual(
-  evidenceMatrix.depthLevels,
+  careerDepthLadder.levels,
   [
     { id: "understand", label: "理解", order: 1 },
     { id: "implement", label: "实现", order: 2 },
@@ -534,24 +550,15 @@ assert.deepEqual(
     { id: "diagnose", label: "诊断", order: 4 },
     { id: "integrate-innovate", label: "综合/创新", order: 5 },
   ],
-  "the matrix should preserve the approved five-level depth ladder",
+  "the directional instrument should preserve the approved five-level depth ladder",
 );
-assert.deepEqual(evidenceMatrix.rows.map((row) => row.subsystemId), ["1", "2", "3", "4", "5", "6"], "the matrix should define one row per Jarvis subsystem");
-assert.ok(evidenceMatrix.rows.every((row) => row.cells.length === 5), "each subsystem should expose all five depth cells");
-assert.deepEqual(
-  evidenceMatrix.rows[0].cells.map((cell) => cell.depthLevelId),
-  evidenceMatrix.depthLevels.map((level) => level.id),
-  "matrix cells should follow the same depth order as the column contract",
-);
-const evidenceCells = evidenceMatrix.rows.flatMap((row) => row.cells);
-assert.equal(evidenceCells.length, 30, "the six-by-five evidence matrix should expose exactly 30 cells");
-assert.ok(evidenceCells.every((cell) => cell.state === "unassessed"), "roadmap prose and unit status must not be converted into claimed evidence");
-assert.ok(evidenceCells.every((cell) => Array.isArray(cell.evidenceRefs) && cell.evidenceRefs.length === 0), "unassessed cells should not contain inferred evidence references");
-assert.ok(
-  Object.keys(evidenceMatrix).every((key) => !/progress|percent|score/i.test(key))
-    && evidenceCells.every((cell) => Object.keys(cell).every((key) => !/progress|percent|score/i.test(key))),
-  "the evidence matrix should not expose percentage or score fields",
-);
+const evidenceRecords = byId["career-roadmap"].evidenceRecords;
+assert.deepEqual(evidenceRecords, [], "roadmap prose and unit status must not be inferred into evidence records");
+assert.ok(evidenceRecords.every((record) => ["2", "3", "4"].includes(record.subsystemId)), "positive evidence records should be limited to candidate specialties ②③④");
+assert.ok(evidenceRecords.every((record) => careerDepthLadder.levels.some((level) => level.id === record.depthLevelId)), "each positive evidence record should identify one declared depth level");
+assert.ok(evidenceRecords.every((record) => typeof record.evidenceRef === "string" && record.evidenceRef.trim()), "each positive evidence record should cite one explicit artifact");
+assert.equal(new Set(evidenceRecords.map((record) => `${record.subsystemId}:${record.depthLevelId}`)).size, evidenceRecords.length, "each specialty-depth evidence pad should have at most one explicit record");
+assert.doesNotMatch(JSON.stringify(byId["career-roadmap"]), /unassessed|未登记/, "the generated Career contract should contain no negative empty-evidence states");
 
 const outcomeGates = byId["career-roadmap"].outcomeGates;
 assert.deepEqual(
@@ -567,7 +574,7 @@ assert.deepEqual(
 assert.equal(outcomeGates.filter((gate) => gate.status === "current").length, 1, "the long-term roadmap should identify one current outcome gate");
 assert.ok(
   data.modules.filter((module) => module.planScope === "interview").every((module) => (
-    !Object.hasOwn(module, "evidenceMatrix") && !Object.hasOwn(module, "outcomeGates") && !Object.hasOwn(module, "units")
+    !Object.hasOwn(module, "depthLadder") && !Object.hasOwn(module, "evidenceRecords") && !Object.hasOwn(module, "outcomeGates") && !Object.hasOwn(module, "units")
   )),
   "Career evidence and outcome-gate contracts must not leak into temporary interview modules",
 );

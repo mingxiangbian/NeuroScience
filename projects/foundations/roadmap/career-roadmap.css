@@ -49,18 +49,17 @@ body[data-project-id="foundations"] .module-header.is-career {
 }
 
 body[data-project-id="foundations"] .module-header.is-career {
-  padding: 28px 0 20px;
+  padding: 22px 0 16px;
 }
 
 body[data-project-id="foundations"] .career-header {
   display: grid;
-  gap: 8px;
+  gap: 6px;
   border-bottom: 1px solid var(--career-line);
-  padding-bottom: 22px;
+  padding-bottom: 18px;
 }
 
 body[data-project-id="foundations"] .career-header-kicker,
-body[data-project-id="foundations"] .career-header-meta,
 body[data-project-id="foundations"] .career-header-goal {
   margin: 0;
 }
@@ -83,24 +82,42 @@ body[data-project-id="foundations"] .career-header-title {
   text-wrap: balance;
 }
 
-body[data-project-id="foundations"] .career-header-meta {
-  color: var(--career-ink-muted);
-  font-size: 13px;
-  line-height: 1.6;
+body[data-project-id="foundations"] .career-header-goal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 3px 9px;
+  max-width: 100%;
+  color: var(--career-ink);
+  font-size: 14px;
+  line-height: 1.58;
+  text-wrap: pretty;
 }
 
-body[data-project-id="foundations"] .career-header-goal {
-  max-width: 70ch;
+body[data-project-id="foundations"] .career-header-goal-label {
+  color: var(--career-cinnabar);
+  font-family: var(--reader-serif);
+  font-size: 12px;
+  font-weight: 760;
+}
+
+body[data-project-id="foundations"] .career-header-goal strong {
   color: var(--career-ink);
-  font-size: 15px;
-  line-height: 1.72;
-  text-wrap: pretty;
+  font-weight: 650;
+}
+
+body[data-project-id="foundations"] .career-header-goal small {
+  margin-inline-start: auto;
+  color: var(--career-ink-muted);
+  font-family: var(--reader-mono);
+  font-size: 10px;
+  white-space: nowrap;
 }
 
 body[data-project-id="foundations"] .career-dashboard {
   display: grid;
-  gap: 38px;
-  padding: 4px 0 44px;
+  gap: 34px;
+  padding: 0 0 44px;
   color: var(--career-ink);
 }
 
@@ -215,36 +232,84 @@ body[data-project-id="foundations"] .career-unit-next strong {
   font-weight: 700;
 }
 
-body[data-project-id="foundations"] .career-workbench-actions {
+body[data-project-id="foundations"] .career-unit-role {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 18px;
+  gap: 5px 10px;
+  align-items: baseline;
+  max-width: 68ch;
+  margin: 0 0 12px;
+  color: var(--career-ink-muted);
+  font-size: 12px;
+  line-height: 1.55;
 }
 
-body[data-project-id="foundations"] .career-action {
-  display: inline-flex;
+body[data-project-id="foundations"] .career-unit-role span {
+  font-family: var(--reader-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
+
+body[data-project-id="foundations"] .career-unit-role strong {
+  color: var(--career-dai);
+  font-weight: 700;
+}
+
+body[data-project-id="foundations"] .career-ledger-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1px 14px;
   align-items: center;
-  justify-content: center;
+  width: fit-content;
   min-height: 44px;
-  border: 1px solid var(--career-line-strong);
+  margin-top: 18px;
+  border: 1px solid color-mix(in srgb, var(--career-dai) 52%, transparent);
   border-radius: 6px;
-  color: var(--career-ink);
+  color: var(--career-dai);
   background: transparent;
-  padding: 8px 15px;
-  font: inherit;
+  padding: 7px 11px;
   font-size: 13px;
-  line-height: 1.3;
+  line-height: 1.35;
   text-decoration: none;
   cursor: pointer;
+  transition:
+    border-color 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-body[data-project-id="foundations"] .career-action:hover {
-  border-color: var(--career-draft);
-  background: color-mix(in srgb, var(--career-draft) 8%, transparent);
+body[data-project-id="foundations"] .career-ledger-link > span,
+body[data-project-id="foundations"] .career-ledger-link > small {
+  grid-column: 1;
 }
 
-body[data-project-id="foundations"] .career-action:focus-visible,
+body[data-project-id="foundations"] .career-ledger-link > small {
+  color: var(--career-ink-muted);
+  font-size: 10.5px;
+}
+
+body[data-project-id="foundations"] .career-ledger-link::after {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  content: "\2192";
+  font-family: var(--reader-mono);
+  font-size: 12px;
+  line-height: 1;
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body[data-project-id="foundations"] .career-ledger-link:hover {
+  border-color: var(--career-dai);
+  color: var(--career-ink);
+  background: color-mix(in srgb, var(--career-dai) 8%, transparent);
+}
+
+body[data-project-id="foundations"] .career-ledger-link:hover::after,
+body[data-project-id="foundations"] .career-ledger-link:focus-visible::after {
+  transform: translate(1px, -1px);
+}
+
+body[data-project-id="foundations"] .career-ledger-link:focus-visible,
 body[data-project-id="foundations"] .career-pending-seal-button:focus-visible,
 body[data-project-id="foundations"] .career-unit-seal:focus-visible,
 body[data-project-id="foundations"] .career-reference summary:focus-visible,
@@ -344,10 +409,6 @@ body[data-project-id="foundations"] .career-unit-seal {
   text-align: center;
 }
 
-body[data-project-id="foundations"] button.career-unit-seal {
-  cursor: pointer;
-}
-
 body[data-project-id="foundations"] .career-unit-seal.is-settled {
   border-color: var(--career-seal);
   color: var(--career-seal-ink);
@@ -359,14 +420,25 @@ body[data-project-id="foundations"] .career-unit-seal.is-settled {
 body[data-project-id="foundations"] .career-unit-seal.is-active {
   border: 2px dashed var(--career-cinnabar);
   color: var(--career-cinnabar);
+  background: color-mix(in srgb, var(--career-cinnabar) 4%, transparent);
 }
 
 body[data-project-id="foundations"] .career-unit-seal.is-frozen {
-  flex-basis: 54px;
-  width: 54px;
-  height: 54px;
+  flex-basis: 44px;
+  width: 44px;
+  height: 44px;
   border-color: var(--career-line);
   color: var(--career-ink-muted);
+}
+
+body[data-project-id="foundations"] .career-unit-seal.is-frozen .career-unit-seal-id {
+  font-family: var(--reader-mono);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+body[data-project-id="foundations"] .career-unit-seal.is-frozen .career-unit-seal-title {
+  display: none;
 }
 
 body[data-project-id="foundations"] .career-unit-seal-id {
@@ -454,182 +526,6 @@ body[data-project-id="foundations"] .career-board-heading .career-section-label 
   margin-bottom: 0;
 }
 
-body[data-project-id="foundations"] .career-board-view-switch {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  border-bottom: 1px solid var(--career-line);
-}
-
-body[data-project-id="foundations"] .career-board-view-switch button {
-  min-height: 40px;
-  border: 0;
-  border-bottom: 2px solid transparent;
-  color: var(--career-ink-muted);
-  background: transparent;
-  padding: 7px 12px 6px;
-  font: inherit;
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-body[data-project-id="foundations"] .career-board-view-switch button[aria-pressed="true"] {
-  border-bottom-color: var(--career-cinnabar);
-  color: var(--career-cinnabar);
-}
-
-body[data-project-id="foundations"] .career-board-view-switch button:focus-visible,
-body[data-project-id="foundations"] .career-evidence-scroll:focus-visible {
-  outline: 2px solid var(--career-focus);
-  outline-offset: 3px;
-}
-
-body[data-project-id="foundations"] .career-board-panel {
-  min-width: 0;
-}
-
-body[data-project-id="foundations"] .career-board-focus {
-  border: 1px solid var(--career-line);
-  border-radius: 12px;
-  background: var(--career-paper-soft);
-  padding: 22px 24px 18px;
-}
-
-body[data-project-id="foundations"] .career-goal-trace-lede {
-  max-width: 70ch;
-  margin: 0;
-  color: var(--career-ink);
-  font-size: 14.5px;
-  line-height: 1.72;
-  text-wrap: pretty;
-}
-
-body[data-project-id="foundations"] .career-goal-trace-lede strong {
-  color: var(--career-cinnabar);
-}
-
-body[data-project-id="foundations"] .career-goal-trace-steps {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
-  margin: 24px 0 18px;
-  padding: 0;
-  list-style: none;
-}
-
-body[data-project-id="foundations"] .career-goal-trace-step {
-  position: relative;
-  min-width: 0;
-  border-top: 1px solid var(--career-line-strong);
-  padding-top: 18px;
-}
-
-body[data-project-id="foundations"] .career-goal-trace-step::before {
-  position: absolute;
-  top: -5px;
-  left: 0;
-  width: 9px;
-  height: 9px;
-  border: 2px solid var(--career-draft-soft);
-  border-radius: 3px;
-  background: var(--career-paper-soft);
-  content: "";
-}
-
-body[data-project-id="foundations"] .career-goal-trace-step.is-current::before {
-  border-color: var(--career-cinnabar);
-  background: var(--career-cinnabar);
-}
-
-body[data-project-id="foundations"] .career-goal-trace-label {
-  display: block;
-  margin-bottom: 5px;
-  color: var(--career-ink-muted);
-  font-size: 12px;
-  line-height: 1.4;
-}
-
-body[data-project-id="foundations"] .career-goal-trace-step > strong {
-  display: block;
-  color: var(--career-ink);
-  font-family: var(--reader-serif);
-  font-size: 16px;
-  line-height: 1.45;
-  text-wrap: balance;
-}
-
-body[data-project-id="foundations"] .career-goal-trace-step > small {
-  display: block;
-  margin-top: 5px;
-  color: var(--career-ink-muted);
-  font-size: 12px;
-  line-height: 1.55;
-}
-
-body[data-project-id="foundations"] .career-goal-trace-systems {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-body[data-project-id="foundations"] .career-goal-trace-systems li {
-  display: inline-flex;
-  align-items: center;
-  min-height: 27px;
-  border: 1px solid var(--career-line);
-  border-radius: 4px;
-  color: var(--career-ink);
-  padding: 3px 7px;
-  font-size: 11.5px;
-  line-height: 1.35;
-}
-
-body[data-project-id="foundations"] .career-goal-trace-systems li span {
-  margin-inline-end: 4px;
-  color: var(--career-cinnabar);
-  font-family: var(--reader-mono);
-  font-weight: 700;
-}
-
-body[data-project-id="foundations"] .career-goal-trace-north-star {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 12px;
-  align-items: baseline;
-  margin: 0;
-  border-top: 1px solid var(--career-line);
-  padding-top: 14px;
-}
-
-body[data-project-id="foundations"] .career-goal-trace-north-star span {
-  color: var(--career-cinnabar);
-  font-family: var(--reader-serif);
-  font-size: 12px;
-  font-weight: 760;
-}
-
-body[data-project-id="foundations"] .career-goal-trace-north-star strong {
-  color: var(--career-ink);
-  font-family: var(--reader-serif);
-  font-size: 18px;
-  line-height: 1.45;
-}
-
-body[data-project-id="foundations"] .career-board-source {
-  margin: 8px 0 0;
-  color: var(--career-ink-muted);
-  font-size: 12px;
-  line-height: 1.55;
-}
-
-body[data-project-id="foundations"] .career-goal-trace-empty p {
-  margin-bottom: 0;
-}
-
 body[data-project-id="foundations"] .career-board-scroll {
   max-width: 100%;
   overflow-x: auto;
@@ -690,6 +586,13 @@ body[data-project-id="foundations"] .career-board-silkscreen.is-caption {
   letter-spacing: 0.8px;
 }
 
+body[data-project-id="foundations"] .career-board-silkscreen.is-route {
+  fill: var(--career-cinnabar);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+}
+
 body[data-project-id="foundations"] .career-board-backplane {
   fill: none;
   stroke: var(--career-draft-soft);
@@ -704,6 +607,128 @@ body[data-project-id="foundations"] .career-board-backplane-nodes circle {
   vector-effect: non-scaling-stroke;
 }
 
+body[data-project-id="foundations"] .career-board-queue,
+body[data-project-id="foundations"] .career-board-route,
+body[data-project-id="foundations"] .career-board-route-node,
+body[data-project-id="foundations"] .career-board-ground-plane,
+body[data-project-id="foundations"] .career-board-ground-label {
+  pointer-events: none;
+}
+
+body[data-project-id="foundations"] .career-board-queue-rail {
+  fill: none;
+  stroke: var(--career-draft);
+  stroke-width: 1.5px;
+  vector-effect: non-scaling-stroke;
+}
+
+body[data-project-id="foundations"] .career-board-queue-label {
+  fill: var(--career-draft);
+  stroke: none;
+  font-family: var(--reader-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+body[data-project-id="foundations"] .career-board-queue-pin rect {
+  fill: var(--career-paper-soft);
+  stroke: var(--career-draft-soft);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+body[data-project-id="foundations"] .career-board-queue-pin text {
+  fill: var(--career-ink-muted);
+  stroke: none;
+  font-family: var(--reader-mono);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+body[data-project-id="foundations"] .career-board-queue-pin.is-active rect {
+  fill: color-mix(in srgb, var(--career-cinnabar) 12%, var(--career-paper-soft));
+  stroke: var(--career-cinnabar);
+  stroke-width: 2px;
+}
+
+body[data-project-id="foundations"] .career-board-queue-pin.is-active text {
+  fill: var(--career-cinnabar);
+}
+
+body[data-project-id="foundations"] .career-board-queue-pin.is-settled rect {
+  fill: var(--career-gold);
+  stroke: var(--career-gold);
+}
+
+body[data-project-id="foundations"] .career-board-queue-pin.is-settled text {
+  fill: var(--career-paper-soft);
+}
+
+body[data-project-id="foundations"] .career-board-queue-pin.is-future rect {
+  fill: transparent;
+  stroke: var(--career-line);
+}
+
+body[data-project-id="foundations"] .career-board-queue-pin.is-future text {
+  fill: var(--career-ink-muted);
+}
+
+body[data-project-id="foundations"] .career-board-route {
+  fill: none;
+  stroke: var(--career-cinnabar);
+  stroke-width: 2px;
+  stroke-dasharray: 7 5;
+  stroke-linecap: square;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+body[data-project-id="foundations"] .career-board-route-node {
+  fill: var(--career-paper-soft);
+  stroke: var(--career-cinnabar);
+  stroke-width: 2px;
+  vector-effect: non-scaling-stroke;
+}
+
+body[data-project-id="foundations"] .career-board-route-arrow {
+  fill: var(--career-cinnabar);
+  stroke: none;
+}
+
+body[data-project-id="foundations"] .career-board-evidence-pads {
+  color: var(--career-gold);
+}
+
+body[data-project-id="foundations"] .career-board-evidence-pad.is-earned {
+  fill: var(--career-gold);
+  stroke: color-mix(in srgb, var(--career-gold) 68%, var(--career-ink));
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+body[data-project-id="foundations"] .career-board-ground-plane {
+  fill: url(#career-ground-mesh);
+  stroke: var(--career-draft-faint);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+body[data-project-id="foundations"] .career-board-ground-mesh {
+  fill: none;
+  stroke: color-mix(in srgb, var(--career-draft-faint) 58%, transparent);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+body[data-project-id="foundations"] .career-board-ground-label {
+  fill: var(--career-draft-soft);
+  stroke: none;
+  font-family: var(--reader-mono);
+  font-size: 9px;
+  letter-spacing: 0.7px;
+}
+
 body[data-project-id="foundations"] .career-board-slot > rect:first-child {
   fill: var(--career-paper-soft);
   stroke: var(--career-draft);
@@ -711,10 +736,22 @@ body[data-project-id="foundations"] .career-board-slot > rect:first-child {
   vector-effect: non-scaling-stroke;
 }
 
-body[data-project-id="foundations"] .career-board-slot.is-supplied > rect:first-child,
-body[data-project-id="foundations"] .career-board-slot.is-frozen > rect:first-child {
+body[data-project-id="foundations"] .career-board-slot.is-supplied > rect:first-child {
   fill: transparent;
-  stroke: var(--career-draft-faint);
+  stroke: color-mix(in srgb, var(--career-draft-soft) 70%, transparent);
+  stroke-dasharray: 7 5;
+}
+
+body[data-project-id="foundations"] .career-board-slot.is-routing > rect:first-child {
+  fill: color-mix(in srgb, var(--career-cinnabar) 5%, var(--career-paper-soft));
+  stroke: var(--career-cinnabar);
+  stroke-width: 2px;
+  stroke-dasharray: 9 4;
+}
+
+body[data-project-id="foundations"] .career-board-slot.is-standby > rect:first-child {
+  fill: transparent;
+  stroke: color-mix(in srgb, var(--career-draft-soft) 70%, transparent);
   stroke-dasharray: 7 5;
 }
 
@@ -744,10 +781,18 @@ body[data-project-id="foundations"] .career-board-slot-note {
   font-size: 12px;
 }
 
-body[data-project-id="foundations"] .career-board-slot.is-frozen .career-board-slot-code,
-body[data-project-id="foundations"] .career-board-slot.is-frozen .career-board-slot-title,
-body[data-project-id="foundations"] .career-board-slot.is-frozen .career-board-slot-note {
-  opacity: 0.7;
+body[data-project-id="foundations"] .career-board-slot.is-routing .career-board-slot-code,
+body[data-project-id="foundations"] .career-board-slot.is-routing .career-board-slot-note {
+  fill: var(--career-cinnabar);
+}
+
+body[data-project-id="foundations"] .career-board-slot.is-standby .career-board-slot-code,
+body[data-project-id="foundations"] .career-board-slot.is-standby .career-board-slot-note {
+  fill: var(--career-ink-muted);
+}
+
+body[data-project-id="foundations"] .career-board-slot.is-standby .career-board-slot-title {
+  fill: var(--career-ink-muted);
 }
 
 body[data-project-id="foundations"] .career-board-chip {
@@ -811,9 +856,22 @@ body[data-project-id="foundations"] .career-board-link.is-inline text {
   text-underline-offset: 2px;
 }
 
+body[data-project-id="foundations"] .career-board-inline-hit {
+  fill: transparent;
+  stroke: none;
+}
+
 body[data-project-id="foundations"] .career-board-link.is-inline:hover text,
 body[data-project-id="foundations"] .career-board-link.is-inline:focus text {
   fill: var(--career-flower);
+}
+
+body[data-project-id="foundations"] .career-board-link.is-inline:hover .career-board-inline-hit,
+body[data-project-id="foundations"] .career-board-link.is-inline:focus .career-board-inline-hit {
+  fill: color-mix(in srgb, var(--career-flower) 7%, transparent);
+  stroke: color-mix(in srgb, var(--career-flower) 46%, transparent);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
 }
 
 body[data-project-id="foundations"] .career-board-note {
@@ -822,170 +880,6 @@ body[data-project-id="foundations"] .career-board-note {
   color: var(--career-ink-muted);
   font-size: 12.5px;
   line-height: 1.65;
-  text-wrap: pretty;
-}
-
-body[data-project-id="foundations"] .career-evidence-section {
-  min-width: 0;
-}
-
-body[data-project-id="foundations"] .career-evidence-scroll {
-  max-width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  overscroll-behavior-inline: contain;
-  scrollbar-gutter: stable;
-}
-
-body[data-project-id="foundations"] .career-evidence-matrix {
-  width: 100%;
-  min-width: 720px;
-  border-collapse: separate;
-  border-spacing: 0;
-  color: var(--career-ink);
-  table-layout: fixed;
-}
-
-body[data-project-id="foundations"] .career-evidence-matrix caption {
-  caption-side: top;
-  padding: 0 0 12px;
-  text-align: start;
-}
-
-body[data-project-id="foundations"] .career-evidence-matrix caption strong,
-body[data-project-id="foundations"] .career-evidence-matrix caption span {
-  display: block;
-}
-
-body[data-project-id="foundations"] .career-evidence-matrix caption strong {
-  color: var(--career-ink);
-  font-family: var(--reader-serif);
-  font-size: 17px;
-  line-height: 1.4;
-}
-
-body[data-project-id="foundations"] .career-evidence-matrix caption span {
-  max-width: 72ch;
-  margin-top: 4px;
-  color: var(--career-ink-muted);
-  font-size: 12px;
-  line-height: 1.55;
-}
-
-body[data-project-id="foundations"] .career-evidence-matrix th,
-body[data-project-id="foundations"] .career-evidence-matrix td {
-  border-bottom: 1px solid var(--career-line);
-  border-inline-end: 1px solid var(--career-line);
-}
-
-body[data-project-id="foundations"] .career-evidence-matrix tr > :first-child {
-  border-inline-start: 1px solid var(--career-line);
-}
-
-body[data-project-id="foundations"] .career-evidence-matrix thead th {
-  height: 44px;
-  border-top: 1px solid var(--career-line);
-  color: var(--career-ink-muted);
-  background: var(--career-paper-warm);
-  padding: 8px;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.35;
-  text-align: center;
-}
-
-body[data-project-id="foundations"] .career-evidence-matrix thead th:first-child {
-  width: 166px;
-  text-align: start;
-}
-
-body[data-project-id="foundations"] .career-evidence-matrix tbody th {
-  position: sticky;
-  left: 0;
-  z-index: 1;
-  width: 166px;
-  color: var(--career-ink);
-  background: var(--career-paper);
-  padding: 10px 12px;
-  line-height: 1.35;
-  text-align: start;
-}
-
-body[data-project-id="foundations"] .career-evidence-matrix tbody th > span {
-  display: inline-block;
-  min-width: 22px;
-  color: var(--career-dai);
-  font-family: var(--reader-mono);
-  font-size: 12px;
-}
-
-body[data-project-id="foundations"] .career-evidence-matrix tbody th > strong {
-  font-family: var(--reader-serif);
-  font-size: 13px;
-}
-
-body[data-project-id="foundations"] .career-evidence-matrix tbody th > small {
-  display: block;
-  margin-top: 3px;
-  color: var(--career-cinnabar);
-  font-size: 11px;
-  font-weight: 700;
-}
-
-body[data-project-id="foundations"] .career-evidence-matrix td {
-  height: 64px;
-  color: var(--career-ink-muted);
-  background: var(--career-paper-soft);
-  padding: 8px 6px;
-  font-size: 12px;
-  line-height: 1.35;
-  text-align: center;
-}
-
-body[data-project-id="foundations"] .career-evidence-mark {
-  display: block;
-  position: relative;
-  width: 14px;
-  height: 14px;
-  margin: 0 auto 5px;
-  border: 1.5px solid var(--career-draft-soft);
-  border-radius: 50%;
-}
-
-body[data-project-id="foundations"] .career-evidence-state {
-  display: block;
-  font-size: 11.5px;
-}
-
-body[data-project-id="foundations"] .career-evidence-matrix td[data-evidence-state="observed"] .career-evidence-mark::after {
-  position: absolute;
-  inset: 3px;
-  border-radius: 50%;
-  background: var(--career-draft-soft);
-  content: "";
-}
-
-body[data-project-id="foundations"] .career-evidence-matrix td[data-evidence-state="supported"] .career-evidence-mark {
-  border-color: var(--career-gold);
-  background: var(--career-gold);
-}
-
-body[data-project-id="foundations"] .career-evidence-matrix td[data-evidence-state="revisit"] .career-evidence-mark {
-  border-color: var(--career-cinnabar);
-  border-radius: 3px;
-}
-
-body[data-project-id="foundations"] .career-evidence-matrix tr.is-current-path th {
-  color: var(--career-ink);
-  background: color-mix(in srgb, var(--career-cinnabar) 7%, var(--career-paper));
-}
-
-body[data-project-id="foundations"] .career-evidence-note {
-  max-width: 74ch;
-  margin: 10px 0 0;
-  color: var(--career-ink-muted);
-  font-size: 12px;
-  line-height: 1.6;
   text-wrap: pretty;
 }
 
@@ -1219,17 +1113,73 @@ body[data-project-id="foundations"] .career-reference {
 body[data-project-id="foundations"] .career-reference summary {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 16px;
   min-height: 48px;
+  border-radius: 4px;
   color: var(--career-ink);
-  padding: 10px 2px;
+  padding: 10px 8px;
   font-weight: 700;
+  list-style: none;
   cursor: pointer;
+  transition:
+    color 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body[data-project-id="foundations"] .career-reference summary::-webkit-details-marker {
+  display: none;
+}
+
+body[data-project-id="foundations"] .career-reference-toggle {
+  display: grid;
+  flex: 0 0 28px;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--career-line);
+  border-radius: 4px;
+  color: var(--career-dai);
+  font-family: var(--reader-mono);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+body[data-project-id="foundations"] .career-reference-toggle > span {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+body[data-project-id="foundations"] .career-reference-toggle .is-open {
+  display: none;
+}
+
+body[data-project-id="foundations"] .career-reference[open] .career-reference-toggle {
+  border-color: color-mix(in srgb, var(--career-dai) 52%, transparent);
+}
+
+body[data-project-id="foundations"] .career-reference[open] .career-reference-toggle .is-closed {
+  display: none;
+}
+
+body[data-project-id="foundations"] .career-reference[open] .career-reference-toggle .is-open {
+  display: inline;
+}
+
+body[data-project-id="foundations"] .career-reference summary:hover {
+  color: var(--career-dai);
+  background: color-mix(in srgb, var(--career-dai) 6%, transparent);
+}
+
+body[data-project-id="foundations"] .career-reference summary:active {
+  background: color-mix(in srgb, var(--career-dai) 10%, transparent);
 }
 
 body[data-project-id="foundations"] .career-reference-body {
   max-width: 72ch;
   color: var(--career-ink);
-  padding: 0 2px 18px;
+  padding: 0 8px 18px;
   font-size: 14px;
   line-height: 1.76;
 }
@@ -1378,11 +1328,7 @@ body[data-project-id="foundations"] .long-term-module-context strong {
   }
 
   body[data-project-id="foundations"] .career-mainboard {
-    width: 760px;
-  }
-
-  body[data-project-id="foundations"] .career-goal-trace-steps {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 820px;
   }
 
   body[data-project-id="foundations"] .career-board-scroll::after {
@@ -1400,8 +1346,17 @@ body[data-project-id="foundations"] .long-term-module-context strong {
 }
 
 @media (max-width: 620px) {
+  body[data-project-id="foundations"] .module-header.is-career {
+    padding-top: 18px;
+  }
+
   body[data-project-id="foundations"] .career-header-title {
-    font-size: 34px;
+    font-size: 32px;
+  }
+
+  body[data-project-id="foundations"] .career-header-goal small {
+    width: 100%;
+    margin-inline-start: 0;
   }
 
   body[data-project-id="foundations"] .career-dashboard {
@@ -1412,26 +1367,8 @@ body[data-project-id="foundations"] .long-term-module-context strong {
     align-items: stretch;
   }
 
-  body[data-project-id="foundations"] .career-board-view-switch {
-    width: 100%;
-  }
-
-  body[data-project-id="foundations"] .career-board-view-switch button {
-    flex: 1;
-    min-height: 44px;
-  }
-
-  body[data-project-id="foundations"] .career-board-focus {
-    padding: 18px;
-  }
-
-  body[data-project-id="foundations"] .career-goal-trace-steps {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 15px;
-  }
-
-  body[data-project-id="foundations"] .career-evidence-matrix {
-    min-width: 680px;
+  body[data-project-id="foundations"] .career-mainboard {
+    width: 760px;
   }
 
   body[data-project-id="foundations"] .career-workbench {
@@ -1463,14 +1400,9 @@ body[data-project-id="foundations"] .long-term-module-context strong {
   }
 
   body[data-project-id="foundations"] .career-ledger-seals {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(48px, 1fr));
+    display: flex;
+    align-items: center;
     gap: 10px 8px;
-  }
-
-  body[data-project-id="foundations"] .career-unit-seal,
-  body[data-project-id="foundations"] .career-unit-seal.is-frozen {
-    justify-self: center;
   }
 
   body[data-project-id="foundations"] .career-ledger-meta {
@@ -1545,9 +1477,76 @@ body[data-project-id="foundations"] .long-term-module-context strong {
   }
 }
 
+@media (max-width: 390px) {
+  body[data-project-id="foundations"] .module-header.is-career {
+    padding: 16px 0 12px;
+  }
+
+  body[data-project-id="foundations"] .career-header {
+    gap: 4px;
+    padding-bottom: 14px;
+  }
+
+  body[data-project-id="foundations"] .career-header-kicker {
+    font-size: 11px;
+  }
+
+  body[data-project-id="foundations"] .career-header-title {
+    font-size: 30px;
+  }
+
+  body[data-project-id="foundations"] .career-header-goal {
+    gap: 2px 7px;
+    font-size: 13px;
+  }
+
+  body[data-project-id="foundations"] .career-dashboard {
+    gap: 24px;
+  }
+
+  body[data-project-id="foundations"] .career-workbench {
+    padding: 16px;
+  }
+
+  body[data-project-id="foundations"] .career-unit-title {
+    font-size: 24px;
+  }
+
+  body[data-project-id="foundations"] .career-ledger-link {
+    width: 100%;
+  }
+
+  body[data-project-id="foundations"] .career-ledger-seals {
+    gap: 9px 7px;
+  }
+
+  body[data-project-id="foundations"] .career-section-label {
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+
+  body[data-project-id="foundations"] .career-reference summary {
+    gap: 12px;
+    font-size: 13.5px;
+  }
+
+  body[data-project-id="foundations"] .career-stage-track {
+    padding-inline: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   body[data-project-id="foundations"] .career-unit-seal.is-just-settled {
     animation: none;
   }
 
+  body[data-project-id="foundations"] .career-ledger-link::after,
+  body[data-project-id="foundations"] .career-reference summary {
+    transition: none;
+  }
+
+  body[data-project-id="foundations"] .career-ledger-link:hover::after,
+  body[data-project-id="foundations"] .career-ledger-link:focus-visible::after {
+    transform: none;
+  }
 }
