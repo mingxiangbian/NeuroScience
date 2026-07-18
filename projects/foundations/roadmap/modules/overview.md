@@ -1,121 +1,66 @@
 ---
 id: overview
-title: Overview
+title: Interview Overview
 status: not-started
 learning_progress: 0
-last_updated: 2026-07-05
+last_updated: 2026-07-18
 priority: high
+plan_scope: interview
+navigation_group: interview
+module_role: interview
+goal_role: 临时面试突击
+subsystems:
 ---
 
-## Dashboard
+## 目标
 
-目标岗位：**Agent / LLM Systems Engineer**。
+为临时面试突击提供能力地图和入口。它回答“如果近期需要面试，应该检查哪些信号、进入哪个冲刺任务”，不定义个人长期学习方向。
 
-目标难度：OpenAI / Anthropic / Google DeepMind / xAI 这类顶尖 AI Lab / AGI 团队。
+长期北极星、六子系统、活动单元和结算状态只由 **Career Roadmap** 与 `ledger.md` 管理；这里的岗位、readiness、mock 和日期不会改写长期队列。
 
-当前策略不是从头开课，而是建立一个长期可复习、可扩展的知识库。主导航按能力模块组织，模块内部保留学习记录、时间线和知识笔记。
+## 使用边界
 
-全局进度现在从 **0%** 开始，因为这些百分比代表“已经完成并可复述/可面试的学习进度”，不是页面内容的完整度。
+- **Interview Overview**：临时能力地图、风险和材料入口。
+- **Interview Sprint**：实际日期、训练块、blind baseline、复测和冲刺卡的唯一时间驾驶舱。
+- **Behavioral / Strategy**：项目表达、tradeoff、failure story 与结构化沟通。
+- **长期能力模块**：保存可复用的技术知识和真实产物，不承载面试倒计时。
+- **Career Roadmap**：唯一长期北极星；面试结束后仍按原活动单元继续。
 
-核心优先级：
+面试训练若产生真实实现、实验或失败分析，可以在满足长期结算判据后被明确晋升；完成一道题、一次 mock 或一份润色答案本身不自动结算长期单元。
 
-- 主线不是大项目，而是面试可用能力包。
-- 第一优先级是 coding 和实现能力。
-- 第二优先级是面试表达：能把设计、tradeoff、failure mode、eval 讲清楚。
-- LLM/Agent 系统知识不从 0 讲起，而是拉深到可设计、可实现、可调试。
-- Python + TypeScript 是主栈，Rust 只作为 45/60 天 optional add-on。
+## 面试能力地图
 
-## Interview Signal
+- **Engineering Foundations**：coding correctness、Python fluency、edge cases 与验证。
+- **LLM Systems**：attention、KV cache、context、structured outputs、post-training 与 inference constraints。
+- **Agent Runtime**：tool registry、state、sandbox、approval、trace 与 recovery。
+- **Lifelong Memory**：retrieval、write policy、conflict、deletion、privacy 与 user control。
+- **Evals & Diagnostics**：task success、regression、grader、trace debugging 与 evidence boundary。
+- **Research Reading**：从 claim 和 evidence 推到 system implication。
+- **Behavioral / Strategy**：把真实项目、取舍、失败和改变判断讲清楚。
 
-这个区块不替代 Dashboard。Dashboard 回答“这个项目现在是什么状态”，Interview Signal 只回答“如果明天面试，哪些信号强、哪些信号弱、哪些判断还没有证据”。
+这些是面试观察维度，不是长期路线的优先级排序。
 
-当前主判断：
+## Signal Rubric
 
-- 最强可塑信号：Agent / LLM component implementation + eval / failure analysis。
-- 当前最大风险：目标岗位过宽，容易把准备做成知识库，而不是可验证的面试表现。
-- 需要先校准的真实 baseline：coding、LLM systems、Agent design、research discussion、behavioral communication。
-- 当前证据资产：Foundations reader、Agent Runtime Casebook、RAG Evaluation Pack、Memory System Mini Portfolio、Trace Debugging Workbench。
-- 近期校准动作：做一次 45 分钟 coding baseline 和一次 30 分钟 Agent system design mock，然后把扣分点写回对应模块。
+- **Coding signal**：能独立完成目标难度的题，解释 invariant、complexity 和 edge cases。
+- **Systems signal**：能把 LLM / Agent system 拆成 state、tools、memory、eval、trace 与 failure recovery。
+- **Research signal**：能区分 claim、evidence、limitation 和 system implication，不停留在论文名。
+- **Project signal**：能讲清 problem、constraint、tradeoff、failure mode 和 verification，且不夸大证据。
+- **Communication signal**：回答包含假设、取舍、验证动作和结论边界。
 
-### Signal Rubric
+readiness 只由未见任务中的独立表现提高；coached 重构、熟题复述和材料润色不能覆盖 blind baseline。
 
-- Coding signal：45 分钟内完成 medium 题，并能解释 invariant、complexity、edge cases。
-- Systems signal：能把 LLM / Agent system 拆成 state、tools、memory、eval、trace、failure recovery。
-- Research signal：能从论文 claim 推到 system implication，不停留在论文名。
-- Project signal：每个项目能讲清 problem、constraint、tradeoff、failure mode、verification。
-- Communication signal：回答不只正确，还要让面试官听到假设、取舍和验证动作。
+## 任务
 
-### Current Uncertainty
+1. 打开 Interview Sprint，确认当前 Day、必修块和到期复测。
+2. 使用 blind、coach、evaluator 分离的会话完成训练。
+3. 把原始回答、hint、评分和 failure tag 留在面试 eval ledger。
+4. 技术知识只回填对应长期模块，冲刺页面不复制知识正文。
+5. 面试窗口结束后关闭临时组，回到 Career Roadmap 的原活动单元。
 
-眼下最没有把握的是你的真实 baseline。没有 timed coding、mock system design 和 project deep dive 记录，任何进度判断都只能是计划假设。
+## 时间线
 
-## 模块总览
-
-总知识地图拆成八个稳定模块：
-
-- Coding：基础算法、Python fluency、TypeScript interfaces、optional Rust depth。
-- LLM Systems：tokenization、attention、KV cache、batching、streaming、post-training、structured outputs。
-- Agent Design：tool registry、tool router、planner loop、sandbox、approval gate、trace。
-- RAG & Memory：chunking、retrieval、reranking、context assembly、freshness、privacy、memory conflict。
-- Evals & Debugging：task success eval、regression eval、tool correctness、trace debugging、golden/adversarial sets。
-- Research Reading：Transformer、scaling laws、instruction tuning、preference optimization、tool use、RAG、agent memory、evals。
-- Behavioral / Strategy：STAR stories、project evidence、tradeoff answer、mock scoring rubric。
-- Logs：Weekly Review Checklist、cross-module review、uncategorized notes、复盘。
-
-模块关系：
-
-- Coding 提供实现可信度。
-- LLM Systems 和 Agent Design 提供系统设计骨架。
-- RAG & Memory、Evals & Debugging 提供面试中最容易体现深度的 failure-mode 讨论。
-- Research Reading 只服务 system design 和追问，不单独扩成论文综述。
-- Behavioral / Strategy 和 Logs 负责把学习转成可讲的证据。
-
-## 计划节奏
-
-### 30/45/60-Day Plan
-
-整体节奏可以按 30、45、60 天伸缩，不强行固定在 30 天：
-
-- Week 1：Coding Baseline And Agent Vocabulary。建立 Python coding 节奏，写 `Tool Router`，练 2 分钟 tool-calling agent 回答。
-- Week 2：Graphs, RAG, And Trace。做 tree/graph patterns，写 `Retrieval Evaluator`，练 production RAG。
-- Week 3：DP / Heap / Memory System。做 heap/interval/DP，写 `Memory Store`，练 long-term memory design。
-- Week 4：Mock Sprint And Integration。做 timed coding、system design mock、behavioral stories 和 drill portfolio summary。
-- Days 31-45：深入 eval harness、multi-agent workflow、post-training / RLHF / DPO / RLVR。
-- Days 46-60：只在基础稳定后做 capstone、Optional Rust Log Parser 或 Agent eval and trace workbench。
-
-推荐项目方向（Project Recommendations）：
-
-1. **Agent Runtime Casebook + Drills**：tool router、memory store、trace logger、eval harness 和 written design answers。
-2. **RAG Evaluation Pack**：retrieval quality、citations、regression tests。
-3. **Memory System Mini Portfolio**：write policy、retrieval、deletion、stale memory。
-4. **Trace Debugging Workbench**：observability、replay、diff、latency/cost。
-5. **Optional Rust Trace Parser**：只有 coding baseline 稳定后再做，用作 systems-depth add-on。
-
-## 待补知识
-
-公开岗位信号校准：
-
-- [OpenAI AI Systems Engineer, Codex Agents](https://openai.com/careers/ai-systems-engineer-codex-agents-san-francisco/) 强调 coding agents、tool-using LLM systems、evals、inference behavior、logs/traces、runtime constraints、Rust/Python/API layers。
-- [OpenAI Applied AI Engineer, Codex Core Agent](https://openai.com/careers/applied-ai-engineer-codex-core-agent-san-francisco/) 强调 shipping LLM products、Python、model evaluation、fine-tuning、prompt design 和 agent UX。
-- [OpenAI Software Engineer, Agent Infrastructure](https://openai.com/careers/software-engineer-agent-infrastructure-san-francisco/) 强调 FastAPI/gRPC APIs、agentic infrastructure、research-production collaboration 和 scaling。
-- [OpenAI Backend Software Engineer (Evals)](https://openai.com/careers/backend-software-engineer-%28evals%29-san-francisco/) 强调 AI agents、production evals、multi-agent workflows、tool use、long context 和 backend systems。
-- [Anthropic Alignment roles](https://www.anthropic.com/careers/jobs/4631822008) 强调 empirical AI research、safety-relevant evals、multi-agent experiments 和 LLM-generated jailbreak eval tooling。
-- [Google DeepMind Careers](https://deepmind.google/careers/) 中 Research Engineer role family 强调 engineering + ML/deep learning + research implementation，能 build and scale systems to test and evaluate ideas。
-
-结论：这条路线必须把 coding、Agent/LLM implementation、eval、trace/debugging 和表达训练放在阅读之前。
-
-6-agent debate 的收敛结论：
-
-- Research Agent 想扩大论文阅读：限制为 high-signal reading，每组 reading 必须能转成 system design 或面试追问。
-- CTO Agent 强调 production infra：保留 latency、cost、reliability、trace、eval，但不把准备变成云原生/SRE 复习。
-- Coding Agent 要求可测量训练：每周固定 coding patterns 和 implementation drills。
-- Product Agent 强调 agent UX：每个 design case 必须包含用户 workflow、failure recovery、human-in-the-loop。
-- Strategy Agent 强调强信号：所有任务都要能产出面试叙事：我做了什么、为什么这样设计、怎么验证。
-
-1. Python coding fluency。
-2. Agent / LLM component implementation。
-3. System design casebook。
-4. Eval and failure analysis。
-5. Mock interview expression。
-6. Focused research reading。
-7. Optional Rust systems-depth。
+- 冲刺期间：进行中；具体日期、Day 计划与 readiness 变化只在 Interview Sprint 维护。
+- 计划边界：进行中；本页不再维护第二份 30 / 45 / 60 天计划。
+- 新面试窗口：未开始；先重新做 baseline，再决定临时突击范围。
+- 面试窗口结束：未开始；只晋升满足长期结算判据的真实产物。

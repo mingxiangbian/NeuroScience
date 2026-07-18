@@ -5,6 +5,11 @@ status: learning
 learning_progress: 0
 last_updated: 2026-07-10
 priority: high
+plan_scope: interview
+navigation_group: interview
+module_role: interview
+goal_role: 临时面试突击
+subsystems:
 ---
 
 ## 目标

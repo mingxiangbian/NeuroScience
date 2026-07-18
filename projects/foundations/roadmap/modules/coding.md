@@ -1,25 +1,32 @@
 ---
 id: coding
-title: Coding
+title: Engineering Foundations
 status: not-started
 learning_progress: 0
-last_updated: 2026-07-05
+last_updated: 2026-07-18
 priority: high
+plan_scope: long-term
+navigation_group: practice
+module_role: support
+goal_role: 工程基础
+subsystems: 1,3,5,6
 ---
 
 ## 目标
 
-把 coding 能力转成可测量的面试信号。重点不是刷题数量本身，而是限时写对、边写边解释、主动验证 edge cases，并能把实现能力连接到 Agent / LLM components。
+为贾维斯 0.x 提供可独立完成、可测试、可诊断的工程基础。重点是把一个机制写成最小实现，定义行为边界，主动验证 edge cases，并在失败时定位原因。
 
 ## 当前状态
 
-当前短板优先级最高的是 coding 和实现能力。Python 是主面试语言；TypeScript 用于 service/API/interface style drills；Rust 只作为 45/60 天后 optional systems-depth。
+Python 是贾维斯 0.1 及独立实验的主语言。TypeScript 主要用于阅读 Cyrene 0.0 的历史实现或处理必要的接口互操作，不再作为长期训练主线。C++ 属于系统层军火库，只在性能、内存、并发或底层实现成为活动单元的真实墙时取用。
+
+当前队列以 U1–U3 修复 decoder causal mask、建立 eval 和写失败分析，把“能组装”推进到“能验证和诊断”。
 
 ## 核心知识
 
-### Coding Fundamentals
+### 算法与数据结构工具箱
 
-必须掌握到能限时写对：
+这些知识按活动单元需要取用，不形成独立练习债：
 
 - Arrays and strings：two pointers、sliding window、prefix sum。
 - Hash maps and sets：frequency counting、dedup、index mapping。
@@ -31,17 +38,9 @@ priority: high
 - Greedy：排序后局部决策、反例检查。
 - DP basics：1D/2D state、transition、base case。
 
-面试表达要求：
+每次取用都应说明：当前问题的简单基线是什么、瓶颈在哪里、关键 invariant 是什么、复杂度与边界如何影响系统。
 
-- 先说 brute force。
-- 再说 bottleneck。
-- 再给 optimized approach。
-- 写代码时主动说明 invariants。
-- 结束时给 complexity 和 edge cases。
-
-### Python / TypeScript Implementation
-
-Python：
+### Python 实现基础
 
 - clean function signatures
 - dataclass / TypedDict
@@ -49,69 +48,55 @@ Python：
 - async basics
 - file and JSON handling
 - testable small modules
+- explicit state 与 typed boundaries
+- unit test、property test 与 differential test 的基本使用
+- profiling、logging 与最小可复现实例
 
-TypeScript：
+### 系统层军火库
 
-- typed interfaces
-- async API wrappers
-- discriminated unions for tool calls
-- error result types
-- simple Node service structure
+- 进程、线程、异步 I/O 与取消
+- 内存布局、缓存与数据移动
+- 文件、网络与序列化边界
+- profiling、benchmark 与资源观测
+- 需要时用 C++ 理解或实现性能关键路径
 
-TypeScript 不作为算法主语言，主要用于 Agent interfaces：
-
-- `ToolCall`
-- `ToolResult`
-- `AgentTrace`
-- `MemoryRecord`
-- `EvalCase`
-
-用它训练 API boundary 和 schema thinking。
+军火库只由真实工程问题触发。学到的内容必须回写到当次实现、实验或失败分析，不能脱离目标单独囤积。
 
 ## 任务
 
-### Coding Plan
+### 实现单元循环
 
-### Weekly Pattern Allocation
+1. 写清输入、输出、状态变化和禁止行为。
+2. 先建立最简单的可运行基线。
+3. 写最小测试和一个容易失败的边界 case。
+4. 实现并记录关键 invariant、复杂度和外部依赖。
+5. 保存失败现象与诊断证据，而不是只保留最终答案。
+6. 说明这个实现怎样服务当前子系统或改变 0.x 的设计。
 
-- Week 1：arrays, strings, hash maps, sliding window。目标是写稳基础题，减少语法和边界错误。
-- Week 2：trees, graphs, BFS, DFS。目标是建立 recursion / traversal / visited set 直觉。
-- Week 3：heap, intervals, greedy, DP basics。目标是覆盖中频题型。
-- Week 4：mixed mock。目标是提升限时表现和解释质量。
+### Python 质量标准
 
-### Daily Coding Loop
-
-1. 3 分钟澄清输入输出和 edge cases。
-2. 5 分钟写 brute force 和瓶颈。
-3. 20-35 分钟写 optimized solution。
-4. 5 分钟手动跑测试。
-5. 5 分钟写复盘：pattern、bug、复杂度。
-
-### Python Standards
-
-每题必须做到：
+每个实现单元必须做到：
 
 - 函数签名清楚。
 - 不依赖全局变量。
 - 变量名能表达含义。
-- 主动处理 empty input、single item、duplicates。
-- 复杂度能说出来。
+- 主动处理 empty input、single item、duplicates 和失败返回。
+- 对状态变化、外部 I/O 和权限边界写测试。
+- 能解释复杂度、失败模式与为什么采用当前设计。
 
-### TypeScript Standards
+### 与子系统的连接
 
-- 用 typed interfaces 表达 API boundary。
-- 对 tool call 使用 discriminated unions。
-- 对失败返回 error result types。
-- 对 async wrapper 写 timeout、retry、trace hooks。
+- **① 基座模型**：tensor shape、mask、sampling 与训练 / 生成脚本。
+- **③ 终身记忆**：索引、检索、更新、冲突和删除的数据结构。
+- **⑤ Agent 执行**：状态机、队列、异步工具、timeout 与 cancellation。
+- **⑥ 系统层**：profiling、I/O、并发、内存和性能关键路径。
 
 ## 时间线
 
-- Week 1：10 道 array/hash map/sliding window 题，写 50-100 行 Python tool router。
-- Week 2：8-10 道 tree/graph/BFS/DFS 题，写 mini retrieval evaluator。
-- Week 3：8-10 道 heap/interval/DP 题，写 JSON-backed memory store。
-- Week 4：2 次 timed coding mock，混合复盘。
-- Days 31-45：每周 2 次 timed coding。
-- Days 46-60：如果 coding baseline 稳定，加入 Optional Rust Log Parser。
+- 当前：未开始；U1–U2 在 toy Transformer 上完成基线保存、mask 修复、对照与 eval 脚本。
+- U7 解冻时：未开始；用 Python 建立贾维斯 0.1 的最小对话循环和清晰接口。
+- 领域单元解冻时：未开始；只补该单元需要的数据结构、异步、测试与诊断能力。
+- 系统墙出现时：未开始；按需进入 CSAPP / C++、profiling 或底层实现，并把结果结算在触发它的单元中。
 
 ## 知识笔记
 

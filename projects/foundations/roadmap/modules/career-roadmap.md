@@ -5,6 +5,11 @@ status: in-progress
 learning_progress: 0
 last_updated: 2026-07-18
 priority: high
+plan_scope: long-term
+navigation_group: north-star
+module_role: control
+goal_role: 长期总控
+subsystems: 1,2,3,4,5,6
 ---
 
 ## 目标

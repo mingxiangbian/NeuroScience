@@ -1,95 +1,98 @@
 ---
 id: rag-memory
-title: RAG & Memory
+title: Lifelong Memory
 status: not-started
 learning_progress: 0
-last_updated: 2026-07-05
+last_updated: 2026-07-18
 priority: high
+plan_scope: long-term
+navigation_group: systems
+module_role: domain
+goal_role: 终身记忆
+subsystems: 3
 ---
 
 ## 目标
 
-能设计 production RAG 和 long-term memory，并能解释 retrieval quality、context assembly、provenance、freshness、privacy、write policy、conflict resolution 和 deletion。
+承担贾维斯六子系统中的 **③ 终身记忆**：让系统知道什么值得记、如何整合与更新、何时遗忘或删除，以及怎样在长期互动中正确使用记忆。
+
+RAG 是可用的检索技术，但不是终身记忆本身。这个模块的判断标准不是“能搜到文本”，而是记忆是否提高了持续理解和行动质量，同时保留来源、隐私、用户控制与纠错能力。
 
 ## 当前状态
 
-RAG & Memory 是 Agent / LLM 系统面试高频交叉点。准备重点是把“检索 + 生成”拆成可验证组件，不把“上下文窗口更长”误当作 memory。
+终身记忆是候选专长之一，但当前仍在远期冻结队列。现有 Cyrene 0.0 提供了 memory policy、周期维护和行为 eval 的经验资产；新成果可以先作为独立 Python 小项目成熟，再接入贾维斯 0.x。
+
+当前不展开完整课程。只有活动单元进入记忆方向，或人格、Agent 执行真实撞到记忆墙时，才定义下一个 2–4 session 的结算单元。
 
 ## 核心知识
 
-### RAG And Memory
+### 记忆生命周期
 
-必须会解释：
+- **观察与候选生成**：从对话、行为和任务结果中识别可能值得保留的信息。
+- **写入决策**：区分事实、偏好、经历、关系状态和临时上下文，避免把每句话都写入长期记忆。
+- **整合与更新**：合并重复信息，保留时间、来源、置信度与适用范围。
+- **检索与使用**：按当前目标、关系语境和权限取回，而不是只按语义相似度取回。
+- **冲突与陈旧**：识别新旧信息冲突、偏好变化和过期事实。
+- **遗忘与删除**：支持自动降权、明确删除、撤销和用户可见控制。
+- **反思**：从多次经历形成更稳定的模式，同时避免把模型推断伪装成用户事实。
 
-- chunking strategy
-- embedding retrieval
-- reranking
-- metadata filtering
-- context assembly
-- citation and provenance
-- freshness
-- deletion and privacy
-- memory write policy
-- memory conflict resolution
+### 检索与 RAG 工具箱
+
+- chunking、embedding retrieval 与 metadata filtering
+- reranking 与 context assembly
+- citation、provenance 与 freshness
+- recall@k、precision 与失败样例
+- prompt injection、隐私边界与数据隔离
+
+这些技术服务记忆生命周期。通用文档 RAG 可以验证检索组件，但不能替代长期一致性、冲突处理和用户控制的评估。
+
+### 必须守住的边界
+
+- long context 不等于 memory；窗口消失后没有持久状态，也没有写入和删除政策。
+- 检索相关不等于使用正确；错误记忆可能被成功取回并劫持后续行动。
+- 模型总结不等于用户事实；推断必须保留来源和置信度。
+- 删除索引项不一定等于彻底删除；需要说明原始数据、派生数据和缓存的范围。
 
 ## 任务
 
-### Case 1: Design A Production RAG System
+### 记忆生命周期原型
 
-必须覆盖：
+用一个小型 Python 模块实现：
 
-- ingestion pipeline
-- chunking and metadata
-- embedding and index
-- retrieval and reranking
-- context assembly
-- citations
-- freshness
-- prompt injection defense
-- eval: recall@k, answer faithfulness, latency, cost
+- candidate → accept / reject 的写入政策
+- write / retrieve / update / delete
+- scope、timestamp、source 与 confidence
+- 冲突检测、陈旧标记和用户撤销
+- 每个状态变化的可审计记录
 
-### Case 3: Design Long-Term Memory For A Personal Assistant
+结算需要可运行结果、最小测试，以及一条说明“为什么这条信息应该或不应该被记住”的设计理由。
 
-必须覆盖：
+### 检索验证单元
 
-- what should be remembered
-- write policy
-- retrieval policy
-- update/delete policy
-- privacy and user control
-- conflict resolution
-- stale memory detection
-- eval: precision of memory use, harmful memory rate
+- 建立 document、query 与 expected relevant ids。
+- 先测 retrieval precision / recall，再观察生成行为。
+- 保存错误召回、漏召回、延迟和来源信息。
+- 说明检索改进是否真的改善了下游回答或行动。
 
-### Drill 2: Retrieval Evaluator
+### 记忆行为评估
 
-Build：
+至少覆盖：
 
-- document list
-- query set
-- expected relevant ids
-- recall@k and failure report
+- 应记住的信息是否被使用。
+- 不应写入的信息是否被拒绝。
+- 已删除或过期的信息是否仍泄露。
+- 冲突出现时是否请求澄清或采用正确版本。
+- 错误记忆是否改变 Agent 的工具选择或行动。
 
-Interview story：
+### 跨子系统整合
 
-- RAG quality is measured before generation, not only by final answer.
-
-### Drill 3: Memory Store
-
-Build：
-
-- write/read/update/delete
-- metadata tags
-- conflict detection
-- deletion test
-
-Interview story：
-
-- long-term memory requires write policy, user control, and stale memory handling.
+- **人格 × 记忆**：长期一致性与人格漂移之间如何取舍。
+- **记忆 × Agent**：记忆如何改善行动，同时不让错误记忆劫持行动。
+- **信任与控制**：系统记错后，用户如何看见、纠正、删除并恢复控制权。
 
 ## 时间线
 
-- Week 2：画 RAG data flow；写 mini retrieval evaluator；练 `Design a production RAG system`。
-- Week 2 stretch：给 retrieval evaluator 加 TypeScript API wrapper；加 trace log：query、retrieved docs、latency、score。
-- Week 3：实现 JSON-backed memory store：write、retrieve、update、delete；练 `Design long-term memory for a personal assistant`。
-- Week 3 stretch：给 memory store 加 conflict resolution；加 eval：memory 是否应该写入、是否应该删除。
+- 远期队列阶段：未开始；保持冻结，只保存问题、来源和候选实验，不产生日期债。
+- 第一次解冻：未开始；先做独立记忆生命周期原型和行为评估，再决定接口。
+- 接入贾维斯 0.x：未开始；记录人格、记忆和 Agent Runtime 之间的接口与冲突。
+- 专业化阶段：未开始；若终身记忆被选为 1–2 个专长之一，再进入长期一致性、整合、遗忘与自主机制假设。

@@ -1,25 +1,30 @@
 ---
 id: evals-debugging
-title: Evals & Debugging
+title: Evals & Diagnostics
 status: learning
 learning_progress: 0
-last_updated: 2026-07-11
+last_updated: 2026-07-18
 priority: high
+plan_scope: long-term
+navigation_group: practice
+module_role: support
+goal_role: 验证与诊断
+subsystems: 1,2,3,4,5,6
 ---
 
 ## 目标
 
-能设计 Agent / LLM eval harness，并能用 trace debugging 定位 multi-step workflow failure。重点是 task set、grader、golden traces、adversarial cases、CI integration、thresholds、flaky eval 和 versioning。
+建立横跨六个子系统的验证与诊断能力：先定义“怎样算真的工作”，再用可重放运行、行为契约、trace 和对照实验定位失败。验证纪律不是贾维斯的一个部件，而是安装每个部件时都要使用的手艺。
 
 ## 当前状态
 
-Eval and failure analysis 是 top lab signal 的关键维度。D2 已完成第一份 coached case audit：用六部分拆解 Cyrene `T0-MODE-FAST`，并对 Balanced Mode 做近迁移。当前仍是 coached readiness 1；D5 才进行未见 case 的独立审计。
+当前队列将用 U1–U3 的 causal mask 错误建立第一条完整证据链：先保存作弊基线，再修复、对照 teacher-forced loss 与自回归生成，最后解释指标为什么曾经给出假象。
+
+已有 Cyrene eval case 审计和 benchmark 边界笔记可作为经验资产，但不会直接替代贾维斯 0.x 上的新验证结果。
 
 ## 核心知识
 
-### Eval And Debugging
-
-必须会设计：
+### 验证对象
 
 - task success eval
 - regression eval
@@ -30,65 +35,67 @@ Eval and failure analysis 是 top lab signal 的关键维度。D2 已完成第�
 - golden set and adversarial set
 - failure taxonomy
 
+每项评估都要写清 workload、版本、环境、样本、阈值和未覆盖范围。一次成功运行不是成功率，一次计时不是 P95，低 loss 也不自动等于目标行为正确。
+
+### 诊断链
+
+1. 从系统目标或 policy 写出 expected behavior。
+2. 保存真实 output、tool call、trace 和 state change。
+3. 用 assertion 或 grader 直接检查这些观测。
+4. 把失败归入可行动 taxonomy，而不是只记录“结果不好”。
+5. 用对照、消融或 replay 缩小原因范围。
+6. 记录结论会如何改变实现、接口或下一单元。
+
+### 六子系统的验证焦点
+
+- **① 基座模型**：训练目标、数据泄漏、生成行为与 benchmark 错位。
+- **② 人格与情感**：行为一致性、情境适应、漂移与副作用。
+- **③ 终身记忆**：写入精度、错误使用、冲突、陈旧与删除泄露。
+- **④ 实时多模态**：端到端延迟、打断、轮次交接与体验劣化原因。
+- **⑤ Agent 执行**：工具选择、参数、权限、循环、部分执行和恢复。
+- **⑥ 系统层**：延迟分布、成本、资源、容量、降级和版本回归。
+
 ## 任务
 
-### Case 4: Design An Eval Harness For Agent Regressions
+### 最小 Eval Harness
 
-必须覆盖：
+围绕当前活动单元建立：
 
-- task set
-- graders
-- golden traces
-- adversarial cases
-- CI integration
-- pass/fail thresholds
-- flaky eval handling
-- model and prompt versioning
+- versioned task set
+- expected behavior 与禁止行为
+- grader / assertion
+- raw actual output 与 evidence
+- pass / fail summary 和 failure tag
+- model、prompt、code 与环境版本
+- 可重放失败 case
 
-### Case 5: Design Trace Debugging For Multi-Step LLM Workflows
+### Trace Diagnostics
 
-必须覆盖：
+与 Agent Runtime 共用一套执行事实：
 
-- trace schema
-- span hierarchy
-- prompt/tool/model events
-- latency/cost aggregation
-- redaction
-- replay
-- diff between runs
+- trace id 与 span hierarchy
+- prompt / model / retrieval / tool / state events
+- latency、cost、error 与 cancellation
+- sensitive-data redaction
+- replay 与 runs diff
+- 部分执行和恢复路径
 
-### Drill 4: Agent Trace Logger
+Runtime 负责稳定发出事件；本模块负责用这些事件复核行为、聚合指标和定位回归。
 
-Build：
+### 对照与回归
 
-- trace id
-- spans for model call, tool call, retrieval
-- latency and error fields
-- redaction policy
-
-Interview story：
-
-- agents fail across steps; trace is the debugging primitive.
-
-### Drill 5: Eval Harness
-
-Build：
-
-- test cases
-- expected outcomes
-- grader functions
-- pass/fail summary
-
-Interview story：
-
-- agent regressions need evals tied to tasks, not only unit tests.
+- 为关键假设保存最简单基线。
+- 一次只改变一个主要因素，或明确写出无法隔离的变量。
+- golden set 保存必须持续成立的行为。
+- adversarial set 覆盖越权、冲突、陈旧、打断和异常输入。
+- flaky case 单独标记和调查，不把随机通过当作修复。
 
 ## 时间线
 
-- Week 2：给 retrieval evaluator 加 trace log：query、retrieved docs、latency、score。
-- Week 4：写一个 agent trace/debugging answer。
-- Days 31-45：深入 eval harness：golden set、adversarial set、regression suite。
-- Days 46-60：capstone extension 可以做 Agent eval and trace workbench。
+- 当前：未开始；U1–U3 完成错误基线、修复对照、两类指标和失败分析。
+- 每个实现或实验单元：未开始；在结算前补齐最小测试、证据和失败解释。
+- 跨子系统接入时：未开始；增加接口冲突、错误传播和恢复 case。
+- 已知行为稳定后：未开始；把关键 case 固化为可重放 regression suite，并保留版本与原始 evidence。
 
 ## 知识笔记
 

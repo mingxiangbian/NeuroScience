@@ -62,3 +62,21 @@ assert.deepEqual(
   ["目标", "知识笔记"],
   "Foundations should keep its curated section contract",
 );
+
+const interviewOverviewModule = {
+  id: "overview",
+  sections: {
+    目标: "goal",
+    使用边界: "boundary",
+    面试能力地图: "map",
+    "Signal Rubric": "signals",
+    任务: "tasks",
+    时间线: "timeline",
+  },
+};
+
+assert.deepEqual(
+  getRenderableSectionTitles(interviewOverviewModule, "foundations"),
+  Object.keys(interviewOverviewModule.sections),
+  "Interview Overview should render every generated interview-only section in source order",
+);

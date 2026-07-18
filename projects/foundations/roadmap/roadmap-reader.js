@@ -13,7 +13,6 @@ import { enhanceCodeListings } from "./code-listing.js";
 import {
   getDefaultNotePanelCollapsed,
   getFinanceReentryState,
-  getNextIncompleteModule,
   getReaderPanelStorageKey,
   getReaderThemeStorageKey,
   getRenderableSectionTitles,
@@ -63,6 +62,8 @@ const state = {
   annotationReturnFocus: null,
   notePanelPreferenceCollapsed: getDefaultNotePanelCollapsed(PROJECT_ID),
   drawerReturnFocus: null,
+  careerLastSettledUnitId: "",
+  careerBoardView: "focus",
   financeGraphFocusId: "",
   financeGraphResizeFrame: 0,
   financeGraphResizeObserver: null,
@@ -710,7 +711,7 @@ function getInitialModuleId() {
   const url = new URL(window.location.href);
   const fromQuery = url.searchParams.get("module");
   const fromHash = url.hash.replace(/^#/, "");
-  return fromQuery || fromHash || "overview";
+  return fromQuery || fromHash || state.data?.project?.dashboardModuleId || "overview";
 }
 
 function getModuleById(moduleId) {
@@ -749,8 +750,12 @@ function getStatusLabel(status) {
 }
 
 function getModuleMeta(module, { includeDate = false } = {}) {
-  const parts = [getStatusLabel(module.status)];
-  if (PROJECT_ID !== "finance" && module.priority) parts.push(module.priority);
+  const parts = PROJECT_ID === "foundations"
+    ? module.planScope === "interview"
+      ? ["临时面试", getStatusLabel(module.status)]
+      : [module.goalRole || getStatusLabel(module.status)]
+    : [getStatusLabel(module.status)];
+  if (PROJECT_ID !== "finance" && PROJECT_ID !== "foundations" && module.priority) parts.push(module.priority);
   if (includeDate && module.lastUpdated) {
     parts.push(PROJECT_ID === "finance" ? `更新于 ${module.lastUpdated}` : `Updated ${module.lastUpdated}`);
   }
@@ -966,28 +971,72 @@ function resetReaderScroll() {
 
 function renderModuleNav() {
   els.nav.innerHTML = "";
-  for (const module of state.data.modules) {
+  const createModuleButton = (module) => {
     const progress = getLearningProgress(module);
     const button = document.createElement("button");
-    button.className = "module-nav-item";
+    button.className = `module-nav-item${module.planScope ? ` is-${module.planScope}` : ""}`;
     button.type = "button";
     button.dataset.moduleId = module.id;
     button.setAttribute("aria-current", module.id === state.currentModule?.id ? "true" : "false");
     button.innerHTML = `
       <span class="module-nav-title">${escapeHtml(module.title)}</span>
-      <span class="module-nav-progress">${escapeHtml(String(progress))}%</span>
+      ${module.planScope === "interview" || PROJECT_ID === "finance" ? `<span class="module-nav-progress">${escapeHtml(String(progress))}%</span>` : ""}
       <span class="module-nav-meta">${escapeHtml(getModuleMeta(module))}</span>
     `;
     button.addEventListener("click", () => openModule(module.id));
-    els.nav.append(button);
+    return button;
+  };
+
+  if (PROJECT_ID !== "foundations" || !state.data.project.navigationGroups?.length) {
+    for (const module of state.data.modules) els.nav.append(createModuleButton(module));
+    return;
+  }
+
+  const moduleById = new Map(state.data.modules.map((module) => [module.id, module]));
+  for (const group of state.data.project.navigationGroups) {
+    const wrapper = document.createElement("section");
+    wrapper.className = `module-nav-group is-${group.scope}`;
+    wrapper.setAttribute("aria-labelledby", `module-nav-group-${group.id}`);
+    const heading = document.createElement("p");
+    heading.className = "module-nav-group-title";
+    heading.id = `module-nav-group-${group.id}`;
+    heading.textContent = group.title;
+    wrapper.append(heading);
+
+    for (const item of group.items) {
+      if (item.type === "module") {
+        const module = moduleById.get(item.moduleId);
+        if (module) wrapper.append(createModuleButton(module));
+        continue;
+      }
+      const slot = document.createElement("div");
+      slot.className = "module-nav-frozen-slot";
+      slot.setAttribute("role", "note");
+      slot.setAttribute("aria-label", `${item.title}，冻结插槽，${item.note}`);
+      slot.innerHTML = `
+        <span class="module-nav-frozen-id">${escapeHtml(item.subsystemId)}</span>
+        <span class="module-nav-frozen-copy"><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.note)}</small></span>
+        <span aria-hidden="true">冻</span>
+      `;
+      wrapper.append(slot);
+    }
+    els.nav.append(wrapper);
   }
 }
 
 function getRailTargets(module) {
-  const sectionTargets = Object.keys(module.sections ?? {}).map((sectionTitle) => ({
-    id: getSectionId(module, sectionTitle),
-    title: sectionTitle,
-  }));
+  const sectionTitles = PROJECT_ID === "foundations" && module.id === "career-roadmap"
+    ? ["当前状态", "任务", "目标", "核心知识", "时间线"]
+    : Object.keys(module.sections ?? {});
+  const sectionTargets = sectionTitles.flatMap((sectionTitle) => [
+    {
+      id: getSectionId(module, sectionTitle),
+      title: sectionTitle,
+    },
+    ...(module.id === "career-roadmap" && sectionTitle === "目标"
+      ? [{ id: `${getSectionId(module, sectionTitle)}-evidence`, title: "能力证据" }]
+      : []),
+  ]);
   const noteTargets = (module.knowledgeNotes ?? []).map((note) => ({
     id: note.id,
     title: note.title,
@@ -1111,80 +1160,450 @@ function renderTaskSection(module, title) {
 }
 
 function renderOverviewDashboard(module) {
-  if (state.data.project.id === "finance") return renderFinanceOverviewDashboard(module);
-  const dashboardModuleId = state.data.project.dashboardModuleId;
-  const learningModules = state.data.modules.filter((item) => item.id !== dashboardModuleId);
-  const stableModules = learningModules.filter((item) => item.id !== "interview-sprint");
-  const nextModule = getNextIncompleteModule(learningModules);
-  const moduleRows = learningModules
-    .map((item) => `
-      <button class="dashboard-module-row" type="button" data-dashboard-module-id="${escapeHtml(item.id)}">
-        <span>
-          <strong>${escapeHtml(item.title)}</strong>
-          <small>${escapeHtml(getModuleMeta(item))}</small>
-        </span>
-        <span class="dashboard-module-progress">${escapeHtml(String(getLearningProgress(item)))}%</span>
-      </button>
-    `)
+  return renderFinanceOverviewDashboard(module);
+}
+
+function getCareerUnitRuntime(module) {
+  const units = module.units ?? [];
+  const firstOpenIndex = units.findIndex((unit) => !taskState[unit.taskId]);
+  const settledCount = firstOpenIndex === -1 ? units.length : firstOpenIndex;
+  const runtimeUnits = units.map((unit, index) => ({
+    ...unit,
+    runtimeStatus: index < settledCount
+      ? "settled"
+      : index === settledCount
+        ? "active"
+        : "frozen",
+  }));
+  return {
+    units: runtimeUnits,
+    settledCount,
+    activeUnit: runtimeUnits.find((unit) => unit.runtimeStatus === "active") ?? null,
+    frozenUnits: runtimeUnits.filter((unit) => unit.runtimeStatus === "frozen"),
+  };
+}
+
+function getCareerSessionLabel(unit) {
+  if (!unit?.sessions) return "";
+  const { min, max } = unit.sessions;
+  return `${min === max ? min : `${min}–${max}`} session${max === 1 ? "" : "s"}`;
+}
+
+function renderCareerWorkbench(module, runtime) {
+  const sectionId = getSectionId(module, "当前状态");
+  const unit = runtime.activeUnit;
+  if (!unit) {
+    return `
+      <article class="career-workbench-section" id="${escapeHtml(sectionId)}" data-section-id="${escapeHtml(sectionId)}" data-section-title="当前状态">
+        <h2 class="career-section-label">活动单元 · 单线程，只有这一件活</h2>
+        <div class="career-empty-state">
+          <strong>U1–U7 已全部结算</strong>
+          <p>台账已经封存这段进展；下一单元应在一次事件触发校准后再定义。</p>
+        </div>
+      </article>
+    `;
+  }
+  return `
+    <article class="career-workbench-section" id="${escapeHtml(sectionId)}" data-section-id="${escapeHtml(sectionId)}" data-section-title="当前状态">
+      <h2 class="career-section-label">活动单元 · 单线程，只有这一件活</h2>
+      <div class="career-workbench">
+        <div class="career-workbench-main">
+          <div class="career-unit-tags">
+            <span class="career-chip is-type">${escapeHtml(unit.type)}</span>
+            <span class="career-chip">${escapeHtml(getCareerSessionLabel(unit))}</span>
+          </div>
+          <p class="career-unit-title">${escapeHtml(unit.id)} ${escapeHtml(unit.title)}</p>
+          <p class="career-unit-next"><span>下一步</span>${escapeHtml(unit.nextAction)}</p>
+          <div class="career-workbench-actions" aria-label="活动单元辅助动作">
+            <button class="career-action" type="button" data-career-log-action="breakpoint">记断点</button>
+            <button class="career-action is-quiet" type="button" data-career-log-action="wall">撞墙了</button>
+          </div>
+        </div>
+        <div class="career-seal-slot">
+          <button class="career-pending-seal-button" type="button" data-career-settle-unit="${escapeHtml(unit.id)}" aria-label="结算 ${escapeHtml(unit.id)} ${escapeHtml(unit.title)}并落印">
+            <span class="career-pending-seal">${escapeHtml(unit.id)}</span>
+            <span>结算落印</span>
+          </button>
+          <p class="career-seal-slot-note">产物与判据成立后再落印</p>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function renderCareerLedger(module, runtime) {
+  const sectionId = getSectionId(module, "任务");
+  const seals = runtime.units.map((unit) => {
+    const justSettled = unit.runtimeStatus === "settled" && state.careerLastSettledUnitId === unit.id;
+    return `
+      <div class="career-unit-seal is-${escapeHtml(unit.runtimeStatus)}${justSettled ? " is-just-settled" : ""}" data-career-unit-seal="${escapeHtml(unit.id)}" role="img" aria-label="${escapeHtml(unit.id)} ${escapeHtml(unit.title)}，${unit.runtimeStatus === "settled" ? "已结算" : unit.runtimeStatus === "active" ? "活动单元，待印" : "冻结"}">
+        <span class="career-unit-seal-id">${escapeHtml(unit.id)}</span>
+        <span class="career-unit-seal-title">${escapeHtml(unit.runtimeStatus === "active" ? "待印" : unit.title)}</span>
+      </div>
+    `;
+  }).join("");
+  const tickets = Math.floor(runtime.settledCount / 2);
+  const untilNextTicket = 2 - (runtime.settledCount % 2);
+  const nearby = runtime.frozenUnits.slice(0, 3);
+  const distant = runtime.frozenUnits.slice(3);
+  const nearbyCards = nearby.length > 0
+    ? nearby.map((unit) => `
+        <div class="career-frozen-card">
+          <span class="career-frozen-id">${escapeHtml(unit.id)}</span>
+          <span><strong>${escapeHtml(unit.title)}</strong> · ${escapeHtml(unit.type)} · ${escapeHtml(getCareerSessionLabel(unit))}</span>
+          <span class="career-frozen-stamp" aria-hidden="true">冻</span>
+        </div>
+      `).join("")
+    : '<p class="career-empty-state">近期队列已经清空。</p>';
+  const distantText = distant.length > 0
+    ? distant.map((unit) => `${unit.id} ${unit.title}`).join(" · ")
+    : "记忆系统 · 实时语音 pipeline · 系统层源码笔记 · 跨子系统整合——到队头再定义";
+  return `
+    <article class="career-ledger-section" id="${escapeHtml(sectionId)}" data-section-id="${escapeHtml(sectionId)}" data-section-title="任务">
+      <h2 class="career-section-label">台账 · 只涨不跌</h2>
+      <div class="career-ledger-strip">
+        <div class="career-ledger-seals">${seals}</div>
+        <div class="career-ledger-meta">
+          <p class="career-ledger-count"><strong>${escapeHtml(String(runtime.settledCount))}</strong><span>已结算</span></p>
+          <p class="career-ticket">玩耍券 ×${escapeHtml(String(tickets))} · 再结算 ${escapeHtml(String(untilNextTicket))} 个解锁</p>
+        </div>
+      </div>
+      <h3 class="career-section-label is-subsection">冻结队列 · 封存待取，不是欠债</h3>
+      <div class="career-frozen-queue">${nearbyCards}</div>
+      <p class="career-distant-queue">远期：${escapeHtml(distantText)}</p>
+    </article>
+  `;
+}
+
+function renderCareerGoalTrace(runtime) {
+  const unit = runtime.activeUnit;
+  if (!unit) {
+    return `
+      <div class="career-goal-trace-empty">
+        <strong>这一批单元已经全部结算</strong>
+        <p>下一条路径应在事件触发校准后再写入；主板不会替你自动生成新方向。</p>
+      </div>
+    `;
+  }
+
+  const mapping = unit.goalMapping ?? {};
+  const subsystemById = new Map((state.data?.project?.subsystems ?? []).map((subsystem) => [subsystem.id, subsystem]));
+  const mappedSubsystems = (mapping.subsystemIds ?? [])
+    .map((subsystemId) => subsystemById.get(subsystemId))
+    .filter(Boolean);
+  const subsystemItems = mappedSubsystems.length > 0
+    ? mappedSubsystems.map((subsystem) => `<li><span>${escapeHtml(subsystem.id)}</span>${escapeHtml(subsystem.title)}</li>`).join("")
+    : "<li>尚未映射子系统</li>";
+  const pathLabel = mapping.pathLabel || "等待路线图映射";
+  const stageLabel = mapping.stageLabel || "当前阶段";
+  const targetGoal = state.data?.project?.targetGoal || "长期目标";
+
+  return `
+    <div class="career-goal-trace" aria-label="当前单元通往长期目标的路径">
+      <p class="career-goal-trace-lede"><strong>${escapeHtml(unit.id)} ${escapeHtml(unit.title)}</strong>现在承担的是“${escapeHtml(pathLabel)}”：它把当前实验接回长期系统目标。</p>
+      <ol class="career-goal-trace-steps">
+        <li class="career-goal-trace-step is-current">
+          <span class="career-goal-trace-label">当前单元</span>
+          <strong>${escapeHtml(unit.id)} ${escapeHtml(unit.title)}</strong>
+          <small>${escapeHtml(unit.type)} · ${escapeHtml(getCareerSessionLabel(unit))}</small>
+        </li>
+        <li class="career-goal-trace-step">
+          <span class="career-goal-trace-label">形成作用</span>
+          <strong>${escapeHtml(pathLabel)}</strong>
+          <small>来自“${escapeHtml(mapping.sourceSection || "行动映射")}”</small>
+        </li>
+        <li class="career-goal-trace-step is-systems">
+          <span class="career-goal-trace-label">作用范围</span>
+          <ul class="career-goal-trace-systems">${subsystemItems}</ul>
+        </li>
+        <li class="career-goal-trace-step">
+          <span class="career-goal-trace-label">结果窗口</span>
+          <strong>${escapeHtml(stageLabel)}</strong>
+          <small>窗口提供远景坐标，不制造日历债</small>
+        </li>
+      </ol>
+      <p class="career-goal-trace-north-star"><span>北极星</span><strong>${escapeHtml(targetGoal)}</strong></p>
+      <p class="career-board-source">路径来自路线图的显式映射；它说明“为什么做”，不代表任何深度已经掌握。</p>
+    </div>
+  `;
+}
+
+function renderCareerBoard(module, runtime) {
+  const sectionId = getSectionId(module, "目标");
+  const focusSelected = state.careerBoardView !== "overview";
+  return `
+    <article class="career-board-section" id="${escapeHtml(sectionId)}" data-section-id="${escapeHtml(sectionId)}" data-section-title="目标">
+      <div class="career-board-heading">
+        <h2 class="career-section-label">贾维斯 0.x · 当前路径与系统总览</h2>
+        <div class="career-board-view-switch" role="group" aria-label="主板视图">
+          <button type="button" data-career-board-view="focus" aria-pressed="${focusSelected ? "true" : "false"}" aria-controls="career-board-focus">当前路径</button>
+          <button type="button" data-career-board-view="overview" aria-pressed="${focusSelected ? "false" : "true"}" aria-controls="career-board-overview">系统总览</button>
+        </div>
+      </div>
+      <div class="career-board-panel career-board-focus" id="career-board-focus" data-career-board-panel="focus"${focusSelected ? "" : " hidden"}>
+        ${renderCareerGoalTrace(runtime)}
+      </div>
+      <div class="career-board-panel career-board-overview" id="career-board-overview" data-career-board-panel="overview"${focusSelected ? " hidden" : ""}>
+        <div class="career-board-scroll" tabindex="0" aria-label="可横向滚动查看六子系统完整主板">
+          <svg class="career-mainboard" viewBox="0 0 900 560" role="group" aria-labelledby="career-mainboard-title career-mainboard-description">
+            <title id="career-mainboard-title">贾维斯 0.x 六子系统主板</title>
+            <desc id="career-mainboard-description">六个子系统的长期能力地图。人格与情感、实时多模态是冻结插槽，其余插槽链接到现有学习模块。</desc>
+            <rect class="career-board-outline" x="10" y="10" width="880" height="540" rx="16" />
+            <rect class="career-board-inner-outline" x="20" y="20" width="860" height="520" rx="11" />
+            <g class="career-board-mounts"><circle cx="34" cy="34" r="6"/><circle cx="866" cy="34" r="6"/><circle cx="34" cy="526" r="6"/><circle cx="866" cy="526" r="6"/></g>
+            <text class="career-board-silkscreen is-title" x="105" y="52">JARVIS 0.x — MAINBOARD REV 0.1</text>
+            <text class="career-board-silkscreen is-caption" x="105" y="70">SINGLE-THREAD ASSEMBLY · SETTLEMENT LEDGER · EST. 2026</text>
+            <text class="career-board-silkscreen is-caption" x="450" y="84" text-anchor="middle">SIX-SYSTEM BACKPLANE</text>
+            <path class="career-board-backplane" d="M452 148 V463 M428 148 H476 M428 308 H476 M428 463 H476" />
+            <g class="career-board-backplane-nodes"><circle cx="452" cy="148" r="4"/><circle cx="452" cy="308" r="4"/><circle cx="452" cy="463" r="4"/></g>
+
+            <a class="career-board-link" href="?module=llm-systems" data-career-module-id="llm-systems" aria-label="打开 LLM Systems：基座模型">
+              <g class="career-board-slot is-supplied">
+                <rect x="146" y="92" width="282" height="112" rx="8" />
+                <text class="career-board-slot-code" x="166" y="124">① BASE MODEL</text>
+                <text class="career-board-slot-title" x="166" y="150">基座模型 · 外部供货</text>
+                <text class="career-board-slot-note" x="166" y="176">LLM Systems · 懂原理、边界与供给约束</text>
+              </g>
+            </a>
+
+            <g class="career-board-slot is-frozen">
+              <rect x="476" y="92" width="278" height="112" rx="8" />
+              <text class="career-board-slot-code" x="496" y="124">② PERSONA</text>
+              <text class="career-board-slot-title" x="496" y="150">人格与情感</text>
+              <text class="career-board-slot-note" x="496" y="174">冻结 · U4–U6 到队头再定义</text>
+            </g>
+
+            <a class="career-board-link" href="?module=rag-memory" data-career-module-id="rag-memory" aria-label="打开 Lifelong Memory：终身记忆">
+              <g class="career-board-slot">
+                <rect x="146" y="252" width="282" height="112" rx="8" />
+                <text class="career-board-slot-code" x="166" y="284">③ LIFELONG MEMORY</text>
+                <text class="career-board-slot-title" x="166" y="310">终身记忆</text>
+                <text class="career-board-slot-note" x="166" y="334">写入 · 整合 · 遗忘 · 反思</text>
+              </g>
+            </a>
+
+            <g class="career-board-slot is-frozen">
+              <rect x="476" y="252" width="278" height="112" rx="8" />
+              <text class="career-board-slot-code" x="496" y="284">④ REALTIME MULTIMODAL</text>
+              <text class="career-board-slot-title" x="496" y="310">实时多模态交互</text>
+              <text class="career-board-slot-note" x="496" y="334">冻结 · 到相关单元再定义</text>
+            </g>
+
+            <a class="career-board-link" href="?module=agent-design" data-career-module-id="agent-design" aria-label="打开 Agent Runtime：Agent 执行">
+              <g class="career-board-slot">
+                <rect x="146" y="412" width="282" height="102" rx="8" />
+                <text class="career-board-slot-code" x="166" y="442">⑤ AGENT EXEC</text>
+                <text class="career-board-slot-title" x="166" y="468">Agent 执行 · 安全运行时</text>
+                <rect class="career-board-chip is-archive" x="166" y="480" width="104" height="22" rx="3" />
+                <text class="career-board-chip-text" x="218" y="495" text-anchor="middle">CYRENE 0.0</text>
+                <rect class="career-board-chip is-socket" x="286" y="480" width="122" height="22" rx="3" />
+                <text class="career-board-chip-text is-socket" x="347" y="495" text-anchor="middle">0.1 SOCKET · U7</text>
+              </g>
+            </a>
+
+            <g class="career-board-slot">
+              <rect x="476" y="412" width="278" height="102" rx="8" />
+              <text class="career-board-slot-code" x="496" y="442">⑥ SYSTEM LAYER</text>
+              <text class="career-board-slot-title" x="496" y="468">系统层 · 推理与工程地基</text>
+              <a class="career-board-link is-inline" href="?module=llm-systems" data-career-module-id="llm-systems" aria-label="打开 LLM Systems 系统层内容"><text x="496" y="493">LLM Systems</text></a>
+              <text class="career-board-slot-note" x="582" y="493">+</text>
+              <a class="career-board-link is-inline" href="?module=coding" data-career-module-id="coding" aria-label="打开 Engineering Foundations"><text x="598" y="493">Engineering Foundations</text></a>
+            </g>
+
+            <g class="career-board-corner-seal"><rect x="806" y="44" width="48" height="48" rx="4"/><text x="830" y="75" text-anchor="middle">0.x</text></g>
+          </svg>
+        </div>
+        <p class="career-board-note">这张总览只表达六个子系统及其现有模块入口；单元队列只保留在台账。②与④仍是冻结插槽。</p>
+      </div>
+    </article>
+  `;
+}
+
+function renderCareerEvidenceMatrix(module, runtime) {
+  const matrix = module.evidenceMatrix;
+  if (!matrix?.depthLevels?.length || !matrix?.rows?.length) return "";
+  const subsystemById = new Map((state.data?.project?.subsystems ?? []).map((subsystem) => [subsystem.id, subsystem]));
+  const activeSubsystemIds = new Set(runtime.activeUnit?.goalMapping?.subsystemIds ?? []);
+  const stateLabels = {
+    unassessed: "未登记",
+    observed: "观察中",
+    supported: "有证据",
+    revisit: "需复核",
+  };
+  const headerCells = matrix.depthLevels
+    .map((level) => `<th scope="col">${escapeHtml(level.label)}</th>`)
     .join("");
-
-  const blocks = [
-    ["Dashboard", `
-      <div class="route-ledger" aria-label="Foundations route ledger">
-        <div class="route-ledger-row">
-          <span class="route-ledger-label">下一次打开</span>
-          ${nextModule ? `
-            <button class="route-ledger-target" type="button" data-dashboard-module-id="${escapeHtml(nextModule.id)}">
-              <strong>${escapeHtml(nextModule.title)}</strong>
-              <span>${escapeHtml(nextModule.priority)}</span>
-            </button>
-          ` : "<strong>暂无下一模块</strong>"}
-        </div>
-        <div class="route-ledger-row">
-          <span class="route-ledger-label">当前缺口</span>
-          <strong>先校准 coding / system design baseline，再扩展项目。</strong>
-        </div>
-      </div>
-      ${getSection(module, "Dashboard")}
-      <div class="dashboard-grid" aria-label="Foundations dashboard">
-        <section class="dashboard-card">
-          <p class="dashboard-card-label">整体学习进度</p>
-          <strong>${escapeHtml(String(getOverallLearningProgress()))}%</strong>
-        </section>
-        <section class="dashboard-card">
-          <p class="dashboard-card-label">主线模块</p>
-          <strong>${escapeHtml(String(stableModules.length))}</strong>
-        </section>
-        <section class="dashboard-card">
-          <p class="dashboard-card-label">当前状态</p>
-          <strong>未开始</strong>
-        </section>
-      </div>
-    `],
-    ["Interview Signal", getSection(module, "Interview Signal")],
-    ["模块总览", `
-      ${getSection(module, "模块总览")}
-      <div class="dashboard-module-list" aria-label="模块学习状态">
-        ${moduleRows}
-      </div>
-    `],
-    ["计划节奏", getSection(module, "计划节奏")],
-    ["待补知识", getSection(module, "待补知识")],
-  ];
-
-  return blocks
-    .map(([title, body]) => {
-      if (!body) return "";
-      const sectionId = getSectionId(module, title);
+  const rows = matrix.rows.map((row) => {
+    const subsystem = subsystemById.get(row.subsystemId) ?? { id: row.subsystemId, title: `子系统 ${row.subsystemId}` };
+    const cellsByLevel = new Map((row.cells ?? []).map((cell) => [cell.depthLevelId, cell]));
+    const cells = matrix.depthLevels.map((level) => {
+      const cell = cellsByLevel.get(level.id) ?? { state: "unassessed", evidenceRefs: [] };
+      const cellState = stateLabels[cell.state] ? cell.state : "unassessed";
+      const evidenceRefs = Array.isArray(cell.evidenceRefs) ? cell.evidenceRefs.filter(Boolean) : [];
+      const evidenceText = evidenceRefs.length > 0 ? `；${evidenceRefs.join("；")}` : "";
       return `
-        <article class="module-section" id="${escapeHtml(sectionId)}" data-section-id="${escapeHtml(sectionId)}" data-section-title="${escapeHtml(title)}">
-          <h2>${escapeHtml(title)}</h2>
-          <div class="section-body">${body}</div>
-        </article>
+        <td data-evidence-state="${escapeHtml(cellState)}" aria-label="${escapeHtml(subsystem.title)} · ${escapeHtml(level.label)}：${escapeHtml(stateLabels[cellState])}${escapeHtml(evidenceText)}">
+          <span class="career-evidence-mark" aria-hidden="true"></span>
+          <span class="career-evidence-state">${escapeHtml(stateLabels[cellState])}</span>
+        </td>
       `;
-    })
-    .filter(Boolean)
-    .join("");
+    }).join("");
+    return `
+      <tr${activeSubsystemIds.has(row.subsystemId) ? ' class="is-current-path"' : ""}>
+        <th scope="row"><span>${escapeHtml(subsystem.id)}</span><strong>${escapeHtml(subsystem.title)}</strong>${activeSubsystemIds.has(row.subsystemId) ? '<small>当前路径</small>' : ""}</th>
+        ${cells}
+      </tr>
+    `;
+  }).join("");
+  return `
+    <article class="career-evidence-section" id="${escapeHtml(`${getSectionId(module, "目标")}-evidence`)}" data-section-id="${escapeHtml(`${getSectionId(module, "目标")}-evidence`)}" data-section-title="能力证据" aria-labelledby="career-evidence-title">
+      <div class="career-evidence-scroll" role="region" tabindex="0" aria-labelledby="career-evidence-title" aria-describedby="career-evidence-note">
+        <table class="career-evidence-matrix">
+          <caption id="career-evidence-title">
+            <strong>能力证据矩阵 · 六系统 × 五深度</strong>
+            <span>只登记结算或校准中明确指认的证据，不计算百分比。</span>
+          </caption>
+          <thead><tr><th scope="col">子系统</th>${headerCells}</tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+      <p class="career-evidence-note" id="career-evidence-note">空心焊盘表示尚未登记证据，不等于不会。当前路径只标出这项工作作用于哪里，不会提前填入任何深度。</p>
+    </article>
+  `;
+}
+
+function renderCareerInsightAndReference(module, runtime) {
+  const sectionId = getSectionId(module, "核心知识");
+  const unit = runtime.activeUnit ?? runtime.units.at(-1);
+  const insight = unit?.insight || "本单元尚未留下朱批；完成产物与结算问答后，再提炼真正改变判断的那一点。";
+  return `
+    <article class="career-annotation" id="${escapeHtml(sectionId)}" data-section-id="${escapeHtml(sectionId)}" data-section-title="核心知识">
+      <h2 class="career-section-label">朱批 · 当前单元要带走的判断</h2>
+      <div class="career-annotation-layout">
+        <div class="career-annotation-body">
+          <strong>${escapeHtml(unit?.id ?? "")} ${escapeHtml(unit?.title ?? "阶段结算")}</strong>
+          ${unit?.bodyHtml ?? ""}
+        </div>
+        <aside class="career-annotation-aside">
+          <span class="career-annotation-label">朱批</span>
+          <p>${escapeHtml(insight)}</p>
+        </aside>
+      </div>
+      <details class="career-reference">
+        <summary>展开完整路线依据与运行规则</summary>
+        <div class="career-reference-body">
+          <section><h3>长期目标</h3>${getSection(module, "目标")}</section>
+          <section><h3>结算、深度与校准</h3>${getSection(module, "核心知识")}</section>
+        </div>
+      </details>
+    </article>
+  `;
+}
+
+function renderCareerStages(module) {
+  const sectionId = getSectionId(module, "时间线");
+  const items = module.outcomeGates?.length
+    ? module.outcomeGates
+    : (module.timeline ?? []).map((item, index) => ({
+        id: item.id,
+        label: item.label,
+        order: index + 1,
+        status: item.status === "current" ? "current" : "planned",
+        window: { label: "待校准", commitment: "flexible" },
+        context: "长期阶段",
+        outcome: item.text,
+      }));
+  const gates = items.map((item, index) => {
+    const current = item.status === "current" || (index === 0 && !items.some((entry) => entry.status === "current"));
+    return `
+      <li class="career-gate${current ? " is-current" : " is-planned"}"${current ? ' aria-current="step"' : ""}>
+        <span class="career-gate-marker" aria-hidden="true">${escapeHtml(String(item.order ?? index + 1))}</span>
+        <div class="career-gate-window">
+          <span>柔性时间窗</span>
+          <strong>${escapeHtml(item.window?.label ?? "待校准")}</strong>
+        </div>
+        <div class="career-gate-copy">
+          <p class="career-gate-title"><span>${escapeHtml(item.label)}</span><strong>${escapeHtml(item.context || "长期阶段")}</strong></p>
+          <p class="career-gate-outcome"><span>结果闸门</span>${escapeHtml(item.outcome)}</p>
+        </div>
+      </li>
+    `;
+  }).join("");
+  return `
+    <article class="career-stage-track" id="${escapeHtml(sectionId)}" data-section-id="${escapeHtml(sectionId)}" data-section-title="时间线">
+      <h2 class="career-section-label">四阶段 · 结果闸门</h2>
+      <ol class="career-gate-list">${gates}</ol>
+      <p class="career-gate-note">阶段由结果解锁，时间窗只提供远景坐标；日期不会自动制造进度或欠债。</p>
+    </article>
+  `;
+}
+
+function renderCareerRoadmap(module) {
+  const runtime = getCareerUnitRuntime(module);
+  return `
+    <div class="career-dashboard">
+      ${renderCareerWorkbench(module, runtime)}
+      ${renderCareerLedger(module, runtime)}
+      ${renderCareerBoard(module, runtime)}
+      ${renderCareerEvidenceMatrix(module, runtime)}
+      ${renderCareerInsightAndReference(module, runtime)}
+      ${renderCareerStages(module)}
+    </div>
+  `;
+}
+
+function settleCareerUnit(module, unitId) {
+  const runtime = getCareerUnitRuntime(module);
+  if (!runtime.activeUnit || runtime.activeUnit.id !== unitId) return;
+  taskState[runtime.activeUnit.taskId] = true;
+  saveTaskState(taskState);
+  state.careerLastSettledUnitId = unitId;
+  state.moduleRenderVersion += 1;
+  renderCurrentModule();
+  renderSectionRail(module);
+  observeSections();
+  announce(`${unitId} ${runtime.activeUnit.title}已结算并落印，下一单元已解冻`);
+  window.setTimeout(() => {
+    els.sectionList.querySelector(`[data-career-unit-seal="${CSS.escape(unitId)}"]`)?.classList.remove("is-just-settled");
+    if (state.careerLastSettledUnitId === unitId) state.careerLastSettledUnitId = "";
+  }, 760);
+}
+
+function setCareerBoardView(view) {
+  if (!["focus", "overview"].includes(view)) return;
+  state.careerBoardView = view;
+  els.sectionList.querySelectorAll("[data-career-board-view]").forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.dataset.careerBoardView === view));
+  });
+  els.sectionList.querySelectorAll("[data-career-board-panel]").forEach((panel) => {
+    panel.hidden = panel.dataset.careerBoardPanel !== view;
+  });
+  announce(view === "focus" ? "已显示当前单元路径" : "已显示六子系统总览");
+}
+
+function bindCareerRoadmap(module) {
+  els.sectionList.querySelector("[data-career-settle-unit]")?.addEventListener("click", (event) => {
+    settleCareerUnit(module, event.currentTarget.dataset.careerSettleUnit);
+  });
+  els.sectionList.querySelectorAll("[data-career-board-view]").forEach((button) => {
+    button.addEventListener("click", () => {
+      setCareerBoardView(button.dataset.careerBoardView);
+    });
+  });
+  els.sectionList.querySelectorAll("[data-career-log-action]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const logsModule = getModuleById("logs");
+      openModule("logs", {
+        targetSectionId: logsModule ? getSectionId(logsModule, "任务") : "",
+      });
+    });
+  });
+  els.sectionList.querySelectorAll("[data-career-module-id]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      openModule(link.dataset.careerModuleId);
+    });
+  });
 }
 
 function renderFinanceOverviewDashboard(module) {
@@ -1572,8 +1991,13 @@ function renderCurrentModule() {
   state.financeGraphResizeObserver?.disconnect();
   state.financeGraphResizeObserver = null;
   const isFinanceOverview = PROJECT_ID === "finance" && module.id === state.data.project.dashboardModuleId;
+  const isCareerRoadmap = PROJECT_ID === "foundations" && module.id === "career-roadmap";
+  const isLongTermModule = PROJECT_ID === "foundations" && module.planScope === "long-term";
+  const projectGoal = state.data.project.targetGoal ?? state.data.project.targetRole;
   els.main.classList.toggle("is-finance-overview", isFinanceOverview);
+  els.main.classList.toggle("is-career-roadmap", isCareerRoadmap);
   els.moduleHeader.classList.toggle("is-compact", isFinanceOverview);
+  els.moduleHeader.classList.toggle("is-career", isCareerRoadmap);
   els.moduleHeader.innerHTML = isFinanceOverview ? `
     <div class="finance-overview-header">
       <div>
@@ -1586,12 +2010,31 @@ function renderCurrentModule() {
         <strong>${escapeHtml(String(getOverallLearningProgress()))}%</strong>
       </div>
     </div>
+  ` : isCareerRoadmap ? `
+    <div class="career-header">
+      <p class="career-header-kicker">${escapeHtml(state.data.project.title)} · CAREER ROADMAP · 结算制</p>
+      <h1 class="career-header-title module-title" tabindex="-1">贾维斯 0.x 装配台</h1>
+      <p class="career-header-meta">单线程 · 台账只涨不跌 · 空窗不记债</p>
+      <p class="career-header-goal">长期目标：${escapeHtml(projectGoal)}</p>
+    </div>
   ` : `
-    <p class="module-kicker">${escapeHtml(state.data.project.title)} · ${escapeHtml(state.data.project.targetRole)}</p>
+    <p class="module-kicker">${escapeHtml(state.data.project.title)} · ${escapeHtml(module.planScope === "interview" ? "临时面试突击 · 不改写长期路线" : projectGoal)}</p>
     <h1 class="module-title" tabindex="-1">${escapeHtml(module.title)}</h1>
     <p class="module-meta">${escapeHtml(getModuleMeta(module, { includeDate: true }))}</p>
-    ${renderProgressSummary(module)}
+    ${isLongTermModule ? `
+      <div class="long-term-module-context">
+        <span>在总路线中的职责</span>
+        <strong>${escapeHtml(module.goalRole)}</strong>
+        <p>长期模块不使用百分比；是否进入主线由 Career Roadmap 的活动单元决定。</p>
+      </div>
+    ` : renderProgressSummary(module)}
   `;
+
+  if (isCareerRoadmap) {
+    els.sectionList.innerHTML = renderCareerRoadmap(module);
+    bindCareerRoadmap(module);
+    return;
+  }
 
   if (module.id === state.data.project.dashboardModuleId) {
     els.sectionList.innerHTML = renderOverviewDashboard(module);

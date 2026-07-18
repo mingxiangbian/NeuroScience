@@ -50,5 +50,6 @@ export function getFinanceReentryState(modules = []) {
 export function getRenderableSectionTitles(module, projectId) {
   const generatedTitles = Object.keys(module?.sections ?? {});
   if (projectId === "finance") return generatedTitles;
+  if (module?.id === "overview") return generatedTitles;
   return CURATED_SECTION_TITLES.filter((title) => generatedTitles.includes(title));
 }

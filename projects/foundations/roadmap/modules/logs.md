@@ -1,51 +1,88 @@
 ---
 id: logs
-title: Logs
+title: Ledger & Calibration
 status: not-started
 learning_progress: 0
-last_updated: 2026-07-05
+last_updated: 2026-07-18
 priority: medium
+plan_scope: long-term
+navigation_group: practice
+module_role: record
+goal_role: 断点与校准
+subsystems: 1,2,3,4,5,6
 ---
 
 ## 目标
 
-保存跨模块复盘、当周实际发生的事、未归类想法和下一轮调整。Logs 不替代能力模块，只提供横向视角。
+提供结算制学习系统的手动记录视图：帮助重新进入活动单元，保存撞墙事实，指认结算产物，并在触发时校准对子系统和路线的判断。
+
+`ledger.md` 是活动状态、断点、结算数和校准记录的唯一账本。本模块不建立第二套进度，也不按周制造复盘义务。
 
 ## 当前状态
 
-第一版 logs 从 Weekly Review Checklist 初始化，后续按日期追加。它解决“这周/这个月总体做了什么”的问题，而不是重新变成主导航。
+当前活动单元、断点和数字以 `ledger.md` 为准。站内页面暂时只保存记录协议与人工整理的摘要；**Phase 3 的 ledger 自动摄入本轮明确不做**，因此这里不会假装与账本实时同步。
+
+空窗不记债。重新回来时先读断点，执行“下一步第一个动作”，而不是重排整套计划。
 
 ## 核心知识
 
-复盘应服务面试准备，而不是写情绪流水账。每条 log 尽量关联：
+### 四类记录
 
-- coding pattern
-- system design case
-- Agent/LLM component
-- failure mode
-- mock answer
-- interview artifact
+- **断点**：做到哪、下一步第一个动作、有没有墙。
+- **撞墙**：在做什么、卡在哪、已经试过什么。
+- **结算**：单元、类型、产物、判据回答和实际 sessions。
+- **校准**：理解改变、子系统重要性变化、当前主线和需要降级的假设。
+
+### 记录边界
+
+- 记录事实和下一动作，不写情绪流水账。
+- 失败记录可以成为实验结果或诊断笔记，不需要掩盖。
+- 结算数字只涨；当前理解和置信度允许下降。
+- 日期只用于回看真实节奏，不产生日期义务。
+- 系统行为的原始 output、trace 和指标归 Evals & Diagnostics；本模块只链接产物和结论。
 
 ## 任务
 
-### Weekly Review Checklist
+### Session 断点
 
-Every week, answer:
+每次结束时手动留下三行：
 
-1. Which coding pattern still causes mistakes?
-2. Which system design case can I explain without notes?
-3. Which Agent/LLM component did I implement?
-4. What failure mode did I learn to detect?
-5. Which answer sounded vague during mock practice?
-6. What is one artifact I can mention in an interview?
-7. What should I cut next week because it is not interview-relevant?
+1. 做到哪。
+2. 下一步第一个可执行动作。
+3. 有没有墙；如果有，墙是什么。
 
-If a week goes badly, do not restart the whole plan. Repeat the current week with only `minimum` and `standard` tasks.
+### 撞墙记录
+
+当同一错误反复原地发生、开始漫无目的搜索或已经无法判断下一步时，记录：
+
+- 在做什么。
+- 卡在哪个可观察现象。
+- 试过哪些动作，分别发生了什么。
+
+记录完成即可合法离场；之后可以交给 AI 协助诊断，或升级为失败分析单元。
+
+### 结算记录
+
+结算时手动指认：
+
+- 单元 ID、标题与类型。
+- 可定位的产物。
+- 对应类型的判据回答。
+- 实际使用的 sessions。
+- 该单元怎样贡献于六子系统、评估、机制解释或设计判断。
+
+### 校准记录
+
+事件触发后只回答四问：
+
+1. 我对贾维斯的理解改变了什么？
+2. 哪个子系统比之前更重要或更不重要？
+3. 当前主线仍是信息增益最高的下一步吗？
+4. 哪个原有假设应降级、删除或继续验证？
 
 ## 时间线
 
-- 2026-07-05：建立 Foundations roadmap reader 结构。决定主导航按能力模块，而不是按周；时间叙事放入模块内部时间线和 Logs。
-- Week 1 review：记录 coding baseline、tool router、tool-calling agent answer。
-- Week 2 review：记录 graph/RAG/retrieval evaluator 和 failure taxonomy。
-- Week 3 review：记录 heap/DP/memory store 和 ambiguity story。
-- Week 4 review：记录 mock sprint、system design answers、behavioral stories 和 portfolio summary。
+- Session 结束时：未开始；写断点，没有进展也可以只写墙。
+- 单元满足判据时：未开始；追加结算记录并更新数字。
+- 卡住信号出现时：未开始；立即写三行墙，不等待固定复盘日。
+- 校准事件出现时：未开始；更新当前理解与假设，不重写历史结算。

@@ -6,6 +6,7 @@ const foundationsPageUrl = new URL("../projects/foundations/index.html", import.
 const buildScriptUrl = new URL("../projects/foundations/scripts/build-roadmap-data.mjs", import.meta.url);
 const dataUrl = new URL("../projects/foundations/roadmap/roadmap-data.json", import.meta.url);
 const cssUrl = new URL("../projects/foundations/roadmap/roadmap-reader.css", import.meta.url);
+const careerCssUrl = new URL("../projects/foundations/roadmap/career-roadmap.css", import.meta.url);
 const jsUrl = new URL("../projects/foundations/roadmap/roadmap-reader.js", import.meta.url);
 const codeListingJsUrl = new URL("../projects/foundations/roadmap/code-listing.js", import.meta.url);
 const regularCodeFontUrl = new URL("../projects/foundations/assets/fonts/ibm-plex-mono/IBMPlexMono-Regular.woff2", import.meta.url);
@@ -15,23 +16,37 @@ const modulesDirUrl = new URL("../projects/foundations/roadmap/modules/", import
 const packageJsonUrl = new URL("../package.json", import.meta.url);
 
 const requiredModules = [
-  ["overview", "Overview"],
   ["career-roadmap", "Career Roadmap"],
-  ["interview-sprint", "Interview Sprint"],
-  ["coding", "Coding"],
   ["llm-systems", "LLM Systems"],
-  ["agent-design", "Agent Design"],
-  ["rag-memory", "RAG & Memory"],
-  ["evals-debugging", "Evals & Debugging"],
+  ["rag-memory", "Lifelong Memory"],
+  ["agent-design", "Agent Runtime"],
+  ["coding", "Engineering Foundations"],
+  ["evals-debugging", "Evals & Diagnostics"],
   ["research-reading", "Research Reading"],
+  ["logs", "Ledger & Calibration"],
+  ["interview-sprint", "Interview Sprint"],
   ["behavioral-strategy", "Behavioral / Strategy"],
-  ["logs", "Logs"],
+  ["overview", "Interview Overview"],
 ];
+
+const interviewModuleIds = new Set(["interview-sprint", "behavioral-strategy", "overview"]);
+const longTermResponsibilityPatterns = {
+  "career-roadmap": /贾维斯式的智能陪伴助手[\s\S]*贾维斯的六个子系统/,
+  "llm-systems": /① 基座模型理解[\s\S]*⑥ 推理系统/,
+  "rag-memory": /③ 终身记忆[\s\S]*记忆是否提高了持续理解和行动质量/,
+  "agent-design": /⑤ Agent 执行[\s\S]*用户始终保有权限与控制权/,
+  "coding": /为贾维斯 0\.x 提供可独立完成、可测试、可诊断的工程基础/,
+  "evals-debugging": /横跨六个子系统的验证与诊断能力/,
+  "research-reading": /改变贾维斯 0\.x 的设计决策/,
+  "logs": /ledger\.md[\s\S]*断点[\s\S]*校准/,
+};
+const oldInterviewDrivenPattern = /30\s*\/\s*45\s*\/\s*60(?:-Day)?|\bWeek\s+(?:N|\d+)\b|\bDay\s+(?:N|\d+)\b|Interview story|\bmock\b|\breadiness\b/i;
 
 assert.equal(existsSync(foundationsPageUrl), true, "Foundations should expose a static reader page");
 assert.equal(existsSync(buildScriptUrl), true, "Foundations should include a roadmap data build script");
 assert.equal(existsSync(dataUrl), true, "Foundations should include generated roadmap data");
 assert.equal(existsSync(cssUrl), true, "Foundations should include dedicated roadmap reader CSS");
+assert.equal(existsSync(careerCssUrl), true, "Foundations should include dedicated Career Roadmap CSS");
 assert.equal(existsSync(jsUrl), true, "Foundations should include dedicated roadmap reader JS");
 assert.equal(existsSync(codeListingJsUrl), true, "Foundations should include the code listing enhancer");
 assert.equal(existsSync(regularCodeFontUrl), true, "Foundations should vendor IBM Plex Mono Regular");
@@ -46,19 +61,18 @@ for (const [id] of requiredModules) {
   assert.match(moduleMarkdown, /status: (not-started|in-progress|learning|review|done)/, `module ${id} should declare an allowed learning status`);
   assert.match(moduleMarkdown, /learning_progress: [0-9]+/, `module ${id} should declare learning progress`);
   assert.doesNotMatch(moduleMarkdown, /^progress: /m, `module ${id} should not use legacy progress`);
-  const expectedLastUpdated = {
-    // career-roadmap settles over time; only its date format is checked below.
-    "career-roadmap": String.raw`\d{4}-\d{2}-\d{2}`,
-    "interview-sprint": "2026-07-11",
-    "evals-debugging": "2026-07-11",
-    "agent-design": "2026-07-10",
-    "behavioral-strategy": "2026-07-10",
-  }[id] ?? "2026-07-05";
-  assert.match(moduleMarkdown, new RegExp(`last_updated: ${expectedLastUpdated}`), `module ${id} should declare a last updated date`);
+  assert.match(moduleMarkdown, /last_updated: \d{4}-\d{2}-\d{2}/, `module ${id} should declare a last updated date`);
+  assert.match(moduleMarkdown, /^plan_scope: (long-term|interview)$/m, `module ${id} should declare its plan scope`);
+  assert.match(moduleMarkdown, /^navigation_group: (north-star|systems|practice|interview)$/m, `module ${id} should declare its navigation group`);
+  assert.match(moduleMarkdown, /^module_role: (control|domain|support|record|interview)$/m, `module ${id} should declare its module role`);
+  assert.match(moduleMarkdown, /^goal_role: \S.*$/m, `module ${id} should declare its goal responsibility`);
+  assert.match(moduleMarkdown, /^subsystems:\s*(?:[1-6](?:,[1-6])*)?\s*$/m, `module ${id} should declare its subsystem mapping`);
   if (id === "overview") {
-    assert.match(moduleMarkdown, /## Dashboard/, "overview should be a dashboard source");
-    assert.match(moduleMarkdown, /## Interview Signal/, "overview should include interview signal calibration");
-    assert.match(moduleMarkdown, /真实 baseline|Signal Rubric|当前最大风险/, "overview should track interview-readiness uncertainty");
+    assert.match(moduleMarkdown, /title: Interview Overview/, "overview should be explicitly limited to interview preparation");
+    assert.match(moduleMarkdown, /不定义个人长期学习方向/, "overview should not define the long-term learning direction");
+    assert.match(moduleMarkdown, /Career Roadmap[\s\S]*唯一长期北极星/, "overview should defer long-term control to Career Roadmap");
+    assert.match(moduleMarkdown, /## 目标[\s\S]*## 使用边界[\s\S]*## 面试能力地图[\s\S]*## Signal Rubric[\s\S]*## 任务[\s\S]*## 时间线/, "overview should retain an interview-only map and timeline");
+    assert.doesNotMatch(moduleMarkdown, /## Dashboard|## Interview Signal/, "overview should no longer act as the long-term dashboard");
     assert.doesNotMatch(moduleMarkdown, /## 验收标准|## 下一步/, "overview should not use ordinary-module closing sections");
   } else if (id === "interview-sprint") {
     assert.match(moduleMarkdown, /时间驾驶舱|D1（2026-07-10）|D7（2026-07-16）/, "interview sprint should stay a seven-day cockpit module");
@@ -75,9 +89,21 @@ for (const [id] of requiredModules) {
     assert.match(moduleMarkdown, /## 目标[\s\S]*## 当前状态[\s\S]*## 核心知识[\s\S]*## 任务[\s\S]*## 时间线/, `module ${id} should preserve the core roadmap sections`);
     assert.doesNotMatch(moduleMarkdown, /## 资源|## 反思|## 面试表达|## 验收标准|## 下一步/, `module ${id} should not keep old side-note or project-management sections`);
   }
+  if (!interviewModuleIds.has(id)) {
+    assert.match(moduleMarkdown, longTermResponsibilityPatterns[id], `module ${id} should state its responsibility to the Jarvis long-term goal`);
+    if (id !== "career-roadmap") {
+      assert.doesNotMatch(moduleMarkdown, oldInterviewDrivenPattern, `long-term module ${id} should not retain interview-driven scheduling or readiness language`);
+    }
+  }
+  if (id === "career-roadmap") {
+    assert.match(moduleMarkdown, /统一五层：\*\*理解 → 实现 → 验证 → 诊断 → 综合\/创新\*\*/, "Career Roadmap should remain the source of the five evidence depths");
+    assert.match(moduleMarkdown, /U1–U3[\s\S]*→ 全部（验证地基）→ 现在/, "Career Roadmap should map U1-U3 to all six subsystems");
+    assert.match(moduleMarkdown, /U4–U7[\s\S]*→ ② 人格情感 \+ ⑤ → 出国前/, "Career Roadmap should map U4-U7 to persona and Agent execution");
+    assert.match(moduleMarkdown, /阶段一 · 现在–2027\.08[\s\S]*阶段四 · 2032\+/, "Career Roadmap should remain the source of its four flexible horizons");
+  }
   if (id === "agent-design") {
     assert.match(moduleMarkdown, /status: learning[\s\S]*learning_progress: 0/, "agent design should be learning without claiming completion");
-    assert.match(moduleMarkdown, /Production Agent Architecture Layers/, "agent design should record the four-layer architecture gap");
+    assert.match(moduleMarkdown, /### 架构层次[\s\S]*Reasoning[\s\S]*Runtime \/ Orchestration[\s\S]*Platform[\s\S]*Evals \/ Security/, "Agent Runtime should retain its four-layer architecture model");
   }
   if (id === "behavioral-strategy") {
     assert.match(moduleMarkdown, /status: learning[\s\S]*learning_progress: 0/, "behavioral strategy should be learning without claiming independent readiness");
@@ -92,6 +118,7 @@ execFileSync(process.execPath, [buildScriptUrl.pathname], { stdio: "pipe" });
 
 const html = readFileSync(foundationsPageUrl, "utf8");
 const css = readFileSync(cssUrl, "utf8");
+const careerCss = readFileSync(careerCssUrl, "utf8");
 const js = readFileSync(jsUrl, "utf8");
 const codeListingJs = readFileSync(codeListingJsUrl, "utf8");
 const data = JSON.parse(readFileSync(dataUrl, "utf8"));
@@ -118,6 +145,7 @@ assert.match(html, /id="reader-main"/, "Foundations page should include a center
 assert.match(html, /id="note-panel"/, "Foundations page should include a right note panel");
 assert.match(html, /id="global-search"/, "Foundations page should include global search");
 assert.match(html, /href="roadmap\/roadmap-reader\.css"/, "Foundations page should load dedicated reader CSS");
+assert.match(html, /href="roadmap\/career-roadmap\.css"/, "Foundations page should load the Career Roadmap visual layer");
 assert.match(html, /src="roadmap\/roadmap-reader\.js"/, "Foundations page should load dedicated reader JS");
 assert.doesNotMatch(html, /class="doc-grid"|class="doc-link"/, "Foundations page should no longer render the document-card homepage as the main experience");
 assert.doesNotMatch(html, /href="README\.md"[\s\S]*href="multi-agent-planner\.md"[\s\S]*href="llm-agent-engineer-roadmap\.md"/, "Foundations homepage should not be a README/template/roadmap card list");
@@ -128,8 +156,6 @@ assert.match(css, /\.module-nav-item\[aria-current="true"\]/, "roadmap CSS shoul
 assert.match(css, /\.learning-progress/, "roadmap CSS should style learning progress");
 assert.match(css, /\.progress-ring/, "roadmap CSS should style a module progress ring");
 assert.match(css, /\.overall-progress/, "roadmap CSS should label overall learning progress");
-assert.match(css, /\.dashboard-grid/, "roadmap CSS should style the overview dashboard");
-assert.match(css, /\.dashboard-module-list/, "roadmap CSS should style module dashboard rows");
 assert.match(css, /--knowledge-heading-font:\s*"Kaiti SC",\s*STKaiti,\s*KaiTi/, "knowledge articles should use the approved heading font stack");
 assert.match(css, /--knowledge-body-font:\s*"Songti SC",\s*STSong/, "knowledge articles should use the approved body font stack");
 assert.match(css, /\.knowledge-article-title\s*\{[\s\S]*font-size:\s*38px/, "knowledge articles should use the fixed desktop title size");
@@ -219,12 +245,37 @@ assert.match(codeListingJs, /COPY_RESET_DELAY_MS = 1500/, "copy feedback should 
 assert.match(codeListingJs, /cancelSchedule = globalThis\.clearTimeout/, "copy feedback should support cancelling an earlier reset");
 assert.match(codeListingJs, /const copyAttempt = \+\+copyAttemptVersion/, "copy feedback should let the latest activation own the visible state");
 assert.match(codeListingJs, /cancelSchedule\(resetTimerId\)/, "copy feedback should cancel an earlier reset before starting a new attempt");
-assert.match(js, /function renderOverviewDashboard/, "roadmap JS should render overview as a dashboard");
-assert.match(js, /getNextIncompleteModule\(learningModules\)/, "Foundations overview should use the tested done-status selector");
 assert.doesNotMatch(js, /status !== "complete"/, "Foundations should not use a status rejected by its builder");
-assert.match(js, /\["Interview Signal",\s*getSection\(module, "Interview Signal"\)\]/, "overview dashboard should render the interview signal section");
-assert.match(js, /stableModules = learningModules\.filter\(\(item\) => item\.id !== "interview-sprint"\)/, "overview dashboard should keep sprint out of the stable module count");
-assert.match(js, /String\(stableModules\.length\)/, "overview dashboard should count stable modules instead of temporary sprint modules");
+assert.match(js, /function getCareerUnitRuntime\(module\)[\s\S]*taskState\[unit\.taskId\]/, "Career Roadmap should derive settlement state from stable unit task ids");
+assert.match(js, /runtimeStatus: index < settledCount[\s\S]*"settled"[\s\S]*"active"[\s\S]*"frozen"/, "Career Roadmap should expose settled, active, and frozen runtime states");
+assert.match(js, /function settleCareerUnit\(module, unitId\)[\s\S]*taskState\[runtime\.activeUnit\.taskId\] = true;[\s\S]*saveTaskState\(taskState\)/, "Career Roadmap should settle only its active unit through the shared local task store");
+assert.match(js, /state\.data\.project\.navigationGroups/, "Foundations navigation should use the generated group contract");
+assert.match(js, /module-nav-group/, "Foundations navigation should render group boundaries");
+assert.match(js, /module-nav-frozen-slot/, "Foundations navigation should retain frozen subsystem slots");
+assert.match(js, /module\.planScope === "interview" \|\| PROJECT_ID === "finance"/, "only interview and Finance navigation should render percentage progress");
+assert.match(js, /isLongTermModule \? `[\s\S]*长期模块不使用百分比[\s\S]*` : renderProgressSummary\(module\)/, "ordinary long-term modules should show their responsibility instead of percentage progress");
+assert.match(js, /function renderCareerBoard\(module, runtime\)[\s\S]*① BASE MODEL[\s\S]*② PERSONA[\s\S]*③ LIFELONG MEMORY[\s\S]*④ REALTIME MULTIMODAL[\s\S]*⑤ AGENT EXEC[\s\S]*⑥ SYSTEM LAYER/, "Career Roadmap should render all six Jarvis subsystem slots");
+assert.doesNotMatch(js, /U-QUEUE|renderCareerDepthPads/, "the system overview should no longer duplicate the settlement queue or depth pads");
+assert.match(js, /function renderCareerGoalTrace\(runtime\)[\s\S]*unit\.goalMapping[\s\S]*pathLabel[\s\S]*subsystemIds/, "the focused board view should derive its path from the generated roadmap mapping");
+assert.match(js, /data-career-board-view="focus"[\s\S]*data-career-board-view="overview"[\s\S]*data-career-board-panel="focus"[\s\S]*data-career-board-panel="overview"/, "Career Roadmap should expose focused and overview board views");
+assert.match(js, /function setCareerBoardView\(view\)[\s\S]*aria-pressed[\s\S]*panel\.hidden/, "board view switching should update accessible state without rerendering the module");
+const careerEvidenceRenderer = js.slice(js.indexOf("function renderCareerEvidenceMatrix"), js.indexOf("function renderCareerInsightAndReference"));
+assert.match(careerEvidenceRenderer, /<table class="career-evidence-matrix">[\s\S]*scope="col"/, "the six-by-five evidence view should render a semantic table with column headers");
+assert.match(careerEvidenceRenderer, /scope="row"/, "the evidence matrix should identify every subsystem through row headers");
+assert.match(careerEvidenceRenderer, /data-evidence-state="\$\{escapeHtml\(cellState\)\}"/, "evidence cells should expose their qualitative state to markup and styling");
+assert.doesNotMatch(careerEvidenceRenderer, /taskState|getLearningProgress|overallLearningProgress/, "the evidence matrix must not infer depth from settlement or percentage state");
+assert.match(js, /title: "能力证据"/, "the section rail should expose the evidence matrix as a navigation target");
+const careerStagesRenderer = js.slice(js.indexOf("function renderCareerStages"), js.indexOf("function renderCareerRoadmap"));
+assert.match(careerStagesRenderer, /module\.outcomeGates/, "the long-term horizon should use source-backed outcome gates");
+assert.match(careerStagesRenderer, /career-gate-list/, "the long-term horizon should render an ordered outcome-gate rail");
+assert.match(careerStagesRenderer, /aria-current="step"/, "the long-term horizon should identify its current step accessibly");
+assert.match(careerCss, /\.career-evidence-scroll[\s\S]*overflow-x:\s*auto[\s\S]*\.career-evidence-matrix[\s\S]*min-width:\s*(?:680|720)px/, "the evidence matrix should own its horizontal overflow on narrow screens");
+assert.match(careerCss, /\.career-gate-list[\s\S]*grid-template-columns:\s*repeat\(4,[\s\S]*@media \(max-width: 620px\)[\s\S]*\.career-gate-list[\s\S]*grid-template-columns:\s*minmax\(0, 1fr\)/, "outcome gates should change from an ordered desktop rail to a vertical mobile rail");
+const desktopGateRailRule = careerCss.slice(careerCss.indexOf('.career-gate-list::before'), careerCss.indexOf('.career-gate {'));
+assert.match(desktopGateRailRule, /position:\s*absolute/, "the desktop gate connector should overlay the explicit four-column grid instead of consuming its cells");
+assert.doesNotMatch(desktopGateRailRule, /grid-column|grid-row/, "the desktop gate connector must not force outcome gates into implicit grid columns");
+assert.match(js, /function renderCareerRoadmap\(module\)/, "roadmap JS should isolate the Career Roadmap renderer");
+assert.match(js, /if \(isCareerRoadmap\) \{[\s\S]*renderCareerRoadmap\(module\);[\s\S]*bindCareerRoadmap\(module\);[\s\S]*return;/, "Career Roadmap should use its dedicated render and interaction path");
 assert.match(js, /function renderKnowledgeNotesSection/, "roadmap JS should render concept-centric knowledge notes");
 assert.match(js, /function renderKnowledgeArticleSection/);
 assert.match(js, /class="knowledge-article"/);
@@ -262,7 +313,7 @@ assert.match(js, /function renderActiveContextualNotePanel/, "annotation edits s
 assert.match(js, /function updateAnnotationCategory[\s\S]*renderActiveContextualNotePanel\(\);/, "category changes should keep archived annotations visible");
 assert.match(js, /function runSearch/, "roadmap JS should implement local keyword search");
 assert.match(js, /function setTheme/, "roadmap JS should support theme switching");
-assert.match(js, /function renderProgressSummary/, "roadmap JS should render labeled module and overall learning progress");
+assert.match(js, /function renderProgressSummary/, "roadmap JS should retain labeled progress for interview and Finance modules");
 assert.match(js, /function renderTimelineSection/, "roadmap JS should render timeline as a visual component");
 assert.match(js, /function renderSearchResults/, "roadmap JS should isolate section-level search rendering");
 assert.match(js, /function hasSearchTerm/, "roadmap JS should avoid raw substring-only search matches");
@@ -338,30 +389,86 @@ assert.match(js, /function setMobileDirectoryOpen[\s\S]*classList\.remove\("is-m
 assert.match(js, /function trapMobileDrawerFocus\(event\)[\s\S]*state\.annotationDeletePopover[\s\S]*els\.mobileNoteDrawer[\s\S]*els\.sidebar/, "mobile focus trapping should cover nested annotation dialogs and both drawers");
 assert.match(js, /trapMobileDrawerFocus\(event\);/, "the shared keyboard handler should run the mobile drawer focus trap");
 
+const expectedModuleMetadata = {
+  "career-roadmap": { planScope: "long-term", navigationGroup: "north-star", moduleRole: "control", goalRole: "长期总控", subsystems: ["1", "2", "3", "4", "5", "6"] },
+  "llm-systems": { planScope: "long-term", navigationGroup: "systems", moduleRole: "domain", goalRole: "基座模型与推理系统", subsystems: ["1", "6"] },
+  "rag-memory": { planScope: "long-term", navigationGroup: "systems", moduleRole: "domain", goalRole: "终身记忆", subsystems: ["3"] },
+  "agent-design": { planScope: "long-term", navigationGroup: "systems", moduleRole: "domain", goalRole: "执行与安全运行时", subsystems: ["5"] },
+  "coding": { planScope: "long-term", navigationGroup: "practice", moduleRole: "support", goalRole: "工程基础", subsystems: ["1", "3", "5", "6"] },
+  "evals-debugging": { planScope: "long-term", navigationGroup: "practice", moduleRole: "support", goalRole: "验证与诊断", subsystems: ["1", "2", "3", "4", "5", "6"] },
+  "research-reading": { planScope: "long-term", navigationGroup: "practice", moduleRole: "support", goalRole: "研究证据", subsystems: ["1", "2", "3", "4", "5", "6"] },
+  "logs": { planScope: "long-term", navigationGroup: "practice", moduleRole: "record", goalRole: "断点与校准", subsystems: ["1", "2", "3", "4", "5", "6"] },
+  "interview-sprint": { planScope: "interview", navigationGroup: "interview", moduleRole: "interview", goalRole: "临时面试突击", subsystems: [] },
+  "behavioral-strategy": { planScope: "interview", navigationGroup: "interview", moduleRole: "interview", goalRole: "临时面试突击", subsystems: [] },
+  "overview": { planScope: "interview", navigationGroup: "interview", moduleRole: "interview", goalRole: "临时面试突击", subsystems: [] },
+};
+
 assert.equal(data.project.id, "foundations", "generated data should identify the Foundations project");
-assert.equal(data.project.targetRole, "Agent / LLM Systems Engineer", "generated data should keep the target role");
-assert.equal(data.project.dashboardModuleId, "overview", "generated data should identify overview as the dashboard");
+assert.equal(data.project.targetGoal, "贾维斯式智能陪伴系统", "generated data should identify the long-term Jarvis target");
+assert.equal(Object.hasOwn(data.project, "targetRole"), false, "generated data should not retain the interview role as its target");
+assert.equal(data.project.dashboardModuleId, "career-roadmap", "generated data should identify Career Roadmap as the dashboard");
 assert.equal(typeof data.project.overallLearningProgress, "number", "generated data should include overall learning progress");
 assert.ok(
   data.project.overallLearningProgress >= 0 && data.project.overallLearningProgress <= 100,
   "overall learning progress should stay within 0-100 as units settle",
 );
 assert.deepEqual(data.modules.map((module) => [module.id, module.title]), requiredModules, "generated data should include the required modules in navigation order");
+assert.deepEqual(
+  data.project.navigationGroups.map(({ id, title, scope }) => ({ id, title, scope })),
+  [
+    { id: "north-star", title: "长期总控", scope: "long-term" },
+    { id: "systems", title: "贾维斯子系统", scope: "long-term" },
+    { id: "practice", title: "构建与验证", scope: "long-term" },
+    { id: "interview", title: "临时面试突击", scope: "interview" },
+  ],
+  "generated navigation should keep four goal-driven groups",
+);
+const navigationItems = data.project.navigationGroups.flatMap((group) => group.items);
+assert.deepEqual(
+  navigationItems.filter((item) => item.type === "module").map((item) => item.moduleId),
+  requiredModules.map(([id]) => id),
+  "group navigation should cover every module once in the approved order",
+);
+assert.deepEqual(
+  navigationItems.filter((item) => item.type === "slot").map(({ subsystemId, status }) => ({ subsystemId, status })),
+  [{ subsystemId: "2", status: "frozen" }, { subsystemId: "4", status: "frozen" }],
+  "group navigation should retain frozen subsystem ② and ④ slots",
+);
+assert.deepEqual(data.project.subsystems.map((subsystem) => subsystem.id), ["1", "2", "3", "4", "5", "6"], "the Jarvis board should define six subsystem slots");
+for (const subsystem of data.project.subsystems) {
+  assert.equal(typeof subsystem.title, "string", `subsystem ${subsystem.id} should include a title`);
+  assert.equal(typeof subsystem.englishTitle, "string", `subsystem ${subsystem.id} should include a board label`);
+  assert.ok(Array.isArray(subsystem.moduleIds), `subsystem ${subsystem.id} should include module mappings`);
+}
+for (const id of ["2", "4"]) {
+  const subsystem = data.project.subsystems.find((item) => item.id === id);
+  assert.equal(subsystem.status, "frozen", `subsystem ${id} should remain frozen`);
+  assert.deepEqual(subsystem.moduleIds, [], `frozen subsystem ${id} should not claim a module implementation`);
+}
 
 for (const module of data.modules) {
   assert.equal(typeof module.status, "string", `${module.id} should include status`);
   assert.equal(typeof module.learningProgress, "number", `${module.id} should include numeric learning progress`);
   assert.ok(module.learningProgress >= 0 && module.learningProgress <= 100, `${module.id} learningProgress should be bounded`);
   assert.equal(Object.hasOwn(module, "progress"), false, `${module.id} should not expose legacy progress`);
+  assert.deepEqual(
+    {
+      planScope: module.planScope,
+      navigationGroup: module.navigationGroup,
+      moduleRole: module.moduleRole,
+      goalRole: module.goalRole,
+      subsystems: module.subsystems,
+    },
+    expectedModuleMetadata[module.id],
+    `${module.id} should expose its approved goal-driven metadata`,
+  );
   assert.equal(typeof module.lastUpdated, "string", `${module.id} should include lastUpdated`);
   assert.equal(typeof module.searchText, "string", `${module.id} should include search text`);
   assert.ok(module.searchText.length > 80, `${module.id} should have useful search text`);
   assert.ok(module.sections && typeof module.sections === "object", `${module.id} should include sections`);
   assert.equal(Object.hasOwn(module.sections, "验收标准"), false, `${module.id} should not render 验收标准 as a section`);
   assert.equal(Object.hasOwn(module.sections, "下一步"), false, `${module.id} should not render 下一步 as a section`);
-  if (module.id !== "overview") {
-    assert.equal(Object.hasOwn(module.sections, "时间线"), true, `${module.id} should preserve 时间线`);
-  }
+  assert.equal(Object.hasOwn(module.sections, "时间线"), true, `${module.id} should preserve 时间线`);
   assert.ok(Array.isArray(module.searchEntries), `${module.id} should include section-level search entries`);
   assert.ok(module.searchEntries.length > 0, `${module.id} should expose searchable sections`);
   assert.ok(module.searchEntries.every((entry) => entry.moduleId === module.id), `${module.id} search entries should point back to the module`);
@@ -376,6 +483,94 @@ for (const module of data.modules) {
 }
 
 const byId = Object.fromEntries(data.modules.map((module) => [module.id, module]));
+const careerUnits = byId["career-roadmap"].units;
+assert.deepEqual(careerUnits.map(({ id, title, type, sessions, status }) => ({ id, title, type, sessions, status })), [
+  { id: "U1", title: "修掩码", type: "实验单元", sessions: { min: 1, max: 2 }, status: "active" },
+  { id: "U2", title: "揭穿作弊", type: "实验单元", sessions: { min: 1, max: 2 }, status: "frozen" },
+  { id: "U3", title: "第一篇笔记", type: "理论单元", sessions: { min: 1, max: 1 }, status: "frozen" },
+  { id: "U4", title: "SFT 试驾", type: "实现单元", sessions: { min: 2, max: 4 }, status: "frozen" },
+  { id: "U5", title: "DPO 试驾", type: "实验单元", sessions: { min: 2, max: 4 }, status: "frozen" },
+  { id: "U6", title: "人格笔记", type: "理论单元", sessions: { min: 1, max: 1 }, status: "frozen" },
+  { id: "U7", title: "贾维斯 0.1 点火", type: "整合单元", sessions: { min: 2, max: 3 }, status: "frozen" },
+], "career roadmap should preserve the approved settlement-unit identity and queue state");
+for (const unit of careerUnits) {
+  assert.equal(unit.taskId, `career-roadmap__unit__${unit.id}`, `${unit.id} should have a stable settlement task id`);
+  assert.ok(typeof unit.description === "string" && unit.description.trim(), `${unit.id} should include a description`);
+  assert.ok(typeof unit.bodyHtml === "string" && unit.bodyHtml.trim(), `${unit.id} should include rendered body HTML`);
+  assert.ok(typeof unit.nextAction === "string" && unit.nextAction.trim(), `${unit.id} should include a concrete next action`);
+  assert.equal(typeof unit.insight, "string", `${unit.id} should expose an insight field`);
+  assert.equal(unit.goalMapping.sourceSection, "行动 → 子系统 → 阶段映射", `${unit.id} should identify the roadmap mapping it came from`);
+}
+assert.deepEqual(
+  careerUnits.map((unit) => ({ id: unit.id, subsystemIds: unit.goalMapping.subsystemIds, pathLabel: unit.goalMapping.pathLabel, stageLabel: unit.goalMapping.stageLabel })),
+  [
+    { id: "U1", subsystemIds: ["1", "2", "3", "4", "5", "6"], pathLabel: "验证地基", stageLabel: "现在" },
+    { id: "U2", subsystemIds: ["1", "2", "3", "4", "5", "6"], pathLabel: "验证地基", stageLabel: "现在" },
+    { id: "U3", subsystemIds: ["1", "2", "3", "4", "5", "6"], pathLabel: "验证地基", stageLabel: "现在" },
+    { id: "U4", subsystemIds: ["2", "5"], pathLabel: "SFT → DPO → 人格笔记 → 0.1 点火", stageLabel: "出国前" },
+    { id: "U5", subsystemIds: ["2", "5"], pathLabel: "SFT → DPO → 人格笔记 → 0.1 点火", stageLabel: "出国前" },
+    { id: "U6", subsystemIds: ["2", "5"], pathLabel: "SFT → DPO → 人格笔记 → 0.1 点火", stageLabel: "出国前" },
+    { id: "U7", subsystemIds: ["2", "5"], pathLabel: "SFT → DPO → 人格笔记 → 0.1 点火", stageLabel: "出国前" },
+  ],
+  "Career unit focus should use the existing action-to-subsystem mappings without inventing new relationships",
+);
+assert.equal(careerUnits[0].taskId, "career-roadmap__unit__U1", "U1 should retain its stable local settlement key");
+assert.ok(careerUnits[0].insight.trim(), "U1 should expose a nonempty insight");
+assert.ok(careerUnits[1].insight.trim(), "U2 should expose a nonempty insight");
+assert.ok(
+  data.modules.filter((module) => module.id !== "career-roadmap").every((module) => !Object.hasOwn(module, "units")),
+  "settlement units should remain isolated to the career roadmap module",
+);
+
+const evidenceMatrix = byId["career-roadmap"].evidenceMatrix;
+assert.equal(evidenceMatrix.basis, "explicit-evidence-only", "the matrix should require explicit evidence instead of inferred progress");
+assert.equal(evidenceMatrix.sourceSection, "深度阶梯（候选专长的定向仪）", "the matrix should identify its roadmap source");
+assert.deepEqual(
+  evidenceMatrix.depthLevels,
+  [
+    { id: "understand", label: "理解", order: 1 },
+    { id: "implement", label: "实现", order: 2 },
+    { id: "verify", label: "验证", order: 3 },
+    { id: "diagnose", label: "诊断", order: 4 },
+    { id: "integrate-innovate", label: "综合/创新", order: 5 },
+  ],
+  "the matrix should preserve the approved five-level depth ladder",
+);
+assert.deepEqual(evidenceMatrix.rows.map((row) => row.subsystemId), ["1", "2", "3", "4", "5", "6"], "the matrix should define one row per Jarvis subsystem");
+assert.ok(evidenceMatrix.rows.every((row) => row.cells.length === 5), "each subsystem should expose all five depth cells");
+assert.deepEqual(
+  evidenceMatrix.rows[0].cells.map((cell) => cell.depthLevelId),
+  evidenceMatrix.depthLevels.map((level) => level.id),
+  "matrix cells should follow the same depth order as the column contract",
+);
+const evidenceCells = evidenceMatrix.rows.flatMap((row) => row.cells);
+assert.equal(evidenceCells.length, 30, "the six-by-five evidence matrix should expose exactly 30 cells");
+assert.ok(evidenceCells.every((cell) => cell.state === "unassessed"), "roadmap prose and unit status must not be converted into claimed evidence");
+assert.ok(evidenceCells.every((cell) => Array.isArray(cell.evidenceRefs) && cell.evidenceRefs.length === 0), "unassessed cells should not contain inferred evidence references");
+assert.ok(
+  Object.keys(evidenceMatrix).every((key) => !/progress|percent|score/i.test(key))
+    && evidenceCells.every((cell) => Object.keys(cell).every((key) => !/progress|percent|score/i.test(key))),
+  "the evidence matrix should not expose percentage or score fields",
+);
+
+const outcomeGates = byId["career-roadmap"].outcomeGates;
+assert.deepEqual(
+  outcomeGates.map(({ id, label, order, status, window, context, outcome, sourceSection }) => ({ id, label, order, status, window, context, outcome, sourceSection })),
+  [
+    { id: "stage-1", label: "阶段一", order: 1, status: "current", window: { label: "现在–2027.08", commitment: "flexible" }, context: "出国前", outcome: "单元队列 U1–U7（验证 → 人格试驾 → 0.1 点火）+ 军火库按需。", sourceSection: "时间线" },
+    { id: "stage-2", label: "阶段二", order: 2, status: "planned", window: { label: "2027–2029", commitment: "flexible" }, context: "硕士", outcome: "从②③④选定 1–2 个子系统，做出第一个专业级作品（实验室或工业实习）。", sourceSection: "时间线" },
+    { id: "stage-3", label: "阶段三", order: 3, status: "planned", window: { label: "2029–2032", commitment: "flexible" }, context: "职业早期", outcome: "进入造贾维斯部件的团队（memory / personalization / voice / agent platform）。", sourceSection: "时间线" },
+    { id: "stage-4", label: "阶段四", order: 4, status: "planned", window: { label: "2032+", commitment: "flexible" }, context: "出口", outcome: "主导陪伴/个性化方向，或带子系统专长创业。", sourceSection: "时间线" },
+  ],
+  "Career Roadmap should expose outcome-first gates with flexible time windows",
+);
+assert.equal(outcomeGates.filter((gate) => gate.status === "current").length, 1, "the long-term roadmap should identify one current outcome gate");
+assert.ok(
+  data.modules.filter((module) => module.planScope === "interview").every((module) => (
+    !Object.hasOwn(module, "evidenceMatrix") && !Object.hasOwn(module, "outcomeGates") && !Object.hasOwn(module, "units")
+  )),
+  "Career evidence and outcome-gate contracts must not leak into temporary interview modules",
+);
 assert.ok(byId["agent-design"].timeline.length >= 3, "agent design should expose timeline items for visual rendering");
 assert.equal(byId["interview-sprint"].status, "in-progress", "interview sprint should be marked as the active seven-day sprint");
 assert.equal(byId["interview-sprint"].timeline.length, 7, "interview sprint should expose a D1-D7 cockpit timeline");
@@ -388,7 +583,7 @@ assert.deepEqual(byId["evals-debugging"].knowledgeNotes.map((note) => note.title
   "Eval Case 的六层结构",
   "Benchmark 与 Agent Behavior Eval",
 ]);
-for (const id of ["interview-sprint", "agent-design", "llm-systems", "rag-memory", "research-reading", "behavioral-strategy", "logs"]) {
+for (const id of ["career-roadmap", "interview-sprint", "agent-design", "llm-systems", "rag-memory", "research-reading", "behavioral-strategy", "logs", "overview"]) {
   assert.equal(byId[id].knowledgeNotes.length, 0, `${id} should not expose shallow knowledge notes`);
 }
 for (const id of ["coding", "evals-debugging"]) {
@@ -406,14 +601,17 @@ assert.equal(Object.hasOwn(byId["interview-sprint"].sections, "知识笔记"), f
 assert.ok(byId.coding.searchEntries.some((entry) => (
   entry.type === "knowledge-section" && entry.articleTitle === "单调队列" && entry.sectionTitle === "核心机制"
 )));
-assert.match(byId.overview.searchText, /30\/45\/60-Day Plan|Project Recommendations|Weekly Review Checklist/, "overview should preserve timeline and project recommendation content");
-assert.match(byId.overview.searchText, /Interview Signal|真实 baseline|Agent system design mock/, "overview should preserve interview signal calibration content");
-assert.match(byId.coding.searchText, /Coding Plan|Python Standards|TypeScript Standards|Optional Rust Log Parser/, "coding should preserve implementation training content");
-assert.match(byId["llm-systems"].searchText, /LLM Systems|Transformer|post-training|LLM Fundamentals/, "LLM systems should preserve model and theory content");
-assert.match(byId["agent-design"].searchText, /Agent Systems|Agent Runtime With Tool Calling|Safe Tool Execution Layer|Tool Router/, "agent design should preserve agent runtime content");
-assert.match(byId["rag-memory"].searchText, /RAG And Memory|Production RAG System|Long-Term Memory|Retrieval Evaluator|Memory Store/, "RAG and memory should preserve retrieval and memory content");
-assert.match(byId["evals-debugging"].searchText, /Eval And Debugging|Eval Harness|Trace Debugging|Agent Trace Logger/, "evals should preserve eval and trace content");
+assert.match(byId.overview.searchText, /Interview Overview[\s\S]*不定义个人长期学习方向[\s\S]*Career Roadmap[\s\S]*(?:readiness|mock)/, "Interview Overview should remain an interview-only map subordinate to Career Roadmap");
+assert.match(byId["career-roadmap"].searchText, /贾维斯式的智能陪伴助手[\s\S]*贾维斯的六个子系统[\s\S]*U1 修掩码/, "Career Roadmap should own the long-term Jarvis assembly line");
+assert.match(byId.coding.searchText, /贾维斯 0\.x[\s\S]*可测试[\s\S]*可诊断/, "Engineering Foundations should serve verifiable Jarvis implementation work");
+assert.match(byId["llm-systems"].searchText, /① 基座模型理解[\s\S]*⑥ 推理系统/, "LLM Systems should own base-model understanding and inference systems");
+assert.match(byId["agent-design"].searchText, /⑤ Agent 执行[\s\S]*权限与控制权/, "Agent Runtime should own safe, user-controlled execution");
+assert.match(byId["rag-memory"].searchText, /③ 终身记忆[\s\S]*写入[\s\S]*遗忘/, "Lifelong Memory should own the memory lifecycle");
+assert.match(byId["evals-debugging"].searchText, /横跨六个子系统[\s\S]*trace[\s\S]*对照实验/, "Evals & Diagnostics should validate every Jarvis subsystem");
 assert.match(byId["evals-debugging"].searchText, /Eval Case Anatomy|positive assertions|P95|time-to-availability/, "evals should expose the D2 coached case-audit knowledge");
-assert.match(byId["research-reading"].searchText, /Research Reading List|scaling laws|RLHF|RLAIF|RLVR/, "research reading should preserve reading list content");
+assert.match(byId["research-reading"].searchText, /研究证据[\s\S]*竞争假设[\s\S]*贾维斯 0\.x/, "Research Reading should change active Jarvis design decisions rather than accumulate papers");
 assert.match(byId["behavioral-strategy"].searchText, /Behavioral And Project Deep Dive|Strategy Rubric|STAR|tradeoff/, "behavioral strategy should preserve interview strategy content");
-assert.match(byId.logs.searchText, /Weekly Review|review checklist|复盘/, "logs should preserve review and reflection content");
+assert.match(byId.logs.searchText, /ledger\.md[\s\S]*断点[\s\S]*校准/, "Ledger & Calibration should preserve the settlement breakpoint and calibration protocol");
+for (const module of data.modules.filter((item) => item.planScope === "long-term" && item.id !== "career-roadmap")) {
+  assert.doesNotMatch(module.searchText, oldInterviewDrivenPattern, `${module.id} generated content should stay free of interview-driven schedules and readiness language`);
+}

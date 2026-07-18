@@ -3,67 +3,87 @@ id: llm-systems
 title: LLM Systems
 status: not-started
 learning_progress: 0
-last_updated: 2026-07-05
+last_updated: 2026-07-18
 priority: high
+plan_scope: long-term
+navigation_group: systems
+module_role: domain
+goal_role: 基座模型与推理系统
+subsystems: 1,6
 ---
 
 ## 目标
 
-把 LLM 概念推进到“能设计、能实现、能解释 tradeoff、能被追问”的程度。重点是 inference behavior、context budgeting、structured outputs、post-training intuition 和 production constraints。
+承担贾维斯六子系统中的 **① 基座模型理解** 与 **⑥ 推理系统**。目标不是独自训练通用基座模型，而是理解模型如何学习、生成和受约束，并能把模型可靠地接入贾维斯 0.x。
+
+这个模块最终要回答两类问题：模型为什么产生当前行为；系统如何在延迟、成本、上下文和可靠性约束下提供这个行为。
 
 ## 当前状态
 
-LLM/Agent 系统知识已有基础，但需要从术语级理解推进到系统级回答。这个模块服务 system design、research discussion 和 LLM Fundamentals mock。
+已经有从零实现 decoder-only Transformer 和训练小模型的经验，但因果掩码错误暴露出验证纪律不足。当前活动单元 U1–U3 先修复并解释这个问题；后续 U4–U6 再把 post-training 原理接到人格试驾。
+
+基座模型是必须理解的底层能力，推理系统是其他子系统运行的地基；两者都服务长期系统，不单独形成脱离贾维斯 0.x 的课程表。
 
 ## 核心知识
 
-### LLM Systems
+### ① 基座模型
 
-核心概念：
-
-- tokenization and context windows
-- attention and KV cache intuition
-- batching, streaming, rate limits
-- latency and cost tradeoff
-- prompt assembly and context budgeting
-- model selection and fallback
-- structured outputs and schema validation
+- tokenization、embedding 与 context window
+- causal attention、mask 与 position representation
+- 训练目标、teacher forcing 与自回归生成
+- sampling、temperature 与生成行为
+- SFT、DPO、RLHF 等 post-training 方法的作用边界
+- benchmark、loss 与真实行为之间的证据边界
 
 需要能解释：
 
-- 为什么 long context 不等于 memory。
-- 为什么 KV cache 影响 latency 和 serving design。
-- 为什么 structured output 需要 schema validation 和 retry。
-- 为什么 benchmark scores 会误导 production system choices。
+- 为什么 decoder 必须阻止当前位置看到未来 token。
+- 为什么 teacher-forced loss 不能单独证明自回归生成质量。
+- 为什么 long context 不等于长期记忆。
+- 为什么 post-training 改变的是行为分布，而不是凭空创造稳定人格。
+
+### ⑥ 推理系统
+
+- KV cache 与 prefill / decode
+- batching、streaming 与 cancellation
+- context assembly 与 token budgeting
+- model selection、fallback 与降级
+- structured output、schema validation 与 retry
+- latency、cost、throughput 与资源约束
+- serving failure、版本变化与可观测性
+
+需要能解释：
+
+- 为什么 KV cache 会改变延迟、显存和 serving 设计。
+- 为什么结构化输出仍需确定性的 schema 校验。
+- 为什么更大的模型或更长的上下文不一定带来更好的系统行为。
+- 哪些约束应由模型承担，哪些必须由 Agent Runtime 强制执行。
 
 ## 任务
 
-### System Design Answer Template
+### 当前验证链：U1–U3
 
-每个 LLM system design case 用同一套结构：
+- 保存错误掩码下的基线，再修复 causal mask。
+- 同时比较 held-out loss 与自回归生成质量。
+- 把失败原因、指标错位和修复证据写成可复核笔记。
 
-1. Clarify requirements。
-2. Define success metrics。
-3. State assumptions。
-4. Draw components。
-5. Explain data flow。
-6. Identify failure modes。
-7. Propose evals and monitoring。
-8. Discuss tradeoffs and follow-ups。
+### 人格试驾支撑：U4–U6
 
-### LLM Fundamentals Mock
+- 为 SFT 明确要改变的单一行为、训练数据与 before / after 样例。
+- 为 DPO 明确偏好对、对照与行为评估，不把“跑通训练”当作成功。
+- 记录模型行为没有变化或变坏时的原因假设。
 
-1. Explain attention and why KV cache matters。
-2. Explain why long context is not the same as memory。
-3. Explain SFT vs RLHF vs DPO。
-4. Explain why benchmark scores can mislead。
-5. Explain temperature, sampling, and structured outputs。
+### 推理系统实验模板
+
+1. 写清要验证的系统约束：延迟、成本、上下文、输出契约或资源。
+2. 固定模型、输入、环境和观测字段。
+3. 建立简单基线，再只改变一个设计因素。
+4. 保存输出、trace 和性能样本。
+5. 说明结果如何改变贾维斯 0.x 的接口或设计决策。
 
 ## 时间线
 
-- Week 1：读一个 Agent/LLM 系统概念并练 2 分钟口头回答。
-- Week 2：把 RAG data flow 和 prompt/context budgeting 讲清楚。
-- Week 3：把 long-term memory 和 long context 的差别讲清楚。
-- Week 4：整理 LLM Fundamentals mock questions。
-- Days 31-45：读 post-training / RLHF / DPO / RLVR 概念，并解释它们和 Agent eval 的关系。
-- Days 46-60：练 research-engineering discussion：如何把 ambiguous failure 转成 experiment。
+- 当前：未开始；U1–U3 用 causal mask 失败建立模型验证纪律。
+- 人格试驾解冻时：未开始；U4–U6 补齐 SFT / DPO 的机制、对照和行为解释。
+- 0.1 运行后：未开始；当上下文、流式输出、结构化返回或模型切换成为真实瓶颈时，加入对应推理实验。
+- 系统墙出现时：未开始；按需进入 batching、KV cache、serving、成本或底层实现，不提前制造课程债。
