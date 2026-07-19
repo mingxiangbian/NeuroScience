@@ -1,7 +1,7 @@
 ---
 id: asset-classes
 title: 资产类别
-status: not-started
+status: in-progress
 learning_progress: 0
 last_updated: 2026-07-19
 priority: high

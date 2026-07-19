@@ -1,7 +1,7 @@
 ---
 id: investment-basics
 title: 投资的本质与前提
-status: not-started
+status: in-progress
 learning_progress: 0
 last_updated: 2026-07-19
 priority: high

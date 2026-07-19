@@ -308,6 +308,7 @@ for (const module of data.modules) {
 }
 
 const investmentBasicsModule = data.modules.find((module) => module.id === "investment-basics");
+assert.equal(investmentBasicsModule.status, "in-progress", "the first Finance chapter should retain the learner's active status");
 assert.match(
   investmentBasicsModule.sections["学习记录"] ?? "",
   /用自己的话解释：投资回报来自什么，以及为什么风险不等于波动。[\s\S]*写下一个不会用于高波动投资的短期资金类别。[\s\S]*2026-07-19 · 公开答卷[\s\S]*投资回报来自资产产生的现金流或价值增长[\s\S]*应急资金/,
@@ -315,6 +316,7 @@ assert.match(
 );
 
 const assetClassesModule = data.modules.find((module) => module.id === "asset-classes");
+assert.equal(assetClassesModule.status, "in-progress", "the asset-classes chapter should retain the learner's active status");
 assert.match(
   assetClassesModule.sections["学习记录"] ?? "",
   /选股票、债券、现金和广泛分散基金各一个例子，写出其回报来源与主要风险。[\s\S]*解释 ETF 的交易方式为何不等于它的风险等级。[\s\S]*市场利率是当前市场对相同期限、相近信用风险的借款所要求的收益率[\s\S]*差价合约（CFD）[\s\S]*一只跟踪全市场指数的非杠杆基金[\s\S]*交易外壳，而不是风险类别/,
