@@ -16,7 +16,7 @@
 
       @font-face {
         font-family: "WenXianGe Bookmark";
-        src: url("../assets/fonts/ZhiMangXing-Bookmark.woff2") format("woff2");
+        src: url("../assets/fonts/ZhiMangXing-Bookmark.woff2?v=20260719-zaji") format("woff2");
         font-display: swap;
         font-style: normal;
         font-weight: 400;
@@ -432,11 +432,13 @@
         }
 
         .project-grid {
+          flex-wrap: nowrap;
+          gap: clamp(14px, 2.4vw, 28px);
           min-height: min(70vh, 540px);
         }
 
         .project-card {
-          width: clamp(96px, 12vw, 112px);
+          width: clamp(86px, 10.5vw, 106px);
           height: clamp(360px, 62vh, 496px);
         }
 

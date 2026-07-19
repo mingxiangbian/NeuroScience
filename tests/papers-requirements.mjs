@@ -101,7 +101,7 @@ assert.doesNotMatch(html, /SurrealDB|embedding|openai|anthropic|\/api\/|localhos
 assert.match(fontSources, /Ma Shan Zheng[\s\S]*?SIL Open Font License/i, "font notes should document Ma Shan Zheng source and OFL license");
 assert.match(fontSources, /Zhi Mang Xing[\s\S]*?SIL Open Font License/i, "font notes should document Zhi Mang Xing source and OFL license");
 assert.match(fontSources, /pyftsubset[\s\S]*?文献阁[\s\S]*?记忆与智能体/, "font notes should document the subset command intent and included characters");
-assert.match(fontSources, /ZhiMangXing-Regular\.ttf --text='记忆与智能体基石语言投资情感大模型'/, "bookmark font subset should document all project and paper directory title characters");
+assert.match(fontSources, /ZhiMangXing-Regular\.ttf --text='记忆与智能体基石语言投资情感大模型札记'/, "bookmark font subset should document all project and paper directory title characters");
 
 assert.equal(Array.isArray(manifest), true, "papers/manifest.json should be a plain project array");
 assert.equal(manifest[0]?.title, "记忆与智能体", "current project module should use the Chinese bookmark title");

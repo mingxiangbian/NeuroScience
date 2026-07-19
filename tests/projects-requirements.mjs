@@ -8,6 +8,7 @@ const manifestUrl = new URL("../projects/manifest.json", import.meta.url);
 const topicPageUrl = new URL("../projects/brain-memory-for-ai-agents/index.html", import.meta.url);
 const foundationsPageUrl = new URL("../projects/foundations/index.html", import.meta.url);
 const financePageUrl = new URL("../projects/finance/index.html", import.meta.url);
+const zajiPageUrl = new URL("../projects/zaji/index.html", import.meta.url);
 const foundationsReadmeUrl = new URL("../projects/foundations/README.md", import.meta.url);
 const foundationsPlannerUrl = new URL("../projects/foundations/multi-agent-planner.md", import.meta.url);
 const foundationsRoadmapUrl = new URL("../projects/foundations/llm-agent-engineer-roadmap.md", import.meta.url);
@@ -19,6 +20,7 @@ assert.equal(existsSync(manifestUrl), true, "projects/ should expose a manifest.
 assert.equal(existsSync(topicPageUrl), true, "brain-memory-for-ai-agents should expose a static topic page");
 assert.equal(existsSync(foundationsPageUrl), true, "foundations should expose a static project page");
 assert.equal(existsSync(financePageUrl), true, "finance should expose a static learning-reader page");
+assert.equal(existsSync(zajiPageUrl), true, "zaji should expose a static public notebook homepage");
 assert.equal(existsSync(foundationsReadmeUrl), true, "foundations should include a README");
 assert.equal(existsSync(foundationsPlannerUrl), true, "foundations should include the reusable multi-agent planner");
 assert.equal(existsSync(foundationsRoadmapUrl), true, "foundations should include the LLM/Agent engineer roadmap");
@@ -45,10 +47,11 @@ assert.match(projectsHtml, /\.project-card\[data-title-script="latin"\] h2\s*\{[
 assert.doesNotMatch(projectsHtml, /github\.com\/mingxiangbian\/NeuroScience\/tree\/main\/projects/i, "projects page should not send users to the GitHub folder listing");
 assert.deepEqual(
   manifest.map((project) => project.title),
-  ["基石", "语言", "记忆与智能体", "投资"],
+  ["基石", "语言", "记忆与智能体", "投资", "札记"],
   "projects bookmarks should include the registered project titles in display order",
 );
 assert.equal(manifest.find((project) => project.id === "finance")?.folder, "finance/", "finance should link to its reader page");
+assert.equal(manifest.find((project) => project.id === "zaji")?.folder, "zaji/", "zaji should link to its public notebook page");
 assert.equal(
   manifest.find((project) => project.id === "ielts-academic")?.folder,
   "language/ielts-academic/",
@@ -59,7 +62,7 @@ assert.equal(
   "语言",
   "IELTS Academic should display as the Chinese language bookmark",
 );
-assert.match(fontSources, /ZhiMangXing-Regular\.ttf --text='记忆与智能体基石语言投资情感大模型'/, "bookmark font subset should include the Chinese project and paper directory titles");
+assert.match(fontSources, /ZhiMangXing-Regular\.ttf --text='记忆与智能体基石语言投资情感大模型札记'/, "bookmark font subset should include the Chinese project and paper directory titles");
 for (const character of new Set(manifest.map((project) => project.title).join(""))) {
   const codePoint = character.codePointAt(0)?.toString(16);
   assert.match(
