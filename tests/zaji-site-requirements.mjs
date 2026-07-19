@@ -9,6 +9,11 @@ const blogIndexUrl = new URL("blog/index.html", projectUrl);
 const worksIndexUrl = new URL("works/index.html", projectUrl);
 const cssUrl = new URL("assets/zaji.css", projectUrl);
 const jsUrl = new URL("assets/zaji.js", projectUrl);
+const twinArcUrl = new URL("assets/twin-arc.svg", projectUrl);
+const signalWaveUrl = new URL("assets/visuals/signal-wave.webp", projectUrl);
+const learningLoopUrl = new URL("assets/visuals/learning-loop.webp", projectUrl);
+const memorySystemUrl = new URL("assets/visuals/memory-system.webp", projectUrl);
+const knowledgeNetworkUrl = new URL("assets/visuals/knowledge-network.webp", projectUrl);
 const readmeUrl = new URL("README.md", projectUrl);
 const manifestUrl = new URL("../projects/manifest.json", import.meta.url);
 const projectsPageUrl = new URL("../projects/index.html", import.meta.url);
@@ -16,7 +21,19 @@ const packageUrl = new URL("../package.json", import.meta.url);
 const blogContentUrl = new URL("content/blog/", projectUrl);
 const worksContentUrl = new URL("content/works/", projectUrl);
 
-for (const url of [homeUrl, blogIndexUrl, worksIndexUrl, cssUrl, jsUrl, readmeUrl]) {
+for (const url of [
+  homeUrl,
+  blogIndexUrl,
+  worksIndexUrl,
+  cssUrl,
+  jsUrl,
+  readmeUrl,
+  twinArcUrl,
+  signalWaveUrl,
+  learningLoopUrl,
+  memorySystemUrl,
+  knowledgeNetworkUrl,
+]) {
   assert.equal(existsSync(url), true, `${url.pathname} should exist`);
 }
 
@@ -61,16 +78,27 @@ for (const pageUrl of generatedPages) {
 assert.match(home, /data-page="zaji-home"/, "zaji homepage should identify its page type");
 assert.match(home, /<h1 id="home-title">札记<\/h1>/, "zaji homepage should use the approved 札记 name");
 assert.match(home, /记录学习、思考与做过的东西/, "homepage should state the public notebook purpose");
-assert.match(home, /class="reading-lens"/, "homepage should reserve glass for the current-reading lens");
-assert.match(home, /class="work-band"/, "homepage works should use one continuous glass band");
-assert.match(home, /这不是荣誉陈列/, "homepage should define results as made work rather than awards");
+assert.match(home, /class="record-board"/, "homepage should follow the approved record-board composition");
+assert.match(home, /class="record-rail"/, "homepage should expose a real chronological rail");
+assert.match(home, /class="record-list"/, "homepage should combine real blog and work records in one list");
+assert.match(home, /class="current-reading"/, "homepage should keep one purposeful current-reading glass surface");
+assert.match(home, /class="signal-bridge"/, "homepage should use the neural signal as the section bridge");
+assert.match(home, /class="achievement-board"/, "homepage results should use one continuous visual canvas");
+assert.match(home, /assets\/visuals\/learning-loop\.webp/, "homepage should use the learning-loop illustration");
+assert.match(home, /assets\/visuals\/memory-system\.webp/, "homepage should use the memory-system illustration");
+assert.match(home, /assets\/visuals\/knowledge-network\.webp/, "homepage should use the knowledge-network illustration");
+assert.match(home, /assets\/visuals\/signal-wave\.webp/, "homepage should use a real waveform asset rather than CSS art");
+assert.doesNotMatch(home, /class="reading-lens"|class="about-block"/, "homepage should remove the superseded lens and about block");
+assert.doesNotMatch(home, /<a[^>]*>关于<\/a>/, "zaji navigation should not include a redundant About link");
 assert.doesNotMatch(home, /成就/, "zaji should use 成果 rather than 成就");
 assert.doesNotMatch(home, /avatar|头像|portrait/i, "zaji should not depend on a portrait or avatar");
 
 assert.match(blogIndex, /data-page="zaji-blog-index"/, "blog index should identify its page type");
-assert.match(blogIndex, /class="chronology-signal"/, "blog index should use the red signal as a real chronology rail");
+assert.match(blogIndex, /class="latest-post"/, "blog index should lead with the latest published article");
+assert.match(blogIndex, /class="article-archive"/, "blog index should expose a recognizable article archive");
 assert.match(blogIndex, /class="blog-row"/, "blog index should use open typographic rows");
 assert.doesNotMatch(blogIndex, /class="[^"]*card/, "blog index should not become a card grid");
+assert.doesNotMatch(blogIndex, /<a[^>]*>关于<\/a>/, "blog navigation should not include About");
 
 assert.match(worksIndex, /data-page="zaji-works-index"/, "works index should identify its page type");
 assert.match(worksIndex, /class="work-preview-lens" aria-live="polite"/, "works index should expose one functional preview lens");
@@ -79,8 +107,11 @@ assert.match(worksIndex, /class="work-list-mobile-image"/, "mobile works should 
 assert.doesNotMatch(worksIndex, /成就|奖项卡片|完成率/, "works index should not imply awards or fake completion metrics");
 
 assert.match(css, /--signal:\s*oklch\(0\.639 0\.207 13\.5\)/, "zaji should use the approved Campari-red signal seed");
-assert.match(css, /\.reading-lens\s*\{[\s\S]*?backdrop-filter:\s*blur\(30px\)/, "current-reading lens should implement purposeful glass");
-assert.match(css, /\.work-band\s*\{[\s\S]*?backdrop-filter:\s*blur\(28px\)/, "works should share one continuous glass surface");
+assert.match(css, /@font-face[\s\S]*?font-family:\s*"Zaji Script"/, "brand display words should use a dedicated calligraphic font");
+assert.match(css, /--serif:\s*"Songti SC"/, "article titles should use a Songti-first serif stack");
+assert.match(css, /\.current-reading\s*\{[\s\S]*?backdrop-filter:\s*blur\(/, "current reading should implement purposeful glass");
+assert.match(css, /\.achievement-board\s*\{[\s\S]*?backdrop-filter:\s*blur\(/, "results should share one continuous glass canvas");
+assert.match(css, /\.display-script\b/, "shared section names should use the calligraphic display treatment");
 assert.match(css, /img\s*\{[\s\S]*?height:\s*auto/, "responsive images should not retain their intrinsic HTML height");
 assert.match(css, /@media \(max-width:\s*719px\)[\s\S]*?\.site-nav\s*\{/, "mobile should keep a visible two-row header rather than a hamburger");
 assert.match(css, /@media \(max-width:\s*719px\)[\s\S]*?min-height:\s*44px/, "mobile navigation and controls should expose touch-sized targets");

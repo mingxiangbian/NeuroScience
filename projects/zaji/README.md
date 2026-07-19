@@ -14,6 +14,9 @@ content/blog/*.md          博客源文件
 content/works/*.md         成果源文件
 assets/zaji.css            全站视觉与响应式样式
 assets/zaji.js             阅读进度、公式和成果预览增强
+assets/twin-arc.svg         继承项目目录的双弧品牌图标
+assets/ZhiMangXing-Zaji.woff2  札记、博客、成果的书法字子集
+assets/visuals/*.webp       首页神经信号与三项成果结构图
 assets/works/*.webp        真实成果页面预览
 scripts/markdown.mjs       Markdown、安全清洗、代码与公式占位
 scripts/build-site.mjs     静态页面生成与只读一致性检查
@@ -70,5 +73,7 @@ E = mc^2
 2. 运行 `npm run build:zaji` 生成静态页。
 3. 运行 `npm run test:zaji`，确认源文件、生成页、安全渲染和内部链接一致。
 4. 运行相关全站测试，并只暂存本次涉及的明确文件。
+
+首页的四条时间记录由博客和成果 Markdown 自动合并、按真实 `date` 排序；没有时间字段时不会补写虚构时刻。三张成果结构图只负责首页视觉表达，成果详情仍以真实页面预览和 Markdown 记录为准。首页精选成果由 `scripts/build-site.mjs` 中的 `workVisuals` 显式映射；Agent 要更换精选成果时，必须同时更新 slug、结构图、尺寸与替代文本。
 
 首版不加入草稿状态、CMS、评论、搜索、RSS、后端或客户端内容请求。进入 `main` 的内容即为公开内容；未完成草稿留在未合并分支。

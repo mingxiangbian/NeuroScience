@@ -36,6 +36,7 @@ function validateDate(value, label) {
 function formatDate(value, style = "short") {
   const [year, month, day] = value.split("-").map(Number);
   if (style === "year") return String(year);
+  if (style === "month-day") return `${String(month).padStart(2, "0")}—${String(day).padStart(2, "0")}`;
   if (style === "long") return `${year} 年 ${month} 月 ${day} 日`;
   return `${year}.${String(month).padStart(2, "0")}.${String(day).padStart(2, "0")}`;
 }
@@ -147,7 +148,7 @@ function renderHead({ title, description, siteRoot, canonicalPath = "", hasMath 
     <meta property="og:description" content="${escapeHtml(description)}" />
     <meta property="og:url" content="${escapeHtml(canonical)}" />
     <link rel="canonical" href="${escapeHtml(canonical)}" />
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23f7f9f9'/%3E%3Ccircle cx='32' cy='32' r='10' fill='%23df3047'/%3E%3C/svg%3E" />${mathStyles}
+    <link rel="icon" href="${siteRoot}/assets/twin-arc.svg" type="image/svg+xml" />${mathStyles}
     <link rel="stylesheet" href="${siteRoot}/assets/zaji.css" />${jsonLd}
   </head>`;
 }
@@ -157,16 +158,14 @@ function renderHeader(siteRoot, active) {
     ["home", "首页", `${siteRoot}/`],
     ["blog", "博客", `${siteRoot}/blog/`],
     ["works", "成果", `${siteRoot}/works/`],
-    ["about", "关于", `${siteRoot}/#about`],
   ];
   return `<a class="skip-link" href="#main-content">跳到正文</a>
     <header class="site-header">
       <div class="header-inner">
-        <a class="site-brand" href="${siteRoot}/" aria-label="札记首页"><span aria-hidden="true"></span>札记</a>
+        <a class="site-brand" href="${siteRoot}/" aria-label="札记首页"><img src="${siteRoot}/assets/twin-arc.svg" alt="" width="28" height="36" />札记</a>
         <nav class="site-nav" aria-label="主导航">
           ${navItems.map(([id, label, href]) => `<a href="${href}"${active === id ? ' aria-current="page"' : ""}>${label}</a>`).join("\n          ")}
         </nav>
-        <a class="project-return" href="${siteRoot}/../">项目目录 <span aria-hidden="true">↗</span></a>
       </div>
     </header>`;
 }
@@ -222,70 +221,59 @@ function renderBlogRow(blog, siteRoot) {
 function renderHome(blogs, works) {
   const siteRoot = ".";
   const latestBlog = blogs[0];
-  const latestWorks = works.slice(0, 3);
-  const signalDots = [...blogs, ...works]
+  const records = [
+    ...blogs.map((blog) => ({ ...blog, kind: "博客", href: `./blog/${blog.slug}/` })),
+    ...works.map((work) => ({ ...work, kind: "成果", href: `./works/${work.slug}/` })),
+  ]
     .sort((a, b) => b.date.localeCompare(a.date))
-    .slice(0, 6)
-    .map((_, index, items) => {
-      const x = items.length === 1 ? 500 : 120 + (index * 760) / (items.length - 1);
-      const y = index % 2 === 0 ? 112 : 92;
-      return `<circle cx="${x}" cy="${y}" r="5" />`;
-    }).join("");
+    .slice(0, 4);
+  const recordRows = records.map((record) => `<a class="record-row" href="${record.href}">
+            <time datetime="${record.date}">${formatDate(record.date, "month-day")}</time>
+            <span class="record-kind">${record.kind}</span>
+            <strong>${escapeHtml(record.title)}</strong>
+            <span class="record-arrow" aria-hidden="true">→</span>
+          </a>`).join("\n");
+  const workVisuals = [
+    ["foundations-reader", "learning-loop.webp", 1520, 600, "学习系统从感知、预测到行动与更新的反馈回路"],
+    ["brain-memory-for-ai-agents", "memory-system.webp", 1240, 600, "大脑记忆机制与智能体记忆系统的对应图"],
+    ["finance-reader", "knowledge-network.webp", 1080, 600, "投资学习阅读器中的知识节点与研究路径"],
+  ];
+  const workFigures = workVisuals.map(([slug, asset, width, height, alt]) => {
+    const work = works.find((item) => item.slug === slug);
+    if (!work) return "";
+    return `<a class="achievement-figure" href="./works/${work.slug}/">
+            <img src="./assets/visuals/${asset}" alt="${alt}" width="${width}" height="${height}" loading="lazy" decoding="async" />
+            <span><small>${escapeHtml(work.artifactType)} · ${escapeHtml(work.status)}</small><strong>${escapeHtml(work.title)}</strong></span>
+          </a>`;
+  }).join("\n");
 
-  const workBand = latestWorks.map((work) => `<a class="work-band-item" href="./works/${work.slug}/">
-            <img src="./${work.cover}" alt="${escapeHtml(work.coverAlt)}" width="1200" height="720" loading="lazy" decoding="async" />
-            <span class="work-band-copy"><strong>${escapeHtml(work.title)}</strong><small>${escapeHtml(work.artifactType)} · ${escapeHtml(work.status)}</small></span>
-            <span class="work-band-arrow" aria-hidden="true">↗</span>
-          </a>`).join("");
-
-  const content = `<section class="home-hero" aria-labelledby="home-title">
-        <div class="atmosphere" aria-hidden="true"></div>
-        <svg class="hero-signal" viewBox="0 0 1000 220" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M20 116 C105 116 126 68 210 98 S360 142 434 106 S568 55 642 94 S782 152 980 98" />
-          ${signalDots}
-        </svg>
-        <div class="hero-copy">
-          <p class="eyebrow">PUBLIC NOTEBOOK / ${formatDate(latestBlog.date, "year")}</p>
+  const content = `<section class="record-board" aria-labelledby="home-title">
+        <div class="record-year">
           <h1 id="home-title">札记</h1>
-          <p class="hero-intro">记录学习、思考与做过的东西。<br />公开，持续，允许修正。</p>
-          <div class="text-actions">
-            <a href="./blog/${latestBlog.slug}/">读最新一篇 <span aria-hidden="true">→</span></a>
-            <a href="./works/">查看全部成果 <span aria-hidden="true">→</span></a>
-          </div>
-          <p class="content-count"><span>${blogs.length}</span> 篇博客 <i aria-hidden="true"></i> <span>${works.length}</span> 项成果</p>
+          <p><i aria-hidden="true"></i>持续记录</p>
+          <strong>${formatDate(records[0].date, "year")}</strong>
+          <span aria-hidden="true"></span>
         </div>
-        <a class="reading-lens" href="./blog/${latestBlog.slug}/" aria-label="正在阅读：${escapeHtml(latestBlog.title)}">
-          <span class="lens-kicker"><i aria-hidden="true"></i> 正在阅读</span>
-          <strong>${escapeHtml(latestBlog.title)}</strong>
-          <span class="lens-summary">${escapeHtml(latestBlog.summary)}</span>
-          <span class="lens-meta">${formatDate(latestBlog.date)} · ${latestBlog.readingMinutes} 分钟</span>
-          <span class="lens-arrow" aria-hidden="true">↗</span>
-        </a>
+        <div class="record-rail" aria-hidden="true">${records.map(() => "<i></i>").join("")}</div>
+        <div class="record-list" aria-label="最近记录">${recordRows}</div>
+        <aside class="current-reading" aria-label="正在阅读">
+          <p><i aria-hidden="true"></i>正在阅读</p>
+          <time datetime="${latestBlog.date}">${formatDate(latestBlog.date, "month-day")}</time>
+          <a href="./blog/${latestBlog.slug}/"><strong>${escapeHtml(latestBlog.title)}</strong><span aria-hidden="true">→</span></a>
+          <small>约 ${latestBlog.readingMinutes} 分钟</small>
+        </aside>
+        <p class="record-purpose">记录学习、思考与做过的东西。公开、持续、允许修正。</p>
+        <nav class="record-links" aria-label="查看全部内容"><a href="./blog/">全部博客 <span aria-hidden="true">→</span></a><a href="./works/">全部成果 <span aria-hidden="true">→</span></a></nav>
       </section>
 
-      <section class="home-section latest-writing" aria-labelledby="latest-writing-title">
-        <div class="section-heading">
-          <div><p class="eyebrow">WRITING</p><h2 id="latest-writing-title">博客</h2></div>
-          <a href="./blog/">全部文章 <span aria-hidden="true">→</span></a>
-        </div>
-        <div class="open-list">${blogs.slice(0, 4).map((blog) => renderBlogRow(blog, ".")).join("\n")}</div>
-      </section>
+      <figure class="signal-bridge" aria-hidden="true">
+        <img src="./assets/visuals/signal-wave.webp" alt="" width="2200" height="220" />
+      </figure>
 
-      <section class="home-section home-works" aria-labelledby="home-works-title">
-        <div class="section-heading">
-          <div><p class="eyebrow">MADE WHILE LEARNING</p><h2 id="home-works-title">成果</h2></div>
-          <a href="./works/">全部成果 <span aria-hidden="true">→</span></a>
-        </div>
-        <div class="work-band">${workBand}</div>
-      </section>
-
-      <section class="about-block" id="about" aria-labelledby="about-title">
-        <p class="eyebrow">ABOUT THIS PLACE</p>
-        <h2 id="about-title">这不是荣誉陈列。</h2>
-        <div class="about-copy">
-          <p>“成果”指学习过程中真正做过的东西：研究框架、阅读器、实验、工具与阶段性作品。它们可以继续变化，也可以公开保留不完整之处。</p>
-          <p>内容以 Markdown 保存，由 Agent 辅助整理、构建和发布。数学表达使用 LaTeX 语法；页面本身保持为可直接访问的静态 HTML。</p>
-        </div>
+      <section class="achievement-board" aria-labelledby="home-works-title">
+        <header><h2 class="display-script" id="home-works-title">成果</h2><a href="./works/">全部成果 <span aria-hidden="true">→</span></a></header>
+        <p class="achievement-intro">学习过程中真正做过、仍可打开查看的东西。</p>
+        <div class="achievement-canvas">${workFigures}</div>
       </section>`;
 
   return renderDocument({
@@ -318,16 +306,23 @@ function groupBlogsByYear(blogs) {
 
 function renderBlogIndex(blogs) {
   const siteRoot = "..";
+  const latest = blogs[0];
   const groups = [...groupBlogsByYear(blogs)].map(([year, items]) => `<section class="year-group" aria-labelledby="year-${year}">
           <h2 id="year-${year}">${year}</h2>
           <div class="chronology-list">${items.map((blog) => renderBlogRow(blog, "..")).join("\n")}</div>
         </section>`).join("\n");
   const content = `<header class="page-lead blog-lead">
-        <p class="eyebrow">BLOG / ${blogs.length} ENTRIES</p>
-        <h1>博客</h1>
+        <p class="eyebrow">公开写作 · ${blogs.length} 篇</p>
+        <h1 class="display-script">博客</h1>
         <p>按时间留下问题、理解和修正。文章不是结论仓库，而是思考如何变化的可追溯记录。</p>
       </header>
-      <div class="chronology" aria-label="博客时间线"><span class="chronology-signal" aria-hidden="true"></span>${groups}</div>`;
+      <article class="latest-post">
+        <div><p><i aria-hidden="true"></i>最新发布</p><time datetime="${latest.date}">${formatDate(latest.date, "long")}</time></div>
+        <h2><a href="./${latest.slug}/">${escapeHtml(latest.title)}</a></h2>
+        <p>${escapeHtml(latest.summary)}</p>
+        <a class="latest-post-link" href="./${latest.slug}/">阅读文章 <span aria-hidden="true">→</span></a>
+      </article>
+      <div class="article-archive" aria-label="博客归档"><header><h2>文章归档</h2><span>${blogs.length} 篇记录</span></header>${groups}</div>`;
   return renderDocument({
     title: "博客",
     description: "札记的公开博客，按时间记录学习、思考与修正。",
@@ -348,7 +343,7 @@ function renderRelatedWorks(slugs, works, siteRoot) {
   const related = slugs.map((slug) => works.find((work) => work.slug === slug)).filter(Boolean);
   if (related.length === 0) return "";
   return `<section class="related-block" aria-labelledby="related-works-title">
-        <div class="section-heading"><div><p class="eyebrow">CONNECTED WORK</p><h2 id="related-works-title">相关成果</h2></div></div>
+        <div class="section-heading"><div><p class="eyebrow">延伸阅读</p><h2 id="related-works-title">相关成果</h2></div></div>
         <div class="related-open-list">${related.map((work) => `<a href="${siteRoot}/works/${work.slug}/"><span>${escapeHtml(work.artifactType)}</span><strong>${escapeHtml(work.title)}</strong><i aria-hidden="true">↗</i></a>`).join("")}</div>
       </section>`;
 }
@@ -370,7 +365,7 @@ function renderBlogArticle(blog, blogs, works) {
   const content = `<article class="article-page">
         <header class="article-hero">
           <a class="back-link" href="../">← 返回博客</a>
-          <p class="eyebrow">NOTE / ${formatDate(blog.date)}</p>
+          <p class="eyebrow">博客 · ${formatDate(blog.date)}</p>
           <h1>${escapeHtml(blog.title)}</h1>
           <p class="article-deck">${escapeHtml(blog.summary)}</p>
           ${renderTags(blog.tags)}
@@ -422,13 +417,13 @@ function renderWorksIndex(works) {
             data-preview-title="${escapeHtml(work.title)}"
             data-preview-meta="${escapeHtml(`${work.artifactType} · ${work.status}`)}"
             data-preview-href="./${work.slug}/">
-          <span class="work-list-copy"><small>${escapeHtml(work.artifactType)} · ${formatDate(work.date)}</small><strong>${escapeHtml(work.title)}</strong><em>${escapeHtml(work.summary)}</em>${renderTags(work.tags)}</span>
+          <div class="work-list-copy"><small>${escapeHtml(work.artifactType)} · ${formatDate(work.date)}</small><strong>${escapeHtml(work.title)}</strong><em>${escapeHtml(work.summary)}</em>${renderTags(work.tags)}</div>
           <img class="work-list-mobile-image" src="../${work.cover}" alt="${escapeHtml(work.coverAlt)}" width="1200" height="720" loading="lazy" decoding="async" />
           <span class="row-arrow" aria-hidden="true">↗</span>
         </a>`).join("\n");
   const content = `<header class="page-lead works-lead">
-        <p class="eyebrow">WORKS / ${works.length} ARTIFACTS</p>
-        <h1>成果</h1>
+        <p class="eyebrow">学习作品 · ${works.length} 项</p>
+        <h1 class="display-script">成果</h1>
         <p>不是获奖记录，而是学习过程中真正做过、仍可打开查看的东西。</p>
       </header>
       <div class="works-workbench">
@@ -456,7 +451,7 @@ function renderRelatedPosts(slugs, blogs, siteRoot) {
   const related = slugs.map((slug) => blogs.find((blog) => blog.slug === slug)).filter(Boolean);
   if (related.length === 0) return "";
   return `<section class="related-block" aria-labelledby="related-posts-title">
-        <div class="section-heading"><div><p class="eyebrow">RELATED WRITING</p><h2 id="related-posts-title">相关博客</h2></div></div>
+        <div class="section-heading"><div><p class="eyebrow">延伸阅读</p><h2 id="related-posts-title">相关博客</h2></div></div>
         <div class="related-open-list">${related.map((blog) => `<a href="${siteRoot}/blog/${blog.slug}/"><span>${formatDate(blog.date)}</span><strong>${escapeHtml(blog.title)}</strong><i aria-hidden="true">↗</i></a>`).join("")}</div>
       </section>`;
 }
