@@ -2202,7 +2202,12 @@ function renderArchivedAnnotations(module) {
 function isAnnotationAnchorResolved(annotation) {
   if (!annotation.highlightActive) return false;
   const context = getAnnotationContextElement(getAnnotationContextId(annotation));
-  const range = context ? findTextRange(context, annotation) : null;
+  if (!context) return false;
+  const renderedHighlight = context.querySelector(
+    `.knowledge-highlight[data-annotation-id="${CSS.escape(annotation.id)}"]`,
+  );
+  if (renderedHighlight) return true;
+  const range = findTextRange(context, annotation);
   return Boolean(range && !rangeContainsExcludedContent(range));
 }
 
