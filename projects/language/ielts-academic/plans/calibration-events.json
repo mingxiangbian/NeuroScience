@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 2,
+  "events": [
+    {
+      "id": "baseline-complete",
+      "label": "基线证据完成",
+      "status": "waiting",
+      "condition": "四项中当前可提供的真实诊断证据均已录入，可以首次判断技能优先级。",
+      "evidenceRefs": [],
+      "decision": null,
+      "decidedAt": null
+    },
+    {
+      "id": "error-set-changed",
+      "label": "高影响错误集合变化",
+      "status": "waiting",
+      "condition": "新增、修复或移除的高影响错误足以改变下一单元排序。",
+      "evidenceRefs": [],
+      "decision": null,
+      "decidedAt": null
+    },
+    {
+      "id": "two-mocks-available",
+      "label": "两次可比模考可用",
+      "status": "waiting",
+      "condition": "已有两次条件可比的完整模考，可以判断 Overall 7.5 是否稳定。",
+      "evidenceRefs": [],
+      "decision": null,
+      "decidedAt": null
+    },
+    {
+      "id": "regression-detected",
+      "label": "检测到错误复发",
+      "status": "waiting",
+      "condition": "处于 improving 或 fixed 的错误在独立新样本中再次出现。",
+      "evidenceRefs": [],
+      "decision": null,
+      "decidedAt": null
+    },
+    {
+      "id": "external-deadline-changed",
+      "label": "外部硬期限变化",
+      "status": "waiting",
+      "condition": "报名、出分或申请硬期限变化，需要更新考试执行策略。",
+      "evidenceRefs": [],
+      "decision": null,
+      "decidedAt": null
+    },
+    {
+      "id": "target-reached",
+      "label": "目标稳定达到",
+      "status": "waiting",
+      "condition": "多份可比证据显示 Overall 7.5 已稳定达到，可以转入保分与考试决策。",
+      "evidenceRefs": [],
+      "decision": null,
+      "decidedAt": null
+    }
+  ]
+}

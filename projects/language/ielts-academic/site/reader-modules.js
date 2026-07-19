@@ -45,7 +45,6 @@ export function createReaderModule(config) {
     title: config.title,
     status: config.status ?? "ready",
     priority: config.priority ?? "core",
-    learningProgress: config.learningProgress ?? 0,
     lastUpdated: config.lastUpdated ?? "",
     sections,
     sectionIds,

@@ -1,24 +1,25 @@
 # Score History Template
 
-Append one entry per weekly review. Do not overwrite earlier entries.
+Append one entry per real evidence event. Do not overwrite earlier entries or add template scores.
 
 ## Entry Format
 
-### Week X - YYYY-MM-DD
+### Event ID - YYYY-MM-DD
 
-| Skill | Estimated range | Evidence used | Confidence | Change since last week |
+| Skill | Estimated range | Evidence used | Confidence | Change since prior comparable evidence |
 | --- | --- | --- | --- | --- |
 | Listening | | | | |
 | Reading | | | | |
 | Writing | | | | |
 | Speaking | | | | |
 
-- Actual focused hours:
-- Major errors fixed:
-- Errors that regressed:
-- Next-week allocation decision:
-- Target status: Overall 8.0 path / staged Overall 7.5 path / retarget exam date
+- Event type: diagnostic / repair / mock / calibration
+- Source type:
+- Evidence references:
+- Errors changed:
+- Unit or target decision:
+- Target status: Overall 7.5 unverified / approaching / stable / exam decision required
 
 ## Snapshot Rule
 
-Keep older entries intact so the trend is visible across Week 1, Week 2, Week 4, Week 6, and Week 8 checkpoints.
+Keep older entries intact so evidence drift and comparable mock changes remain visible by date and event type.

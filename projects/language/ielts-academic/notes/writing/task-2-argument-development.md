@@ -3,7 +3,7 @@ id: writing/task-2-argument-development
 skill: writing
 topic: task-2-argument-development
 date: 2026-07-06
-related_errors: [E001]
+related_errors: []
 ---
 
 # Task 2 Argument Development

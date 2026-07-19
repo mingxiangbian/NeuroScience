@@ -1,6 +1,6 @@
 ---
 date: 2026-07-06
-related_errors: [E001, E002]
+related_errors: []
 related_notes: [writing/task-2-argument-development]
 ---
 

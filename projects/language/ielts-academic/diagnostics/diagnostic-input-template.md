@@ -3,8 +3,8 @@
 ## Exam Target
 
 - Exam type: IELTS Academic
-- Target: Overall 8.0
-- Skill floor: each skill 7.5+
+- Target: Overall 7.5
+- Skill floor: unconfirmed unless an external requirement is supplied
 - Timeline:
 - Exam date:
 

@@ -14,22 +14,21 @@ import {
 import {
   buildDocumentNotes,
   buildErrorNotes,
-  createLegacyTaskIds,
+  buildUnitNotes,
   formatTarget,
-  renderCheckpointList,
-  renderDashboard,
-  renderDailyTasks,
   renderErrors,
+  renderEvidence,
   renderJournal,
   renderNotes,
+  renderNow,
   renderPromptLibrary,
-  renderSwimlane,
+  renderSettlements,
+  renderUnits,
   renderValidation,
 } from "./reader-renderers.js";
 import { getReferencePanelPayload, openReferenceTarget, renderReferencePanel } from "./reader-references.js";
-import { loadAnnotations, loadTaskState, loadUiState, saveAnnotations, saveTaskState, saveUiState } from "./reader-state.js";
-import { renderTaskChecklist } from "./reader-tasks.js";
-import { escapeHtml, getShortcutLabel, renderExamMark, slugify, titleCase, toList } from "./reader-utils.js";
+import { loadAnnotations, loadUiState, saveAnnotations, saveUiState } from "./reader-state.js";
+import { escapeHtml, getShortcutLabel, slugify, titleCase, toList } from "./reader-utils.js";
 
 const readerScript = document.querySelector('script[src$="ielts-reader.js"]');
 
@@ -48,8 +47,6 @@ const state = {
   annotationDeletePopover: null,
   ui: loadUiState(),
 };
-
-const taskState = loadTaskState();
 
 const els = {
   shell: document.querySelector("#reader-shell"),
@@ -90,158 +87,102 @@ function getStatusLabel(status) {
     improving: "改善中",
     fixed: "已修复",
     regressed: "复发",
-    template: "模板态",
     "not-yet-run": "未运行",
     "not-started": "未开始",
     ready: "可执行",
+    suggested: "建议",
+    settled: "已结算",
   };
   return labels[status] ?? titleCase(status);
 }
 
 function getPriorityLabel(priority) {
   const labels = {
-    "score profile": "成绩档案",
-    "weekly execution": "周执行",
+    "current action": "当前动作",
+    "unit ledger": "单元账本",
     "high-impact repair": "高影响修复",
-    "study memory": "学习记忆",
-    "weekly review": "周复盘",
-    "agent operation": "智能体操作",
-    "quality gate": "质量门",
+    "evidence profile": "证据档案",
+    "settlement record": "结算记录",
+    "learning archive": "学习档案",
+    "system quality": "系统与质量",
   };
   return labels[priority] ?? titleCase(priority);
-}
-
-function renderRiskList(risks) {
-  const items = toList(risks);
-  if (items.length === 0) return "";
-  return `<ul>${items.map((risk) => `<li>${escapeHtml(risk)}</li>`).join("")}</ul>`;
 }
 
 function buildReaderModules(data) {
   const target = data.project?.target ?? data.scoreProfile?.target ?? {};
   const lastUpdated = data.scoreProfile?.lastUpdated ?? data.build?.generatedAt ?? "";
-  const dashboardSections = {
-    总览: renderModuleSafely("dashboard", "总览", () => renderDashboard(data)),
-    成绩档案: renderModuleSafely("dashboard", "成绩档案", () => `
-      <p>${escapeHtml(data.scoreProfile?.currentEstimate?.summary ?? "诊断证据尚未收集。")}</p>
-      ${renderRiskList(data.scoreProfile?.risks)}
-    `),
-    每日训练任务: renderModuleSafely("dashboard", "每日训练任务", () => renderDailyTasks(data, "dashboard", taskState, saveTaskState)),
-  };
-
-  const swimlaneSections = {
-    "8周计划": renderModuleSafely("swimlane", "8周计划", () => renderSwimlane(data)),
-    检查点规则: renderModuleSafely("swimlane", "检查点规则", () => renderCheckpointList(data)),
-    每日训练任务: renderModuleSafely("swimlane", "每日训练任务", () => renderDailyTasks(data, "swimlane", taskState, saveTaskState)),
-  };
-
-  const errorSections = {
-    错误看板: renderModuleSafely("errors", "错误看板", () => renderErrors(data)),
-    复发控制: renderModuleSafely("errors", "复发控制", () => {
-      const items = toList(data.errorLog?.errors).map((error) => `${error.id}: 复查这个错误是否已稳定修复，还是出现复发。`);
-      return renderTaskChecklist({
-        sourceId: "errors:regression-control",
-        fieldName: "reviewMethod",
-        items,
-        taskState,
-        legacyIds: createLegacyTaskIds("errors", "复发控制", items.length),
-        onTaskStateMigrated: saveTaskState,
-      });
-    }),
-  };
-
-  const noteSections = {
-    笔记索引: renderModuleSafely("notes", "笔记索引", () => renderNotes(data)),
-  };
-
-  const journalSections = {
-    复盘日志: renderModuleSafely("journal", "复盘日志", () => renderJournal(data)),
-  };
-
-  const promptSections = {
-    提示词库: renderModuleSafely("prompt-library", "提示词库", () => renderPromptLibrary(data)),
-  };
-
-  const validationSections = {
-    质量验证: renderModuleSafely("validation", "质量验证", () => renderValidation(data)),
-  };
+  const hasErrors = toList(data.errorLog?.errors).length > 0;
+  const hasEvidence = toList(data.scoreHistory?.entries).length > 0;
+  const hasSettlements = toList(data.unitLedger?.settled).length > 0;
 
   const modules = [
     createReaderModule({
-      id: "dashboard",
-      title: "总览",
-      status: data.scoreProfile?.state ?? "template",
-      priority: "score profile",
-      learningProgress: data.scoreProfile?.state === "template" ? 0 : 45,
+      id: "now",
+      title: "现在",
+      status: data.unitLedger?.activeUnit ? "active" : "not-started",
+      priority: "current action",
       lastUpdated,
-      sections: dashboardSections,
-      knowledgeNotes: [
-        makeKnowledgeNote("dashboard-target", "目标与诊断边界", `<p>${escapeHtml(formatTarget(target))}</p>`),
-      ],
+      sections: { 当前动作: renderModuleSafely("now", "当前动作", () => renderNow(data)) },
+      knowledgeNotes: [makeKnowledgeNote("now-target", "目标与诊断边界", `<p>${escapeHtml(formatTarget(target))}</p>`)],
     }),
     createReaderModule({
-      id: "swimlane",
-      title: "8周计划",
-      status: "ready",
-      priority: "weekly execution",
-      learningProgress: 15,
+      id: "units",
+      title: "单元",
+      status: data.unitLedger?.activeUnit ? "active" : data.unitLedger?.suggestedUnit ? "suggested" : "not-started",
+      priority: "unit ledger",
       lastUpdated,
-      sections: swimlaneSections,
-      knowledgeNotes: toList(data.checkpoints?.checkpoints).map((checkpoint) => makeKnowledgeNote(
-        `checkpoint-week-${checkpoint.week}`,
-        checkpoint.name,
-        `<p>${escapeHtml(checkpoint.purpose)}</p><p>${escapeHtml(checkpoint.decision)}</p>`,
-      )),
+      sections: { 单元账本: renderModuleSafely("units", "单元账本", () => renderUnits(data)) },
+      knowledgeNotes: buildUnitNotes(data),
     }),
     createReaderModule({
       id: "errors",
       title: "错误",
-      status: toList(data.errorLog?.errors).length ? "active" : "not-started",
+      status: hasErrors ? "active" : "not-started",
       priority: "high-impact repair",
-      learningProgress: 20,
       lastUpdated,
-      sections: errorSections,
+      sections: { 错误状态: renderModuleSafely("errors", "错误状态", () => renderErrors(data)) },
       knowledgeNotes: buildErrorNotes(data),
     }),
     createReaderModule({
-      id: "notes",
-      title: "笔记",
-      status: toList(data.notes).length ? "ready" : "not-started",
-      priority: "study memory",
-      learningProgress: toList(data.notes).length ? 20 : 0,
+      id: "evidence",
+      title: "证据",
+      status: hasEvidence ? "ready" : "not-started",
+      priority: "evidence profile",
       lastUpdated,
-      sections: noteSections,
-      knowledgeNotes: buildDocumentNotes(data.notes, "note"),
+      sections: { 成绩与证据: renderModuleSafely("evidence", "成绩与证据", () => renderEvidence(data)) },
     }),
     createReaderModule({
-      id: "journal",
-      title: "日志",
-      status: toList(data.journal).length ? "ready" : "not-started",
-      priority: "weekly review",
-      learningProgress: toList(data.journal).length ? 20 : 0,
+      id: "settlements",
+      title: "结算",
+      status: hasSettlements ? "settled" : "not-started",
+      priority: "settlement record",
       lastUpdated,
-      sections: journalSections,
-      knowledgeNotes: buildDocumentNotes(data.journal, "journal"),
+      sections: { 结算与校准: renderModuleSafely("settlements", "结算与校准", () => renderSettlements(data)) },
     }),
     createReaderModule({
-      id: "prompt-library",
-      title: "提示词库",
+      id: "archive",
+      title: "档案",
+      status: toList(data.notes).length || toList(data.journal).length ? "ready" : "not-started",
+      priority: "learning archive",
+      lastUpdated,
+      sections: {
+        学习笔记: renderModuleSafely("archive", "学习笔记", () => renderNotes(data)),
+        复盘记录: renderModuleSafely("archive", "复盘记录", () => renderJournal(data)),
+      },
+      knowledgeNotes: [...buildDocumentNotes(data.notes, "note"), ...buildDocumentNotes(data.journal, "journal")],
+    }),
+    createReaderModule({
+      id: "system",
+      title: "系统",
       status: "ready",
-      priority: "agent operation",
-      learningProgress: 40,
+      priority: "system quality",
       lastUpdated,
-      sections: promptSections,
-      knowledgeNotes: buildDocumentNotes(data.promptLibrary, "prompt"),
-    }),
-    createReaderModule({
-      id: "validation",
-      title: "质量验证",
-      status: "ready",
-      priority: "quality gate",
-      learningProgress: 35,
-      lastUpdated,
-      sections: validationSections,
-      knowledgeNotes: buildDocumentNotes(data.validation, "validation"),
+      sections: {
+        智能体提示词: renderModuleSafely("system", "智能体提示词", () => renderPromptLibrary(data)),
+        质量校验: renderModuleSafely("system", "质量校验", () => renderValidation(data)),
+      },
+      knowledgeNotes: [...buildDocumentNotes(data.promptLibrary, "prompt"), ...buildDocumentNotes(data.validation, "validation")],
     }),
   ];
 
@@ -250,8 +191,7 @@ function buildReaderModules(data) {
       id: "ielts-academic",
       title: "语言",
       targetRole: `IELTS Academic · ${formatTarget(target)}`,
-      dashboardModuleId: "dashboard",
-      overallLearningProgress: Math.round(modules.reduce((sum, module) => sum + module.learningProgress, 0) / modules.length),
+      dashboardModuleId: "now",
     },
     raw: data,
     modules,
@@ -347,7 +287,7 @@ function getInitialModuleId() {
   const url = new URL(window.location.href);
   const fromQuery = url.searchParams.get("module");
   const fromHash = url.hash.replace(/^#/, "");
-  return fromQuery || fromHash || "dashboard";
+  return fromQuery || fromHash || "now";
 }
 
 function getModuleById(moduleId) {
@@ -358,22 +298,9 @@ function getSectionId(module, title) {
   return module.sectionIds?.[title] ?? `${module.id}-${slugify(title)}`;
 }
 
-function clampProgress(value) {
-  return Math.max(0, Math.min(100, Number(value) || 0));
-}
-
-function getLearningProgress(module) {
-  return clampProgress(module?.learningProgress);
-}
-
-function getOverallLearningProgress() {
-  return clampProgress(state.data?.project?.overallLearningProgress);
-}
-
 function renderModuleNav() {
   els.nav.innerHTML = "";
   for (const module of state.data.modules) {
-    const progress = getLearningProgress(module);
     const button = document.createElement("button");
     button.className = "module-nav-item";
     button.type = "button";
@@ -381,7 +308,6 @@ function renderModuleNav() {
     button.setAttribute("aria-current", module.id === state.currentModule?.id ? "true" : "false");
     button.innerHTML = `
       <span class="module-nav-title">${escapeHtml(module.title)}</span>
-      <span class="module-nav-progress">${escapeHtml(String(progress))}%</span>
       <span class="module-nav-meta">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(getPriorityLabel(module.priority))}</span>
     `;
     button.addEventListener("click", () => openModule(module.id));
@@ -418,31 +344,12 @@ function renderSectionRail(module) {
   });
 }
 
-function renderProgressSummary(module) {
-  const progress = getLearningProgress(module);
-  const overallProgress = getOverallLearningProgress();
-  return `
-    <div class="module-progress-summary" aria-label="阅读进度摘要">
-      ${renderExamMark(`${progress}%`, { size: 64 })}
-      <div>
-        <p class="progress-label">本模块进度</p>
-        <p class="progress-status">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(getPriorityLabel(module.priority))}</p>
-      </div>
-      <div class="overall-progress-card" aria-label="整体进度 ${overallProgress}%">
-        <span class="overall-progress-tag">全部模块</span>
-        <span class="overall-progress-value">${escapeHtml(String(overallProgress))}%</span>
-      </div>
-    </div>
-  `;
-}
-
 function renderCurrentModule() {
   const module = state.currentModule;
   els.moduleHeader.innerHTML = `
     <p class="module-kicker">${escapeHtml(state.data.project.title)} · ${escapeHtml(state.data.project.targetRole)}</p>
     <h1 class="module-title">${escapeHtml(module.title)}</h1>
     <p class="module-meta">${escapeHtml(getStatusLabel(module.status))} · ${escapeHtml(getPriorityLabel(module.priority))} · 更新 ${escapeHtml(module.lastUpdated)}</p>
-    ${renderProgressSummary(module)}
   `;
 
   const sectionBlocks = Object.entries(module.sections ?? {})
@@ -465,15 +372,6 @@ function renderCurrentModule() {
         <p>这个模块还没有可展示内容。</p>
       </article>
     `;
-
-  els.sectionList.querySelectorAll("[data-task-id]").forEach((checkbox) => {
-    checkbox.addEventListener("change", () => {
-      const taskId = checkbox.dataset.taskId;
-      taskState[taskId] = checkbox.checked;
-      saveTaskState(taskState);
-      checkbox.closest(".task-item")?.classList.toggle("is-done", checkbox.checked);
-    });
-  });
 
   bindSectionReferenceChips();
 }

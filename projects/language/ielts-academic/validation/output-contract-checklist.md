@@ -8,23 +8,27 @@ Use this to review Orchestrator output.
 - Score profile and evidence basis
 - Score confidence and unverified dimensions
 - Skill priority ranking
-- Adaptive 8-week plan
-- Weekly time allocation by skill
-- Daily training tasks in minimum, standard, and stretch modes
+- Active-unit state or explicit not-started state
+- One suggested next unit and evidence-based reason
+- First action, expected artifact, review method, and settlement criteria
 - Error priority map
 - Regression checks
-- Exam simulation strategy
-- Weekly review prompt
-- Risks to Overall 8.0 / each skill 7.5+
+- Calibration trigger update
+- Exam simulation strategy when evidence requires it
+- Risks to Overall 7.5 and any unconfirmed per-skill requirement
 
 ## Task-Level Check
 
-Each task includes:
-- duration
+Each unit includes:
+- type
+- first action
 - material type
-- expected output
+- expected artifact
 - review method
+- settlement criteria
+
+Duration is required only for diagnostics, mocks, and explicitly timed exam samples.
 
 ## Rejection Rule
 
-Reject an output if it invents a weakness profile, omits unverified dimensions, or gives tasks without review methods.
+Reject an output if it invents a weakness profile, marks a suggested unit active without user action, omits unverified dimensions, creates a fixed-week plan, or gives a unit without settlement criteria.

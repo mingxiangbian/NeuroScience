@@ -1,11 +1,22 @@
 const allowedErrorStatuses = new Set(["active", "improving", "fixed", "regressed"]);
 const allowedErrorImpacts = new Set(["high", "medium", "low"]);
+const allowedUnitTypes = new Set(["diagnostic", "repair", "mock", "calibration"]);
+const allowedUnitStatuses = new Set(["suggested", "ready", "active", "settled"]);
+const allowedCalibrationStatuses = new Set(["waiting", "triggered", "decided"]);
 
 const knownFields = {
   scoreProfile: new Set(["schemaVersion", "state", "lastUpdated", "runMode", "target", "currentEstimate", "skills", "risks"]),
-  scoreHistoryEntry: new Set(["date", "week", "state", "runMode", "skills", "overall", "notes"]),
-  checkpoint: new Set(["week", "name", "purpose", "status", "decision", "evidenceRequired"]),
-  error: new Set(["id", "skill", "impact", "status", "description", "evidence", "nextReview", "reviewMethod"]),
+  scoreHistoryEntry: new Set(["id", "date", "eventType", "sourceType", "skills", "overall", "confidence", "evidenceRefs", "notes"]),
+  error: new Set([
+    "id", "skill", "impact", "status", "description", "evidence", "reviewMethod", "openedAt", "lastSeenAt",
+    "repairUnitId", "consecutiveCleanSamples", "fixedEvidence",
+  ]),
+  unitLedger: new Set(["schemaVersion", "mode", "state", "activeUnit", "suggestedUnit", "queue", "settled"]),
+  unit: new Set([
+    "id", "type", "title", "status", "reason", "nextAction", "durationMinutes", "materialType",
+    "expectedArtifact", "reviewMethod", "evidenceRefs", "errorRefs", "settlementCriteria", "openedAt", "settledAt", "decision",
+  ]),
+  calibrationEvent: new Set(["id", "label", "status", "condition", "evidenceRefs", "decision", "decidedAt"]),
 };
 
 function issue(severity, type, path, message, extra = {}) {
@@ -13,12 +24,18 @@ function issue(severity, type, path, message, extra = {}) {
 }
 
 function hasObject(value) {
-  return value && typeof value === "object" && !Array.isArray(value);
+  return value !== null && typeof value === "object" && !Array.isArray(value);
 }
 
 function requireField(value, path, issues) {
   if (value === undefined) {
     issues.push(issue("fatal", "missing_required_field", path, `${path} is required`));
+  }
+}
+
+function requireSchemaV2(record, path, issues) {
+  if (record?.schemaVersion !== 2) {
+    issues.push(issue("fatal", "invalid_schema_version", `${path}.schemaVersion`, `${path}.schemaVersion must be 2`));
   }
 }
 
@@ -38,21 +55,61 @@ function normalizeArrayField(value, path, issues) {
   return [];
 }
 
+function validateUnit(unit, path, fatalIssues, warningIssues, expectedStatus = "") {
+  if (!hasObject(unit)) {
+    fatalIssues.push(issue("fatal", "invalid_type", path, `${path} must be an object`));
+    return;
+  }
+  for (const field of ["id", "type", "title", "status", "nextAction", "materialType", "expectedArtifact", "reviewMethod", "evidenceRefs", "settlementCriteria"]) {
+    requireField(unit[field], `${path}.${field}`, fatalIssues);
+  }
+  warnUnknownFields(unit, path, knownFields.unit, warningIssues);
+  if (unit.type && !allowedUnitTypes.has(unit.type)) {
+    fatalIssues.push(issue("fatal", "invalid_enum", `${path}.type`, `${unit.type} is not an allowed unit type`));
+  }
+  if (unit.status && !allowedUnitStatuses.has(unit.status)) {
+    fatalIssues.push(issue("fatal", "invalid_enum", `${path}.status`, `${unit.status} is not an allowed unit status`));
+  }
+  if (expectedStatus && unit.status !== expectedStatus) {
+    fatalIssues.push(issue("fatal", "invalid_unit_state", `${path}.status`, `${path}.status must be ${expectedStatus}`));
+  }
+  const evidenceRefs = normalizeArrayField(unit.evidenceRefs, `${path}.evidenceRefs`, fatalIssues);
+  const settlementCriteria = normalizeArrayField(unit.settlementCriteria, `${path}.settlementCriteria`, fatalIssues);
+  normalizeArrayField(unit.errorRefs, `${path}.errorRefs`, fatalIssues);
+  if (settlementCriteria.length === 0) {
+    fatalIssues.push(issue("fatal", "missing_settlement_criteria", `${path}.settlementCriteria`, `${path} must define settlement criteria`));
+  }
+  if (["diagnostic", "mock"].includes(unit.type) && !(Number(unit.durationMinutes) > 0)) {
+    fatalIssues.push(issue("fatal", "missing_timed_duration", `${path}.durationMinutes`, `${path} requires a positive duration`));
+  }
+  if (expectedStatus === "settled" && evidenceRefs.length === 0) {
+    fatalIssues.push(issue("fatal", "missing_settlement_evidence", `${path}.evidenceRefs`, `${path} must include settlement evidence`));
+  }
+}
+
 export function validateSiteDataInputs(inputs) {
   const fatalIssues = [];
   const warningIssues = [];
   const scoreProfile = inputs.scoreProfile ?? {};
   const scoreHistory = inputs.scoreHistory ?? {};
   const errorLog = inputs.errorLog ?? {};
-  const checkpoints = inputs.checkpoints ?? {};
+  const unitLedger = inputs.unitLedger ?? {};
+  const calibrationEvents = inputs.calibrationEvents ?? {};
   const notes = Array.isArray(inputs.notes) ? inputs.notes : [];
   const journal = Array.isArray(inputs.journal) ? inputs.journal : [];
   const errors = Array.isArray(errorLog.errors) ? errorLog.errors : [];
+
+  for (const [name, record] of Object.entries({ scoreProfile, scoreHistory, errorLog, unitLedger, calibrationEvents })) {
+    requireSchemaV2(record, name, fatalIssues);
+  }
 
   for (const field of ["schemaVersion", "target", "skills", "currentEstimate"]) {
     requireField(scoreProfile[field], `scoreProfile.${field}`, fatalIssues);
   }
   warnUnknownFields(scoreProfile, "scoreProfile", knownFields.scoreProfile, warningIssues);
+  if (hasObject(scoreProfile.target) && Object.hasOwn(scoreProfile.target, "timelineWeeks")) {
+    fatalIssues.push(issue("fatal", "deprecated_field", "scoreProfile.target.timelineWeeks", "fixed-week runtime fields are not allowed"));
+  }
   if (!Array.isArray(scoreProfile.skills)) {
     fatalIssues.push(issue("fatal", "invalid_type", "scoreProfile.skills", "scoreProfile.skills must be an array"));
   } else {
@@ -67,21 +124,15 @@ export function validateSiteDataInputs(inputs) {
     fatalIssues.push(issue("fatal", "invalid_type", "scoreHistory.entries", "scoreHistory.entries must be an array"));
   } else {
     scoreHistory.entries.forEach((entry, index) => {
-      for (const field of ["date", "week", "skills"]) {
-        requireField(entry?.[field], `scoreHistory.entries[${index}].${field}`, fatalIssues);
+      const path = `scoreHistory.entries[${index}]`;
+      for (const field of ["id", "date", "eventType", "sourceType", "skills", "confidence", "evidenceRefs"]) {
+        requireField(entry?.[field], `${path}.${field}`, fatalIssues);
       }
-      warnUnknownFields(entry, `scoreHistory.entries[${index}]`, knownFields.scoreHistoryEntry, warningIssues);
-    });
-  }
-
-  if (!Array.isArray(checkpoints.checkpoints)) {
-    fatalIssues.push(issue("fatal", "invalid_type", "checkpoints.checkpoints", "checkpoints.checkpoints must be an array"));
-  } else {
-    checkpoints.checkpoints.forEach((checkpoint, index) => {
-      for (const field of ["week", "name", "purpose", "status", "evidenceRequired"]) {
-        requireField(checkpoint?.[field], `checkpoints.checkpoints[${index}].${field}`, fatalIssues);
+      if (hasObject(entry) && Object.hasOwn(entry, "week")) {
+        fatalIssues.push(issue("fatal", "deprecated_field", `${path}.week`, "score history must be event-based, not week-based"));
       }
-      warnUnknownFields(checkpoint, `checkpoints.checkpoints[${index}]`, knownFields.checkpoint, warningIssues);
+      normalizeArrayField(entry?.evidenceRefs, `${path}.evidenceRefs`, fatalIssues);
+      warnUnknownFields(entry, path, knownFields.scoreHistoryEntry, warningIssues);
     });
   }
 
@@ -89,21 +140,74 @@ export function validateSiteDataInputs(inputs) {
     fatalIssues.push(issue("fatal", "invalid_type", "errorLog.errors", "errorLog.errors must be an array"));
   } else {
     errors.forEach((errorRecord, index) => {
-      for (const field of ["id", "skill", "impact", "status", "description"]) {
-        requireField(errorRecord?.[field], `errorLog.errors[${index}].${field}`, fatalIssues);
+      const path = `errorLog.errors[${index}]`;
+      for (const field of [
+        "id", "skill", "impact", "status", "description", "evidence", "reviewMethod", "openedAt", "lastSeenAt",
+        "repairUnitId", "consecutiveCleanSamples", "fixedEvidence",
+      ]) {
+        requireField(errorRecord?.[field], `${path}.${field}`, fatalIssues);
       }
       if (errorRecord?.status && !allowedErrorStatuses.has(errorRecord.status)) {
-        fatalIssues.push(issue("fatal", "invalid_enum", `errorLog.errors[${index}].status`, `${errorRecord.status} is not an allowed error status`));
+        fatalIssues.push(issue("fatal", "invalid_enum", `${path}.status`, `${errorRecord.status} is not an allowed error status`));
       }
       if (errorRecord?.impact && !allowedErrorImpacts.has(errorRecord.impact)) {
-        fatalIssues.push(issue("fatal", "invalid_enum", `errorLog.errors[${index}].impact`, `${errorRecord.impact} is not an allowed error impact`));
+        fatalIssues.push(issue("fatal", "invalid_enum", `${path}.impact`, `${errorRecord.impact} is not an allowed error impact`));
       }
-      warnUnknownFields(errorRecord, `errorLog.errors[${index}]`, knownFields.error, warningIssues);
+      normalizeArrayField(errorRecord?.evidence, `${path}.evidence`, fatalIssues);
+      const fixedEvidence = normalizeArrayField(errorRecord?.fixedEvidence, `${path}.fixedEvidence`, fatalIssues);
+      const independentFixedEvidence = new Set(fixedEvidence).size;
+      if (errorRecord?.status === "fixed" && (Number(errorRecord.consecutiveCleanSamples) < 3 || independentFixedEvidence < 3)) {
+        fatalIssues.push(issue("fatal", "insufficient_fix_evidence", `${path}.fixedEvidence`, "fixed errors require three independent clean sample references"));
+      }
+      warnUnknownFields(errorRecord, path, knownFields.error, warningIssues);
+    });
+  }
+
+  for (const field of ["schemaVersion", "mode", "state", "activeUnit", "suggestedUnit", "queue", "settled"]) {
+    requireField(unitLedger[field], `unitLedger.${field}`, fatalIssues);
+  }
+  warnUnknownFields(unitLedger, "unitLedger", knownFields.unitLedger, warningIssues);
+  const queue = normalizeArrayField(unitLedger.queue, "unitLedger.queue", fatalIssues);
+  const settled = normalizeArrayField(unitLedger.settled, "unitLedger.settled", fatalIssues);
+  if (unitLedger.activeUnit !== null && unitLedger.activeUnit !== undefined) {
+    validateUnit(unitLedger.activeUnit, "unitLedger.activeUnit", fatalIssues, warningIssues, "active");
+  }
+  if (unitLedger.suggestedUnit !== null && unitLedger.suggestedUnit !== undefined) {
+    validateUnit(unitLedger.suggestedUnit, "unitLedger.suggestedUnit", fatalIssues, warningIssues, "suggested");
+  }
+  queue.forEach((unit, index) => validateUnit(unit, `unitLedger.queue[${index}]`, fatalIssues, warningIssues));
+  settled.forEach((unit, index) => validateUnit(unit, `unitLedger.settled[${index}]`, fatalIssues, warningIssues, "settled"));
+  const allUnits = [unitLedger.activeUnit, unitLedger.suggestedUnit, ...queue, ...settled].filter(hasObject);
+  const unitIds = allUnits.map((unit) => unit.id).filter(Boolean);
+  if (new Set(unitIds).size !== unitIds.length) {
+    fatalIssues.push(issue("fatal", "duplicate_id", "unitLedger", "unit ids must be unique across active, suggested, queue, and settled units"));
+  }
+
+  if (!Array.isArray(calibrationEvents.events)) {
+    fatalIssues.push(issue("fatal", "invalid_type", "calibrationEvents.events", "calibrationEvents.events must be an array"));
+  } else {
+    calibrationEvents.events.forEach((event, index) => {
+      const path = `calibrationEvents.events[${index}]`;
+      for (const field of ["id", "label", "status", "condition", "evidenceRefs", "decision", "decidedAt"]) {
+        requireField(event?.[field], `${path}.${field}`, fatalIssues);
+      }
+      if (event?.status && !allowedCalibrationStatuses.has(event.status)) {
+        fatalIssues.push(issue("fatal", "invalid_enum", `${path}.status`, `${event.status} is not an allowed calibration status`));
+      }
+      normalizeArrayField(event?.evidenceRefs, `${path}.evidenceRefs`, fatalIssues);
+      warnUnknownFields(event, path, knownFields.calibrationEvent, warningIssues);
     });
   }
 
   const errorIds = new Set(errors.map((errorRecord) => errorRecord.id));
+  const unitIdSet = new Set(unitIds);
   const noteIds = new Set(notes.map((note) => note.id));
+
+  errors.forEach((errorRecord, index) => {
+    if (errorRecord.repairUnitId && !unitIdSet.has(errorRecord.repairUnitId)) {
+      fatalIssues.push(issue("fatal", "missing_reference", `errorLog.errors[${index}].repairUnitId`, `${errorRecord.id} references missing unit ${errorRecord.repairUnitId}`));
+    }
+  });
 
   notes.forEach((note) => {
     const relatedErrors = normalizeArrayField(note.relatedErrors, `${note.id}.relatedErrors`, fatalIssues);

@@ -1,6 +1,6 @@
 # IELTS Journal
 
-The journal is for dated reflection: workload, confidence, friction, breakthroughs, and exam-readiness concerns. It is separate from `plans/weekly-review-template.md`.
+The journal is for dated reflection: evidence quality, confidence, friction, breakthroughs, and exam-readiness concerns. Formal unit state and settlement decisions live in `plans/unit-ledger.json` and `plans/calibration-events.json`.
 
 Journal entries do not feed Orchestrator planning decisions unless the same information is copied into the structured review files.
 

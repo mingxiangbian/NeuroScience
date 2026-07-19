@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 2,
+  "mode": "event-driven-settlement",
+  "state": "not-started",
+  "activeUnit": null,
+  "suggestedUnit": {
+    "id": "D1",
+    "type": "diagnostic",
+    "title": "写作 Task 2 首次诊断",
+    "status": "suggested",
+    "reason": "在不预判最弱技能的前提下，以较低工具成本获取高密度评分证据。",
+    "nextAction": "准备开始时，完成一篇限时 IELTS Academic Writing Task 2，并保留未经修改的原文。",
+    "durationMinutes": 40,
+    "materialType": "official-style Task 2 prompt and original response",
+    "expectedArtifact": "限时原文、题目、完成日期与 descriptor-based 评分记录",
+    "reviewMethod": "按 Task Response、Coherence and Cohesion、Lexical Resource、Grammar Range and Accuracy 四项评分，并标注置信度。",
+    "evidenceRefs": [],
+    "settlementCriteria": [
+      "原始限时样本和题目可定位",
+      "四项评分维度、依据和置信度已记录",
+      "至少形成一个有证据的可行动判断"
+    ]
+  },
+  "queue": [],
+  "settled": []
+}

@@ -1,24 +1,23 @@
 {
-  "schemaVersion": 1,
-  "state": "template",
-  "lastUpdated": "2026-07-06",
+  "schemaVersion": 2,
+  "state": "not-started",
+  "lastUpdated": "2026-07-19",
   "runMode": "not-yet-run",
   "target": {
-    "overall": 8,
-    "perSkillFloor": 7.5,
-    "timelineWeeks": 8
+    "overall": 7.5,
+    "perSkillFloor": null
   },
   "currentEstimate": {
     "overall": null,
-    "confidence": "low",
-    "summary": "Initial template state. Replace after Week 1 diagnostic evidence is collected."
+    "confidence": "unverified",
+    "summary": "尚无真实诊断证据，当前不能判断总分或最弱技能。"
   },
   "skills": [
     {
       "id": "listening",
       "label": "Listening",
       "estimatedBand": null,
-      "confidence": "low",
+      "confidence": "unverified",
       "evidenceBasis": ["No timed Listening diagnostic has been recorded in this JSON file yet."],
       "unverifiedDimensions": ["spelling", "synonym recognition", "section 4 academic comprehension", "speed tracking"],
       "riskLevel": "unknown"
@@ -27,7 +26,7 @@
       "id": "reading",
       "label": "Reading",
       "estimatedBand": null,
-      "confidence": "low",
+      "confidence": "unverified",
       "evidenceBasis": ["No timed Reading diagnostic has been recorded in this JSON file yet."],
       "unverifiedDimensions": ["TFNG", "matching headings", "multiple choice", "time allocation"],
       "riskLevel": "unknown"
@@ -36,7 +35,7 @@
       "id": "writing",
       "label": "Writing",
       "estimatedBand": null,
-      "confidence": "low",
+      "confidence": "unverified",
       "evidenceBasis": ["No scored Task 1 or Task 2 sample has been recorded in this JSON file yet."],
       "unverifiedDimensions": ["Task 1 overview", "Task 2 argument development", "grammar accuracy", "lexical control"],
       "riskLevel": "unknown"
@@ -45,14 +44,14 @@
       "id": "speaking",
       "label": "Speaking",
       "estimatedBand": null,
-      "confidence": "low",
+      "confidence": "unverified",
       "evidenceBasis": ["No recorded Speaking diagnostic has been recorded in this JSON file yet."],
       "unverifiedDimensions": ["pronunciation", "real-time fluency", "Part 2 expansion", "Part 3 abstraction"],
       "riskLevel": "unknown"
     }
   ],
   "risks": [
-    "Overall 8.0 is not a realistic operating target until Week 1 diagnostic evidence exists.",
-    "Speaking pronunciation and real-time fluency remain unverified without audio evidence."
+    "四项真实诊断证据均未录入，当前不能判断最弱技能。",
+    "没有录音证据时，口语发音和实时流利度仍无法验证。"
   ]
 }

@@ -17,9 +17,9 @@
 3. 
 4. 
 
-## Feasibility Warning
+## Target And Requirement Boundary
 
-Record whether the user is meeting the time floor for the Overall 8.0 path.
+Record the Overall 7.5 target, any externally confirmed per-skill floor, and any hard exam or application deadline. Do not infer a per-skill floor.
 
 ## Next Evidence Needed
 

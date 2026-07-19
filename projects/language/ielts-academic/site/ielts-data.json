@@ -3,43 +3,99 @@
     "id": "ielts-academic",
     "title": "IELTS Academic",
     "target": {
-      "overall": 8,
-      "perSkillFloor": 7.5,
-      "timelineWeeks": 8
+      "overall": 7.5,
+      "perSkillFloor": null
     }
   },
   "build": {
-    "contentUpdatedAt": "2026-07-06",
-    "generatedAt": "2026-07-06",
+    "contentUpdatedAt": "2026-07-19",
+    "generatedAt": "2026-07-19",
     "validationIssues": [],
     "referenceIssues": []
+  },
+  "derived": {
+    "learningState": "not-started",
+    "errorCounts": {
+      "active": 0,
+      "improving": 0,
+      "fixed": 0,
+      "regressed": 0
+    },
+    "settledUnitCount": 0,
+    "evidenceEventCount": 0,
+    "currentTrigger": "baseline-complete"
   },
   "references": {
     "targets": [
       {
-        "id": "error:E001",
-        "rawId": "E001",
-        "type": "error",
-        "label": "Task 2 argument development needs evidence from a real diagnostic essay before it can be scored.",
-        "moduleId": "errors",
-        "sectionId": "error-E001",
-        "sourcePath": ""
+        "id": "unit:D1",
+        "rawId": "D1",
+        "type": "unit",
+        "label": "写作 Task 2 首次诊断",
+        "moduleId": "units",
+        "sectionId": "unit-D1",
+        "sourcePath": "plans/unit-ledger.json"
       },
       {
-        "id": "error:E002",
-        "rawId": "E002",
-        "type": "error",
-        "label": "Speaking pronunciation and real-time fluency are unverified without audio.",
-        "moduleId": "errors",
-        "sectionId": "error-E002",
-        "sourcePath": ""
+        "id": "calibration:baseline-complete",
+        "rawId": "baseline-complete",
+        "type": "calibration",
+        "label": "基线证据完成",
+        "moduleId": "settlements",
+        "sectionId": "calibration-baseline-complete",
+        "sourcePath": "plans/calibration-events.json"
+      },
+      {
+        "id": "calibration:error-set-changed",
+        "rawId": "error-set-changed",
+        "type": "calibration",
+        "label": "高影响错误集合变化",
+        "moduleId": "settlements",
+        "sectionId": "calibration-error-set-changed",
+        "sourcePath": "plans/calibration-events.json"
+      },
+      {
+        "id": "calibration:two-mocks-available",
+        "rawId": "two-mocks-available",
+        "type": "calibration",
+        "label": "两次可比模考可用",
+        "moduleId": "settlements",
+        "sectionId": "calibration-two-mocks-available",
+        "sourcePath": "plans/calibration-events.json"
+      },
+      {
+        "id": "calibration:regression-detected",
+        "rawId": "regression-detected",
+        "type": "calibration",
+        "label": "检测到错误复发",
+        "moduleId": "settlements",
+        "sectionId": "calibration-regression-detected",
+        "sourcePath": "plans/calibration-events.json"
+      },
+      {
+        "id": "calibration:external-deadline-changed",
+        "rawId": "external-deadline-changed",
+        "type": "calibration",
+        "label": "外部硬期限变化",
+        "moduleId": "settlements",
+        "sectionId": "calibration-external-deadline-changed",
+        "sourcePath": "plans/calibration-events.json"
+      },
+      {
+        "id": "calibration:target-reached",
+        "rawId": "target-reached",
+        "type": "calibration",
+        "label": "目标稳定达到",
+        "moduleId": "settlements",
+        "sectionId": "calibration-target-reached",
+        "sourcePath": "plans/calibration-events.json"
       },
       {
         "id": "note:writing/task-2-argument-development",
         "rawId": "writing/task-2-argument-development",
         "type": "note",
         "label": "Task 2 Argument Development",
-        "moduleId": "notes",
+        "moduleId": "archive",
         "sectionId": "note-writing/task-2-argument-development",
         "sourcePath": "notes/writing/task-2-argument-development.md"
       },
@@ -48,7 +104,7 @@
         "rawId": "2026-07-06-initial-setup",
         "type": "journal",
         "label": "Initial Setup",
-        "moduleId": "journal",
+        "moduleId": "archive",
         "sectionId": "journal-2026-07-06-initial-setup",
         "sourcePath": "journal/entries/2026-07-06-initial-setup.md"
       },
@@ -57,7 +113,7 @@
         "rawId": "prompts/agents/diagnostic-score-profile-analyst",
         "type": "prompt",
         "label": "Diagnostic & Score Profile Analyst",
-        "moduleId": "prompt-library",
+        "moduleId": "system",
         "sectionId": "prompt-prompts/agents/diagnostic-score-profile-analyst",
         "sourcePath": "prompts/agents/diagnostic-score-profile-analyst.md"
       },
@@ -66,7 +122,7 @@
         "rawId": "prompts/agents/language-error-analyst",
         "type": "prompt",
         "label": "Language Error Analyst",
-        "moduleId": "prompt-library",
+        "moduleId": "system",
         "sectionId": "prompt-prompts/agents/language-error-analyst",
         "sourcePath": "prompts/agents/language-error-analyst.md"
       },
@@ -75,7 +131,7 @@
         "rawId": "prompts/agents/listening-specialist",
         "type": "prompt",
         "label": "Listening Specialist",
-        "moduleId": "prompt-library",
+        "moduleId": "system",
         "sectionId": "prompt-prompts/agents/listening-specialist",
         "sourcePath": "prompts/agents/listening-specialist.md"
       },
@@ -84,7 +140,7 @@
         "rawId": "prompts/agents/reading-specialist",
         "type": "prompt",
         "label": "Reading Specialist",
-        "moduleId": "prompt-library",
+        "moduleId": "system",
         "sectionId": "prompt-prompts/agents/reading-specialist",
         "sourcePath": "prompts/agents/reading-specialist.md"
       },
@@ -93,7 +149,7 @@
         "rawId": "prompts/agents/speaking-examiner",
         "type": "prompt",
         "label": "Speaking Examiner",
-        "moduleId": "prompt-library",
+        "moduleId": "system",
         "sectionId": "prompt-prompts/agents/speaking-examiner",
         "sourcePath": "prompts/agents/speaking-examiner.md"
       },
@@ -102,7 +158,7 @@
         "rawId": "prompts/agents/study-load-execution-planner",
         "type": "prompt",
         "label": "Study Load / Execution Planner",
-        "moduleId": "prompt-library",
+        "moduleId": "system",
         "sectionId": "prompt-prompts/agents/study-load-execution-planner",
         "sourcePath": "prompts/agents/study-load-execution-planner.md"
       },
@@ -111,7 +167,7 @@
         "rawId": "prompts/agents/writing-task-1-examiner",
         "type": "prompt",
         "label": "Writing Task 1 Examiner",
-        "moduleId": "prompt-library",
+        "moduleId": "system",
         "sectionId": "prompt-prompts/agents/writing-task-1-examiner",
         "sourcePath": "prompts/agents/writing-task-1-examiner.md"
       },
@@ -120,7 +176,7 @@
         "rawId": "prompts/agents/writing-task-2-examiner",
         "type": "prompt",
         "label": "Writing Task 2 Examiner",
-        "moduleId": "prompt-library",
+        "moduleId": "system",
         "sectionId": "prompt-prompts/agents/writing-task-2-examiner",
         "sourcePath": "prompts/agents/writing-task-2-examiner.md"
       },
@@ -129,7 +185,7 @@
         "rawId": "prompts/calibration-and-validation",
         "type": "prompt",
         "label": "Calibration And Validation",
-        "moduleId": "prompt-library",
+        "moduleId": "system",
         "sectionId": "prompt-prompts/calibration-and-validation",
         "sourcePath": "prompts/calibration-and-validation.md"
       },
@@ -138,7 +194,7 @@
         "rawId": "prompts/interaction-protocol",
         "type": "prompt",
         "label": "Interaction Protocol",
-        "moduleId": "prompt-library",
+        "moduleId": "system",
         "sectionId": "prompt-prompts/interaction-protocol",
         "sourcePath": "prompts/interaction-protocol.md"
       },
@@ -147,7 +203,7 @@
         "rawId": "prompts/orchestrator",
         "type": "prompt",
         "label": "IELTS Orchestrator Agent",
-        "moduleId": "prompt-library",
+        "moduleId": "system",
         "sectionId": "prompt-prompts/orchestrator",
         "sourcePath": "prompts/orchestrator.md"
       },
@@ -156,7 +212,7 @@
         "rawId": "prompts/output-contract",
         "type": "prompt",
         "label": "Output Contract",
-        "moduleId": "prompt-library",
+        "moduleId": "system",
         "sectionId": "prompt-prompts/output-contract",
         "sourcePath": "prompts/output-contract.md"
       },
@@ -165,7 +221,7 @@
         "rawId": "prompts/run-modes",
         "type": "prompt",
         "label": "Run Modes",
-        "moduleId": "prompt-library",
+        "moduleId": "system",
         "sectionId": "prompt-prompts/run-modes",
         "sourcePath": "prompts/run-modes.md"
       },
@@ -174,7 +230,7 @@
         "rawId": "validation/dry-run-test-cases",
         "type": "validation",
         "label": "Dry-Run Test Cases",
-        "moduleId": "validation",
+        "moduleId": "system",
         "sectionId": "validation-validation/dry-run-test-cases",
         "sourcePath": "validation/dry-run-test-cases.md"
       },
@@ -183,7 +239,7 @@
         "rawId": "validation/examiner-calibration-checklist",
         "type": "validation",
         "label": "Examiner Calibration Checklist",
-        "moduleId": "validation",
+        "moduleId": "system",
         "sectionId": "validation-validation/examiner-calibration-checklist",
         "sourcePath": "validation/examiner-calibration-checklist.md"
       },
@@ -192,31 +248,12 @@
         "rawId": "validation/output-contract-checklist",
         "type": "validation",
         "label": "Output Contract Checklist",
-        "moduleId": "validation",
+        "moduleId": "system",
         "sectionId": "validation-validation/output-contract-checklist",
         "sourcePath": "validation/output-contract-checklist.md"
       }
     ],
     "backlinks": {
-      "error:E001": [
-        {
-          "id": "note:writing/task-2-argument-development",
-          "type": "note",
-          "label": "Task 2 Argument Development"
-        },
-        {
-          "id": "journal:2026-07-06-initial-setup",
-          "type": "journal",
-          "label": "Initial Setup"
-        }
-      ],
-      "error:E002": [
-        {
-          "id": "journal:2026-07-06-initial-setup",
-          "type": "journal",
-          "label": "Initial Setup"
-        }
-      ],
       "note:writing/task-2-argument-development": [
         {
           "id": "journal:2026-07-06-initial-setup",
@@ -224,6 +261,13 @@
           "label": "Initial Setup"
         }
       ],
+      "unit:D1": [],
+      "calibration:baseline-complete": [],
+      "calibration:error-set-changed": [],
+      "calibration:two-mocks-available": [],
+      "calibration:regression-detected": [],
+      "calibration:external-deadline-changed": [],
+      "calibration:target-reached": [],
       "journal:2026-07-06-initial-setup": [],
       "prompt:prompts/agents/diagnostic-score-profile-analyst": [],
       "prompt:prompts/agents/language-error-analyst": [],
@@ -244,6 +288,41 @@
     }
   },
   "sourceLinks": [
+    {
+      "id": "unit:D1",
+      "label": "写作 Task 2 首次诊断",
+      "path": "plans/unit-ledger.json"
+    },
+    {
+      "id": "calibration:baseline-complete",
+      "label": "基线证据完成",
+      "path": "plans/calibration-events.json"
+    },
+    {
+      "id": "calibration:error-set-changed",
+      "label": "高影响错误集合变化",
+      "path": "plans/calibration-events.json"
+    },
+    {
+      "id": "calibration:two-mocks-available",
+      "label": "两次可比模考可用",
+      "path": "plans/calibration-events.json"
+    },
+    {
+      "id": "calibration:regression-detected",
+      "label": "检测到错误复发",
+      "path": "plans/calibration-events.json"
+    },
+    {
+      "id": "calibration:external-deadline-changed",
+      "label": "外部硬期限变化",
+      "path": "plans/calibration-events.json"
+    },
+    {
+      "id": "calibration:target-reached",
+      "label": "目标稳定达到",
+      "path": "plans/calibration-events.json"
+    },
     {
       "id": "note:writing/task-2-argument-development",
       "label": "Task 2 Argument Development",
@@ -336,26 +415,25 @@
     }
   ],
   "scoreProfile": {
-    "schemaVersion": 1,
-    "state": "template",
-    "lastUpdated": "2026-07-06",
+    "schemaVersion": 2,
+    "state": "not-started",
+    "lastUpdated": "2026-07-19",
     "runMode": "not-yet-run",
     "target": {
-      "overall": 8,
-      "perSkillFloor": 7.5,
-      "timelineWeeks": 8
+      "overall": 7.5,
+      "perSkillFloor": null
     },
     "currentEstimate": {
       "overall": null,
-      "confidence": "low",
-      "summary": "Initial template state. Replace after Week 1 diagnostic evidence is collected."
+      "confidence": "unverified",
+      "summary": "尚无真实诊断证据，当前不能判断总分或最弱技能。"
     },
     "skills": [
       {
         "id": "listening",
         "label": "Listening",
         "estimatedBand": null,
-        "confidence": "low",
+        "confidence": "unverified",
         "evidenceBasis": [
           "No timed Listening diagnostic has been recorded in this JSON file yet."
         ],
@@ -371,7 +449,7 @@
         "id": "reading",
         "label": "Reading",
         "estimatedBand": null,
-        "confidence": "low",
+        "confidence": "unverified",
         "evidenceBasis": [
           "No timed Reading diagnostic has been recorded in this JSON file yet."
         ],
@@ -387,7 +465,7 @@
         "id": "writing",
         "label": "Writing",
         "estimatedBand": null,
-        "confidence": "low",
+        "confidence": "unverified",
         "evidenceBasis": [
           "No scored Task 1 or Task 2 sample has been recorded in this JSON file yet."
         ],
@@ -403,7 +481,7 @@
         "id": "speaking",
         "label": "Speaking",
         "estimatedBand": null,
-        "confidence": "low",
+        "confidence": "unverified",
         "evidenceBasis": [
           "No recorded Speaking diagnostic has been recorded in this JSON file yet."
         ],
@@ -417,107 +495,100 @@
       }
     ],
     "risks": [
-      "Overall 8.0 is not a realistic operating target until Week 1 diagnostic evidence exists.",
-      "Speaking pronunciation and real-time fluency remain unverified without audio evidence."
+      "四项真实诊断证据均未录入，当前不能判断最弱技能。",
+      "没有录音证据时，口语发音和实时流利度仍无法验证。"
     ]
   },
   "scoreHistory": {
-    "schemaVersion": 1,
-    "entries": [
-      {
-        "date": "2026-07-06",
-        "week": 0,
-        "state": "template",
-        "runMode": "not-yet-run",
-        "skills": {
-          "listening": null,
-          "reading": null,
-          "writing": null,
-          "speaking": null
-        },
-        "notes": "Starter entry only. Replace with Week 1 diagnostic results before using this history for allocation decisions."
-      }
-    ]
+    "schemaVersion": 2,
+    "entries": []
   },
   "errorLog": {
-    "schemaVersion": 1,
-    "errors": [
-      {
-        "id": "E001",
-        "skill": "writing",
-        "impact": "high",
-        "status": "active",
-        "description": "Task 2 argument development needs evidence from a real diagnostic essay before it can be scored.",
-        "evidence": [
-          "Starter error used to demonstrate cross-reference behavior."
-        ],
-        "nextReview": "Week 1 diagnostic review",
-        "reviewMethod": "Write one timed Task 2 essay, score against descriptor categories, and update this entry with real evidence."
-      },
-      {
-        "id": "E002",
-        "skill": "speaking",
-        "impact": "high",
-        "status": "active",
-        "description": "Speaking pronunciation and real-time fluency are unverified without audio.",
-        "evidence": [
-          "Starter error used to keep audio evidence visible in the dashboard."
-        ],
-        "nextReview": "First recorded Part 2 and Part 3 sample",
-        "reviewMethod": "Record answers, complete speaking-audio-self-assessment.md, then update the Speaking score confidence."
-      }
-    ]
+    "schemaVersion": 2,
+    "errors": []
   },
-  "checkpoints": {
-    "schemaVersion": 1,
-    "checkpoints": [
+  "unitLedger": {
+    "schemaVersion": 2,
+    "mode": "event-driven-settlement",
+    "state": "not-started",
+    "activeUnit": null,
+    "suggestedUnit": {
+      "id": "D1",
+      "type": "diagnostic",
+      "title": "写作 Task 2 首次诊断",
+      "status": "suggested",
+      "reason": "在不预判最弱技能的前提下，以较低工具成本获取高密度评分证据。",
+      "nextAction": "准备开始时，完成一篇限时 IELTS Academic Writing Task 2，并保留未经修改的原文。",
+      "durationMinutes": 40,
+      "materialType": "official-style Task 2 prompt and original response",
+      "expectedArtifact": "限时原文、题目、完成日期与 descriptor-based 评分记录",
+      "reviewMethod": "按 Task Response、Coherence and Cohesion、Lexical Resource、Grammar Range and Accuracy 四项评分，并标注置信度。",
+      "evidenceRefs": [],
+      "settlementCriteria": [
+        "原始限时样本和题目可定位",
+        "四项评分维度、依据和置信度已记录",
+        "至少形成一个有证据的可行动判断"
+      ]
+    },
+    "queue": [],
+    "settled": []
+  },
+  "calibrationEvents": {
+    "schemaVersion": 2,
+    "events": [
       {
-        "week": 2,
-        "name": "Week 2 Data Quality Check",
-        "purpose": "Confirm the Week 1 diagnostic produced enough evidence before committing Weeks 3-4 allocation.",
-        "status": "not-started",
-        "decision": "Pending diagnostic evidence.",
-        "evidenceRequired": [
-          "At least one scored sample per available skill",
-          "Confidence label for each skill",
-          "Initial error log entries"
-        ]
+        "id": "baseline-complete",
+        "label": "基线证据完成",
+        "status": "waiting",
+        "condition": "四项中当前可提供的真实诊断证据均已录入，可以首次判断技能优先级。",
+        "evidenceRefs": [],
+        "decision": null,
+        "decidedAt": null
       },
       {
-        "week": 4,
-        "name": "Week 4 Target Feasibility Check",
-        "purpose": "Decide whether the 8-week operating target remains Overall 8.0 / each skill 7.5+.",
-        "status": "not-started",
-        "decision": "Pending Week 4 score profile.",
-        "evidenceRequired": [
-          "Updated score profile",
-          "Writing Task 1 and Task 2 evidence",
-          "Speaking audio self-assessment if available"
-        ]
+        "id": "error-set-changed",
+        "label": "高影响错误集合变化",
+        "status": "waiting",
+        "condition": "新增、修复或移除的高影响错误足以改变下一单元排序。",
+        "evidenceRefs": [],
+        "decision": null,
+        "decidedAt": null
       },
       {
-        "week": 6,
-        "name": "Week 6 Trajectory And Allocation Check",
-        "purpose": "Compare Week 4 and Week 6 progress and reallocate time toward stalled skills.",
-        "status": "not-started",
-        "decision": "Pending Week 6 trajectory evidence.",
-        "evidenceRequired": [
-          "Score history comparison",
-          "Regression check results",
-          "Actual weekly study hours"
-        ]
+        "id": "two-mocks-available",
+        "label": "两次可比模考可用",
+        "status": "waiting",
+        "condition": "已有两次条件可比的完整模考，可以判断 Overall 7.5 是否稳定。",
+        "evidenceRefs": [],
+        "decision": null,
+        "decidedAt": null
       },
       {
-        "week": 8,
-        "name": "Week 8 Final Lock-in",
-        "purpose": "Finalize exam readiness, risk flags, and per-skill exam-day tactics.",
-        "status": "not-started",
-        "decision": "Pending final mock-test evidence.",
-        "evidenceRequired": [
-          "Final mock results",
-          "Risk-flagged skills",
-          "Exam-day time management plan"
-        ]
+        "id": "regression-detected",
+        "label": "检测到错误复发",
+        "status": "waiting",
+        "condition": "处于 improving 或 fixed 的错误在独立新样本中再次出现。",
+        "evidenceRefs": [],
+        "decision": null,
+        "decidedAt": null
+      },
+      {
+        "id": "external-deadline-changed",
+        "label": "外部硬期限变化",
+        "status": "waiting",
+        "condition": "报名、出分或申请硬期限变化，需要更新考试执行策略。",
+        "evidenceRefs": [],
+        "decision": null,
+        "decidedAt": null
+      },
+      {
+        "id": "target-reached",
+        "label": "目标稳定达到",
+        "status": "waiting",
+        "condition": "多份可比证据显示 Overall 7.5 已稳定达到，可以转入保分与考试决策。",
+        "evidenceRefs": [],
+        "decision": null,
+        "decidedAt": null
       }
     ]
   },
@@ -526,25 +597,21 @@
       "id": "writing/task-2-argument-development",
       "path": "notes/writing/task-2-argument-development.md",
       "title": "Task 2 Argument Development",
-      "markdown": "---\nid: writing/task-2-argument-development\nskill: writing\ntopic: task-2-argument-development\ndate: 2026-07-06\nrelated_errors: [E001]\n---\n\n# Task 2 Argument Development\n\nThis starter note records what should be checked after the first diagnostic Task 2 essay.\n\nThe key question is not whether the essay uses advanced vocabulary. The first check is whether each body paragraph makes one claim, explains the claim, and supports it with a relevant example.\n\nUpdate this note after the first scored Task 2 sample.\n",
+      "markdown": "---\nid: writing/task-2-argument-development\nskill: writing\ntopic: task-2-argument-development\ndate: 2026-07-06\nrelated_errors: []\n---\n\n# Task 2 Argument Development\n\nThis starter note records what should be checked after the first diagnostic Task 2 essay.\n\nThe key question is not whether the essay uses advanced vocabulary. The first check is whether each body paragraph makes one claim, explains the claim, and supports it with a relevant example.\n\nUpdate this note after the first scored Task 2 sample.\n",
       "body": "# Task 2 Argument Development\n\nThis starter note records what should be checked after the first diagnostic Task 2 essay.\n\nThe key question is not whether the essay uses advanced vocabulary. The first check is whether each body paragraph makes one claim, explains the claim, and supports it with a relevant example.\n\nUpdate this note after the first scored Task 2 sample.",
       "frontmatter": {
         "id": "writing/task-2-argument-development",
         "skill": "writing",
         "topic": "task-2-argument-development",
         "date": "2026-07-06",
-        "related_errors": [
-          "E001"
-        ]
+        "related_errors": []
       },
       "html": "<h1>Task 2 Argument Development</h1>\n<p>This starter note records what should be checked after the first diagnostic Task 2 essay.</p>\n<p>The key question is not whether the essay uses advanced vocabulary. The first check is whether each body paragraph makes one claim, explains the claim, and supports it with a relevant example.</p>\n<p>Update this note after the first scored Task 2 sample.</p>\n",
       "text": "Task 2 Argument Development This starter note records what should be checked after the first diagnostic Task 2 essay. The key question is not whether the essay uses advanced vocabulary. The first check is whether each body paragraph makes one claim, explains the claim, and supports it with a relevant example. Update this note after the first scored Task 2 sample.",
       "skill": "writing",
       "topic": "task-2-argument-development",
       "date": "2026-07-06",
-      "relatedErrors": [
-        "E001"
-      ]
+      "relatedErrors": []
     }
   ],
   "journal": [
@@ -552,14 +619,11 @@
       "id": "2026-07-06-initial-setup",
       "path": "journal/entries/2026-07-06-initial-setup.md",
       "title": "Initial Setup",
-      "markdown": "---\ndate: 2026-07-06\nrelated_errors: [E001, E002]\nrelated_notes: [writing/task-2-argument-development]\n---\n\n# Initial Setup\n\nThe IELTS Academic project is being expanded from a prompt-and-plan package into a full learning repository.\n\nThis entry is starter content for validating the journal index and cross-reference flow. Replace or extend it after the first real study session.\n",
+      "markdown": "---\ndate: 2026-07-06\nrelated_errors: []\nrelated_notes: [writing/task-2-argument-development]\n---\n\n# Initial Setup\n\nThe IELTS Academic project is being expanded from a prompt-and-plan package into a full learning repository.\n\nThis entry is starter content for validating the journal index and cross-reference flow. Replace or extend it after the first real study session.\n",
       "body": "# Initial Setup\n\nThe IELTS Academic project is being expanded from a prompt-and-plan package into a full learning repository.\n\nThis entry is starter content for validating the journal index and cross-reference flow. Replace or extend it after the first real study session.",
       "frontmatter": {
         "date": "2026-07-06",
-        "related_errors": [
-          "E001",
-          "E002"
-        ],
+        "related_errors": [],
         "related_notes": [
           "writing/task-2-argument-development"
         ]
@@ -567,10 +631,7 @@
       "html": "<h1>Initial Setup</h1>\n<p>The IELTS Academic project is being expanded from a prompt-and-plan package into a full learning repository.</p>\n<p>This entry is starter content for validating the journal index and cross-reference flow. Replace or extend it after the first real study session.</p>\n",
       "text": "Initial Setup The IELTS Academic project is being expanded from a prompt-and-plan package into a full learning repository. This entry is starter content for validating the journal index and cross-reference flow. Replace or extend it after the first real study session.",
       "date": "2026-07-06",
-      "relatedErrors": [
-        "E001",
-        "E002"
-      ],
+      "relatedErrors": [],
       "relatedNotes": [
         "writing/task-2-argument-development"
       ]
@@ -631,11 +692,11 @@
       "id": "prompts/agents/study-load-execution-planner",
       "path": "prompts/agents/study-load-execution-planner.md",
       "title": "Study Load / Execution Planner",
-      "markdown": "# Study Load / Execution Planner\n\nRole: convert priorities into sustainable daily and weekly training.\n\n## Responsibilities\n\n- track actual weekly hours\n- apply minimum / standard / stretch day modes\n- warn when the aggressive target is infeasible\n- protect maintenance time for stronger skills\n- reduce overload\n\n## Rules\n\n- If actual average is below 6 focused hours per week for two consecutive weeks, warn that Overall 8.0 is not realistic as an 8-week operating target.\n- Minimum days preserve continuity but do not prove target feasibility.\n- Every task must include duration, material type, expected output, and review method.\n\n## Output\n\n- Weekly time budget\n- Allocation by skill\n- Minimum / standard / stretch task set\n- Overload warning\n- Next-week adjustment trigger\n",
-      "body": "# Study Load / Execution Planner\n\nRole: convert priorities into sustainable daily and weekly training.\n\n## Responsibilities\n\n- track actual weekly hours\n- apply minimum / standard / stretch day modes\n- warn when the aggressive target is infeasible\n- protect maintenance time for stronger skills\n- reduce overload\n\n## Rules\n\n- If actual average is below 6 focused hours per week for two consecutive weeks, warn that Overall 8.0 is not realistic as an 8-week operating target.\n- Minimum days preserve continuity but do not prove target feasibility.\n- Every task must include duration, material type, expected output, and review method.\n\n## Output\n\n- Weekly time budget\n- Allocation by skill\n- Minimum / standard / stretch task set\n- Overload warning\n- Next-week adjustment trigger",
+      "markdown": "# Study Load / Execution Planner\n\nRole: convert competing priorities into one executable, evidence-settled learning unit.\n\n## Responsibilities\n\n- keep at most one active unit\n- identify the first observable action\n- define the smallest useful artifact and settlement criteria\n- warn when external deadline evidence makes the target infeasible\n- reduce overload\n\n## Rules\n\n- Do not create a weekly allocation, daily checklist, workload floor, or overdue state.\n- Diagnostic and mock units must state duration because timing is part of exam performance.\n- Repair units are settled by the artifact and evidence criteria, not by minutes spent.\n- If evidence is missing, propose one diagnostic unit and keep it suggested until the user starts.\n\n## Output\n\n- Active-unit state\n- One suggested unit and reason\n- First action\n- Expected artifact and review method\n- Settlement criteria\n- Next calibration trigger\n",
+      "body": "# Study Load / Execution Planner\n\nRole: convert competing priorities into one executable, evidence-settled learning unit.\n\n## Responsibilities\n\n- keep at most one active unit\n- identify the first observable action\n- define the smallest useful artifact and settlement criteria\n- warn when external deadline evidence makes the target infeasible\n- reduce overload\n\n## Rules\n\n- Do not create a weekly allocation, daily checklist, workload floor, or overdue state.\n- Diagnostic and mock units must state duration because timing is part of exam performance.\n- Repair units are settled by the artifact and evidence criteria, not by minutes spent.\n- If evidence is missing, propose one diagnostic unit and keep it suggested until the user starts.\n\n## Output\n\n- Active-unit state\n- One suggested unit and reason\n- First action\n- Expected artifact and review method\n- Settlement criteria\n- Next calibration trigger",
       "frontmatter": {},
-      "html": "<h1>Study Load / Execution Planner</h1>\n<p>Role: convert priorities into sustainable daily and weekly training.</p>\n<h2>Responsibilities</h2>\n<ul>\n<li>track actual weekly hours</li>\n<li>apply minimum / standard / stretch day modes</li>\n<li>warn when the aggressive target is infeasible</li>\n<li>protect maintenance time for stronger skills</li>\n<li>reduce overload</li>\n</ul>\n<h2>Rules</h2>\n<ul>\n<li>If actual average is below 6 focused hours per week for two consecutive weeks, warn that Overall 8.0 is not realistic as an 8-week operating target.</li>\n<li>Minimum days preserve continuity but do not prove target feasibility.</li>\n<li>Every task must include duration, material type, expected output, and review method.</li>\n</ul>\n<h2>Output</h2>\n<ul>\n<li>Weekly time budget</li>\n<li>Allocation by skill</li>\n<li>Minimum / standard / stretch task set</li>\n<li>Overload warning</li>\n<li>Next-week adjustment trigger</li>\n</ul>\n",
-      "text": "Study Load / Execution Planner Role: convert priorities into sustainable daily and weekly training. Responsibilities track actual weekly hours apply minimum / standard / stretch day modes warn when the aggressive target is infeasible protect maintenance time for stronger skills reduce overload Rules If actual average is below 6 focused hours per week for two consecutive weeks, warn that Overall 8.0 is not realistic as an 8-week operating target. Minimum days preserve continuity but do not prove target feasibility. Every task must include duration, material type, expected output, and review method. Output Weekly time budget Allocation by skill Minimum / standard / stretch task set Overload warning Next-week adjustment trigger"
+      "html": "<h1>Study Load / Execution Planner</h1>\n<p>Role: convert competing priorities into one executable, evidence-settled learning unit.</p>\n<h2>Responsibilities</h2>\n<ul>\n<li>keep at most one active unit</li>\n<li>identify the first observable action</li>\n<li>define the smallest useful artifact and settlement criteria</li>\n<li>warn when external deadline evidence makes the target infeasible</li>\n<li>reduce overload</li>\n</ul>\n<h2>Rules</h2>\n<ul>\n<li>Do not create a weekly allocation, daily checklist, workload floor, or overdue state.</li>\n<li>Diagnostic and mock units must state duration because timing is part of exam performance.</li>\n<li>Repair units are settled by the artifact and evidence criteria, not by minutes spent.</li>\n<li>If evidence is missing, propose one diagnostic unit and keep it suggested until the user starts.</li>\n</ul>\n<h2>Output</h2>\n<ul>\n<li>Active-unit state</li>\n<li>One suggested unit and reason</li>\n<li>First action</li>\n<li>Expected artifact and review method</li>\n<li>Settlement criteria</li>\n<li>Next calibration trigger</li>\n</ul>\n",
+      "text": "Study Load / Execution Planner Role: convert competing priorities into one executable, evidence-settled learning unit. Responsibilities keep at most one active unit identify the first observable action define the smallest useful artifact and settlement criteria warn when external deadline evidence makes the target infeasible reduce overload Rules Do not create a weekly allocation, daily checklist, workload floor, or overdue state. Diagnostic and mock units must state duration because timing is part of exam performance. Repair units are settled by the artifact and evidence criteria, not by minutes spent. If evidence is missing, propose one diagnostic unit and keep it suggested until the user starts. Output Active-unit state One suggested unit and reason First action Expected artifact and review method Settlement criteria Next calibration trigger"
     },
     {
       "id": "prompts/agents/writing-task-1-examiner",
@@ -671,41 +732,41 @@
       "id": "prompts/interaction-protocol",
       "path": "prompts/interaction-protocol.md",
       "title": "Interaction Protocol",
-      "markdown": "# Interaction Protocol\n\n## Phase 1: Input Pack\n\nThe input pack contains exam type, target, timeline, weekly time budget, score evidence, samples, error logs, and constraints.\n\n## Phase 2: Subagent Reports\n\nEach subagent returns:\n- Evidence used\n- Weak points\n- Bottleneck hypothesis\n- High-impact drills\n- Confidence level\n- Missing evidence\n\n## Phase 3: Cross-Agent Critique\n\nRequired critiques:\n- Writing vs Speaking: grammar cleanup, fluency, and naturalness tradeoff\n- Reading vs Listening: vocabulary size vs real-time synonym recognition\n- Language Error Analyst vs skill specialists: cross-skill error pattern validation\n- Study Load Planner vs all agents: remove work that exceeds actual weekly capacity\n\n## Phase 4: Orchestrator Resolution\n\nThe Orchestrator resolves conflicts using scoring risk, confidence, target gap, workload feasibility, and regression risk.\n\n## Phase 5: Weekly Review\n\nEvery weekly review updates score history, error status, completed hours, and next-week allocation.\n\n## Conflict Table Format\n\n| Conflict | Agents involved | Resolution | Reason |\n| --- | --- | --- | --- |\n|  |  |  |  |\n",
-      "body": "# Interaction Protocol\n\n## Phase 1: Input Pack\n\nThe input pack contains exam type, target, timeline, weekly time budget, score evidence, samples, error logs, and constraints.\n\n## Phase 2: Subagent Reports\n\nEach subagent returns:\n- Evidence used\n- Weak points\n- Bottleneck hypothesis\n- High-impact drills\n- Confidence level\n- Missing evidence\n\n## Phase 3: Cross-Agent Critique\n\nRequired critiques:\n- Writing vs Speaking: grammar cleanup, fluency, and naturalness tradeoff\n- Reading vs Listening: vocabulary size vs real-time synonym recognition\n- Language Error Analyst vs skill specialists: cross-skill error pattern validation\n- Study Load Planner vs all agents: remove work that exceeds actual weekly capacity\n\n## Phase 4: Orchestrator Resolution\n\nThe Orchestrator resolves conflicts using scoring risk, confidence, target gap, workload feasibility, and regression risk.\n\n## Phase 5: Weekly Review\n\nEvery weekly review updates score history, error status, completed hours, and next-week allocation.\n\n## Conflict Table Format\n\n| Conflict | Agents involved | Resolution | Reason |\n| --- | --- | --- | --- |\n|  |  |  |  |",
+      "markdown": "# Interaction Protocol\n\n## Phase 1: Input Pack\n\nThe input pack contains exam type, target, external deadlines if any, score evidence, samples, error logs, the unit ledger, calibration events, and constraints.\n\n## Phase 2: Subagent Reports\n\nEach subagent returns:\n- Evidence used\n- Weak points\n- Bottleneck hypothesis\n- High-impact drills\n- Confidence level\n- Missing evidence\n\n## Phase 3: Cross-Agent Critique\n\nRequired critiques:\n- Writing vs Speaking: grammar cleanup, fluency, and naturalness tradeoff\n- Reading vs Listening: vocabulary size vs real-time synonym recognition\n- Language Error Analyst vs skill specialists: cross-skill error pattern validation\n- Execution Planner vs all agents: reduce competing recommendations to one evidence-backed unit\n\n## Phase 4: Orchestrator Resolution\n\nThe Orchestrator resolves conflicts using scoring risk, confidence, target gap, regression risk, and external deadline risk.\n\n## Phase 5: Settlement And Trigger Update\n\nWhen the active unit meets its settlement criteria, update the score event history, error status, settled-unit record, and calibration triggers. If the unit has not started, preserve `activeUnit: null`.\n\n## Conflict Table Format\n\n| Conflict | Agents involved | Resolution | Reason |\n| --- | --- | --- | --- |\n|  |  |  |  |\n",
+      "body": "# Interaction Protocol\n\n## Phase 1: Input Pack\n\nThe input pack contains exam type, target, external deadlines if any, score evidence, samples, error logs, the unit ledger, calibration events, and constraints.\n\n## Phase 2: Subagent Reports\n\nEach subagent returns:\n- Evidence used\n- Weak points\n- Bottleneck hypothesis\n- High-impact drills\n- Confidence level\n- Missing evidence\n\n## Phase 3: Cross-Agent Critique\n\nRequired critiques:\n- Writing vs Speaking: grammar cleanup, fluency, and naturalness tradeoff\n- Reading vs Listening: vocabulary size vs real-time synonym recognition\n- Language Error Analyst vs skill specialists: cross-skill error pattern validation\n- Execution Planner vs all agents: reduce competing recommendations to one evidence-backed unit\n\n## Phase 4: Orchestrator Resolution\n\nThe Orchestrator resolves conflicts using scoring risk, confidence, target gap, regression risk, and external deadline risk.\n\n## Phase 5: Settlement And Trigger Update\n\nWhen the active unit meets its settlement criteria, update the score event history, error status, settled-unit record, and calibration triggers. If the unit has not started, preserve `activeUnit: null`.\n\n## Conflict Table Format\n\n| Conflict | Agents involved | Resolution | Reason |\n| --- | --- | --- | --- |\n|  |  |  |  |",
       "frontmatter": {},
-      "html": "<h1>Interaction Protocol</h1>\n<h2>Phase 1: Input Pack</h2>\n<p>The input pack contains exam type, target, timeline, weekly time budget, score evidence, samples, error logs, and constraints.</p>\n<h2>Phase 2: Subagent Reports</h2>\n<p>Each subagent returns:</p>\n<ul>\n<li>Evidence used</li>\n<li>Weak points</li>\n<li>Bottleneck hypothesis</li>\n<li>High-impact drills</li>\n<li>Confidence level</li>\n<li>Missing evidence</li>\n</ul>\n<h2>Phase 3: Cross-Agent Critique</h2>\n<p>Required critiques:</p>\n<ul>\n<li>Writing vs Speaking: grammar cleanup, fluency, and naturalness tradeoff</li>\n<li>Reading vs Listening: vocabulary size vs real-time synonym recognition</li>\n<li>Language Error Analyst vs skill specialists: cross-skill error pattern validation</li>\n<li>Study Load Planner vs all agents: remove work that exceeds actual weekly capacity</li>\n</ul>\n<h2>Phase 4: Orchestrator Resolution</h2>\n<p>The Orchestrator resolves conflicts using scoring risk, confidence, target gap, workload feasibility, and regression risk.</p>\n<h2>Phase 5: Weekly Review</h2>\n<p>Every weekly review updates score history, error status, completed hours, and next-week allocation.</p>\n<h2>Conflict Table Format</h2>\n<table>\n<thead>\n<tr>\n<th>Conflict</th>\n<th>Agents involved</th>\n<th>Resolution</th>\n<th>Reason</th>\n</tr>\n</thead>\n<tbody><tr>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n</tbody></table>\n",
-      "text": "Interaction Protocol Phase 1: Input Pack The input pack contains exam type, target, timeline, weekly time budget, score evidence, samples, error logs, and constraints. Phase 2: Subagent Reports Each subagent returns: Evidence used Weak points Bottleneck hypothesis High-impact drills Confidence level Missing evidence Phase 3: Cross-Agent Critique Required critiques: Writing vs Speaking: grammar cleanup, fluency, and naturalness tradeoff Reading vs Listening: vocabulary size vs real-time synonym recognition Language Error Analyst vs skill specialists: cross-skill error pattern validation Study Load Planner vs all agents: remove work that exceeds actual weekly capacity Phase 4: Orchestrator Resolution The Orchestrator resolves conflicts using scoring risk, confidence, target gap, workload feasibility, and regression risk. Phase 5: Weekly Review Every weekly review updates score history, error status, completed hours, and next-week allocation. Conflict Table Format Conflict Agents involved Resolution Reason"
+      "html": "<h1>Interaction Protocol</h1>\n<h2>Phase 1: Input Pack</h2>\n<p>The input pack contains exam type, target, external deadlines if any, score evidence, samples, error logs, the unit ledger, calibration events, and constraints.</p>\n<h2>Phase 2: Subagent Reports</h2>\n<p>Each subagent returns:</p>\n<ul>\n<li>Evidence used</li>\n<li>Weak points</li>\n<li>Bottleneck hypothesis</li>\n<li>High-impact drills</li>\n<li>Confidence level</li>\n<li>Missing evidence</li>\n</ul>\n<h2>Phase 3: Cross-Agent Critique</h2>\n<p>Required critiques:</p>\n<ul>\n<li>Writing vs Speaking: grammar cleanup, fluency, and naturalness tradeoff</li>\n<li>Reading vs Listening: vocabulary size vs real-time synonym recognition</li>\n<li>Language Error Analyst vs skill specialists: cross-skill error pattern validation</li>\n<li>Execution Planner vs all agents: reduce competing recommendations to one evidence-backed unit</li>\n</ul>\n<h2>Phase 4: Orchestrator Resolution</h2>\n<p>The Orchestrator resolves conflicts using scoring risk, confidence, target gap, regression risk, and external deadline risk.</p>\n<h2>Phase 5: Settlement And Trigger Update</h2>\n<p>When the active unit meets its settlement criteria, update the score event history, error status, settled-unit record, and calibration triggers. If the unit has not started, preserve <code>activeUnit: null</code>.</p>\n<h2>Conflict Table Format</h2>\n<table>\n<thead>\n<tr>\n<th>Conflict</th>\n<th>Agents involved</th>\n<th>Resolution</th>\n<th>Reason</th>\n</tr>\n</thead>\n<tbody><tr>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n</tbody></table>\n",
+      "text": "Interaction Protocol Phase 1: Input Pack The input pack contains exam type, target, external deadlines if any, score evidence, samples, error logs, the unit ledger, calibration events, and constraints. Phase 2: Subagent Reports Each subagent returns: Evidence used Weak points Bottleneck hypothesis High-impact drills Confidence level Missing evidence Phase 3: Cross-Agent Critique Required critiques: Writing vs Speaking: grammar cleanup, fluency, and naturalness tradeoff Reading vs Listening: vocabulary size vs real-time synonym recognition Language Error Analyst vs skill specialists: cross-skill error pattern validation Execution Planner vs all agents: reduce competing recommendations to one evidence-backed unit Phase 4: Orchestrator Resolution The Orchestrator resolves conflicts using scoring risk, confidence, target gap, regression risk, and external deadline risk. Phase 5: Settlement And Trigger Update When the active unit meets its settlement criteria, update the score event history, error status, settled-unit record, and calibration triggers. If the unit has not started, preserve activeUnit: null. Conflict Table Format Conflict Agents involved Resolution Reason"
     },
     {
       "id": "prompts/orchestrator",
       "path": "prompts/orchestrator.md",
       "title": "IELTS Orchestrator Agent",
-      "markdown": "# IELTS Orchestrator Agent\n\nYou are the IELTS Orchestrator Agent for IELTS Academic.\n\nTarget:\n- Primary target: Overall 8.0\n- Floor target: each skill 7.5+\n- Baseline assumption before diagnosis: IELTS 6.0-6.5\n\n## Operating Rules\n\n- Do not directly teach IELTS content unless the final plan requires a short task explanation.\n- Do not invent a personal weakness profile when diagnostic evidence is missing.\n- Always report: Run mode used and independence level.\n- Every final training task must include duration, material type, expected output, and review method.\n- Treat LLM examiner scores as advisory, not official IELTS scores.\n- Prefer score-gain actions over theory completeness.\n\n## Input Check\n\nBefore planning, check whether the user supplied:\n- IELTS type\n- target score\n- timeline\n- weekly time budget or time log\n- recent Listening and Reading raw scores or band estimates\n- Writing Task 1 and Task 2 samples\n- Speaking audio, transcript, or audio notes\n- error examples\n\nIf information is missing, produce skill-specific diagnostic tasks instead of a fake profile.\n\n## Run Mode Selection\n\nAsk the user to choose:\n- manual multi-session mode for true agent isolation\n- single-session simulation mode for quick planning\n\nIf single-session simulation mode is used, label all cross-agent critique as simulated.\n\n## Subagent Roster\n\nUse these subagents by default:\n1. Listening Specialist\n2. Reading Specialist\n3. Writing Task 1 Examiner\n4. Writing Task 2 Examiner\n5. Speaking Examiner\n6. Language Error Analyst\n7. Diagnostic & Score Profile Analyst\n8. Study Load / Execution Planner\n\n## Resolution Rule\n\nResolve conflicts by:\n1. IELTS scoring risk\n2. evidence confidence\n3. gap to Overall 8.0 / each skill 7.5+\n4. weekly time feasibility\n5. regression risk\n\nIf two recommendations conflict, keep the one with stronger evidence and higher score impact. If evidence is weak, assign a diagnostic task instead of guessing.\n\n## Final Output\n\nReturn:\n1. Run mode used and independence level\n2. Score profile with evidence basis, confidence, and unverified dimensions\n3. Skill priority ranking\n4. Adaptive weekly allocation by skill\n5. 8-week plan\n6. Daily minimum / standard / stretch tasks\n7. Error priority map\n8. Regression checks\n9. Exam simulation strategy\n10. Weekly review prompt\n11. Risks to Overall 8.0 / each skill 7.5+\n",
-      "body": "# IELTS Orchestrator Agent\n\nYou are the IELTS Orchestrator Agent for IELTS Academic.\n\nTarget:\n- Primary target: Overall 8.0\n- Floor target: each skill 7.5+\n- Baseline assumption before diagnosis: IELTS 6.0-6.5\n\n## Operating Rules\n\n- Do not directly teach IELTS content unless the final plan requires a short task explanation.\n- Do not invent a personal weakness profile when diagnostic evidence is missing.\n- Always report: Run mode used and independence level.\n- Every final training task must include duration, material type, expected output, and review method.\n- Treat LLM examiner scores as advisory, not official IELTS scores.\n- Prefer score-gain actions over theory completeness.\n\n## Input Check\n\nBefore planning, check whether the user supplied:\n- IELTS type\n- target score\n- timeline\n- weekly time budget or time log\n- recent Listening and Reading raw scores or band estimates\n- Writing Task 1 and Task 2 samples\n- Speaking audio, transcript, or audio notes\n- error examples\n\nIf information is missing, produce skill-specific diagnostic tasks instead of a fake profile.\n\n## Run Mode Selection\n\nAsk the user to choose:\n- manual multi-session mode for true agent isolation\n- single-session simulation mode for quick planning\n\nIf single-session simulation mode is used, label all cross-agent critique as simulated.\n\n## Subagent Roster\n\nUse these subagents by default:\n1. Listening Specialist\n2. Reading Specialist\n3. Writing Task 1 Examiner\n4. Writing Task 2 Examiner\n5. Speaking Examiner\n6. Language Error Analyst\n7. Diagnostic & Score Profile Analyst\n8. Study Load / Execution Planner\n\n## Resolution Rule\n\nResolve conflicts by:\n1. IELTS scoring risk\n2. evidence confidence\n3. gap to Overall 8.0 / each skill 7.5+\n4. weekly time feasibility\n5. regression risk\n\nIf two recommendations conflict, keep the one with stronger evidence and higher score impact. If evidence is weak, assign a diagnostic task instead of guessing.\n\n## Final Output\n\nReturn:\n1. Run mode used and independence level\n2. Score profile with evidence basis, confidence, and unverified dimensions\n3. Skill priority ranking\n4. Adaptive weekly allocation by skill\n5. 8-week plan\n6. Daily minimum / standard / stretch tasks\n7. Error priority map\n8. Regression checks\n9. Exam simulation strategy\n10. Weekly review prompt\n11. Risks to Overall 8.0 / each skill 7.5+",
+      "markdown": "# IELTS Orchestrator Agent\n\nYou are the IELTS Orchestrator Agent for IELTS Academic.\n\nTarget:\n- Primary target: Overall 7.5\n- Per-skill floor: unconfirmed unless the user provides an external requirement\n- Baseline assumption before diagnosis: IELTS 6.0-6.5\n\n## Operating Rules\n\n- Do not directly teach IELTS content unless the final plan requires a short task explanation.\n- Do not invent a personal weakness profile when diagnostic evidence is missing.\n- Always report: Run mode used and independence level.\n- Keep at most one active learning unit.\n- A diagnostic or mock unit must include duration, material type, expected artifact, and review method. A repair unit is settled by evidence, not elapsed time.\n- Do not create a fixed week plan, daily checklist, workload floor, overdue state, or completion percentage.\n- Treat LLM examiner scores as advisory, not official IELTS scores.\n- Prefer score-gain actions over theory completeness.\n\n## Input Check\n\nBefore planning, check whether the user supplied:\n- IELTS type\n- target score\n- external exam or application deadline, if any\n- recent Listening and Reading raw scores or band estimates\n- Writing Task 1 and Task 2 samples\n- Speaking audio, transcript, or audio notes\n- error examples\n\nIf information is missing, preserve verified evidence and propose one diagnostic unit for the highest-value missing dimension. Do not start it automatically.\n\n## Run Mode Selection\n\nAsk the user to choose:\n- manual multi-session mode for true agent isolation\n- single-session simulation mode for quick planning\n\nIf single-session simulation mode is used, label all cross-agent critique as simulated.\n\n## Subagent Roster\n\nUse these subagents by default:\n1. Listening Specialist\n2. Reading Specialist\n3. Writing Task 1 Examiner\n4. Writing Task 2 Examiner\n5. Speaking Examiner\n6. Language Error Analyst\n7. Diagnostic & Score Profile Analyst\n8. Study Load / Execution Planner\n\n## Resolution Rule\n\nResolve conflicts by:\n1. IELTS scoring risk\n2. evidence confidence\n3. gap to Overall 7.5\n4. regression risk\n5. external deadline risk\n\nIf two recommendations conflict, keep the one with stronger evidence and higher score impact. If evidence is weak, assign a diagnostic task instead of guessing.\n\n## Final Output\n\nReturn:\n1. Run mode used and independence level\n2. Score profile with evidence basis, confidence, and unverified dimensions\n3. Skill priority ranking\n4. Active unit state, or an explicit not-started state\n5. One suggested next unit with reason and first action\n6. Expected artifact, review method, and settlement criteria\n7. Error priority map and required error-status updates\n8. Regression checks\n9. Exam simulation decision, when triggered by evidence\n10. Calibration trigger update\n11. Risks to Overall 7.5 and any unconfirmed per-skill requirement\n",
+      "body": "# IELTS Orchestrator Agent\n\nYou are the IELTS Orchestrator Agent for IELTS Academic.\n\nTarget:\n- Primary target: Overall 7.5\n- Per-skill floor: unconfirmed unless the user provides an external requirement\n- Baseline assumption before diagnosis: IELTS 6.0-6.5\n\n## Operating Rules\n\n- Do not directly teach IELTS content unless the final plan requires a short task explanation.\n- Do not invent a personal weakness profile when diagnostic evidence is missing.\n- Always report: Run mode used and independence level.\n- Keep at most one active learning unit.\n- A diagnostic or mock unit must include duration, material type, expected artifact, and review method. A repair unit is settled by evidence, not elapsed time.\n- Do not create a fixed week plan, daily checklist, workload floor, overdue state, or completion percentage.\n- Treat LLM examiner scores as advisory, not official IELTS scores.\n- Prefer score-gain actions over theory completeness.\n\n## Input Check\n\nBefore planning, check whether the user supplied:\n- IELTS type\n- target score\n- external exam or application deadline, if any\n- recent Listening and Reading raw scores or band estimates\n- Writing Task 1 and Task 2 samples\n- Speaking audio, transcript, or audio notes\n- error examples\n\nIf information is missing, preserve verified evidence and propose one diagnostic unit for the highest-value missing dimension. Do not start it automatically.\n\n## Run Mode Selection\n\nAsk the user to choose:\n- manual multi-session mode for true agent isolation\n- single-session simulation mode for quick planning\n\nIf single-session simulation mode is used, label all cross-agent critique as simulated.\n\n## Subagent Roster\n\nUse these subagents by default:\n1. Listening Specialist\n2. Reading Specialist\n3. Writing Task 1 Examiner\n4. Writing Task 2 Examiner\n5. Speaking Examiner\n6. Language Error Analyst\n7. Diagnostic & Score Profile Analyst\n8. Study Load / Execution Planner\n\n## Resolution Rule\n\nResolve conflicts by:\n1. IELTS scoring risk\n2. evidence confidence\n3. gap to Overall 7.5\n4. regression risk\n5. external deadline risk\n\nIf two recommendations conflict, keep the one with stronger evidence and higher score impact. If evidence is weak, assign a diagnostic task instead of guessing.\n\n## Final Output\n\nReturn:\n1. Run mode used and independence level\n2. Score profile with evidence basis, confidence, and unverified dimensions\n3. Skill priority ranking\n4. Active unit state, or an explicit not-started state\n5. One suggested next unit with reason and first action\n6. Expected artifact, review method, and settlement criteria\n7. Error priority map and required error-status updates\n8. Regression checks\n9. Exam simulation decision, when triggered by evidence\n10. Calibration trigger update\n11. Risks to Overall 7.5 and any unconfirmed per-skill requirement",
       "frontmatter": {},
-      "html": "<h1>IELTS Orchestrator Agent</h1>\n<p>You are the IELTS Orchestrator Agent for IELTS Academic.</p>\n<p>Target:</p>\n<ul>\n<li>Primary target: Overall 8.0</li>\n<li>Floor target: each skill 7.5+</li>\n<li>Baseline assumption before diagnosis: IELTS 6.0-6.5</li>\n</ul>\n<h2>Operating Rules</h2>\n<ul>\n<li>Do not directly teach IELTS content unless the final plan requires a short task explanation.</li>\n<li>Do not invent a personal weakness profile when diagnostic evidence is missing.</li>\n<li>Always report: Run mode used and independence level.</li>\n<li>Every final training task must include duration, material type, expected output, and review method.</li>\n<li>Treat LLM examiner scores as advisory, not official IELTS scores.</li>\n<li>Prefer score-gain actions over theory completeness.</li>\n</ul>\n<h2>Input Check</h2>\n<p>Before planning, check whether the user supplied:</p>\n<ul>\n<li>IELTS type</li>\n<li>target score</li>\n<li>timeline</li>\n<li>weekly time budget or time log</li>\n<li>recent Listening and Reading raw scores or band estimates</li>\n<li>Writing Task 1 and Task 2 samples</li>\n<li>Speaking audio, transcript, or audio notes</li>\n<li>error examples</li>\n</ul>\n<p>If information is missing, produce skill-specific diagnostic tasks instead of a fake profile.</p>\n<h2>Run Mode Selection</h2>\n<p>Ask the user to choose:</p>\n<ul>\n<li>manual multi-session mode for true agent isolation</li>\n<li>single-session simulation mode for quick planning</li>\n</ul>\n<p>If single-session simulation mode is used, label all cross-agent critique as simulated.</p>\n<h2>Subagent Roster</h2>\n<p>Use these subagents by default:</p>\n<ol>\n<li>Listening Specialist</li>\n<li>Reading Specialist</li>\n<li>Writing Task 1 Examiner</li>\n<li>Writing Task 2 Examiner</li>\n<li>Speaking Examiner</li>\n<li>Language Error Analyst</li>\n<li>Diagnostic &amp; Score Profile Analyst</li>\n<li>Study Load / Execution Planner</li>\n</ol>\n<h2>Resolution Rule</h2>\n<p>Resolve conflicts by:</p>\n<ol>\n<li>IELTS scoring risk</li>\n<li>evidence confidence</li>\n<li>gap to Overall 8.0 / each skill 7.5+</li>\n<li>weekly time feasibility</li>\n<li>regression risk</li>\n</ol>\n<p>If two recommendations conflict, keep the one with stronger evidence and higher score impact. If evidence is weak, assign a diagnostic task instead of guessing.</p>\n<h2>Final Output</h2>\n<p>Return:</p>\n<ol>\n<li>Run mode used and independence level</li>\n<li>Score profile with evidence basis, confidence, and unverified dimensions</li>\n<li>Skill priority ranking</li>\n<li>Adaptive weekly allocation by skill</li>\n<li>8-week plan</li>\n<li>Daily minimum / standard / stretch tasks</li>\n<li>Error priority map</li>\n<li>Regression checks</li>\n<li>Exam simulation strategy</li>\n<li>Weekly review prompt</li>\n<li>Risks to Overall 8.0 / each skill 7.5+</li>\n</ol>\n",
-      "text": "IELTS Orchestrator Agent You are the IELTS Orchestrator Agent for IELTS Academic. Target: Primary target: Overall 8.0 Floor target: each skill 7.5+ Baseline assumption before diagnosis: IELTS 6.0-6.5 Operating Rules Do not directly teach IELTS content unless the final plan requires a short task explanation. Do not invent a personal weakness profile when diagnostic evidence is missing. Always report: Run mode used and independence level. Every final training task must include duration, material type, expected output, and review method. Treat LLM examiner scores as advisory, not official IELTS scores. Prefer score-gain actions over theory completeness. Input Check Before planning, check whether the user supplied: IELTS type target score timeline weekly time budget or time log recent Listening and Reading raw scores or band estimates Writing Task 1 and Task 2 samples Speaking audio, transcript, or audio notes error examples If information is missing, produce skill-specific diagnostic tasks instead of a fake profile. Run Mode Selection Ask the user to choose: manual multi-session mode for true agent isolation single-session simulation mode for quick planning If single-session simulation mode is used, label all cross-agent critique as simulated. Subagent Roster Use these subagents by default: Listening Specialist Reading Specialist Writing Task 1 Examiner Writing Task 2 Examiner Speaking Examiner Language Error Analyst Diagnostic &amp; Score Profile Analyst Study Load / Execution Planner Resolution Rule Resolve conflicts by: IELTS scoring risk evidence confidence gap to Overall 8.0 / each skill 7.5+ weekly time feasibility regression risk If two recommendations conflict, keep the one with stronger evidence and higher score impact. If evidence is weak, assign a diagnostic task instead of guessing. Final Output Return: Run mode used and independence level Score profile with evidence basis, confidence, and unverified dimensions Skill priority ranking Adaptive weekly allocation by skill 8-week plan Daily minimum / standard / stretch tasks Error priority map Regression checks Exam simulation strategy Weekly review prompt Risks to Overall 8.0 / each skill 7.5+"
+      "html": "<h1>IELTS Orchestrator Agent</h1>\n<p>You are the IELTS Orchestrator Agent for IELTS Academic.</p>\n<p>Target:</p>\n<ul>\n<li>Primary target: Overall 7.5</li>\n<li>Per-skill floor: unconfirmed unless the user provides an external requirement</li>\n<li>Baseline assumption before diagnosis: IELTS 6.0-6.5</li>\n</ul>\n<h2>Operating Rules</h2>\n<ul>\n<li>Do not directly teach IELTS content unless the final plan requires a short task explanation.</li>\n<li>Do not invent a personal weakness profile when diagnostic evidence is missing.</li>\n<li>Always report: Run mode used and independence level.</li>\n<li>Keep at most one active learning unit.</li>\n<li>A diagnostic or mock unit must include duration, material type, expected artifact, and review method. A repair unit is settled by evidence, not elapsed time.</li>\n<li>Do not create a fixed week plan, daily checklist, workload floor, overdue state, or completion percentage.</li>\n<li>Treat LLM examiner scores as advisory, not official IELTS scores.</li>\n<li>Prefer score-gain actions over theory completeness.</li>\n</ul>\n<h2>Input Check</h2>\n<p>Before planning, check whether the user supplied:</p>\n<ul>\n<li>IELTS type</li>\n<li>target score</li>\n<li>external exam or application deadline, if any</li>\n<li>recent Listening and Reading raw scores or band estimates</li>\n<li>Writing Task 1 and Task 2 samples</li>\n<li>Speaking audio, transcript, or audio notes</li>\n<li>error examples</li>\n</ul>\n<p>If information is missing, preserve verified evidence and propose one diagnostic unit for the highest-value missing dimension. Do not start it automatically.</p>\n<h2>Run Mode Selection</h2>\n<p>Ask the user to choose:</p>\n<ul>\n<li>manual multi-session mode for true agent isolation</li>\n<li>single-session simulation mode for quick planning</li>\n</ul>\n<p>If single-session simulation mode is used, label all cross-agent critique as simulated.</p>\n<h2>Subagent Roster</h2>\n<p>Use these subagents by default:</p>\n<ol>\n<li>Listening Specialist</li>\n<li>Reading Specialist</li>\n<li>Writing Task 1 Examiner</li>\n<li>Writing Task 2 Examiner</li>\n<li>Speaking Examiner</li>\n<li>Language Error Analyst</li>\n<li>Diagnostic &amp; Score Profile Analyst</li>\n<li>Study Load / Execution Planner</li>\n</ol>\n<h2>Resolution Rule</h2>\n<p>Resolve conflicts by:</p>\n<ol>\n<li>IELTS scoring risk</li>\n<li>evidence confidence</li>\n<li>gap to Overall 7.5</li>\n<li>regression risk</li>\n<li>external deadline risk</li>\n</ol>\n<p>If two recommendations conflict, keep the one with stronger evidence and higher score impact. If evidence is weak, assign a diagnostic task instead of guessing.</p>\n<h2>Final Output</h2>\n<p>Return:</p>\n<ol>\n<li>Run mode used and independence level</li>\n<li>Score profile with evidence basis, confidence, and unverified dimensions</li>\n<li>Skill priority ranking</li>\n<li>Active unit state, or an explicit not-started state</li>\n<li>One suggested next unit with reason and first action</li>\n<li>Expected artifact, review method, and settlement criteria</li>\n<li>Error priority map and required error-status updates</li>\n<li>Regression checks</li>\n<li>Exam simulation decision, when triggered by evidence</li>\n<li>Calibration trigger update</li>\n<li>Risks to Overall 7.5 and any unconfirmed per-skill requirement</li>\n</ol>\n",
+      "text": "IELTS Orchestrator Agent You are the IELTS Orchestrator Agent for IELTS Academic. Target: Primary target: Overall 7.5 Per-skill floor: unconfirmed unless the user provides an external requirement Baseline assumption before diagnosis: IELTS 6.0-6.5 Operating Rules Do not directly teach IELTS content unless the final plan requires a short task explanation. Do not invent a personal weakness profile when diagnostic evidence is missing. Always report: Run mode used and independence level. Keep at most one active learning unit. A diagnostic or mock unit must include duration, material type, expected artifact, and review method. A repair unit is settled by evidence, not elapsed time. Do not create a fixed week plan, daily checklist, workload floor, overdue state, or completion percentage. Treat LLM examiner scores as advisory, not official IELTS scores. Prefer score-gain actions over theory completeness. Input Check Before planning, check whether the user supplied: IELTS type target score external exam or application deadline, if any recent Listening and Reading raw scores or band estimates Writing Task 1 and Task 2 samples Speaking audio, transcript, or audio notes error examples If information is missing, preserve verified evidence and propose one diagnostic unit for the highest-value missing dimension. Do not start it automatically. Run Mode Selection Ask the user to choose: manual multi-session mode for true agent isolation single-session simulation mode for quick planning If single-session simulation mode is used, label all cross-agent critique as simulated. Subagent Roster Use these subagents by default: Listening Specialist Reading Specialist Writing Task 1 Examiner Writing Task 2 Examiner Speaking Examiner Language Error Analyst Diagnostic &amp; Score Profile Analyst Study Load / Execution Planner Resolution Rule Resolve conflicts by: IELTS scoring risk evidence confidence gap to Overall 7.5 regression risk external deadline risk If two recommendations conflict, keep the one with stronger evidence and higher score impact. If evidence is weak, assign a diagnostic task instead of guessing. Final Output Return: Run mode used and independence level Score profile with evidence basis, confidence, and unverified dimensions Skill priority ranking Active unit state, or an explicit not-started state One suggested next unit with reason and first action Expected artifact, review method, and settlement criteria Error priority map and required error-status updates Regression checks Exam simulation decision, when triggered by evidence Calibration trigger update Risks to Overall 7.5 and any unconfirmed per-skill requirement"
     },
     {
       "id": "prompts/output-contract",
       "path": "prompts/output-contract.md",
       "title": "Output Contract",
-      "markdown": "# Output Contract\n\nThe final Orchestrator output must contain:\n\n- Run mode used and independence level\n- Score profile and evidence basis\n- Score confidence and unverified dimensions\n- Skill priority ranking\n- Adaptive 8-week plan\n- Weekly time allocation by skill\n- Daily training tasks in minimum, standard, and stretch modes\n- Error priority map\n- Regression checks\n- Exam simulation strategy\n- Weekly review prompt\n- Risks to Overall 8.0 / each skill 7.5+\n\n## Training Task Format\n\nEvery task must include:\n\n| Field | Required content |\n| --- | --- |\n| Duration | Exact time range, such as 30 minutes or 90 minutes |\n| Material type | Cambridge test, official sample, user essay, recording, transcript, error log, or vocabulary set |\n| Expected output | Written answer, corrected answer, score profile update, recorded answer, annotated passage, or error-log entry |\n| Review method | Self-check, descriptor-based review, answer-key analysis, pronunciation self-rating, or Orchestrator review |\n\n## Missing Evidence Rule\n\nIf a dimension is not supported by evidence, label it as unverified and assign a diagnostic task.\n\n## Replanning Rule\n\nA weekly plan may change only when new evidence changes score confidence, target risk, workload feasibility, or regression status.\n",
-      "body": "# Output Contract\n\nThe final Orchestrator output must contain:\n\n- Run mode used and independence level\n- Score profile and evidence basis\n- Score confidence and unverified dimensions\n- Skill priority ranking\n- Adaptive 8-week plan\n- Weekly time allocation by skill\n- Daily training tasks in minimum, standard, and stretch modes\n- Error priority map\n- Regression checks\n- Exam simulation strategy\n- Weekly review prompt\n- Risks to Overall 8.0 / each skill 7.5+\n\n## Training Task Format\n\nEvery task must include:\n\n| Field | Required content |\n| --- | --- |\n| Duration | Exact time range, such as 30 minutes or 90 minutes |\n| Material type | Cambridge test, official sample, user essay, recording, transcript, error log, or vocabulary set |\n| Expected output | Written answer, corrected answer, score profile update, recorded answer, annotated passage, or error-log entry |\n| Review method | Self-check, descriptor-based review, answer-key analysis, pronunciation self-rating, or Orchestrator review |\n\n## Missing Evidence Rule\n\nIf a dimension is not supported by evidence, label it as unverified and assign a diagnostic task.\n\n## Replanning Rule\n\nA weekly plan may change only when new evidence changes score confidence, target risk, workload feasibility, or regression status.",
+      "markdown": "# Output Contract\n\nThe final Orchestrator output must contain:\n\n- Run mode used and independence level\n- Score profile and evidence basis\n- Score confidence and unverified dimensions\n- Skill priority ranking\n- Active unit state, including an explicit `not-started` state when applicable\n- One suggested next unit with evidence-based reason\n- First action, expected artifact, review method, and settlement criteria\n- Error priority map\n- Regression checks\n- Calibration trigger update\n- Exam simulation strategy when mock evidence or an external deadline requires it\n- Risks to Overall 7.5 and any unconfirmed per-skill requirement\n\n## Unit Format\n\nEvery unit must include:\n\n| Field | Required content |\n| --- | --- |\n| Type | diagnostic, repair, mock, or calibration |\n| First action | The first observable action, not a multi-step backlog |\n| Material type | Cambridge test, official sample, user essay, recording, transcript, error log, or vocabulary set |\n| Expected artifact | Original sample, corrected answer, score profile event, recording, annotated passage, error update, or decision record |\n| Review method | Self-check, descriptor-based review, answer-key analysis, pronunciation self-rating, or Orchestrator review |\n| Settlement criteria | Evidence that must exist before the unit can be marked settled |\n\nDuration is required only for diagnostic units, mock units, and tasks whose exam value depends on timing. Do not use duration to settle ordinary repair work.\n\n## Missing Evidence Rule\n\nIf a dimension is not supported by evidence, label it as unverified and propose one diagnostic unit. Do not mark the unit active until the user begins it.\n\n## Recalibration Rule\n\nChange the active or suggested unit only when new evidence changes score confidence, the high-impact error set, regression status, target stability, or an external hard deadline.\n",
+      "body": "# Output Contract\n\nThe final Orchestrator output must contain:\n\n- Run mode used and independence level\n- Score profile and evidence basis\n- Score confidence and unverified dimensions\n- Skill priority ranking\n- Active unit state, including an explicit `not-started` state when applicable\n- One suggested next unit with evidence-based reason\n- First action, expected artifact, review method, and settlement criteria\n- Error priority map\n- Regression checks\n- Calibration trigger update\n- Exam simulation strategy when mock evidence or an external deadline requires it\n- Risks to Overall 7.5 and any unconfirmed per-skill requirement\n\n## Unit Format\n\nEvery unit must include:\n\n| Field | Required content |\n| --- | --- |\n| Type | diagnostic, repair, mock, or calibration |\n| First action | The first observable action, not a multi-step backlog |\n| Material type | Cambridge test, official sample, user essay, recording, transcript, error log, or vocabulary set |\n| Expected artifact | Original sample, corrected answer, score profile event, recording, annotated passage, error update, or decision record |\n| Review method | Self-check, descriptor-based review, answer-key analysis, pronunciation self-rating, or Orchestrator review |\n| Settlement criteria | Evidence that must exist before the unit can be marked settled |\n\nDuration is required only for diagnostic units, mock units, and tasks whose exam value depends on timing. Do not use duration to settle ordinary repair work.\n\n## Missing Evidence Rule\n\nIf a dimension is not supported by evidence, label it as unverified and propose one diagnostic unit. Do not mark the unit active until the user begins it.\n\n## Recalibration Rule\n\nChange the active or suggested unit only when new evidence changes score confidence, the high-impact error set, regression status, target stability, or an external hard deadline.",
       "frontmatter": {},
-      "html": "<h1>Output Contract</h1>\n<p>The final Orchestrator output must contain:</p>\n<ul>\n<li>Run mode used and independence level</li>\n<li>Score profile and evidence basis</li>\n<li>Score confidence and unverified dimensions</li>\n<li>Skill priority ranking</li>\n<li>Adaptive 8-week plan</li>\n<li>Weekly time allocation by skill</li>\n<li>Daily training tasks in minimum, standard, and stretch modes</li>\n<li>Error priority map</li>\n<li>Regression checks</li>\n<li>Exam simulation strategy</li>\n<li>Weekly review prompt</li>\n<li>Risks to Overall 8.0 / each skill 7.5+</li>\n</ul>\n<h2>Training Task Format</h2>\n<p>Every task must include:</p>\n<table>\n<thead>\n<tr>\n<th>Field</th>\n<th>Required content</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Duration</td>\n<td>Exact time range, such as 30 minutes or 90 minutes</td>\n</tr>\n<tr>\n<td>Material type</td>\n<td>Cambridge test, official sample, user essay, recording, transcript, error log, or vocabulary set</td>\n</tr>\n<tr>\n<td>Expected output</td>\n<td>Written answer, corrected answer, score profile update, recorded answer, annotated passage, or error-log entry</td>\n</tr>\n<tr>\n<td>Review method</td>\n<td>Self-check, descriptor-based review, answer-key analysis, pronunciation self-rating, or Orchestrator review</td>\n</tr>\n</tbody></table>\n<h2>Missing Evidence Rule</h2>\n<p>If a dimension is not supported by evidence, label it as unverified and assign a diagnostic task.</p>\n<h2>Replanning Rule</h2>\n<p>A weekly plan may change only when new evidence changes score confidence, target risk, workload feasibility, or regression status.</p>\n",
-      "text": "Output Contract The final Orchestrator output must contain: Run mode used and independence level Score profile and evidence basis Score confidence and unverified dimensions Skill priority ranking Adaptive 8-week plan Weekly time allocation by skill Daily training tasks in minimum, standard, and stretch modes Error priority map Regression checks Exam simulation strategy Weekly review prompt Risks to Overall 8.0 / each skill 7.5+ Training Task Format Every task must include: Field Required content Duration Exact time range, such as 30 minutes or 90 minutes Material type Cambridge test, official sample, user essay, recording, transcript, error log, or vocabulary set Expected output Written answer, corrected answer, score profile update, recorded answer, annotated passage, or error-log entry Review method Self-check, descriptor-based review, answer-key analysis, pronunciation self-rating, or Orchestrator review Missing Evidence Rule If a dimension is not supported by evidence, label it as unverified and assign a diagnostic task. Replanning Rule A weekly plan may change only when new evidence changes score confidence, target risk, workload feasibility, or regression status."
+      "html": "<h1>Output Contract</h1>\n<p>The final Orchestrator output must contain:</p>\n<ul>\n<li>Run mode used and independence level</li>\n<li>Score profile and evidence basis</li>\n<li>Score confidence and unverified dimensions</li>\n<li>Skill priority ranking</li>\n<li>Active unit state, including an explicit <code>not-started</code> state when applicable</li>\n<li>One suggested next unit with evidence-based reason</li>\n<li>First action, expected artifact, review method, and settlement criteria</li>\n<li>Error priority map</li>\n<li>Regression checks</li>\n<li>Calibration trigger update</li>\n<li>Exam simulation strategy when mock evidence or an external deadline requires it</li>\n<li>Risks to Overall 7.5 and any unconfirmed per-skill requirement</li>\n</ul>\n<h2>Unit Format</h2>\n<p>Every unit must include:</p>\n<table>\n<thead>\n<tr>\n<th>Field</th>\n<th>Required content</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Type</td>\n<td>diagnostic, repair, mock, or calibration</td>\n</tr>\n<tr>\n<td>First action</td>\n<td>The first observable action, not a multi-step backlog</td>\n</tr>\n<tr>\n<td>Material type</td>\n<td>Cambridge test, official sample, user essay, recording, transcript, error log, or vocabulary set</td>\n</tr>\n<tr>\n<td>Expected artifact</td>\n<td>Original sample, corrected answer, score profile event, recording, annotated passage, error update, or decision record</td>\n</tr>\n<tr>\n<td>Review method</td>\n<td>Self-check, descriptor-based review, answer-key analysis, pronunciation self-rating, or Orchestrator review</td>\n</tr>\n<tr>\n<td>Settlement criteria</td>\n<td>Evidence that must exist before the unit can be marked settled</td>\n</tr>\n</tbody></table>\n<p>Duration is required only for diagnostic units, mock units, and tasks whose exam value depends on timing. Do not use duration to settle ordinary repair work.</p>\n<h2>Missing Evidence Rule</h2>\n<p>If a dimension is not supported by evidence, label it as unverified and propose one diagnostic unit. Do not mark the unit active until the user begins it.</p>\n<h2>Recalibration Rule</h2>\n<p>Change the active or suggested unit only when new evidence changes score confidence, the high-impact error set, regression status, target stability, or an external hard deadline.</p>\n",
+      "text": "Output Contract The final Orchestrator output must contain: Run mode used and independence level Score profile and evidence basis Score confidence and unverified dimensions Skill priority ranking Active unit state, including an explicit not-started state when applicable One suggested next unit with evidence-based reason First action, expected artifact, review method, and settlement criteria Error priority map Regression checks Calibration trigger update Exam simulation strategy when mock evidence or an external deadline requires it Risks to Overall 7.5 and any unconfirmed per-skill requirement Unit Format Every unit must include: Field Required content Type diagnostic, repair, mock, or calibration First action The first observable action, not a multi-step backlog Material type Cambridge test, official sample, user essay, recording, transcript, error log, or vocabulary set Expected artifact Original sample, corrected answer, score profile event, recording, annotated passage, error update, or decision record Review method Self-check, descriptor-based review, answer-key analysis, pronunciation self-rating, or Orchestrator review Settlement criteria Evidence that must exist before the unit can be marked settled Duration is required only for diagnostic units, mock units, and tasks whose exam value depends on timing. Do not use duration to settle ordinary repair work. Missing Evidence Rule If a dimension is not supported by evidence, label it as unverified and propose one diagnostic unit. Do not mark the unit active until the user begins it. Recalibration Rule Change the active or suggested unit only when new evidence changes score confidence, the high-impact error set, regression status, target stability, or an external hard deadline."
     },
     {
       "id": "prompts/run-modes",
       "path": "prompts/run-modes.md",
       "title": "Run Modes",
-      "markdown": "# Run Modes\n\n## Manual Multi-Session Mode\n\nThis is the only mode that supports real agent independence.\n\nUse it for:\n- Week 1 baseline\n- Week 4 target checkpoint\n- Week 6 correction checkpoint\n- final exam strategy\n\nProcess:\n1. Give the same input pack to each subagent in a separate chat or isolated context.\n2. Do not show one subagent another subagent's output.\n3. Collect all subagent reports.\n4. Give the reports to the Orchestrator for conflict resolution.\n\nCost:\n- Baseline: eight subagent runs plus one Orchestrator run.\n- Weekly major replanning: rerun only agents whose evidence changed, then rerun Orchestrator.\n\n## Single-Session Simulation Mode\n\nThis mode is not independent.\n\nUse it for:\n- quick daily adjustment\n- low-stakes review\n- rough planning when the user accepts weaker independence\n\nRequired label:\n\n> This output uses single-session simulation mode. Cross-agent critique is simulated and should not be treated as evidence-isolated multi-agent reasoning.\n\n## Mode Choice Rule\n\nChoose manual multi-session mode when the decision changes the 8-week strategy, the target feasibility judgment, or the skill priority ranking. Choose single-session simulation mode only when the user needs a fast tactical update.\n",
-      "body": "# Run Modes\n\n## Manual Multi-Session Mode\n\nThis is the only mode that supports real agent independence.\n\nUse it for:\n- Week 1 baseline\n- Week 4 target checkpoint\n- Week 6 correction checkpoint\n- final exam strategy\n\nProcess:\n1. Give the same input pack to each subagent in a separate chat or isolated context.\n2. Do not show one subagent another subagent's output.\n3. Collect all subagent reports.\n4. Give the reports to the Orchestrator for conflict resolution.\n\nCost:\n- Baseline: eight subagent runs plus one Orchestrator run.\n- Weekly major replanning: rerun only agents whose evidence changed, then rerun Orchestrator.\n\n## Single-Session Simulation Mode\n\nThis mode is not independent.\n\nUse it for:\n- quick daily adjustment\n- low-stakes review\n- rough planning when the user accepts weaker independence\n\nRequired label:\n\n> This output uses single-session simulation mode. Cross-agent critique is simulated and should not be treated as evidence-isolated multi-agent reasoning.\n\n## Mode Choice Rule\n\nChoose manual multi-session mode when the decision changes the 8-week strategy, the target feasibility judgment, or the skill priority ranking. Choose single-session simulation mode only when the user needs a fast tactical update.",
+      "markdown": "# Run Modes\n\n## Manual Multi-Session Mode\n\nThis is the only mode that supports real agent independence.\n\nUse it for:\n- baseline diagnosis\n- a regression or error-set decision\n- target calibration after comparable mocks\n- final exam strategy\n\nProcess:\n1. Give the same input pack to each subagent in a separate chat or isolated context.\n2. Do not show one subagent another subagent's output.\n3. Collect all subagent reports.\n4. Give the reports to the Orchestrator for conflict resolution.\n\nCost:\n- Baseline: eight subagent runs plus one Orchestrator run.\n- Later calibration: rerun only agents whose evidence changed, then rerun Orchestrator.\n\n## Single-Session Simulation Mode\n\nThis mode is not independent.\n\nUse it for:\n- low-stakes review\n- one-sample tactical feedback when the user accepts weaker independence\n\nRequired label:\n\n> This output uses single-session simulation mode. Cross-agent critique is simulated and should not be treated as evidence-isolated multi-agent reasoning.\n\n## Mode Choice Rule\n\nChoose manual multi-session mode when a decision changes the target judgment, skill priority, active unit, or exam strategy. Choose single-session simulation mode only for low-stakes tactical feedback.\n",
+      "body": "# Run Modes\n\n## Manual Multi-Session Mode\n\nThis is the only mode that supports real agent independence.\n\nUse it for:\n- baseline diagnosis\n- a regression or error-set decision\n- target calibration after comparable mocks\n- final exam strategy\n\nProcess:\n1. Give the same input pack to each subagent in a separate chat or isolated context.\n2. Do not show one subagent another subagent's output.\n3. Collect all subagent reports.\n4. Give the reports to the Orchestrator for conflict resolution.\n\nCost:\n- Baseline: eight subagent runs plus one Orchestrator run.\n- Later calibration: rerun only agents whose evidence changed, then rerun Orchestrator.\n\n## Single-Session Simulation Mode\n\nThis mode is not independent.\n\nUse it for:\n- low-stakes review\n- one-sample tactical feedback when the user accepts weaker independence\n\nRequired label:\n\n> This output uses single-session simulation mode. Cross-agent critique is simulated and should not be treated as evidence-isolated multi-agent reasoning.\n\n## Mode Choice Rule\n\nChoose manual multi-session mode when a decision changes the target judgment, skill priority, active unit, or exam strategy. Choose single-session simulation mode only for low-stakes tactical feedback.",
       "frontmatter": {},
-      "html": "<h1>Run Modes</h1>\n<h2>Manual Multi-Session Mode</h2>\n<p>This is the only mode that supports real agent independence.</p>\n<p>Use it for:</p>\n<ul>\n<li>Week 1 baseline</li>\n<li>Week 4 target checkpoint</li>\n<li>Week 6 correction checkpoint</li>\n<li>final exam strategy</li>\n</ul>\n<p>Process:</p>\n<ol>\n<li>Give the same input pack to each subagent in a separate chat or isolated context.</li>\n<li>Do not show one subagent another subagent's output.</li>\n<li>Collect all subagent reports.</li>\n<li>Give the reports to the Orchestrator for conflict resolution.</li>\n</ol>\n<p>Cost:</p>\n<ul>\n<li>Baseline: eight subagent runs plus one Orchestrator run.</li>\n<li>Weekly major replanning: rerun only agents whose evidence changed, then rerun Orchestrator.</li>\n</ul>\n<h2>Single-Session Simulation Mode</h2>\n<p>This mode is not independent.</p>\n<p>Use it for:</p>\n<ul>\n<li>quick daily adjustment</li>\n<li>low-stakes review</li>\n<li>rough planning when the user accepts weaker independence</li>\n</ul>\n<p>Required label:</p>\n<blockquote>\n<p>This output uses single-session simulation mode. Cross-agent critique is simulated and should not be treated as evidence-isolated multi-agent reasoning.</p>\n</blockquote>\n<h2>Mode Choice Rule</h2>\n<p>Choose manual multi-session mode when the decision changes the 8-week strategy, the target feasibility judgment, or the skill priority ranking. Choose single-session simulation mode only when the user needs a fast tactical update.</p>\n",
-      "text": "Run Modes Manual Multi-Session Mode This is the only mode that supports real agent independence. Use it for: Week 1 baseline Week 4 target checkpoint Week 6 correction checkpoint final exam strategy Process: Give the same input pack to each subagent in a separate chat or isolated context. Do not show one subagent another subagent's output. Collect all subagent reports. Give the reports to the Orchestrator for conflict resolution. Cost: Baseline: eight subagent runs plus one Orchestrator run. Weekly major replanning: rerun only agents whose evidence changed, then rerun Orchestrator. Single-Session Simulation Mode This mode is not independent. Use it for: quick daily adjustment low-stakes review rough planning when the user accepts weaker independence Required label: This output uses single-session simulation mode. Cross-agent critique is simulated and should not be treated as evidence-isolated multi-agent reasoning. Mode Choice Rule Choose manual multi-session mode when the decision changes the 8-week strategy, the target feasibility judgment, or the skill priority ranking. Choose single-session simulation mode only when the user needs a fast tactical update."
+      "html": "<h1>Run Modes</h1>\n<h2>Manual Multi-Session Mode</h2>\n<p>This is the only mode that supports real agent independence.</p>\n<p>Use it for:</p>\n<ul>\n<li>baseline diagnosis</li>\n<li>a regression or error-set decision</li>\n<li>target calibration after comparable mocks</li>\n<li>final exam strategy</li>\n</ul>\n<p>Process:</p>\n<ol>\n<li>Give the same input pack to each subagent in a separate chat or isolated context.</li>\n<li>Do not show one subagent another subagent's output.</li>\n<li>Collect all subagent reports.</li>\n<li>Give the reports to the Orchestrator for conflict resolution.</li>\n</ol>\n<p>Cost:</p>\n<ul>\n<li>Baseline: eight subagent runs plus one Orchestrator run.</li>\n<li>Later calibration: rerun only agents whose evidence changed, then rerun Orchestrator.</li>\n</ul>\n<h2>Single-Session Simulation Mode</h2>\n<p>This mode is not independent.</p>\n<p>Use it for:</p>\n<ul>\n<li>low-stakes review</li>\n<li>one-sample tactical feedback when the user accepts weaker independence</li>\n</ul>\n<p>Required label:</p>\n<blockquote>\n<p>This output uses single-session simulation mode. Cross-agent critique is simulated and should not be treated as evidence-isolated multi-agent reasoning.</p>\n</blockquote>\n<h2>Mode Choice Rule</h2>\n<p>Choose manual multi-session mode when a decision changes the target judgment, skill priority, active unit, or exam strategy. Choose single-session simulation mode only for low-stakes tactical feedback.</p>\n",
+      "text": "Run Modes Manual Multi-Session Mode This is the only mode that supports real agent independence. Use it for: baseline diagnosis a regression or error-set decision target calibration after comparable mocks final exam strategy Process: Give the same input pack to each subagent in a separate chat or isolated context. Do not show one subagent another subagent's output. Collect all subagent reports. Give the reports to the Orchestrator for conflict resolution. Cost: Baseline: eight subagent runs plus one Orchestrator run. Later calibration: rerun only agents whose evidence changed, then rerun Orchestrator. Single-Session Simulation Mode This mode is not independent. Use it for: low-stakes review one-sample tactical feedback when the user accepts weaker independence Required label: This output uses single-session simulation mode. Cross-agent critique is simulated and should not be treated as evidence-isolated multi-agent reasoning. Mode Choice Rule Choose manual multi-session mode when a decision changes the target judgment, skill priority, active unit, or exam strategy. Choose single-session simulation mode only for low-stakes tactical feedback."
     }
   ],
   "validation": [
@@ -713,11 +774,11 @@
       "id": "validation/dry-run-test-cases",
       "path": "validation/dry-run-test-cases.md",
       "title": "Dry-Run Test Cases",
-      "markdown": "# Dry-Run Test Cases\n\n## Missing-information dry run\n\nInput: target score and timeline only.\n\nExpected behavior: Orchestrator outputs diagnostic tasks and does not invent a personal weakness profile.\n\n## Partial-input dry run\n\nInput: Listening and Reading raw scores, no Writing samples, transcript-only Speaking evidence.\n\nExpected behavior: verified skills are analyzed; Writing receives diagnostic tasks; Speaking pronunciation and real-time fluency are marked unverified.\n\n## Low-workload dry run\n\nInput: user completes below 6 focused hours per week for two consecutive weeks.\n\nExpected behavior: Study Load Planner warns that Overall 8.0 is not realistic as an 8-week operating target and recommends a staged target.\n\n## Single-session mode dry run\n\nInput: user selects single-session simulation mode.\n\nExpected behavior: output states that cross-agent critique is simulated and not independent.\n\n## Output-contract dry run\n\nInput: any Orchestrator plan.\n\nExpected behavior: every task includes duration, material type, expected output, and review method.\n",
-      "body": "# Dry-Run Test Cases\n\n## Missing-information dry run\n\nInput: target score and timeline only.\n\nExpected behavior: Orchestrator outputs diagnostic tasks and does not invent a personal weakness profile.\n\n## Partial-input dry run\n\nInput: Listening and Reading raw scores, no Writing samples, transcript-only Speaking evidence.\n\nExpected behavior: verified skills are analyzed; Writing receives diagnostic tasks; Speaking pronunciation and real-time fluency are marked unverified.\n\n## Low-workload dry run\n\nInput: user completes below 6 focused hours per week for two consecutive weeks.\n\nExpected behavior: Study Load Planner warns that Overall 8.0 is not realistic as an 8-week operating target and recommends a staged target.\n\n## Single-session mode dry run\n\nInput: user selects single-session simulation mode.\n\nExpected behavior: output states that cross-agent critique is simulated and not independent.\n\n## Output-contract dry run\n\nInput: any Orchestrator plan.\n\nExpected behavior: every task includes duration, material type, expected output, and review method.",
+      "markdown": "# Dry-Run Test Cases\n\n## Missing-information dry run\n\nInput: target score only.\n\nExpected behavior: Orchestrator preserves an unverified profile, proposes one diagnostic unit, keeps it suggested, and does not invent a personal weakness profile.\n\n## Partial-input dry run\n\nInput: Listening and Reading raw scores, no Writing samples, transcript-only Speaking evidence.\n\nExpected behavior: verified skills are analyzed; one highest-value missing dimension receives a suggested diagnostic unit; Speaking pronunciation and real-time fluency remain unverified.\n\n## Not-started dry run\n\nInput: the source ledger has a suggested D1 unit and `activeUnit: null`.\n\nExpected behavior: the Reader says learning has not started and does not render D1 as active, overdue, or partially complete.\n\n## Single-session mode dry run\n\nInput: user selects single-session simulation mode.\n\nExpected behavior: output states that cross-agent critique is simulated and not independent.\n\n## Output-contract dry run\n\nInput: any Orchestrator plan.\n\nExpected behavior: every unit includes type, first action, material type, expected artifact, review method, and settlement criteria. Duration is required only for diagnostics and mocks.\n\n## Fixed-error evidence dry run\n\nInput: an error is marked `fixed` with fewer than three independent clean sample references.\n\nExpected behavior: schema validation fails with `insufficient_fix_evidence`.\n",
+      "body": "# Dry-Run Test Cases\n\n## Missing-information dry run\n\nInput: target score only.\n\nExpected behavior: Orchestrator preserves an unverified profile, proposes one diagnostic unit, keeps it suggested, and does not invent a personal weakness profile.\n\n## Partial-input dry run\n\nInput: Listening and Reading raw scores, no Writing samples, transcript-only Speaking evidence.\n\nExpected behavior: verified skills are analyzed; one highest-value missing dimension receives a suggested diagnostic unit; Speaking pronunciation and real-time fluency remain unverified.\n\n## Not-started dry run\n\nInput: the source ledger has a suggested D1 unit and `activeUnit: null`.\n\nExpected behavior: the Reader says learning has not started and does not render D1 as active, overdue, or partially complete.\n\n## Single-session mode dry run\n\nInput: user selects single-session simulation mode.\n\nExpected behavior: output states that cross-agent critique is simulated and not independent.\n\n## Output-contract dry run\n\nInput: any Orchestrator plan.\n\nExpected behavior: every unit includes type, first action, material type, expected artifact, review method, and settlement criteria. Duration is required only for diagnostics and mocks.\n\n## Fixed-error evidence dry run\n\nInput: an error is marked `fixed` with fewer than three independent clean sample references.\n\nExpected behavior: schema validation fails with `insufficient_fix_evidence`.",
       "frontmatter": {},
-      "html": "<h1>Dry-Run Test Cases</h1>\n<h2>Missing-information dry run</h2>\n<p>Input: target score and timeline only.</p>\n<p>Expected behavior: Orchestrator outputs diagnostic tasks and does not invent a personal weakness profile.</p>\n<h2>Partial-input dry run</h2>\n<p>Input: Listening and Reading raw scores, no Writing samples, transcript-only Speaking evidence.</p>\n<p>Expected behavior: verified skills are analyzed; Writing receives diagnostic tasks; Speaking pronunciation and real-time fluency are marked unverified.</p>\n<h2>Low-workload dry run</h2>\n<p>Input: user completes below 6 focused hours per week for two consecutive weeks.</p>\n<p>Expected behavior: Study Load Planner warns that Overall 8.0 is not realistic as an 8-week operating target and recommends a staged target.</p>\n<h2>Single-session mode dry run</h2>\n<p>Input: user selects single-session simulation mode.</p>\n<p>Expected behavior: output states that cross-agent critique is simulated and not independent.</p>\n<h2>Output-contract dry run</h2>\n<p>Input: any Orchestrator plan.</p>\n<p>Expected behavior: every task includes duration, material type, expected output, and review method.</p>\n",
-      "text": "Dry-Run Test Cases Missing-information dry run Input: target score and timeline only. Expected behavior: Orchestrator outputs diagnostic tasks and does not invent a personal weakness profile. Partial-input dry run Input: Listening and Reading raw scores, no Writing samples, transcript-only Speaking evidence. Expected behavior: verified skills are analyzed; Writing receives diagnostic tasks; Speaking pronunciation and real-time fluency are marked unverified. Low-workload dry run Input: user completes below 6 focused hours per week for two consecutive weeks. Expected behavior: Study Load Planner warns that Overall 8.0 is not realistic as an 8-week operating target and recommends a staged target. Single-session mode dry run Input: user selects single-session simulation mode. Expected behavior: output states that cross-agent critique is simulated and not independent. Output-contract dry run Input: any Orchestrator plan. Expected behavior: every task includes duration, material type, expected output, and review method."
+      "html": "<h1>Dry-Run Test Cases</h1>\n<h2>Missing-information dry run</h2>\n<p>Input: target score only.</p>\n<p>Expected behavior: Orchestrator preserves an unverified profile, proposes one diagnostic unit, keeps it suggested, and does not invent a personal weakness profile.</p>\n<h2>Partial-input dry run</h2>\n<p>Input: Listening and Reading raw scores, no Writing samples, transcript-only Speaking evidence.</p>\n<p>Expected behavior: verified skills are analyzed; one highest-value missing dimension receives a suggested diagnostic unit; Speaking pronunciation and real-time fluency remain unverified.</p>\n<h2>Not-started dry run</h2>\n<p>Input: the source ledger has a suggested D1 unit and <code>activeUnit: null</code>.</p>\n<p>Expected behavior: the Reader says learning has not started and does not render D1 as active, overdue, or partially complete.</p>\n<h2>Single-session mode dry run</h2>\n<p>Input: user selects single-session simulation mode.</p>\n<p>Expected behavior: output states that cross-agent critique is simulated and not independent.</p>\n<h2>Output-contract dry run</h2>\n<p>Input: any Orchestrator plan.</p>\n<p>Expected behavior: every unit includes type, first action, material type, expected artifact, review method, and settlement criteria. Duration is required only for diagnostics and mocks.</p>\n<h2>Fixed-error evidence dry run</h2>\n<p>Input: an error is marked <code>fixed</code> with fewer than three independent clean sample references.</p>\n<p>Expected behavior: schema validation fails with <code>insufficient_fix_evidence</code>.</p>\n",
+      "text": "Dry-Run Test Cases Missing-information dry run Input: target score only. Expected behavior: Orchestrator preserves an unverified profile, proposes one diagnostic unit, keeps it suggested, and does not invent a personal weakness profile. Partial-input dry run Input: Listening and Reading raw scores, no Writing samples, transcript-only Speaking evidence. Expected behavior: verified skills are analyzed; one highest-value missing dimension receives a suggested diagnostic unit; Speaking pronunciation and real-time fluency remain unverified. Not-started dry run Input: the source ledger has a suggested D1 unit and activeUnit: null. Expected behavior: the Reader says learning has not started and does not render D1 as active, overdue, or partially complete. Single-session mode dry run Input: user selects single-session simulation mode. Expected behavior: output states that cross-agent critique is simulated and not independent. Output-contract dry run Input: any Orchestrator plan. Expected behavior: every unit includes type, first action, material type, expected artifact, review method, and settlement criteria. Duration is required only for diagnostics and mocks. Fixed-error evidence dry run Input: an error is marked fixed with fewer than three independent clean sample references. Expected behavior: schema validation fails with insufficient_fix_evidence."
     },
     {
       "id": "validation/examiner-calibration-checklist",
@@ -733,11 +794,11 @@
       "id": "validation/output-contract-checklist",
       "path": "validation/output-contract-checklist.md",
       "title": "Output Contract Checklist",
-      "markdown": "# Output Contract Checklist\n\nUse this to review Orchestrator output.\n\n## Required Fields\n\n- Run mode used and independence level\n- Score profile and evidence basis\n- Score confidence and unverified dimensions\n- Skill priority ranking\n- Adaptive 8-week plan\n- Weekly time allocation by skill\n- Daily training tasks in minimum, standard, and stretch modes\n- Error priority map\n- Regression checks\n- Exam simulation strategy\n- Weekly review prompt\n- Risks to Overall 8.0 / each skill 7.5+\n\n## Task-Level Check\n\nEach task includes:\n- duration\n- material type\n- expected output\n- review method\n\n## Rejection Rule\n\nReject an output if it invents a weakness profile, omits unverified dimensions, or gives tasks without review methods.\n",
-      "body": "# Output Contract Checklist\n\nUse this to review Orchestrator output.\n\n## Required Fields\n\n- Run mode used and independence level\n- Score profile and evidence basis\n- Score confidence and unverified dimensions\n- Skill priority ranking\n- Adaptive 8-week plan\n- Weekly time allocation by skill\n- Daily training tasks in minimum, standard, and stretch modes\n- Error priority map\n- Regression checks\n- Exam simulation strategy\n- Weekly review prompt\n- Risks to Overall 8.0 / each skill 7.5+\n\n## Task-Level Check\n\nEach task includes:\n- duration\n- material type\n- expected output\n- review method\n\n## Rejection Rule\n\nReject an output if it invents a weakness profile, omits unverified dimensions, or gives tasks without review methods.",
+      "markdown": "# Output Contract Checklist\n\nUse this to review Orchestrator output.\n\n## Required Fields\n\n- Run mode used and independence level\n- Score profile and evidence basis\n- Score confidence and unverified dimensions\n- Skill priority ranking\n- Active-unit state or explicit not-started state\n- One suggested next unit and evidence-based reason\n- First action, expected artifact, review method, and settlement criteria\n- Error priority map\n- Regression checks\n- Calibration trigger update\n- Exam simulation strategy when evidence requires it\n- Risks to Overall 7.5 and any unconfirmed per-skill requirement\n\n## Task-Level Check\n\nEach unit includes:\n- type\n- first action\n- material type\n- expected artifact\n- review method\n- settlement criteria\n\nDuration is required only for diagnostics, mocks, and explicitly timed exam samples.\n\n## Rejection Rule\n\nReject an output if it invents a weakness profile, marks a suggested unit active without user action, omits unverified dimensions, creates a fixed-week plan, or gives a unit without settlement criteria.\n",
+      "body": "# Output Contract Checklist\n\nUse this to review Orchestrator output.\n\n## Required Fields\n\n- Run mode used and independence level\n- Score profile and evidence basis\n- Score confidence and unverified dimensions\n- Skill priority ranking\n- Active-unit state or explicit not-started state\n- One suggested next unit and evidence-based reason\n- First action, expected artifact, review method, and settlement criteria\n- Error priority map\n- Regression checks\n- Calibration trigger update\n- Exam simulation strategy when evidence requires it\n- Risks to Overall 7.5 and any unconfirmed per-skill requirement\n\n## Task-Level Check\n\nEach unit includes:\n- type\n- first action\n- material type\n- expected artifact\n- review method\n- settlement criteria\n\nDuration is required only for diagnostics, mocks, and explicitly timed exam samples.\n\n## Rejection Rule\n\nReject an output if it invents a weakness profile, marks a suggested unit active without user action, omits unverified dimensions, creates a fixed-week plan, or gives a unit without settlement criteria.",
       "frontmatter": {},
-      "html": "<h1>Output Contract Checklist</h1>\n<p>Use this to review Orchestrator output.</p>\n<h2>Required Fields</h2>\n<ul>\n<li>Run mode used and independence level</li>\n<li>Score profile and evidence basis</li>\n<li>Score confidence and unverified dimensions</li>\n<li>Skill priority ranking</li>\n<li>Adaptive 8-week plan</li>\n<li>Weekly time allocation by skill</li>\n<li>Daily training tasks in minimum, standard, and stretch modes</li>\n<li>Error priority map</li>\n<li>Regression checks</li>\n<li>Exam simulation strategy</li>\n<li>Weekly review prompt</li>\n<li>Risks to Overall 8.0 / each skill 7.5+</li>\n</ul>\n<h2>Task-Level Check</h2>\n<p>Each task includes:</p>\n<ul>\n<li>duration</li>\n<li>material type</li>\n<li>expected output</li>\n<li>review method</li>\n</ul>\n<h2>Rejection Rule</h2>\n<p>Reject an output if it invents a weakness profile, omits unverified dimensions, or gives tasks without review methods.</p>\n",
-      "text": "Output Contract Checklist Use this to review Orchestrator output. Required Fields Run mode used and independence level Score profile and evidence basis Score confidence and unverified dimensions Skill priority ranking Adaptive 8-week plan Weekly time allocation by skill Daily training tasks in minimum, standard, and stretch modes Error priority map Regression checks Exam simulation strategy Weekly review prompt Risks to Overall 8.0 / each skill 7.5+ Task-Level Check Each task includes: duration material type expected output review method Rejection Rule Reject an output if it invents a weakness profile, omits unverified dimensions, or gives tasks without review methods."
+      "html": "<h1>Output Contract Checklist</h1>\n<p>Use this to review Orchestrator output.</p>\n<h2>Required Fields</h2>\n<ul>\n<li>Run mode used and independence level</li>\n<li>Score profile and evidence basis</li>\n<li>Score confidence and unverified dimensions</li>\n<li>Skill priority ranking</li>\n<li>Active-unit state or explicit not-started state</li>\n<li>One suggested next unit and evidence-based reason</li>\n<li>First action, expected artifact, review method, and settlement criteria</li>\n<li>Error priority map</li>\n<li>Regression checks</li>\n<li>Calibration trigger update</li>\n<li>Exam simulation strategy when evidence requires it</li>\n<li>Risks to Overall 7.5 and any unconfirmed per-skill requirement</li>\n</ul>\n<h2>Task-Level Check</h2>\n<p>Each unit includes:</p>\n<ul>\n<li>type</li>\n<li>first action</li>\n<li>material type</li>\n<li>expected artifact</li>\n<li>review method</li>\n<li>settlement criteria</li>\n</ul>\n<p>Duration is required only for diagnostics, mocks, and explicitly timed exam samples.</p>\n<h2>Rejection Rule</h2>\n<p>Reject an output if it invents a weakness profile, marks a suggested unit active without user action, omits unverified dimensions, creates a fixed-week plan, or gives a unit without settlement criteria.</p>\n",
+      "text": "Output Contract Checklist Use this to review Orchestrator output. Required Fields Run mode used and independence level Score profile and evidence basis Score confidence and unverified dimensions Skill priority ranking Active-unit state or explicit not-started state One suggested next unit and evidence-based reason First action, expected artifact, review method, and settlement criteria Error priority map Regression checks Calibration trigger update Exam simulation strategy when evidence requires it Risks to Overall 7.5 and any unconfirmed per-skill requirement Task-Level Check Each unit includes: type first action material type expected artifact review method settlement criteria Duration is required only for diagnostics, mocks, and explicitly timed exam samples. Rejection Rule Reject an output if it invents a weakness profile, marks a suggested unit active without user action, omits unverified dimensions, creates a fixed-week plan, or gives a unit without settlement criteria."
     }
   ]
 }

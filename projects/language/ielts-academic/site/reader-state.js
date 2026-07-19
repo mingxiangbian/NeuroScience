@@ -1,6 +1,5 @@
 export const UI_STATE_KEY = "ieltsReader.ui.v1";
 export const ANNOTATION_STORAGE_KEY = "ieltsReader.annotations.v1";
-export const TASK_STORAGE_KEY = "ieltsReader.tasks.v1";
 
 export function createEmptyAnnotationStore() {
   return {
@@ -30,25 +29,6 @@ export function saveAnnotations(annotations) {
     window.localStorage.setItem(ANNOTATION_STORAGE_KEY, JSON.stringify(annotations));
   } catch (error) {
     console.warn("Unable to save IELTS annotations", error);
-  }
-}
-
-export function loadTaskState() {
-  try {
-    const raw = window.localStorage.getItem(TASK_STORAGE_KEY);
-    const parsed = raw ? JSON.parse(raw) : {};
-    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
-  } catch (error) {
-    console.warn("Unable to load task checklist state", error);
-    return {};
-  }
-}
-
-export function saveTaskState(tasks) {
-  try {
-    window.localStorage.setItem(TASK_STORAGE_KEY, JSON.stringify(tasks));
-  } catch (error) {
-    console.warn("Unable to save task checklist state", error);
   }
 }
 

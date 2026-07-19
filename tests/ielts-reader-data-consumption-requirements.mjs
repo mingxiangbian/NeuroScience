@@ -1,124 +1,133 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { formatTarget, renderNow } from "../projects/language/ielts-academic/site/reader-renderers.js";
 
 const read = (path) => readFileSync(new URL(path, import.meta.url), "utf8");
 
 const indexHtml = read("../projects/language/ielts-academic/index.html");
 const entryJs = read("../projects/language/ielts-academic/site/ielts-reader.js");
+const renderers = read("../projects/language/ielts-academic/site/reader-renderers.js");
+const references = read("../projects/language/ielts-academic/site/reader-references.js");
+const annotations = read("../projects/language/ielts-academic/site/reader-annotations.js");
+const modules = read("../projects/language/ielts-academic/site/reader-modules.js");
+const state = read("../projects/language/ielts-academic/site/reader-state.js");
+const utils = read("../projects/language/ielts-academic/site/reader-utils.js");
 const css = read("../projects/language/ielts-academic/site/ielts-reader.css");
 const workflow = read("../.github/workflows/pages.yml");
 const data = JSON.parse(read("../projects/language/ielts-academic/site/ielts-data.json"));
 
-assert.match(entryJs, /from "\.\/reader-renderers\.js"/, "entrypoint should import renderer module");
-assert.match(entryJs, /from "\.\/reader-modules\.js"/, "entrypoint should import module builder");
-assert.match(entryJs, /from "\.\/reader-references\.js"/, "entrypoint should import reference module");
-assert.match(entryJs, /from "\.\/reader-annotations\.js"/, "entrypoint should import annotation module");
-assert.match(entryJs, /from "\.\/reader-tasks\.js"/, "entrypoint should import task module");
+assert.match(entryJs, /from "\.\/reader-renderers\.js"/);
+assert.match(entryJs, /from "\.\/reader-modules\.js"/);
+assert.match(entryJs, /from "\.\/reader-references\.js"/);
+assert.match(entryJs, /from "\.\/reader-annotations\.js"/);
+assert.match(entryJs, /from "\.\/reader-state\.js"/);
+assert.doesNotMatch(entryJs, /reader-tasks/);
 
-const renderers = read("../projects/language/ielts-academic/site/reader-renderers.js");
-const references = read("../projects/language/ielts-academic/site/reader-references.js");
-const annotations = read("../projects/language/ielts-academic/site/reader-annotations.js");
-const tasks = read("../projects/language/ielts-academic/site/reader-tasks.js");
-const utils = read("../projects/language/ielts-academic/site/reader-utils.js");
-const modules = read("../projects/language/ielts-academic/site/reader-modules.js");
+for (const title of ["现在", "单元", "错误", "证据", "结算", "档案", "系统"]) {
+  assert.match(entryJs, new RegExp(`title: "${title}"`), `reader should expose ${title}`);
+}
+assert.match(entryJs, /dashboardModuleId: "now"/);
+assert.match(entryJs, /return fromQuery \|\| fromHash \|\| "now"/);
+assert.match(entryJs, /function renderModuleNav/);
+assert.match(entryJs, /function renderCurrentModule/);
+assert.match(entryJs, /function renderSectionRail/);
+assert.match(entryJs, /function runSearch/);
+assert.match(entryJs, /function renderEmptyDetailPanel/);
+assert.match(entryJs, /点击引用，或选中正文/);
+assert.doesNotMatch(entryJs, /learningProgress|overallLearningProgress|renderProgressSummary|module-nav-progress/);
+assert.doesNotMatch(entryJs, /data-task-id|taskState|saveTaskState|loadTaskState/);
 
-assert.doesNotMatch(renderers, /function laneText/, "swimlane should not use static laneText");
-assert.match(renderers, /function renderScoreHistory/, "dashboard should render score history");
-assert.match(renderers, /function getSkillWeekFocus/, "swimlane should derive per-skill weekly focus");
-assert.match(renderers, /function renderCheckpointMilestones/, "checkpoint milestones should be global");
-assert.match(renderers, /scoreProfile\.skills/, "swimlane should consume skill profile data");
-assert.match(renderers, /errorLog\?\.errors/, "swimlane should consume error data");
-assert.match(renderers, /scoreHistory\?\.entries/, "dashboard should consume score history data");
+assert.match(renderers, /function renderNow/);
+assert.match(renderers, /data-learning-state/);
+assert.match(renderers, /学习尚未开始/);
+assert.match(renderers, /只是建议诊断，不代表已经开始/);
+assert.match(renderers, /function renderUnits/);
+assert.match(renderers, /当前没有活动单元/);
+assert.match(renderers, /队列不是债，不产生逾期/);
+assert.match(renderers, /function renderErrors/);
+assert.match(renderers, /未验证维度不是错误/);
+assert.match(renderers, /function renderEvidence/);
+assert.match(renderers, /scoreHistory\?\.entries/);
+assert.match(renderers, /function renderSettlements/);
+assert.match(renderers, /事件触发校准/);
+assert.match(renderers, /function renderCompactDocumentCard/);
+assert.match(renderers, /compact-document-grid/);
+assert.doesNotMatch(renderers, /WEEKS|renderSwimlane|renderDailyTasks|renderCheckpoint|\.week\b/);
+assert.doesNotMatch(renderers, /0\.0.*Gap|完成第 1 周诊断/);
 
-assert.match(references, /function renderReferenceChips/, "reference chips should live in reference module");
-assert.match(references, /data-reference-id/, "reference chips should bind internal target ids");
-assert.match(references, /function getReferencePanelPayload/, "right panel should render reference payloads");
-assert.match(references, /relatedObjects/, "right panel payload should expose forward related objects");
-assert.match(references, /payload\.status/, "right panel should expose object status metadata");
-assert.match(references, /payload\.skill/, "right panel should expose object skill metadata");
-assert.match(references, /payload\.date/, "right panel should expose object date metadata");
-assert.match(references, /payload\.summary/, "right panel should expose object summary metadata");
-assert.match(references, /function openReferenceTarget/, "references should support internal navigation");
-assert.doesNotMatch(references, /href="\$\{escapeHtml\(item\.path\)\}"/, "source path should not be the primary chip navigation");
+assert.match(references, /function renderReferenceChips/);
+assert.match(references, /data-reference-id/);
+assert.match(references, /function getReferencePanelPayload/);
+assert.match(references, /unit: getUnits/);
+assert.match(references, /evidence: raw\.scoreHistory/);
+assert.match(references, /calibration: raw\.calibrationEvents/);
+assert.match(references, /relatedObjects/);
+assert.match(references, /function openReferenceTarget/);
 
-assert.match(tasks, /function createStableTaskId/, "task module should create stable task ids");
-assert.doesNotMatch(tasks, /__\$\{index\}/, "task ids should not use array index");
+assert.match(annotations, /function createJournalDraftMarkdown/);
+assert.match(annotations, /定位失效|unresolved/i);
+assert.match(annotations, /本机临时阅读标注/);
+assert.match(entryJs, /function refreshJournalDraftTextareas/);
+assert.match(entryJs, /navigator\.clipboard\?\.writeText/);
+assert.match(entryJs, /请手动复制|复制失败/);
+assert.doesNotMatch(entryJs, /querySelectorAll\("\[data-section-id\], \[data-note-id\]"\)/);
+const setActiveSectionBlock = entryJs.slice(entryJs.indexOf("function setActiveSection"), entryJs.indexOf("function getActiveSectionFromScroll"));
+assert.doesNotMatch(setActiveSectionBlock, /setActiveKnowledgeContext/);
 
-assert.match(annotations, /function createJournalDraftMarkdown/, "annotations should support journal draft export");
-assert.match(annotations, /data-journal-draft/, "annotation journal draft should have a refresh target");
-assert.match(annotations, /定位失效|unresolved/i, "annotations should expose unresolved locator state");
-assert.match(annotations, /本机临时阅读标注/, "annotation UI should state local temporary boundary");
-assert.match(entryJs, /function refreshJournalDraftTextareas/, "annotation editor should refresh adjacent journal drafts");
-assert.match(entryJs, /navigator\.clipboard\?\.writeText/, "journal draft copy should handle unavailable clipboard APIs");
-assert.match(entryJs, /请手动复制|复制失败/, "journal draft copy should expose a manual fallback state");
-assert.match(entryJs, /function renderEmptyDetailPanel/, "right panel should default to an empty detail state");
-assert.match(entryJs, /function getPriorityLabel/, "module priority labels should be localized");
-assert.match(entryJs, /成绩档案/, "module priority labels should be Chinese-facing");
-assert.doesNotMatch(entryJs, /"Session bodies"/, "journal module should not render duplicate full session bodies by default");
-assert.doesNotMatch(entryJs, /"Indexed note bodies"|"Prompt bodies"|"Validation bodies"/, "main content should not render full source bodies by default");
-assert.doesNotMatch(entryJs, /renderKnowledgeNotesSection/, "main content should not auto-render parallel notes");
-assert.doesNotMatch(
-  entryJs,
-  /querySelectorAll\("\[data-section-id\], \[data-note-id\]"\)/,
-  "clicking normal main sections should not mirror content into the right panel",
-);
-const setActiveSectionBlock = entryJs.slice(
-  entryJs.indexOf("function setActiveSection"),
-  entryJs.indexOf("function getActiveSectionFromScroll"),
-);
-assert.doesNotMatch(setActiveSectionBlock, /setActiveKnowledgeContext/, "scroll sync should not populate the right panel");
+assert.match(modules, /function renderModuleSafely/);
+assert.doesNotMatch(modules, /learningProgress/);
+assert.match(state, /ieltsReader\.ui\.v1/);
+assert.match(state, /ieltsReader\.annotations\.v1/);
+assert.doesNotMatch(state, /ieltsReader\.tasks\.v1|TASK_STORAGE_KEY/);
+assert.match(utils, /function getShortcutLabel/);
 
-assert.match(modules, /function renderModuleSafely/, "module rendering should have per-module error boundary");
-assert.match(utils, /function getShortcutLabel/, "shortcut label should be platform-aware");
-assert.match(utils, /function renderExamMark/, "utility module should render the exam mark component");
-assert.match(renderers, /renderExamMark/, "dashboard and checkpoint renderers should use exam marks");
-assert.match(entryJs, /renderExamMark/, "entrypoint progress summary should use exam marks");
-assert.match(renderers, /<table class="swimlane-table"/, "swimlane should expose table semantics");
-assert.match(renderers, /function getCheckpointDisplayName/, "checkpoint titles should remove duplicate week prefixes");
-assert.doesNotMatch(
-  renderers,
-  /Week \$\{escapeHtml\(checkpoint\.week\)\} · \$\{escapeHtml\(checkpoint\.name\)\}/,
-  "checkpoint marker should not duplicate week text from data names",
-);
-assert.match(renderers, /function getCompactWeekFocusLabel/, "swimlane cells should have compact labels");
-assert.match(renderers, /class="swimlane-chip"/, "swimlane cells should render compact chips");
-assert.doesNotMatch(renderers, /<h3>\$\{escapeHtml\(error\.description\)\}<\/h3>/, "error cards should not use long descriptions as headings");
-assert.match(renderers, /error-description/, "error cards should demote descriptions to compact body text");
-assert.match(renderers, /function renderCompactDocumentCard/, "document-heavy modules should render compact index cards");
-assert.match(renderers, /compact-document-grid/, "document-heavy modules should use compact index grids");
-assert.match(renderers, /function getErrorStatusLabel/, "error status labels should be localized");
-assert.match(renderers, /暂无匹配错误/, "empty error columns should be Chinese-facing");
-assert.match(renderers, /error-status-strip/, "empty error statuses should collapse into compact status strips");
+assert.match(css, /\.reader-shell/);
+assert.match(css, /\.reader-toolbar/);
+assert.match(css, /\.reader-sidebar/);
+assert.match(css, /\.module-section/);
+assert.match(css, /\.note-panel/);
+assert.match(css, /\.mobile-note-drawer/);
+assert.match(css, /\[data-theme="dark"\]/);
+assert.match(css, /\.annotation-toolbar/);
+assert.match(css, /@media \(max-width:\s*860px\)/);
+assert.doesNotMatch(css, /--reader-glass|--reader-panel-blur|backdrop-filter|-webkit-backdrop-filter/);
+assert.match(css, /--reader-paper:\s*#eee9dc/);
+assert.match(css, /--reader-surface:\s*#faf7ef/);
+assert.match(css, /--reader-red:\s*#a33e35/);
+assert.match(css, /\.current-action::before/);
+assert.match(css, /\.unit-record::before/);
+assert.doesNotMatch(css, /radial-gradient|linear-gradient/);
+assert.doesNotMatch(css, /\.task-list|\.swimlane|\.dashboard-grid|\.module-progress-summary/);
 
-assert.match(css, /\.score-history/, "CSS should style score history");
-assert.match(css, /\.checkpoint-milestones/, "CSS should style checkpoint milestones");
-assert.match(css, /\.reference-panel-action/, "CSS should style reference panel actions");
-assert.match(css, /\.validation-issue/, "CSS should style validation issues");
-assert.match(css, /\.annotation-draft/, "CSS should style annotation journal draft");
-assert.match(css, /\.annotation-unresolved/, "CSS should style unresolved annotations");
-assert.match(css, /\.swimlane-chip/, "CSS should style compact swimlane chips");
-assert.match(css, /\.error-description/, "CSS should clamp compact error descriptions");
-assert.match(css, /\.compact-document-grid/, "CSS should style compact document indexes");
-assert.match(css, /\.error-status-strip/, "CSS should style compact error status strips");
-assert.doesNotMatch(css, /grid-template-columns:\s*repeat\(4,\s*minmax\(0,\s*1fr\)\)/, "error board should not force four narrow desktop columns");
-assert.match(css, /--reader-marker: var\(--reader-red\);/, "CSS should expose the IELTS marker token");
-assert.match(css, /--text-display: clamp\(36px, 5vw, 56px\);/, "CSS should expose display type scale token");
-assert.match(css, /--sp-16: 64px;/, "CSS should expose spacing scale tokens");
-assert.match(css, /--radius-pill: 999px;/, "CSS should expose radius scale tokens");
-assert.match(css, /\.exam-mark/, "CSS should style the exam mark component");
-assert.doesNotMatch(css, /progress-ring/, "reader progress should no longer use progress rings");
-assert.doesNotMatch(
-  css,
-  /--reader-glass|--reader-panel-blur|backdrop-filter|-webkit-backdrop-filter/,
-  "reader should not use frosted glass tokens or filters",
-);
+assert.match(indexHtml, /site\/ielts-reader\.js/);
+assert.match(indexHtml, /data-shortcut-label/);
+assert.match(indexHtml, /id="note-panel"/);
+assert.match(workflow, /npm run build:ielts/);
+assert.match(workflow, /npm run test:all/);
 
-assert.match(indexHtml, /site\/ielts-reader\.js/, "reader HTML should keep stable entrypoint");
-assert.match(indexHtml, /data-shortcut-label/, "shortcut hint should be platform-aware");
-assert.match(workflow, /actions\/setup-node@v5/, "Pages workflow should setup Node before deploy");
-assert.match(workflow, /npm ci/, "Pages workflow should install dependencies");
-assert.match(workflow, /fonttools\[woff\]==4\.63\.0/, "Pages workflow should install WOFF font validation tools");
-assert.match(workflow, /npm run build:ielts/, "Pages workflow should build IELTS data before deploy");
-assert.match(workflow, /npm run test:all/, "Pages workflow should run static site tests before deploy");
+assert.equal(data.unitLedger.activeUnit, null);
+assert.equal(data.unitLedger.suggestedUnit.id, "D1");
+assert.equal(data.derived.currentTrigger, "baseline-complete");
 assert.equal(Array.isArray(data.references.targets), true);
 assert.equal(Array.isArray(data.build.validationIssues), true);
+assert.equal(formatTarget({ overall: 7.5, perSkillFloor: null }), "总分 7.5 · 单项线待确认");
+assert.equal(formatTarget({ overall: 8, perSkillFloor: 7.5 }), "总分 8.0 · 单项 7.5+");
+
+const settledNow = renderNow({
+  unitLedger: {
+    state: "waiting-evidence",
+    activeUnit: null,
+    suggestedUnit: null,
+    settled: [{ id: "R3" }],
+  },
+  calibrationEvents: {
+    events: [{ id: "two-mocks-available", label: "两次可比模考可用", condition: "等待下一次模考。" }],
+  },
+  derived: { currentTrigger: "two-mocks-available" },
+  scoreHistory: { entries: [{ id: "EV1" }] },
+  errorLog: { errors: [] },
+  project: { target: { overall: 7.5, perSkillFloor: null } },
+});
+assert.match(settledNow, /当前没有活动单元/);
+assert.match(settledNow, /等待下一份独立证据/);
+assert.doesNotMatch(settledNow, /学习尚未开始/);

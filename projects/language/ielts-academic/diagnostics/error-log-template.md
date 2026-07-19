@@ -1,14 +1,13 @@
 # Error Log Template
 
-| Date | Skill | Error | Category | Source | Impact | Status | Review date |
-| --- | --- | --- | --- | --- | --- | --- | --- |
+| Opened | Last seen | Skill | Error | Category | Source | Impact | Status | Repair unit | Clean samples |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 
 ## Status Values
 
 - active
 - improving
-- fixed once
-- fixed repeatedly
+- fixed
 - regressed
 
 ## Categories
@@ -25,4 +24,4 @@
 
 ## Review Rule
 
-An error should stay in review until it remains fixed in at least two relevant practice contexts.
+An error can move to `improving` after one evidence-backed repair. It can move to `fixed` only after three independent new samples remain clean. Any recurrence moves it to `regressed` and resets the clean-sample count.

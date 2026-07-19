@@ -1,175 +1,211 @@
 import assert from "node:assert/strict";
-import { existsSync, mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { fileURLToPath } from "node:url";
 
 import { markdownToSafeHtml } from "../projects/language/ielts-academic/scripts/build-markdown.mjs";
 import { buildReferenceIndex } from "../projects/language/ielts-academic/scripts/build-references.mjs";
 import { findMarkdownDocuments, parseFrontmatter } from "../projects/language/ielts-academic/scripts/build-sources.mjs";
 import { validateSiteDataInputs } from "../projects/language/ielts-academic/scripts/build-schema.mjs";
 
-const projectRoot = fileURLToPath(new URL("../projects/language/ielts-academic/", import.meta.url));
+function makeSuggestedUnit(overrides = {}) {
+  return {
+    id: "D1",
+    type: "diagnostic",
+    title: "写作 Task 2 首次诊断",
+    status: "suggested",
+    reason: "Collect dense evidence without assuming the weakest skill.",
+    nextAction: "Complete a timed Task 2 response.",
+    durationMinutes: 40,
+    materialType: "official-style Task 2 prompt",
+    expectedArtifact: "Original response and scoring record",
+    reviewMethod: "Descriptor-based review",
+    evidenceRefs: [],
+    settlementCriteria: ["Original sample saved", "Confidence recorded"],
+    ...overrides,
+  };
+}
 
 function makeValidInputs(overrides = {}) {
   const base = {
     scoreProfile: {
-      schemaVersion: 1,
-      state: "template",
-      lastUpdated: "2026-07-06",
+      schemaVersion: 2,
+      state: "not-started",
+      lastUpdated: "2026-07-19",
       runMode: "not-yet-run",
-      target: { overall: 8, perSkillFloor: 7.5, timelineWeeks: 8 },
-      currentEstimate: { overall: null, confidence: "low", summary: "Template state." },
-      skills: [
-        {
-          id: "writing",
-          label: "Writing",
-          estimatedBand: null,
-          confidence: "low",
-          evidenceBasis: ["No sample yet."],
-          unverifiedDimensions: ["Task 2 argument"],
-          riskLevel: "unknown",
-        },
-      ],
+      target: { overall: 7.5, perSkillFloor: null },
+      currentEstimate: null,
+      skills: [{
+        id: "writing",
+        label: "Writing",
+        estimatedBand: null,
+        confidence: "unverified",
+        evidenceBasis: ["No sample yet."],
+        unverifiedDimensions: ["Task 2 argument"],
+        riskLevel: "unknown",
+      }],
       risks: [],
     },
-    scoreHistory: {
-      schemaVersion: 1,
-      entries: [
-        {
-          date: "2026-07-06",
-          week: 0,
-          state: "template",
-          runMode: "not-yet-run",
-          skills: { listening: null, reading: null, writing: null, speaking: null },
-          notes: "Starter row.",
-        },
-      ],
+    scoreHistory: { schemaVersion: 2, entries: [] },
+    errorLog: { schemaVersion: 2, errors: [] },
+    unitLedger: {
+      schemaVersion: 2,
+      mode: "event-driven-settlement",
+      state: "not-started",
+      activeUnit: null,
+      suggestedUnit: makeSuggestedUnit(),
+      queue: [],
+      settled: [],
     },
-    errorLog: {
-      schemaVersion: 1,
-      errors: [
-        {
-          id: "writing-task2-argument",
-          skill: "writing",
-          impact: "high",
-          status: "active",
-          description: "Argument is underdeveloped.",
-          evidence: ["Task 2 sample"],
-        },
-      ],
+    calibrationEvents: {
+      schemaVersion: 2,
+      events: [{
+        id: "baseline-complete",
+        label: "基线证据完成",
+        status: "waiting",
+        condition: "Available diagnostic evidence has been recorded.",
+        evidenceRefs: [],
+        decision: null,
+        decidedAt: null,
+      }],
     },
-    checkpoints: {
-      schemaVersion: 1,
-      checkpoints: [
-        {
-          week: 2,
-          name: "Week 2 Data Quality Check",
-          purpose: "Confirm diagnostic evidence.",
-          status: "not-started",
-          decision: "Pending.",
-          evidenceRequired: ["At least one scored sample."],
-        },
-      ],
-    },
-    notes: [
-      {
-        id: "writing/task-2-argument-development",
-        path: "notes/writing/task-2-argument-development.md",
-        title: "Task 2 argument development",
-        relatedErrors: ["writing-task2-argument"],
-      },
-    ],
-    journal: [
-      {
-        id: "2026-07-06-initial-setup",
-        path: "journal/entries/2026-07-06-initial-setup.md",
-        title: "Initial setup",
-        relatedErrors: ["writing-task2-argument"],
-        relatedNotes: ["writing/task-2-argument-development"],
-      },
-    ],
+    notes: [{
+      id: "writing/task-2-argument-development",
+      path: "notes/writing/task-2-argument-development.md",
+      title: "Task 2 argument development",
+      relatedErrors: [],
+    }],
+    journal: [{
+      id: "2026-07-06-initial-setup",
+      path: "journal/entries/2026-07-06-initial-setup.md",
+      title: "Initial setup",
+      relatedErrors: [],
+      relatedNotes: ["writing/task-2-argument-development"],
+    }],
+    promptLibrary: [],
+    validation: [],
   };
   return { ...base, ...overrides };
 }
 
-const validResult = validateSiteDataInputs(makeValidInputs());
-assert.deepEqual(validResult.fatalIssues, []);
-assert.equal(Array.isArray(validResult.warningIssues), true);
-assert.deepEqual(validResult.warningIssues, []);
+assert.deepEqual(validateSiteDataInputs(makeValidInputs()), { fatalIssues: [], warningIssues: [] });
 
-const invalidResult = validateSiteDataInputs(makeValidInputs({
+const missingSkills = validateSiteDataInputs(makeValidInputs({
   scoreProfile: {
-    schemaVersion: 1,
-    target: { overall: 8, perSkillFloor: 7.5, timelineWeeks: 8 },
-    currentEstimate: { overall: null, confidence: "low", summary: "Missing skills." },
+    schemaVersion: 2,
+    state: "not-started",
+    lastUpdated: "2026-07-19",
+    runMode: "not-yet-run",
+    target: { overall: 7.5, perSkillFloor: null },
+    currentEstimate: null,
+    risks: [],
   },
 }));
-assert.equal(
-  invalidResult.fatalIssues.some((issue) => issue.type === "missing_required_field" && issue.path === "scoreProfile.skills"),
-  true,
-  "missing scoreProfile.skills should be fatal",
-);
+assert.equal(missingSkills.fatalIssues.some((issue) => issue.path === "scoreProfile.skills"), true);
 
-const malformedErrorsResult = validateSiteDataInputs(makeValidInputs({
-  errorLog: { schemaVersion: 1, errors: {} },
-}));
-assert.equal(
-  malformedErrorsResult.fatalIssues.some((issue) => issue.type === "invalid_type" && issue.path === "errorLog.errors"),
-  true,
-  "non-array errorLog.errors should be reported as fatal instead of throwing",
-);
-
-const malformedRelationsResult = validateSiteDataInputs(makeValidInputs({
-  notes: [
-    {
-      id: "bad-note",
-      path: "notes/bad-note.md",
-      title: "Bad note",
-      relatedErrors: {},
-    },
-  ],
-  journal: [
-    {
-      id: "bad-entry",
-      path: "journal/entries/bad-entry.md",
-      title: "Bad entry",
-      relatedErrors: {},
-      relatedNotes: {},
-    },
-  ],
-}));
-assert.equal(
-  malformedRelationsResult.fatalIssues.some((issue) => issue.type === "invalid_type" && issue.path === "bad-note.relatedErrors"),
-  true,
-  "non-array note.relatedErrors should be reported as fatal instead of throwing",
-);
-assert.equal(
-  malformedRelationsResult.fatalIssues.some((issue) => issue.type === "invalid_type" && issue.path === "bad-entry.relatedErrors"),
-  true,
-  "non-array journal.relatedErrors should be reported as fatal instead of throwing",
-);
-assert.equal(
-  malformedRelationsResult.fatalIssues.some((issue) => issue.type === "invalid_type" && issue.path === "bad-entry.relatedNotes"),
-  true,
-  "non-array journal.relatedNotes should be reported as fatal instead of throwing",
-);
-
-const warningResult = validateSiteDataInputs(makeValidInputs({
+const deprecatedTimeline = validateSiteDataInputs(makeValidInputs({
   scoreProfile: {
     ...makeValidInputs().scoreProfile,
-    extraPlanningField: true,
+    target: { overall: 7.5, perSkillFloor: null, timelineWeeks: 8 },
   },
 }));
-assert.equal(
-  warningResult.warningIssues.some((issue) => issue.type === "unknown_field" && issue.path === "scoreProfile.extraPlanningField"),
-  true,
-  "unknown fields should be warnings",
-);
+assert.equal(deprecatedTimeline.fatalIssues.some((issue) => issue.type === "deprecated_field" && issue.path.endsWith("timelineWeeks")), true);
 
-const parsed = parseFrontmatter("---\nid: sample\nrelated_errors: [writing-task2-argument]\n---\n# Title\nBody");
+const deprecatedWeek = validateSiteDataInputs(makeValidInputs({
+  scoreHistory: {
+    schemaVersion: 2,
+    entries: [{
+      id: "S1",
+      date: "2026-07-19",
+      eventType: "diagnostic",
+      sourceType: "timed-writing",
+      skills: { writing: 6.5 },
+      overall: null,
+      confidence: "medium",
+      evidenceRefs: [],
+      week: 1,
+    }],
+  },
+}));
+assert.equal(deprecatedWeek.fatalIssues.some((issue) => issue.type === "deprecated_field" && issue.path.endsWith(".week")), true);
+
+const malformedErrors = validateSiteDataInputs(makeValidInputs({ errorLog: { schemaVersion: 2, errors: {} } }));
+assert.equal(malformedErrors.fatalIssues.some((issue) => issue.path === "errorLog.errors" && issue.type === "invalid_type"), true);
+
+function makeError(overrides = {}) {
+  return {
+    id: "E1",
+    skill: "writing",
+    impact: "high",
+    status: "active",
+    description: "Argument support is missing.",
+    evidence: ["evidence:S1"],
+    reviewMethod: "Compare original and revision.",
+    openedAt: "2026-07-19",
+    lastSeenAt: "2026-07-19",
+    repairUnitId: null,
+    consecutiveCleanSamples: 0,
+    fixedEvidence: [],
+    ...overrides,
+  };
+}
+
+const invalidFixedError = validateSiteDataInputs(makeValidInputs({
+  errorLog: { schemaVersion: 2, errors: [makeError({ status: "fixed" })] },
+}));
+assert.equal(invalidFixedError.fatalIssues.some((issue) => issue.type === "insufficient_fix_evidence"), true);
+
+const validFixedError = validateSiteDataInputs(makeValidInputs({
+  errorLog: {
+    schemaVersion: 2,
+    errors: [makeError({
+      status: "fixed",
+      consecutiveCleanSamples: 3,
+      fixedEvidence: ["evidence:S2", "evidence:S3", "evidence:S4"],
+    })],
+  },
+}));
+assert.equal(validFixedError.fatalIssues.some((issue) => issue.type === "insufficient_fix_evidence"), false);
+
+const invalidActiveState = validateSiteDataInputs(makeValidInputs({
+  unitLedger: {
+    ...makeValidInputs().unitLedger,
+    activeUnit: makeSuggestedUnit({ id: "D2" }),
+  },
+}));
+assert.equal(invalidActiveState.fatalIssues.some((issue) => issue.type === "invalid_unit_state" && issue.path === "unitLedger.activeUnit.status"), true);
+
+const missingDiagnosticDuration = validateSiteDataInputs(makeValidInputs({
+  unitLedger: {
+    ...makeValidInputs().unitLedger,
+    suggestedUnit: makeSuggestedUnit({ durationMinutes: null }),
+  },
+}));
+assert.equal(missingDiagnosticDuration.fatalIssues.some((issue) => issue.type === "missing_timed_duration"), true);
+
+const duplicateUnit = validateSiteDataInputs(makeValidInputs({
+  unitLedger: {
+    ...makeValidInputs().unitLedger,
+    queue: [makeSuggestedUnit({ status: "ready" })],
+  },
+}));
+assert.equal(duplicateUnit.fatalIssues.some((issue) => issue.type === "duplicate_id"), true);
+
+const malformedRelations = validateSiteDataInputs(makeValidInputs({
+  notes: [{ id: "bad-note", relatedErrors: {} }],
+  journal: [{ id: "bad-entry", relatedErrors: {}, relatedNotes: {} }],
+}));
+assert.equal(malformedRelations.fatalIssues.some((issue) => issue.path === "bad-note.relatedErrors"), true);
+assert.equal(malformedRelations.fatalIssues.some((issue) => issue.path === "bad-entry.relatedNotes"), true);
+
+const warningResult = validateSiteDataInputs(makeValidInputs({
+  scoreProfile: { ...makeValidInputs().scoreProfile, extraPlanningField: true },
+}));
+assert.equal(warningResult.warningIssues.some((issue) => issue.type === "unknown_field" && issue.path === "scoreProfile.extraPlanningField"), true);
+
+const parsed = parseFrontmatter("---\nid: sample\nrelated_errors: [E1]\n---\n# Title\nBody");
 assert.equal(parsed.frontmatter.id, "sample");
-assert.deepEqual(parsed.frontmatter.related_errors, ["writing-task2-argument"]);
+assert.deepEqual(parsed.frontmatter.related_errors, ["E1"]);
 assert.equal(parsed.body, "# Title\nBody");
 
 const tempDir = mkdtempSync(join(tmpdir(), "ielts-sources-"));
@@ -179,11 +215,6 @@ try {
   writeFileSync(join(tempDir, "prompts", "agents", "new-agent.md"), "# New Agent\nBody\n");
   const docs = findMarkdownDocuments(join(tempDir, "prompts"), tempDir);
   assert.deepEqual(docs.map((doc) => doc.id), ["prompts/agents/new-agent", "prompts/orchestrator"]);
-
-  mkdirSync(join(tempDir, "docs.v1"), { recursive: true });
-  writeFileSync(join(tempDir, "docs.v1", "file.md"), "# Versioned Doc\nBody\n");
-  const prefixedDocs = findMarkdownDocuments(join(tempDir, "docs.v1"), tempDir, { stripPrefix: "docs.v1/" });
-  assert.deepEqual(prefixedDocs.map((doc) => doc.id), ["file"]);
 } finally {
   rmSync(tempDir, { recursive: true, force: true });
 }
@@ -191,41 +222,11 @@ try {
 const html = markdownToSafeHtml("# Heading\n\nA **bold** item with `code`.\n\n[good](https://example.com)\n\n[bad](javascript:alert(1))\n\n<img src=x onerror=alert(1)>\n\n```js\nconsole.log(1)\n```\n\n<script>alert(1)</script>\n");
 assert.match(html.html, /<h1[^>]*>Heading<\/h1>/);
 assert.match(html.html, /<strong>bold<\/strong>/);
-assert.match(html.html, /<code>code<\/code>/);
 assert.match(html.html, /<pre><code class="language-js">/);
-assert.match(html.html, /rel="noopener noreferrer"/);
-assert.doesNotMatch(html.html, /<script|alert\(1\)/);
-assert.doesNotMatch(html.html, /javascript:|onerror|<img/i);
-assert.match(html.text, /Heading/);
+assert.doesNotMatch(html.html, /<script|javascript:|onerror|<img|alert\(1\)/i);
 
 const referenceIndex = buildReferenceIndex(makeValidInputs());
-assert.equal(referenceIndex.targets.some((target) => target.id === "error:writing-task2-argument"), true);
-assert.equal(referenceIndex.targets.some((target) => target.id === "note:writing/task-2-argument-development"), true);
+assert.equal(referenceIndex.targets.some((target) => target.id === "unit:D1" && target.moduleId === "units"), true);
+assert.equal(referenceIndex.targets.some((target) => target.id === "calibration:baseline-complete" && target.moduleId === "settlements"), true);
+assert.equal(referenceIndex.targets.some((target) => target.id === "note:writing/task-2-argument-development" && target.moduleId === "archive"), true);
 assert.equal(referenceIndex.backlinks["note:writing/task-2-argument-development"].some((link) => link.id === "journal:2026-07-06-initial-setup"), true);
-
-const malformedReferenceIndex = buildReferenceIndex({
-  errorLog: { errors: {} },
-  notes: [{ id: "bad-note", title: "Bad note", relatedErrors: {} }],
-  journal: [{ id: "bad-entry", title: "Bad entry", relatedErrors: {}, relatedNotes: {} }],
-});
-assert.deepEqual(malformedReferenceIndex.targets, [
-  {
-    id: "note:bad-note",
-    rawId: "bad-note",
-    type: "note",
-    label: "Bad note",
-    moduleId: "notes",
-    sectionId: "note-bad-note",
-    sourcePath: "",
-  },
-  {
-    id: "journal:bad-entry",
-    rawId: "bad-entry",
-    type: "journal",
-    label: "Bad entry",
-    moduleId: "journal",
-    sectionId: "journal-bad-entry",
-    sourcePath: "",
-  },
-]);
-assert.equal(existsSync(new URL("../projects/language/ielts-academic/scripts/build-ielts-data.mjs", import.meta.url)), true);

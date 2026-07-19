@@ -11,6 +11,10 @@ const scriptDir = dirname(fileURLToPath(import.meta.url));
 const projectDir = resolve(scriptDir, "..");
 const outputPath = resolve(projectDir, "site/ielts-data.json");
 
+function asArray(value) {
+  return Array.isArray(value) ? value : [];
+}
+
 function readJson(path) {
   return JSON.parse(readFileSync(resolve(projectDir, path), "utf8"));
 }
@@ -26,11 +30,7 @@ function getGeneratedAt(scoreProfile) {
 
 function enrichMarkdownDoc(doc) {
   const rendered = markdownToSafeHtml(doc.body);
-  return {
-    ...doc,
-    html: rendered.html,
-    text: rendered.text,
-  };
+  return { ...doc, html: rendered.html, text: rendered.text };
 }
 
 function indexNotes() {
@@ -68,10 +68,26 @@ function indexJournal() {
     .sort((a, b) => String(b.date ?? "").localeCompare(String(a.date ?? "")) || b.path.localeCompare(a.path));
 }
 
+function buildDerived({ errorLog, unitLedger, calibrationEvents, scoreHistory }) {
+  const errorCounts = { active: 0, improving: 0, fixed: 0, regressed: 0 };
+  for (const errorRecord of asArray(errorLog.errors)) {
+    if (Object.hasOwn(errorCounts, errorRecord.status)) errorCounts[errorRecord.status] += 1;
+  }
+  const currentTrigger = asArray(calibrationEvents.events).find((event) => event.status !== "decided")?.id ?? null;
+  return {
+    learningState: unitLedger.state,
+    errorCounts,
+    settledUnitCount: asArray(unitLedger.settled).length,
+    evidenceEventCount: asArray(scoreHistory.entries).length,
+    currentTrigger,
+  };
+}
+
 const scoreProfile = readJson("diagnostics/score-profile.json");
 const scoreHistory = readJson("diagnostics/score-history.json");
 const errorLog = readJson("diagnostics/error-log.json");
-const checkpoints = readJson("plans/checkpoint-status.json");
+const unitLedger = readJson("plans/unit-ledger.json");
+const calibrationEvents = readJson("plans/calibration-events.json");
 const notes = indexNotes();
 const journal = indexJournal();
 const promptLibrary = findMarkdownDocuments(resolve(projectDir, "prompts"), projectDir, { includeReadme: false }).map(enrichMarkdownDoc);
@@ -81,16 +97,26 @@ const validationResult = validateSiteDataInputs({
   scoreProfile,
   scoreHistory,
   errorLog,
-  checkpoints,
+  unitLedger,
+  calibrationEvents,
   notes,
   journal,
   promptLibrary,
   validation,
 });
-const references = buildReferenceIndex({ errorLog, notes, journal, promptLibrary, validation });
+const references = buildReferenceIndex({
+  scoreHistory,
+  errorLog,
+  unitLedger,
+  calibrationEvents,
+  notes,
+  journal,
+  promptLibrary,
+  validation,
+});
 const sourceLinks = references.targets
-  .filter((target) => target.sourcePath)
-  .map((target) => ({ id: target.id, label: target.label, path: target.sourcePath }));
+  .filter((referenceTarget) => referenceTarget.sourcePath)
+  .map((referenceTarget) => ({ id: referenceTarget.id, label: referenceTarget.label, path: referenceTarget.sourcePath }));
 
 const data = {
   project: {
@@ -102,14 +128,16 @@ const data = {
     contentUpdatedAt: scoreProfile.lastUpdated,
     generatedAt: getGeneratedAt(scoreProfile),
     validationIssues: [...validationResult.fatalIssues, ...validationResult.warningIssues],
-    referenceIssues: validationResult.fatalIssues.filter((issue) => issue.type === "missing_reference"),
+    referenceIssues: validationResult.fatalIssues.filter((validationIssue) => validationIssue.type === "missing_reference"),
   },
+  derived: buildDerived({ errorLog, unitLedger, calibrationEvents, scoreHistory }),
   references,
   sourceLinks,
   scoreProfile,
   scoreHistory,
   errorLog,
-  checkpoints,
+  unitLedger,
+  calibrationEvents,
   notes,
   journal,
   promptLibrary,
@@ -120,8 +148,8 @@ mkdirSync(dirname(outputPath), { recursive: true });
 writeFileSync(outputPath, `${JSON.stringify(data, null, 2)}\n`);
 
 if (validationResult.fatalIssues.length > 0) {
-  for (const issue of validationResult.fatalIssues) {
-    console.error(`${issue.path}: ${issue.message}`);
+  for (const validationIssue of validationResult.fatalIssues) {
+    console.error(`${validationIssue.path}: ${validationIssue.message}`);
   }
   process.exitCode = 1;
 }

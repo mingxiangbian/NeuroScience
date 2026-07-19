@@ -1,23 +1,23 @@
 # IELTS Academic
 
-Goal: move from an estimated IELTS 6.0-6.5 baseline toward Overall 8.0, with each skill 7.5+.
+Goal: use real evidence to move toward IELTS Academic Overall 7.5. The per-skill floor remains unconfirmed until an external requirement is supplied.
 
 This project has two layers:
 
 1. Prompt system: reusable Orchestrator and subagent prompts for diagnosis, critique, calibration, and replanning.
-2. Learning package: diagnostic templates, adaptive 8-week plan, daily flexible training, error tracking, and validation checklists.
+2. Learning package: diagnostic evidence, one active learning unit, error regression tracking, event-triggered calibration, and settlement records.
 
 ## Static Reader
 
 Serve this project with GitHub Pages or a local static server, then open `index.html`. It renders:
 
-- Dashboard
-- 8-week swimlane
-- Errors board
-- Notes
-- Journal
-- Prompt library
-- Validation status
+- 现在
+- 单元
+- 错误
+- 证据
+- 结算
+- 档案
+- 系统
 
 The reader uses `site/ielts-data.json`, generated from the repository source files. It does not write back to GitHub, local files, or any backend.
 
@@ -26,16 +26,16 @@ The reader uses `site/ielts-data.json`, generated from the repository source fil
 1. Start with `diagnostics/diagnostic-input-template.md`.
 2. Choose a run mode in `prompts/run-modes.md`.
 3. Use `prompts/orchestrator.md` to coordinate subagent outputs.
-4. Fill the human templates and update the structured counterparts: `diagnostics/score-profile.json`, `diagnostics/score-history.json`, `diagnostics/error-log.json`, and `plans/checkpoint-status.json`.
-5. Follow `plans/8-week-diagnostic-driven-plan.md`, adjusting weekly allocation through `plans/checkpoint-rules.md`.
+4. Update the structured counterparts only from real evidence: `diagnostics/score-profile.json`, `diagnostics/score-history.json`, `diagnostics/error-log.json`, `plans/unit-ledger.json`, and `plans/calibration-events.json`.
+5. Follow `plans/event-driven-study-system.md`. Keep `activeUnit` at `null` until the user explicitly begins a unit.
 6. Track recurring issues in `diagnostics/error-log-template.md`, `diagnostics/error-log.json`, and `errors/regression-check-template.md`.
 7. Record durable learning insights in `notes/` and freeform dated reflection in `journal/`.
-8. Run `node projects/language/ielts-academic/scripts/build-ielts-data.mjs` before reviewing the static reader or committing weekly updates.
+8. Run `node projects/language/ielts-academic/scripts/build-ielts-data.mjs` before reviewing the static reader or committing evidence updates.
 
 ## Run Modes
 
-- manual multi-session mode: recommended for Week 1 baseline, Week 4 target checkpoint, Week 6 correction, and final exam strategy. This mode gives each subagent an isolated context and is the only mode that supports real agent independence.
-- single-session simulation mode: useful for quick daily planning or low-stakes review. It is not independent and any critique must be labeled as simulated.
+- manual multi-session mode: recommended when a diagnostic, regression, mock, or target decision needs true agent isolation.
+- single-session simulation mode: useful for low-stakes tactical review. It is not independent and any critique must be labeled as simulated.
 
 ## Scoring Caution
 
@@ -52,9 +52,9 @@ LLM examiner scores are advisory. They must be descriptor-anchored, confidence-l
 - `diagnostics/score-profile.json`
 - `diagnostics/score-history.json`
 - `diagnostics/error-log.json`
-- `plans/8-week-diagnostic-driven-plan.md`
-- `plans/checkpoint-rules.md`
-- `plans/checkpoint-status.json`
+- `plans/event-driven-study-system.md`
+- `plans/unit-ledger.json`
+- `plans/calibration-events.json`
 - `notes/README.md`
 - `journal/README.md`
 - `scripts/build-ielts-data.mjs`

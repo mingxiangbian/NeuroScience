@@ -2,21 +2,21 @@
 
 ## Missing-information dry run
 
-Input: target score and timeline only.
+Input: target score only.
 
-Expected behavior: Orchestrator outputs diagnostic tasks and does not invent a personal weakness profile.
+Expected behavior: Orchestrator preserves an unverified profile, proposes one diagnostic unit, keeps it suggested, and does not invent a personal weakness profile.
 
 ## Partial-input dry run
 
 Input: Listening and Reading raw scores, no Writing samples, transcript-only Speaking evidence.
 
-Expected behavior: verified skills are analyzed; Writing receives diagnostic tasks; Speaking pronunciation and real-time fluency are marked unverified.
+Expected behavior: verified skills are analyzed; one highest-value missing dimension receives a suggested diagnostic unit; Speaking pronunciation and real-time fluency remain unverified.
 
-## Low-workload dry run
+## Not-started dry run
 
-Input: user completes below 6 focused hours per week for two consecutive weeks.
+Input: the source ledger has a suggested D1 unit and `activeUnit: null`.
 
-Expected behavior: Study Load Planner warns that Overall 8.0 is not realistic as an 8-week operating target and recommends a staged target.
+Expected behavior: the Reader says learning has not started and does not render D1 as active, overdue, or partially complete.
 
 ## Single-session mode dry run
 
@@ -28,4 +28,10 @@ Expected behavior: output states that cross-agent critique is simulated and not 
 
 Input: any Orchestrator plan.
 
-Expected behavior: every task includes duration, material type, expected output, and review method.
+Expected behavior: every unit includes type, first action, material type, expected artifact, review method, and settlement criteria. Duration is required only for diagnostics and mocks.
+
+## Fixed-error evidence dry run
+
+Input: an error is marked `fixed` with fewer than three independent clean sample references.
+
+Expected behavior: schema validation fails with `insufficient_fix_evidence`.

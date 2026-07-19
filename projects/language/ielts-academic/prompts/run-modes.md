@@ -5,9 +5,9 @@
 This is the only mode that supports real agent independence.
 
 Use it for:
-- Week 1 baseline
-- Week 4 target checkpoint
-- Week 6 correction checkpoint
+- baseline diagnosis
+- a regression or error-set decision
+- target calibration after comparable mocks
 - final exam strategy
 
 Process:
@@ -18,16 +18,15 @@ Process:
 
 Cost:
 - Baseline: eight subagent runs plus one Orchestrator run.
-- Weekly major replanning: rerun only agents whose evidence changed, then rerun Orchestrator.
+- Later calibration: rerun only agents whose evidence changed, then rerun Orchestrator.
 
 ## Single-Session Simulation Mode
 
 This mode is not independent.
 
 Use it for:
-- quick daily adjustment
 - low-stakes review
-- rough planning when the user accepts weaker independence
+- one-sample tactical feedback when the user accepts weaker independence
 
 Required label:
 
@@ -35,4 +34,4 @@ Required label:
 
 ## Mode Choice Rule
 
-Choose manual multi-session mode when the decision changes the 8-week strategy, the target feasibility judgment, or the skill priority ranking. Choose single-session simulation mode only when the user needs a fast tactical update.
+Choose manual multi-session mode when a decision changes the target judgment, skill priority, active unit, or exam strategy. Choose single-session simulation mode only for low-stakes tactical feedback.
