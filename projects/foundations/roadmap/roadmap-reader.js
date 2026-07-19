@@ -63,6 +63,7 @@ const state = {
   notePanelPreferenceCollapsed: getDefaultNotePanelCollapsed(PROJECT_ID),
   drawerReturnFocus: null,
   careerLastSettledUnitId: "",
+  careerBoardResizeObserver: null,
   financeGraphFocusId: "",
   financeGraphResizeFrame: 0,
   financeGraphResizeObserver: null,
@@ -1337,7 +1338,8 @@ function renderCareerBoard(module, runtime) {
       <div class="career-board-heading">
         <h2 class="career-section-label" id="career-board-title">贾维斯 0.x · 六子系统装配主板</h2>
       </div>
-      <div class="career-board-scroll" role="region" tabindex="0" aria-labelledby="career-board-title" aria-describedby="career-board-note career-board-evidence-summary">
+      <div class="career-board-viewport">
+        <div class="career-board-scroll" role="region" tabindex="0" aria-labelledby="career-board-title" aria-describedby="career-board-note career-board-evidence-summary">
           <svg class="career-mainboard" viewBox="0 0 900 560" role="group" aria-labelledby="career-mainboard-title career-mainboard-description">
             <title id="career-mainboard-title">贾维斯 0.x 六子系统主板</title>
             <desc id="career-mainboard-description">六个子系统的长期装配图。U-QUEUE 正向人格与情感布线；证据焊盘只在结算或校准中明确登记后出现。</desc>
@@ -1429,6 +1431,7 @@ function renderCareerBoard(module, runtime) {
 
             <g class="career-board-corner-seal"><rect x="806" y="44" width="48" height="48" rx="4"/><text x="830" y="75" text-anchor="middle">0.x</text></g>
           </svg>
+        </div>
       </div>
       <p class="career-board-note" id="career-board-note">朱砂表示当前布线，金色只表示结算或校准中明确指认的证据；没有证据的层级不生成占位。</p>
       <p class="visually-hidden" id="career-board-evidence-summary">${escapeHtml(getCareerEvidenceSummary(module))}</p>
@@ -1544,6 +1547,21 @@ function bindCareerRoadmap(module) {
       });
     });
   });
+  const boardScroll = els.sectionList.querySelector(".career-board-scroll");
+  const boardViewport = boardScroll?.closest(".career-board-viewport");
+  if (boardScroll && boardViewport) {
+    const updateBoardOverflowCue = () => {
+      const maxScrollLeft = Math.max(0, boardScroll.scrollWidth - boardScroll.clientWidth);
+      boardViewport.classList.toggle("has-horizontal-overflow", maxScrollLeft > 1);
+      boardViewport.classList.toggle("is-at-end", boardScroll.scrollLeft >= maxScrollLeft - 1);
+    };
+    boardScroll.addEventListener("scroll", updateBoardOverflowCue, { passive: true });
+    if (typeof ResizeObserver === "function") {
+      state.careerBoardResizeObserver = new ResizeObserver(updateBoardOverflowCue);
+      state.careerBoardResizeObserver.observe(boardScroll);
+    }
+    updateBoardOverflowCue();
+  }
 }
 
 function renderFinanceOverviewDashboard(module) {
@@ -1928,6 +1946,8 @@ function renderLegacyAnnotationArchive(module) {
 
 function renderCurrentModule() {
   const module = state.currentModule;
+  state.careerBoardResizeObserver?.disconnect();
+  state.careerBoardResizeObserver = null;
   state.financeGraphResizeObserver?.disconnect();
   state.financeGraphResizeObserver = null;
   const isFinanceOverview = PROJECT_ID === "finance" && module.id === state.data.project.dashboardModuleId;

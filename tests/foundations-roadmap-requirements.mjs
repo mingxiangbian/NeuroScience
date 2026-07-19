@@ -276,6 +276,21 @@ const careerEvidencePointerRule = careerCss.slice(careerCss.indexOf('.career-boa
 assert.doesNotMatch(careerEvidencePointerRule, /career-board-evidence-pads/, "positive evidence pads must remain pointer-readable instead of behaving like decorative traces");
 assert.match(careerBoardRenderer, /career-board-inline-hit" x="486" y="460" width="100" height="52"[\s\S]*career-board-inline-hit" x="590" y="460" width="160" height="52"/, "System Layer links should retain 44px-equivalent hit targets below, not over, the slot title");
 assert.match(js, /<summary><span>展开完整路线依据与运行规则<\/span><span class="career-reference-toggle" aria-hidden="true">/, "the route reference should expose a visible, screen-reader-safe disclosure indicator");
+assert.doesNotMatch(careerCss, /\.career-section-label::after\s*\{/, "Career section hierarchy should use typography and spacing instead of ambiguous leader rules");
+assert.doesNotMatch(careerCss, /\.career-(?:annotation|reference)\s*\{[^}]*border-(?:top|bottom):/, "Career content shells should not recreate ambiguous pairs of horizontal rules");
+assert.doesNotMatch(careerCss, /\.career-annotation-aside\s*\{[^}]*border-top:/, "the mobile annotation should retain its semantic side note instead of adding another horizontal divider");
+const annotationLayoutRule = careerCss.match(/\.career-annotation-layout\s*\{(?<body>[\s\S]*?)\}/)?.groups.body ?? "";
+assert.match(annotationLayoutRule, /border:\s*1px solid/, "the annotation content should use one complete semantic container");
+const referenceShellRules = [...careerCss.matchAll(/body\[data-project-id="foundations"\] \.career-reference\s*\{(?<body>[\s\S]*?)\}/g)];
+const referenceShellRule = referenceShellRules.at(-1)?.groups.body ?? "";
+assert.doesNotMatch(referenceShellRule, /border-(?:top|bottom):/, "the disclosure shell should not use unexplained top and bottom rules");
+const referenceSummaryRule = careerCss.match(/\.career-reference summary\s*\{(?<body>[\s\S]*?)\}/)?.groups.body ?? "";
+assert.match(referenceSummaryRule, /border:\s*1px solid/, "the disclosure's complete interactive row should own its box boundary");
+const referenceToggleRule = careerCss.match(/\.career-reference-toggle\s*\{(?<body>[\s\S]*?)\}/)?.groups.body ?? "";
+assert.doesNotMatch(referenceToggleRule, /\bborder(?:-color)?:/, "the disclosure glyph should not look like a nested control");
+assert.match(careerCss, /--career-prose:[\s\S]*--career-prose-strong:[\s\S]*--career-prose-heading:[\s\S]*--career-prose-link:/, "Career long-form reading should define restrained semantic text colors");
+assert.match(careerCss, /\.career-reference-body strong[\s\S]*color:\s*var\(--career-prose-strong\)/, "Career long-form emphasis should use its semantic ink color");
+assert.match(careerCss, /\.career-reference-body a[\s\S]*color:\s*var\(--career-prose-link\)[\s\S]*text-decoration/, "Career long-form links should remain visibly identifiable beyond color alone");
 const careerStagesRenderer = js.slice(js.indexOf("function renderCareerStages"), js.indexOf("function renderCareerRoadmap"));
 assert.match(careerStagesRenderer, /module\.outcomeGates/, "the long-term horizon should use source-backed outcome gates");
 assert.match(careerStagesRenderer, /career-gate-list/, "the long-term horizon should render an ordered outcome-gate rail");
@@ -498,6 +513,27 @@ for (const module of data.modules) {
 }
 
 const byId = Object.fromEntries(data.modules.map((module) => [module.id, module]));
+const careerSections = byId["career-roadmap"].sections;
+assert.match(
+  careerSections["目标"],
+  /<strong>我长期想研究并创造能理解人、记住人、与人持续互动并采取行动的智能系统<\/strong>。这个理由/,
+  "Career long-term rationale should render as emphasis without exposing Markdown delimiters",
+);
+assert.match(
+  careerSections["任务"],
+  /<strong>预期结果：修复后 loss 上升。这不是修坏了——旧的低 loss 是作弊的假分数，loss 变高正是修复成功的证据<\/strong>。产物/,
+  "Career U1 expected result should render as emphasis without exposing Markdown delimiters",
+);
+assert.doesNotMatch(
+  `${careerSections["目标"]}${careerSections["任务"]}`,
+  /\*\*/,
+  "Career rendered sections should not expose raw strong-emphasis delimiters",
+);
+assert.doesNotMatch(
+  byId["career-roadmap"].searchEntries.map((entry) => entry.text).join(" "),
+  /\*\*/,
+  "Career search summaries should not expose raw strong-emphasis delimiters",
+);
 const careerUnits = byId["career-roadmap"].units;
 assert.deepEqual(careerUnits.map(({ id, title, type, sessions, status }) => ({ id, title, type, sessions, status })), [
   { id: "U1", title: "修掩码", type: "实验单元", sessions: { min: 1, max: 2 }, status: "active" },

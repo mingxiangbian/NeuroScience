@@ -13,9 +13,19 @@ body[data-project-id="foundations"] {
   --career-dai: #183c49;
   --career-flower: #2e6f77;
   --career-draft: #2c4a3c;
-  --career-draft-soft: #61766a;
+  --career-draft-soft: #586c60;
   --career-draft-faint: #aab8ae;
   --career-focus: #2e6f77;
+  --career-prose: oklch(36% 0.018 158);
+  --career-prose-muted: oklch(48% 0.02 158);
+  --career-prose-strong: oklch(32% 0.052 160);
+  --career-prose-heading: oklch(38% 0.058 220);
+  --career-prose-link: oklch(43% 0.085 215);
+  --career-prose-code: oklch(37% 0.05 165);
+  --career-board-surface: #e5e9de;
+  --career-board-mount: #c7d0c6;
+  --career-board-inner-line: rgba(44, 74, 60, 0.32);
+  --career-board-shadow: rgba(31, 39, 36, 0.14);
 }
 
 body[data-project-id="foundations"][data-theme="dark"] {
@@ -36,6 +46,52 @@ body[data-project-id="foundations"][data-theme="dark"] {
   --career-draft-soft: #789282;
   --career-draft-faint: #4f6558;
   --career-focus: #98d9a6;
+  --career-prose: oklch(82% 0.018 155);
+  --career-prose-muted: oklch(69% 0.018 155);
+  --career-prose-strong: oklch(88% 0.038 135);
+  --career-prose-heading: oklch(80% 0.055 215);
+  --career-prose-link: oklch(78% 0.085 210);
+  --career-prose-code: oklch(84% 0.045 155);
+  --career-board-surface: #142019;
+  --career-board-mount: #0c1210;
+  --career-board-inner-line: rgba(154, 182, 164, 0.28);
+  --career-board-shadow: rgba(0, 0, 0, 0.3);
+}
+
+body[data-project-id="foundations"]:has(.reader-main.is-career-roadmap) {
+  background:
+    radial-gradient(ellipse at 94% 12%, rgba(46, 111, 119, 0.055), transparent 34%),
+    radial-gradient(ellipse at 4% 92%, rgba(24, 60, 73, 0.03), transparent 32%),
+    #f3efe5;
+}
+
+body[data-project-id="foundations"]:has(.reader-main.is-career-roadmap)::before {
+  background: url("../assets/paper-fiber.svg") center top / 640px 640px repeat;
+  filter: none;
+  mix-blend-mode: multiply;
+  opacity: 0.12;
+}
+
+body[data-project-id="foundations"][data-theme="dark"]:has(.reader-main.is-career-roadmap) {
+  background:
+    radial-gradient(ellipse at 92% 10%, rgba(46, 111, 119, 0.09), transparent 34%),
+    radial-gradient(ellipse at 4% 92%, rgba(166, 67, 56, 0.035), transparent 28%),
+    #0e1411;
+}
+
+body[data-project-id="foundations"][data-theme="dark"]:has(.reader-main.is-career-roadmap)::before {
+  filter: invert(1);
+  mix-blend-mode: screen;
+  opacity: 0.05;
+}
+
+body[data-project-id="foundations"][data-theme="dark"]:has(.reader-main.is-career-roadmap) .module-nav-item[aria-current="true"] {
+  border-color: color-mix(in srgb, var(--career-cinnabar) 22%, transparent);
+  background: color-mix(in srgb, var(--career-paper-soft) 58%, transparent);
+}
+
+body[data-project-id="foundations"][data-theme="dark"]:has(.reader-main.is-career-roadmap) .module-nav-item[aria-current="true"]::before {
+  background: var(--career-cinnabar);
 }
 
 body[data-project-id="foundations"] .reader-main.is-career-roadmap {
@@ -110,7 +166,7 @@ body[data-project-id="foundations"] .career-header-goal small {
   margin-inline-start: auto;
   color: var(--career-ink-muted);
   font-family: var(--reader-mono);
-  font-size: 10px;
+  font-size: 11px;
   white-space: nowrap;
 }
 
@@ -133,10 +189,8 @@ body[data-project-id="foundations"] .career-board-section {
 }
 
 body[data-project-id="foundations"] .career-section-label {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 0 0 12px;
+  display: block;
+  margin: 0 0 14px;
   color: var(--career-ink);
   font-family: var(--reader-serif);
   font-size: 17px;
@@ -145,17 +199,12 @@ body[data-project-id="foundations"] .career-section-label {
   line-height: 1.4;
 }
 
-body[data-project-id="foundations"] .career-section-label::after {
-  min-width: 28px;
-  height: 1px;
-  flex: 1;
-  background: var(--career-line);
-  content: "";
-}
-
 body[data-project-id="foundations"] .career-section-label.is-subsection {
-  margin-top: 24px;
-  font-size: 15px;
+  margin: 28px 0 10px;
+  color: var(--career-dai);
+  font-family: var(--reader-font);
+  font-size: 14px;
+  font-weight: 700;
 }
 
 body[data-project-id="foundations"] .career-workbench {
@@ -223,7 +272,7 @@ body[data-project-id="foundations"] .career-unit-next > span {
   margin-bottom: 3px;
   color: var(--career-ink-muted);
   font-family: var(--reader-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.08em;
 }
 
@@ -246,7 +295,7 @@ body[data-project-id="foundations"] .career-unit-role {
 
 body[data-project-id="foundations"] .career-unit-role span {
   font-family: var(--reader-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.04em;
 }
 
@@ -285,7 +334,7 @@ body[data-project-id="foundations"] .career-ledger-link > small {
 
 body[data-project-id="foundations"] .career-ledger-link > small {
   color: var(--career-ink-muted);
-  font-size: 10.5px;
+  font-size: 11px;
 }
 
 body[data-project-id="foundations"] .career-ledger-link::after {
@@ -536,6 +585,10 @@ body[data-project-id="foundations"] .career-board-scroll {
   scrollbar-gutter: stable;
 }
 
+body[data-project-id="foundations"] .career-board-viewport {
+  position: relative;
+}
+
 body[data-project-id="foundations"] .career-board-scroll:focus-visible {
   outline: 2px solid var(--career-focus);
   outline-offset: 4px;
@@ -560,13 +613,24 @@ body[data-project-id="foundations"] .career-board-mounts circle {
 }
 
 body[data-project-id="foundations"] .career-board-outline {
+  fill: var(--career-board-surface);
   stroke-width: 2px;
+  filter: drop-shadow(0 4px 5px var(--career-board-shadow));
 }
 
 body[data-project-id="foundations"] .career-board-inner-outline,
 body[data-project-id="foundations"] .career-board-mounts circle {
-  stroke: var(--career-draft-faint);
   stroke-width: 1px;
+}
+
+body[data-project-id="foundations"] .career-board-inner-outline {
+  stroke: var(--career-board-inner-line);
+}
+
+body[data-project-id="foundations"] .career-board-mounts circle {
+  fill: var(--career-board-mount);
+  stroke: var(--career-draft-soft);
+  stroke-width: 1.25px;
 }
 
 body[data-project-id="foundations"] .career-board-silkscreen {
@@ -734,6 +798,10 @@ body[data-project-id="foundations"] .career-board-slot > rect:first-child {
   stroke: var(--career-draft);
   stroke-width: 1.5px;
   vector-effect: non-scaling-stroke;
+  transition:
+    fill 160ms cubic-bezier(0.16, 1, 0.3, 1),
+    stroke 160ms cubic-bezier(0.16, 1, 0.3, 1),
+    stroke-width 160ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 body[data-project-id="foundations"] .career-board-slot.is-supplied > rect:first-child {
@@ -836,11 +904,15 @@ body[data-project-id="foundations"] .career-board-link {
   text-decoration: none;
 }
 
+body[data-project-id="foundations"] .career-board-link text {
+  transition: fill 160ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 body[data-project-id="foundations"] .career-board-link:hover .career-board-slot > rect:first-child,
 body[data-project-id="foundations"] .career-board-link:focus .career-board-slot > rect:first-child {
   fill: color-mix(in srgb, var(--career-flower) 9%, var(--career-paper-soft));
   stroke: var(--career-flower);
-  stroke-width: 3px;
+  stroke-width: 2px;
 }
 
 body[data-project-id="foundations"] .career-board-link:focus {
@@ -859,6 +931,9 @@ body[data-project-id="foundations"] .career-board-link.is-inline text {
 body[data-project-id="foundations"] .career-board-inline-hit {
   fill: transparent;
   stroke: none;
+  transition:
+    fill 160ms cubic-bezier(0.16, 1, 0.3, 1),
+    stroke 160ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 body[data-project-id="foundations"] .career-board-link.is-inline:hover text,
@@ -883,16 +958,14 @@ body[data-project-id="foundations"] .career-board-note {
   text-wrap: pretty;
 }
 
-body[data-project-id="foundations"] .career-annotation {
-  border-top: 1px solid var(--career-line);
-  border-bottom: 1px solid var(--career-line);
-  padding: 20px 4px;
-}
-
 body[data-project-id="foundations"] .career-annotation-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(180px, 220px);
   gap: 22px;
+  border: 1px solid var(--career-line);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--career-cinnabar) 3%, var(--career-paper-soft));
+  padding: 20px;
 }
 
 body[data-project-id="foundations"] .career-annotation-body,
@@ -1105,9 +1178,7 @@ body[data-project-id="foundations"] .career-gate-note {
 }
 
 body[data-project-id="foundations"] .career-reference {
-  margin-top: 20px;
-  border-top: 1px solid var(--career-line);
-  border-bottom: 1px solid var(--career-line);
+  margin-top: 16px;
 }
 
 body[data-project-id="foundations"] .career-reference summary {
@@ -1116,13 +1187,16 @@ body[data-project-id="foundations"] .career-reference summary {
   justify-content: space-between;
   gap: 16px;
   min-height: 48px;
-  border-radius: 4px;
+  border: 1px solid var(--career-line);
+  border-radius: 6px;
   color: var(--career-ink);
-  padding: 10px 8px;
+  background: color-mix(in srgb, var(--career-dai) 3%, var(--career-paper-soft));
+  padding: 10px 12px;
   font-weight: 700;
   list-style: none;
   cursor: pointer;
   transition:
+    border-color 180ms cubic-bezier(0.16, 1, 0.3, 1),
     color 180ms cubic-bezier(0.16, 1, 0.3, 1),
     background-color 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -1137,12 +1211,10 @@ body[data-project-id="foundations"] .career-reference-toggle {
   place-items: center;
   width: 28px;
   height: 28px;
-  border: 1px solid var(--career-line);
-  border-radius: 4px;
   color: var(--career-dai);
   font-family: var(--reader-mono);
-  font-size: 17px;
-  font-weight: 500;
+  font-size: 19px;
+  font-weight: 600;
   line-height: 1;
 }
 
@@ -1155,10 +1227,6 @@ body[data-project-id="foundations"] .career-reference-toggle .is-open {
   display: none;
 }
 
-body[data-project-id="foundations"] .career-reference[open] .career-reference-toggle {
-  border-color: color-mix(in srgb, var(--career-dai) 52%, transparent);
-}
-
 body[data-project-id="foundations"] .career-reference[open] .career-reference-toggle .is-closed {
   display: none;
 }
@@ -1168,6 +1236,7 @@ body[data-project-id="foundations"] .career-reference[open] .career-reference-to
 }
 
 body[data-project-id="foundations"] .career-reference summary:hover {
+  border-color: color-mix(in srgb, var(--career-dai) 42%, transparent);
   color: var(--career-dai);
   background: color-mix(in srgb, var(--career-dai) 6%, transparent);
 }
@@ -1178,10 +1247,63 @@ body[data-project-id="foundations"] .career-reference summary:active {
 
 body[data-project-id="foundations"] .career-reference-body {
   max-width: 72ch;
-  color: var(--career-ink);
-  padding: 0 8px 18px;
+  color: var(--career-prose);
+  padding: 18px 8px 4px;
   font-size: 14px;
   line-height: 1.76;
+}
+
+body[data-project-id="foundations"] .career-reference-body p,
+body[data-project-id="foundations"] .career-reference-body li {
+  color: var(--career-prose);
+}
+
+body[data-project-id="foundations"] .career-reference-body section > h3:first-child {
+  color: var(--career-cinnabar);
+  font-family: var(--reader-serif);
+  font-size: 18px;
+  font-weight: 760;
+}
+
+body[data-project-id="foundations"] .career-reference-body section > h3:not(:first-child) {
+  color: var(--career-prose-heading);
+  font-family: var(--reader-serif);
+  font-weight: 720;
+}
+
+body[data-project-id="foundations"] .career-reference-body strong {
+  color: var(--career-prose-strong);
+  font-weight: 700;
+}
+
+body[data-project-id="foundations"] .career-reference-body a {
+  color: var(--career-prose-link);
+  text-decoration-color: color-mix(in oklch, currentColor 48%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+body[data-project-id="foundations"] .career-reference-body a:hover {
+  text-decoration-color: currentColor;
+}
+
+body[data-project-id="foundations"] .career-reference-body a:focus-visible {
+  border-radius: 3px;
+  outline: 2px solid var(--career-focus);
+  outline-offset: 2px;
+}
+
+body[data-project-id="foundations"] .career-reference-body code {
+  border-radius: 3px;
+  color: var(--career-prose-code);
+  background: color-mix(in oklch, var(--career-prose-code) 9%, transparent);
+  padding: 0.08em 0.28em;
+  font-family: var(--reader-code-font);
+  font-size: 0.88em;
+}
+
+body[data-project-id="foundations"] .career-reference-body li::marker {
+  color: var(--career-prose-heading);
 }
 
 body[data-project-id="foundations"] .career-reference-body > :first-child {
@@ -1263,7 +1385,7 @@ body[data-project-id="foundations"] .module-nav-frozen-copy small {
 
 body[data-project-id="foundations"] .module-nav-frozen-copy small {
   margin-top: 2px;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 400;
 }
 
@@ -1331,13 +1453,30 @@ body[data-project-id="foundations"] .long-term-module-context strong {
     width: 820px;
   }
 
-  body[data-project-id="foundations"] .career-board-scroll::after {
-    display: block;
-    margin-top: 6px;
+  body[data-project-id="foundations"] .career-board-heading::after {
+    flex: 0 0 auto;
     color: var(--career-ink-muted);
+    content: "横向滑动查看完整主板  →";
+    font-family: var(--reader-mono);
     font-size: 11px;
-    text-align: end;
-    content: "横向滑动查看完整主板";
+    line-height: 1.45;
+  }
+
+  body[data-project-id="foundations"] .career-board-viewport::after {
+    position: absolute;
+    top: 2px;
+    right: 0;
+    bottom: 10px;
+    width: 34px;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--career-paper) 90%, transparent));
+    content: "";
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  body[data-project-id="foundations"] .career-board-viewport.has-horizontal-overflow:not(.is-at-end)::after {
+    opacity: 1;
   }
 
   body[data-project-id="foundations"] .career-annotation-layout {
@@ -1415,13 +1554,7 @@ body[data-project-id="foundations"] .long-term-module-context strong {
   body[data-project-id="foundations"] .career-annotation-layout {
     grid-template-columns: minmax(0, 1fr);
     gap: 14px;
-  }
-
-  body[data-project-id="foundations"] .career-annotation-aside {
-    border-top: 1px solid var(--career-cinnabar);
-    border-inline-start: 0;
-    padding-top: 12px;
-    padding-inline-start: 0;
+    padding: 16px;
   }
 
   body[data-project-id="foundations"] .career-gate-list {
@@ -1541,7 +1674,11 @@ body[data-project-id="foundations"] .long-term-module-context strong {
   }
 
   body[data-project-id="foundations"] .career-ledger-link::after,
-  body[data-project-id="foundations"] .career-reference summary {
+  body[data-project-id="foundations"] .career-reference summary,
+  body[data-project-id="foundations"] .career-board-slot > rect:first-child,
+  body[data-project-id="foundations"] .career-board-inline-hit,
+  body[data-project-id="foundations"] .career-board-link text,
+  body[data-project-id="foundations"] .career-board-viewport::after {
     transition: none;
   }
 
