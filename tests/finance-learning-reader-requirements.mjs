@@ -63,6 +63,7 @@ const openModuleSource = sourceBetween("function openModule", "function openSear
 const mobileNoteSource = sourceBetween("function setMobileNoteOpen", "function setMobileDirectoryOpen");
 const mobileDirectorySource = sourceBetween("function setMobileDirectoryOpen", "function closeMobileDrawers");
 const mobileFocusTrapSource = sourceBetween("function trapMobileDrawerFocus", "function bindEvents");
+const annotationResolutionSource = sourceBetween("function isAnnotationAnchorResolved", "function renderAnnotationList");
 const escapeKeySource = sharedReader.slice(
   sharedReader.indexOf('if (event.key === "Escape")'),
   sharedReader.indexOf("\n  });", sharedReader.indexOf('if (event.key === "Escape")')),
@@ -153,6 +154,7 @@ assert.match(sharedReader, /function rangeContainsExcludedContent\(range\)[\s\S]
 assert.match(sharedReader, /function applyHighlights\(\)[\s\S]*rangeContainsExcludedContent\(range\)/, "restored annotations should never wrap newly interactive content");
 assert.match(sharedReader, /data-annotation-manage=/, "every retained annotation should remain manageable from the note panel");
 assert.match(sharedReader, /data-anchor-status="\$\{anchorStatus\}"/, "the note panel should expose whether each source anchor still resolves");
+assert.match(annotationResolutionSource, /if \(!context\) return false;[\s\S]*context\.querySelector\([\s\S]*\.knowledge-highlight\[data-annotation-id=[\s\S]*if \(renderedHighlight\) return true;[\s\S]*findTextRange\(context, annotation\)/, "a rendered highlight should resolve its own anchor before the excluded-content fallback");
 assert.match(sharedReader, /原文位置已失效，批注仍保留。/, "unresolved source anchors should remain visible and explain their state");
 assert.match(sharedReader, /function deleteAnnotation[\s\S]*returnSurfaceId[\s\S]*remainingManageButtons[\s\S]*els\.closeMobileNote/, "deleting from a note drawer should restore focus inside the remaining active surface");
 assert.match(sharedReader, /function updateAnnotationCategory\(annotationId, category, focusSurface\)[\s\S]*focus\(\{ preventScroll: true \}\)/, "changing annotation categories should restore focus after rerendering both note surfaces");
