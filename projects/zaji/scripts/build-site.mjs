@@ -362,6 +362,7 @@ function renderBlogArticle(blog, blogs, works) {
         <a href="../${newer.slug}/"><span>下一篇</span><strong>${escapeHtml(newer.title)}</strong></a>` : ""}
       </nav>` : "";
   const toc = renderToc(rendered.toc);
+  const relatedWorks = renderRelatedWorks(blog.relatedWorks, works, siteRoot);
   const content = `<article class="article-page">
         <header class="article-hero">
           <a class="back-link" href="../">← 返回博客</a>
@@ -381,8 +382,7 @@ ${updatedMeta}              <div><dt>阅读</dt><dd>约 ${blog.readingMinutes} �
           <div class="prose article-prose">${rendered.html}</div>
           <aside class="article-toc" aria-label="本文目录"><p>目录</p>${toc}</aside>
         </div>
-      </article>
-      ${renderRelatedWorks(blog.relatedWorks, works, siteRoot)}
+      </article>${relatedWorks ? `\n      ${relatedWorks}` : ""}
       ${nav}`;
 
   return renderDocument({
