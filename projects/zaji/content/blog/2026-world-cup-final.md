@@ -3,6 +3,7 @@ title: 1比0，十二年
 date: 2026-07-20
 summary: 决赛输给西班牙的那个凌晨：五种打架的情绪，一段被情绪改写的记忆，和只剩一种情绪的热搜。
 tags: [随想, 足球]
+companion_posts: [why-anger-sounds-louder-than-praise]
 ---
 
 ## 凌晨两点半

@@ -40,8 +40,11 @@ date: 2026-07-19
 summary: 一句话摘要
 tags: [标签一, 标签二]
 related_works: [optional-work-slug]
+companion_posts: [optional-companion-post-slug]
 ---
 ```
+
+博客的 `companion_posts` 会在正文之后显示为“伴随文章”，用于保存不受发布时间顺序影响的阅读关系。
 
 成果还需要：
 

@@ -75,6 +75,7 @@ function readCollection(type) {
       body: body.trim(),
       relatedWorks: toArray(frontmatter.related_works),
       relatedPosts: toArray(frontmatter.related_posts),
+      companionPosts: toArray(frontmatter.companion_posts),
       status: frontmatter.status?.trim() || "",
       artifactType: frontmatter.type?.trim() || "",
       cover: frontmatter.cover?.trim() || "",
@@ -105,6 +106,10 @@ function assertRelations(blogs, works) {
   for (const blog of blogs) {
     for (const slug of blog.relatedWorks) {
       if (!workSlugs.has(slug)) throw new Error(`${blog.slug}: unknown related work ${slug}`);
+    }
+    for (const slug of blog.companionPosts) {
+      if (!blogSlugs.has(slug)) throw new Error(`${blog.slug}: unknown companion post ${slug}`);
+      if (slug === blog.slug) throw new Error(`${blog.slug}: companion post cannot reference itself`);
     }
   }
   for (const work of works) {
@@ -348,6 +353,15 @@ function renderRelatedWorks(slugs, works, siteRoot) {
       </section>`;
 }
 
+function renderCompanionPosts(slugs, blogs, siteRoot) {
+  const related = slugs.map((slug) => blogs.find((blog) => blog.slug === slug)).filter(Boolean);
+  if (related.length === 0) return "";
+  return `<aside class="related-block companion-block" aria-labelledby="companion-posts-title">
+        <div class="section-heading"><div><p class="eyebrow">阅读路径</p><h2 id="companion-posts-title">伴随文章</h2></div></div>
+        <div class="related-open-list">${related.map((blog) => `<a href="${siteRoot}/blog/${blog.slug}/"><span>由本文延伸</span><div class="related-open-copy"><strong>${escapeHtml(blog.title)}</strong><small>${escapeHtml(blog.summary)}</small></div><i aria-hidden="true">↗</i></a>`).join("")}</div>
+      </aside>`;
+}
+
 function renderBlogArticle(blog, blogs, works) {
   const siteRoot = "../..";
   const rendered = renderMarkdown(blog.body, { siteRoot });
@@ -362,6 +376,7 @@ function renderBlogArticle(blog, blogs, works) {
         <a href="../${newer.slug}/"><span>下一篇</span><strong>${escapeHtml(newer.title)}</strong></a>` : ""}
       </nav>` : "";
   const toc = renderToc(rendered.toc);
+  const companionPosts = renderCompanionPosts(blog.companionPosts, blogs, siteRoot);
   const relatedWorks = renderRelatedWorks(blog.relatedWorks, works, siteRoot);
   const content = `<article class="article-page">
         <header class="article-hero">
@@ -382,7 +397,7 @@ ${updatedMeta}              <div><dt>阅读</dt><dd>约 ${blog.readingMinutes} �
           <div class="prose article-prose">${rendered.html}</div>
           <aside class="article-toc" aria-label="本文目录"><p>目录</p>${toc}</aside>
         </div>
-      </article>${relatedWorks ? `\n      ${relatedWorks}` : ""}
+      </article>${companionPosts ? `\n      ${companionPosts}` : ""}${relatedWorks ? `\n      ${relatedWorks}` : ""}
       ${nav}`;
 
   return renderDocument({

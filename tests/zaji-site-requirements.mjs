@@ -6,6 +6,7 @@ import { parseFrontmatter, renderMarkdown } from "../projects/zaji/scripts/markd
 const projectUrl = new URL("../projects/zaji/", import.meta.url);
 const homeUrl = new URL("index.html", projectUrl);
 const blogIndexUrl = new URL("blog/index.html", projectUrl);
+const worldCupArticleUrl = new URL("blog/2026-world-cup-final/index.html", projectUrl);
 const worksIndexUrl = new URL("works/index.html", projectUrl);
 const cssUrl = new URL("assets/zaji.css", projectUrl);
 const jsUrl = new URL("assets/zaji.js", projectUrl);
@@ -39,6 +40,7 @@ for (const url of [
 
 const home = readFileSync(homeUrl, "utf8");
 const blogIndex = readFileSync(blogIndexUrl, "utf8");
+const worldCupArticle = readFileSync(worldCupArticleUrl, "utf8");
 const worksIndex = readFileSync(worksIndexUrl, "utf8");
 const css = readFileSync(cssUrl, "utf8");
 const js = readFileSync(jsUrl, "utf8");
@@ -99,6 +101,11 @@ assert.match(blogIndex, /class="article-archive"/, "blog index should expose a r
 assert.match(blogIndex, /class="blog-row"/, "blog index should use open typographic rows");
 assert.doesNotMatch(blogIndex, /class="[^"]*card/, "blog index should not become a card grid");
 assert.doesNotMatch(blogIndex, /<a[^>]*>关于<\/a>/, "blog navigation should not include About");
+
+assert.match(worldCupArticle, /class="related-block companion-block" aria-labelledby="companion-posts-title"/, "the originating reflection should expose a durable companion-article relationship");
+assert.match(worldCupArticle, /<h2 id="companion-posts-title">伴随文章<\/h2>/, "the relationship should be labelled as a companion article rather than chronology");
+assert.match(worldCupArticle, /href="\.\.\/\.\.\/blog\/why-anger-sounds-louder-than-praise\/"[\s\S]*?为什么愤怒显得比赞美更响[\s\S]*?从一次关于热搜的误判出发/, "the companion entry should include the linked article title and summary");
+assert.ok(worldCupArticle.indexOf('id="companion-posts-title"') < worldCupArticle.indexOf('class="entry-nav"'), "the companion entry should appear before chronological article navigation");
 
 assert.match(worksIndex, /data-page="zaji-works-index"/, "works index should identify its page type");
 assert.match(worksIndex, /class="work-preview-lens" aria-live="polite"/, "works index should expose one functional preview lens");
@@ -182,3 +189,4 @@ assert.match(projectsPage, /@media \(min-width:\s*681px\) and \(max-width:\s*980
 assert.equal(packageJson.scripts["build:zaji"], "node projects/zaji/scripts/build-site.mjs", "package scripts should expose the Zaji builder");
 assert.equal(packageJson.scripts["test:zaji"], "node projects/zaji/scripts/build-site.mjs --check && node tests/zaji-site-requirements.mjs", "Zaji tests should first verify generated pages are current");
 assert.match(readme, /Agent 发布流程/, "Zaji should document the Agent-assisted publishing workflow");
+assert.match(readme, /companion_posts[\s\S]*伴随文章/, "Zaji should document semantic companion links for blog sources");
