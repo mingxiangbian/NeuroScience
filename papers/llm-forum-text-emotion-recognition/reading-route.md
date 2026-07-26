@@ -22,6 +22,7 @@
 - Citation：Soujanya Poria, Navonil Majumder, Rada Mihalcea, and Eduard Hovy. 2019. arXiv:1905.02947.
 - 原文：[arXiv](https://arxiv.org/abs/1905.02947)
 - 本地 PDF：[2019-poria-erc-survey.pdf](pdfs/2019-poria-erc-survey.pdf)
+- 审阅笔记：[2019 Poria ERC Survey 中文阅读笔记](notes-cn/2019-poria-erc-survey.md)
 - 角色：领域综述，不是首个复现对象。
 - 阅读重点：情绪识别会受到上下文、说话者依赖、情绪转移、讽刺和类别不平衡影响；需要分清单条文本情绪分类与会话情感识别（Emotion Recognition in Conversation, ERC）。
 - 对本项目的价值：帮助开题报告定义问题、梳理数据集与方法谱系，也能说明为什么论坛回复链可能比孤立帖子更有信息。

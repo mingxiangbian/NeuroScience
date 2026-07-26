@@ -2,7 +2,7 @@
   "paperId": "poria-2019-erc-survey",
   "noteMode": "public",
   "noteSource": "project-reading-annotations",
-  "updatedAt": "2026-07-17",
+  "updatedAt": "2026-07-26",
   "notes": [
     {
       "chunkId": "ch-001",
@@ -18,11 +18,11 @@
     },
     {
       "chunkId": "ch-004",
-      "note": ""
+      "note": "这里描述的是 inter-speaker dependency，即其他参与者可能改变当前说话人的情绪。说话人自身的历史也可能形成 self-dependency，但“自我反思”只是可能的解释，现有标签并未直接观察或验证这一心理过程。"
     },
     {
       "chunkId": "ch-005",
-      "note": ""
+      "note": "这些数据集不能当作可互换的基准。IEMOCAP 和 SEMAINE 主要支持双人多模态或连续情感研究；EmotionLines、DailyDialog 与 EmoContext 提供不同来源和长度的文本对话；MELD 扩展到影视剧多方多模态。论坛项目应依据模态、说话人数、上下文长度、标签空间和领域接近度选数据，而不只看规模。SEMAINE 使用 valence、arousal、expectancy、power 四个连续属性；EmoContext 的目标标签包括 Happy、Sad、Angry、Others。"
     },
     {
       "chunkId": "ch-006",
@@ -30,7 +30,7 @@
     },
     {
       "chunkId": "ch-007",
-      "note": ""
+      "note": "这里真正需要比较的是 utterance-only 与 context-aware 输入，而不是把 BERT、SVM 和 RNN 简单对立。BERT 也能接收上下文；CMN、ICON、IANN 使用不同形式的说话人记忆，DialogueRNN 则递归更新全局、说话人与情绪状态。Attention 只表示模型在计算中赋予哪些历史更高权重，不能单独证明某句话造成了情绪变化。"
     },
     {
       "chunkId": "ch-008",
