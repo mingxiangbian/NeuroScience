@@ -2,7 +2,7 @@
   "paperId": "demszky-2020-goemotions",
   "noteMode": "public",
   "noteSource": "project-reading-annotations",
-  "updatedAt": "2026-07-17",
+  "updatedAt": "2026-07-28",
   "notes": [
     {
       "chunkId": "ch-001",
@@ -10,7 +10,7 @@
     },
     {
       "chunkId": "ch-002",
-      "note": ""
+      "note": "这句话可以拆成三个判断标准。Coverage 看标签体系是否覆盖项目需要区分的情绪；agreement 看不同标注者能否稳定区分这些标签；downstream utility 看这种区分是否会改变评估结论或系统处理方式。例如，admiration 与 approval 增加了标签覆盖度，但如果试标中两者频繁混淆，而应用也不需要区别处理，合并标签会更合理。标签数量应由试标结果和混淆分析决定。"
     },
     {
       "chunkId": "ch-003",
@@ -22,7 +22,7 @@
     },
     {
       "chunkId": "ch-005",
-      "note": ""
+      "note": "频率表示一个标签出现多少次；一致性表示不同标注者面对同一条文本时，能否选出同一标签。高频标签能提供更多样本，却不会自动消除类别边界的歧义。论文给出的反例是：fear 相对低频但一致性较高，annoyance 较常见但一致性较低。annoyance 与 anger、disapproval 的语义重叠可能造成这种差异，但这是解释，不是论文验证过的因果结论。设计标签时要同时看样本量、逐类一致性和混淆对。"
     },
     {
       "chunkId": "ch-006",
@@ -30,7 +30,7 @@
     },
     {
       "chunkId": "ch-007",
-      "note": ""
+      "note": "这篇论文把 BERT 用作判别式多标签基线。BERT-base 先把评论编码为文本表示，顶层的 dense layer 再为 27 类情绪和 Neutral 分别输出概率；sigmoid cross-entropy 允许一条评论保留多个标签。完整标签体系的平均 F1 为 0.46，合并为 Ekman 类别和 sentiment 类别后分别升至 0.64 和 0.69。分数上升有一部分来自任务变简单，不能单独说明模型更懂情绪。毕设可先复现这一基线，再与 LLM 比较。"
     },
     {
       "chunkId": "ch-008",
