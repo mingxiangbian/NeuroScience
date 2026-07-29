@@ -2,7 +2,7 @@
   "paperId": "demszky-2020-goemotions",
   "noteMode": "public",
   "noteSource": "project-reading-annotations",
-  "updatedAt": "2026-07-28",
+  "updatedAt": "2026-07-29",
   "notes": [
     {
       "chunkId": "ch-001",
@@ -26,7 +26,7 @@
     },
     {
       "chunkId": "ch-006",
-      "note": ""
+      "note": "这里的“区域”不是空间或脑区，而是相关矩阵和层次聚类里的粗粒度分组。作者先用每种情绪在全部样本上的平均标注评分构成一个向量，再计算情绪两两之间的 Pearson 相关：正面与负面标签各自大体成簇，强度相近的标签也彼此接近，这就是“整体与 sentiment 分组相符”。“内部差异”指同一大组没有被压成一个标签，例如 annoyance 与 anger 高度相关且在树状图中相邻，但仍是可分别分析的类别。原译文中的“模糊情感区域”容易误导：论文没有发现 ambiguous 标签稳定形成独立簇，反而指出 surprise 在这份数据里更靠近 positive。这个结果只描述 GoEmotions 标注的共现结构，不能证明固定的心理边界或因果关系。"
     },
     {
       "chunkId": "ch-007",
