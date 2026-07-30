@@ -8,6 +8,18 @@ change, or post-result tuning is allowed.
 
 Independent verification status: `Verified`.
 
+## Freeze Decision
+
+The user confirmed the final freeze on 2026-07-30 after reviewing the local
+results against the pinned upstream references. The experiment code, anonymous
+predictions, metrics, and verification record are archived in Git commit
+`f061ec9c91e925236d6d481c66efc9dcbbfce907`.
+
+EXP-016 is now the final TweetEval test estimate for this project. The test
+split may be inspected for preregistered descriptive error analysis, but it
+must not be used to tune prompts, choose new models, change preprocessing, or
+replace these results.
+
 ## Test Results
 
 | Frozen condition | Test Macro-F1 | Test Accuracy | Weighted F1 | Runs |

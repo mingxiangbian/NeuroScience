@@ -74,12 +74,22 @@ papers:
 - 毕设题目、项目类型、导师及导师当前准备要求已经记录。
 - 已建立 6 篇核心论文的本地阅读包与复现路线。
 - 已提出初始实验矩阵、最低数据字段和开题研究问题。
+- 已使用固定 TweetEval emotion 训练集拟合首个 TF-IDF + Logistic Regression 基线，并完成固定验证集评估；测试集尚未读取。
+- 已在其余配置不变的条件下拟合并评估 `class_weight="balanced"` 受控变体；按预先登记的 validation Macro-F1，balanced 版本暂选为后续 TF-IDF 基线。
+- 已完成 paper-aligned word + character n-gram TF-IDF + Linear SVM 基线；EXP-005 的 validation Macro-F1 和 Accuracy 均高于 balanced Logistic Regression，成为当前更强的传统基线；测试集仍未读取。
+- 已在不读取 validation/test 的条件下完成 EXP-006 训练集 5 折调参，并用冻结配置执行一次 EXP-007 validation 确认；Macro-F1 从 0.611866 提高到 0.622678，Accuracy 从 0.671123 提高到 0.676471，成为当前最强的本地传统基线；测试集仍未读取。
+- 已建立独立的 `emotion-roberta` 环境并固定 `FacebookAI/roberta-base` 上游 revision；EXP-008 已通过离线模型哈希校验、MPS 单步训练和合成推理检查，未读取任何项目数据。
+- 已完成 EXP-011 RoBERTa-base 三随机种子正式微调；validation Macro-F1 为 `0.732804 +/- 0.005007`，Accuracy 为 `0.792335 +/- 0.004084`，相对 EXP-007 的平均 Macro-F1 提高 `0.110126`。逐条预测、类级指标、训练曲线、checkpoint 哈希和独立复算均已保存；测试集仍未读取。
+- 已通过 EXP-012 与 EXP-013 两轮仅使用训练集的 Minor 筛选确定正式调优配置：保留原始文本，加入 `label_smoothing_factor=0.05`。Tweet 归一化规则未改变当前数据中的任何样本，因此不能从分差判断其效果；论文同款超参数组合未在当前受控设置下胜出。
+- 已完成 EXP-014 通用 RoBERTa-base 优化配置的三随机种子验证；validation Macro-F1 为 `0.740219 +/- 0.005381`，相对 EXP-011 提高 `0.007415`。两个 seed 明确提高，一个 seed 与 EXP-011 属于 practical tie；独立复算已通过，测试集仍未读取。
+- 已完成 EXP-015 Twitter 域预训练 RoBERTa-base 的配对比较；validation Macro-F1 为 `0.761755 +/- 0.010579`，Accuracy 为 `0.829768 +/- 0.012350`，相对 EXP-014 的 Macro-F1 提高 `0.021536`，三个配对 seed 均提高。收益主要来自 joy、sadness 和 anger；optimism F1 反而从 `0.556824` 降至 `0.521836`，不能把整体收益解释为所有类别均受益。独立复算已通过，测试集仍未读取。
+- 已完成并由用户确认冻结一次性测试门 EXP-016。test Macro-F1 分别为 EXP-007 `0.646998`、EXP-011 `0.795761 +/- 0.003298`、EXP-014 `0.792645 +/- 0.003658`、EXP-015 `0.809973 +/- 0.007038`。EXP-014 相对 EXP-011 的配对均值为 `-0.003116`，说明 label smoothing 的小幅 validation 收益没有泛化；EXP-015 相对 EXP-014 为 `+0.017328`，且 3/3 seed 提高，支持 Twitter 域预训练收益。14,210 条模型-样本预测的指标、类别结果、混淆矩阵和哈希已独立复算通过，并归档于提交 `f061ec9`；此后不得再用该 test 调参。
 
 ### 尚未完成
 
 - 目标论坛、文本语言、授权范围和数据再分发边界尚未确认。
 - 标签体系、标注者、标注协议和一致性指标尚未确定。
-- 尚无代码复现结果、自建数据集、实验指标或可运行系统。
+- 已有传统基线、通用 RoBERTa 和 Twitter 域预训练 RoBERTa 的训练、validation 与一次性正式 test 证据；但尚未完成自建数据集、LLM 对照、完整错误分析或可运行系统。
 
 ## Evidence Standard
 
@@ -93,6 +103,7 @@ papers:
 - [`research-roadmap.md`](research-roadmap.md): 从开题到论文交付的阶段路线和通过条件。
 - [`hypotheses.md`](hypotheses.md): 当前待验证假设、反证条件和对应实验。
 - [`evidence-log.md`](evidence-log.md): 项目事实、实验产物和申请证据台账。
+- [`experiments/tweeteval-emotion/test-gate/README.md`](experiments/tweeteval-emotion/test-gate/README.md): EXP-016 一次性正式 test 结果、受控比较、外部参照与复算入口。
 - [`../../questions/llm-forum-text-emotion-recognition/open-questions.md`](../../questions/llm-forum-text-emotion-recognition/open-questions.md): 会改变项目主线的开放问题。
 - [`../../sources/llm-forum-text-emotion-recognition-sources.md`](../../sources/llm-forum-text-emotion-recognition-sources.md): 论文、代码、数据与合规来源地图。
 - [`../../papers/llm-forum-text-emotion-recognition/reading-route.md`](../../papers/llm-forum-text-emotion-recognition/reading-route.md): 论文阅读器与复现建议。
@@ -100,6 +111,6 @@ papers:
 ## Next Action
 
 1. 向导师确认目标论坛、语言、标签粒度、数据获取方式和预期交付物。
-2. 阅读 TweetEval 与 GoEmotions，并先复现 TweetEval emotion 子任务的固定评估流程。
-3. 在采集前完成数据合规检查和小规模双人标注试验。
-4. 从第一次复现实验开始同步更新 `evidence-log.md`，不在期末补写证据。
+2. 不再围绕 TweetEval test 调参；先冻结错误案例抽样规则，再比较 EXP-007、EXP-011、EXP-014 与 EXP-015 的共享错误、特有错误、optimism 弱项以及 validation/test 方向不一致的案例。
+3. 明确首个 LLM 对照的模型、prompt、成本预算和数据处理边界。若后续读取同一 TweetEval test，必须标记为 post-test evaluation；更强的最终证据应来自新冻结的论坛 holdout。
+4. 在采集前完成数据合规检查和小规模双人标注试验。

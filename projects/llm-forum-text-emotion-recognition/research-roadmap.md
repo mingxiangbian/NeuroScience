@@ -22,6 +22,14 @@ tags: [emotion-recognition, forum-text, llm, roadmap]
 - 至少完成一组对照、消融或鲁棒性实验。
 - 所有外部成果表述均能追溯到 [`evidence-log.md`](evidence-log.md) 中的 `Verified` 证据。
 
+## Research Question Registry
+
+| RQ ID | Question | Expected contribution | Major experiments | Thesis destination | Status |
+| --- | --- | --- | --- | --- | --- |
+| RQ-B1 | 在固定 TweetEval emotion 数据上，word + character n-gram Linear SVM 是否比 balanced word TF-IDF + Logistic Regression 更强，且训练集内调参能否进一步改善泛化？ | 建立进入编码器实验前更可信的传统非神经网络下界；量化增加字符特征、更换分类器和受控调参的收益与边界 | EXP-005、EXP-007（由 Minor EXP-006 选择配置）、EXP-016 test gate | 结果章节的传统基线与调优比较表，编号待定 | 阶段性解决：EXP-007 test Macro-F1=0.646998、Accuracy=0.700915；与上游 SVM 的三位小数结果一致，逐条预测已独立复算 |
+| RQ-B2 | 在相同 TweetEval emotion 数据上，标准微调的 RoBERTa-base 是否稳定优于 EXP-007，且 label smoothing 的 validation 收益能否泛化到冻结 test？ | 建立可复现的强编码器基线，量化三随机种子波动，并区分开发集改善与真正的测试集泛化 | EXP-009（首个优化步前实现失败）；EXP-010（数据读取前环境失败）；EXP-011（正式控制）；EXP-014（由 Minor EXP-012/013 选择配置）；EXP-016 test gate | 结果章节的编码器基线、调优与传统方法比较表，编号待定 | 阶段性解决：EXP-011 test Macro-F1=0.795761 +/- 0.003298；EXP-014 为 0.792645 +/- 0.003658，配对 delta=-0.003116，label smoothing 未建立 test 改善 |
+| RQ-B3 | 在相同数据、预处理和冻结微调协议下，Twitter 域预训练的 RoBERTa-base 是否比通用 RoBERTa-base 获得更高的 Macro-F1，并泛化到冻结 test？ | 将“域预训练收益”与超参数调优分离，检验论坛/社交媒体语言分布匹配是否改善情绪分类，尤其是 optimism 等困难类别 | EXP-015（与 EXP-014 配对比较）、EXP-016 test gate | 结果章节的预训练域消融与逐类别比较表，编号待定 | 阶段性解决：EXP-015 test Macro-F1=0.809973 +/- 0.007038，较 EXP-014 +0.017328，3/3 seed 提高；optimism 在 test 小幅提高 0.007331，但仍是最弱类别 |
+
 ## Phase 0: Scope and Opening
 
 Status: in progress
@@ -39,7 +47,7 @@ Status: in progress
 
 ## Phase 1: Literature and Baseline Reproduction
 
-Status: not started
+Status: in progress
 
 目标：
 
@@ -86,7 +94,7 @@ title, body, reply_depth, forum_section, source_url, labels
 
 ## Phase 3: Reproducible Baselines
 
-Status: not started
+Status: TweetEval baseline gate completed; forum-data baseline pending
 
 目标：
 

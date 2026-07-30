@@ -74,6 +74,10 @@ InstructERC 将 ERC 重构为受约束的标签生成任务，并结合指令、
 
 机制可解释性研究可通过分层探针、激活替换、消融和表征 steering，检验某类内部信息在模型的哪些层出现，以及它是否真正影响最终预测。Tak et al. 在开放权重自回归模型中发现，部分情绪与 appraisal 信息集中于中间层，并可通过因果干预改变情绪输出。
 
+稀疏自编码器（Sparse Autoencoder, SAE）提供了另一种候选分析单位。SAE 使用稀疏瓶颈重构 Transformer 某一层的激活，并学习一个通常比原始神经元维度更大的特征字典。其动机是把单个神经元或激活方向中相互叠加的多种信息，分解为更稀疏、可能更容易解释的特征。研究者可根据高激活文本、最小对照样本和特征干预，为候选 SAE 特征提出语义解释。
+
+对本项目而言，SAE 可用于比较显式情绪词、隐式情绪、上下文依赖和 appraisal 样本激活的特征是否不同，并寻找可能对应说话者状态、责任、确定性、威胁或目标受阻的候选特征。但 SAE 不会自动给出可靠机制解释：部分特征可能难以命名、错误合并或拆分概念，稀疏性与重构质量之间也存在权衡。只有当候选特征在未用于解释的样本上稳定响应，并且对其进行受控干预会选择性改变情绪预测时，才可提出较强结论。
+
 Anthropic 的 J-space 研究使用 Jacobian lens 识别与潜在可报告概念相关的共享内部表征。相关实验表明，这些表征可参与部分多步推理，但简单 sentiment classification 在移除 J-space 后仍能基本运行。这提示情绪任务可能同时存在两类路径：
 
 - 依赖显式情绪词或稳定模式的自动分类路径。
@@ -163,11 +167,13 @@ J-space 在本项目中首先作为研究动机和方法参考。除非后续确
 
 - 使用 layer-wise linear probe 检查情绪、appraisal 和上下文依赖信息在不同层的可解码性。
 - 使用最小对照样本改变责任、结果、确定性或目标一致性，同时尽量保持其余文本不变。
+- 在探针定位候选模型层后，优先寻找与该模型和层兼容的预训练 SAE；如无合适资源，再评估是否在受控语料上训练小规模 SAE。
+- 比较 SAE 特征在显式、隐式和上下文最小对照样本上的激活，并记录高激活样本、重构误差、平均稀疏度和无效特征比例。
 - 使用 activation patching、ablation 或 steering 检验候选表征是否影响最终标签。
 - 设置随机方向、无关概念和表层词汇控制，避免把一般扰动误认为情绪机制。
 - 仅在资源和实现条件允许时尝试 J-lens，不将其设为最低交付要求。
 
-线性探针只能说明信息可被读取，不能单独证明模型依赖该信息。因果表述必须建立在受控干预、选择性检查和重复实验之上。模型内部机制与人类认知之间的相似性也只能在任务、表征或算法层讨论，不能据此推断共同的生物实现。
+线性探针只能说明信息可被读取，SAE 特征的高激活样本也只能支持语义假设，两者都不能单独证明模型依赖该信息。因果表述必须建立在受控干预、选择性检查和重复实验之上。模型内部机制与人类认知之间的相似性也只能在任务、表征或算法层讨论，不能据此推断共同的生物实现。
 
 ### 7.5 下游系统演示
 
@@ -253,7 +259,7 @@ Accuracy 和 Weighted-F1 只作为补充，不单独用于支撑结论。
 | --- | --- | --- |
 | Must | 数据协议、简单基线、编码器基线、LLM 对照、完整指标、失败分析和可运行演示 | 必须完成 |
 | Should | 显式与隐式子集、分层探针和至少一组受控干预 | 研究深化 |
-| Could | J-lens、appraisal-aware 训练、复杂 chatbot 评价或 Agent 扩展 | 资源允许后开展 |
+| Could | SAE、J-lens、appraisal-aware 训练、复杂 chatbot 评价或 Agent 扩展 | 资源允许后开展 |
 
 主要风险及应对方式：
 
@@ -261,8 +267,9 @@ Accuracy 和 Weighted-F1 只作为补充，不单独用于支撑结论。
 - **标签一致性不足**：先做小规模双人标注，必要时降低标签粒度并保留 `unclear/other`。
 - **机制实验计算量过大**：优先选择 1B 至 3B 级开放模型和受控子集。
 - **探针结果被过度解释**：将 probe 与干预分开报告，不把可解码性写成模型实际使用。
+- **SAE 特征被过度解释**：同时报告重构质量、稀疏度、无效特征和反例，不把自动命名或少量高激活样本当作机制证据。
 - **复杂方法未超过基线**：保留完整负结果、控制实验和失败原因，不以隐藏实验换取漂亮指标。
-- **范围持续扩大**：在核心系统和基线未通过前，不开展 J-lens 或完整 Agent。
+- **范围持续扩大**：在核心系统和基线未通过前，不训练 SAE、不开展 J-lens 或完整 Agent。
 
 ## 12. 现实价值
 
@@ -315,3 +322,6 @@ Accuracy 和 Weighted-F1 只作为补充，不单独用于支撑结论。
 8. Yeo, G. C., and Jaidka, K. (2025). [Beyond Context to Cognitive Appraisal: Emotion Reasoning as a Theory of Mind Benchmark for Large Language Models](https://aclanthology.org/2025.findings-acl.1359/).
 9. Anthropic. (2026). [Emotion concepts and their function in a large language model](https://www.anthropic.com/research/emotion-concepts-function).
 10. Anthropic. (2026). [A global workspace in language models](https://www.anthropic.com/research/global-workspace).
+11. Cunningham, H., et al. (2023). [Sparse Autoencoders Find Highly Interpretable Features in Language Models](https://arxiv.org/abs/2309.08600).
+12. Bricken, T., et al. (2023). [Towards Monosemanticity: Decomposing Language Models With Dictionary Learning](https://transformer-circuits.pub/2023/monosemantic-features/index.html).
+13. Gao, L., et al. (2024). [Scaling and evaluating sparse autoencoders](https://cdn.openai.com/papers/sparse-autoencoders.pdf).
