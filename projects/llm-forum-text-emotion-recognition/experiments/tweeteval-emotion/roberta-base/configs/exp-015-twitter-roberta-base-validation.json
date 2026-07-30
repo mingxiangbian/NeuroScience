@@ -1,0 +1,117 @@
+{
+  "common_training": {
+    "gradient_accumulation_steps": 1,
+    "label_smoothing_factor": 0.0,
+    "learning_rate": 0.00002,
+    "logging_steps": 25,
+    "lr_scheduler_type": "linear",
+    "max_grad_norm": 1.0,
+    "num_train_epochs": 5,
+    "optim": "adamw_torch",
+    "per_device_eval_batch_size": 32,
+    "per_device_train_batch_size": 16,
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.01
+  },
+  "comparison": {
+    "experiment_id": "EXP-014",
+    "practical_improvement_threshold": 0.005,
+    "run_metadata": "experiments/tweeteval-emotion/roberta-base/runs/exp-014-optimized-roberta-validation/run.json",
+    "run_metadata_sha256": "5b7078105514328a0c049fda889cdc63d41eca8fda09134c5a97ead8ad41a2c0"
+  },
+  "data": {
+    "allowed_splits": [
+      "train",
+      "validation"
+    ],
+    "dataset": "TweetEval emotion",
+    "files": {
+      "mapping": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/mapping.txt",
+        "sha256": "656dea85d149716af96206ca19bec0d94e9dc6de3f5079f5c7c2a241ec76cadb"
+      },
+      "train_labels": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/train_labels.txt",
+        "sha256": "987e767d8679e18abdf7de37a6d2bcd0a40a296ddd704e8d515cf0e3033c8d9c"
+      },
+      "train_text": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/train_text.txt",
+        "sha256": "2c62f67aeb3eac1aea0e5a9c3d0f4bc337992581f3f858061786a1fb4d79d95e"
+      },
+      "validation_labels": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/val_labels.txt",
+        "sha256": "313730630160b7e0a6b4235b800c76683f4aeeb72d094eb69646630cd5cfe338"
+      },
+      "validation_text": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/val_text.txt",
+        "sha256": "e2e30c86b8cbb97944d6543aedc06eace3bb275cb2f381aba787b838b4f23ca5"
+      }
+    },
+    "label_mapping": {
+      "0": "anger",
+      "1": "joy",
+      "2": "optimism",
+      "3": "sadness"
+    },
+    "train_sample_count": 3257,
+    "upstream_commit": "4fbd22cd78421f05b1ecdb4fc5725bc7a7bd8f66",
+    "validation_sample_count": 374
+  },
+  "diagnose_train": true,
+  "experiment_id": "EXP-015",
+  "model": {
+    "local_snapshot": "models/twitter-roberta-base/snapshot",
+    "manifest": "models/twitter-roberta-base/manifest.json",
+    "manifest_sha256": "8de53639f979a947cb74c3165d42fb084315ba43544d68c7adc926414221b00f",
+    "repo_id": "cardiffnlp/twitter-roberta-base",
+    "revision": "cbb417e9647b51504caf68cbe1af6bbf56da06b7"
+  },
+  "model_variant_id": "twitter-roberta-base",
+  "preprocessing": {
+    "normalize_mentions_urls": false
+  },
+  "protocol": {
+    "path": "experiments/tweeteval-emotion/roberta-base/protocols/exp-015-twitter-roberta-base-validation.md"
+  },
+  "resource_budget": {
+    "api_cost_usd": 0,
+    "maximum_seed_runs": 3,
+    "maximum_wall_time_minutes": 120,
+    "retained_checkpoints": 3
+  },
+  "rq_id": "RQ-B3",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "selection": {
+    "checkpoint_metric": "validation Macro-F1",
+    "checkpoint_rule": "maximum validation Macro-F1; exact ties keep the earlier checkpoint",
+    "comparison_rule": "mean Macro-F1 minus EXP-014 mean Macro-F1 must be at least 0.005 for a practical domain-pretraining improvement claim",
+    "primary_metric": "mean validation Macro-F1 across seeds 42, 43, and 44",
+    "test_rule": "test remains sealed; no checkpoint is selected or evaluated on test"
+  },
+  "stage": "formal-twitter-domain-pretraining-comparison",
+  "tier": "Major",
+  "tokenization": {
+    "max_length": 128,
+    "padding": "dynamic",
+    "truncation": true
+  },
+  "training": {
+    "class_weighting": "none",
+    "gradient_accumulation_steps": 1,
+    "label_smoothing_factor": 0.05,
+    "learning_rate": 0.00002,
+    "logging_steps": 25,
+    "lr_scheduler_type": "linear",
+    "max_grad_norm": 1.0,
+    "num_train_epochs": 5,
+    "optim": "adamw_torch",
+    "per_device_eval_batch_size": 32,
+    "per_device_train_batch_size": 16,
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.01
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "accessed_splits": [],
+  "completed_at_utc": "2026-07-30T04:36:19.751763+00:00",
+  "completed_seed_count": 0,
+  "created_at_utc": "2026-07-30T04:36:19.311589+00:00",
+  "error": {
+    "message": "MPS is unavailable in this process",
+    "traceback": "Traceback (most recent call last):\n  File \"/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/tweeteval-emotion/roberta-base/train_finetune.py\", line 1126, in main\n    environment = assert_dependency_isolation()\n  File \"/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/tweeteval-emotion/roberta-base/train_finetune.py\", line 272, in assert_dependency_isolation\n    raise RuntimeError(\"MPS is unavailable in this process\")\nRuntimeError: MPS is unavailable in this process\n",
+    "type": "RuntimeError"
+  },
+  "experiment_id": "EXP-010",
+  "rq_id": "RQ-B2",
+  "stage": "train-validation",
+  "status": "Failed",
+  "test_split_accessed": false,
+  "tier": "Major",
+  "validation_split_accessed": false
+}

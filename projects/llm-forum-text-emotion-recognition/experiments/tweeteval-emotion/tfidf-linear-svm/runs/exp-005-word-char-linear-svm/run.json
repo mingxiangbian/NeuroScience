@@ -1,0 +1,273 @@
+{
+  "accessed_splits": [
+    "train",
+    "validation"
+  ],
+  "artifacts": {
+    "confusion_matrix_csv": {
+      "path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-005-word-char-linear-svm/confusion_matrix.csv",
+      "sha256": "37668f7de3e23297128ee308a12c441566c8a27bcfecedbc35c543377b0f5c6c"
+    },
+    "confusion_matrix_png": {
+      "path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-005-word-char-linear-svm/confusion_matrix.png",
+      "sha256": "27ebd6a5a78826a4385696c7709af34daf5fac1dad09819e267ec079696989c2"
+    },
+    "metadata": {
+      "path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-005-word-char-linear-svm/run.json"
+    },
+    "model": {
+      "path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-005-word-char-linear-svm/model.joblib",
+      "sha256": "bf3bf6e632ad2ba50fa033193cd8690238abf2ebbfd3b2cb58063686e9705b84"
+    },
+    "predictions": {
+      "path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-005-word-char-linear-svm/predictions.csv",
+      "sha256": "164cc1285293f0a6fbb43e25da10476fe0bab8b403b1f2f5e23f9c2c2da4d3b9"
+    },
+    "stdout_log": {
+      "path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-005-word-char-linear-svm/stdout.log"
+    }
+  },
+  "comparison": {
+    "accuracy_delta": 0.050802139037433136,
+    "baseline_accuracy": 0.6203208556149733,
+    "baseline_macro_f1": 0.565980574363182,
+    "experiment_id": "EXP-004",
+    "macro_f1_delta": 0.045885387836644975,
+    "practical_improvement_threshold": 0.005,
+    "primary_rule_passed": true,
+    "run_metadata": {
+      "path": "experiments/tweeteval-emotion/tfidf-logreg/runs/exp-004-balanced-validation/run.json",
+      "sha256": "54d31e751291b12456760c3518bd54abefdc46573d173e040f7445876eecb24b"
+    }
+  },
+  "created_at_utc": "2026-07-29T11:23:38.913370+00:00",
+  "data": {
+    "dataset": "TweetEval emotion",
+    "exact_duplicate_checks": {
+      "train_duplicate_rows": 25,
+      "train_validation_text_overlap": 0,
+      "validation_duplicate_rows": 0
+    },
+    "files_read": {
+      "mapping": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/mapping.txt",
+        "sha256": "656dea85d149716af96206ca19bec0d94e9dc6de3f5079f5c7c2a241ec76cadb"
+      },
+      "train_labels": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/train_labels.txt",
+        "sha256": "987e767d8679e18abdf7de37a6d2bcd0a40a296ddd704e8d515cf0e3033c8d9c"
+      },
+      "train_text": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/train_text.txt",
+        "sha256": "2c62f67aeb3eac1aea0e5a9c3d0f4bc337992581f3f858061786a1fb4d79d95e"
+      },
+      "validation_labels": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/val_labels.txt",
+        "sha256": "313730630160b7e0a6b4235b800c76683f4aeeb72d094eb69646630cd5cfe338"
+      },
+      "validation_text": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/val_text.txt",
+        "sha256": "e2e30c86b8cbb97944d6543aedc06eace3bb275cb2f381aba787b838b4f23ca5"
+      }
+    },
+    "label_mapping": {
+      "0": "anger",
+      "1": "joy",
+      "2": "optimism",
+      "3": "sadness"
+    },
+    "train_class_distribution": {
+      "0": 1400,
+      "1": 708,
+      "2": 294,
+      "3": 855
+    },
+    "train_sample_count": 3257,
+    "upstream_commit": "4fbd22cd78421f05b1ecdb4fc5725bc7a7bd8f66",
+    "validation_class_distribution": {
+      "0": 160,
+      "1": 97,
+      "2": 28,
+      "3": 89
+    },
+    "validation_sample_count": 374
+  },
+  "experiment_id": "EXP-005",
+  "invocation": [
+    "/Users/phoenix/miniconda3/envs/llm/bin/python",
+    "projects/llm-forum-text-emotion-recognition/experiments/tweeteval-emotion/tfidf-linear-svm/run_experiment.py"
+  ],
+  "metrics": {
+    "accuracy": 0.6711229946524064,
+    "confusion_matrix": {
+      "labels": [
+        "anger",
+        "joy",
+        "optimism",
+        "sadness"
+      ],
+      "orientation": "rows=true, columns=predicted",
+      "values": [
+        [
+          129,
+          13,
+          1,
+          17
+        ],
+        [
+          27,
+          54,
+          2,
+          14
+        ],
+        [
+          10,
+          4,
+          10,
+          4
+        ],
+        [
+          22,
+          5,
+          4,
+          58
+        ]
+      ]
+    },
+    "macro": {
+      "f1": 0.611865962199827,
+      "precision": 0.6521469341628932,
+      "recall": 0.5929448203322798
+    },
+    "per_class": {
+      "anger": {
+        "f1": 0.7413793103448276,
+        "label_id": 0,
+        "precision": 0.6861702127659575,
+        "recall": 0.80625,
+        "support": 160
+      },
+      "joy": {
+        "f1": 0.6242774566473989,
+        "label_id": 1,
+        "precision": 0.7105263157894737,
+        "recall": 0.5567010309278351,
+        "support": 97
+      },
+      "optimism": {
+        "f1": 0.4444444444444444,
+        "label_id": 2,
+        "precision": 0.5882352941176471,
+        "recall": 0.35714285714285715,
+        "support": 28
+      },
+      "sadness": {
+        "f1": 0.6373626373626373,
+        "label_id": 3,
+        "precision": 0.6236559139784946,
+        "recall": 0.651685393258427,
+        "support": 89
+      }
+    },
+    "primary": {
+      "name": "macro_f1",
+      "value": 0.611865962199827
+    },
+    "weighted": {
+      "f1": 0.6640249254537146,
+      "precision": 0.670278746667145,
+      "recall": 0.6711229946524064
+    }
+  },
+  "pipeline": {
+    "feature_union": {
+      "character_tfidf": {
+        "analyzer": "char",
+        "lowercase": true,
+        "min_df": 2,
+        "ngram_range": [
+          3,
+          5
+        ],
+        "norm": "l2",
+        "sublinear_tf": true,
+        "vocabulary_size": 60753
+      },
+      "combined_feature_count": 70639,
+      "weights": {
+        "character": 1.0,
+        "word": 1.0
+      },
+      "word_tfidf": {
+        "analyzer": "word",
+        "lowercase": true,
+        "min_df": 2,
+        "ngram_range": [
+          1,
+          2
+        ],
+        "norm": "l2",
+        "sublinear_tf": true,
+        "vocabulary_size": 9886
+      }
+    },
+    "linear_svc": {
+      "C": 1.0,
+      "class_weight": null,
+      "classes": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "coefficient_shape": [
+        4,
+        70639
+      ],
+      "convergence_warnings": [],
+      "dual": "auto",
+      "iterations": 54,
+      "loss": "squared_hinge",
+      "max_iter": 5000,
+      "penalty": "l2",
+      "random_state": 42,
+      "tol": 0.0001
+    }
+  },
+  "resource_budget": {
+    "actual_run_number": 1,
+    "api_cost_usd": 0,
+    "maximum_runs": 1,
+    "wall_time_minutes": 5
+  },
+  "rq_id": "RQ-B1",
+  "runtime": {
+    "architecture": "arm64",
+    "evaluation_seconds": 0.052692,
+    "executable": "/Users/phoenix/miniconda3/envs/llm/bin/python",
+    "fit_seconds": 0.512108,
+    "git": {
+      "branch": "main",
+      "commit": "c92b92db18dfe8ccd5368774532bb22019f7889a",
+      "dirty": true,
+      "dirty_path_count": 29
+    },
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "processor": "arm",
+    "python": "3.10.20",
+    "scikit_learn": "1.7.2",
+    "total_seconds": 0.779099,
+    "warnings": []
+  },
+  "source_alignment": {
+    "exact_reproduction": false,
+    "official_validation_macro_f1": 0.638,
+    "paper": "https://aclanthology.org/2020.findings-emnlp.148/",
+    "reason": "The paper and public repository do not disclose the complete n-gram and SVM hyperparameters.",
+    "shared_design": "word and character n-gram features with SVM"
+  },
+  "stage": "train-validation",
+  "status": "Completed",
+  "test_split_accessed": false,
+  "tier": "Major"
+}

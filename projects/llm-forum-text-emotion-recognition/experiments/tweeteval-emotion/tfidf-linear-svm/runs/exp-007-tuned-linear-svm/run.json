@@ -1,0 +1,276 @@
+{
+  "accessed_splits": [
+    "train",
+    "validation"
+  ],
+  "artifacts": {
+    "confusion_matrix_csv": {
+      "path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-007-tuned-linear-svm/confusion_matrix.csv",
+      "sha256": "ec693d490f9e17f742c6af3212262edefba9a1be82c0181610320e398b55cd4a"
+    },
+    "confusion_matrix_png": {
+      "path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-007-tuned-linear-svm/confusion_matrix.png",
+      "sha256": "aa5567180a04eeb68aa71e9a827c265cdfebcb25769f9183d2e2f13cad81a4cc"
+    },
+    "metadata": {
+      "path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-007-tuned-linear-svm/run.json"
+    },
+    "model": {
+      "path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-007-tuned-linear-svm/model.joblib",
+      "sha256": "c4744557448a5b6a3606c21b6ed655e45a19051058b3d1e7aa0d1d53ebca4590"
+    },
+    "predictions": {
+      "path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-007-tuned-linear-svm/predictions.csv",
+      "sha256": "139bfc7a91b2d2ef8a9eec92dd0dd09948fef35b25a04f22f96168aca2757cc8"
+    },
+    "stdout_log": {
+      "path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-007-tuned-linear-svm/stdout.log"
+    }
+  },
+  "comparison": {
+    "accuracy_delta": 0.005347593582887722,
+    "baseline_accuracy": 0.6711229946524064,
+    "baseline_macro_f1": 0.611865962199827,
+    "experiment_id": "EXP-005",
+    "macro_f1_delta": 0.010811943943867863,
+    "practical_improvement_threshold": 0.005,
+    "primary_rule_passed": true,
+    "run_metadata": {
+      "path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-005-word-char-linear-svm/run.json",
+      "sha256": "93c751d305a33c101f582c4239484ba0a8a6de5553e7bdada2ed264f60fe9d0f"
+    }
+  },
+  "created_at_utc": "2026-07-29T11:42:27.255388+00:00",
+  "data": {
+    "dataset": "TweetEval emotion",
+    "files_read": {
+      "mapping": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/mapping.txt",
+        "sha256": "656dea85d149716af96206ca19bec0d94e9dc6de3f5079f5c7c2a241ec76cadb"
+      },
+      "train_labels": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/train_labels.txt",
+        "sha256": "987e767d8679e18abdf7de37a6d2bcd0a40a296ddd704e8d515cf0e3033c8d9c"
+      },
+      "train_text": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/train_text.txt",
+        "sha256": "2c62f67aeb3eac1aea0e5a9c3d0f4bc337992581f3f858061786a1fb4d79d95e"
+      },
+      "validation_labels": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/val_labels.txt",
+        "sha256": "313730630160b7e0a6b4235b800c76683f4aeeb72d094eb69646630cd5cfe338"
+      },
+      "validation_text": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/val_text.txt",
+        "sha256": "e2e30c86b8cbb97944d6543aedc06eace3bb275cb2f381aba787b838b4f23ca5"
+      }
+    },
+    "label_mapping": {
+      "0": "anger",
+      "1": "joy",
+      "2": "optimism",
+      "3": "sadness"
+    },
+    "train_class_distribution": {
+      "0": 1400,
+      "1": 708,
+      "2": 294,
+      "3": 855
+    },
+    "train_sample_count": 3257,
+    "upstream_commit": "4fbd22cd78421f05b1ecdb4fc5725bc7a7bd8f66",
+    "validation_class_distribution": {
+      "0": 160,
+      "1": 97,
+      "2": 28,
+      "3": 89
+    },
+    "validation_sample_count": 374
+  },
+  "experiment_id": "EXP-007",
+  "interpretation_boundary": "Development validation confirmation; the untouched test split is required for the final generalization estimate.",
+  "invocation": [
+    "/Users/phoenix/miniconda3/envs/llm/bin/python",
+    "projects/llm-forum-text-emotion-recognition/experiments/tweeteval-emotion/tfidf-linear-svm/run_tuned_validation.py"
+  ],
+  "metrics": {
+    "accuracy": 0.6764705882352942,
+    "confusion_matrix": {
+      "labels": [
+        "anger",
+        "joy",
+        "optimism",
+        "sadness"
+      ],
+      "orientation": "rows=true, columns=predicted",
+      "values": [
+        [
+          128,
+          12,
+          4,
+          16
+        ],
+        [
+          24,
+          57,
+          3,
+          13
+        ],
+        [
+          8,
+          3,
+          13,
+          4
+        ],
+        [
+          17,
+          10,
+          7,
+          55
+        ]
+      ]
+    },
+    "macro": {
+      "f1": 0.6226779061436949,
+      "precision": 0.6311918186272258,
+      "recall": 0.6174730270887459
+    },
+    "per_class": {
+      "anger": {
+        "f1": 0.7596439169139466,
+        "label_id": 0,
+        "precision": 0.7231638418079096,
+        "recall": 0.8,
+        "support": 160
+      },
+      "joy": {
+        "f1": 0.6368715083798883,
+        "label_id": 1,
+        "precision": 0.6951219512195121,
+        "recall": 0.5876288659793815,
+        "support": 97
+      },
+      "optimism": {
+        "f1": 0.4727272727272727,
+        "label_id": 2,
+        "precision": 0.48148148148148145,
+        "recall": 0.4642857142857143,
+        "support": 28
+      },
+      "sadness": {
+        "f1": 0.6214689265536724,
+        "label_id": 3,
+        "precision": 0.625,
+        "recall": 0.6179775280898876,
+        "support": 89
+      }
+    },
+    "primary": {
+      "name": "macro_f1",
+      "value": 0.6226779061436949
+    },
+    "train_diagnostic": {
+      "accuracy": 0.9858765735339269,
+      "macro_f1": 0.9847133787631889
+    },
+    "weighted": {
+      "f1": 0.673440270370912,
+      "precision": 0.6744372337942238,
+      "recall": 0.6764705882352942
+    }
+  },
+  "pipeline": {
+    "feature_union": {
+      "character_tfidf": {
+        "min_df": 2,
+        "ngram_range": [
+          3,
+          6
+        ],
+        "vocabulary_size": 101826
+      },
+      "combined_feature_count": 111712,
+      "weights": {
+        "character": 1.0,
+        "word": 1.0
+      },
+      "word_tfidf": {
+        "min_df": 2,
+        "ngram_range": [
+          1,
+          2
+        ],
+        "vocabulary_size": 9886
+      }
+    },
+    "linear_svc": {
+      "C": 0.25,
+      "class_weight": "balanced",
+      "classes": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "coefficient_shape": [
+        4,
+        111712
+      ],
+      "convergence_warnings": [],
+      "dual": "auto",
+      "iterations": 32,
+      "loss": "squared_hinge",
+      "max_iter": 5000,
+      "penalty": "l2",
+      "random_state": 42,
+      "tol": 0.0001
+    }
+  },
+  "resource_budget": {
+    "actual_run_number": 1,
+    "api_cost_usd": 0,
+    "maximum_runs": 1,
+    "wall_time_minutes": 5
+  },
+  "rq_id": "RQ-B1",
+  "runtime": {
+    "architecture": "arm64",
+    "evaluation_seconds": 0.06931,
+    "executable": "/Users/phoenix/miniconda3/envs/llm/bin/python",
+    "fit_seconds": 0.563269,
+    "git": {
+      "branch": "main",
+      "commit": "c92b92db18dfe8ccd5368774532bb22019f7889a",
+      "dirty": true,
+      "dirty_path_count": 29
+    },
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.10.20",
+    "scikit_learn": "1.7.2",
+    "total_seconds": 1.20564,
+    "warnings": []
+  },
+  "selection": {
+    "config_path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-006-train-cv-tuning/best_config.json",
+    "config_sha256": "8ddb3e3a479ebb53de8cee25401ff792acff770a6e5a4cc8823352f03f4f475e",
+    "experiment_id": "EXP-006",
+    "selection_rule": "maximum mean 5-fold train-CV Macro-F1",
+    "train_cv_metrics": {
+      "mean_cv_accuracy": 0.7209130832226023,
+      "mean_cv_macro_f1": 0.6708514107166554,
+      "mean_train_accuracy": 0.989177197755659,
+      "mean_train_macro_f1": 0.9880962484912039,
+      "rank_macro_f1": 1,
+      "std_cv_accuracy": 0.010316058949958299,
+      "std_cv_macro_f1": 0.010909729903321013,
+      "std_train_accuracy": 0.0020796385509848207,
+      "std_train_macro_f1": 0.0017126161030288918
+    },
+    "tuning_metadata_path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-006-train-cv-tuning/run.json",
+    "tuning_metadata_sha256": "6dd3df4ee48db58c1febc51012076218a9f5b714bfe53a5d7478af1a9a62e8ab"
+  },
+  "stage": "train-validation",
+  "status": "Completed",
+  "test_split_accessed": false,
+  "tier": "Major"
+}

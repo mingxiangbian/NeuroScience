@@ -1,0 +1,155 @@
+{
+  "artifacts": {
+    "confusion_matrix_csv": {
+      "path": "experiments/tweeteval-emotion/tfidf-logreg/runs/exp-004-balanced-validation/confusion_matrix.csv",
+      "sha256": "81fc9630362d55ac98ce7b9b9c8b2d9e60d1b71b49234d0087fd879c3424ac62"
+    },
+    "confusion_matrix_png": {
+      "path": "experiments/tweeteval-emotion/tfidf-logreg/runs/exp-004-balanced-validation/confusion_matrix.png",
+      "sha256": "58ed572f2b4e6e76537d3eccfd1ad2923d88dd50a7c333d848a581a600b73b54"
+    },
+    "metadata": {
+      "path": "experiments/tweeteval-emotion/tfidf-logreg/runs/exp-004-balanced-validation/run.json"
+    },
+    "predictions": {
+      "path": "experiments/tweeteval-emotion/tfidf-logreg/runs/exp-004-balanced-validation/predictions.csv",
+      "sha256": "163e94e375408612a1e05cbf06e75c3645836921d88d0db62b1cbd9d042d5465"
+    }
+  },
+  "created_at_utc": "2026-07-29T10:34:20.113360+00:00",
+  "data": {
+    "dataset": "TweetEval emotion",
+    "files_read": {
+      "mapping": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/mapping.txt",
+        "sha256": "656dea85d149716af96206ca19bec0d94e9dc6de3f5079f5c7c2a241ec76cadb"
+      },
+      "validation_labels": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/val_labels.txt",
+        "sha256": "313730630160b7e0a6b4235b800c76683f4aeeb72d094eb69646630cd5cfe338"
+      },
+      "validation_text": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/val_text.txt",
+        "sha256": "e2e30c86b8cbb97944d6543aedc06eace3bb275cb2f381aba787b838b4f23ca5"
+      }
+    },
+    "label_mapping": {
+      "0": "anger",
+      "1": "joy",
+      "2": "optimism",
+      "3": "sadness"
+    },
+    "sample_count": 374,
+    "split": "validation",
+    "upstream_commit": "4fbd22cd78421f05b1ecdb4fc5725bc7a7bd8f66"
+  },
+  "experiment_id": "exp-004-balanced-validation",
+  "invocation": [
+    "/Users/phoenix/miniconda3/envs/llm/bin/python",
+    "projects/llm-forum-text-emotion-recognition/experiments/tweeteval-emotion/tfidf-logreg/validate.py",
+    "--model",
+    "projects/llm-forum-text-emotion-recognition/experiments/tweeteval-emotion/tfidf-logreg/runs/exp-003-balanced-train-only/model.joblib",
+    "--train-metadata",
+    "projects/llm-forum-text-emotion-recognition/experiments/tweeteval-emotion/tfidf-logreg/runs/exp-003-balanced-train-only/run.json",
+    "--output-dir",
+    "projects/llm-forum-text-emotion-recognition/experiments/tweeteval-emotion/tfidf-logreg/runs/exp-004-balanced-validation"
+  ],
+  "metrics": {
+    "accuracy": 0.6203208556149733,
+    "confusion_matrix": {
+      "labels": [
+        "anger",
+        "joy",
+        "optimism",
+        "sadness"
+      ],
+      "orientation": "rows=true, columns=predicted",
+      "values": [
+        [
+          114,
+          12,
+          17,
+          17
+        ],
+        [
+          22,
+          54,
+          9,
+          12
+        ],
+        [
+          5,
+          6,
+          15,
+          2
+        ],
+        [
+          16,
+          10,
+          14,
+          49
+        ]
+      ]
+    },
+    "macro": {
+      "f1": 0.565980574363182,
+      "precision": 0.5674696269436638,
+      "recall": 0.5888692785987324
+    },
+    "per_class": {
+      "anger": {
+        "f1": 0.7192429022082019,
+        "label_id": 0,
+        "precision": 0.7261146496815286,
+        "recall": 0.7125,
+        "support": 160
+      },
+      "joy": {
+        "f1": 0.6033519553072626,
+        "label_id": 1,
+        "precision": 0.6585365853658537,
+        "recall": 0.5567010309278351,
+        "support": 97
+      },
+      "optimism": {
+        "f1": 0.3614457831325301,
+        "label_id": 2,
+        "precision": 0.2727272727272727,
+        "recall": 0.5357142857142857,
+        "support": 28
+      },
+      "sadness": {
+        "f1": 0.5798816568047337,
+        "label_id": 3,
+        "precision": 0.6125,
+        "recall": 0.550561797752809,
+        "support": 89
+      }
+    },
+    "primary": {
+      "name": "macro_f1",
+      "value": 0.565980574363182
+    },
+    "weighted": {
+      "f1": 0.6292351695225907,
+      "precision": 0.6476076373419679,
+      "recall": 0.6203208556149733
+    }
+  },
+  "model": {
+    "path": "experiments/tweeteval-emotion/tfidf-logreg/runs/exp-003-balanced-train-only/model.joblib",
+    "sha256": "110d42029c387bba87311b7fc2c3d39121d37f61b3cf0af6bd8168a363005372",
+    "train_metadata_path": "experiments/tweeteval-emotion/tfidf-logreg/runs/exp-003-balanced-train-only/run.json",
+    "train_metadata_sha256": "a2f11dd63ed6111f019186543df04902c2ea5f5c56f741e03a3f4e9451470d97"
+  },
+  "parent_experiment_id": "exp-003-balanced-train-only",
+  "runtime": {
+    "evaluation_seconds": 0.011521,
+    "executable": "/Users/phoenix/miniconda3/envs/llm/bin/python",
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.10.20",
+    "scikit_learn": "1.7.2"
+  },
+  "stage": "validation",
+  "test_split_accessed": false
+}

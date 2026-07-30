@@ -1,0 +1,49 @@
+{
+  "accessed_splits_verified": [
+    "train",
+    "validation"
+  ],
+  "aggregate_metrics_recomputed": true,
+  "artifact_hashes_verified": true,
+  "created_at_utc": "2026-07-30T05:04:44.634757+00:00",
+  "experiment_id": "EXP-011",
+  "run_json_sha256": "8ca285f136ade51db62c387a45a34c3f89d4b31344863f43bbab5a4593b8dd7c",
+  "seed_checks": [
+    {
+      "history": {
+        "evaluation_record_count": 5,
+        "training_loss_record_count": 41
+      },
+      "model_sha256": "06693b7490ab70b5371be81d7c05a03cec404323a55929a03a16b7bb5fe37fb8",
+      "prediction_count": 374,
+      "seed": 42,
+      "validation_accuracy": 0.7967914438502673,
+      "validation_macro_f1": 0.7308975110645581
+    },
+    {
+      "history": {
+        "evaluation_record_count": 5,
+        "training_loss_record_count": 41
+      },
+      "model_sha256": "44218ec2649683f75a8681eb540d25fc6af0cc0ba88bc5e7210d5096d3525889",
+      "prediction_count": 374,
+      "seed": 43,
+      "validation_accuracy": 0.7887700534759359,
+      "validation_macro_f1": 0.7384839384968758
+    },
+    {
+      "history": {
+        "evaluation_record_count": 5,
+        "training_loss_record_count": 41
+      },
+      "model_sha256": "d011d647939f7e2c38263bc68583db0dd5646db379392ad9e9b76b1a63e06bc0",
+      "prediction_count": 374,
+      "seed": 44,
+      "validation_accuracy": 0.7914438502673797,
+      "validation_macro_f1": 0.7290301190411261
+    }
+  ],
+  "status": "Verified",
+  "test_split_accessed": false,
+  "validation_gold_hash_verified": true
+}

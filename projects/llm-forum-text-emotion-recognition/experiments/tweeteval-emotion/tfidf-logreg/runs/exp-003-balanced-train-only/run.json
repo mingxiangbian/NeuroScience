@@ -1,0 +1,95 @@
+{
+  "artifacts": {
+    "metadata": "experiments/tweeteval-emotion/tfidf-logreg/runs/exp-003-balanced-train-only/run.json",
+    "model": "experiments/tweeteval-emotion/tfidf-logreg/runs/exp-003-balanced-train-only/model.joblib"
+  },
+  "created_at_utc": "2026-07-29T10:28:07.778443+00:00",
+  "data": {
+    "class_distribution": {
+      "0": 1400,
+      "1": 708,
+      "2": 294,
+      "3": 855
+    },
+    "dataset": "TweetEval emotion",
+    "files_read": {
+      "mapping": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/mapping.txt",
+        "sha256": "656dea85d149716af96206ca19bec0d94e9dc6de3f5079f5c7c2a241ec76cadb"
+      },
+      "train_labels": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/train_labels.txt",
+        "sha256": "987e767d8679e18abdf7de37a6d2bcd0a40a296ddd704e8d515cf0e3033c8d9c"
+      },
+      "train_text": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/train_text.txt",
+        "sha256": "2c62f67aeb3eac1aea0e5a9c3d0f4bc337992581f3f858061786a1fb4d79d95e"
+      }
+    },
+    "label_mapping": {
+      "0": "anger",
+      "1": "joy",
+      "2": "optimism",
+      "3": "sadness"
+    },
+    "sample_count": 3257,
+    "split": "train",
+    "upstream_commit": "4fbd22cd78421f05b1ecdb4fc5725bc7a7bd8f66"
+  },
+  "evaluation_performed": false,
+  "experiment_id": "exp-003-balanced-train-only",
+  "invocation": [
+    "/Users/phoenix/miniconda3/envs/llm/bin/python",
+    "projects/llm-forum-text-emotion-recognition/experiments/tweeteval-emotion/tfidf-logreg/train.py",
+    "--class-weight",
+    "balanced",
+    "--output-dir",
+    "projects/llm-forum-text-emotion-recognition/experiments/tweeteval-emotion/tfidf-logreg/runs/exp-003-balanced-train-only"
+  ],
+  "pipeline": {
+    "logistic_regression": {
+      "C": 1.0,
+      "class_weight": "balanced",
+      "classes": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "coefficient_shape": [
+        4,
+        9886
+      ],
+      "effective_class_weights": {
+        "0": 0.5816071428571429,
+        "1": 1.1500706214689265,
+        "2": 2.7695578231292517,
+        "3": 0.9523391812865497
+      },
+      "iterations": [
+        37
+      ],
+      "max_iter": 1000,
+      "random_state": 42,
+      "solver": "lbfgs"
+    },
+    "tfidf": {
+      "lowercase": true,
+      "min_df": 2,
+      "ngram_range": [
+        1,
+        2
+      ],
+      "sublinear_tf": true,
+      "vocabulary_size": 9886
+    }
+  },
+  "runtime": {
+    "executable": "/Users/phoenix/miniconda3/envs/llm/bin/python",
+    "fit_seconds": 0.150382,
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.10.20",
+    "scikit_learn": "1.7.2"
+  },
+  "stage": "train-only"
+}

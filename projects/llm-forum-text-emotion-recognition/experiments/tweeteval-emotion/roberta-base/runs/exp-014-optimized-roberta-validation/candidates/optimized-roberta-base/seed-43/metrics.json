@@ -1,0 +1,174 @@
+{
+  "artifacts": {
+    "confusion_matrix": {
+      "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-014-optimized-roberta-validation/candidates/optimized-roberta-base/seed-43/confusion_matrix.csv",
+      "sha256": "dec76eaffc2fc73f88b649579286daa82db54c84bce9303d0f56348f3abb11df"
+    },
+    "history": {
+      "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-014-optimized-roberta-validation/candidates/optimized-roberta-base/seed-43/history.csv",
+      "sha256": "caf578206127f1a551da82252ec798ca73d350a728c77092505854f0e6e0c102"
+    },
+    "predictions": {
+      "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-014-optimized-roberta-validation/candidates/optimized-roberta-base/seed-43/predictions.csv",
+      "sha256": "08e235abdd5a11a83658c47d4d66e16b80b0b64ae2738a0bcff12d68eb43cfb6"
+    }
+  },
+  "best_checkpoint": {
+    "epoch": 4.0,
+    "global_step": 816,
+    "metric": "Macro-F1",
+    "metric_value": 0.7341356838719845,
+    "model_file": {
+      "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-014-optimized-roberta-validation/candidates/optimized-roberta-base/seed-43/checkpoints/checkpoint-816/model.safetensors",
+      "sha256": "ca6673f093ba8663a82087e00e5169cccc71a4e3097a327d90ab40a2e5e4183a"
+    },
+    "original_path": "experiments/tweeteval-emotion/roberta-base/runs/exp-014-optimized-roberta-validation/candidates/optimized-roberta-base/seed-43/checkpoints/checkpoint-816",
+    "retained": true
+  },
+  "candidate_id": "optimized-roberta-base",
+  "class_weighting": "none",
+  "parameter_count": 124648708,
+  "preprocessing": {
+    "normalize_mentions_urls": false,
+    "train": {
+      "changed_rows": 0,
+      "changed_tokens": 0
+    },
+    "validation": {
+      "changed_rows": 0,
+      "changed_tokens": 0
+    }
+  },
+  "runtime": {
+    "device": "mps",
+    "train_seconds": 453.455788457999,
+    "trainer_train_metrics": {
+      "epoch": 5.0,
+      "train_loss": 0.5638836831438775,
+      "train_runtime": 452.3165,
+      "train_samples_per_second": 36.004,
+      "train_steps_per_second": 2.255
+    }
+  },
+  "seed": 43,
+  "token_lengths": {
+    "train": {
+      "max": 162,
+      "mean": 26.783543137856924,
+      "median": 27.0,
+      "p95": 42.0,
+      "truncated_count": 1
+    },
+    "validation": {
+      "max": 75,
+      "mean": 27.302139037433154,
+      "median": 27.5,
+      "p95": 44.0,
+      "truncated_count": 0
+    }
+  },
+  "train_diagnostic": {
+    "accuracy": 0.9665336198956095,
+    "loss": 0.2895859479904175,
+    "macro": {
+      "f1": 0.9622301057171572,
+      "precision": 0.9703118137824822,
+      "recall": 0.9550411465508
+    },
+    "per_class": {
+      "anger": {
+        "f1": 0.9735262972114367,
+        "label_id": 0,
+        "precision": 0.9623168178646196,
+        "recall": 0.985,
+        "support": 1400
+      },
+      "joy": {
+        "f1": 0.9698668535388928,
+        "label_id": 1,
+        "precision": 0.9624478442280946,
+        "recall": 0.9774011299435028,
+        "support": 708
+      },
+      "optimism": {
+        "f1": 0.9469964664310954,
+        "label_id": 2,
+        "precision": 0.9852941176470589,
+        "recall": 0.9115646258503401,
+        "support": 294
+      },
+      "sadness": {
+        "f1": 0.9585308056872038,
+        "label_id": 3,
+        "precision": 0.9711884753901561,
+        "recall": 0.9461988304093567,
+        "support": 855
+      }
+    },
+    "weighted": {
+      "f1": 0.9663995543122041,
+      "precision": 0.9667483069606316,
+      "recall": 0.9665336198956095
+    }
+  },
+  "training": {
+    "class_weighting": "none",
+    "gradient_accumulation_steps": 1,
+    "label_smoothing_factor": 0.05,
+    "learning_rate": 2e-05,
+    "logging_steps": 25,
+    "lr_scheduler_type": "linear",
+    "max_grad_norm": 1.0,
+    "num_train_epochs": 5,
+    "optim": "adamw_torch",
+    "per_device_eval_batch_size": 32,
+    "per_device_train_batch_size": 16,
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.01
+  },
+  "validation": {
+    "accuracy": 0.7941176470588235,
+    "loss": 0.7955362796783447,
+    "macro": {
+      "f1": 0.7341356838719845,
+      "precision": 0.7577073811980932,
+      "recall": 0.7189843064817727
+    },
+    "per_class": {
+      "anger": {
+        "f1": 0.8580060422960725,
+        "label_id": 0,
+        "precision": 0.8304093567251462,
+        "recall": 0.8875,
+        "support": 160
+      },
+      "joy": {
+        "f1": 0.7897435897435897,
+        "label_id": 1,
+        "precision": 0.7857142857142857,
+        "recall": 0.7938144329896907,
+        "support": 97
+      },
+      "optimism": {
+        "f1": 0.5416666666666666,
+        "label_id": 2,
+        "precision": 0.65,
+        "recall": 0.4642857142857143,
+        "support": 28
+      },
+      "sadness": {
+        "f1": 0.7471264367816092,
+        "label_id": 3,
+        "precision": 0.7647058823529411,
+        "recall": 0.7303370786516854,
+        "support": 89
+      }
+    },
+    "weighted": {
+      "f1": 0.7902326591249457,
+      "precision": 0.789675417967168,
+      "recall": 0.7941176470588235
+    }
+  },
+  "warnings": []
+}

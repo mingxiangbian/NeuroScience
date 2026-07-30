@@ -1,0 +1,54 @@
+{
+  "condition_id": "exp-007-linear-svm",
+  "inference_seconds": 0.28258429100969806,
+  "metrics": {
+    "accuracy": 0.7009148486981,
+    "macro": {
+      "f1": 0.6469979241075925,
+      "precision": 0.6668059181425959,
+      "recall": 0.6355328146873636
+    },
+    "per_class": {
+      "anger": {
+        "f1": 0.7736156351791531,
+        "label_id": 0,
+        "precision": 0.7089552238805971,
+        "recall": 0.8512544802867383,
+        "support": 558
+      },
+      "joy": {
+        "f1": 0.6824925816023739,
+        "label_id": 1,
+        "precision": 0.7278481012658228,
+        "recall": 0.6424581005586593,
+        "support": 358
+      },
+      "optimism": {
+        "f1": 0.4642857142857143,
+        "label_id": 2,
+        "precision": 0.5148514851485149,
+        "recall": 0.42276422764227645,
+        "support": 123
+      },
+      "sadness": {
+        "f1": 0.6675977653631285,
+        "label_id": 3,
+        "precision": 0.7155688622754491,
+        "recall": 0.6256544502617801,
+        "support": 382
+      }
+    },
+    "weighted": {
+      "f1": 0.6953830808370692,
+      "precision": 0.6986915364117007,
+      "recall": 0.7009148486981
+    }
+  },
+  "model": {
+    "path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-007-tuned-linear-svm/model.joblib",
+    "sha256": "c4744557448a5b6a3606c21b6ed655e45a19051058b3d1e7aa0d1d53ebca4590"
+  },
+  "score_type": "LinearSVC decision function",
+  "seed": null,
+  "source_experiment_id": "EXP-007"
+}

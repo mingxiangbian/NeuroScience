@@ -1,0 +1,289 @@
+{
+  "authorization": {
+    "approved": true,
+    "approved_at_local_date": "2026-07-30",
+    "scope": "One formal test evaluation of every checkpoint/model listed in this config."
+  },
+  "conditions": [
+    {
+      "family": "traditional",
+      "id": "exp-007-linear-svm",
+      "model": {
+        "path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-007-tuned-linear-svm/model.joblib",
+        "sha256": "c4744557448a5b6a3606c21b6ed655e45a19051058b3d1e7aa0d1d53ebca4590"
+      },
+      "selection_basis": "EXP-006 train-only CV selected the hyperparameters; EXP-007 performed one frozen validation confirmation.",
+      "source_experiment_id": "EXP-007",
+      "source_run": {
+        "path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-007-tuned-linear-svm/run.json",
+        "sha256": "02b75009b580dfa5faf4170c9b14160e0c11b17f05c55ca2ecb6ec82e0848a7e"
+      },
+      "source_verification": {
+        "path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-007-tuned-linear-svm/verification.json",
+        "sha256": "648bfabf7973d06823c65f0277564edad0167005f6ac6ed4476a48835d92c6dc"
+      },
+      "type": "sklearn_joblib",
+      "validation": {
+        "macro_f1": 0.6226779061436949
+      }
+    },
+    {
+      "batch_size": 32,
+      "checkpoints": [
+        {
+          "metrics": {
+            "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-42/metrics.json",
+            "sha256": "2c40bb5dc24f67a4d47beefd470c1087d1e9d3310ae7ec96f38d665a25dd5aa0"
+          },
+          "model": {
+            "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-42/checkpoints/checkpoint-816/model.safetensors",
+            "sha256": "06693b7490ab70b5371be81d7c05a03cec404323a55929a03a16b7bb5fe37fb8"
+          },
+          "seed": 42
+        },
+        {
+          "metrics": {
+            "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-43/metrics.json",
+            "sha256": "00320dcf78e29a00b53443e69badf0356e9da6e8da8aecc377171b28c56616d7"
+          },
+          "model": {
+            "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-43/checkpoints/checkpoint-612/model.safetensors",
+            "sha256": "44218ec2649683f75a8681eb540d25fc6af0cc0ba88bc5e7210d5096d3525889"
+          },
+          "seed": 43
+        },
+        {
+          "metrics": {
+            "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-44/metrics.json",
+            "sha256": "794d87a49aab195c1f62bf1515c64d31ab22ab644316b16c42f535c02ac1fa5c"
+          },
+          "model": {
+            "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-44/checkpoints/checkpoint-1020/model.safetensors",
+            "sha256": "d011d647939f7e2c38263bc68583db0dd5646db379392ad9e9b76b1a63e06bc0"
+          },
+          "seed": 44
+        }
+      ],
+      "family": "neural",
+      "id": "exp-011-generic-roberta",
+      "max_length": 128,
+      "model_repo_id": "FacebookAI/roberta-base",
+      "preprocessing": "raw_text",
+      "selection_basis": "Best validation-Macro-F1 checkpoint was retained independently for each preregistered seed.",
+      "source_experiment_id": "EXP-011",
+      "source_run": {
+        "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/run.json",
+        "sha256": "8ca285f136ade51db62c387a45a34c3f89d4b31344863f43bbab5a4593b8dd7c"
+      },
+      "source_verification": {
+        "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/verification.json",
+        "sha256": "8431a510b37593057d2f190d589c44d792ba2f59ba69fc388716cd57bb07d82d"
+      },
+      "tokenizer_snapshot": "models/roberta-base/snapshot",
+      "type": "transformer_checkpoint_set",
+      "validation": {
+        "macro_f1_mean": 0.7328038562008533,
+        "macro_f1_sample_std": 0.005006924146567919
+      }
+    },
+    {
+      "batch_size": 32,
+      "checkpoints": [
+        {
+          "metrics": {
+            "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-014-optimized-roberta-validation/candidates/optimized-roberta-base/seed-42/metrics.json",
+            "sha256": "1773c453adf5189c532cf5c97073627e4c415ef9bdbeac23b898a1fbaea88d95"
+          },
+          "model": {
+            "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-014-optimized-roberta-validation/candidates/optimized-roberta-base/seed-42/checkpoints/checkpoint-612/model.safetensors",
+            "sha256": "a0e2027e8a6bf44cc8623d456775be14c93f28afb7f211c231ef1cc29a2fdbdd"
+          },
+          "seed": 42
+        },
+        {
+          "metrics": {
+            "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-014-optimized-roberta-validation/candidates/optimized-roberta-base/seed-43/metrics.json",
+            "sha256": "d05f16a2a96709791115546a65c8cd0b5b0b4173c3f5351cba1cf9351227113e"
+          },
+          "model": {
+            "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-014-optimized-roberta-validation/candidates/optimized-roberta-base/seed-43/checkpoints/checkpoint-816/model.safetensors",
+            "sha256": "ca6673f093ba8663a82087e00e5169cccc71a4e3097a327d90ab40a2e5e4183a"
+          },
+          "seed": 43
+        },
+        {
+          "metrics": {
+            "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-014-optimized-roberta-validation/candidates/optimized-roberta-base/seed-44/metrics.json",
+            "sha256": "8117bbccb1234b6bae5870967f23da374823cd3b19a3254987b4410b6d2b3438"
+          },
+          "model": {
+            "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-014-optimized-roberta-validation/candidates/optimized-roberta-base/seed-44/checkpoints/checkpoint-1020/model.safetensors",
+            "sha256": "b4bf295ad6f65cdca4ff1fba5edfc47fcb5196684fa1e6fdcf639df9d5b006a9"
+          },
+          "seed": 44
+        }
+      ],
+      "family": "neural",
+      "id": "exp-014-generic-roberta-label-smoothing",
+      "max_length": 128,
+      "model_repo_id": "FacebookAI/roberta-base",
+      "preprocessing": "raw_text",
+      "selection_basis": "EXP-012/013 train-only screening selected label smoothing 0.05; the best validation checkpoint was retained per seed in EXP-014.",
+      "source_experiment_id": "EXP-014",
+      "source_run": {
+        "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-014-optimized-roberta-validation/run.json",
+        "sha256": "5b7078105514328a0c049fda889cdc63d41eca8fda09134c5a97ead8ad41a2c0"
+      },
+      "source_verification": {
+        "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-014-optimized-roberta-validation/verification.json",
+        "sha256": "4537b7f1d13807ed24fd19986834b0b9fedaabaf71f9d51e4eb9dc29c0a632da"
+      },
+      "tokenizer_snapshot": "models/roberta-base/snapshot",
+      "type": "transformer_checkpoint_set",
+      "validation": {
+        "macro_f1_mean": 0.7402186466322782,
+        "macro_f1_sample_std": 0.005380589727534514
+      }
+    },
+    {
+      "batch_size": 32,
+      "checkpoints": [
+        {
+          "metrics": {
+            "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-015-twitter-roberta-base-validation/candidates/twitter-roberta-base/seed-42/metrics.json",
+            "sha256": "ccc800c8983811bf243d8d3c9443d90432f1e0c7b0f0f20f9f44afb5c3df4d56"
+          },
+          "model": {
+            "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-015-twitter-roberta-base-validation/candidates/twitter-roberta-base/seed-42/checkpoints/checkpoint-612/model.safetensors",
+            "sha256": "7cbba019b2af0d787ad6e16bc57a4f90de0ec19a51aa28aa36b8cb3932e68308"
+          },
+          "seed": 42
+        },
+        {
+          "metrics": {
+            "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-015-twitter-roberta-base-validation/candidates/twitter-roberta-base/seed-43/metrics.json",
+            "sha256": "b6c145d3329bc21ec8d00b754b03a1219844974d20b14d20a16f89b95bdee73e"
+          },
+          "model": {
+            "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-015-twitter-roberta-base-validation/candidates/twitter-roberta-base/seed-43/checkpoints/checkpoint-1020/model.safetensors",
+            "sha256": "2a33d46cd1d79ec9be18dffe3c66d25431954d3366368c73308225e9a880771a"
+          },
+          "seed": 43
+        },
+        {
+          "metrics": {
+            "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-015-twitter-roberta-base-validation/candidates/twitter-roberta-base/seed-44/metrics.json",
+            "sha256": "859e8ace848413026b8272ac0fa7d6c4339f416adbff085517e616adb3305cac"
+          },
+          "model": {
+            "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-015-twitter-roberta-base-validation/candidates/twitter-roberta-base/seed-44/checkpoints/checkpoint-612/model.safetensors",
+            "sha256": "ab4880d9fa2896954ad62e6189e85d429073fd127edb6f7155cab2f6c462b3a7"
+          },
+          "seed": 44
+        }
+      ],
+      "family": "neural",
+      "id": "exp-015-twitter-roberta-label-smoothing",
+      "max_length": 128,
+      "model_repo_id": "cardiffnlp/twitter-roberta-base",
+      "preprocessing": "raw_text",
+      "selection_basis": "EXP-015 changed only the base encoder from EXP-014; the best validation checkpoint was retained per seed.",
+      "source_experiment_id": "EXP-015",
+      "source_run": {
+        "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-015-twitter-roberta-base-validation/run.json",
+        "sha256": "c2289cc43c9ba9eca1cf2303c4f5261475155f83945028be23a809003c3da66f"
+      },
+      "source_verification": {
+        "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-015-twitter-roberta-base-validation/verification.json",
+        "sha256": "40c4d0c0dfb1bced0bcdf4df6cd81029424e05fe514f90010741a7b93e9b3c4e"
+      },
+      "tokenizer_snapshot": "models/twitter-roberta-base/snapshot",
+      "type": "transformer_checkpoint_set",
+      "validation": {
+        "macro_f1_mean": 0.7617550810819511,
+        "macro_f1_sample_std": 0.010579165889048723
+      }
+    }
+  ],
+  "data": {
+    "dataset": "TweetEval emotion",
+    "files": {
+      "mapping": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/mapping.txt",
+        "sha256": "656dea85d149716af96206ca19bec0d94e9dc6de3f5079f5c7c2a241ec76cadb"
+      },
+      "test_labels": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/test_labels.txt",
+        "sha256": "245072348c711961785be6d395997f97cf7fcda3effeae7805664171dc75f913"
+      },
+      "test_text": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/test_text.txt",
+        "sha256": "7e1070f5d3e3fcece5bc73680bff9981e90d8f7b2f1009bfe7a01d059d1c6091"
+      }
+    },
+    "label_mapping": {
+      "0": "anger",
+      "1": "joy",
+      "2": "optimism",
+      "3": "sadness"
+    },
+    "test_sample_count": 1421,
+    "upstream_commit": "4fbd22cd78421f05b1ecdb4fc5725bc7a7bd8f66"
+  },
+  "experiment_id": "EXP-016",
+  "external_references": {
+    "leaderboard": {
+      "path": "data/tweeteval-emotion/official/README.md",
+      "sha256": "cf91d41af5748a4a9eb6914327cdcc6585113c8c1caf16bc39a1b93500450b6b",
+      "test_macro_f1": {
+        "RoBERTa-Base": 0.761,
+        "RoBERTa-Retrained": 0.785,
+        "RoBERTa-Twitter": 0.72,
+        "SVM": 0.647
+      }
+    }
+  },
+  "metrics": {
+    "auxiliary": [
+      "accuracy",
+      "macro_precision",
+      "macro_recall",
+      "weighted_f1",
+      "per_class_precision_recall_f1",
+      "confusion_matrix"
+    ],
+    "primary": "test_macro_f1",
+    "probability_or_decision_scores": true
+  },
+  "output_dir": "experiments/tweeteval-emotion/test-gate/runs/exp-016-frozen-test",
+  "protocol": {
+    "path": "experiments/tweeteval-emotion/test-gate/protocols/exp-016-frozen-test.md"
+  },
+  "resource_budget": {
+    "api_cost_usd": 0,
+    "maximum_checkpoint_evaluations": 10,
+    "maximum_wall_time_minutes": 60
+  },
+  "rq_ids": [
+    "RQ-B1",
+    "RQ-B2",
+    "RQ-B3"
+  ],
+  "stage": "formal-frozen-test-gate",
+  "statistics": {
+    "deterministic_baseline": "single frozen result",
+    "neural_conditions": "mean and sample standard deviation across seeds 42, 43, and 44",
+    "paired_differences": [
+      "EXP-014 minus EXP-011 by seed",
+      "EXP-015 minus EXP-014 by seed"
+    ],
+    "practical_difference_threshold": 0.005
+  },
+  "test_policy": {
+    "allow_checkpoint_selection": false,
+    "allow_ensemble": false,
+    "allow_post_result_tuning": false,
+    "evaluate_every_listed_model_once": true
+  },
+  "tier": "Major"
+}

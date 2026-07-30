@@ -1,0 +1,166 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "artifacts": {
+    "best_config": {
+      "path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-006-train-cv-tuning/best_config.json",
+      "sha256": "8ddb3e3a479ebb53de8cee25401ff792acff770a6e5a4cc8823352f03f4f475e"
+    },
+    "cv_results": {
+      "path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-006-train-cv-tuning/cv_results.csv",
+      "sha256": "701e55c32ecee97f90b411bad3f37285d9d9a906f80e1a920ae230074e598f43"
+    },
+    "metadata": {
+      "path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-006-train-cv-tuning/run.json"
+    },
+    "stdout_log": {
+      "path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-006-train-cv-tuning/stdout.log"
+    }
+  },
+  "baseline_diagnostic": {
+    "experiment_id": "EXP-005",
+    "full_train_accuracy": 0.9969296898986798,
+    "full_train_macro_f1": 0.9976440799228387,
+    "metadata_path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-005-word-char-linear-svm/run.json",
+    "metadata_sha256": "93c751d305a33c101f582c4239484ba0a8a6de5553e7bdada2ed264f60fe9d0f",
+    "model_path": "experiments/tweeteval-emotion/tfidf-linear-svm/runs/exp-005-word-char-linear-svm/model.joblib",
+    "model_sha256": "bf3bf6e632ad2ba50fa033193cd8690238abf2ebbfd3b2cb58063686e9705b84",
+    "validation_accuracy": 0.6711229946524064,
+    "validation_macro_f1": 0.611865962199827
+  },
+  "created_at_utc": "2026-07-29T11:35:06.882007+00:00",
+  "data": {
+    "class_distribution": {
+      "0": 1400,
+      "1": 708,
+      "2": 294,
+      "3": 855
+    },
+    "dataset": "TweetEval emotion",
+    "files_read": {
+      "mapping": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/mapping.txt",
+        "sha256": "656dea85d149716af96206ca19bec0d94e9dc6de3f5079f5c7c2a241ec76cadb"
+      },
+      "train_labels": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/train_labels.txt",
+        "sha256": "987e767d8679e18abdf7de37a6d2bcd0a40a296ddd704e8d515cf0e3033c8d9c"
+      },
+      "train_text": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/train_text.txt",
+        "sha256": "2c62f67aeb3eac1aea0e5a9c3d0f4bc337992581f3f858061786a1fb4d79d95e"
+      }
+    },
+    "label_mapping": {
+      "0": "anger",
+      "1": "joy",
+      "2": "optimism",
+      "3": "sadness"
+    },
+    "sample_count": 3257,
+    "split": "train",
+    "upstream_commit": "4fbd22cd78421f05b1ecdb4fc5725bc7a7bd8f66"
+  },
+  "experiment_id": "EXP-006",
+  "invocation": [
+    "/Users/phoenix/miniconda3/envs/llm/bin/python",
+    "projects/llm-forum-text-emotion-recognition/experiments/tweeteval-emotion/tfidf-linear-svm/tune_train_cv.py"
+  ],
+  "question": "Can stronger regularization, class weighting, or a different character n-gram range reduce EXP-005 overfitting?",
+  "resource_budget": {
+    "api_cost_usd": 0,
+    "candidate_count": 30,
+    "search_runs": 1,
+    "total_cv_fits": 150,
+    "wall_time_minutes": 5
+  },
+  "rq_id": "RQ-B1",
+  "runtime": {
+    "architecture": "arm64",
+    "executable": "/Users/phoenix/miniconda3/envs/llm/bin/python",
+    "git": {
+      "branch": "main",
+      "commit": "c92b92db18dfe8ccd5368774532bb22019f7889a",
+      "dirty": true,
+      "dirty_path_count": 29
+    },
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.10.20",
+    "scikit_learn": "1.7.2",
+    "search_seconds": 101.625621,
+    "warnings": []
+  },
+  "search": {
+    "best": {
+      "mean_cv_accuracy": 0.7209130832226023,
+      "mean_cv_macro_f1": 0.6708514107166554,
+      "mean_train_accuracy": 0.989177197755659,
+      "mean_train_macro_f1": 0.9880962484912039,
+      "params": {
+        "C": 0.25,
+        "character_ngram_range": [
+          3,
+          6
+        ],
+        "class_weight": "balanced",
+        "min_df": 2,
+        "word_ngram_range": [
+          1,
+          2
+        ]
+      },
+      "rank_macro_f1": 1,
+      "selection_rule": "maximum mean 5-fold train-CV Macro-F1",
+      "std_cv_accuracy": 0.010316058949958299,
+      "std_cv_macro_f1": 0.010909729903321013,
+      "std_train_accuracy": 0.0020796385509848207,
+      "std_train_macro_f1": 0.0017126161030288918
+    },
+    "candidate_count": 30,
+    "folds": 5,
+    "parameter_grid": {
+      "C": [
+        0.05,
+        0.1,
+        0.25,
+        0.5,
+        1.0
+      ],
+      "character_ngram_range": [
+        [
+          3,
+          5
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          6
+        ]
+      ],
+      "class_weight": [
+        null,
+        "balanced"
+      ],
+      "fixed_min_df": 2,
+      "fixed_word_ngram_range": [
+        1,
+        2
+      ]
+    },
+    "primary_metric": "macro_f1",
+    "random_state": 42,
+    "secondary_metric": "accuracy",
+    "shuffle": true,
+    "splitter": "StratifiedKFold",
+    "total_cv_fits": 150
+  },
+  "stage": "train-only-cross-validation",
+  "status": "Completed",
+  "test_split_accessed": false,
+  "tier": "Minor",
+  "validation_split_accessed": false
+}

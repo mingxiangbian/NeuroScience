@@ -1,0 +1,890 @@
+{
+  "accessed_splits": [
+    "train",
+    "validation"
+  ],
+  "artifacts": {
+    "aggregate_metrics": {
+      "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/aggregate_metrics.json",
+      "sha256": "b8dc3d0e57fd5b26c0d7919f3a73c05d28d69af206060e9669d0ee71fc9e2f5b"
+    },
+    "config": {
+      "path": "experiments/tweeteval-emotion/roberta-base/configs/exp-011-roberta-base.json",
+      "sha256": "15ae9b0d5adcae9dd98519ba84a5ae1207fd00f89fab8b485a0b89d5a555901a"
+    },
+    "learning_curves": {
+      "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/learning_curves.png",
+      "sha256": "e5772fc93c745c8b18a4566245730bbc63f5189713817ec3ae91027bf2c76928"
+    },
+    "protocol": {
+      "path": "experiments/tweeteval-emotion/roberta-base/protocols/exp-011-roberta-base-finetuning.md",
+      "sha256": "c0e2d1f49b8e6f43381519a33c2ae4d2c6d0143546bf6825cc944130b881fd26"
+    },
+    "requirements_lock": {
+      "path": "experiments/tweeteval-emotion/roberta-base/requirements-lock.txt",
+      "sha256": "123e455840fb9e5e9230cd3eb7feda625a8819c4cd3dbf82b91068a7d60797fd"
+    },
+    "seed_summary": {
+      "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seed_summary.csv",
+      "sha256": "a1b17177b612c1428491c68d7fd7b57447ca8156d2c6399f8a26c76f33779ec7"
+    },
+    "stdout_log": {
+      "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/stdout.log"
+    },
+    "training_script": {
+      "path": "experiments/tweeteval-emotion/roberta-base/train_finetune.py",
+      "sha256": "d00eeccfb2bc1ce78e103899cf49cbfd24a34029524b6415b39132d06c0c0e67"
+    }
+  },
+  "comparison": {
+    "baseline_experiment_id": "EXP-007",
+    "baseline_validation_macro_f1": 0.6226779061436949,
+    "mean_macro_f1_delta": 0.11012595005715842,
+    "practical_improvement_passed": true,
+    "practical_improvement_threshold": 0.005
+  },
+  "completed_at_utc": "2026-07-30T05:02:46.228903+00:00",
+  "created_at_utc": "2026-07-30T04:39:35.157423+00:00",
+  "data": {
+    "dataset": "TweetEval emotion",
+    "exact_duplicate_checks": {
+      "train_duplicate_rows": 25,
+      "train_validation_text_overlap": 0,
+      "validation_duplicate_rows": 0
+    },
+    "files_read": {
+      "mapping": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/mapping.txt",
+        "sha256": "656dea85d149716af96206ca19bec0d94e9dc6de3f5079f5c7c2a241ec76cadb"
+      },
+      "train_labels": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/train_labels.txt",
+        "sha256": "987e767d8679e18abdf7de37a6d2bcd0a40a296ddd704e8d515cf0e3033c8d9c"
+      },
+      "train_text": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/train_text.txt",
+        "sha256": "2c62f67aeb3eac1aea0e5a9c3d0f4bc337992581f3f858061786a1fb4d79d95e"
+      },
+      "validation_labels": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/val_labels.txt",
+        "sha256": "313730630160b7e0a6b4235b800c76683f4aeeb72d094eb69646630cd5cfe338"
+      },
+      "validation_text": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/val_text.txt",
+        "sha256": "e2e30c86b8cbb97944d6543aedc06eace3bb275cb2f381aba787b838b4f23ca5"
+      }
+    },
+    "label_mapping": {
+      "0": "anger",
+      "1": "joy",
+      "2": "optimism",
+      "3": "sadness"
+    },
+    "token_lengths": {
+      "train": {
+        "max": 128,
+        "mean": 26.773104083512436,
+        "median": 27.0,
+        "p95": 42.0,
+        "truncated_count": 1
+      },
+      "validation": {
+        "max": 75,
+        "mean": 27.302139037433154,
+        "median": 27.5,
+        "p95": 44.0,
+        "truncated_count": 0
+      }
+    },
+    "train_class_distribution": {
+      "0": 1400,
+      "1": 708,
+      "2": 294,
+      "3": 855
+    },
+    "train_sample_count": 3257,
+    "upstream_commit": "4fbd22cd78421f05b1ecdb4fc5725bc7a7bd8f66",
+    "validation_class_distribution": {
+      "0": 160,
+      "1": 97,
+      "2": 28,
+      "3": 89
+    },
+    "validation_sample_count": 374
+  },
+  "environment_gate": {
+    "conda_prefix": "/Users/phoenix/miniconda3/envs/emotion-roberta",
+    "module_paths": {
+      "accelerate": "/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/accelerate/__init__.py",
+      "datasets": "/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/datasets/__init__.py",
+      "evaluate": "/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/evaluate/__init__.py",
+      "matplotlib": "/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/matplotlib/__init__.py",
+      "numpy": "/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/numpy/__init__.py",
+      "pandas": "/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/pandas/__init__.py",
+      "sklearn": "/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/sklearn/__init__.py",
+      "torch": "/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/torch/__init__.py",
+      "transformers": "/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/transformers/__init__.py"
+    },
+    "pip_check": "No broken requirements found.",
+    "pip_freeze_matches_lock": true,
+    "python_no_user_site": "1",
+    "requirements_lock": {
+      "path": "experiments/tweeteval-emotion/roberta-base/requirements-lock.txt",
+      "sha256": "123e455840fb9e5e9230cd3eb7feda625a8819c4cd3dbf82b91068a7d60797fd"
+    },
+    "runtime_package_count": 70,
+    "user_site": "/Users/phoenix/.local/lib/python3.10/site-packages",
+    "user_site_enabled": false
+  },
+  "experiment_id": "EXP-011",
+  "invocation": [
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python",
+    "projects/llm-forum-text-emotion-recognition/experiments/tweeteval-emotion/roberta-base/train_finetune.py"
+  ],
+  "model": {
+    "classification_head": "newly initialized independently for each seed",
+    "local_files_only": true,
+    "manifest": {
+      "path": "models/roberta-base/manifest.json",
+      "sha256": "b6e508ca9783b9e79e3cfc445f3abc7d2792ac5cfa6f44a9b3cf5d5607cd30b6"
+    },
+    "repo_id": "FacebookAI/roberta-base",
+    "revision": "e2da8e2f811d1448a5b465c236feacd80ffbac7b",
+    "snapshot_path": "models/roberta-base/snapshot",
+    "verified_snapshot_files": [
+      {
+        "bytes": 9079,
+        "path": "README.md",
+        "sha256": "139c5c5c8d734a8841928308cf7f083018aa5cc49f903c5199e3f1563b3ded51"
+      },
+      {
+        "bytes": 481,
+        "path": "config.json",
+        "sha256": "ef0185e2aae6e06c5f105a285006952c340e20c7dbf43c86ec82601b13fc45e9"
+      },
+      {
+        "bytes": 456318,
+        "path": "merges.txt",
+        "sha256": "1ce1664773c50f3e0cc8842619a93edc4624525b728b188a9e0be33b7726adc5"
+      },
+      {
+        "bytes": 498818054,
+        "path": "model.safetensors",
+        "sha256": "5bde1d28afb363d0103324efeb5afc8b2b397fe5e04beabb9b1ef355255ade81"
+      },
+      {
+        "bytes": 1355863,
+        "path": "tokenizer.json",
+        "sha256": "847bbeab6174d66a88898f729d52fa8d355fafe1bea101cf960dd404581df70e"
+      },
+      {
+        "bytes": 25,
+        "path": "tokenizer_config.json",
+        "sha256": "994f46754c5bf4014f1aa92d34b1374319c3a6b3f702105cd5b742beaecd18ce"
+      },
+      {
+        "bytes": 898823,
+        "path": "vocab.json",
+        "sha256": "9e7f63c2d15d666b52e21d250d2e513b87c9b713cfa6987a82ed89e5e6e50655"
+      }
+    ]
+  },
+  "resource_budget": {
+    "actual_seed_runs": 3,
+    "actual_total_seconds": 1391.2919492920046,
+    "api_cost_usd": 0,
+    "maximum_seed_runs": 3,
+    "maximum_wall_time_minutes": 120,
+    "retained_checkpoints_per_seed": 1
+  },
+  "rq_id": "RQ-B2",
+  "runtime": {
+    "architecture": "arm64",
+    "device": "mps",
+    "executable": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python",
+    "git": {
+      "branch": "main",
+      "commit": "c92b92db18dfe8ccd5368774532bb22019f7889a",
+      "dirty": true,
+      "dirty_path_count": 30
+    },
+    "mps_available": true,
+    "mps_built": true,
+    "packages": {
+      "accelerate": "1.13.0",
+      "datasets": "5.0.1",
+      "evaluate": "0.4.6",
+      "matplotlib": "3.10.7",
+      "numpy": "2.2.6",
+      "scikit_learn": "1.7.2",
+      "torch": "2.9.1",
+      "transformers": "5.8.0"
+    },
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.10.20",
+    "total_seconds": 1391.2919492920046
+  },
+  "seed_results": [
+    {
+      "artifacts": {
+        "confusion_matrix_csv": {
+          "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-42/confusion_matrix.csv",
+          "sha256": "ff02283fb85f2c416a61ebce9abffdb35638d814295c394208a9bb8351d96d60"
+        },
+        "confusion_matrix_png": {
+          "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-42/confusion_matrix.png",
+          "sha256": "769a263487d70ad934ef306f9be4a0a4a48d8497565e9a5f0554f50425a92cfd"
+        },
+        "history": {
+          "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-42/history.csv",
+          "sha256": "ebecff5df86a3ce9b86ddd5e68f6e3c4bdaf2b9c6cbf12ec7507644a15276a33"
+        },
+        "metrics": {
+          "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-42/metrics.json",
+          "sha256": "2c40bb5dc24f67a4d47beefd470c1087d1e9d3310ae7ec96f38d665a25dd5aa0"
+        },
+        "predictions": {
+          "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-42/predictions.csv",
+          "sha256": "6d5ae71654225c14fe02cbe614c70fecc4f63c3953729f005d65a785103e3888"
+        }
+      },
+      "best_checkpoint": {
+        "epoch": 4.0,
+        "global_step": 816,
+        "metric": "validation Macro-F1",
+        "metric_value": 0.7308975110645581,
+        "model_file": {
+          "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-42/checkpoints/checkpoint-816/model.safetensors",
+          "sha256": "06693b7490ab70b5371be81d7c05a03cec404323a55929a03a16b7bb5fe37fb8"
+        },
+        "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-42/checkpoints/checkpoint-816"
+      },
+      "parameter_count": 124648708,
+      "runtime": {
+        "device": "mps",
+        "train_seconds": 442.49139820900746,
+        "trainer_train_metrics": {
+          "epoch": 5.0,
+          "train_loss": 0.4622814330400205,
+          "train_runtime": 441.8347,
+          "train_samples_per_second": 36.858,
+          "train_steps_per_second": 2.309
+        }
+      },
+      "seed": 42,
+      "train_diagnostic": {
+        "accuracy": 0.9668406509057414,
+        "confusion_matrix": {
+          "labels": [
+            "anger",
+            "joy",
+            "optimism",
+            "sadness"
+          ],
+          "orientation": "rows=true, columns=predicted",
+          "values": [
+            [
+              1355,
+              1,
+              5,
+              39
+            ],
+            [
+              2,
+              687,
+              8,
+              11
+            ],
+            [
+              7,
+              4,
+              279,
+              4
+            ],
+            [
+              17,
+              5,
+              5,
+              828
+            ]
+          ]
+        },
+        "loss": 0.11933831870555878,
+        "macro": {
+          "f1": 0.962483967625676,
+          "precision": 0.9612488275750741,
+          "recall": 0.963899192594076
+        },
+        "per_class": {
+          "anger": {
+            "f1": 0.9744696152463143,
+            "label_id": 0,
+            "precision": 0.9811730629978277,
+            "recall": 0.9678571428571429,
+            "support": 1400
+          },
+          "joy": {
+            "f1": 0.9779359430604982,
+            "label_id": 1,
+            "precision": 0.9856527977044476,
+            "recall": 0.9703389830508474,
+            "support": 708
+          },
+          "optimism": {
+            "f1": 0.9441624365482234,
+            "label_id": 2,
+            "precision": 0.9393939393939394,
+            "recall": 0.9489795918367347,
+            "support": 294
+          },
+          "sadness": {
+            "f1": 0.9533678756476683,
+            "label_id": 3,
+            "precision": 0.9387755102040817,
+            "recall": 0.968421052631579,
+            "support": 855
+          }
+        },
+        "weighted": {
+          "f1": 0.9669479272507238,
+          "precision": 0.9672457317709595,
+          "recall": 0.9668406509057414
+        }
+      },
+      "validation": {
+        "accuracy": 0.7967914438502673,
+        "confusion_matrix": {
+          "labels": [
+            "anger",
+            "joy",
+            "optimism",
+            "sadness"
+          ],
+          "orientation": "rows=true, columns=predicted",
+          "values": [
+            [
+              140,
+              6,
+              5,
+              9
+            ],
+            [
+              9,
+              70,
+              6,
+              12
+            ],
+            [
+              1,
+              6,
+              15,
+              6
+            ],
+            [
+              6,
+              4,
+              6,
+              73
+            ]
+          ]
+        },
+        "loss": 0.7204625606536865,
+        "macro": {
+          "f1": 0.7308975110645581,
+          "precision": 0.7275348464519976,
+          "recall": 0.7381471223378729
+        },
+        "per_class": {
+          "anger": {
+            "f1": 0.8860759493670886,
+            "label_id": 0,
+            "precision": 0.8974358974358975,
+            "recall": 0.875,
+            "support": 160
+          },
+          "joy": {
+            "f1": 0.7650273224043715,
+            "label_id": 1,
+            "precision": 0.813953488372093,
+            "recall": 0.7216494845360825,
+            "support": 97
+          },
+          "optimism": {
+            "f1": 0.5,
+            "label_id": 2,
+            "precision": 0.46875,
+            "recall": 0.5357142857142857,
+            "support": 28
+          },
+          "sadness": {
+            "f1": 0.7724867724867724,
+            "label_id": 3,
+            "precision": 0.73,
+            "recall": 0.8202247191011236,
+            "support": 89
+          }
+        },
+        "weighted": {
+          "f1": 0.7987463233242806,
+          "precision": 0.8038455400049107,
+          "recall": 0.7967914438502673
+        }
+      },
+      "warnings": []
+    },
+    {
+      "artifacts": {
+        "confusion_matrix_csv": {
+          "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-43/confusion_matrix.csv",
+          "sha256": "b4dc7e782a0daae7b90719db193a8e5c5646d63926ba83890508e8ecd62aeb9b"
+        },
+        "confusion_matrix_png": {
+          "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-43/confusion_matrix.png",
+          "sha256": "a4d5edcbf40ec6733c6907dd7e5b950048406eb8fbaf6d29c0d8a9690287b474"
+        },
+        "history": {
+          "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-43/history.csv",
+          "sha256": "1d0d976bc2af3f54027adc673ea4fc19412b88605bcf57fe2efad5719e537a62"
+        },
+        "metrics": {
+          "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-43/metrics.json",
+          "sha256": "00320dcf78e29a00b53443e69badf0356e9da6e8da8aecc377171b28c56616d7"
+        },
+        "predictions": {
+          "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-43/predictions.csv",
+          "sha256": "37abf2562c7965dc2d99fd2b77b15fd6f96fd6dd3ec88efd3b3400889d3dd19d"
+        }
+      },
+      "best_checkpoint": {
+        "epoch": 3.0,
+        "global_step": 612,
+        "metric": "validation Macro-F1",
+        "metric_value": 0.7384839384968758,
+        "model_file": {
+          "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-43/checkpoints/checkpoint-612/model.safetensors",
+          "sha256": "44218ec2649683f75a8681eb540d25fc6af0cc0ba88bc5e7210d5096d3525889"
+        },
+        "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-43/checkpoints/checkpoint-612"
+      },
+      "parameter_count": 124648708,
+      "runtime": {
+        "device": "mps",
+        "train_seconds": 440.00423474999843,
+        "trainer_train_metrics": {
+          "epoch": 5.0,
+          "train_loss": 0.44472381063536104,
+          "train_runtime": 439.0021,
+          "train_samples_per_second": 37.095,
+          "train_steps_per_second": 2.323
+        }
+      },
+      "seed": 43,
+      "train_diagnostic": {
+        "accuracy": 0.9462695732268959,
+        "confusion_matrix": {
+          "labels": [
+            "anger",
+            "joy",
+            "optimism",
+            "sadness"
+          ],
+          "orientation": "rows=true, columns=predicted",
+          "values": [
+            [
+              1342,
+              7,
+              6,
+              45
+            ],
+            [
+              10,
+              670,
+              6,
+              22
+            ],
+            [
+              12,
+              4,
+              265,
+              13
+            ],
+            [
+              35,
+              6,
+              9,
+              805
+            ]
+          ]
+        },
+        "loss": 0.17415666580200195,
+        "macro": {
+          "f1": 0.9396419585733186,
+          "precision": 0.9426723222315755,
+          "recall": 0.936945031060298
+        },
+        "per_class": {
+          "anger": {
+            "f1": 0.9589138978206503,
+            "label_id": 0,
+            "precision": 0.9592566118656183,
+            "recall": 0.9585714285714285,
+            "support": 1400
+          },
+          "joy": {
+            "f1": 0.9605734767025089,
+            "label_id": 1,
+            "precision": 0.975254730713246,
+            "recall": 0.9463276836158192,
+            "support": 708
+          },
+          "optimism": {
+            "f1": 0.9137931034482759,
+            "label_id": 2,
+            "precision": 0.9265734265734266,
+            "recall": 0.9013605442176871,
+            "support": 294
+          },
+          "sadness": {
+            "f1": 0.9252873563218391,
+            "label_id": 3,
+            "precision": 0.9096045197740112,
+            "recall": 0.9415204678362573,
+            "support": 855
+          }
+        },
+        "weighted": {
+          "f1": 0.9463743753525491,
+          "precision": 0.9467497874658307,
+          "recall": 0.9462695732268959
+        }
+      },
+      "validation": {
+        "accuracy": 0.7887700534759359,
+        "confusion_matrix": {
+          "labels": [
+            "anger",
+            "joy",
+            "optimism",
+            "sadness"
+          ],
+          "orientation": "rows=true, columns=predicted",
+          "values": [
+            [
+              137,
+              5,
+              2,
+              16
+            ],
+            [
+              8,
+              68,
+              5,
+              16
+            ],
+            [
+              2,
+              3,
+              16,
+              7
+            ],
+            [
+              6,
+              5,
+              4,
+              74
+            ]
+          ]
+        },
+        "loss": 0.6752634644508362,
+        "macro": {
+          "f1": 0.7384839384968758,
+          "precision": 0.7455977146676436,
+          "recall": 0.7400425433552316
+        },
+        "per_class": {
+          "anger": {
+            "f1": 0.8753993610223643,
+            "label_id": 0,
+            "precision": 0.8954248366013072,
+            "recall": 0.85625,
+            "support": 160
+          },
+          "joy": {
+            "f1": 0.7640449438202247,
+            "label_id": 1,
+            "precision": 0.8395061728395061,
+            "recall": 0.7010309278350515,
+            "support": 97
+          },
+          "optimism": {
+            "f1": 0.5818181818181818,
+            "label_id": 2,
+            "precision": 0.5925925925925926,
+            "recall": 0.5714285714285714,
+            "support": 28
+          },
+          "sadness": {
+            "f1": 0.7326732673267327,
+            "label_id": 3,
+            "precision": 0.6548672566371682,
+            "recall": 0.8314606741573034,
+            "support": 89
+          }
+        },
+        "weighted": {
+          "f1": 0.7905750994575624,
+          "precision": 0.8010049493447641,
+          "recall": 0.7887700534759359
+        }
+      },
+      "warnings": []
+    },
+    {
+      "artifacts": {
+        "confusion_matrix_csv": {
+          "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-44/confusion_matrix.csv",
+          "sha256": "66cfe0cfaec19b262ce157371648be854af7e0314ed55466f6bfd7a785cd119d"
+        },
+        "confusion_matrix_png": {
+          "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-44/confusion_matrix.png",
+          "sha256": "4dfaf2595f872dbc32ec2f22fc66e0d8b5311f107ba7292644765efd05125bcd"
+        },
+        "history": {
+          "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-44/history.csv",
+          "sha256": "797ea5892ca651ca7889373c65784236a5e1d0856d277164b2044cf6f699765b"
+        },
+        "metrics": {
+          "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-44/metrics.json",
+          "sha256": "794d87a49aab195c1f62bf1515c64d31ab22ab644316b16c42f535c02ac1fa5c"
+        },
+        "predictions": {
+          "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-44/predictions.csv",
+          "sha256": "bb83df6296cec565fdefadf612149b76d14035d62761c7f072beb9037b53bb06"
+        }
+      },
+      "best_checkpoint": {
+        "epoch": 5.0,
+        "global_step": 1020,
+        "metric": "validation Macro-F1",
+        "metric_value": 0.7290301190411261,
+        "model_file": {
+          "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-44/checkpoints/checkpoint-1020/model.safetensors",
+          "sha256": "d011d647939f7e2c38263bc68583db0dd5646db379392ad9e9b76b1a63e06bc0"
+        },
+        "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-44/checkpoints/checkpoint-1020"
+      },
+      "parameter_count": 124648708,
+      "runtime": {
+        "device": "mps",
+        "train_seconds": 442.26964324999426,
+        "trainer_train_metrics": {
+          "epoch": 5.0,
+          "train_loss": 0.45422727734434837,
+          "train_runtime": 441.5026,
+          "train_samples_per_second": 36.885,
+          "train_steps_per_second": 2.31
+        }
+      },
+      "seed": 44,
+      "train_diagnostic": {
+        "accuracy": 0.9717531470678539,
+        "confusion_matrix": {
+          "labels": [
+            "anger",
+            "joy",
+            "optimism",
+            "sadness"
+          ],
+          "orientation": "rows=true, columns=predicted",
+          "values": [
+            [
+              1364,
+              4,
+              8,
+              24
+            ],
+            [
+              3,
+              693,
+              4,
+              8
+            ],
+            [
+              5,
+              7,
+              280,
+              2
+            ],
+            [
+              11,
+              10,
+              6,
+              828
+            ]
+          ]
+        },
+        "loss": 0.10225779563188553,
+        "macro": {
+          "f1": 0.9663348905699911,
+          "precision": 0.9642510362742891,
+          "recall": 0.9684753196550698
+        },
+        "per_class": {
+          "anger": {
+            "f1": 0.9802371541501976,
+            "label_id": 0,
+            "precision": 0.9862617498192335,
+            "recall": 0.9742857142857143,
+            "support": 1400
+          },
+          "joy": {
+            "f1": 0.9746835443037974,
+            "label_id": 1,
+            "precision": 0.9705882352941176,
+            "recall": 0.9788135593220338,
+            "support": 708
+          },
+          "optimism": {
+            "f1": 0.9459459459459459,
+            "label_id": 2,
+            "precision": 0.9395973154362416,
+            "recall": 0.9523809523809523,
+            "support": 294
+          },
+          "sadness": {
+            "f1": 0.9644729178800233,
+            "label_id": 3,
+            "precision": 0.9605568445475638,
+            "recall": 0.968421052631579,
+            "support": 855
+          }
+        },
+        "weighted": {
+          "f1": 0.9717962597706152,
+          "precision": 0.9718945757327555,
+          "recall": 0.9717531470678539
+        }
+      },
+      "validation": {
+        "accuracy": 0.7914438502673797,
+        "confusion_matrix": {
+          "labels": [
+            "anger",
+            "joy",
+            "optimism",
+            "sadness"
+          ],
+          "orientation": "rows=true, columns=predicted",
+          "values": [
+            [
+              139,
+              6,
+              7,
+              8
+            ],
+            [
+              7,
+              71,
+              6,
+              13
+            ],
+            [
+              2,
+              6,
+              16,
+              4
+            ],
+            [
+              8,
+              5,
+              6,
+              70
+            ]
+          ]
+        },
+        "loss": 0.8613933324813843,
+        "macro": {
+          "f1": 0.7290301190411261,
+          "precision": 0.7229571963124595,
+          "recall": 0.7396635470619385
+        },
+        "per_class": {
+          "anger": {
+            "f1": 0.879746835443038,
+            "label_id": 0,
+            "precision": 0.8910256410256411,
+            "recall": 0.86875,
+            "support": 160
+          },
+          "joy": {
+            "f1": 0.7675675675675676,
+            "label_id": 1,
+            "precision": 0.8068181818181818,
+            "recall": 0.7319587628865979,
+            "support": 97
+          },
+          "optimism": {
+            "f1": 0.5079365079365079,
+            "label_id": 2,
+            "precision": 0.45714285714285713,
+            "recall": 0.5714285714285714,
+            "support": 28
+          },
+          "sadness": {
+            "f1": 0.7608695652173914,
+            "label_id": 3,
+            "precision": 0.7368421052631579,
+            "recall": 0.7865168539325843,
+            "support": 89
+          }
+        },
+        "weighted": {
+          "f1": 0.794527169121685,
+          "precision": 0.8000118009863296,
+          "recall": 0.7914438502673797
+        }
+      },
+      "warnings": []
+    }
+  ],
+  "selection": {
+    "aggregate_primary": "mean validation Macro-F1 across all three seeds",
+    "checkpoint_metric": "validation Macro-F1",
+    "checkpoint_rule": "maximum validation Macro-F1; exact ties keep the earlier checkpoint",
+    "comparison_rule": "mean Macro-F1 minus EXP-007 Macro-F1 must be at least 0.005 for a practical improvement claim",
+    "test_candidates": "all three per-seed best checkpoints; no seed is selected using test"
+  },
+  "stage": "train-validation",
+  "status": "Completed",
+  "test_split_accessed": false,
+  "tier": "Major",
+  "training_config": {
+    "bf16": false,
+    "dataloader_num_workers": 0,
+    "dataloader_pin_memory": false,
+    "eval_strategy": "epoch",
+    "fp16": false,
+    "gradient_accumulation_steps": 1,
+    "label_smoothing_factor": 0.0,
+    "learning_rate": 2e-05,
+    "logging_first_step": true,
+    "logging_steps": 25,
+    "lr_scheduler_type": "linear",
+    "max_grad_norm": 1.0,
+    "num_train_epochs": 5,
+    "optim": "adamw_torch",
+    "per_device_eval_batch_size": 32,
+    "per_device_train_batch_size": 16,
+    "save_only_model": true,
+    "save_strategy": "epoch",
+    "save_total_limit": 1,
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.01
+  },
+  "validation_split_accessed": true
+}

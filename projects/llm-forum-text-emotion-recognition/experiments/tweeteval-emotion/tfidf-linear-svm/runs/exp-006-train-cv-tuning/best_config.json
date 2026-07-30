@@ -1,0 +1,25 @@
+{
+  "mean_cv_accuracy": 0.7209130832226023,
+  "mean_cv_macro_f1": 0.6708514107166554,
+  "mean_train_accuracy": 0.989177197755659,
+  "mean_train_macro_f1": 0.9880962484912039,
+  "params": {
+    "C": 0.25,
+    "character_ngram_range": [
+      3,
+      6
+    ],
+    "class_weight": "balanced",
+    "min_df": 2,
+    "word_ngram_range": [
+      1,
+      2
+    ]
+  },
+  "rank_macro_f1": 1,
+  "selection_rule": "maximum mean 5-fold train-CV Macro-F1",
+  "std_cv_accuracy": 0.010316058949958299,
+  "std_cv_macro_f1": 0.010909729903321013,
+  "std_train_accuracy": 0.0020796385509848207,
+  "std_train_macro_f1": 0.0017126161030288918
+}

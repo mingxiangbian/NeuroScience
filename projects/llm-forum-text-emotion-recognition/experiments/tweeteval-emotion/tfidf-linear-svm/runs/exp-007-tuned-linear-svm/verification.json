@@ -1,0 +1,23 @@
+{
+  "checks": {
+    "artifact_hashes_match": true,
+    "confusion_matrix_recomputed": true,
+    "decision_columns": 4,
+    "input_hashes_match": true,
+    "metrics_recomputed": true,
+    "official_validation_gold_exact_match": true,
+    "per_class_metrics_recomputed": true,
+    "prediction_rows": 374
+  },
+  "experiment_id": "EXP-007",
+  "predictions_sha256": "139bfc7a91b2d2ef8a9eec92dd0dd09948fef35b25a04f22f96168aca2757cc8",
+  "recomputed": {
+    "accuracy": 0.6764705882352942,
+    "macro_f1": 0.6226779061436949,
+    "weighted_f1": 0.673440270370912
+  },
+  "run_json_sha256": "02b75009b580dfa5faf4170c9b14160e0c11b17f05c55ca2ecb6ec82e0848a7e",
+  "scope": "Local independent validation metric and artifact verification; evidence remains Completed until durable commit or equivalent.",
+  "test_split_accessed": false,
+  "verified_at_utc": "2026-07-29T11:42:37.700820+00:00"
+}

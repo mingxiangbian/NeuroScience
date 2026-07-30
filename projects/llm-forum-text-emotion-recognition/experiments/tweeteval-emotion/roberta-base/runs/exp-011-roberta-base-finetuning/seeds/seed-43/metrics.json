@@ -1,0 +1,185 @@
+{
+  "best_checkpoint": {
+    "epoch": 3.0,
+    "global_step": 612,
+    "metric": "validation Macro-F1",
+    "metric_value": 0.7384839384968758,
+    "model_file": {
+      "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-43/checkpoints/checkpoint-612/model.safetensors",
+      "sha256": "44218ec2649683f75a8681eb540d25fc6af0cc0ba88bc5e7210d5096d3525889"
+    },
+    "path": "experiments/tweeteval-emotion/roberta-base/runs/exp-011-roberta-base-finetuning/seeds/seed-43/checkpoints/checkpoint-612"
+  },
+  "parameter_count": 124648708,
+  "runtime": {
+    "device": "mps",
+    "train_seconds": 440.00423474999843,
+    "trainer_train_metrics": {
+      "epoch": 5.0,
+      "train_loss": 0.44472381063536104,
+      "train_runtime": 439.0021,
+      "train_samples_per_second": 37.095,
+      "train_steps_per_second": 2.323
+    }
+  },
+  "seed": 43,
+  "train_diagnostic": {
+    "accuracy": 0.9462695732268959,
+    "confusion_matrix": {
+      "labels": [
+        "anger",
+        "joy",
+        "optimism",
+        "sadness"
+      ],
+      "orientation": "rows=true, columns=predicted",
+      "values": [
+        [
+          1342,
+          7,
+          6,
+          45
+        ],
+        [
+          10,
+          670,
+          6,
+          22
+        ],
+        [
+          12,
+          4,
+          265,
+          13
+        ],
+        [
+          35,
+          6,
+          9,
+          805
+        ]
+      ]
+    },
+    "loss": 0.17415666580200195,
+    "macro": {
+      "f1": 0.9396419585733186,
+      "precision": 0.9426723222315755,
+      "recall": 0.936945031060298
+    },
+    "per_class": {
+      "anger": {
+        "f1": 0.9589138978206503,
+        "label_id": 0,
+        "precision": 0.9592566118656183,
+        "recall": 0.9585714285714285,
+        "support": 1400
+      },
+      "joy": {
+        "f1": 0.9605734767025089,
+        "label_id": 1,
+        "precision": 0.975254730713246,
+        "recall": 0.9463276836158192,
+        "support": 708
+      },
+      "optimism": {
+        "f1": 0.9137931034482759,
+        "label_id": 2,
+        "precision": 0.9265734265734266,
+        "recall": 0.9013605442176871,
+        "support": 294
+      },
+      "sadness": {
+        "f1": 0.9252873563218391,
+        "label_id": 3,
+        "precision": 0.9096045197740112,
+        "recall": 0.9415204678362573,
+        "support": 855
+      }
+    },
+    "weighted": {
+      "f1": 0.9463743753525491,
+      "precision": 0.9467497874658307,
+      "recall": 0.9462695732268959
+    }
+  },
+  "validation": {
+    "accuracy": 0.7887700534759359,
+    "confusion_matrix": {
+      "labels": [
+        "anger",
+        "joy",
+        "optimism",
+        "sadness"
+      ],
+      "orientation": "rows=true, columns=predicted",
+      "values": [
+        [
+          137,
+          5,
+          2,
+          16
+        ],
+        [
+          8,
+          68,
+          5,
+          16
+        ],
+        [
+          2,
+          3,
+          16,
+          7
+        ],
+        [
+          6,
+          5,
+          4,
+          74
+        ]
+      ]
+    },
+    "loss": 0.6752634644508362,
+    "macro": {
+      "f1": 0.7384839384968758,
+      "precision": 0.7455977146676436,
+      "recall": 0.7400425433552316
+    },
+    "per_class": {
+      "anger": {
+        "f1": 0.8753993610223643,
+        "label_id": 0,
+        "precision": 0.8954248366013072,
+        "recall": 0.85625,
+        "support": 160
+      },
+      "joy": {
+        "f1": 0.7640449438202247,
+        "label_id": 1,
+        "precision": 0.8395061728395061,
+        "recall": 0.7010309278350515,
+        "support": 97
+      },
+      "optimism": {
+        "f1": 0.5818181818181818,
+        "label_id": 2,
+        "precision": 0.5925925925925926,
+        "recall": 0.5714285714285714,
+        "support": 28
+      },
+      "sadness": {
+        "f1": 0.7326732673267327,
+        "label_id": 3,
+        "precision": 0.6548672566371682,
+        "recall": 0.8314606741573034,
+        "support": 89
+      }
+    },
+    "weighted": {
+      "f1": 0.7905750994575624,
+      "precision": 0.8010049493447641,
+      "recall": 0.7887700534759359
+    }
+  },
+  "warnings": []
+}

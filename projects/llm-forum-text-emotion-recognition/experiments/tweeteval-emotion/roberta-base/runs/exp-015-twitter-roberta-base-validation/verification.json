@@ -1,0 +1,148 @@
+{
+  "accessed_splits_verified": [
+    "train",
+    "validation"
+  ],
+  "aggregate": {
+    "accuracy": {
+      "count": 3,
+      "mean": 0.8297682709447415,
+      "sample_std": 0.012349738378387702
+    },
+    "macro_f1": {
+      "count": 3,
+      "mean": 0.7617550810819512,
+      "sample_std": 0.010578963148175424
+    },
+    "macro_precision": {
+      "count": 3,
+      "mean": 0.7762391373200868,
+      "sample_std": 0.0050814592615271445
+    },
+    "macro_recall": {
+      "count": 3,
+      "mean": 0.752430716436928,
+      "sample_std": 0.018495956171070582
+    },
+    "per_class_f1": {
+      "anger": {
+        "count": 3,
+        "mean": 0.8913520198866071,
+        "sample_std": 0.010945823276229907
+      },
+      "joy": {
+        "count": 3,
+        "mean": 0.8379445882465727,
+        "sample_std": 0.01676970413534618
+      },
+      "optimism": {
+        "count": 3,
+        "mean": 0.5218356131135036,
+        "sample_std": 0.014870944478202431
+      },
+      "sadness": {
+        "count": 3,
+        "mean": 0.795888103081121,
+        "sample_std": 0.030732928026259584
+      }
+    },
+    "weighted_f1": {
+      "count": 3,
+      "mean": 0.82711868070367,
+      "sample_std": 0.014600639763047443
+    }
+  },
+  "artifact_hashes_verified": true,
+  "comparison": {
+    "matched_seed_improvement_count": 3,
+    "matched_seed_macro_f1_deltas": {
+      "42": 0.023810187942634342,
+      "43": 0.035437186818952915,
+      "44": 0.005361928587431453
+    },
+    "mean_macro_f1_delta": 0.021536434449672903,
+    "parent_experiment_id": "EXP-014",
+    "parent_run_sha256": "5b7078105514328a0c049fda889cdc63d41eca8fda09134c5a97ead8ad41a2c0",
+    "practical_improvement_passed": true
+  },
+  "created_at_utc": "2026-07-30T09:48:07.362132+00:00",
+  "data_file_checks": [
+    {
+      "name": "mapping",
+      "path": "data/tweeteval-emotion/official/datasets/emotion/mapping.txt",
+      "sha256": "656dea85d149716af96206ca19bec0d94e9dc6de3f5079f5c7c2a241ec76cadb"
+    },
+    {
+      "name": "train_labels",
+      "path": "data/tweeteval-emotion/official/datasets/emotion/train_labels.txt",
+      "sha256": "987e767d8679e18abdf7de37a6d2bcd0a40a296ddd704e8d515cf0e3033c8d9c"
+    },
+    {
+      "name": "train_text",
+      "path": "data/tweeteval-emotion/official/datasets/emotion/train_text.txt",
+      "sha256": "2c62f67aeb3eac1aea0e5a9c3d0f4bc337992581f3f858061786a1fb4d79d95e"
+    },
+    {
+      "name": "validation_labels",
+      "path": "data/tweeteval-emotion/official/datasets/emotion/val_labels.txt",
+      "sha256": "313730630160b7e0a6b4235b800c76683f4aeeb72d094eb69646630cd5cfe338"
+    },
+    {
+      "name": "validation_text",
+      "path": "data/tweeteval-emotion/official/datasets/emotion/val_text.txt",
+      "sha256": "e2e30c86b8cbb97944d6543aedc06eace3bb275cb2f381aba787b838b4f23ca5"
+    }
+  ],
+  "experiment_id": "EXP-015",
+  "model_check": {
+    "manifest_sha256": "8de53639f979a947cb74c3165d42fb084315ba43544d68c7adc926414221b00f",
+    "snapshot_file_count": 5
+  },
+  "run_json_sha256": "c2289cc43c9ba9eca1cf2303c4f5261475155f83945028be23a809003c3da66f",
+  "seed_checks": [
+    {
+      "best_epoch": 3.0,
+      "checkpoint_sha256": "7cbba019b2af0d787ad6e16bc57a4f90de0ec19a51aa28aa36b8cb3932e68308",
+      "history": {
+        "evaluation_record_count": 5,
+        "training_loss_record_count": 41
+      },
+      "prediction_count": 374,
+      "prediction_sha256": "341b0ad7a345eeed00fb6e08bf50ecafb7bd6fe27b8b2acd251a4b1c24cf40a8",
+      "probabilities_finite": true,
+      "seed": 42,
+      "validation_accuracy": 0.8368983957219251,
+      "validation_macro_f1": 0.7659749060728915
+    },
+    {
+      "best_epoch": 5.0,
+      "checkpoint_sha256": "2a33d46cd1d79ec9be18dffe3c66d25431954d3366368c73308225e9a880771a",
+      "history": {
+        "evaluation_record_count": 5,
+        "training_loss_record_count": 41
+      },
+      "prediction_count": 374,
+      "prediction_sha256": "744ad3c515a5adc3d56442981416f7a40f6445e7bb29d301f086fdb2e2943c41",
+      "probabilities_finite": true,
+      "seed": 43,
+      "validation_accuracy": 0.8368983957219251,
+      "validation_macro_f1": 0.7695728706909374
+    },
+    {
+      "best_epoch": 3.0,
+      "checkpoint_sha256": "ab4880d9fa2896954ad62e6189e85d429073fd127edb6f7155cab2f6c462b3a7",
+      "history": {
+        "evaluation_record_count": 5,
+        "training_loss_record_count": 41
+      },
+      "prediction_count": 374,
+      "prediction_sha256": "e02131345697baf1cfe4121eaa6365127736acc9e1ad94c35825b29f4eb28849",
+      "probabilities_finite": true,
+      "seed": 44,
+      "validation_accuracy": 0.8155080213903744,
+      "validation_macro_f1": 0.7497174664820244
+    }
+  ],
+  "status": "Verified",
+  "test_split_accessed": false
+}

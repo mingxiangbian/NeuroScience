@@ -1,0 +1,21 @@
+{
+  "accessed_splits": [
+    "train",
+    "validation"
+  ],
+  "completed_at_utc": "2026-07-30T04:29:43.299093+00:00",
+  "completed_seed_count": 0,
+  "created_at_utc": "2026-07-30T04:29:42.302187+00:00",
+  "error": {
+    "message": "'Tee' object has no attribute 'isatty'",
+    "traceback": "Traceback (most recent call last):\n  File \"/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/tweeteval-emotion/roberta-base/train_finetune.py\", line 1147, in main\n    result, history = run_seed(\n  File \"/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/tweeteval-emotion/roberta-base/train_finetune.py\", line 702, in run_seed\n    model = AutoModelForSequenceClassification.from_pretrained(\n  File \"/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py\", line 405, in from_pretrained\n    return model_class.from_pretrained(\n  File \"/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/transformers/modeling_utils.py\", line 4246, in from_pretrained\n    loading_info = cls._finalize_model_loading(model, load_config, loading_info)\n  File \"/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/transformers/modeling_utils.py\", line 4418, in _finalize_model_loading\n    log_state_dict_report(\n  File \"/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/transformers/utils/loading_report.py\", line 262, in log_state_dict_report\n    report = loading_info.create_loading_report()\n  File \"/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/transformers/utils/loading_report.py\", line 181, in create_loading_report\n    tips += f\"\\n- {_style('UNEXPECTED:', 'orange')}\\t\" + _style(\n  File \"/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/transformers/utils/loading_report.py\", line 123, in _style\n    if sys.stdout.isatty():\nAttributeError: 'Tee' object has no attribute 'isatty'\n",
+    "type": "AttributeError"
+  },
+  "experiment_id": "EXP-009",
+  "rq_id": "RQ-B2",
+  "stage": "train-validation",
+  "status": "Failed",
+  "test_split_accessed": false,
+  "tier": "Major",
+  "validation_split_accessed": true
+}

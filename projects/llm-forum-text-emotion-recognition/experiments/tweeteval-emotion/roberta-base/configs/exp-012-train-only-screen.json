@@ -1,0 +1,136 @@
+{
+  "common_training": {
+    "gradient_accumulation_steps": 1,
+    "label_smoothing_factor": 0.0,
+    "learning_rate": 0.00002,
+    "logging_steps": 25,
+    "lr_scheduler_type": "linear",
+    "max_grad_norm": 1.0,
+    "num_train_epochs": 5,
+    "optim": "adamw_torch",
+    "per_device_eval_batch_size": 32,
+    "per_device_train_batch_size": 16,
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.01
+  },
+  "data": {
+    "allowed_splits": [
+      "train"
+    ],
+    "dataset": "TweetEval emotion",
+    "files": {
+      "mapping": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/mapping.txt",
+        "sha256": "656dea85d149716af96206ca19bec0d94e9dc6de3f5079f5c7c2a241ec76cadb"
+      },
+      "train_labels": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/train_labels.txt",
+        "sha256": "987e767d8679e18abdf7de37a6d2bcd0a40a296ddd704e8d515cf0e3033c8d9c"
+      },
+      "train_text": {
+        "path": "data/tweeteval-emotion/official/datasets/emotion/train_text.txt",
+        "sha256": "2c62f67aeb3eac1aea0e5a9c3d0f4bc337992581f3f858061786a1fb4d79d95e"
+      }
+    },
+    "inner_split": {
+      "random_state": 20260730,
+      "validation_fraction": 0.15
+    },
+    "label_mapping": {
+      "0": "anger",
+      "1": "joy",
+      "2": "optimism",
+      "3": "sadness"
+    },
+    "train_sample_count": 3257,
+    "upstream_commit": "4fbd22cd78421f05b1ecdb4fc5725bc7a7bd8f66"
+  },
+  "diagnose_train": false,
+  "experiment_id": "EXP-012",
+  "model": {
+    "local_snapshot": "models/roberta-base/snapshot",
+    "manifest": "models/roberta-base/manifest.json",
+    "manifest_sha256": "b6e508ca9783b9e79e3cfc445f3abc7d2792ac5cfa6f44a9b3cf5d5607cd30b6",
+    "repo_id": "FacebookAI/roberta-base",
+    "revision": "e2da8e2f811d1448a5b465c236feacd80ffbac7b"
+  },
+  "resource_budget": {
+    "api_cost_usd": 0,
+    "maximum_seed_runs": 10,
+    "maximum_wall_time_minutes": 120,
+    "retained_checkpoints": 0
+  },
+  "rq_id": "RQ-B2",
+  "screening": {
+    "candidates": [
+      {
+        "complexity_rank": 0,
+        "description": "EXP-011 training settings without mention normalization",
+        "id": "A-current-raw",
+        "preprocessing": {
+          "normalize_mentions_urls": false
+        },
+        "training": {}
+      },
+      {
+        "complexity_rank": 1,
+        "description": "Published CardiffNLP learning rate, epoch count, and batch size",
+        "id": "B-published-raw",
+        "preprocessing": {
+          "normalize_mentions_urls": false
+        },
+        "training": {
+          "learning_rate": 0.00000816845589476017,
+          "num_train_epochs": 3,
+          "per_device_train_batch_size": 32
+        }
+      },
+      {
+        "complexity_rank": 1,
+        "description": "EXP-011 settings with CardiffNLP mention and URL normalization",
+        "id": "C-current-normalized",
+        "preprocessing": {
+          "normalize_mentions_urls": true
+        },
+        "training": {}
+      },
+      {
+        "complexity_rank": 2,
+        "description": "Published settings plus CardiffNLP mention and URL normalization",
+        "id": "D-published-normalized",
+        "preprocessing": {
+          "normalize_mentions_urls": true
+        },
+        "training": {
+          "learning_rate": 0.00000816845589476017,
+          "num_train_epochs": 3,
+          "per_device_train_batch_size": 32
+        }
+      }
+    ],
+    "confirmation_seeds": [
+      43,
+      44
+    ],
+    "control_candidate_id": "A-current-raw",
+    "promote_treatment_count": 2,
+    "round_one_seed": 42
+  },
+  "selection": {
+    "practical_improvement_threshold": 0.005,
+    "primary_metric": "mean inner-validation Macro-F1 over seeds 42, 43, and 44",
+    "promotion_rule": "Retain the control and the two best treatments from seed 42",
+    "winner_rule": "A treatment must improve mean Macro-F1 by at least 0.005 and beat the control in at least two matched seeds"
+  },
+  "source_notes": {
+    "published_hyperparameters": "https://huggingface.co/cardiffnlp/roberta-base-emotion/blob/main/best_run_hyperparameters.json",
+    "published_hyperparameters_retrieved_utc": "2026-07-30"
+  },
+  "stage": "train-only-inner-validation-screen",
+  "tier": "Minor",
+  "tokenization": {
+    "max_length": 128,
+    "padding": "dynamic",
+    "truncation": true
+  }
+}
