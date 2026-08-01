@@ -184,7 +184,7 @@ assert.match(unsafeSample.html, /class="hljs language-js"/, "supported code bloc
 assert.equal(manifest.at(-1)?.id, "zaji", "zaji should be appended last so row-reverse places it at the visual left edge");
 assert.equal(manifest.at(-1)?.folder, "zaji/", "projects directory should link 札记 to projects/zaji/");
 assert.match(projectsPage, /ZhiMangXing-Bookmark\.woff2\?v=20260719-zaji/, "projects directory should bust the old bookmark-font cache");
-assert.match(projectsPage, /@media \(min-width:\s*681px\) and \(max-width:\s*980px\)[\s\S]*?\.project-grid\s*\{[\s\S]*?flex-wrap:\s*nowrap/, "narrow desktop should keep five bookmarks on one row");
+assert.match(projectsPage, /@media \(min-width:\s*681px\) and \(max-width:\s*980px\)[\s\S]*?\.project-grid\s*\{[\s\S]*?flex-wrap:\s*nowrap/, "narrow desktop should keep project bookmarks on one row");
 
 assert.equal(packageJson.scripts["build:zaji"], "node projects/zaji/scripts/build-site.mjs", "package scripts should expose the Zaji builder");
 assert.equal(packageJson.scripts["test:zaji"], "node projects/zaji/scripts/build-site.mjs --check && node tests/zaji-site-requirements.mjs", "Zaji tests should first verify generated pages are current");

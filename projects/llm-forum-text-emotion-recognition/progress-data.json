@@ -1,0 +1,352 @@
+{
+  "schemaVersion": 1,
+  "project": {
+    "id": "llm-forum-text-emotion-recognition",
+    "directoryLabel": "情感与智能体",
+    "title": "论坛文本情感识别",
+    "englishTitle": "Forum Text Emotion Recognition",
+    "stage": "GoEmotions 本地 LLM 行为 2×2 已验证；EXP-028 matched frozen probe 已登记，正式运行待开始。",
+    "curatedAt": "2026-08-01",
+    "evidenceThrough": "2026-07-31",
+    "staleAfterDays": 45,
+    "scope": "静态研究进度与证据展示；不运行模型，不接收文本输入。"
+  },
+  "sources": {
+    "readme": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/README.md",
+    "evidenceLog": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md",
+    "roadmap": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/research-roadmap.md"
+  },
+  "researchQuestions": [
+    {
+      "id": "RQ-B1",
+      "anchor": "rq-b1",
+      "title": "传统下界",
+      "question": "Linear SVM 与受控调参能否建立可信的非神经网络下界？",
+      "status": "completed"
+    },
+    {
+      "id": "RQ-B2",
+      "anchor": "rq-b2",
+      "title": "编码器与调优",
+      "question": "RoBERTa 是否稳定超过传统基线，validation 改善能否泛化？",
+      "status": "completed"
+    },
+    {
+      "id": "RQ-B3",
+      "anchor": "rq-b3",
+      "title": "领域预训练",
+      "question": "Twitter-domain encoder 的收益能否在冻结 test 上保持？",
+      "status": "completed"
+    },
+    {
+      "id": "RQ-G1",
+      "anchor": "rq-g1",
+      "title": "多标签监督基线",
+      "question": "BERT 相对简单多标签基线增加了多少有效性能？",
+      "status": "completed"
+    },
+    {
+      "id": "RQ-G2",
+      "anchor": "rq-g2",
+      "title": "LLM 适配阶段",
+      "question": "Prompt、decoder、post-training 与后续 LoRA 分别改变了什么？",
+      "status": "active"
+    }
+  ],
+  "dependencyRoute": [
+    {
+      "label": "TweetEval 训练与 test gate",
+      "detail": "传统基线 → 通用 RoBERTa → Twitter-domain RoBERTa → 冻结错误分析",
+      "status": "verified",
+      "rq": "RQ-B1 · B2 · B3"
+    },
+    {
+      "label": "GoEmotions 监督下界",
+      "detail": "TF-IDF OVR 与 BERT-base-cased，固定 28 标签多标签 dev",
+      "status": "verified",
+      "rq": "RQ-G1"
+    },
+    {
+      "label": "Prompt × decoder 2×2",
+      "detail": "zero/few-shot × constrained/unconstrained，含格式、延迟与内存",
+      "status": "verified",
+      "rq": "RQ-G2"
+    },
+    {
+      "label": "Base / post-trained frozen probe",
+      "detail": "协议与零数据 preflight 已完成；正式 train/dev 运行待开始",
+      "status": "active",
+      "rq": "RQ-G2"
+    },
+    {
+      "label": "LoRA、上下文与系统",
+      "detail": "在 probe 之后推进；forum data 与 holdout 边界尚待确认",
+      "status": "planned",
+      "rq": "RQ-G2"
+    }
+  ],
+  "verifiedEvidence": {
+    "tweetEval": {
+      "label": "TweetEval emotion",
+      "evaluation": "Official test · 四分类单标签 · Macro-F1",
+      "gate": "EXP-016 Frozen Test Gate",
+      "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-016-frozen-formal-test-gate",
+      "models": [
+        {
+          "experiment": "EXP-007",
+          "label": "Linear SVM",
+          "value": 0.646998,
+          "std": null,
+          "rq": "RQ-B1",
+          "note": "传统非神经网络下界；单次确定性运行。"
+        },
+        {
+          "experiment": "EXP-011",
+          "label": "RoBERTa",
+          "value": 0.795761,
+          "std": 0.003298,
+          "rq": "RQ-B2",
+          "note": "通用 RoBERTa-base，三随机种子。"
+        },
+        {
+          "experiment": "EXP-014",
+          "label": "RoBERTa + LS",
+          "value": 0.792645,
+          "std": 0.003658,
+          "rq": "RQ-B2",
+          "note": "加入 label smoothing；test 未复现 validation 小幅收益。"
+        },
+        {
+          "experiment": "EXP-015",
+          "label": "Twitter RoBERTa + LS",
+          "value": 0.809973,
+          "std": 0.007038,
+          "rq": "RQ-B3",
+          "note": "Twitter-domain encoder；冻结 test 上的最强本地条件。"
+        }
+      ],
+      "findings": [
+        {
+          "status": "preserved",
+          "title": "负结果被保留",
+          "body": "EXP-014 − EXP-011 = −0.003116，2/3 seed 为负；label smoothing 的 validation 收益没有泛化。"
+        },
+        {
+          "status": "verified",
+          "title": "领域收益通过冻结门",
+          "body": "EXP-015 − EXP-014 = +0.017328，3/3 seed 提高；支持 Twitter-domain encoder 的收益。"
+        }
+      ],
+      "errorAnalysis": {
+        "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-017-frozen-test-error-analysis",
+        "metrics": [
+          {
+            "label": "稳定错误",
+            "value": "155",
+            "detail": "10.91% · 三个 seed 均错误"
+          },
+          {
+            "label": "seed 不稳定",
+            "value": "147",
+            "detail": "10.34% · 结果随初始化变化"
+          },
+          {
+            "label": "optimism 稳定错误率",
+            "value": "26.02%",
+            "detail": "四类中最高"
+          },
+          {
+            "label": "共享错误",
+            "value": "87",
+            "detail": "所有冻结条件共同判错"
+          }
+        ],
+        "boundary": "该分析只描述已消费 test 的错误结构，不用于继续调参或模型选择。"
+      }
+    },
+    "goEmotions": {
+      "label": "GoEmotions",
+      "evaluation": "DEV · 28 标签多标签 · Macro-F1",
+      "gate": "Official test 未获取，test gate 关闭",
+      "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-020-goemotions-bert-base-cased-three-seed-fine-tuning",
+      "models": [
+        {
+          "experiment": "EXP-018",
+          "label": "TF-IDF OVR",
+          "value": 0.203644,
+          "std": null,
+          "rq": "RQ-G1",
+          "note": "固定阈值 0.5 的简单多标签基线。",
+          "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-018-goemotions-tf-idf--one-vs-rest-logistic-regression"
+        },
+        {
+          "experiment": "EXP-025",
+          "label": "Qwen constrained few-shot",
+          "value": 0.241164,
+          "std": null,
+          "rq": "RQ-G2",
+          "note": "冻结 dev 规则下选定的生成式行为条件。",
+          "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-025-constrained-qwen3-17b-zerofew-shot"
+        },
+        {
+          "experiment": "EXP-020",
+          "label": "BERT-base-cased",
+          "value": 0.489435,
+          "std": 0.011063,
+          "rq": "RQ-G1",
+          "note": "三随机种子监督编码器基线；仅为 dev 结果。",
+          "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-020-goemotions-bert-base-cased-three-seed-fine-tuning"
+        }
+      ],
+      "longTail": {
+        "emptyPredictions": "3,261 / 5,426",
+        "emptyRate": "60.10%",
+        "zeroRecallLabels": [
+          "disappointment",
+          "grief",
+          "nervousness",
+          "pride",
+          "relief"
+        ],
+        "boundary": "EXP-018 与 EXP-020 使用不同冻结阈值，因此二者差值不是纯模型架构消融。"
+      },
+      "decoderMatrix": {
+        "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-026-matched-unconstrained-decoder-ablation",
+        "columns": [
+          "zero-shot",
+          "few-shot"
+        ],
+        "rows": [
+          {
+            "decoder": "constrained",
+            "cells": [
+              {
+                "experiment": "EXP-025",
+                "macroF1": 0.222998,
+                "parserValid": "99.9631%",
+                "medianLatency": "0.750 s",
+                "peakMemory": "3.61 GB"
+              },
+              {
+                "experiment": "EXP-025",
+                "macroF1": 0.241164,
+                "parserValid": "100%",
+                "medianLatency": "0.969 s",
+                "peakMemory": "3.66 GB"
+              }
+            ]
+          },
+          {
+            "decoder": "unconstrained",
+            "cells": [
+              {
+                "experiment": "EXP-026",
+                "macroF1": 0.2287,
+                "parserValid": "95.9823%",
+                "medianLatency": "0.686 s",
+                "peakMemory": "3.61 GB"
+              },
+              {
+                "experiment": "EXP-026",
+                "macroF1": 0.236465,
+                "parserValid": "90.7298%",
+                "medianLatency": "0.880 s",
+                "peakMemory": "3.66 GB"
+              }
+            ]
+          }
+        ],
+        "finding": "few-shot 中约束主要恢复 503 个无效输出；zero-shot 双方有效样本的标签集合仅 75.8164% 完全一致，decoder 不能笼统视为 label-neutral。"
+      }
+    }
+  },
+  "workingMargin": {
+    "nextAction": {
+      "status": "active",
+      "title": "正式执行 EXP-028 matched frozen probe",
+      "detail": "按冻结顺序完成 Base / post-trained 的 train/dev 特征抽取、真实 probe、3-seed label-shuffle 与独立 verifier；test 继续关闭。",
+      "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/research-roadmap.md#phase-4-local-llm-comparison-and-post-training-control"
+    },
+    "blockers": [
+      {
+        "status": "blocked",
+        "title": "论坛数据主线待确认",
+        "detail": "需要与导师确认主要数据是否可采用 GoEmotions，还是必须另采论坛数据并保留线程上下文；目标论坛、语言、授权、再分发、标签与线程结构尚未冻结。"
+      }
+    ],
+    "testGates": [
+      {
+        "label": "TweetEval",
+        "status": "verified",
+        "detail": "Frozen · Verified · Consumed"
+      },
+      {
+        "label": "GoEmotions",
+        "status": "preserved",
+        "detail": "Closed · official test unavailable"
+      },
+      {
+        "label": "Forum holdout",
+        "status": "planned",
+        "detail": "Undefined · split protocol pending"
+      }
+    ],
+    "recentChanges": [
+      {
+        "date": "2026-07-31",
+        "title": "EXP-025/026 decoder × prompt 2×2 验证完成"
+      },
+      {
+        "date": "2026-07-31",
+        "title": "EXP-018/020 GoEmotions dev 基线验证完成"
+      },
+      {
+        "date": "2026-07-30",
+        "title": "TweetEval frozen test gate 与错误分析完成"
+      }
+    ]
+  },
+  "futurePlan": [
+    {
+      "status": "active",
+      "label": "NOW",
+      "title": "EXP-028 frozen probe",
+      "detail": "先回答 Base 与 post-trained 表征在线性 readout 下是否存在可复核差异。"
+    },
+    {
+      "status": "planned",
+      "label": "NEXT",
+      "title": "Instruct LoRA",
+      "detail": "在同一 GoEmotions 任务上比较性能、稳定性、成本与延迟。"
+    },
+    {
+      "status": "blocked",
+      "label": "SCOPE GATE",
+      "title": "论坛数据与上下文",
+      "detail": "先冻结授权、标注和 thread-level split，再做上下文与鲁棒性实验。"
+    },
+    {
+      "status": "planned",
+      "label": "LATER",
+      "title": "系统、论文与归档",
+      "detail": "只在证据闭环后接入演示层；第一版页面不运行模型。"
+    }
+  ],
+  "privacy": {
+    "publicData": "本页正文与 progress-data.json 仅包含聚合指标、实验编号、状态与公开证据链接。",
+    "excluded": [
+      "原始 Tweet、Reddit 或论坛文本",
+      "用户名、comment ID 与可识别标识",
+      "私有错误案例与含原文日志",
+      "checkpoint、模型二进制与本地路径"
+    ]
+  },
+  "futureInterfaces": {
+    "inference": {
+      "status": "reserved",
+      "schemaVersion": 1,
+      "endpoint": null,
+      "note": "仅保留未来接入演示的资料接口；当前页面不渲染输入控件。"
+    }
+  }
+}

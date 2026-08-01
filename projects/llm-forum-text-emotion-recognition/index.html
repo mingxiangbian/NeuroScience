@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="论坛文本情感识别项目的研究问题、已验证证据、实验依赖、当前行动与测试边界。"
+    />
+    <title>论坛文本情感识别 | NeuroScience x AI</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='20' fill='%23f4efe3'/%3E%3Cpath fill='%231f2724' d='M39 12C22 21 14 34 14 49c0 16 9 29 25 35-8-13-10-25-5-36-5-10-3-22 5-36Z'/%3E%3Cpath fill='%231f2724' d='M57 12c17 9 25 22 25 37 0 16-9 29-25 35 8-13 10-25 5-36 5-10 3-22-5-36Z'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="progress.css" />
+    <noscript>
+      <style>
+        .skip-link,
+        #dashboard-root,
+        .state-summary,
+        #load-announcer {
+          display: none !important;
+        }
+      </style>
+    </noscript>
+  </head>
+  <body data-page="emotion-project-ledger">
+    <a class="skip-link" href="#project-story">跳到项目证据</a>
+
+    <div class="page-shell">
+      <nav class="top-nav" aria-label="项目导航">
+        <a class="back-link" href="../index.html">
+          <svg class="project-mark" viewBox="0 0 96 96" aria-hidden="true" focusable="false">
+            <path fill="currentColor" opacity="0.28" d="M39 10C22 19 13 34 13 49c0 17 10 32 28 39-9-15-12-29-7-40-5-10-3-24 5-38Z" />
+            <path fill="currentColor" d="M41 13C26 22 18 35 18 49c0 14 9 27 23 34-6-12-8-24-3-35-5-10-3-23 3-35Z" />
+            <path fill="currentColor" d="M55 13c15 9 23 22 23 36 0 14-9 27-23 34 6-12 8-24 3-35 5-10 3-23-3-35Z" />
+          </svg>
+          <span>返回项目</span>
+          <span aria-hidden="true">/</span>
+          <span class="directory-label">情感与智能体</span>
+        </a>
+
+        <div class="source-cluster" aria-label="项目原始资料">
+          <a
+            class="source-link"
+            href="https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/README.md"
+            target="_blank"
+            rel="noopener noreferrer"
+          >README</a>
+          <a
+            class="source-link"
+            href="https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Evidence Log</a>
+          <a
+            class="source-link"
+            href="https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/research-roadmap.md"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Roadmap</a>
+        </div>
+      </nav>
+
+      <header class="project-header">
+        <div>
+          <p class="eyebrow">Research Ledger · Emotion Recognition</p>
+          <h1>论坛文本情感识别</h1>
+          <p class="lede">
+            把研究问题、实验依赖与证据边界放在同一张工作台上。TweetEval 与
+            GoEmotions 始终分开呈现；只有通过证据门的数字才进入结果区。
+          </p>
+        </div>
+
+        <section class="state-summary" aria-labelledby="current-state-label">
+          <div id="current-state-label" class="state-label">Current state</div>
+          <p id="stage-copy" class="state-copy">正在读取项目状态……</p>
+          <p class="state-meta">
+            <span id="curated-date">页面数据读取中</span>
+            <span id="evidence-date"></span>
+          </p>
+          <p id="stale-note" class="stale-note" hidden></p>
+        </section>
+      </header>
+
+      <p id="load-announcer" class="sr-only" role="status" aria-live="polite">正在读取项目进度。</p>
+      <div id="dashboard-root" class="workspace" aria-busy="true">
+        <main id="project-story" class="load-state" aria-label="加载项目证据">
+          <p class="section-kicker">Loading evidence</p>
+          <h2>正在核对进度快照</h2>
+          <p>读取净化后的聚合数据，不加载原始文本、用户标识、模型或 checkpoint。</p>
+          <div class="loading-line" aria-hidden="true"></div>
+        </main>
+      </div>
+
+      <noscript>
+        <main class="load-state error-state">
+          <p class="section-kicker">JavaScript disabled</p>
+          <h2>当前浏览器未运行页面脚本</h2>
+          <p>仍可直接打开项目 README、证据台账和研究路线查看完整记录。</p>
+          <div class="fallback-links">
+            <a href="https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/README.md">打开 README</a>
+            <a href="https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md">打开 Evidence Log</a>
+            <a href="https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/research-roadmap.md">打开 Roadmap</a>
+          </div>
+        </main>
+      </noscript>
+    </div>
+
+    <script type="module" src="progress.js"></script>
+  </body>
+</html>

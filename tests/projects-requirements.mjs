@@ -9,6 +9,10 @@ const topicPageUrl = new URL("../projects/brain-memory-for-ai-agents/index.html"
 const foundationsPageUrl = new URL("../projects/foundations/index.html", import.meta.url);
 const financePageUrl = new URL("../projects/finance/index.html", import.meta.url);
 const zajiPageUrl = new URL("../projects/zaji/index.html", import.meta.url);
+const emotionPageUrl = new URL("../projects/llm-forum-text-emotion-recognition/index.html", import.meta.url);
+const emotionDataUrl = new URL("../projects/llm-forum-text-emotion-recognition/progress-data.json", import.meta.url);
+const emotionCssUrl = new URL("../projects/llm-forum-text-emotion-recognition/progress.css", import.meta.url);
+const emotionJsUrl = new URL("../projects/llm-forum-text-emotion-recognition/progress.js", import.meta.url);
 const foundationsReadmeUrl = new URL("../projects/foundations/README.md", import.meta.url);
 const foundationsPlannerUrl = new URL("../projects/foundations/multi-agent-planner.md", import.meta.url);
 const foundationsRoadmapUrl = new URL("../projects/foundations/llm-agent-engineer-roadmap.md", import.meta.url);
@@ -21,6 +25,10 @@ assert.equal(existsSync(topicPageUrl), true, "brain-memory-for-ai-agents should 
 assert.equal(existsSync(foundationsPageUrl), true, "foundations should expose a static project page");
 assert.equal(existsSync(financePageUrl), true, "finance should expose a static learning-reader page");
 assert.equal(existsSync(zajiPageUrl), true, "zaji should expose a static public notebook homepage");
+assert.equal(existsSync(emotionPageUrl), true, "forum emotion recognition should expose a static progress page");
+assert.equal(existsSync(emotionDataUrl), true, "forum emotion recognition should expose sanitized progress data");
+assert.equal(existsSync(emotionCssUrl), true, "forum emotion recognition should expose project-scoped styles");
+assert.equal(existsSync(emotionJsUrl), true, "forum emotion recognition should expose project-scoped rendering logic");
 assert.equal(existsSync(foundationsReadmeUrl), true, "foundations should include a README");
 assert.equal(existsSync(foundationsPlannerUrl), true, "foundations should include the reusable multi-agent planner");
 assert.equal(existsSync(foundationsRoadmapUrl), true, "foundations should include the LLM/Agent engineer roadmap");
@@ -32,6 +40,11 @@ const topicHtml = readFileSync(topicPageUrl, "utf8");
 const foundationsHtml = readFileSync(foundationsPageUrl, "utf8");
 const foundationsRoadmap = readFileSync(foundationsRoadmapUrl, "utf8");
 const fontSources = readFileSync(fontSourcesUrl, "utf8");
+const emotionHtml = readFileSync(emotionPageUrl, "utf8");
+const emotionDataText = readFileSync(emotionDataUrl, "utf8");
+const emotionData = JSON.parse(emotionDataText);
+const emotionCss = readFileSync(emotionCssUrl, "utf8");
+const emotionJs = readFileSync(emotionJsUrl, "utf8");
 const bookmarkFontCmap = execFileSync("ttx", ["-q", "-t", "cmap", "-o", "-", fileURLToPath(bookmarkFontUrl)], {
   encoding: "utf8",
 });
@@ -47,11 +60,16 @@ assert.match(projectsHtml, /\.project-card\[data-title-script="latin"\] h2\s*\{[
 assert.doesNotMatch(projectsHtml, /github\.com\/mingxiangbian\/NeuroScience\/tree\/main\/projects/i, "projects page should not send users to the GitHub folder listing");
 assert.deepEqual(
   manifest.map((project) => project.title),
-  ["基石", "语言", "记忆与智能体", "投资", "札记"],
+  ["基石", "语言", "记忆与智能体", "情感与智能体", "投资", "札记"],
   "projects bookmarks should include the registered project titles in display order",
 );
 assert.equal(manifest.find((project) => project.id === "finance")?.folder, "finance/", "finance should link to its reader page");
 assert.equal(manifest.find((project) => project.id === "zaji")?.folder, "zaji/", "zaji should link to its public notebook page");
+assert.equal(
+  manifest.find((project) => project.id === "llm-forum-text-emotion-recognition")?.folder,
+  "llm-forum-text-emotion-recognition/",
+  "emotion and agents should link to its project progress page",
+);
 assert.equal(
   manifest.find((project) => project.id === "ielts-academic")?.folder,
   "language/ielts-academic/",
@@ -71,6 +89,48 @@ for (const character of new Set(manifest.map((project) => project.title).join(""
     `bookmark font subset should contain the visible Chinese bookmark character ${character}`,
   );
 }
+
+assert.match(projectsHtml, /@media \(min-width:\s*681px\) and \(max-width:\s*980px\)[\s\S]*?\.project-card\s*\{[\s\S]*?flex:\s*1 1 0[\s\S]*?min-width:\s*0/, "narrow desktop bookmarks should shrink without horizontal overflow");
+assert.match(projectsHtml, /@media \(max-width:\s*680px\)[\s\S]*?\.project-grid\s*\{[\s\S]*?display:\s*grid[\s\S]*?grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/, "mobile project directory should arrange six bookmarks in two columns");
+
+assert.match(emotionHtml, /<title>论坛文本情感识别 \| NeuroScience x AI<\/title>/, "emotion project should use the approved page title");
+assert.match(emotionHtml, /data-page="emotion-project-ledger"/, "emotion project should identify its page surface");
+assert.match(emotionHtml, /href="\.\.\/index\.html"/, "emotion project should link back to the project directory");
+assert.match(emotionHtml, /progress-data\.json|progress\.js/, "emotion project should load its sanitized progress data renderer");
+assert.match(emotionHtml, /<noscript>[\s\S]*Evidence Log/, "emotion project should keep source links available without JavaScript");
+assert.equal(emotionData.schemaVersion, 1, "emotion progress data should use the supported schema");
+assert.equal(emotionData.project.directoryLabel, "情感与智能体", "emotion progress data should preserve the directory label");
+assert.equal(emotionData.project.title, "论坛文本情感识别", "emotion progress data should preserve the project title");
+assert.deepEqual(
+  emotionData.researchQuestions.map((question) => question.id),
+  ["RQ-B1", "RQ-B2", "RQ-B3", "RQ-G1", "RQ-G2"],
+  "emotion progress page should expose the frozen research-question registry",
+);
+assert.deepEqual(
+  emotionData.verifiedEvidence.tweetEval.models.map((model) => model.value),
+  [0.646998, 0.795761, 0.792645, 0.809973],
+  "TweetEval should expose only the EXP-016 verified test ladder",
+);
+assert.deepEqual(
+  emotionData.verifiedEvidence.goEmotions.models.map((model) => model.value),
+  [0.203644, 0.241164, 0.489435],
+  "GoEmotions should expose the verified dev baselines without mixing TweetEval scores",
+);
+assert.match(emotionData.verifiedEvidence.goEmotions.evaluation, /^DEV ·/, "GoEmotions results should be labeled as dev evidence");
+assert.match(emotionData.verifiedEvidence.goEmotions.gate, /test gate 关闭/, "GoEmotions should not imply official test access");
+assert.equal(emotionData.workingMargin.nextAction.title, "正式执行 EXP-028 matched frozen probe", "the page should use the current frozen-probe next action");
+assert.equal(emotionData.futureInterfaces.inference.endpoint, null, "the future model interface should remain architectural only in V1");
+assert.doesNotMatch(emotionDataText, /"raw(?:Text|Sample|Utterance)"\s*:/i, "public progress data should not contain raw-text fields");
+assert.match(emotionCss, /grid-template-columns:\s*minmax\(150px, 184px\)[\s\S]*minmax\(220px, 270px\)/, "desktop emotion page should use the approved three-column research layout");
+assert.match(emotionCss, /@media \(max-width:\s*560px\)[\s\S]*?\.working-margin\s*\{[\s\S]*?order:\s*2[\s\S]*?\.rq-rail\s*\{[\s\S]*?order:\s*0[\s\S]*?\.story\s*\{[\s\S]*?order:\s*1[\s\S]*?\.mobile-next-action\s*\{[\s\S]*?order:\s*-1/, "mobile emotion page should place only the next action before evidence navigation");
+assert.match(emotionCss, /@media \(max-width:\s*560px\)[\s\S]*?\.working-margin \.next-action\s*\{[\s\S]*?display:\s*none/, "mobile emotion page should not duplicate the next action inside the trailing research margin");
+assert.match(emotionJs, /renderNextAction\(data\.workingMargin\.nextAction,[\s\S]*renderResearchRail\(data\.researchQuestions,[\s\S]*renderStory\(data\)[\s\S]*renderWorkingMargin\(data\.workingMargin/, "mobile-first DOM order should remain next action, research questions, evidence story, then remaining margin");
+assert.match(emotionCss, /prefers-reduced-motion:\s*reduce/, "emotion page should respect reduced-motion preferences");
+assert.match(emotionJs, /暂无 Verified 证据/, "emotion page should render an explicit no-verified-evidence state");
+assert.match(emotionJs, /进度数据没有加载成功/, "emotion page should render a source-linked data error state");
+assert.match(emotionJs, /requestAnimationFrame/, "emotion page should throttle its research-question scroll state");
+assert.match(emotionJs, /aria-disabled="true"/, "emotion page should disable RQ anchors when their verified section is unavailable");
+assert.match(emotionHtml, /<noscript>[\s\S]*#dashboard-root[\s\S]*display:\s*none !important/, "emotion page should hide the permanent loading region when JavaScript is disabled");
 
 assert.match(topicHtml, /<title>Brain Memory for AI Agents \| NeuroScience x AI<\/title>/, "topic page should use the project title");
 assert.match(topicHtml, /data-page="project-topic"/, "project topic should identify itself as a topic page");

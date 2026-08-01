@@ -232,7 +232,7 @@
         flex-flow: row-reverse wrap;
         align-items: center;
         justify-content: flex-start;
-        gap: clamp(18px, 3vw, 32px);
+        gap: clamp(14px, 2vw, 26px);
         min-height: min(72vh, 560px);
       }
 
@@ -241,7 +241,7 @@
         position: relative;
         isolation: isolate;
         display: grid;
-        width: clamp(96px, 9vw, 124px);
+        width: clamp(90px, 8vw, 118px);
         height: clamp(360px, 62vh, 500px);
         place-items: stretch center;
         overflow: hidden;
@@ -433,13 +433,18 @@
 
         .project-grid {
           flex-wrap: nowrap;
-          gap: clamp(14px, 2.4vw, 28px);
+          gap: clamp(8px, 1.4vw, 14px);
           min-height: min(70vh, 540px);
         }
 
         .project-card {
-          width: clamp(86px, 10.5vw, 106px);
+          flex: 1 1 0;
+          width: auto;
+          min-width: 0;
+          max-width: 104px;
           height: clamp(360px, 62vh, 496px);
+          padding-right: 8px;
+          padding-left: 8px;
         }
 
         .project-card h2 {
@@ -496,18 +501,18 @@
         }
 
         .project-grid {
-          flex-direction: column;
-          flex-wrap: nowrap;
-          align-items: center;
-          justify-content: center;
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          width: min(100%, 360px);
           min-height: 0;
-          gap: 22px;
+          margin-inline: auto;
+          gap: 16px;
         }
 
         .project-card {
-          width: clamp(108px, 32vw, 132px);
-          height: clamp(360px, 58vh, 440px);
-          padding-top: 96px;
+          width: 100%;
+          height: clamp(264px, 72vw, 292px);
+          padding: 76px 10px 44px;
         }
 
         .project-card:nth-child(3n + 2),
@@ -516,7 +521,11 @@
         }
 
         .project-card h2 {
-          font-size: clamp(24px, 6.3vw, 29px);
+          font-size: clamp(23px, 6.3vw, 27px);
+        }
+
+        .project-card::before {
+          top: 48px;
         }
       }
 
@@ -546,7 +555,7 @@
         </section>
       </header>
 
-      <main aria-label="Research project modules">
+      <main aria-label="项目书签">
         <div id="project-empty" class="empty" hidden>还没有登记 research 项目。</div>
         <section id="project-grid" class="project-grid" aria-live="polite"></section>
       </main>
