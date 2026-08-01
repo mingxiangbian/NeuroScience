@@ -98,7 +98,7 @@ assert.match(emotionHtml, /data-page="emotion-project-ledger"/, "emotion project
 assert.match(emotionHtml, /href="\.\.\/index\.html"/, "emotion project should link back to the project directory");
 assert.match(emotionHtml, /progress-data\.json|progress\.js/, "emotion project should load its sanitized progress data renderer");
 assert.match(emotionHtml, /<noscript>[\s\S]*Evidence Log/, "emotion project should keep source links available without JavaScript");
-assert.equal(emotionData.schemaVersion, 1, "emotion progress data should use the supported schema");
+assert.equal(emotionData.schemaVersion, 2, "emotion progress data should use the observatory schema");
 assert.equal(emotionData.project.directoryLabel, "情感与智能体", "emotion progress data should preserve the directory label");
 assert.equal(emotionData.project.title, "论坛文本情感识别", "emotion progress data should preserve the project title");
 assert.deepEqual(
@@ -118,13 +118,103 @@ assert.deepEqual(
 );
 assert.match(emotionData.verifiedEvidence.goEmotions.evaluation, /^DEV ·/, "GoEmotions results should be labeled as dev evidence");
 assert.match(emotionData.verifiedEvidence.goEmotions.gate, /test gate 关闭/, "GoEmotions should not imply official test access");
-assert.equal(emotionData.workingMargin.nextAction.title, "正式执行 EXP-028 matched frozen probe", "the page should use the current frozen-probe next action");
+assert.deepEqual(
+  emotionData.activeEvidenceSpine.nodes.map((node) => node.kind),
+  ["research-question", "experiment", "evidence", "claim", "next"],
+  "the active evidence spine should keep the RQ-to-next semantic order",
+);
+assert.equal(emotionData.activeEvidenceSpine.nodes[0].ref, "RQ-G2", "the active spine should belong to the active LLM research question");
+assert.equal(emotionData.activeEvidenceSpine.nodes[1].ref, "EXP-028", "the active spine should preserve the failed probe identity");
+assert.equal(emotionData.activeEvidenceSpine.nodes[1].status, "failed", "EXP-028 should remain failed after crossing its frozen resource gate");
+assert.equal(emotionData.activeEvidenceSpine.nodes[2].status, "preserved", "the failed artifact audit should remain preserved rather than verified");
+assert.match(emotionData.activeEvidenceSpine.nodes[3].detail, /不能|尚无.*Verified/, "the active claim should state that no Verified probe conclusion exists");
+assert.notEqual(emotionData.activeEvidenceSpine.nodes[4].ref, "EXP-028", "the successor dependency must not reuse the failed experiment ID");
+assert.doesNotMatch(
+  emotionData.actionDock.nextAction.title,
+  /正式执行 EXP-028/,
+  "EXP-028 has already failed its frozen resource gate and must not remain the next run",
+);
+assert.match(
+  `${emotionData.actionDock.nextAction.title} ${emotionData.actionDock.nextAction.detail}`,
+  /新的 matched-probe|新实验编号|登记新的/,
+  "the next action should preserve EXP-028 and register a successor experiment",
+);
+assert.deepEqual(
+  emotionData.actionDock.testGates.map((gate) => gate.label),
+  ["TweetEval", "GoEmotions", "Forum holdout"],
+  "the action dock should keep all test gates visible before evidence",
+);
+assert.deepEqual(
+  emotionData.verifiedEvidence.tweetEval.comparisonContract,
+  {
+    split: "official-test",
+    taskType: "single-label",
+    labelCount: 4,
+    metric: "Macro-F1",
+    scale: [0, 1],
+    testGate: "consumed",
+    comparisonScope: "within-dataset-only",
+  },
+  "TweetEval should expose a machine-readable within-dataset comparison contract",
+);
+assert.deepEqual(
+  emotionData.verifiedEvidence.goEmotions.comparisonContract,
+  {
+    split: "dev",
+    taskType: "multi-label",
+    labelCount: 28,
+    metric: "Macro-F1",
+    scale: [0, 1],
+    testGate: "closed",
+    comparisonScope: "within-dataset-only",
+  },
+  "GoEmotions should expose a separate DEV-only comparison contract",
+);
+for (const dataset of [emotionData.verifiedEvidence.tweetEval, emotionData.verifiedEvidence.goEmotions]) {
+  const models = new Map(dataset.models.map((model) => [model.experiment, model]));
+  for (const model of dataset.models) {
+    assert.ok(model.uncertainty?.kind, `${model.experiment} should expose an uncertainty kind`);
+    assert.ok(model.uncertainty?.label, `${model.experiment} should expose a visible uncertainty label`);
+    if (model.uncertainty.kind === "sample-standard-deviation") {
+      assert.ok(model.uncertainty.runs >= 3, `${model.experiment} should not draw a sample SD from fewer than three runs`);
+      assert.ok(Number.isFinite(model.uncertainty.value), `${model.experiment} should expose a finite sample SD`);
+    }
+    if (model.comparison.baselineExperiment !== null) {
+      const baseline = models.get(model.comparison.baselineExperiment);
+      assert.ok(baseline, `${model.experiment} baseline should belong to the same dataset`);
+      assert.ok(
+        Math.abs(model.comparison.delta - (model.value - baseline.value)) < 1e-9,
+        `${model.experiment} delta should match its named baseline`,
+      );
+    }
+  }
+}
+assert.equal(emotionData.verifiedEvidence.tweetEval.models.find((model) => model.experiment === "EXP-014").comparison.delta, -0.003116, "label smoothing should keep its frozen negative delta");
+assert.equal(emotionData.verifiedEvidence.tweetEval.models.find((model) => model.experiment === "EXP-015").comparison.delta, 0.017328, "domain pretraining should keep its frozen positive delta");
+assert.equal(emotionData.verifiedEvidence.goEmotions.models.find((model) => model.experiment === "EXP-020").comparison.interpretation, "descriptive-only", "different GoEmotions thresholds should not be presented as a pure ablation");
+assert.doesNotMatch(
+  JSON.stringify(emotionData.verifiedEvidence),
+  /EXP-028|0\.310534|0\.306373/,
+  "failed EXP-028 diagnostics must not enter Verified evidence lanes",
+);
 assert.equal(emotionData.futureInterfaces.inference.endpoint, null, "the future model interface should remain architectural only in V1");
 assert.doesNotMatch(emotionDataText, /"raw(?:Text|Sample|Utterance)"\s*:/i, "public progress data should not contain raw-text fields");
-assert.match(emotionCss, /grid-template-columns:\s*minmax\(150px, 184px\)[\s\S]*minmax\(220px, 270px\)/, "desktop emotion page should use the approved three-column research layout");
-assert.match(emotionCss, /@media \(max-width:\s*560px\)[\s\S]*?\.working-margin\s*\{[\s\S]*?order:\s*2[\s\S]*?\.rq-rail\s*\{[\s\S]*?order:\s*0[\s\S]*?\.story\s*\{[\s\S]*?order:\s*1[\s\S]*?\.mobile-next-action\s*\{[\s\S]*?order:\s*-1/, "mobile emotion page should place only the next action before evidence navigation");
-assert.match(emotionCss, /@media \(max-width:\s*560px\)[\s\S]*?\.working-margin \.next-action\s*\{[\s\S]*?display:\s*none/, "mobile emotion page should not duplicate the next action inside the trailing research margin");
-assert.match(emotionJs, /renderNextAction\(data\.workingMargin\.nextAction,[\s\S]*renderResearchRail\(data\.researchQuestions,[\s\S]*renderStory\(data\)[\s\S]*renderWorkingMargin\(data\.workingMargin/, "mobile-first DOM order should remain next action, research questions, evidence story, then remaining margin");
+assert.match(emotionJs, /renderActionDock\(data\.actionDock\)[\s\S]*renderResearchRail\(data\.researchQuestions,[\s\S]*renderStory\(data\)/, "the single action dock should precede RQ navigation and evidence in DOM order");
+assert.doesNotMatch(emotionJs, /mobile-next-action|workingMargin/, "the observatory should not duplicate or split the action context");
+assert.match(emotionJs, /renderEvidenceSpine\(data\.activeEvidenceSpine\)/, "the observatory should render the explicit active evidence spine");
+assert.match(emotionJs, /aria-label="当前证据路径"/, "the active evidence spine should have an accessible label");
+assert.match(emotionJs, /renderComparisonContract\(tweetEval\.comparisonContract\)|renderComparisonContract\(goEmotions\.comparisonContract\)/, "each dataset lane should render its own comparison contract");
+assert.match(emotionJs, /metric-whisker/, "multi-seed results should render uncertainty whiskers");
+assert.match(emotionJs, /metric-dot/, "full-scale result rows should render point estimates");
+assert.match(emotionJs, /baselineExperiment/, "result rows should render named comparison baselines");
+assert.match(emotionJs, /0\.00[\s\S]*0\.25[\s\S]*0\.50[\s\S]*0\.75[\s\S]*1\.00/, "result lanes should preserve the full 0-to-1 scale");
+assert.match(emotionCss, /\.action-dock\s*\{[\s\S]*grid-template-columns:/, "desktop should expose the unified action dock before evidence");
+assert.match(emotionCss, /\.dataset-lanes\s*\{[\s\S]*grid-template-columns:\s*1fr/, "TweetEval and GoEmotions should remain vertically separated lanes");
+assert.doesNotMatch(emotionCss, /\.rq-rail\s*\{[^}]*overflow-x:\s*auto/, "RQ navigation should not hide questions behind horizontal scrolling");
+assert.doesNotMatch(emotionCss, /\.rq-list\s*\{[^}]*width:\s*max-content/, "RQ navigation should wrap within the viewport");
+const emotionMobileCss = emotionCss.slice(emotionCss.indexOf("@media (max-width: 600px)"));
+assert.match(emotionMobileCss, /\.action-dock\s*\{[\s\S]*grid-template-columns:\s*1fr/, "mobile should keep the complete action dock in one visible column");
+assert.match(emotionMobileCss, /\.rq-list\s*\{[\s\S]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/, "mobile should wrap all research questions into two visible columns");
 assert.match(emotionCss, /prefers-reduced-motion:\s*reduce/, "emotion page should respect reduced-motion preferences");
 assert.match(emotionJs, /暂无 Verified 证据/, "emotion page should render an explicit no-verified-evidence state");
 assert.match(emotionJs, /进度数据没有加载成功/, "emotion page should render a source-linked data error state");

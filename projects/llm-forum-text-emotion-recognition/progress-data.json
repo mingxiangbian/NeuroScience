@@ -1,13 +1,13 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "project": {
     "id": "llm-forum-text-emotion-recognition",
     "directoryLabel": "情感与智能体",
     "title": "论坛文本情感识别",
     "englishTitle": "Forum Text Emotion Recognition",
-    "stage": "GoEmotions 本地 LLM 行为 2×2 已验证；EXP-028 matched frozen probe 已登记，正式运行待开始。",
+    "stage": "GoEmotions 本地 LLM 行为 2×2 已验证；EXP-028 因超过冻结资源门而失败，后续正式 probe 待登记新编号。",
     "curatedAt": "2026-08-01",
-    "evidenceThrough": "2026-07-31",
+    "evidenceThrough": "2026-08-01",
     "staleAfterDays": 45,
     "scope": "静态研究进度与证据展示；不运行模型，不接收文本输入。"
   },
@@ -53,6 +53,54 @@
       "status": "active"
     }
   ],
+  "activeEvidenceSpine": {
+    "title": "RQ-G2 · 表征证据恢复路径",
+    "summary": "当前路径只表达 EXP-028 失败后的证据边界与恢复依赖，不把失败运行的诊断分数晋升为 Verified。",
+    "nodes": [
+      {
+        "kind": "research-question",
+        "label": "Research question",
+        "ref": "RQ-G2",
+        "title": "适配阶段改变了什么？",
+        "detail": "区分 prompt、decoder、post-training 与后续 LoRA 的行为和表征影响。",
+        "status": "active"
+      },
+      {
+        "kind": "experiment",
+        "label": "Experiment",
+        "ref": "EXP-028",
+        "title": "Matched frozen probe",
+        "detail": "全部计算完成，但 fitting/evaluation 344.288 分钟超过冻结的 240 分钟上限。",
+        "status": "failed"
+      },
+      {
+        "kind": "evidence",
+        "label": "Evidence",
+        "ref": "Artifact audit",
+        "title": "产物审计通过，证据门失败",
+        "detail": "概率、指标与 bootstrap 可复算；正式状态仍为 Failed，不具 Verified 资格。",
+        "status": "preserved",
+        "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/README.md"
+      },
+      {
+        "kind": "claim",
+        "label": "Current claim",
+        "ref": "Boundary",
+        "title": "尚无 Verified probe 结论",
+        "detail": "诊断值不能用于判断 post-training 是否改变标签线性可解码性，也不能进入论文定量结论。",
+        "status": "blocked"
+      },
+      {
+        "kind": "next",
+        "label": "Next dependency",
+        "ref": "New EXP ID",
+        "title": "登记新的 matched-probe Major",
+        "detail": "先冻结透明的恢复政策与现实资源门；保留 EXP-028，test 继续关闭。",
+        "status": "active",
+        "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/README.md"
+      }
+    ]
+  },
   "dependencyRoute": [
     {
       "label": "TweetEval 训练与 test gate",
@@ -73,15 +121,15 @@
       "rq": "RQ-G2"
     },
     {
-      "label": "Base / post-trained frozen probe",
-      "detail": "协议与零数据 preflight 已完成；正式 train/dev 运行待开始",
-      "status": "active",
+      "label": "EXP-028 Base / post-trained frozen probe",
+      "detail": "计算与产物审计完成，但 344.288 分钟超过冻结资源门；诊断结果不得晋升为 Verified",
+      "status": "failed",
       "rq": "RQ-G2"
     },
     {
-      "label": "LoRA、上下文与系统",
-      "detail": "在 probe 之后推进；forum data 与 holdout 边界尚待确认",
-      "status": "planned",
+      "label": "新的正式 probe、LoRA、上下文与系统",
+      "detail": "先登记 successor probe；forum data 与 holdout 边界仍待确认",
+      "status": "active",
       "rq": "RQ-G2"
     }
   ],
@@ -90,6 +138,15 @@
       "label": "TweetEval emotion",
       "evaluation": "Official test · 四分类单标签 · Macro-F1",
       "gate": "EXP-016 Frozen Test Gate",
+      "comparisonContract": {
+        "split": "official-test",
+        "taskType": "single-label",
+        "labelCount": 4,
+        "metric": "Macro-F1",
+        "scale": [0, 1],
+        "testGate": "consumed",
+        "comparisonScope": "within-dataset-only"
+      },
       "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-016-frozen-formal-test-gate",
       "models": [
         {
@@ -98,7 +155,19 @@
           "value": 0.646998,
           "std": null,
           "rq": "RQ-B1",
-          "note": "传统非神经网络下界；单次确定性运行。"
+          "note": "传统非神经网络下界；单次确定性运行。",
+          "visualRole": "reference",
+          "uncertainty": {
+            "kind": "deterministic",
+            "value": null,
+            "runs": 1,
+            "label": "deterministic fit"
+          },
+          "comparison": {
+            "baselineExperiment": null,
+            "delta": null,
+            "interpretation": "reference"
+          }
         },
         {
           "experiment": "EXP-011",
@@ -106,7 +175,19 @@
           "value": 0.795761,
           "std": 0.003298,
           "rq": "RQ-B2",
-          "note": "通用 RoBERTa-base，三随机种子。"
+          "note": "通用 RoBERTa-base，三随机种子。",
+          "visualRole": "verified",
+          "uncertainty": {
+            "kind": "sample-standard-deviation",
+            "value": 0.003298,
+            "runs": 3,
+            "label": "3 seeds · sample SD"
+          },
+          "comparison": {
+            "baselineExperiment": "EXP-007",
+            "delta": 0.148763,
+            "interpretation": "controlled"
+          }
         },
         {
           "experiment": "EXP-014",
@@ -114,7 +195,19 @@
           "value": 0.792645,
           "std": 0.003658,
           "rq": "RQ-B2",
-          "note": "加入 label smoothing；test 未复现 validation 小幅收益。"
+          "note": "加入 label smoothing；test 未复现 validation 小幅收益。",
+          "visualRole": "negative",
+          "uncertainty": {
+            "kind": "sample-standard-deviation",
+            "value": 0.003658,
+            "runs": 3,
+            "label": "3 seeds · sample SD"
+          },
+          "comparison": {
+            "baselineExperiment": "EXP-011",
+            "delta": -0.003116,
+            "interpretation": "controlled"
+          }
         },
         {
           "experiment": "EXP-015",
@@ -122,19 +215,41 @@
           "value": 0.809973,
           "std": 0.007038,
           "rq": "RQ-B3",
-          "note": "Twitter-domain encoder；冻结 test 上的最强本地条件。"
+          "note": "Twitter-domain encoder；冻结 test 上的最强本地条件。",
+          "visualRole": "selected",
+          "uncertainty": {
+            "kind": "sample-standard-deviation",
+            "value": 0.007038,
+            "runs": 3,
+            "label": "3 seeds · sample SD"
+          },
+          "comparison": {
+            "baselineExperiment": "EXP-014",
+            "delta": 0.017328,
+            "interpretation": "controlled"
+          }
         }
       ],
       "findings": [
         {
           "status": "preserved",
+          "rq": "RQ-B2",
+          "experiment": "EXP-014 vs EXP-011",
+          "delta": "−0.003116",
           "title": "负结果被保留",
-          "body": "EXP-014 − EXP-011 = −0.003116，2/3 seed 为负；label smoothing 的 validation 收益没有泛化。"
+          "body": "EXP-014 − EXP-011 = −0.003116，2/3 seed 为负；label smoothing 的 validation 收益没有泛化。",
+          "next": "RQ-B2 阶段性关闭",
+          "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-016-frozen-formal-test-gate"
         },
         {
           "status": "verified",
+          "rq": "RQ-B3",
+          "experiment": "EXP-015 vs EXP-014",
+          "delta": "+0.017328",
           "title": "领域收益通过冻结门",
-          "body": "EXP-015 − EXP-014 = +0.017328，3/3 seed 提高；支持 Twitter-domain encoder 的收益。"
+          "body": "EXP-015 − EXP-014 = +0.017328，3/3 seed 提高；支持 Twitter-domain encoder 的收益。",
+          "next": "RQ-B3 阶段性关闭",
+          "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-016-frozen-formal-test-gate"
         }
       ],
       "errorAnalysis": {
@@ -168,6 +283,15 @@
       "label": "GoEmotions",
       "evaluation": "DEV · 28 标签多标签 · Macro-F1",
       "gate": "Official test 未获取，test gate 关闭",
+      "comparisonContract": {
+        "split": "dev",
+        "taskType": "multi-label",
+        "labelCount": 28,
+        "metric": "Macro-F1",
+        "scale": [0, 1],
+        "testGate": "closed",
+        "comparisonScope": "within-dataset-only"
+      },
       "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-020-goemotions-bert-base-cased-three-seed-fine-tuning",
       "models": [
         {
@@ -177,6 +301,18 @@
           "std": null,
           "rq": "RQ-G1",
           "note": "固定阈值 0.5 的简单多标签基线。",
+          "visualRole": "reference",
+          "uncertainty": {
+            "kind": "deterministic",
+            "value": null,
+            "runs": 1,
+            "label": "deterministic fit"
+          },
+          "comparison": {
+            "baselineExperiment": null,
+            "delta": null,
+            "interpretation": "reference"
+          },
           "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-018-goemotions-tf-idf--one-vs-rest-logistic-regression"
         },
         {
@@ -186,6 +322,18 @@
           "std": null,
           "rq": "RQ-G2",
           "note": "冻结 dev 规则下选定的生成式行为条件。",
+          "visualRole": "selected",
+          "uncertainty": {
+            "kind": "not-estimated",
+            "value": null,
+            "runs": 1,
+            "label": "single run · uncertainty unavailable"
+          },
+          "comparison": {
+            "baselineExperiment": "EXP-018",
+            "delta": 0.03752,
+            "interpretation": "descriptive-only"
+          },
           "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-025-constrained-qwen3-17b-zerofew-shot"
         },
         {
@@ -195,6 +343,18 @@
           "std": 0.011063,
           "rq": "RQ-G1",
           "note": "三随机种子监督编码器基线；仅为 dev 结果。",
+          "visualRole": "verified",
+          "uncertainty": {
+            "kind": "sample-standard-deviation",
+            "value": 0.011063,
+            "runs": 3,
+            "label": "3 seeds · sample SD"
+          },
+          "comparison": {
+            "baselineExperiment": "EXP-018",
+            "delta": 0.285791,
+            "interpretation": "descriptive-only"
+          },
           "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-020-goemotions-bert-base-cased-three-seed-fine-tuning"
         }
       ],
@@ -256,18 +416,39 @@
             ]
           }
         ],
+        "comparisons": [
+          {
+            "condition": "zero-shot · unconstrained − constrained",
+            "macroF1Delta": 0.005702,
+            "parserDeltaPp": -3.9808,
+            "latencyDeltaSeconds": -0.064,
+            "interpretation": "Macro-F1 略高但 bootstrap 区间跨 0；格式有效率下降。"
+          },
+          {
+            "condition": "few-shot · unconstrained − constrained",
+            "macroF1Delta": -0.004699,
+            "parserDeltaPp": -9.2702,
+            "latencyDeltaSeconds": -0.089,
+            "interpretation": "双方有效输出标签集合一致；约束主要恢复 503 个无效输出。"
+          }
+        ],
         "finding": "few-shot 中约束主要恢复 503 个无效输出；zero-shot 双方有效样本的标签集合仅 75.8164% 完全一致，decoder 不能笼统视为 label-neutral。"
       }
     }
   },
-  "workingMargin": {
+  "actionDock": {
     "nextAction": {
       "status": "active",
-      "title": "正式执行 EXP-028 matched frozen probe",
-      "detail": "按冻结顺序完成 Base / post-trained 的 train/dev 特征抽取、真实 probe、3-seed label-shuffle 与独立 verifier；test 继续关闭。",
-      "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/research-roadmap.md#phase-4-local-llm-comparison-and-post-training-control"
+      "title": "登记新的 matched-probe Major",
+      "detail": "保留 EXP-028 的 Failed 状态；执行前冻结透明的恢复政策、现实资源门和新实验编号，test 继续关闭。",
+      "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/README.md"
     },
     "blockers": [
+      {
+        "status": "failed",
+        "title": "EXP-028 超过冻结资源门",
+        "detail": "probe fitting/evaluation 为 344.288 分钟，高于 240 分钟上限；产物审计通过，但诊断值不能作为 Verified 证据。"
+      },
       {
         "status": "blocked",
         "title": "论坛数据主线待确认",
@@ -290,34 +471,32 @@
         "status": "planned",
         "detail": "Undefined · split protocol pending"
       }
-    ],
-    "recentChanges": [
-      {
-        "date": "2026-07-31",
-        "title": "EXP-025/026 decoder × prompt 2×2 验证完成"
-      },
-      {
-        "date": "2026-07-31",
-        "title": "EXP-018/020 GoEmotions dev 基线验证完成"
-      },
-      {
-        "date": "2026-07-30",
-        "title": "TweetEval frozen test gate 与错误分析完成"
-      }
     ]
   },
-  "futurePlan": [
+  "recentChanges": [
     {
-      "status": "active",
-      "label": "NOW",
-      "title": "EXP-028 frozen probe",
-      "detail": "先回答 Base 与 post-trained 表征在线性 readout 下是否存在可复核差异。"
+      "date": "2026-08-01",
+      "title": "EXP-028 触发 240 分钟资源门，保留 Failed；失败产物审计通过"
     },
+    {
+      "date": "2026-07-31",
+      "title": "EXP-025/026 decoder × prompt 2×2 验证完成"
+    },
+    {
+      "date": "2026-07-31",
+      "title": "EXP-018/020 GoEmotions dev 基线验证完成"
+    },
+    {
+      "date": "2026-07-30",
+      "title": "TweetEval frozen test gate 与错误分析完成"
+    }
+  ],
+  "futurePlan": [
     {
       "status": "planned",
       "label": "NEXT",
       "title": "Instruct LoRA",
-      "detail": "在同一 GoEmotions 任务上比较性能、稳定性、成本与延迟。"
+      "detail": "仅在新的 matched-probe 正式实验通过资源门和独立验证后进入。"
     },
     {
       "status": "blocked",
