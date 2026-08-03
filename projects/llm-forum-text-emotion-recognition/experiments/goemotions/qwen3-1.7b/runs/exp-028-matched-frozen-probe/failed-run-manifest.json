@@ -1,0 +1,208 @@
+{
+  "accessed_splits": [
+    "train",
+    "dev"
+  ],
+  "artifacts": {
+    "private_feature_cache": {
+      "base": {
+        "dev": {
+          "feature_bytes": 44449920,
+          "feature_sha256": "0acc5b67a599cb8c19ea771b03e3fdee658c827c61476d9bb133f96c210f05b4",
+          "metadata_sha256": "285c5f119661813bb190987f02f28bcbeb4f09620509f22e214877aa0b014944"
+        },
+        "train": {
+          "feature_bytes": 355614848,
+          "feature_sha256": "68609420690c8ec04ee04eca775defe99a8efe34765d6503aed8ac10510a983d",
+          "metadata_sha256": "44762e31dd3039fca210e873d8a4f878cd87c53553fc2333678b1647a0dec9f5"
+        }
+      },
+      "post-trained": {
+        "dev": {
+          "feature_bytes": 44449920,
+          "feature_sha256": "507618cf5e12b4cd949aa97d50c9ba44b69484310bb5f2576361fca656be9098",
+          "metadata_sha256": "5a78a9b72e08fd8a001deb983c539c0bea77f09804e310ad85f1c2478ed9e08e"
+        },
+        "train": {
+          "feature_bytes": 355614848,
+          "feature_sha256": "08102d4c8ea96c51357cf0504bd284460afdadb6e5871e0e6821c74db2197e6b",
+          "metadata_sha256": "e3c067576132a611b48128974ee9838347ccd5ceca6580083e65ea6c8834262f"
+        }
+      }
+    },
+    "private_probe_models": {
+      "base/label-shuffle-seed-42.joblib": {
+        "bytes": 444245,
+        "sha256": "3c4d5ac468548f74c024cc8bdc73fcf2dede954e0195de8ce416b1e36d1c252d"
+      },
+      "base/label-shuffle-seed-43.joblib": {
+        "bytes": 444188,
+        "sha256": "589f272c7fa789440db71e639be4c9b563f90ed04a2a17ae4e1d5de9685a493e"
+      },
+      "base/label-shuffle-seed-44.joblib": {
+        "bytes": 444193,
+        "sha256": "200a8d53a4c9a78a50d9c871f2586f1afb714e069a28fb03892b2fa4e2c80e66"
+      },
+      "base/real-probe.joblib": {
+        "bytes": 490955,
+        "sha256": "5eea13f3647805a63e35f6c1cdb368e312339aa04e82d99c52129a73b5c477d6"
+      },
+      "post-trained/label-shuffle-seed-42.joblib": {
+        "bytes": 444159,
+        "sha256": "0d0a0dd6295f5e28834ec707c2890f22e02a24debaccdbd65629a4fb0146773b"
+      },
+      "post-trained/label-shuffle-seed-43.joblib": {
+        "bytes": 444205,
+        "sha256": "061bf61b4592a58aa6ad5e062ca66120e793d968f9b2c800262f1c130332a2b8"
+      },
+      "post-trained/label-shuffle-seed-44.joblib": {
+        "bytes": 444286,
+        "sha256": "d6d0fc018364822850787bf0e15976d011894f3768c4af628698a167c7999dc4"
+      },
+      "post-trained/real-probe.joblib": {
+        "bytes": 491256,
+        "sha256": "ddf2b305c0eac96fef88c2bfa59e9cd3ef9e95614648893481d3f9f6ee161dbd"
+      }
+    },
+    "public_failed_run": {
+      "aggregate-metrics.json": {
+        "bytes": 78826,
+        "sha256": "e3028a7dcfd71294a72377b91105ac104a0a3e38a4ee0dad4a7c31787180470d"
+      },
+      "base/label-shuffle/seed-42-metrics.json": {
+        "bytes": 6628,
+        "sha256": "420383b1a4e345cb8b886e57017b15f7f227c3f1f38b74dbfc25c55569cd3683"
+      },
+      "base/label-shuffle/seed-42-predictions.csv": {
+        "bytes": 510261,
+        "sha256": "514eae0e81649a1a482a2b7ee1df1c705beaf2c716dbfb02f5e85fee35498e90"
+      },
+      "base/label-shuffle/seed-43-metrics.json": {
+        "bytes": 6618,
+        "sha256": "2e70f4658980ec1a22b87bd07ef1388d79ed2ca7e835fd2d9a2c82261cbc2234"
+      },
+      "base/label-shuffle/seed-43-predictions.csv": {
+        "bytes": 508613,
+        "sha256": "3783155c93d4112b2199fbe8fcdd27b952a47701db3520112f91db0db5b2994a"
+      },
+      "base/label-shuffle/seed-44-metrics.json": {
+        "bytes": 6605,
+        "sha256": "3f7de73024eea056cc75af5b3a1456abad96e960f4399fd852a5f91262ed3f24"
+      },
+      "base/label-shuffle/seed-44-predictions.csv": {
+        "bytes": 507821,
+        "sha256": "5d81cdea6bdf7253a927f7b60f7bd6e30d57c89e8f9f71f54cb11b92f2f9cdc7"
+      },
+      "base/metrics.json": {
+        "bytes": 6759,
+        "sha256": "8e46afeb98fce233bec70de11c68061a1a2e53846d44f51355380839644ae985"
+      },
+      "base/multilabel-confusion-matrix.csv": {
+        "bytes": 809,
+        "sha256": "74e2ebf425fc3809e35e0a48d6bb33bedca4444ff72823beda4a036a944dade1"
+      },
+      "base/per-label-metrics.csv": {
+        "bytes": 1887,
+        "sha256": "711b5e4b7e4b5fd49b242421591dd2d4663f18a0744ff51742a00d8edc92715d"
+      },
+      "base/predictions.csv": {
+        "bytes": 3630180,
+        "sha256": "2f874db9a481aeeea4fa59a654622e6f38ed79b2d28f7d85ee643137aa77a932"
+      },
+      "condition-summary.csv": {
+        "bytes": 425,
+        "sha256": "a7b2e99780f93c00dfbc9425de1fcaf898458b0d0e7227a03238365c42614d07"
+      },
+      "failure.json": {
+        "bytes": 817,
+        "sha256": "c28fb6f2ef848694494d458ca65e53be42d9a20197f5a96f766d555e8849f33e"
+      },
+      "paired-bootstrap.json": {
+        "bytes": 408,
+        "sha256": "a90ced0d8db82b2931f45a59da84e89aa9c76ddceadb536c9f6dd57e4daef2f8"
+      },
+      "post-trained/label-shuffle/seed-42-metrics.json": {
+        "bytes": 6657,
+        "sha256": "56d23c5418936a89e3ec0be5056ad96a08063660bc044298b1b44c913a90f5d0"
+      },
+      "post-trained/label-shuffle/seed-42-predictions.csv": {
+        "bytes": 511565,
+        "sha256": "3e9dc9895f7c4682f97d081360b1be007c5cc9c79cf948e0b1bfef342f388b59"
+      },
+      "post-trained/label-shuffle/seed-43-metrics.json": {
+        "bytes": 6664,
+        "sha256": "61b342102d023a527b280419fb2ad08c5c810c42540520e441553f8de68e83de"
+      },
+      "post-trained/label-shuffle/seed-43-predictions.csv": {
+        "bytes": 508940,
+        "sha256": "7c7996c5fcb88dd1fb4182f04ec34d8901a76986cabd28be97ddcd83185a26f7"
+      },
+      "post-trained/label-shuffle/seed-44-metrics.json": {
+        "bytes": 6645,
+        "sha256": "d7d510189bbafcc30930ba9de331ee3b96b265d5512a3b0939e88d543b41e78e"
+      },
+      "post-trained/label-shuffle/seed-44-predictions.csv": {
+        "bytes": 508792,
+        "sha256": "c3bb2632fc0e3a896d721959c01cdb0aebb91cce702dc2b9a122695a4db1c0d2"
+      },
+      "post-trained/metrics.json": {
+        "bytes": 6666,
+        "sha256": "d3f9a550f3f40fa6eb392fb269a25fcaf6947e5a32509df01ce8653e97437249"
+      },
+      "post-trained/multilabel-confusion-matrix.csv": {
+        "bytes": 809,
+        "sha256": "4f88d17d18b3c90a76944bb7a547e2b3a88629c1952142cecfd9ec02c59f9515"
+      },
+      "post-trained/per-label-metrics.csv": {
+        "bytes": 1887,
+        "sha256": "410abe5bc8fce24cbe8e71e7c60dba881018a1011bc77808ed66cbc186bf0439"
+      },
+      "post-trained/predictions.csv": {
+        "bytes": 3627375,
+        "sha256": "a94d958ba24bafa46bcfe0a27b22a208323dadb2b4d265c2adede2260eb7fd46"
+      },
+      "stdout.log": {
+        "bytes": 1449,
+        "sha256": "11b96ac46a6370b7106ada05c9bff92cbbbf3dea1d5d9b8a97fe61451c366a99"
+      }
+    }
+  },
+  "comparison": {
+    "ci_95_percentile": {
+      "lower": -0.013155861945012478,
+      "upper": 0.004711226869814619
+    },
+    "comparison": "post-trained_minus_base",
+    "observed_macro_f1": {
+      "base": 0.3105341788946285,
+      "post-trained": 0.3063734974747955
+    },
+    "observed_macro_f1_difference": -0.004160681419833001,
+    "outcome": "practical_tie",
+    "practical_threshold": 0.005,
+    "replicates": 10000,
+    "seed": 20260801
+  },
+  "config_path": "experiments/goemotions/qwen3-1.7b/configs/exp-028-matched-frozen-probe.json",
+  "config_sha256": "a932e62a1dbbd6d5cf0c46656b74043caedf63ddc488a578d0e5ac8a0ded4cea",
+  "created_at_utc": "2026-08-01T09:09:43.265106+00:00",
+  "experiment_id": "EXP-028",
+  "failure": {
+    "created_at_utc": "2026-08-01T09:02:48.556570+00:00",
+    "error": "Probe fitting exceeded the frozen wall-time budget",
+    "error_type": "TimeoutError",
+    "experiment_id": "EXP-028",
+    "status": "Failed",
+    "test_split_accessed": false,
+    "traceback": "Traceback (most recent call last):\n  File \"/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/fit_frozen_probe.py\", line 739, in main\n    execute(args, output_dir, logger)\n  File \"/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/fit_frozen_probe.py\", line 670, in execute\n    raise TimeoutError(\"Probe fitting exceeded the frozen wall-time budget\")\nTimeoutError: Probe fitting exceeded the frozen wall-time budget\n"
+  },
+  "resource_gate": {
+    "budget_seconds": 14400.0,
+    "exceeded_by_seconds": 6257.254570000001,
+    "observed_seconds_from_log": 20657.25457,
+    "passed": false
+  },
+  "status": "Failed",
+  "test_absent_after_audit": true,
+  "test_split_accessed": false
+}

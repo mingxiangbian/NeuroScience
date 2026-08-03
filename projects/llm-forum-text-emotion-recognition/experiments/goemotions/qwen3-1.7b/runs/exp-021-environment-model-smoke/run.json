@@ -1,0 +1,103 @@
+{
+  "accessed_splits": [],
+  "artifacts": {
+    "environment_lock": {
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-021-environment-model-smoke/environment-lock.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout_log": {
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-021-environment-model-smoke/stdout.log"
+    }
+  },
+  "completed_at_utc": "2026-07-31T11:35:50.185024+00:00",
+  "data": {
+    "dataset": "synthetic inputs only",
+    "project_data_rows": 0,
+    "split": "N/A"
+  },
+  "errors": [],
+  "experiment_id": "EXP-021",
+  "invocation": [
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+    "projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/run_environment_smoke.py"
+  ],
+  "models": [
+    {
+      "condition": "post-trained",
+      "manifest": {
+        "path": "models/qwen3-1.7b/manifest.json",
+        "sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877"
+      },
+      "mlx_total_bytes": 3452636312,
+      "repo_id": "Qwen/Qwen3-1.7B",
+      "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+      "smoke": {
+        "generated_nonempty": true,
+        "generated_token_count": 1,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-021-environment-model-smoke/smoke-post-trained.json",
+        "sha256": "1c4a16cfdc13bb97a6f9b901c45452105dc75ce0dd85ed1a6a94f6373c6a86ca"
+      },
+      "upstream_total_bytes": 4079450110
+    },
+    {
+      "condition": "base",
+      "manifest": {
+        "path": "models/qwen3-1.7b-base/manifest.json",
+        "sha256": "e120c568597bc10aebab9b07ad77c41a8837014860abbe96537098529068d080"
+      },
+      "mlx_total_bytes": 3452636130,
+      "repo_id": "Qwen/Qwen3-1.7B-Base",
+      "revision": "ea980cb0a6c2ae4b936e82123acc929f1cec04c1",
+      "smoke": {
+        "generated_nonempty": true,
+        "generated_token_count": 7,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-021-environment-model-smoke/smoke-base.json",
+        "sha256": "e0d619dff3d3aac509d156bf6da450c9d4e4a1c1892ed1f8c4da212506cf305e"
+      },
+      "upstream_total_bytes": 3452692285
+    }
+  ],
+  "resource_usage": {
+    "api_cost_usd": 0,
+    "model_storage_bytes": 14437414837,
+    "total_seconds": 105.57355558298877
+  },
+  "rq_id": "RQ-G2",
+  "runtime": {
+    "environment": "emotion-llm-mlx",
+    "executable": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+    "git": {
+      "commit": "0fec243e5b96c04f2ad23382f430d3fe986b888b",
+      "dirty": true,
+      "dirty_path_count": 35
+    },
+    "hardware": {
+      "architecture": "arm64",
+      "chip": "Apple M3",
+      "memory_bytes": 17179869184,
+      "platform": "macOS-26.5.2-arm64-arm-64bit"
+    },
+    "packages": {
+      "huggingface-hub": "1.26.0",
+      "mlx": "0.32.0",
+      "mlx-lm": "0.31.3",
+      "numpy": "2.4.6",
+      "safetensors": "0.8.0",
+      "tokenizers": "0.22.2",
+      "transformers": "5.14.1"
+    },
+    "python": "3.11.15",
+    "user_site_disabled": true
+  },
+  "stage": "environment-and-model-provenance",
+  "started_at_utc": "2026-07-31T11:34:04.609035+00:00",
+  "status": "Completed",
+  "test_split_accessed": false,
+  "tier": "Minor",
+  "validation_split_accessed": false,
+  "warnings": [
+    "The first pip install attempt followed global.user=true and was not importable with user-site disabled.",
+    "The second and final setup attempt used pip --isolated --no-user and installed packages inside the Conda environment.",
+    "Synthetic generation is an implementation check, not task evidence."
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "baseline_condition": "old-prompt-closed-decoder",
+  "conditions": {
+    "aligned-prompt-open-decoder": {
+      "all_rows_transition": {
+        "improved": 84,
+        "unchanged_correct": 2746,
+        "unchanged_wrong": 2502,
+        "worsened": 94
+      },
+      "neutral_cooccurrence_transition": {
+        "improved": 0,
+        "unchanged_correct": 0,
+        "unchanged_wrong": 174,
+        "worsened": 0
+      },
+      "predicted_neutral_cooccurrence_rows_all": 0,
+      "predicted_neutral_cooccurrence_rows_gold_slice": 0
+    },
+    "old-prompt-open-decoder": {
+      "all_rows_transition": {
+        "improved": 0,
+        "unchanged_correct": 2840,
+        "unchanged_wrong": 2586,
+        "worsened": 0
+      },
+      "neutral_cooccurrence_transition": {
+        "improved": 0,
+        "unchanged_correct": 0,
+        "unchanged_wrong": 174,
+        "worsened": 0
+      },
+      "predicted_neutral_cooccurrence_rows_all": 0,
+      "predicted_neutral_cooccurrence_rows_gold_slice": 0
+    }
+  },
+  "historical_reproducibility": {
+    "different_prediction_rows": 0,
+    "identical_prediction_rate": 1.0,
+    "macro_f1_difference_concurrent_minus_historical": 0.0
+  },
+  "neutral_cooccurrence_gold_rows": 174,
+  "seed": 43
+}

@@ -1,0 +1,46 @@
+{
+  "experiment_id": "EXP-017",
+  "labels": [
+    "anger",
+    "joy",
+    "optimism",
+    "sadness"
+  ],
+  "row_count": 1421,
+  "sampling": {
+    "domain_recoveries": {
+      "candidate_count": 21,
+      "selected_count": 6
+    },
+    "domain_regressions": {
+      "candidate_count": 11,
+      "selected_count": 4
+    },
+    "final_high_confidence_errors": {
+      "candidate_count": 135,
+      "false_negative_slots_filled": 8,
+      "false_positive_slots_filled": 8,
+      "selected_count": 16
+    },
+    "ordinary_final_errors": {
+      "candidate_count": 225,
+      "selected_count": 8
+    },
+    "shared_errors": {
+      "candidate_count": 87,
+      "selected_count": 8
+    },
+    "total": {
+      "maximum": 48,
+      "selected_count": 42
+    }
+  },
+  "shared_error_rows": 87,
+  "source_experiment_id": "EXP-016",
+  "test_policy": {
+    "allow_model_or_prompt_selection": false,
+    "allow_new_test_inference": false,
+    "allow_post_result_tuning": false,
+    "descriptive_analysis_only": true
+  }
+}

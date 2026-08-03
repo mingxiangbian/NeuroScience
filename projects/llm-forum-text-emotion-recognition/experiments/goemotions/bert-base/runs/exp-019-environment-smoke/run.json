@@ -1,0 +1,127 @@
+{
+  "accessed_splits": [],
+  "artifacts": {
+    "model_manifest": {
+      "path": "models/bert-base-cased/manifest.json",
+      "sha256": "795076f67146a80a2bd875d198305dcd663c84feccdf314b7b426354a1b6d75b"
+    },
+    "run_metadata": {
+      "path": "experiments/goemotions/bert-base/runs/exp-019-environment-smoke/run.json"
+    }
+  },
+  "created_at_utc": "2026-07-31T03:57:00.742865+00:00",
+  "data": {
+    "dataset": "synthetic smoke inputs only",
+    "label_count": 28,
+    "sample_count": 16,
+    "split": "N/A"
+  },
+  "experiment_id": "EXP-019",
+  "invocation": [
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python",
+    "projects/llm-forum-text-emotion-recognition/experiments/goemotions/bert-base/smoke_test.py"
+  ],
+  "model": {
+    "classification_head": "newly initialized 28-label head",
+    "local_files_only": true,
+    "manifest_files_verified": [
+      {
+        "bytes": 8982,
+        "path": "README.md",
+        "sha256": "cc8e037bc719c4776a0f78b146b315df062f8172343bbde9af25792683059080"
+      },
+      {
+        "bytes": 570,
+        "path": "config.json",
+        "sha256": "8b73abed2d67075fd3ec0f840aa53d9cccdc9169c04a7da135c07e721910ed74"
+      },
+      {
+        "bytes": 435755784,
+        "path": "model.safetensors",
+        "sha256": "1d8bdcee6021e2c25f0325e84889b61c2eb26b843eef5659c247af138d64f050"
+      },
+      {
+        "bytes": 435797,
+        "path": "tokenizer.json",
+        "sha256": "5b3360be30cdf39081153cf9d30bfb0503c011462fc9f77f097127c83ef0f4d9"
+      },
+      {
+        "bytes": 49,
+        "path": "tokenizer_config.json",
+        "sha256": "0f6d13e6f4da6f9e24f22ada6bc3be571123d858d7c0c05a8a7cd55a9c23c2e8"
+      },
+      {
+        "bytes": 213450,
+        "path": "vocab.txt",
+        "sha256": "eeaa9875b23b04b4c54ef759d03db9d1ba1554838f8fb26c5d96fa551df93d02"
+      }
+    ],
+    "parameter_count": 108331804,
+    "repo_id": "google-bert/bert-base-cased",
+    "revision": "cd5ef92a9fb2f889e972770a36d4ed042daf221e",
+    "snapshot_path": "models/bert-base-cased/snapshot"
+  },
+  "parent_experiment": "N/A",
+  "question": "Can the pinned BERT stack complete multi-label BCE optimization and sigmoid inference on Apple MPS?",
+  "resource_budget": {
+    "api_cost_usd": 0,
+    "dataset_rows": 0,
+    "optimization_steps": 3,
+    "wall_time_minutes": 3
+  },
+  "rq_id": "RQ-G1 implementation check",
+  "runtime": {
+    "architecture": "arm64",
+    "device": "mps",
+    "environment": "emotion-roberta",
+    "executable": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python",
+    "git": {
+      "commit": "0fec243e5b96c04f2ad23382f430d3fe986b888b",
+      "dirty": true,
+      "dirty_path_count": 33
+    },
+    "mps_available": true,
+    "mps_built": true,
+    "packages": {
+      "numpy": "2.2.6",
+      "safetensors": "0.8.0",
+      "scikit-learn": "1.7.2",
+      "torch": "2.9.1",
+      "transformers": "5.8.0"
+    },
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.10.20",
+    "total_seconds": 3.122990457981359
+  },
+  "smoke_result": {
+    "final_synthetic_train_loss": 0.6279566884040833,
+    "losses": [
+      0.6893370151519775,
+      0.6632582545280457,
+      0.6279566884040833
+    ],
+    "median_step_seconds": 0.5007525000255555,
+    "prediction_shape": [
+      16,
+      28
+    ],
+    "probability_max": 0.6618791222572327,
+    "probability_min": 0.20945538580417633,
+    "step_seconds": [
+      1.2110379580117296,
+      0.5007525000255555,
+      0.36981616698903963
+    ]
+  },
+  "stage": "environment-and-model-smoke",
+  "started_at_utc": "2026-07-31T03:56:57.716752+00:00",
+  "status": "Completed",
+  "test_split_accessed": false,
+  "tier": "Minor",
+  "validation_split_accessed": false,
+  "warnings": [
+    "The 28-label head is initialized from scratch.",
+    "Synthetic loss and probabilities are implementation checks only.",
+    "No project data split was read."
+  ]
+}

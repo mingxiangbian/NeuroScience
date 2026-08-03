@@ -1,0 +1,68 @@
+{
+  "data": {
+    "allowed_splits": [
+      "train",
+      "dev"
+    ],
+    "forbidden_split": "test",
+    "protocol_id": "DATA-GOE-V1"
+  },
+  "evaluation": {
+    "checkpoint_rule": "final epoch 4; no dev-based early stopping",
+    "primary_metric": "macro_f1",
+    "sample_standard_deviation": true,
+    "threshold": 0.3,
+    "threshold_operator": ">="
+  },
+  "experiment_id": "EXP-020",
+  "model": {
+    "attention_dropout": 0.1,
+    "classifier_dropout": 0.1,
+    "hidden_dropout": 0.1,
+    "local_files_only": true,
+    "name": "bert-base-cased",
+    "num_labels": 28,
+    "repo_id": "google-bert/bert-base-cased",
+    "revision": "cd5ef92a9fb2f889e972770a36d4ed042daf221e",
+    "snapshot": "models/bert-base-cased/snapshot"
+  },
+  "resource_budget": {
+    "api_cost_usd": 0,
+    "device": "Apple MPS",
+    "maximum_seed_runs": 3,
+    "maximum_wall_minutes": 360,
+    "retained_models": 3
+  },
+  "rq_id": "RQ-G1",
+  "tier": "Major",
+  "training": {
+    "adam_beta1": 0.9,
+    "adam_beta2": 0.999,
+    "adam_epsilon": 1e-06,
+    "drop_last": true,
+    "epochs": 4,
+    "evaluation_batch_size": 64,
+    "gradient_accumulation_steps": 1,
+    "learning_rate": 5e-05,
+    "loss": "BCEWithLogitsLoss",
+    "max_grad_norm": 1.0,
+    "max_sequence_length": 50,
+    "mixed_precision": false,
+    "num_workers": 0,
+    "optimizer": "AdamW",
+    "scheduler": "linear decay after linear warmup",
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "shuffle": true,
+    "train_batch_size": 16,
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.01,
+    "weight_decay_exclusions": [
+      "bias",
+      "LayerNorm.weight"
+    ]
+  }
+}

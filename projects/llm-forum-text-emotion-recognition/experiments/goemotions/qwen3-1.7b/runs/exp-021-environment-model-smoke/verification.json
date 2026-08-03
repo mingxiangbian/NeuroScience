@@ -1,0 +1,55 @@
+{
+  "checks": {
+    "environment": {
+      "lock_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "packages": {
+        "huggingface-hub": "1.26.0",
+        "mlx": "0.32.0",
+        "mlx-lm": "0.31.3",
+        "transformers": "5.14.1"
+      }
+    },
+    "models": [
+      {
+        "condition": "post-trained",
+        "manifest_sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877",
+        "mlx_bf16": {
+          "file_count": 8,
+          "total_bytes": 3452636312
+        },
+        "quantized": false,
+        "repo_id": "Qwen/Qwen3-1.7B",
+        "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+        "upstream": {
+          "file_count": 12,
+          "total_bytes": 4079450110
+        }
+      },
+      {
+        "condition": "base",
+        "manifest_sha256": "e120c568597bc10aebab9b07ad77c41a8837014860abbe96537098529068d080",
+        "mlx_bf16": {
+          "file_count": 8,
+          "total_bytes": 3452636130
+        },
+        "quantized": false,
+        "repo_id": "Qwen/Qwen3-1.7B-Base",
+        "revision": "ea980cb0a6c2ae4b936e82123acc929f1cec04c1",
+        "upstream": {
+          "file_count": 10,
+          "total_bytes": 3452692285
+        }
+      }
+    ],
+    "run": {
+      "accessed_splits": [],
+      "model_count": 2,
+      "project_data_rows": 0,
+      "status": "Completed",
+      "test_split_accessed": false,
+      "validation_split_accessed": false
+    }
+  },
+  "experiment_id": "EXP-021",
+  "status": "Verified"
+}

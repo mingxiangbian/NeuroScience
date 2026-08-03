@@ -1,0 +1,58 @@
+{
+  "batch_size": 100,
+  "comparisons": {
+    "aligned-open-minus-closed": {
+      "ci_95_percentile": {
+        "lower": -0.01124053783534377,
+        "upper": 0.003145795177258409
+      },
+      "left": "aligned-open",
+      "observed_macro_f1_difference": -0.0038717466587775418,
+      "practical_effect": false,
+      "practical_threshold": 0.005,
+      "right": "closed",
+      "two_sided_interval_excludes_zero": false
+    },
+    "aligned-open-minus-old-open": {
+      "ci_95_percentile": {
+        "lower": -0.01124053783534377,
+        "upper": 0.003145795177258409
+      },
+      "left": "aligned-open",
+      "observed_macro_f1_difference": -0.0038717466587775418,
+      "practical_effect": false,
+      "practical_threshold": 0.005,
+      "right": "old-open",
+      "two_sided_interval_excludes_zero": false
+    },
+    "concurrent-closed-minus-historical-closed": {
+      "ci_95_percentile": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "left": "closed",
+      "observed_macro_f1_difference": 0.0,
+      "practical_effect": false,
+      "practical_threshold": 0.005,
+      "right": "historical-closed",
+      "two_sided_interval_excludes_zero": false
+    },
+    "old-open-minus-closed": {
+      "ci_95_percentile": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "left": "old-open",
+      "observed_macro_f1_difference": 0.0,
+      "practical_effect": false,
+      "practical_threshold": 0.005,
+      "right": "closed",
+      "two_sided_interval_excludes_zero": false
+    }
+  },
+  "confidence_interval": 0.95,
+  "replicates": 10000,
+  "resampling_unit": "dev row with replacement",
+  "seed": 20260846,
+  "statistic": "paired Macro-F1 difference"
+}

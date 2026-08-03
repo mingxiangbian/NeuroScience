@@ -1,0 +1,49 @@
+{
+  "checks": {
+    "condition_checks": {
+      "few-shot-synthetic-3": {
+        "finish_reasons": {
+          "stop": 32
+        },
+        "generated_total": 309,
+        "length_terminated": 0,
+        "parser_errors": {},
+        "prompt_total": 9100,
+        "sample_count": 32,
+        "valid_count": 32
+      },
+      "zero-shot": {
+        "finish_reasons": {
+          "stop": 32
+        },
+        "generated_total": 264,
+        "length_terminated": 0,
+        "parser_errors": {},
+        "prompt_total": 5516,
+        "sample_count": 32,
+        "valid_count": 32
+      }
+    },
+    "constraint_candidate_token_count": 14215,
+    "data_rows_scanned": 43410,
+    "dev_accessed": false,
+    "gate_checks": {
+      "full_dev_estimate_within_budget": true,
+      "generation_failures_within_budget": true,
+      "length_termination_within_budget": true,
+      "peak_memory_within_budget": true,
+      "strict_parser_rate_within_budget": true,
+      "wall_time_within_budget": true
+    },
+    "gate_status": "Passed",
+    "gold_labels_retained_or_used": false,
+    "measured_generations": 64,
+    "parent_sample_match": true,
+    "privacy_boundary": "passed",
+    "sample_count": 32,
+    "selection_digest_sha256": "7dcdbe002627948d6e1c5ed4eceb950085585ad0c726333ba3012515dbd8c525",
+    "test_accessed": false
+  },
+  "experiment_id": "EXP-024",
+  "status": "Verified"
+}

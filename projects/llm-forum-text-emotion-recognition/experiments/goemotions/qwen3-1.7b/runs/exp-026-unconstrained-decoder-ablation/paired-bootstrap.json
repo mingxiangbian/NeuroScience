@@ -1,0 +1,118 @@
+{
+  "batch_size": 100,
+  "comparisons": {
+    "unconstrained-few-shot-synthetic-3-minus-bert-seed-42": {
+      "ci_95_percentile": {
+        "lower": -0.2598788783373634,
+        "upper": -0.2242516004762325
+      },
+      "left": "unconstrained-few-shot-synthetic-3",
+      "observed_macro_f1_difference": -0.24228738055423824,
+      "practical_effect": true,
+      "practical_threshold": 0.005,
+      "right": "bert-seed-42",
+      "two_sided_interval_excludes_zero": true
+    },
+    "unconstrained-few-shot-synthetic-3-minus-bert-seed-43": {
+      "ci_95_percentile": {
+        "lower": -0.2696985241492839,
+        "upper": -0.23321328873209032
+      },
+      "left": "unconstrained-few-shot-synthetic-3",
+      "observed_macro_f1_difference": -0.252243244506253,
+      "practical_effect": true,
+      "practical_threshold": 0.005,
+      "right": "bert-seed-43",
+      "two_sided_interval_excludes_zero": true
+    },
+    "unconstrained-few-shot-synthetic-3-minus-bert-seed-44": {
+      "ci_95_percentile": {
+        "lower": -0.2816147072567115,
+        "upper": -0.2459952904653214
+      },
+      "left": "unconstrained-few-shot-synthetic-3",
+      "observed_macro_f1_difference": -0.26437801157222807,
+      "practical_effect": true,
+      "practical_threshold": 0.005,
+      "right": "bert-seed-44",
+      "two_sided_interval_excludes_zero": true
+    },
+    "unconstrained-minus-constrained-few-shot-synthetic-3": {
+      "ci_95_percentile": {
+        "lower": -0.008687228637850722,
+        "upper": -0.0009900483230725426
+      },
+      "left": "unconstrained-few-shot-synthetic-3",
+      "observed_macro_f1_difference": -0.004698676868222229,
+      "practical_effect": false,
+      "practical_threshold": 0.005,
+      "right": "constrained-few-shot-synthetic-3",
+      "two_sided_interval_excludes_zero": true
+    },
+    "unconstrained-minus-constrained-zero-shot": {
+      "ci_95_percentile": {
+        "lower": -0.0039059267656018216,
+        "upper": 0.015234235701131043
+      },
+      "left": "unconstrained-zero-shot",
+      "observed_macro_f1_difference": 0.005702042548763109,
+      "practical_effect": true,
+      "practical_threshold": 0.005,
+      "right": "constrained-zero-shot",
+      "two_sided_interval_excludes_zero": false
+    },
+    "unconstrained-zero-shot-minus-bert-seed-42": {
+      "ci_95_percentile": {
+        "lower": -0.27135763721509104,
+        "upper": -0.22919851442761707
+      },
+      "left": "unconstrained-zero-shot",
+      "observed_macro_f1_difference": -0.250053100849322,
+      "practical_effect": true,
+      "practical_threshold": 0.005,
+      "right": "bert-seed-42",
+      "two_sided_interval_excludes_zero": true
+    },
+    "unconstrained-zero-shot-minus-bert-seed-43": {
+      "ci_95_percentile": {
+        "lower": -0.2819342096481972,
+        "upper": -0.2377759515386235
+      },
+      "left": "unconstrained-zero-shot",
+      "observed_macro_f1_difference": -0.26000896480133673,
+      "practical_effect": true,
+      "practical_threshold": 0.005,
+      "right": "bert-seed-43",
+      "two_sided_interval_excludes_zero": true
+    },
+    "unconstrained-zero-shot-minus-bert-seed-44": {
+      "ci_95_percentile": {
+        "lower": -0.29235720655380254,
+        "upper": -0.2524064050612352
+      },
+      "left": "unconstrained-zero-shot",
+      "observed_macro_f1_difference": -0.27214373186731183,
+      "practical_effect": true,
+      "practical_threshold": 0.005,
+      "right": "bert-seed-44",
+      "two_sided_interval_excludes_zero": true
+    },
+    "unconstrained-zero-shot-minus-unconstrained-few-shot-synthetic-3": {
+      "ci_95_percentile": {
+        "lower": -0.02450176098262563,
+        "upper": 0.008006964717192496
+      },
+      "left": "unconstrained-zero-shot",
+      "observed_macro_f1_difference": -0.007765720295083739,
+      "practical_effect": true,
+      "practical_threshold": 0.005,
+      "right": "unconstrained-few-shot-synthetic-3",
+      "two_sided_interval_excludes_zero": false
+    }
+  },
+  "confidence_interval": 0.95,
+  "replicates": 10000,
+  "resampling_unit": "dev row with replacement",
+  "seed": 20260731,
+  "statistic": "paired Macro-F1 difference"
+}

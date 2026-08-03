@@ -1,0 +1,141 @@
+{
+  "accessed_splits": [],
+  "checks": [
+    {
+      "message": "config identity is EXP-028",
+      "passed": true
+    },
+    {
+      "message": "config tier is Major",
+      "passed": true
+    },
+    {
+      "message": "Major protocol exists",
+      "passed": true
+    },
+    {
+      "message": "test access is not authorized",
+      "passed": true
+    },
+    {
+      "message": "GoEmotions test is absent",
+      "passed": true
+    },
+    {
+      "message": "formal output directory is absent",
+      "passed": true
+    },
+    {
+      "message": "private feature cache is absent",
+      "passed": true
+    },
+    {
+      "message": "private feature cache is gitignored",
+      "passed": true
+    },
+    {
+      "message": "dev split exists",
+      "passed": true
+    },
+    {
+      "message": "dev split hash matches",
+      "passed": true
+    },
+    {
+      "message": "train split exists",
+      "passed": true
+    },
+    {
+      "message": "train split hash matches",
+      "passed": true
+    },
+    {
+      "message": "label ontology hash matches",
+      "passed": true
+    },
+    {
+      "message": "label ontology contains 28 labels",
+      "passed": true
+    },
+    {
+      "message": "base manifest hash matches",
+      "passed": true
+    },
+    {
+      "message": "base tokenizer hash matches",
+      "passed": true
+    },
+    {
+      "message": "post-trained manifest hash matches",
+      "passed": true
+    },
+    {
+      "message": "post-trained tokenizer hash matches",
+      "passed": true
+    },
+    {
+      "message": "extractor implementation hash matches",
+      "passed": true
+    },
+    {
+      "message": "fitter implementation hash matches",
+      "passed": true
+    },
+    {
+      "message": "verifier implementation hash matches",
+      "passed": true
+    },
+    {
+      "message": "EXP-027 verification hash matches",
+      "passed": true
+    },
+    {
+      "message": "EXP-027 synthetic representation smoke passed",
+      "passed": true
+    },
+    {
+      "message": "EXP-027 parent identity matches",
+      "passed": true
+    },
+    {
+      "message": "MLX extractor Python exists",
+      "passed": true
+    },
+    {
+      "message": "probe Python exists",
+      "passed": true
+    },
+    {
+      "message": "MLX extractor package versions match",
+      "passed": true
+    },
+    {
+      "message": "probe package versions match",
+      "passed": true
+    }
+  ],
+  "config_path": "experiments/goemotions/qwen3-1.7b/configs/exp-028-matched-frozen-probe.json",
+  "config_sha256": "a932e62a1dbbd6d5cf0c46656b74043caedf63ddc488a578d0e5ac8a0ded4cea",
+  "created_at_utc": "2026-08-01T01:58:06.166385+00:00",
+  "environment": {
+    "extractor": {
+      "mlx": "0.32.0",
+      "mlx-lm": "0.31.3",
+      "numpy": "2.4.6",
+      "transformers": "5.14.1"
+    },
+    "probe": {
+      "numpy": "2.2.6",
+      "scikit-learn": "1.7.2",
+      "scipy": "1.15.3"
+    }
+  },
+  "experiment_id": "EXP-028",
+  "failed_checks": [],
+  "preflight_sha256": "a975bf272b9b2370f48a8f51543b00e9cea9473f9a768f93e84de2490146cefb",
+  "protocol_path": "experiments/goemotions/qwen3-1.7b/protocols/exp-028-matched-frozen-probe.md",
+  "protocol_sha256": "8045606b7dcfba36b0611b17c86676704aa29b3b08cba9336bf17daf989306c3",
+  "status": "Passed",
+  "test_absent": true,
+  "test_split_accessed": false
+}

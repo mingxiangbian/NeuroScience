@@ -1,0 +1,161 @@
+{
+  "accessed_splits": [
+    "train",
+    "dev"
+  ],
+  "adapter": {
+    "config": {
+      "bytes": 1729,
+      "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-029-instruct-lora/seed-43/adapter_config.json",
+      "sha256": "bf130be560285a980a45a33170ffeddd3f4a6706c6c1539a588b60eea3305247"
+    },
+    "lora_b_nonzero_tensors": 112,
+    "lora_b_tensor_count": 112,
+    "runtime_config": {
+      "bytes": 1156,
+      "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-029-instruct-lora/seed-43/runtime-config.json",
+      "sha256": "66c55caeeb313483c43edf9e97eb87a03e22651924d2f7e955ef6b3dc02faf9a"
+    },
+    "tensor_count": 224,
+    "weights": {
+      "bytes": 19947012,
+      "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-029-instruct-lora/seed-43/adapters.safetensors",
+      "sha256": "8265d98f1ab8bb3ea40dff901aede2b56dba520c351acf97ea26f0a6e0e8f806"
+    }
+  },
+  "api_cost_usd": 0,
+  "command": [
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/mlx_lm.lora",
+    "-c",
+    "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/private-cache/exp-029-instruct-lora/seed-43/runtime-config.json"
+  ],
+  "completed_at_utc": "2026-08-02T04:48:31.676673+00:00",
+  "data": {
+    "dev_rows": 5426,
+    "dev_sha256": "575489c079c9de1097062a01738f998590d6b7ead66dd1c9fd1d2ba01fd8bc62",
+    "expanded_train": {
+      "bytes": 38312222,
+      "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-029-lora-data/train.jsonl",
+      "sha256": "16ddfd4562c3a7f780e0d115a1ff88af31a8149b8bd89fd9eb9c882534338dd2"
+    },
+    "labels": [
+      "admiration",
+      "amusement",
+      "anger",
+      "annoyance",
+      "approval",
+      "caring",
+      "confusion",
+      "curiosity",
+      "desire",
+      "disappointment",
+      "disapproval",
+      "disgust",
+      "embarrassment",
+      "excitement",
+      "fear",
+      "gratitude",
+      "grief",
+      "joy",
+      "love",
+      "nervousness",
+      "optimism",
+      "pride",
+      "realization",
+      "relief",
+      "remorse",
+      "sadness",
+      "surprise",
+      "neutral"
+    ],
+    "raw_comment_ids_stored": false,
+    "raw_input_text_stored": false,
+    "rows": 43410,
+    "split": "train",
+    "test_rows_accessed": 0,
+    "validation_rows_accessed": 0
+  },
+  "dev_duration_seconds": 9404.826442374964,
+  "dev_generation_pairs": 10852,
+  "dev_model_load_seconds": 1.8260777909890749,
+  "dev_peak_mlx_memory_gb": 3.994525964,
+  "dev_progress": {
+    "completed": 10852,
+    "estimated_remaining_seconds": 0.0,
+    "total": 10852
+  },
+  "dev_started_at_utc": "2026-08-02T02:11:46.870353+00:00",
+  "duration_seconds": 23478.975887709006,
+  "experiment_id": "EXP-029",
+  "history": {
+    "bytes": 9547,
+    "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/history.csv",
+    "sha256": "a2c5182ff517d76c35a84ea8d765cb0fb21b175af69b1191fbff4fcaa62acc60"
+  },
+  "peak_mlx_memory_gb": 7.19,
+  "seed": 43,
+  "smoke": false,
+  "source_artifacts": {
+    "config": {
+      "bytes": 8007,
+      "path": "experiments/goemotions/qwen3-1.7b/configs/exp-029-instruct-lora.json",
+      "sha256": "14fe020eb86331d987561240ebfa1da70d724f0d622d74f7879a6364d4aba4ed"
+    },
+    "constraint": {
+      "bytes": 8432,
+      "path": "experiments/goemotions/qwen3-1.7b/label_json_constraint.py",
+      "sha256": "6e4d1d21d79d2fed3c8a5d118748591db6e72cfcfefb74386f913fb5fd164efa"
+    },
+    "labels": {
+      "bytes": 248,
+      "path": "data/goemotions/official/emotions.txt",
+      "sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89"
+    },
+    "metrics": {
+      "bytes": 20541,
+      "path": "experiments/goemotions/qwen3-1.7b/llm_full_dev_metrics.py",
+      "sha256": "38e50c725a5f065d0babb263ad497b5d8dc21ad6edcd11a5e4d4c79310ff44d4"
+    },
+    "model_manifest": {
+      "bytes": 4235,
+      "path": "models/qwen3-1.7b/manifest.json",
+      "sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877"
+    },
+    "prompt": {
+      "bytes": 1079,
+      "path": "experiments/goemotions/qwen3-1.7b/prompts/exp-022-resource-v1.json",
+      "sha256": "2ce7083d41df7ff15292b4211bba26e5403d9cd66c67f8f12f9386cb99bf328c"
+    },
+    "runner": {
+      "bytes": 68098,
+      "path": "experiments/goemotions/qwen3-1.7b/run_lora.py",
+      "sha256": "effbd2a5803b78289543eff13a7ceec59867dbdbbfc0b8a78bb1de9a87f3cc5f"
+    },
+    "verifier": {
+      "bytes": 24311,
+      "path": "experiments/goemotions/qwen3-1.7b/verify_lora.py",
+      "sha256": "a1a3db59e0306edcdc2cde04b6105d465004696f2393d406f66aa30eaff9ef7b"
+    }
+  },
+  "started_at_utc": "2026-08-01T19:40:04.589330+00:00",
+  "status": "Completed",
+  "stdout": {
+    "bytes": 30253,
+    "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/stdout.log",
+    "sha256": "af5d40e000558e725b576aa2897a9e80c0bfa8c35d15d7cdc5fb519938b20cb1"
+  },
+  "test_split_accessed": false,
+  "tier": "Major",
+  "trainable_parameters_reported": {
+    "percent": 0.289,
+    "total_millions": 1720.575,
+    "trainable_millions": 4.981
+  },
+  "validation_split_accessed": true,
+  "warnings": [
+    "Dev is a model-selection split, not a test or public benchmark result.",
+    "Invalid or length-terminated outputs are empty predictions without retry.",
+    "Constrained sequence log probabilities are not calibrated 28-label probabilities.",
+    "EXP-029 evaluates behavior and does not establish an emotion mechanism."
+  ]
+}

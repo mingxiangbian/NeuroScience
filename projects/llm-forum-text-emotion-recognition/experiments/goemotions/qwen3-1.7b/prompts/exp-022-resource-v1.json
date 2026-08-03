@@ -1,0 +1,19 @@
+{
+  "few_shot_examples": [
+    {
+      "assistant": "{\"labels\":[\"joy\",\"excitement\"]}",
+      "user": "Comment:\nI finally passed the exam and cannot stop smiling.\n\nReturn JSON only."
+    },
+    {
+      "assistant": "{\"labels\":[\"anger\",\"disgust\",\"disapproval\"]}",
+      "user": "Comment:\nWhy would you treat someone like that? It is disgusting.\n\nReturn JSON only."
+    },
+    {
+      "assistant": "{\"labels\":[\"nervousness\",\"fear\"]}",
+      "user": "Comment:\nThe interview is tomorrow and I cannot stop worrying.\n\nReturn JSON only."
+    }
+  ],
+  "prompt_id": "EXP-022-resource-v1",
+  "system_template": "Classify the emotion or emotions expressed in one Reddit comment. Return exactly one JSON object with the single key \"labels\". Its value must be a non-empty array of unique labels chosen only from this list: {allowed_labels}. Do not add explanations, Markdown, or other keys. Use \"neutral\" only when no listed emotion is expressed, and never combine \"neutral\" with another label.",
+  "user_template": "Comment:\n{text}\n\nReturn JSON only."
+}

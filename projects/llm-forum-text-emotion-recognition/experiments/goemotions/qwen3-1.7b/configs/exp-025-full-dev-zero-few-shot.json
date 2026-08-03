@@ -1,0 +1,208 @@
+{
+  "artifacts": {
+    "output_dir": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot",
+    "public_forbidden_content": [
+      "raw_input_text",
+      "upstream_comment_id",
+      "prompt_expanded_input",
+      "invalid_raw_generation"
+    ],
+    "required": [
+      "run.json",
+      "stdout.log",
+      "generation-records.jsonl",
+      "condition-summary.csv",
+      "aggregate-metrics.json",
+      "paired-bootstrap.json",
+      "zero-shot/predictions.csv",
+      "zero-shot/metrics.json",
+      "zero-shot/per-label-metrics.csv",
+      "zero-shot/multilabel-confusion-matrix.csv",
+      "few-shot-synthetic-3/predictions.csv",
+      "few-shot-synthetic-3/metrics.json",
+      "few-shot-synthetic-3/per-label-metrics.csv",
+      "few-shot-synthetic-3/multilabel-confusion-matrix.csv",
+      "verification.json"
+    ]
+  },
+  "comparison_inputs": {
+    "EXP-018": {
+      "dev_macro_f1": 0.20364430957028798,
+      "predictions_path": "experiments/goemotions/tfidf-ovr-logreg/runs/exp-018-tfidf-ovr-logreg/predictions.csv",
+      "predictions_sha256": "c54d1ba5ee1c4f78122db5c8cedaffa33211b5e15165520a4f9eb9ada263d901",
+      "run_path": "experiments/goemotions/tfidf-ovr-logreg/runs/exp-018-tfidf-ovr-logreg/run.json",
+      "run_sha256": "c7b29b8bfd393437e41813444894b12e3467aca4c3d99433402fe4ea8da60e6c"
+    },
+    "EXP-020": {
+      "aggregate_metrics_path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/aggregate_metrics.json",
+      "aggregate_metrics_sha256": "5e81a8877bdbade1fd8de1d8280253c2d014c1033ef6aebf51cafc3e36d16e7e",
+      "dev_macro_f1_mean": 0.4894350234249331,
+      "dev_macro_f1_sample_std": 0.011063210636681352,
+      "seed_predictions": [
+        {
+          "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/seed-42/predictions.csv",
+          "seed": 42,
+          "sha256": "eadde158ab9d9b42a0dffc554ec662b6d9aeb7bd4376c32c1c6ac310dc7e57b3"
+        },
+        {
+          "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/seed-43/predictions.csv",
+          "seed": 43,
+          "sha256": "cdae577732f10872326ab0ef263e61ad3a736ae56a224f9b5fdcbbe70a29e317"
+        },
+        {
+          "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/seed-44/predictions.csv",
+          "seed": 44,
+          "sha256": "b4d35702dc75eb75f2aba20cf5e94c53fad516b52de769c910bfe856c99d3bce"
+        }
+      ]
+    }
+  },
+  "conditions": [
+    {
+      "few_shot_examples": 0,
+      "name": "zero-shot"
+    },
+    {
+      "few_shot_examples": 3,
+      "name": "few-shot-synthetic-3"
+    }
+  ],
+  "constraint": {
+    "duplicate_labels_allowed": false,
+    "implementation": "finite-state token mask via MLX-LM logits_processors",
+    "path": "experiments/goemotions/qwen3-1.7b/label_json_constraint.py",
+    "schema": "exact label-name JSON",
+    "sha256": "6e4d1d21d79d2fed3c8a5d118748591db6e72cfcfefb74386f913fb5fd164efa",
+    "unrestricted_fallback": false
+  },
+  "data": {
+    "dataset_protocol": "DATA-GOE-V1",
+    "dev_rows": 5426,
+    "dev_sha256": "575489c079c9de1097062a01738f998590d6b7ead66dd1c9fd1d2ba01fd8bc62",
+    "labels_sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89",
+    "split": "dev",
+    "test_access": false,
+    "test_must_be_absent": true,
+    "train_access": false
+  },
+  "decoding": {
+    "batch_size": 1,
+    "enable_thinking": false,
+    "generation_seed": null,
+    "kv_cache_quantization": null,
+    "max_new_tokens": 64,
+    "prompt_cache": false,
+    "sampler": "greedy",
+    "temperature": 0.0
+  },
+  "decoder_ablation": {
+    "paired_experiment": "EXP-026",
+    "role": "EXP-025 estimates the constrained end-to-end system; EXP-026 removes only the finite-state token mask.",
+    "telemetry": [
+      "constraint_intervened",
+      "raw_argmax_blocked_steps",
+      "first_blocked_step",
+      "first_blocked_token_id"
+    ]
+  },
+  "evaluation": {
+    "bootstrap": {
+      "comparisons": "zero-shot versus few-shot, and each Qwen condition versus every frozen EXP-020 seed",
+      "confidence_interval": 0.95,
+      "replicates": 10000,
+      "resampling_unit": "dev row with replacement",
+      "seed": 20260731,
+      "statistic": "paired Macro-F1 difference"
+    },
+    "invalid_output_policy": {
+      "generation_exception_or_nonfinite_value": "stop and reject the run",
+      "length_or_parser_invalid": "record an empty prediction for that condition and keep the row in every metric denominator",
+      "retries": 0,
+      "silent_repairs": false,
+      "synonym_mapping": false
+    },
+    "practical_tie_absolute_macro_f1": 0.005,
+    "primary_metric": "macro_f1_all_28_labels",
+    "required_metrics": [
+      "macro_precision",
+      "macro_recall",
+      "macro_f1",
+      "micro_precision",
+      "micro_recall",
+      "micro_f1",
+      "weighted_precision",
+      "weighted_recall",
+      "weighted_f1",
+      "samples_precision",
+      "samples_recall",
+      "samples_f1",
+      "strict_subset_accuracy",
+      "hamming_loss",
+      "label_accuracy",
+      "per_label_precision_recall_f1_gold_support_predicted_support",
+      "per_label_2x2_confusion_matrix",
+      "gold_and_predicted_label_cardinality",
+      "empty_prediction_count",
+      "neutral_coprediction_count",
+      "strict_parser_valid_rate",
+      "constraint_intervention_rate",
+      "raw_argmax_blocked_step_count",
+      "finish_reason_counts",
+      "prompt_and_generation_token_counts",
+      "latency_median_p95_total",
+      "peak_mlx_memory_gb",
+      "api_cost_usd"
+    ],
+    "selection_rule": "Select the higher dev Macro-F1 condition when the absolute difference is at least 0.005; otherwise treat the conditions as practically tied and select zero-shot for lower prompt length, latency and complexity. Selection does not authorize test access.",
+    "sequence_score": {
+      "fields": [
+        "constrained_sequence_logprob_sum",
+        "constrained_sequence_logprob_mean"
+      ],
+      "interpretation": "Log probabilities are computed after the finite-state mask and are not calibrated 28-label probabilities or unconstrained-model confidence."
+    }
+  },
+  "execution": {
+    "condition_order": "For odd one-based dev rows run zero-shot then few-shot; for even rows run few-shot then zero-shot.",
+    "external_network": false,
+    "formal_generation_passes": 1,
+    "resume_policy": "A technical resume is permitted only from an independently checked exact completed prefix with unchanged hashes; completed row-condition pairs must not be regenerated, and the interruption/resume must be recorded in run.json."
+  },
+  "experiment_id": "EXP-025",
+  "implementation": {
+    "metrics_sha256": "38e50c725a5f065d0babb263ad497b5d8dc21ad6edcd11a5e4d4c79310ff44d4",
+    "runner_sha256": "ec2615c44b6c13d9843dabd344f3e2bcc05e44b1df05e2215771b7dc5a4a41ee",
+    "verifier_sha256": "f36d6417a0bcaa194635d398de0de7d95b155104996b325ef5aefc99cdc1b534"
+  },
+  "model": {
+    "condition": "post-trained",
+    "local_path": "models/qwen3-1.7b/mlx-bf16",
+    "manifest_path": "models/qwen3-1.7b/manifest.json",
+    "manifest_sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877",
+    "precision": "bfloat16",
+    "provider": "Qwen official Hugging Face repository",
+    "quantized": false,
+    "repo_id": "Qwen/Qwen3-1.7B",
+    "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e"
+  },
+  "parent_experiment": "EXP-024",
+  "prompt": {
+    "path": "experiments/goemotions/qwen3-1.7b/prompts/exp-022-resource-v1.json",
+    "sha256": "2ce7083d41df7ff15292b4211bba26e5403d9cd66c67f8f12f9386cb99bf328c",
+    "synthetic_examples_only": true
+  },
+  "registration_date": "2026-07-31",
+  "resource_budget": {
+    "api_cost_usd_max": 0,
+    "formal_runs_max": 1,
+    "measured_generations": 10852,
+    "peak_mlx_memory_gb_max": 14.0,
+    "projected_active_generation_hours": 2.5402900671708865,
+    "wall_time_minutes_max": 240,
+    "warmup_generations": 2
+  },
+  "rq_id": "RQ-G2",
+  "stage": "full-dev-zero-few-shot-evaluation",
+  "status": "Registered",
+  "tier": "Major"
+}

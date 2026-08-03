@@ -1,0 +1,65 @@
+{
+  "artifacts": {
+    "REPORT.md": {
+      "bytes": 7270,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/REPORT.md",
+      "sha256": "89eebd92dd100c47ccdc8e50901c29b9f3750d1badcfc234b4720e2a344a7899"
+    },
+    "manual_annotations.csv": {
+      "bytes": 6933,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/manual_annotations.csv",
+      "sha256": "dbf9020f7de73064464aa3b690b7f9bfe0dfa991b723962d7f020b00d92a1022"
+    },
+    "qualitative_counts.csv": {
+      "bytes": 7195,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/qualitative_counts.csv",
+      "sha256": "dc2a4478c479189db1faed6ffe8ee2a402dcd737bf604a4ff27c101a86749c61"
+    },
+    "qualitative_summary.json": {
+      "bytes": 888,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/qualitative_summary.json",
+      "sha256": "0743cc6b22f5ec101efc39487273e110c24ab3f156999e54743ded7464b52255"
+    }
+  },
+  "completed_at_utc": "2026-08-02T14:28:56.727889+00:00",
+  "experiment_id": "EXP-030",
+  "qualitative_summary": {
+    "annotation_count": 48,
+    "evidence_flag_counts": {
+      "annotation_ambiguity": 37,
+      "implicit_emotion": 18,
+      "label_overlap": 19,
+      "lexical_cue_conflict": 39,
+      "minority_class": 6,
+      "mixed_emotion": 19,
+      "negation": 3,
+      "possible_context_dependency": 15,
+      "sarcasm_irony": 4,
+      "slang_noise": 11
+    },
+    "primary_possible_source_counts": {
+      "annotation_data_uncertainty": 9,
+      "missing_context": 6,
+      "model_representation_limitation": 9,
+      "output_policy_or_label_mapping": 5,
+      "overlapping_label_ontology": 18,
+      "surface_form_noise": 1
+    },
+    "reviewer_confidence_counts": {
+      "high": 28,
+      "medium": 20
+    },
+    "role_counts": {
+      "bert_over_lora_regressions": 8,
+      "lora_over_bert_recoveries": 8,
+      "lora_over_frozen_recoveries": 8,
+      "neutral_cooccurrence_errors": 8,
+      "ordinary_lora_errors": 8,
+      "shared_errors": 8
+    }
+  },
+  "reviewer_count": 1,
+  "sampling_boundary": "stratified purposive sample; not a prevalence estimate",
+  "status": "Completed",
+  "wall_seconds": 0.013165832962840796
+}

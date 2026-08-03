@@ -1,0 +1,105 @@
+{
+  "accessed_splits": [],
+  "adapter": {
+    "bytes": 19947012,
+    "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-029-instruct-lora/seed-42/adapters.safetensors",
+    "sha256": "77624d77d2ba2225dcf51e7fbf9a8131aa746bfd0004d72ae203360fedfe88ff"
+  },
+  "api_cost_usd": 0,
+  "command": [
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+    "experiments/goemotions/qwen3-1.7b/run_neutral_ontology_ablation.py",
+    "smoke",
+    "--seed",
+    "42"
+  ],
+  "completed_at_utc": "2026-08-02T15:49:08.752085+00:00",
+  "config": {
+    "bytes": 8166,
+    "path": "experiments/goemotions/qwen3-1.7b/configs/exp-031-neutral-ontology-inference-ablation.json",
+    "sha256": "66e256d749feb8a0df3ca1f289a93f74ec36888d76ffc42db0142e79edc8cb75"
+  },
+  "duration_seconds": 7.690943416964728,
+  "environment": {
+    "packages": {
+      "mlx": "0.32.0",
+      "mlx-lm": "0.31.3",
+      "numpy": "2.4.6",
+      "transformers": "5.14.1"
+    },
+    "python_executable": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+    "python_version": "3.11.15 (main, Jun 11 2026, 15:14:57) [Clang 20.1.8 ]"
+  },
+  "experiment_id": "EXP-031",
+  "grammar_assertions_passed": 6,
+  "hardware": {
+    "logical_cpu_count": 8,
+    "machine": "arm64",
+    "macos_version": "26.5.2",
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "processor": "arm"
+  },
+  "model_manifest": {
+    "bytes": 4235,
+    "path": "models/qwen3-1.7b/manifest.json",
+    "sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877"
+  },
+  "protocol": {
+    "bytes": 9646,
+    "path": "experiments/goemotions/qwen3-1.7b/protocols/exp-031-neutral-ontology-inference-ablation.md",
+    "sha256": "af7651e12b404994ab2f4088c5c5522204c4ef84671ce2ee8e1cfb44bfaf2c58"
+  },
+  "records": [
+    {
+      "canonical_output": "{\"labels\":[\"annoyance\"]}",
+      "condition": "old-prompt-closed-decoder",
+      "generated_tokens": 8,
+      "input_id": 1,
+      "output_sha256": "d21ffbbc06523da4c470e4dfa87f4798812be251e6b34c1566f2eb424f43260e",
+      "peak_memory_gb": 3.830871152
+    },
+    {
+      "canonical_output": "{\"labels\":[\"joy\"]}",
+      "condition": "old-prompt-closed-decoder",
+      "generated_tokens": 6,
+      "input_id": 2,
+      "output_sha256": "b293d3b3866aac91faf6a0ac6d69721870b60e66d8ed043aff0950f18d759039",
+      "peak_memory_gb": 3.75533864
+    },
+    {
+      "canonical_output": "{\"labels\":[\"annoyance\"]}",
+      "condition": "old-prompt-open-decoder",
+      "generated_tokens": 8,
+      "input_id": 1,
+      "output_sha256": "d21ffbbc06523da4c470e4dfa87f4798812be251e6b34c1566f2eb424f43260e",
+      "peak_memory_gb": 3.75533864
+    },
+    {
+      "canonical_output": "{\"labels\":[\"joy\"]}",
+      "condition": "old-prompt-open-decoder",
+      "generated_tokens": 6,
+      "input_id": 2,
+      "output_sha256": "b293d3b3866aac91faf6a0ac6d69721870b60e66d8ed043aff0950f18d759039",
+      "peak_memory_gb": 3.75533864
+    },
+    {
+      "canonical_output": "{\"labels\":[\"annoyance\"]}",
+      "condition": "aligned-prompt-open-decoder",
+      "generated_tokens": 8,
+      "input_id": 1,
+      "output_sha256": "d21ffbbc06523da4c470e4dfa87f4798812be251e6b34c1566f2eb424f43260e",
+      "peak_memory_gb": 3.7806356
+    },
+    {
+      "canonical_output": "{\"labels\":[\"joy\"]}",
+      "condition": "aligned-prompt-open-decoder",
+      "generated_tokens": 6,
+      "input_id": 2,
+      "output_sha256": "b293d3b3866aac91faf6a0ac6d69721870b60e66d8ed043aff0950f18d759039",
+      "peak_memory_gb": 3.7806356
+    }
+  ],
+  "seed": 42,
+  "status": "Passed",
+  "test_absent": true
+}

@@ -1,0 +1,179 @@
+{
+  "annotation": {
+    "allowed_evidence_flags": [
+      "sarcasm_irony",
+      "negation",
+      "implicit_emotion",
+      "mixed_emotion",
+      "slang_noise",
+      "possible_context_dependency",
+      "annotation_ambiguity",
+      "lexical_cue_conflict",
+      "minority_class",
+      "label_overlap"
+    ],
+    "allowed_primary_sources": [
+      "annotation_data_uncertainty",
+      "overlapping_label_ontology",
+      "missing_context",
+      "model_representation_limitation",
+      "surface_form_noise",
+      "output_policy_or_label_mapping",
+      "uncertain"
+    ],
+    "confidence_levels": ["low", "medium", "high"]
+  },
+  "conditions": [
+    {
+      "expected_runs": 3,
+      "id": "exp-020-bert",
+      "name": "EXP-020 BERT-base-cased",
+      "runs": [
+        {
+          "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/seed-42/predictions.csv",
+          "seed": 42,
+          "sha256": "eadde158ab9d9b42a0dffc554ec662b6d9aeb7bd4376c32c1c6ac310dc7e57b3"
+        },
+        {
+          "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/seed-43/predictions.csv",
+          "seed": 43,
+          "sha256": "cdae577732f10872326ab0ef263e61ad3a736ae56a224f9b5fdcbbe70a29e317"
+        },
+        {
+          "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/seed-44/predictions.csv",
+          "seed": 44,
+          "sha256": "b4d35702dc75eb75f2aba20cf5e94c53fad516b52de769c910bfe856c99d3bce"
+        }
+      ],
+      "verification": {
+        "expected_status": "Verified",
+        "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/verification.json",
+        "sha256": "0a97b9af655c26d33d6c7e96aa1b54c301be2ec31ba222ccafbdad8b79d3780b",
+        "status_field": "status"
+      }
+    },
+    {
+      "expected_runs": 1,
+      "id": "exp-025-frozen-qwen",
+      "name": "EXP-025 frozen Qwen selected few-shot",
+      "runs": [
+        {
+          "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/few-shot-synthetic-3/predictions.csv",
+          "seed": null,
+          "sha256": "0e44154e8202e9e3f30f3f4b0da5570b872698d7e62e600370782cc784228ee5"
+        }
+      ],
+      "verification": {
+        "expected_status": "Passed",
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/verification.json",
+        "sha256": "3d095e27e24052f64e55cbeeeed2f37775b129f3c4de111f4c90b2e1bde9279c",
+        "status_field": "status"
+      }
+    },
+    {
+      "expected_runs": 3,
+      "id": "exp-029-lora-qwen",
+      "name": "EXP-029 LoRA Qwen selected zero-shot",
+      "runs": [
+        {
+          "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-42/zero-shot/predictions.csv",
+          "seed": 42,
+          "sha256": "9ba3dbcc444fa1c0c1e4491e6679a961a577e1fbd8018a1c1bf16161d277cc63"
+        },
+        {
+          "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/zero-shot/predictions.csv",
+          "seed": 43,
+          "sha256": "e4e7d4b28aa9ae7e685d0832cedd04566990f8f5cb0894e474c9bccdbfc4fffd"
+        },
+        {
+          "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-44/zero-shot/predictions.csv",
+          "seed": 44,
+          "sha256": "f21750dad0a4c770f63e017e160a45cea7ba6311ed9cc7a91e8583457d40bf1a"
+        }
+      ],
+      "verification": {
+        "expected_status": "Passed",
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/multi-seed-verification.json",
+        "sha256": "798257185d17b797b3e131924688e30a43d2b87fa0e84acb54183751d090e2cd",
+        "status_field": "status"
+      }
+    }
+  ],
+  "data": {
+    "dev": {
+      "path": "data/goemotions/official/dev.tsv",
+      "rows": 5426,
+      "sha256": "575489c079c9de1097062a01738f998590d6b7ead66dd1c9fd1d2ba01fd8bc62"
+    },
+    "labels": {
+      "count": 28,
+      "path": "data/goemotions/official/emotions.txt",
+      "sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89"
+    },
+    "protocol_id": "DATA-GOE-V1",
+    "source_revision": "8dadc6c56e2c2e51a9dd7e0d4bf2840922b4b6c0",
+    "test_path": "data/goemotions/official/test.tsv"
+  },
+  "experiment_id": "EXP-030",
+  "official_reference": {
+    "comparison_boundary": "Official values are final-test references only; no matched validation comparison is claimed.",
+    "metric_code_url": "https://github.com/google-research/google-research/blob/master/goemotions/calculate_metrics.py",
+    "paper_url": "https://aclanthology.org/2020.acl-main.372/",
+    "per_label_f1": {
+      "admiration": 0.65,
+      "amusement": 0.80,
+      "anger": 0.47,
+      "annoyance": 0.34,
+      "approval": 0.36,
+      "caring": 0.39,
+      "confusion": 0.37,
+      "curiosity": 0.54,
+      "desire": 0.49,
+      "disappointment": 0.28,
+      "disapproval": 0.39,
+      "disgust": 0.45,
+      "embarrassment": 0.43,
+      "excitement": 0.34,
+      "fear": 0.60,
+      "gratitude": 0.86,
+      "grief": 0.00,
+      "joy": 0.51,
+      "love": 0.78,
+      "nervousness": 0.35,
+      "neutral": 0.68,
+      "optimism": 0.51,
+      "pride": 0.36,
+      "realization": 0.21,
+      "relief": 0.15,
+      "remorse": 0.66,
+      "sadness": 0.49,
+      "surprise": 0.50
+    },
+    "repository_url": "https://github.com/google-research/google-research/tree/master/goemotions",
+    "reported_split": "test",
+    "reported_test_rows": 5427,
+    "test_macro_f1": 0.46,
+    "test_macro_precision": 0.40,
+    "test_macro_recall": 0.63,
+    "validation_accuracy_published": false
+  },
+  "output_dir": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis",
+  "protocol": {
+    "path": "experiments/goemotions/error-analysis/protocols/exp-030-frozen-dev-error-analysis.md"
+  },
+  "sampling": {
+    "long_tail_support_below": 100,
+    "maximum_unique_rows": 48,
+    "roles": [
+      {"id": "lora_over_bert_recoveries", "limit": 8},
+      {"id": "bert_over_lora_regressions", "limit": 8},
+      {"id": "lora_over_frozen_recoveries", "limit": 8},
+      {"id": "neutral_cooccurrence_errors", "limit": 8},
+      {"id": "shared_errors", "limit": 8},
+      {"id": "ordinary_lora_errors", "limit": 8, "long_tail_target": 4}
+    ],
+    "seed": "20260802"
+  },
+  "stage": "descriptive-frozen-dev-error-analysis",
+  "tier": "Major"
+}

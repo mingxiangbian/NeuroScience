@@ -5,9 +5,9 @@
     "directoryLabel": "情感与智能体",
     "title": "论坛文本情感识别",
     "englishTitle": "Forum Text Emotion Recognition",
-    "stage": "GoEmotions 本地 LLM 行为 2×2 已验证；EXP-028 因超过冻结资源门而失败，后续正式 probe 待登记新编号。",
-    "curatedAt": "2026-08-01",
-    "evidenceThrough": "2026-08-01",
+    "stage": "GoEmotions EXP-030 错误分析与 EXP-031 neutral ontology 推理消融已验证；下一候选为 target-aligned retraining。",
+    "curatedAt": "2026-08-03",
+    "evidenceThrough": "2026-08-03",
     "staleAfterDays": 45,
     "scope": "静态研究进度与证据展示；不运行模型，不接收文本输入。"
   },
@@ -49,53 +49,53 @@
       "id": "RQ-G2",
       "anchor": "rq-g2",
       "title": "LLM 适配阶段",
-      "question": "Prompt、decoder、post-training 与后续 LoRA 分别改变了什么？",
+      "question": "Prompt、decoder、post-training 与 LoRA 分别改变了什么？",
       "status": "active"
     }
   ],
   "activeEvidenceSpine": {
-    "title": "RQ-G2 · 表征证据恢复路径",
-    "summary": "当前路径只表达 EXP-028 失败后的证据边界与恢复依赖，不把失败运行的诊断分数晋升为 Verified。",
+    "title": "RQ-G2 · Neutral ontology 消融证据链",
+    "summary": "EXP-031 已验证 inference-only correction 不足以修复 EXP-029 的 neutral 共现失配；下一步需用新编号检验 target-aligned retraining。",
     "nodes": [
       {
         "kind": "research-question",
         "label": "Research question",
         "ref": "RQ-G2",
         "title": "适配阶段改变了什么？",
-        "detail": "区分 prompt、decoder、post-training 与后续 LoRA 的行为和表征影响。",
+        "detail": "区分 prompt、decoder、训练目标、post-training 与 LoRA 的行为收益，并保留独立表征问题。",
         "status": "active"
       },
       {
         "kind": "experiment",
         "label": "Experiment",
-        "ref": "EXP-028",
-        "title": "Matched frozen probe",
-        "detail": "全部计算完成，但 fitting/evaluation 344.288 分钟超过冻结的 240 分钟上限。",
-        "status": "failed"
+        "ref": "EXP-031",
+        "title": "Neutral co-occurrence inference ablation",
+        "detail": "复用三个冻结 EXP-029 adapters，对 closed、decoder-open 与 prompt/decoder aligned 三种推理策略完成全量 dev 配对消融。",
+        "status": "verified"
       },
       {
         "kind": "evidence",
         "label": "Evidence",
-        "ref": "Artifact audit",
-        "title": "产物审计通过，证据门失败",
-        "detail": "概率、指标与 bootstrap 可复算；正式状态仍为 Failed，不具 Verified 资格。",
-        "status": "preserved",
-        "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/README.md"
+        "ref": "EVID-020",
+        "title": "推理消融三 seed 结果已验证",
+        "detail": "decoder-only 预测完全不变；aligned inference Macro-F1 +0.001682，neutral 共现切片 Samples-F1 -0.009132。",
+        "status": "verified",
+        "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-031-neutral-co-occurrence-inference-ablation"
       },
       {
         "kind": "claim",
         "label": "Current claim",
-        "ref": "Boundary",
-        "title": "尚无 Verified probe 结论",
-        "detail": "诊断值不能用于判断 post-training 是否改变标签线性可解码性，也不能进入论文定量结论。",
-        "status": "blocked"
+        "ref": "Inference-policy claim",
+        "title": "推理修正不足，不能替代重新训练",
+        "detail": "三种条件都没有产生 neutral 共现预测；结果只排除 inference-only correction 足够的解释，不证明训练目标是唯一原因。",
+        "status": "verified"
       },
       {
         "kind": "next",
         "label": "Next dependency",
         "ref": "New EXP ID",
-        "title": "登记新的 matched-probe Major",
-        "detail": "先冻结透明的恢复政策与现实资源门；保留 EXP-028，test 继续关闭。",
+        "title": "讨论并预登记 target-aligned retraining",
+        "detail": "用新实验编号在训练目标、prompt 和 decoder 中一致保留官方 neutral 共现标签；GoEmotions test 继续关闭。",
         "status": "active",
         "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/README.md"
       }
@@ -127,8 +127,26 @@
       "rq": "RQ-G2"
     },
     {
-      "label": "新的正式 probe、LoRA、上下文与系统",
-      "detail": "先登记 successor probe；forum data 与 holdout 边界仍待确认",
+      "label": "EXP-029 Qwen3-1.7B supervised LoRA",
+      "detail": "三 seed zero-shot Macro-F1 0.451374 ± 0.019212；较冻结 Qwen +0.210209，较 BERT -0.038061",
+      "status": "verified",
+      "rq": "RQ-G2"
+    },
+    {
+      "label": "EXP-030 跨模型 dev 错误分析",
+      "detail": "LoRA 偏向近单标签输出；174 条 neutral+emotion gold 对 closed ontology 结构性不可达",
+      "status": "verified",
+      "rq": "RQ-G1 · RQ-G2"
+    },
+    {
+      "label": "EXP-031 neutral ontology 推理消融",
+      "detail": "decoder-only 预测完全不变；aligned inference 未达到改善门槛，neutral 共现预测仍为 0",
+      "status": "verified",
+      "rq": "RQ-G2"
+    },
+    {
+      "label": "Target-aligned retraining、正式 probe 与论坛上下文",
+      "detail": "行为线需新编号检验 corrected retraining；表征线需新实验编号；forum data 与 holdout 边界仍待确认",
       "status": "active",
       "rq": "RQ-G2"
     }
@@ -315,14 +333,14 @@
           },
           "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-018-goemotions-tf-idf--one-vs-rest-logistic-regression"
         },
-        {
-          "experiment": "EXP-025",
-          "label": "Qwen constrained few-shot",
-          "value": 0.241164,
+      {
+        "experiment": "EXP-025",
+        "label": "Qwen constrained few-shot",
+        "value": 0.241164,
           "std": null,
           "rq": "RQ-G2",
           "note": "冻结 dev 规则下选定的生成式行为条件。",
-          "visualRole": "selected",
+          "visualRole": "reference",
           "uncertainty": {
             "kind": "not-estimated",
             "value": null,
@@ -333,11 +351,32 @@
             "baselineExperiment": "EXP-018",
             "delta": 0.03752,
             "interpretation": "descriptive-only"
-          },
-          "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-025-constrained-qwen3-17b-zerofew-shot"
         },
-        {
-          "experiment": "EXP-020",
+        "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-025-constrained-qwen3-17b-zerofew-shot"
+      },
+      {
+        "experiment": "EXP-029",
+        "label": "Qwen3-1.7B + LoRA",
+        "value": 0.451374,
+        "std": 0.019212,
+        "rq": "RQ-G2",
+        "note": "三随机种子监督 LoRA；冻结规则选择 zero-shot；仅为 dev 结果。",
+        "visualRole": "selected",
+        "uncertainty": {
+          "kind": "sample-standard-deviation",
+          "value": 0.019212,
+          "runs": 3,
+          "label": "3 seeds · sample SD"
+        },
+        "comparison": {
+          "baselineExperiment": "EXP-025",
+          "delta": 0.21021,
+          "interpretation": "controlled-dev"
+        },
+        "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-029-supervised-lora-for-qwen3-17b"
+      },
+      {
+        "experiment": "EXP-020",
           "label": "BERT-base-cased",
           "value": 0.489435,
           "std": 0.011063,
@@ -439,15 +478,15 @@
   "actionDock": {
     "nextAction": {
       "status": "active",
-      "title": "登记新的 matched-probe Major",
-      "detail": "保留 EXP-028 的 Failed 状态；执行前冻结透明的恢复政策、现实资源门和新实验编号，test 继续关闭。",
+      "title": "讨论并预登记 target-aligned retraining",
+      "detail": "EXP-031 已排除 inference-only correction 足够的解释；下一 Major 应统一官方训练目标、开放 prompt 与 decoder，test 继续关闭。",
       "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/README.md"
     },
     "blockers": [
       {
         "status": "failed",
-        "title": "EXP-028 超过冻结资源门",
-        "detail": "probe fitting/evaluation 为 344.288 分钟，高于 240 分钟上限；产物审计通过，但诊断值不能作为 Verified 证据。"
+        "title": "表征支线仍无 Verified probe",
+        "detail": "EXP-028 超过冻结资源门并保持 Failed；恢复 Base/Instruct 表征比较必须登记新实验编号，不能用诊断值补写结论。"
       },
       {
         "status": "blocked",
@@ -475,6 +514,18 @@
   },
   "recentChanges": [
     {
+      "date": "2026-08-03",
+      "title": "EXP-031 三 seed neutral ontology 推理消融完成并独立验证"
+    },
+    {
+      "date": "2026-08-02",
+      "title": "EXP-030 冻结跨模型 dev 错误分析完成并独立验证"
+    },
+    {
+      "date": "2026-08-02",
+      "title": "EXP-029 三 seed LoRA 训练、双条件 dev 评估和独立验证完成"
+    },
+    {
       "date": "2026-08-01",
       "title": "EXP-028 触发 240 分钟资源门，保留 Failed；失败产物审计通过"
     },
@@ -485,18 +536,20 @@
     {
       "date": "2026-07-31",
       "title": "EXP-018/020 GoEmotions dev 基线验证完成"
-    },
-    {
-      "date": "2026-07-30",
-      "title": "TweetEval frozen test gate 与错误分析完成"
     }
   ],
   "futurePlan": [
     {
       "status": "planned",
       "label": "NEXT",
-      "title": "Instruct LoRA",
-      "detail": "仅在新的 matched-probe 正式实验通过资源门和独立验证后进入。"
+      "title": "Target-aligned retraining",
+      "detail": "使用新实验编号统一官方训练目标、开放 prompt 与 decoder；与冻结 EXP-029/031 配对比较，不读取 test。"
+    },
+    {
+      "status": "planned",
+      "label": "PARALLEL",
+      "title": "恢复 matched probe",
+      "detail": "若继续表征支线，登记新的 Major、现实资源门和恢复政策；EXP-028 保持 Failed。"
     },
     {
       "status": "blocked",

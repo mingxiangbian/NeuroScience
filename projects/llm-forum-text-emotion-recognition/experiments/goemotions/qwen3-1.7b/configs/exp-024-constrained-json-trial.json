@@ -1,0 +1,82 @@
+{
+  "conditions": [
+    {
+      "few_shot_examples": 0,
+      "name": "zero-shot"
+    },
+    {
+      "few_shot_examples": 3,
+      "name": "few-shot-synthetic-3"
+    }
+  ],
+  "data": {
+    "dataset_protocol": "DATA-GOE-V1",
+    "dev_access": false,
+    "dev_rows_for_linear_estimate": 5426,
+    "expected_selection_digest_sha256": "7dcdbe002627948d6e1c5ed4eceb950085585ad0c726333ba3012515dbd8c525",
+    "expected_train_rows": 43410,
+    "gold_labels_retained_or_used": false,
+    "labels_sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89",
+    "sample_count": 32,
+    "selection": {
+      "length_measure": "Python Unicode code-point count of the text field",
+      "per_stratum": 8,
+      "rank_strata": 4,
+      "rule": "Reuse EXP-022 exactly: sort all train rows by (text_length, sha256(comment_id), one_based_row); assign rank quartiles by floor(rank * 4 / 43410); within each quartile select the 8 smallest sha256('EXP-022-selection-v1:' + comment_id), breaking ties by row number; order selected rows by (quartile, selector_hash, row number)."
+    },
+    "split": "train",
+    "test_access": false,
+    "train_sha256": "1c254a142be5c00e80d819b9ae1bbd36d94b2eeb8f4b1271846508d57e57d9c5"
+  },
+  "decoding": {
+    "batch_size": 1,
+    "constraint": {
+      "duplicate_labels_allowed": false,
+      "implementation": "finite-state token mask via MLX-LM logits_processors",
+      "neutral_combination_allowed": false,
+      "schema": "exact label-name JSON",
+      "unrestricted_fallback": false
+    },
+    "enable_thinking": false,
+    "kv_cache_quantization": null,
+    "max_new_tokens": 64,
+    "prompt_cache": false,
+    "sampler": "greedy",
+    "temperature": 0.0
+  },
+  "experiment_id": "EXP-024",
+  "model": {
+    "condition": "post-trained",
+    "local_path": "models/qwen3-1.7b/mlx-bf16",
+    "precision": "bfloat16",
+    "quantized": false,
+    "repo_id": "Qwen/Qwen3-1.7B",
+    "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e"
+  },
+  "output_schema": {
+    "exact_key": "labels",
+    "label_names_from_frozen_ontology_only": true,
+    "neutral_combination_allowed": false,
+    "silent_repairs": false,
+    "synonym_mapping": false
+  },
+  "parent_experiment": "EXP-022",
+  "prompt_path": "experiments/goemotions/qwen3-1.7b/prompts/exp-022-resource-v1.json",
+  "resource_budget": {
+    "api_cost_usd": 0,
+    "full_dev_estimate_hours_per_condition_max": 8.0,
+    "measured_generations": 64,
+    "peak_mlx_memory_gb_max": 14.0,
+    "wall_time_minutes_max": 30,
+    "warmup_generations": 2
+  },
+  "rq_id": "RQ-G2 implementation gate",
+  "stage": "constrained-label-json-repair-trial",
+  "success_gate": {
+    "generation_failures_max": 0,
+    "length_terminated_max_per_condition": 0,
+    "strict_parser_valid_rate_min_per_condition": 0.95
+  },
+  "tier": "Minor",
+  "unique_change_from_exp_022": "Apply a finite-state token mask that permits only complete strict label-name JSON over the frozen ontology; keep prompt, samples, model, conditions, decoding budget, ordering and gates unchanged."
+}

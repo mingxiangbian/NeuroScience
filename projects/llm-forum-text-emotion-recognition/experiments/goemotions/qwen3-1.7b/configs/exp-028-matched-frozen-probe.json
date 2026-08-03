@@ -1,0 +1,175 @@
+{
+  "data": {
+    "dataset_protocol": "DATA-GOE-V1",
+    "label_count": 28,
+    "labels_path": "data/goemotions/official/emotions.txt",
+    "labels_sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89",
+    "splits": {
+      "dev": {
+        "path": "data/goemotions/official/dev.tsv",
+        "rows": 5426,
+        "sha256": "575489c079c9de1097062a01738f998590d6b7ead66dd1c9fd1d2ba01fd8bc62"
+      },
+      "train": {
+        "path": "data/goemotions/official/train.tsv",
+        "rows": 43410,
+        "sha256": "1c254a142be5c00e80d819b9ae1bbd36d94b2eeb8f4b1271846508d57e57d9c5"
+      }
+    },
+    "test_access": false,
+    "test_path": "data/goemotions/official/test.tsv"
+  },
+  "environment": {
+    "extractor_python": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+    "extractor_versions": {
+      "mlx": "0.32.0",
+      "mlx-lm": "0.31.3",
+      "numpy": "2.4.6",
+      "transformers": "5.14.1"
+    },
+    "probe_python": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python",
+    "probe_versions": {
+      "numpy": "2.2.6",
+      "scikit-learn": "1.7.2",
+      "scipy": "1.15.3"
+    }
+  },
+  "evaluation": {
+    "bootstrap": {
+      "batch_size": 100,
+      "replicates": 10000,
+      "seed": 20260801,
+      "unit": "dev row"
+    },
+    "primary_metric": "Macro-F1 over all 28 labels",
+    "practical_macro_f1_difference": 0.005,
+    "required_secondary_metrics": [
+      "macro/micro/weighted/samples precision recall F1",
+      "strict subset accuracy",
+      "hamming loss and label accuracy",
+      "per-label precision recall F1 and support",
+      "per-label 2x2 confusion matrices",
+      "prediction cardinality and empty predictions"
+    ],
+    "selection_rule": {
+      "base_more_linearly_decodable": "post-trained minus base <= -0.005 and the paired 95% interval is below zero",
+      "inconclusive": "absolute difference >= 0.005 but the paired 95% interval includes zero",
+      "post-trained_more_linearly_decodable": "post-trained minus base >= 0.005 and the paired 95% interval is above zero",
+      "practical_tie": "absolute post-trained minus base difference < 0.005"
+    }
+  },
+  "experiment_id": "EXP-028",
+  "extraction": {
+    "batch_size": 8,
+    "feature_dtype": "float32",
+    "model_forward_dtype": "bfloat16",
+    "network_access": false,
+    "split_order": [
+      "base/train",
+      "base/dev",
+      "post-trained/train",
+      "post-trained/dev"
+    ]
+  },
+  "implementation": {
+    "extractor_path": "experiments/goemotions/qwen3-1.7b/extract_frozen_probe_features.py",
+    "extractor_sha256": "c29f5a7ba71a956bf8ed259a9c0461d1a151f3a1e7cb8c444baebf6b8a69dccd",
+    "fitter_path": "experiments/goemotions/qwen3-1.7b/fit_frozen_probe.py",
+    "fitter_sha256": "af64794722d40f4449d84aed2c4cd4d6c53ab254e9e69c3b006938862b7c6909",
+    "verifier_path": "experiments/goemotions/qwen3-1.7b/verify_frozen_probe.py",
+    "verifier_sha256": "90056c79bfc6f5f176537b2bc05dd273f8fcabbcd70ab29c29b6d12c4d55f605"
+  },
+  "label_shuffle": {
+    "interpretation_gate": "Each real probe should exceed its condition's maximum shuffled-label Macro-F1 by at least 0.02; a failure is preserved as a validity concern rather than deleted.",
+    "minimum_real_minus_max_shuffle_macro_f1": 0.02,
+    "rule": "For each seed, permute complete train label-set rows while leaving train features fixed; this preserves label marginals and within-row label co-occurrence but breaks text-label alignment.",
+    "seeds": [
+      42,
+      43,
+      44
+    ]
+  },
+  "models": [
+    {
+      "condition": "base",
+      "local_path": "models/qwen3-1.7b-base/mlx-bf16",
+      "manifest_path": "models/qwen3-1.7b-base/manifest.json",
+      "manifest_sha256": "e120c568597bc10aebab9b07ad77c41a8837014860abbe96537098529068d080",
+      "precision": "bfloat16",
+      "repo_id": "Qwen/Qwen3-1.7B-Base",
+      "revision": "ea980cb0a6c2ae4b936e82123acc929f1cec04c1",
+      "training_stage": "pretraining only"
+    },
+    {
+      "condition": "post-trained",
+      "local_path": "models/qwen3-1.7b/mlx-bf16",
+      "manifest_path": "models/qwen3-1.7b/manifest.json",
+      "manifest_sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877",
+      "precision": "bfloat16",
+      "repo_id": "Qwen/Qwen3-1.7B",
+      "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+      "training_stage": "pretraining and post-training"
+    }
+  ],
+  "parent_experiment": "EXP-027",
+  "paths": {
+    "formal_run_dir": "experiments/goemotions/qwen3-1.7b/runs/exp-028-matched-frozen-probe",
+    "private_cache_root": "experiments/goemotions/qwen3-1.7b/private-cache/exp-028-matched-frozen-probe",
+    "protocol": "experiments/goemotions/qwen3-1.7b/protocols/exp-028-matched-frozen-probe.md"
+  },
+  "preflight_parent": {
+    "experiment_id": "EXP-027",
+    "verification_path": "experiments/goemotions/qwen3-1.7b/runs/exp-027-frozen-probe-smoke/verification.json",
+    "verification_sha256": "90cbc3ef373c1581c561335120a7f492df17d893cd1ef0f4c030da3d48560119"
+  },
+  "probe": {
+    "C": 1.0,
+    "class_weight": "balanced",
+    "classifier": "28 independent LogisticRegression models via OneVsRestClassifier",
+    "classifier_random_state": 20260801,
+    "max_iter": 2000,
+    "n_jobs": 1,
+    "penalty": "l2",
+    "scaling": "StandardScaler fitted independently on each condition's train features only",
+    "solver": "liblinear",
+    "threshold": 0.5,
+    "threshold_tuning": false,
+    "tol": 0.0001
+  },
+  "representation": {
+    "forward_path": "model.model(input_ids)",
+    "hidden_size": 2048,
+    "layer": "final transformer output after final RMSNorm and before the LM head",
+    "pooling": "attention-mask-aware arithmetic mean over non-padding token states",
+    "right_padding_caveat": "The model receives no padding mask; right-padding tokens occur after all real tokens, so causal attention prevents them from changing retained real-token states, and pooling excludes them.",
+    "stored_feature_dtype": "float32"
+  },
+  "resource_budget": {
+    "api_cost_usd": 0,
+    "external_compute_cost_usd": 0,
+    "extraction_wall_time_minutes_max_per_condition_split": 120,
+    "formal_runs_max": 1,
+    "peak_mlx_memory_gb_max": 14.0,
+    "private_cache_gb_max": 4.0,
+    "probe_wall_time_minutes_max": 240,
+    "total_wall_time_minutes_max": 480
+  },
+  "rq_id": "RQ-G2",
+  "stage": "matched-base-post-trained-frozen-representation-probe",
+  "test_gate": {
+    "authorized": false,
+    "test_must_be_absent": true
+  },
+  "tier": "Major",
+  "tokenizer": {
+    "add_special_tokens": false,
+    "asset": "tokenizer.json",
+    "asset_sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+    "chat_template": false,
+    "max_length": 64,
+    "padding": "right",
+    "padding_token": "<|endoftext|>",
+    "padding_token_id": 151643,
+    "truncation": "right"
+  }
+}

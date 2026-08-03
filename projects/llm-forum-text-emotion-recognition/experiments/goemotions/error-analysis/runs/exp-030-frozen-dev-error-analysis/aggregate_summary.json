@@ -1,0 +1,117 @@
+{
+  "condition_summary": {
+    "exp-020-bert": {
+      "all_runs_correct": 1858,
+      "all_runs_wrong": 2511,
+      "error_mode_mean_counts": {
+        "empty_prediction": 91.66666666666667,
+        "exact": 2392.6666666666665,
+        "mixed_fp_fn": 1778.6666666666667,
+        "overprediction_only": 793.6666666666666,
+        "underprediction_only": 369.3333333333333
+      },
+      "exact_match_accuracy_mean": 0.4409632633003333,
+      "exact_match_accuracy_sample_std": 0.0039627603942349755,
+      "macro_f1_mean": 0.4894350234249331,
+      "macro_f1_sample_std": 0.011063210636681323,
+      "macro_f1_values": [
+        0.47875285843493154,
+        0.48870872238694635,
+        0.5008434894529213
+      ],
+      "mixed_outcome": 1057,
+      "predicted_cardinality_mean": 1.2759552770613334,
+      "samples_f1_mean": 0.5959360866843334
+    },
+    "exp-025-frozen-qwen": {
+      "all_runs_correct": 571,
+      "all_runs_wrong": 4855,
+      "error_mode_mean_counts": {
+        "empty_prediction": 0.0,
+        "exact": 571.0,
+        "mixed_fp_fn": 3795.0,
+        "overprediction_only": 990.0,
+        "underprediction_only": 70.0
+      },
+      "exact_match_accuracy_mean": 0.105234058238,
+      "exact_match_accuracy_sample_std": 0.0,
+      "macro_f1_mean": 0.2411641547489156,
+      "macro_f1_sample_std": 0.0,
+      "macro_f1_values": [
+        0.2411641547489156
+      ],
+      "mixed_outcome": 0,
+      "predicted_cardinality_mean": 1.911168448212,
+      "samples_f1_mean": 0.263544573745
+    },
+    "exp-029-lora-qwen": {
+      "all_runs_correct": 2341,
+      "all_runs_wrong": 2253,
+      "error_mode_mean_counts": {
+        "empty_prediction": 0.0,
+        "exact": 2758.0,
+        "mixed_fp_fn": 2049.0,
+        "overprediction_only": 65.66666666666667,
+        "underprediction_only": 553.3333333333334
+      },
+      "exact_match_accuracy_mean": 0.508293402138,
+      "exact_match_accuracy_sample_std": 0.013273282402916099,
+      "macro_f1_mean": 0.4513736090059024,
+      "macro_f1_sample_std": 0.019212762339722994,
+      "macro_f1_values": [
+        0.43720532360391057,
+        0.44367346940106894,
+        0.4732420340127276
+      ],
+      "mixed_outcome": 832,
+      "predicted_cardinality_mean": 1.034279395503,
+      "samples_f1_mean": 0.5858479747716666
+    }
+  },
+  "experiment_id": "EXP-030",
+  "gold_cardinality_mean": 1.1758201253225211,
+  "long_tail_labels": {
+    "desire": 77,
+    "disgust": 97,
+    "embarrassment": 35,
+    "excitement": 96,
+    "fear": 90,
+    "grief": 13,
+    "nervousness": 21,
+    "pride": 15,
+    "relief": 18,
+    "remorse": 68
+  },
+  "neutral_cooccurrence_rows": 174,
+  "row_count": 5426,
+  "sampling": {
+    "realized_role_counts": {
+      "bert_over_lora_regressions": 8,
+      "lora_over_bert_recoveries": 8,
+      "lora_over_frozen_recoveries": 8,
+      "neutral_cooccurrence_errors": 8,
+      "ordinary_lora_errors": 8,
+      "shared_errors": 8
+    },
+    "unique_rows": 48
+  },
+  "shared_stable_error_rows": 1771,
+  "split": "dev",
+  "test_accessed": false,
+  "transition_summary": {
+    "bert_to_lora": {
+      "higher_correct_rate": 959,
+      "lower_correct_rate": 573,
+      "stable_recovery": 304,
+      "stable_regression": 122,
+      "unchanged_correct_rate": 3468
+    },
+    "frozen_qwen_to_lora": {
+      "higher_correct_rate": 766,
+      "lower_correct_rate": 66,
+      "stable_recovery": 1915,
+      "stable_regression": 79,
+      "unchanged_correct_rate": 2600
+    }
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "api_cost_usd": 0,
+  "conditions": {
+    "few-shot-synthetic-3": {
+      "estimated_full_dev_hours": 1.788337431846109,
+      "finish_reasons": {
+        "stop": 32
+      },
+      "generated_tokens": {
+        "mean": 10.65625,
+        "p95": 13.45,
+        "total": 341
+      },
+      "generation_seconds": {
+        "mean": 1.1865121184382588,
+        "median": 1.1690350830031093,
+        "p95": 1.3276766434588354,
+        "total": 37.96838779002428
+      },
+      "generation_tps": {
+        "mean": 22.515268207629866,
+        "median": 22.513196612966595
+      },
+      "length_terminated": 0,
+      "parser_errors": {
+        "duplicate-label-id": 2,
+        "neutral-combined": 9
+      },
+      "parser_valid_count": 21,
+      "parser_valid_rate": 0.65625,
+      "peak_memory_gb_max": 3.725955208,
+      "prompt_tokens": {
+        "mean": 422.375,
+        "p95": 436.9,
+        "total": 13516
+      },
+      "prompt_tps": {
+        "mean": 738.9063253065577,
+        "median": 737.1753869131396
+      },
+      "sample_count": 32
+    },
+    "zero-shot": {
+      "estimated_full_dev_hours": 1.4664811459185472,
+      "finish_reasons": {
+        "stop": 32
+      },
+      "generated_tokens": {
+        "mean": 9.0,
+        "p95": 9.0,
+        "total": 288
+      },
+      "generation_seconds": {
+        "mean": 0.9729694296547677,
+        "median": 0.95947743699071,
+        "p95": 1.0520964834504412,
+        "total": 31.135021748952568
+      },
+      "generation_tps": {
+        "mean": 23.026503122618205,
+        "median": 23.121479056263112
+      },
+      "length_terminated": 0,
+      "parser_errors": {
+        "invalid-json": 16
+      },
+      "parser_valid_count": 16,
+      "parser_valid_rate": 0.5,
+      "peak_memory_gb_max": 3.667234944,
+      "prompt_tokens": {
+        "mean": 310.375,
+        "p95": 324.9,
+        "total": 9932
+      },
+      "prompt_tps": {
+        "mean": 705.5229049557438,
+        "median": 711.9876973073799
+      },
+      "sample_count": 32
+    }
+  },
+  "full_dev_rows_for_linear_estimate": 5426,
+  "gate_checks": {
+    "full_dev_estimate_within_budget": true,
+    "generation_failures_within_budget": true,
+    "length_termination_within_budget": true,
+    "peak_memory_within_budget": true,
+    "strict_parser_rate_within_budget": false,
+    "wall_time_within_budget": true
+  },
+  "gate_status": "Failed",
+  "generation_failures": 0,
+  "gold_labels_retained_or_used": false,
+  "measured_generations": 64,
+  "model_active_memory_after_load_gb": 3.44114996,
+  "model_load_peak_memory_gb": 3.44114996,
+  "model_load_seconds": 1.6964670000015758,
+  "overall_peak_memory_gb": 3.725955208,
+  "raw_generation_text_stored": false,
+  "total_seconds": 73.44708458299283,
+  "warmup_generations": 2
+}

@@ -1,0 +1,35 @@
+{
+  "annotation_count": 48,
+  "evidence_flag_counts": {
+    "annotation_ambiguity": 37,
+    "implicit_emotion": 18,
+    "label_overlap": 19,
+    "lexical_cue_conflict": 39,
+    "minority_class": 6,
+    "mixed_emotion": 19,
+    "negation": 3,
+    "possible_context_dependency": 15,
+    "sarcasm_irony": 4,
+    "slang_noise": 11
+  },
+  "primary_possible_source_counts": {
+    "annotation_data_uncertainty": 9,
+    "missing_context": 6,
+    "model_representation_limitation": 9,
+    "output_policy_or_label_mapping": 5,
+    "overlapping_label_ontology": 18,
+    "surface_form_noise": 1
+  },
+  "reviewer_confidence_counts": {
+    "high": 28,
+    "medium": 20
+  },
+  "role_counts": {
+    "bert_over_lora_regressions": 8,
+    "lora_over_bert_recoveries": 8,
+    "lora_over_frozen_recoveries": 8,
+    "neutral_cooccurrence_errors": 8,
+    "ordinary_lora_errors": 8,
+    "shared_errors": 8
+  }
+}

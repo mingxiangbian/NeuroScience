@@ -1,0 +1,99 @@
+{
+  "api_cost_usd": 0,
+  "conditions": {
+    "few-shot-synthetic-3": {
+      "estimated_full_dev_hours": 1.4563295472840314,
+      "finish_reasons": {
+        "stop": 32
+      },
+      "generated_tokens": {
+        "mean": 9.65625,
+        "p95": 13.45,
+        "total": 309
+      },
+      "generation_seconds": {
+        "mean": 0.9662341264693168,
+        "median": 0.9526994374900823,
+        "p95": 1.3072569689145892,
+        "total": 30.91949204701814
+      },
+      "generation_tps": {
+        "mean": 22.09817077520288,
+        "median": 22.07468470717383
+      },
+      "length_terminated": 0,
+      "parser_errors": {},
+      "parser_valid_count": 32,
+      "parser_valid_rate": 1.0,
+      "peak_memory_gb_max": 3.654111344,
+      "prompt_tokens": {
+        "mean": 284.375,
+        "p95": 298.9,
+        "total": 9100
+      },
+      "prompt_tps": {
+        "mean": 755.7831435698901,
+        "median": 755.2932806357737
+      },
+      "sample_count": 32
+    },
+    "zero-shot": {
+      "estimated_full_dev_hours": 1.083960519886855,
+      "finish_reasons": {
+        "stop": 32
+      },
+      "generated_tokens": {
+        "mean": 8.25,
+        "p95": 11.0,
+        "total": 264
+      },
+      "generation_seconds": {
+        "mean": 0.7191776394383851,
+        "median": 0.6962276044941973,
+        "p95": 0.9098497333150589,
+        "total": 23.013684462028323
+      },
+      "generation_tps": {
+        "mean": 25.44409079949491,
+        "median": 25.957698863350057
+      },
+      "length_terminated": 0,
+      "parser_errors": {},
+      "parser_valid_count": 32,
+      "parser_valid_rate": 1.0,
+      "peak_memory_gb_max": 3.604908948,
+      "prompt_tokens": {
+        "mean": 172.375,
+        "p95": 186.89999999999998,
+        "total": 5516
+      },
+      "prompt_tps": {
+        "mean": 656.1495268039884,
+        "median": 650.6802230432822
+      },
+      "sample_count": 32
+    }
+  },
+  "constraint_candidate_token_count": 14215,
+  "constraint_init_seconds": 0.2986977079999633,
+  "full_dev_rows_for_linear_estimate": 5426,
+  "gate_checks": {
+    "full_dev_estimate_within_budget": true,
+    "generation_failures_within_budget": true,
+    "length_termination_within_budget": true,
+    "peak_memory_within_budget": true,
+    "strict_parser_rate_within_budget": true,
+    "wall_time_within_budget": true
+  },
+  "gate_status": "Passed",
+  "generation_failures": 0,
+  "gold_labels_retained_or_used": false,
+  "measured_generations": 64,
+  "model_active_memory_after_load_gb": 3.44114996,
+  "model_load_peak_memory_gb": 3.44114996,
+  "model_load_seconds": 1.6322512079786975,
+  "overall_peak_memory_gb": 3.654111344,
+  "raw_generation_text_stored": false,
+  "total_seconds": 57.813318874977995,
+  "warmup_generations": 2
+}

@@ -1,0 +1,147 @@
+{
+  "accessed_splits": [
+    "test"
+  ],
+  "artifacts": {
+    "aggregate_summary": {
+      "bytes": 1007,
+      "contains_raw_text": false,
+      "path": "experiments/tweeteval-emotion/error-analysis/runs/exp-017-frozen-error-analysis/aggregate_summary.json",
+      "sha256": "171d100bcbe4fa2315bc9a84a8dac82f9f8f2a90a4ba5611583f7c879e7b8e06",
+      "tracked": true
+    },
+    "condition_stability": {
+      "bytes": 2141,
+      "contains_raw_text": false,
+      "path": "experiments/tweeteval-emotion/error-analysis/runs/exp-017-frozen-error-analysis/condition_stability.csv",
+      "sha256": "4c5e74c36a3c641500722b684d0e301879d02e6f3814a153f7e388e20dd64a6c",
+      "tracked": true
+    },
+    "pairwise_transitions": {
+      "bytes": 7182,
+      "contains_raw_text": false,
+      "path": "experiments/tweeteval-emotion/error-analysis/runs/exp-017-frozen-error-analysis/pairwise_transitions.csv",
+      "sha256": "8e1fbd652373c176b00e44b6c064d75e1c5f6faa4425d48a12d0ad707e9a4c26",
+      "tracked": true
+    },
+    "sample_manifest": {
+      "bytes": 11283,
+      "contains_raw_text": false,
+      "path": "experiments/tweeteval-emotion/error-analysis/runs/exp-017-frozen-error-analysis/sample_manifest.csv",
+      "sha256": "7c3ed3d628ea98502c2c8ce2bef63227835becf34f1dcd91704ac3914440c0f5",
+      "tracked": true
+    },
+    "seed_confusions": {
+      "bytes": 4463,
+      "contains_raw_text": false,
+      "path": "experiments/tweeteval-emotion/error-analysis/runs/exp-017-frozen-error-analysis/seed_confusions.csv",
+      "sha256": "4a679bc74c920934de8290e365e0173cf965a076f60846096946cb8663049780",
+      "tracked": true
+    },
+    "selected_text_private": {
+      "bytes": 8044,
+      "contains_raw_text": true,
+      "path": "experiments/tweeteval-emotion/error-analysis/runs/exp-017-frozen-error-analysis/private/selected_text.private.jsonl",
+      "sha256": "2c4273fc6d3ea952489b208bd9b27508aaa792b5486926096759b7e80db304de",
+      "tracked": false
+    },
+    "stdout_log": {
+      "bytes": 124,
+      "contains_raw_text": false,
+      "path": "experiments/tweeteval-emotion/error-analysis/runs/exp-017-frozen-error-analysis/stdout.log",
+      "sha256": "ee732804473be370611b9b874beff1e7f22153c35352d19483f94d60bca2c3a6",
+      "tracked": true
+    }
+  },
+  "authorization": {
+    "approved": true,
+    "approved_at_local_date": "2026-07-30",
+    "scope": "Preregistered descriptive error analysis of the already-consumed EXP-016 TweetEval test predictions. No development decision may use these cases."
+  },
+  "command": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python projects/llm-forum-text-emotion-recognition/experiments/tweeteval-emotion/error-analysis/analyze_frozen_errors.py",
+  "completed_at": "2026-07-30T19:37:38.544477+08:00",
+  "config": {
+    "path": "experiments/tweeteval-emotion/error-analysis/configs/exp-017-frozen-error-analysis.json",
+    "sha256": "e5599d425baad66d50990d83a3a8e295edb5318f7c0260635c4506af04d44c75"
+  },
+  "data": {
+    "label_mapping": {
+      "0": "anger",
+      "1": "joy",
+      "2": "optimism",
+      "3": "sadness"
+    },
+    "test_labels": {
+      "path": "data/tweeteval-emotion/official/datasets/emotion/test_labels.txt",
+      "sha256": "245072348c711961785be6d395997f97cf7fcda3effeae7805664171dc75f913"
+    },
+    "test_sample_count": 1421,
+    "test_text": {
+      "path": "data/tweeteval-emotion/official/datasets/emotion/test_text.txt",
+      "sha256": "7e1070f5d3e3fcece5bc73680bff9981e90d8f7b2f1009bfe7a01d059d1c6091"
+    },
+    "upstream_commit": "4fbd22cd78421f05b1ecdb4fc5725bc7a7bd8f66"
+  },
+  "environment": {
+    "machine": "arm64",
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.10.20"
+  },
+  "experiment_id": "EXP-017",
+  "git": {
+    "commit": "0fec243e5b96c04f2ad23382f430d3fe986b888b",
+    "dirty": true
+  },
+  "new_model_inference": false,
+  "protocol": {
+    "path": "experiments/tweeteval-emotion/error-analysis/protocols/exp-017-frozen-error-analysis.md"
+  },
+  "sampling": {
+    "domain_recoveries": {
+      "candidate_count": 21,
+      "selected_count": 6
+    },
+    "domain_regressions": {
+      "candidate_count": 11,
+      "selected_count": 4
+    },
+    "final_high_confidence_errors": {
+      "candidate_count": 135,
+      "false_negative_slots_filled": 8,
+      "false_positive_slots_filled": 8,
+      "selected_count": 16
+    },
+    "ordinary_final_errors": {
+      "candidate_count": 225,
+      "selected_count": 8
+    },
+    "shared_errors": {
+      "candidate_count": 87,
+      "selected_count": 8
+    },
+    "total": {
+      "maximum": 48,
+      "selected_count": 42
+    }
+  },
+  "source_test_gate": {
+    "experiment_id": "EXP-016",
+    "run": {
+      "path": "experiments/tweeteval-emotion/test-gate/runs/exp-016-frozen-test/run.json",
+      "sha256": "f12617542c943193e8e069c782622bd2227e14d78030a904a80814c57ab352f4"
+    },
+    "verification": {
+      "path": "experiments/tweeteval-emotion/test-gate/runs/exp-016-frozen-test/verification.json",
+      "sha256": "0173ccfbd40c82f02f6c3b37578072b4d3250a4a8c4fc3bd8149ccfd6299d9b8"
+    }
+  },
+  "stage": "descriptive-frozen-test-error-analysis",
+  "started_at": "2026-07-30T19:37:38.468414+08:00",
+  "status": "sampling_completed",
+  "test_split_accessed": true,
+  "test_use": "preregistered descriptive error analysis only",
+  "tier": "Major",
+  "validation_split_accessed": false,
+  "wall_time_seconds": 0.1231362920079846,
+  "working_directory": "/Users/phoenix/Assistant/NeuroScience"
+}

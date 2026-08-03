@@ -22,10 +22,12 @@ sources:
 
 ### Supporting Evidence
 
-- TweetEval 与 GoEmotions 提供了可复现的编码器基线。
+- TweetEval 已验证传统分类器与 RoBERTa 的实验流程；GoEmotions 将提供
+  LLM 对照所需的同数据集简单基线与编码器基线。
 - LLM 输出还会引入格式解析、版本漂移、成本和延迟问题。
 
-当前证据只支持建立比较，不支持预判最终胜者。
+TweetEval 与 GoEmotions 的任务定义不同，前者的分数不是后者 LLM 实验的比较
+证据。当前证据只支持在 GoEmotions 内建立比较，不支持预判最终胜者。
 
 ### What Would Change the Conclusion
 
@@ -33,11 +35,12 @@ sources:
 
 ### Test
 
-- TF-IDF + Logistic Regression。
-- BERT/RoBERTa fine-tuning。
-- Zero-shot LLM。
-- Few-shot LLM。
-- 在同一测试集上比较指标、成本、延迟和格式有效率。
+- GoEmotions 简单多标签基线。
+- 在相同 GoEmotions split 上冻结的 BERT/RoBERTa fine-tuning。
+- 本地 post-trained LLM 的 zero-shot 与 few-shot。
+- 同一本地 post-trained LLM 的 LoRA。
+- 编码器冻结后，在同一 GoEmotions 评估协议上比较指标、成本、延迟和格式
+  有效率。
 
 ## H2. 回复上下文的收益集中在上下文依赖样本，而非所有样本
 
@@ -115,3 +118,30 @@ sources:
 - 随机示例 vs. 语义检索示例。
 - 不微调 vs. LoRA。
 - 单独与组合报告增益、成本和失败案例。
+
+## H5. 预训练可能已形成可解码的情绪信息，后训练主要改变其可用方式
+
+- Status: draft
+- Confidence: low
+- Claim type: user-motivated assistant synthesis
+
+### Hypothesis
+
+Qwen3-1.7B-Base 的冻结隐藏表征中可能已经存在可由简单监督 probe 解码的
+GoEmotions 标签信息；post-training 可能进一步改变这些信息的线性可解码性，
+同时显著增强任务指令、标签映射和输出格式遵循。生成式分类改善不应自动归因于
+出现了新的情绪识别机制。
+
+### What Would Change the Conclusion
+
+如果 Base 与 Instruct 在相同 frozen representation、相同 readout 和相同阈值
+协议下没有稳定差异，而 Instruct 只在生成式输出有效率上占优，则后训练收益更可能
+主要来自任务接口。反之，如果配对 probe 在多个控制下仍出现稳定差异，则支持
+后训练改变了相关表征的可解码性，但仍不构成因果机制证据。
+
+### Test
+
+- 固定 revision 的 Qwen3-1.7B-Base 与 Qwen3-1.7B。
+- BF16、相同输入、tokenizer 检查、层、pooling 和 train-only threshold protocol。
+- 相同的多标签线性 probe 和 label-shuffle negative control。
+- 后续可选的层级分析、ablation 或 activation intervention。

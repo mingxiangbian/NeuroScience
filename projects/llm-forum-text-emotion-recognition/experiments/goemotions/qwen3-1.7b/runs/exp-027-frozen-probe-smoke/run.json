@@ -1,0 +1,84 @@
+{
+  "accessed_splits": [],
+  "conditions": [
+    {
+      "condition": "base",
+      "feature_digest_sha256": "2f39cada62cfabbc5fa21ba8893bf34004b613a8edd14d503c86561fa67e1dec",
+      "feature_dtype": "float32",
+      "feature_shape": [
+        6,
+        2048
+      ],
+      "finite": true,
+      "forward_seconds": 0.5750587499933317,
+      "hidden_size": 2048,
+      "load_seconds": 1.644981416000519,
+      "norm_max": 176.2970733642578,
+      "norm_mean": 172.02101135253906,
+      "norm_min": 168.2604522705078,
+      "num_hidden_layers": 28,
+      "peak_mlx_memory_gb": 3.533621736,
+      "token_count_max": 11,
+      "token_count_min": 5,
+      "token_id_digest_sha256": "347b69cd75ec8ff4e7a5f5641f1ae438dc1446b245a726298a4e5e7ba84a0d79"
+    },
+    {
+      "condition": "post-trained",
+      "feature_digest_sha256": "790f51dc3779e83d05f3220a7e6da1f710f0e336ce11c7ca9ae4b6b04a1a17ae",
+      "feature_dtype": "float32",
+      "feature_shape": [
+        6,
+        2048
+      ],
+      "finite": true,
+      "forward_seconds": 0.46429412500583567,
+      "hidden_size": 2048,
+      "load_seconds": 1.710004749998916,
+      "norm_max": 104.85649871826172,
+      "norm_mean": 98.80233764648438,
+      "norm_min": 93.56128692626953,
+      "num_hidden_layers": 28,
+      "peak_mlx_memory_gb": 3.533670888,
+      "token_count_max": 11,
+      "token_count_min": 5,
+      "token_id_digest_sha256": "347b69cd75ec8ff4e7a5f5641f1ae438dc1446b245a726298a4e5e7ba84a0d79"
+    }
+  ],
+  "config_path": "projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/configs/exp-027-frozen-probe-smoke.json",
+  "config_sha256": "3649f0090353b2101c78965f968ee19ead5acd63f63137a1339c1f9143277228",
+  "created_at_utc": "2026-08-01T01:43:42.524701+00:00",
+  "experiment_id": "EXP-027",
+  "git": {
+    "commit": "0fec243e5b96c04f2ad23382f430d3fe986b888b",
+    "dirty": true,
+    "dirty_path_count": 35
+  },
+  "packages": {
+    "mlx": "0.32.0",
+    "mlx-lm": "0.31.3",
+    "numpy": "2.4.6",
+    "transformers": "5.14.1"
+  },
+  "paired_diagnostics": {
+    "cosine_max": 0.9804654717445374,
+    "cosine_mean": 0.9703459739685059,
+    "cosine_min": 0.9599268436431885,
+    "l2_difference_max": 85.70536041259766,
+    "l2_difference_mean": 79.70976257324219,
+    "l2_difference_min": 74.15216064453125
+  },
+  "platform": "macOS-26.5.2-arm64-arm-64bit",
+  "project_rows_accessed": 0,
+  "python": "3.11.15",
+  "runner_sha256": "1852b142205b0fdede9794e5f758f5598630f9e6a318f2418ba6db64fdc01baa",
+  "started_at_utc": "2026-08-01T01:43:38.014452+00:00",
+  "status": "completed",
+  "synthetic_text_count": 6,
+  "synthetic_text_stored_in_run": false,
+  "test_absent_after_run": true,
+  "test_absent_before_run": true,
+  "test_split_accessed": false,
+  "tier": "Minor",
+  "total_seconds": 4.728116666985443,
+  "validation_split_accessed": false
+}

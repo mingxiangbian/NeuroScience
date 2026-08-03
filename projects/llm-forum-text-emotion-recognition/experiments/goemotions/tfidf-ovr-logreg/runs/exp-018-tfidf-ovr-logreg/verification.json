@@ -1,0 +1,45 @@
+{
+  "checks": {
+    "aggregate_metrics_match": true,
+    "artifact_hashes_match": true,
+    "confusion_matrices_match": true,
+    "dev_rows": 5426,
+    "gold_matches_frozen_dev": true,
+    "input_hashes_match": true,
+    "labels": 28,
+    "maximum_metric_absolute_difference": 0.0,
+    "model_gitignored": true,
+    "per_label_metrics_match": true,
+    "predictions_match_threshold": true,
+    "probability_shape": [
+      5426,
+      28
+    ],
+    "test_split_accessed": false,
+    "test_split_exists": false,
+    "threshold": 0.5
+  },
+  "experiment_id": "EXP-018",
+  "recomputed_metrics": {
+    "empty_prediction_rows": 3261,
+    "hamming_loss": 0.0353193618029593,
+    "macro_f1": 0.20364430957028798,
+    "micro_f1": 0.3776385989329622,
+    "subset_accuracy": 0.2469590858827866,
+    "weighted_f1": 0.33280939505413226
+  },
+  "status": "Verified",
+  "verification_method": "Independent reconstruction from frozen dev labels and saved probabilities; training model was not loaded for metric recomputation.",
+  "verified_artifact_hashes": {
+    "model": "7448ab735691dde2f87f48bf85d00c640fe36ee0b668bf4e8f8a4d08ff22e452",
+    "multilabel_confusion_matrix": "b6c5012683240a6eac9def46b9c529cfd9b42c6b1de503462d5558c245637f1d",
+    "per_label_metrics": "d61c16a5be45b1e6e1ecb685851696afc03b34fbeddf6693bbbead5d99b740ea",
+    "predictions": "c54d1ba5ee1c4f78122db5c8cedaffa33211b5e15165520a4f9eb9ada263d901"
+  },
+  "verified_at_utc": "2026-07-31T03:38:35.505281+00:00",
+  "verifier": {
+    "path": "experiments/goemotions/tfidf-ovr-logreg/verify.py",
+    "python": "3.10.20 (main, Mar 11 2026, 17:43:48) [Clang 20.1.8 ]",
+    "sha256": "10041e13b1703d76571a8379d0d209d4ac8ecf544765c4eec7e596f902cc397f"
+  }
+}

@@ -1,0 +1,253 @@
+{
+  "analysis_scope": "paired full-dev decoder ablation",
+  "conditions": {
+    "few-shot-synthetic-3": {
+      "constrained_macro_f1": 0.2411641547489156,
+      "constrained_parser_valid_rate": 1.0,
+      "constraint_intervention": {
+        "blocked_steps_total": 631,
+        "first_blocked_step_median": 6.0,
+        "rate": 0.0927018061186878,
+        "rows": 503
+      },
+      "exact_label_set_agreement": {
+        "count": 4923,
+        "denominator_both_valid": 4923,
+        "rate": 1.0
+      },
+      "label_set_jaccard_mean_on_both_valid": 1.0,
+      "macro_f1_delta_unconstrained_minus_constrained": -0.004698676868222229,
+      "per_label": {
+        "admiration": {
+          "unconstrained_minus_constrained_predicted_support": -6
+        },
+        "amusement": {
+          "unconstrained_minus_constrained_predicted_support": -44
+        },
+        "anger": {
+          "unconstrained_minus_constrained_predicted_support": -2
+        },
+        "annoyance": {
+          "unconstrained_minus_constrained_predicted_support": -17
+        },
+        "approval": {
+          "unconstrained_minus_constrained_predicted_support": -90
+        },
+        "caring": {
+          "unconstrained_minus_constrained_predicted_support": -48
+        },
+        "confusion": {
+          "unconstrained_minus_constrained_predicted_support": -69
+        },
+        "curiosity": {
+          "unconstrained_minus_constrained_predicted_support": -35
+        },
+        "desire": {
+          "unconstrained_minus_constrained_predicted_support": -10
+        },
+        "disappointment": {
+          "unconstrained_minus_constrained_predicted_support": -44
+        },
+        "disapproval": {
+          "unconstrained_minus_constrained_predicted_support": -220
+        },
+        "disgust": {
+          "unconstrained_minus_constrained_predicted_support": -44
+        },
+        "embarrassment": {
+          "unconstrained_minus_constrained_predicted_support": -35
+        },
+        "excitement": {
+          "unconstrained_minus_constrained_predicted_support": -37
+        },
+        "fear": {
+          "unconstrained_minus_constrained_predicted_support": -43
+        },
+        "gratitude": {
+          "unconstrained_minus_constrained_predicted_support": -46
+        },
+        "grief": {
+          "unconstrained_minus_constrained_predicted_support": -8
+        },
+        "joy": {
+          "unconstrained_minus_constrained_predicted_support": -17
+        },
+        "love": {
+          "unconstrained_minus_constrained_predicted_support": -9
+        },
+        "nervousness": {
+          "unconstrained_minus_constrained_predicted_support": -3
+        },
+        "neutral": {
+          "unconstrained_minus_constrained_predicted_support": -32
+        },
+        "optimism": {
+          "unconstrained_minus_constrained_predicted_support": -42
+        },
+        "pride": {
+          "unconstrained_minus_constrained_predicted_support": -10
+        },
+        "realization": {
+          "unconstrained_minus_constrained_predicted_support": -20
+        },
+        "relief": {
+          "unconstrained_minus_constrained_predicted_support": -16
+        },
+        "remorse": {
+          "unconstrained_minus_constrained_predicted_support": -80
+        },
+        "sadness": {
+          "unconstrained_minus_constrained_predicted_support": -43
+        },
+        "surprise": {
+          "unconstrained_minus_constrained_predicted_support": -34
+        }
+      },
+      "predicted_cardinality_delta_unconstrained_minus_constrained": -0.2034647991153704,
+      "resource_deltas_unconstrained_minus_constrained": {
+        "generated_tokens_total": -391.0,
+        "generation_seconds": {
+          "median": -0.08893781251390465,
+          "p95": -0.37155763502960326,
+          "total": -800.7164462736109
+        },
+        "prompt_tokens_total": 0.0
+      },
+      "unconstrained_macro_f1": 0.23646547788069336,
+      "unconstrained_parser_valid_count": 4923,
+      "unconstrained_parser_valid_rate": 0.9072981938813122,
+      "validity_rate_delta_unconstrained_minus_constrained": -0.09270180611868784
+    },
+    "zero-shot": {
+      "constrained_macro_f1": 0.2229977150368465,
+      "constrained_parser_valid_rate": 0.9996314043494287,
+      "constraint_intervention": {
+        "blocked_steps_total": 5881,
+        "first_blocked_step_median": 3.0,
+        "rate": 1.0,
+        "rows": 5426
+      },
+      "exact_label_set_agreement": {
+        "count": 3947,
+        "denominator_both_valid": 5206,
+        "rate": 0.7581636573184787
+      },
+      "label_set_jaccard_mean_on_both_valid": 0.8472892998920659,
+      "macro_f1_delta_unconstrained_minus_constrained": 0.005702042548763109,
+      "per_label": {
+        "admiration": {
+          "unconstrained_minus_constrained_predicted_support": -10
+        },
+        "amusement": {
+          "unconstrained_minus_constrained_predicted_support": 89
+        },
+        "anger": {
+          "unconstrained_minus_constrained_predicted_support": 19
+        },
+        "annoyance": {
+          "unconstrained_minus_constrained_predicted_support": 68
+        },
+        "approval": {
+          "unconstrained_minus_constrained_predicted_support": 89
+        },
+        "caring": {
+          "unconstrained_minus_constrained_predicted_support": 4
+        },
+        "confusion": {
+          "unconstrained_minus_constrained_predicted_support": 1
+        },
+        "curiosity": {
+          "unconstrained_minus_constrained_predicted_support": 23
+        },
+        "desire": {
+          "unconstrained_minus_constrained_predicted_support": 11
+        },
+        "disappointment": {
+          "unconstrained_minus_constrained_predicted_support": 17
+        },
+        "disapproval": {
+          "unconstrained_minus_constrained_predicted_support": 128
+        },
+        "disgust": {
+          "unconstrained_minus_constrained_predicted_support": 68
+        },
+        "embarrassment": {
+          "unconstrained_minus_constrained_predicted_support": 11
+        },
+        "excitement": {
+          "unconstrained_minus_constrained_predicted_support": 13
+        },
+        "fear": {
+          "unconstrained_minus_constrained_predicted_support": 93
+        },
+        "gratitude": {
+          "unconstrained_minus_constrained_predicted_support": 25
+        },
+        "grief": {
+          "unconstrained_minus_constrained_predicted_support": 1
+        },
+        "joy": {
+          "unconstrained_minus_constrained_predicted_support": 3
+        },
+        "love": {
+          "unconstrained_minus_constrained_predicted_support": 2
+        },
+        "nervousness": {
+          "unconstrained_minus_constrained_predicted_support": -3
+        },
+        "neutral": {
+          "unconstrained_minus_constrained_predicted_support": -11
+        },
+        "optimism": {
+          "unconstrained_minus_constrained_predicted_support": -5
+        },
+        "pride": {
+          "unconstrained_minus_constrained_predicted_support": 2
+        },
+        "realization": {
+          "unconstrained_minus_constrained_predicted_support": -1
+        },
+        "relief": {
+          "unconstrained_minus_constrained_predicted_support": -13
+        },
+        "remorse": {
+          "unconstrained_minus_constrained_predicted_support": -12
+        },
+        "sadness": {
+          "unconstrained_minus_constrained_predicted_support": 55
+        },
+        "surprise": {
+          "unconstrained_minus_constrained_predicted_support": -38
+        }
+      },
+      "predicted_cardinality_delta_unconstrained_minus_constrained": 0.11592333210468109,
+      "resource_deltas_unconstrained_minus_constrained": {
+        "generated_tokens_total": 5181.0,
+        "generation_seconds": {
+          "median": -0.06357122850022279,
+          "p95": -0.0935934375229408,
+          "total": -429.76348569846596
+        },
+        "prompt_tokens_total": 0.0
+      },
+      "unconstrained_macro_f1": 0.22869975758560962,
+      "unconstrained_parser_valid_count": 5208,
+      "unconstrained_parser_valid_rate": 0.9598230740877257,
+      "validity_rate_delta_unconstrained_minus_constrained": -0.03980833026170294
+    }
+  },
+  "exp_025_artifacts": {
+    "generation_records": {
+      "bytes": 9121788,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/generation-records.jsonl",
+      "sha256": "eb4eaa30c3426a3b08697624d3dbbe73c437b5f5b0d8e433e7d2d4313cd4aa5f"
+    },
+    "verification": {
+      "bytes": 6077,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/verification.json",
+      "sha256": "3d095e27e24052f64e55cbeeeed2f37775b129f3c4de111f4c90b2e1bde9279c"
+    }
+  },
+  "invalid_output_primary_policy": "invalid or length outputs are empty predictions",
+  "valid_pair_metrics_are_diagnostic_only": true
+}

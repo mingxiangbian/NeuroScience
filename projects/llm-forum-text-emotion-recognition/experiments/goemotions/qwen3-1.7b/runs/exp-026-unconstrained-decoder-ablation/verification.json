@@ -1,0 +1,138 @@
+{
+  "checked_artifacts": {
+    "aggregate-metrics.json": {
+      "bytes": 20676,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-026-unconstrained-decoder-ablation/aggregate-metrics.json",
+      "sha256": "59a11902d435f1e08669a7bdff44044fe4f68b677e289a1a07ec955af561d539"
+    },
+    "condition-summary.csv": {
+      "bytes": 792,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-026-unconstrained-decoder-ablation/condition-summary.csv",
+      "sha256": "0d780db73857ce58590658d9111c0888876d9e32778ec956fddd6e9fe2d4e3cf"
+    },
+    "few-shot-synthetic-3/metrics.json": {
+      "bytes": 8709,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-026-unconstrained-decoder-ablation/few-shot-synthetic-3/metrics.json",
+      "sha256": "f1d34f1441e4a900c92260003006afca8a98b12028718cfa9f0e17f8ec8bdc7f"
+    },
+    "few-shot-synthetic-3/multilabel-confusion-matrix.csv": {
+      "bytes": 807,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-026-unconstrained-decoder-ablation/few-shot-synthetic-3/multilabel-confusion-matrix.csv",
+      "sha256": "27ff73fcbf5b4e1a527493369a8e7d7859e27534fce65f98ac086426353b8016"
+    },
+    "few-shot-synthetic-3/per-label-metrics.csv": {
+      "bytes": 2244,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-026-unconstrained-decoder-ablation/few-shot-synthetic-3/per-label-metrics.csv",
+      "sha256": "f01f4b7cdaaa32fa40472095c28481c949bdb690b9739625f6a924c99a56ad5b"
+    },
+    "few-shot-synthetic-3/predictions.csv": {
+      "bytes": 1509445,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-026-unconstrained-decoder-ablation/few-shot-synthetic-3/predictions.csv",
+      "sha256": "8505304451200406a5173434bf22f1330489bae784588a86fb61f14e32f4c2de"
+    },
+    "generation-records.jsonl": {
+      "bytes": 9181791,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-026-unconstrained-decoder-ablation/generation-records.jsonl",
+      "sha256": "ac8a7b045c991965bc380baabdf80a803e2160bc3ae620546eb81edcc8b456b7"
+    },
+    "joint-decoder-analysis.json": {
+      "bytes": 8796,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-026-unconstrained-decoder-ablation/joint-decoder-analysis.json",
+      "sha256": "5709b1b34fe4a7e2fe526bf16157c28164a02b2485f791b046563f5b21719079"
+    },
+    "paired-bootstrap.json": {
+      "bytes": 4152,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-026-unconstrained-decoder-ablation/paired-bootstrap.json",
+      "sha256": "3d933600110026a004cb8eb8a2bf1f358c20ff2d712bf272f2af00a92442f4ef"
+    },
+    "run.json": {
+      "bytes": 9385,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-026-unconstrained-decoder-ablation/run.json",
+      "sha256": "98824385f808e772996c52975e3b68a9c64f71c3c4e085c50ceff895bd6abb65"
+    },
+    "source:config": {
+      "bytes": 8351,
+      "path": "experiments/goemotions/qwen3-1.7b/configs/exp-026-unconstrained-decoder-ablation.json",
+      "sha256": "01cd49cb0d020ad1c4d3cc5ef8d1acef9426ebfdaf9db22dda702b85e0565ed3"
+    },
+    "source:labels": {
+      "bytes": 248,
+      "path": "data/goemotions/official/emotions.txt",
+      "sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89"
+    },
+    "source:metrics_implementation": {
+      "bytes": 20541,
+      "path": "experiments/goemotions/qwen3-1.7b/llm_full_dev_metrics.py",
+      "sha256": "38e50c725a5f065d0babb263ad497b5d8dc21ad6edcd11a5e4d4c79310ff44d4"
+    },
+    "source:model_manifest": {
+      "bytes": 4235,
+      "path": "models/qwen3-1.7b/manifest.json",
+      "sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877"
+    },
+    "source:parser_source": {
+      "bytes": 27964,
+      "path": "experiments/goemotions/qwen3-1.7b/run_resource_parser_trial.py",
+      "sha256": "d2051f5c621190117cb5c874e5d8c3a128aee262a1a070b038c5254d90b40e5e"
+    },
+    "source:prompt": {
+      "bytes": 1079,
+      "path": "experiments/goemotions/qwen3-1.7b/prompts/exp-022-resource-v1.json",
+      "sha256": "2ce7083d41df7ff15292b4211bba26e5403d9cd66c67f8f12f9386cb99bf328c"
+    },
+    "source:runner": {
+      "bytes": 47658,
+      "path": "experiments/goemotions/qwen3-1.7b/run_full_dev.py",
+      "sha256": "ec2615c44b6c13d9843dabd344f3e2bcc05e44b1df05e2215771b7dc5a4a41ee"
+    },
+    "source:verifier": {
+      "bytes": 51492,
+      "path": "experiments/goemotions/qwen3-1.7b/verify_full_dev.py",
+      "sha256": "f36d6417a0bcaa194635d398de0de7d95b155104996b325ef5aefc99cdc1b534"
+    },
+    "stdout.log": {
+      "bytes": 10622,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-026-unconstrained-decoder-ablation/stdout.log",
+      "sha256": "2e6790334d0b8d766fd5edb810e4443702f7aa6811b62c00c745d8c365fc474f"
+    },
+    "zero-shot/metrics.json": {
+      "bytes": 8694,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-026-unconstrained-decoder-ablation/zero-shot/metrics.json",
+      "sha256": "3be4e02a73454b7cfd0a5bd9278b32b2b434ed8529ca0bd8c250aa895606ff9c"
+    },
+    "zero-shot/multilabel-confusion-matrix.csv": {
+      "bytes": 793,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-026-unconstrained-decoder-ablation/zero-shot/multilabel-confusion-matrix.csv",
+      "sha256": "6e04d09b127905e1ce19a5e3219dc49d6ee54a96aa1b7e291b08b54208d0a133"
+    },
+    "zero-shot/per-label-metrics.csv": {
+      "bytes": 2269,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-026-unconstrained-decoder-ablation/zero-shot/per-label-metrics.csv",
+      "sha256": "e42e09368cd4a44e25f5405485ad9197808b0fef736ebd2d60ab42923c835930"
+    },
+    "zero-shot/predictions.csv": {
+      "bytes": 1453149,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-026-unconstrained-decoder-ablation/zero-shot/predictions.csv",
+      "sha256": "262038eebd710ad57e9f3d56c1d4430428cc95e212d20bd9ffbeb36d59e868c5"
+    }
+  },
+  "completed_generation_pairs": 10852,
+  "dev_rows": 5426,
+  "experiment_id": "EXP-026",
+  "independent_metric_library": "scikit-learn",
+  "max_absolute_numeric_difference": 0.0,
+  "privacy": {
+    "invalid_raw_generation_stored": false,
+    "prompt_expanded_input_stored": false,
+    "raw_input_text_stored": false,
+    "upstream_comment_id_stored": false
+  },
+  "status": "Passed",
+  "test_split_absent": true,
+  "verified_at_utc": "2026-07-31T19:30:40.893329+00:00",
+  "verifier": {
+    "bytes": 51492,
+    "path": "experiments/goemotions/qwen3-1.7b/verify_full_dev.py",
+    "sha256": "f36d6417a0bcaa194635d398de0de7d95b155104996b325ef5aefc99cdc1b534"
+  }
+}

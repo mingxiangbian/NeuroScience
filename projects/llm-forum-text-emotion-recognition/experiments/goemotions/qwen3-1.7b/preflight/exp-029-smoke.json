@@ -1,0 +1,113 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "adapter": {
+    "config": {
+      "bytes": 1724,
+      "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-029-instruct-lora/smoke/adapter_config.json",
+      "sha256": "9724ea3e7e1d8a419b7e5e461c2d93e229a31605a6d21cc5f03ae2c3065998bc"
+    },
+    "lora_b_nonzero_tensors": 112,
+    "lora_b_tensor_count": 112,
+    "runtime_config": {
+      "bytes": 1153,
+      "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-029-instruct-lora/smoke/runtime-config.json",
+      "sha256": "725674d9bbdb4ae621d709f0c33e5ed034410bdbdb174e2daae26694bc75ac91"
+    },
+    "tensor_count": 224,
+    "weights": {
+      "bytes": 19947012,
+      "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-029-instruct-lora/smoke/adapters.safetensors",
+      "sha256": "e370297646d9ed0e20e80c94d8296253de671895bbb273ef6e887728b193fa8e"
+    }
+  },
+  "command": [
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/mlx_lm.lora",
+    "-c",
+    "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/private-cache/exp-029-instruct-lora/smoke/runtime-config.json"
+  ],
+  "completed_at_utc": "2026-08-01T10:14:48.644999+00:00",
+  "data": {
+    "expanded_train": {
+      "bytes": 56583,
+      "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-029-lora-data/smoke/train.jsonl",
+      "sha256": "82a29734c9f7adcb69ec63bd28dc5ba555da314b4f384f6526ec8e3c390719e5"
+    },
+    "rows": 64,
+    "split": "train",
+    "test_rows_accessed": 0,
+    "validation_rows_accessed": 0
+  },
+  "duration_seconds": 59.526475250022486,
+  "experiment_id": "EXP-029",
+  "final_loss_window": 0.24,
+  "history": {
+    "bytes": 490,
+    "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-029-smoke-history.csv",
+    "sha256": "205613850ac3c5c73cb8eda98d901e06d07296ff92b32e4e4a36e46bf48859df"
+  },
+  "initial_loss_window": 6.1035,
+  "median_iterations_per_second": 0.922,
+  "peak_mlx_memory_gb": 5.179,
+  "projected_formal_training_hours": 6.539226319595083,
+  "seed": 42,
+  "smoke": true,
+  "source_artifacts": {
+    "config": {
+      "bytes": 8007,
+      "path": "experiments/goemotions/qwen3-1.7b/configs/exp-029-instruct-lora.json",
+      "sha256": "14fe020eb86331d987561240ebfa1da70d724f0d622d74f7879a6364d4aba4ed"
+    },
+    "constraint": {
+      "bytes": 8432,
+      "path": "experiments/goemotions/qwen3-1.7b/label_json_constraint.py",
+      "sha256": "6e4d1d21d79d2fed3c8a5d118748591db6e72cfcfefb74386f913fb5fd164efa"
+    },
+    "labels": {
+      "bytes": 248,
+      "path": "data/goemotions/official/emotions.txt",
+      "sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89"
+    },
+    "metrics": {
+      "bytes": 20541,
+      "path": "experiments/goemotions/qwen3-1.7b/llm_full_dev_metrics.py",
+      "sha256": "38e50c725a5f065d0babb263ad497b5d8dc21ad6edcd11a5e4d4c79310ff44d4"
+    },
+    "model_manifest": {
+      "bytes": 4235,
+      "path": "models/qwen3-1.7b/manifest.json",
+      "sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877"
+    },
+    "prompt": {
+      "bytes": 1079,
+      "path": "experiments/goemotions/qwen3-1.7b/prompts/exp-022-resource-v1.json",
+      "sha256": "2ce7083d41df7ff15292b4211bba26e5403d9cd66c67f8f12f9386cb99bf328c"
+    },
+    "runner": {
+      "bytes": 68098,
+      "path": "experiments/goemotions/qwen3-1.7b/run_lora.py",
+      "sha256": "effbd2a5803b78289543eff13a7ceec59867dbdbbfc0b8a78bb1de9a87f3cc5f"
+    },
+    "verifier": {
+      "bytes": 24311,
+      "path": "experiments/goemotions/qwen3-1.7b/verify_lora.py",
+      "sha256": "a1a3db59e0306edcdc2cde04b6105d465004696f2393d406f66aa30eaff9ef7b"
+    }
+  },
+  "started_at_utc": "2026-08-01T10:13:48.898219+00:00",
+  "status": "Passed",
+  "stdout": {
+    "bytes": 1857,
+    "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-029-smoke-stdout.log",
+    "sha256": "d938fba08218ca2fcaa51ab2149c69cce89ceb15a18e14f75d331b2ef13c4fee"
+  },
+  "test_split_accessed": false,
+  "tier": "Minor preflight",
+  "trainable_parameters_reported": {
+    "percent": 0.289,
+    "total_millions": 1720.575,
+    "trainable_millions": 4.981
+  },
+  "validation_split_accessed": false
+}

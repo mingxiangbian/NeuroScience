@@ -1,0 +1,221 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "artifacts": {
+    "config": {
+      "path": "experiments/goemotions/qwen3-1.7b/configs/exp-023-label-id-parser-trial.json",
+      "sha256": "53ed7eafd5c227e97c0dde197644b35fff1ba6d7d7f1d4986e39d6ab525e2e93"
+    },
+    "parent_runner": {
+      "path": "experiments/goemotions/qwen3-1.7b/run_resource_parser_trial.py",
+      "sha256": "d2051f5c621190117cb5c874e5d8c3a128aee262a1a070b038c5254d90b40e5e"
+    },
+    "parent_selected_samples": {
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-022-resource-parser-trial/selected-samples.json",
+      "sha256": "cc14677904d3ff7bea2b4824e68e608b596a4f35480baf9c392ad63fcaa74031"
+    },
+    "prompt": {
+      "path": "experiments/goemotions/qwen3-1.7b/prompts/exp-023-label-id-v1.json",
+      "sha256": "09079207271900b84db7ab0f209bf884a22f67f2f2872a2e3ea88cab9c5f2516"
+    },
+    "runner": {
+      "path": "experiments/goemotions/qwen3-1.7b/run_label_id_parser_trial.py",
+      "sha256": "0e4c77ef39d79fc07266bdc67db9ee615eb86e8a81cfc10c48eea6fb53dd9add"
+    },
+    "sample_results": {
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-023-label-id-parser-trial/sample-results.jsonl",
+      "sha256": "eb62cea631ea5683e0bd027ed678bc191b42a6edad58da07672d655305afc623"
+    },
+    "selected_samples": {
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-023-label-id-parser-trial/selected-samples.json",
+      "sha256": "cc14677904d3ff7bea2b4824e68e608b596a4f35480baf9c392ad63fcaa74031"
+    },
+    "summary": {
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-023-label-id-parser-trial/summary.json",
+      "sha256": "0e5d46bafdc831a9a3fb08b75d50cb4b878deee36a5cf12c38c1430c694e043c"
+    }
+  },
+  "completed_at_utc": "2026-07-31T12:31:17.295296+00:00",
+  "data": {
+    "data_rows_scanned": 43410,
+    "dataset_protocol": "DATA-GOE-V1",
+    "dev_rows_accessed": 0,
+    "gold_labels_retained_or_used": false,
+    "measured_sample_count": 32,
+    "selection_digest_sha256": "7dcdbe002627948d6e1c5ed4eceb950085585ad0c726333ba3012515dbd8c525",
+    "split": "train",
+    "test_rows_accessed": 0,
+    "train_sha256": "1c254a142be5c00e80d819b9ae1bbd36d94b2eeb8f4b1271846508d57e57d9c5"
+  },
+  "errors": [],
+  "experiment_id": "EXP-023",
+  "gate_status": "Failed",
+  "invocation": [
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+    "projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/run_label_id_parser_trial.py"
+  ],
+  "model": {
+    "condition": "post-trained",
+    "local_path": "models/qwen3-1.7b/mlx-bf16",
+    "manifest_path": "models/qwen3-1.7b/manifest.json",
+    "manifest_sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877",
+    "precision": "bfloat16",
+    "quantized": false,
+    "repo_id": "Qwen/Qwen3-1.7B",
+    "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e"
+  },
+  "parent_experiment": "EXP-022",
+  "parser": {
+    "label_id_range": [
+      0,
+      27
+    ],
+    "neutral_label_id": 27,
+    "retries": 0,
+    "schema": {
+      "label_ids": "non-empty unique integer array"
+    },
+    "silent_repairs": false,
+    "synonym_mapping": false
+  },
+  "resource_usage": {
+    "api_cost_usd": 0,
+    "conditions": {
+      "few-shot-synthetic-3": {
+        "estimated_full_dev_hours": 1.788337431846109,
+        "finish_reasons": {
+          "stop": 32
+        },
+        "generated_tokens": {
+          "mean": 10.65625,
+          "p95": 13.45,
+          "total": 341
+        },
+        "generation_seconds": {
+          "mean": 1.1865121184382588,
+          "median": 1.1690350830031093,
+          "p95": 1.3276766434588354,
+          "total": 37.96838779002428
+        },
+        "generation_tps": {
+          "mean": 22.515268207629866,
+          "median": 22.513196612966595
+        },
+        "length_terminated": 0,
+        "parser_errors": {
+          "duplicate-label-id": 2,
+          "neutral-combined": 9
+        },
+        "parser_valid_count": 21,
+        "parser_valid_rate": 0.65625,
+        "peak_memory_gb_max": 3.725955208,
+        "prompt_tokens": {
+          "mean": 422.375,
+          "p95": 436.9,
+          "total": 13516
+        },
+        "prompt_tps": {
+          "mean": 738.9063253065577,
+          "median": 737.1753869131396
+        },
+        "sample_count": 32
+      },
+      "zero-shot": {
+        "estimated_full_dev_hours": 1.4664811459185472,
+        "finish_reasons": {
+          "stop": 32
+        },
+        "generated_tokens": {
+          "mean": 9.0,
+          "p95": 9.0,
+          "total": 288
+        },
+        "generation_seconds": {
+          "mean": 0.9729694296547677,
+          "median": 0.95947743699071,
+          "p95": 1.0520964834504412,
+          "total": 31.135021748952568
+        },
+        "generation_tps": {
+          "mean": 23.026503122618205,
+          "median": 23.121479056263112
+        },
+        "length_terminated": 0,
+        "parser_errors": {
+          "invalid-json": 16
+        },
+        "parser_valid_count": 16,
+        "parser_valid_rate": 0.5,
+        "peak_memory_gb_max": 3.667234944,
+        "prompt_tokens": {
+          "mean": 310.375,
+          "p95": 324.9,
+          "total": 9932
+        },
+        "prompt_tps": {
+          "mean": 705.5229049557438,
+          "median": 711.9876973073799
+        },
+        "sample_count": 32
+      }
+    },
+    "full_dev_rows_for_linear_estimate": 5426,
+    "gate_checks": {
+      "full_dev_estimate_within_budget": true,
+      "generation_failures_within_budget": true,
+      "length_termination_within_budget": true,
+      "peak_memory_within_budget": true,
+      "strict_parser_rate_within_budget": false,
+      "wall_time_within_budget": true
+    },
+    "gate_status": "Failed",
+    "generation_failures": 0,
+    "gold_labels_retained_or_used": false,
+    "measured_generations": 64,
+    "model_active_memory_after_load_gb": 3.44114996,
+    "model_load_peak_memory_gb": 3.44114996,
+    "model_load_seconds": 1.6964670000015758,
+    "overall_peak_memory_gb": 3.725955208,
+    "raw_generation_text_stored": false,
+    "total_seconds": 73.44708458299283,
+    "warmup_generations": 2
+  },
+  "rq_id": "RQ-G2 implementation gate",
+  "runtime": {
+    "environment": "emotion-llm-mlx",
+    "executable": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+    "git": {
+      "commit": "0fec243e5b96c04f2ad23382f430d3fe986b888b",
+      "dirty": true,
+      "dirty_path_count": 35
+    },
+    "hardware": {
+      "architecture": "arm64",
+      "chip": "Apple M3",
+      "memory_bytes": 17179869184,
+      "platform": "macOS-26.5.2-arm64-arm-64bit"
+    },
+    "packages": {
+      "huggingface-hub": "1.26.0",
+      "mlx": "0.32.0",
+      "mlx-lm": "0.31.3",
+      "numpy": "2.4.6",
+      "transformers": "5.14.1"
+    },
+    "python": "3.11.15",
+    "user_site_disabled": true
+  },
+  "stage": "label-id-parser-repair-trial",
+  "started_at_utc": "2026-07-31T12:30:03.841870+00:00",
+  "status": "Completed",
+  "test_split_accessed": false,
+  "tier": "Minor",
+  "validation_split_accessed": false,
+  "warnings": [
+    "This run measures engineering cost and parser behavior, not classification performance.",
+    "Gold labels are discarded and no Accuracy or F1 metric is computed.",
+    "EXP-023 changes only the output interface from label names to integer label IDs.",
+    "Full-dev hours are linear estimates for unbatched generation without prompt caching."
+  ]
+}

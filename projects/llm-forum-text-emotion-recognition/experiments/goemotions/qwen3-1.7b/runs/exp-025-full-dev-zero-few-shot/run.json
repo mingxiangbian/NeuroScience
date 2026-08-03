@@ -1,0 +1,239 @@
+{
+  "accessed_splits": [
+    "dev"
+  ],
+  "api_cost_usd": 0,
+  "completed_at_utc": "2026-07-31T17:02:00.074090+00:00",
+  "completed_generation_pairs": 10852,
+  "data": {
+    "dataset_protocol": "DATA-GOE-V1",
+    "dev_rows": 5426,
+    "dev_sha256": "575489c079c9de1097062a01738f998590d6b7ead66dd1c9fd1d2ba01fd8bc62",
+    "labels": [
+      "admiration",
+      "amusement",
+      "anger",
+      "annoyance",
+      "approval",
+      "caring",
+      "confusion",
+      "curiosity",
+      "desire",
+      "disappointment",
+      "disapproval",
+      "disgust",
+      "embarrassment",
+      "excitement",
+      "fear",
+      "gratitude",
+      "grief",
+      "joy",
+      "love",
+      "nervousness",
+      "optimism",
+      "pride",
+      "realization",
+      "relief",
+      "remorse",
+      "sadness",
+      "surprise",
+      "neutral"
+    ],
+    "labels_sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89",
+    "raw_comment_ids_stored": false,
+    "raw_input_text_stored": false,
+    "split": "dev",
+    "test_rows_accessed": 0,
+    "train_rows_accessed": 0
+  },
+  "decoder": {
+    "constrained": true,
+    "constraint_candidate_token_count": 14215,
+    "constraint_init_seconds": 0.38798145900364034,
+    "post_hoc_repair": false,
+    "retries": 0,
+    "strict_parser": true,
+    "synonym_mapping": false
+  },
+  "environment": {
+    "hardware": {
+      "architecture": "arm64",
+      "chip": "Apple M3",
+      "memory_bytes": 17179869184,
+      "platform": "macOS-26.5.2-arm64-arm-64bit"
+    },
+    "packages": {
+      "huggingface-hub": "1.26.0",
+      "mlx": "0.32.0",
+      "mlx-lm": "0.31.3",
+      "numpy": "2.4.6",
+      "transformers": "5.14.1"
+    },
+    "python": "3.11.15",
+    "python_executable": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+    "python_prefix": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx"
+  },
+  "errors": [],
+  "experiment_id": "EXP-025",
+  "generated_artifacts": {
+    "aggregate-metrics.json": {
+      "bytes": 20875,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/aggregate-metrics.json",
+      "sha256": "369108ac14b88416fefc44637a2db10b553f55ae4d86818508003dd7cdeb0f9d"
+    },
+    "condition-summary.csv": {
+      "bytes": 794,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/condition-summary.csv",
+      "sha256": "998d0a3f634b3b71f338a8ef9ff1964d1bbaad23446f366724b4be420c1b8613"
+    },
+    "few-shot-synthetic-3/metrics.json": {
+      "bytes": 8817,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/few-shot-synthetic-3/metrics.json",
+      "sha256": "cfed9311a733a8a2588a710c094cf7fb41780db07f88be84e8f7052b4c2bb626"
+    },
+    "few-shot-synthetic-3/multilabel-confusion-matrix.csv": {
+      "bytes": 805,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/few-shot-synthetic-3/multilabel-confusion-matrix.csv",
+      "sha256": "b4f8f1d4b1d6cc82b864a463b173a274ffc2713267ecd9dc649283577044e763"
+    },
+    "few-shot-synthetic-3/per-label-metrics.csv": {
+      "bytes": 2275,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/few-shot-synthetic-3/per-label-metrics.csv",
+      "sha256": "34838317effee94f45c2717838a036cd77d6f8304d4ea20575867bfb53481825"
+    },
+    "few-shot-synthetic-3/predictions.csv": {
+      "bytes": 1562084,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/few-shot-synthetic-3/predictions.csv",
+      "sha256": "0e44154e8202e9e3f30f3f4b0da5570b872698d7e62e600370782cc784228ee5"
+    },
+    "generation-records.jsonl": {
+      "bytes": 9121788,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/generation-records.jsonl",
+      "sha256": "eb4eaa30c3426a3b08697624d3dbbe73c437b5f5b0d8e433e7d2d4313cd4aa5f"
+    },
+    "paired-bootstrap.json": {
+      "bytes": 3224,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/paired-bootstrap.json",
+      "sha256": "e32a713a5204a4413b07111cbfc18687feb31dbfd60e29d45d371ec0bd39c58c"
+    },
+    "stdout.log": {
+      "bytes": 10649,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/stdout.log",
+      "sha256": "2df91156cdd844c05b724b83c2fb969be92d454439bf955d1cb5c0a9a9d4bc87"
+    },
+    "zero-shot/metrics.json": {
+      "bytes": 8739,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/zero-shot/metrics.json",
+      "sha256": "b96fffc2955182958e15b5718720024aaa6803d39e27823c8f69a6d544cbd3c0"
+    },
+    "zero-shot/multilabel-confusion-matrix.csv": {
+      "bytes": 789,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/zero-shot/multilabel-confusion-matrix.csv",
+      "sha256": "bc49796fa4cbcb9ec34f9a62d213dc0aaf4654db1c1fb4671dbb87673841f823"
+    },
+    "zero-shot/per-label-metrics.csv": {
+      "bytes": 2220,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/zero-shot/per-label-metrics.csv",
+      "sha256": "e3146e05d648a9bd3d776fbed5ef6030109c4c2818ea62806f8200af8d880b0b"
+    },
+    "zero-shot/predictions.csv": {
+      "bytes": 1470641,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/zero-shot/predictions.csv",
+      "sha256": "4e6101914b2e90e1ebe5aa0359189b0ff4cf476b3d76b26a8e6c8a4af5a805ee"
+    }
+  },
+  "git": {
+    "commit": "0fec243e5b96c04f2ad23382f430d3fe986b888b",
+    "dirty": true,
+    "dirty_path_count": 35
+  },
+  "invocation": [
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+    "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/run_full_dev.py",
+    "--experiment",
+    "EXP-025"
+  ],
+  "model": {
+    "active_memory_after_load_gb": 3.44114996,
+    "condition": "post-trained",
+    "load_peak_memory_gb": 3.44114996,
+    "load_seconds": 1.8553445409925189,
+    "local_path": "models/qwen3-1.7b/mlx-bf16",
+    "manifest_path": "models/qwen3-1.7b/manifest.json",
+    "manifest_sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877",
+    "precision": "bfloat16",
+    "provider": "Qwen official Hugging Face repository",
+    "quantized": false,
+    "repo_id": "Qwen/Qwen3-1.7B",
+    "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e"
+  },
+  "parent_experiment": "EXP-024",
+  "progress": {
+    "completed": 10852,
+    "estimated_remaining_seconds": 0.0,
+    "total": 10852
+  },
+  "resource_usage": {
+    "api_cost_usd": 0,
+    "overall_peak_memory_gb": 3.660009584,
+    "total_seconds": 10000.266686416988,
+    "warmup_generations": 2
+  },
+  "resume": false,
+  "rq_id": "RQ-G2",
+  "source_artifacts": {
+    "config": {
+      "bytes": 8049,
+      "path": "experiments/goemotions/qwen3-1.7b/configs/exp-025-full-dev-zero-few-shot.json",
+      "sha256": "dfb182a0ca20146f92f6832d5b7536f29419c64e0448c2ce12e4f6c91c964e07"
+    },
+    "constraint": {
+      "bytes": 8432,
+      "path": "experiments/goemotions/qwen3-1.7b/label_json_constraint.py",
+      "sha256": "6e4d1d21d79d2fed3c8a5d118748591db6e72cfcfefb74386f913fb5fd164efa"
+    },
+    "labels": {
+      "bytes": 248,
+      "path": "data/goemotions/official/emotions.txt",
+      "sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89"
+    },
+    "metrics_implementation": {
+      "bytes": 20541,
+      "path": "experiments/goemotions/qwen3-1.7b/llm_full_dev_metrics.py",
+      "sha256": "38e50c725a5f065d0babb263ad497b5d8dc21ad6edcd11a5e4d4c79310ff44d4"
+    },
+    "model_manifest": {
+      "bytes": 4235,
+      "path": "models/qwen3-1.7b/manifest.json",
+      "sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877"
+    },
+    "prompt": {
+      "bytes": 1079,
+      "path": "experiments/goemotions/qwen3-1.7b/prompts/exp-022-resource-v1.json",
+      "sha256": "2ce7083d41df7ff15292b4211bba26e5403d9cd66c67f8f12f9386cb99bf328c"
+    },
+    "runner": {
+      "bytes": 47658,
+      "path": "experiments/goemotions/qwen3-1.7b/run_full_dev.py",
+      "sha256": "ec2615c44b6c13d9843dabd344f3e2bcc05e44b1df05e2215771b7dc5a4a41ee"
+    },
+    "verifier": {
+      "bytes": 51492,
+      "path": "experiments/goemotions/qwen3-1.7b/verify_full_dev.py",
+      "sha256": "f36d6417a0bcaa194635d398de0de7d95b155104996b325ef5aefc99cdc1b534"
+    }
+  },
+  "stage": "full-dev-zero-few-shot-evaluation",
+  "started_at_utc": "2026-07-31T14:15:20.119741+00:00",
+  "status": "Completed",
+  "test_split_accessed": false,
+  "tier": "Major",
+  "validation_split_accessed": true,
+  "verification_status": "Pending",
+  "warnings": [
+    "EXP-025 measures the constrained end-to-end system; EXP-026 is the matched decoder ablation.",
+    "Dev is a model-selection split, not an independent test or public benchmark result.",
+    "Invalid or length-terminated outputs are scored as empty predictions without retry.",
+    "Sequence log probabilities are not calibrated 28-label probabilities."
+  ]
+}

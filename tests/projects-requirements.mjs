@@ -113,8 +113,8 @@ assert.deepEqual(
 );
 assert.deepEqual(
   emotionData.verifiedEvidence.goEmotions.models.map((model) => model.value),
-  [0.203644, 0.241164, 0.489435],
-  "GoEmotions should expose the verified dev baselines without mixing TweetEval scores",
+  [0.203644, 0.241164, 0.451374, 0.489435],
+  "GoEmotions should expose the verified dev baselines and LoRA result without mixing TweetEval scores",
 );
 assert.match(emotionData.verifiedEvidence.goEmotions.evaluation, /^DEV ·/, "GoEmotions results should be labeled as dev evidence");
 assert.match(emotionData.verifiedEvidence.goEmotions.gate, /test gate 关闭/, "GoEmotions should not imply official test access");
@@ -124,11 +124,17 @@ assert.deepEqual(
   "the active evidence spine should keep the RQ-to-next semantic order",
 );
 assert.equal(emotionData.activeEvidenceSpine.nodes[0].ref, "RQ-G2", "the active spine should belong to the active LLM research question");
-assert.equal(emotionData.activeEvidenceSpine.nodes[1].ref, "EXP-028", "the active spine should preserve the failed probe identity");
-assert.equal(emotionData.activeEvidenceSpine.nodes[1].status, "failed", "EXP-028 should remain failed after crossing its frozen resource gate");
-assert.equal(emotionData.activeEvidenceSpine.nodes[2].status, "preserved", "the failed artifact audit should remain preserved rather than verified");
-assert.match(emotionData.activeEvidenceSpine.nodes[3].detail, /不能|尚无.*Verified/, "the active claim should state that no Verified probe conclusion exists");
-assert.notEqual(emotionData.activeEvidenceSpine.nodes[4].ref, "EXP-028", "the successor dependency must not reuse the failed experiment ID");
+assert.equal(emotionData.activeEvidenceSpine.nodes[1].ref, "EXP-031", "the active spine should identify the completed ontology ablation");
+assert.equal(emotionData.activeEvidenceSpine.nodes[1].status, "verified", "EXP-031 should expose its independently verified status");
+assert.equal(emotionData.activeEvidenceSpine.nodes[2].ref, "EVID-020", "the ontology ablation should map to its evidence-ledger entry");
+assert.equal(emotionData.activeEvidenceSpine.nodes[2].status, "verified", "the EXP-031 aggregate should be verified evidence");
+assert.match(emotionData.activeEvidenceSpine.nodes[3].detail, /neutral.*0|inference-only/i, "the active claim should preserve the negative inference-only result");
+assert.notEqual(emotionData.activeEvidenceSpine.nodes[4].ref, "EXP-031", "the next dependency must not reuse the completed experiment ID");
+assert.equal(
+  emotionData.dependencyRoute.find((step) => step.label.startsWith("EXP-028")).status,
+  "failed",
+  "EXP-028 should remain failed in the separate representation branch",
+);
 assert.doesNotMatch(
   emotionData.actionDock.nextAction.title,
   /正式执行 EXP-028/,
@@ -136,8 +142,13 @@ assert.doesNotMatch(
 );
 assert.match(
   `${emotionData.actionDock.nextAction.title} ${emotionData.actionDock.nextAction.detail}`,
-  /新的 matched-probe|新实验编号|登记新的/,
-  "the next action should preserve EXP-028 and register a successor experiment",
+  /target-aligned|训练目标.*prompt.*decoder/i,
+  "the next action should pre-register target-aligned retraining",
+);
+assert.equal(
+  emotionData.dependencyRoute.find((step) => step.label.startsWith("EXP-031")).status,
+  "verified",
+  "EXP-031 should remain independently verified in the dependency route",
 );
 assert.deepEqual(
   emotionData.actionDock.testGates.map((gate) => gate.label),
@@ -192,6 +203,8 @@ for (const dataset of [emotionData.verifiedEvidence.tweetEval, emotionData.verif
 assert.equal(emotionData.verifiedEvidence.tweetEval.models.find((model) => model.experiment === "EXP-014").comparison.delta, -0.003116, "label smoothing should keep its frozen negative delta");
 assert.equal(emotionData.verifiedEvidence.tweetEval.models.find((model) => model.experiment === "EXP-015").comparison.delta, 0.017328, "domain pretraining should keep its frozen positive delta");
 assert.equal(emotionData.verifiedEvidence.goEmotions.models.find((model) => model.experiment === "EXP-020").comparison.interpretation, "descriptive-only", "different GoEmotions thresholds should not be presented as a pure ablation");
+assert.equal(emotionData.verifiedEvidence.goEmotions.models.find((model) => model.experiment === "EXP-029").uncertainty.runs, 3, "LoRA should report all three registered seeds");
+assert.equal(emotionData.verifiedEvidence.goEmotions.models.find((model) => model.experiment === "EXP-029").comparison.delta, 0.21021, "LoRA should preserve its frozen selected-Qwen dev delta");
 assert.doesNotMatch(
   JSON.stringify(emotionData.verifiedEvidence),
   /EXP-028|0\.310534|0\.306373/,

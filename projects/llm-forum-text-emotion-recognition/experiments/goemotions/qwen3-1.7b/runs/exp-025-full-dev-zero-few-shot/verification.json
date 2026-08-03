@@ -1,0 +1,133 @@
+{
+  "checked_artifacts": {
+    "aggregate-metrics.json": {
+      "bytes": 20875,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/aggregate-metrics.json",
+      "sha256": "369108ac14b88416fefc44637a2db10b553f55ae4d86818508003dd7cdeb0f9d"
+    },
+    "condition-summary.csv": {
+      "bytes": 794,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/condition-summary.csv",
+      "sha256": "998d0a3f634b3b71f338a8ef9ff1964d1bbaad23446f366724b4be420c1b8613"
+    },
+    "few-shot-synthetic-3/metrics.json": {
+      "bytes": 8817,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/few-shot-synthetic-3/metrics.json",
+      "sha256": "cfed9311a733a8a2588a710c094cf7fb41780db07f88be84e8f7052b4c2bb626"
+    },
+    "few-shot-synthetic-3/multilabel-confusion-matrix.csv": {
+      "bytes": 805,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/few-shot-synthetic-3/multilabel-confusion-matrix.csv",
+      "sha256": "b4f8f1d4b1d6cc82b864a463b173a274ffc2713267ecd9dc649283577044e763"
+    },
+    "few-shot-synthetic-3/per-label-metrics.csv": {
+      "bytes": 2275,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/few-shot-synthetic-3/per-label-metrics.csv",
+      "sha256": "34838317effee94f45c2717838a036cd77d6f8304d4ea20575867bfb53481825"
+    },
+    "few-shot-synthetic-3/predictions.csv": {
+      "bytes": 1562084,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/few-shot-synthetic-3/predictions.csv",
+      "sha256": "0e44154e8202e9e3f30f3f4b0da5570b872698d7e62e600370782cc784228ee5"
+    },
+    "generation-records.jsonl": {
+      "bytes": 9121788,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/generation-records.jsonl",
+      "sha256": "eb4eaa30c3426a3b08697624d3dbbe73c437b5f5b0d8e433e7d2d4313cd4aa5f"
+    },
+    "paired-bootstrap.json": {
+      "bytes": 3224,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/paired-bootstrap.json",
+      "sha256": "e32a713a5204a4413b07111cbfc18687feb31dbfd60e29d45d371ec0bd39c58c"
+    },
+    "run.json": {
+      "bytes": 9005,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/run.json",
+      "sha256": "bad55270df92503f64ab7bb1090587346ad9f9ca82d78fbd70fc6e66874f8063"
+    },
+    "source:config": {
+      "bytes": 8049,
+      "path": "experiments/goemotions/qwen3-1.7b/configs/exp-025-full-dev-zero-few-shot.json",
+      "sha256": "dfb182a0ca20146f92f6832d5b7536f29419c64e0448c2ce12e4f6c91c964e07"
+    },
+    "source:constraint": {
+      "bytes": 8432,
+      "path": "experiments/goemotions/qwen3-1.7b/label_json_constraint.py",
+      "sha256": "6e4d1d21d79d2fed3c8a5d118748591db6e72cfcfefb74386f913fb5fd164efa"
+    },
+    "source:labels": {
+      "bytes": 248,
+      "path": "data/goemotions/official/emotions.txt",
+      "sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89"
+    },
+    "source:metrics_implementation": {
+      "bytes": 20541,
+      "path": "experiments/goemotions/qwen3-1.7b/llm_full_dev_metrics.py",
+      "sha256": "38e50c725a5f065d0babb263ad497b5d8dc21ad6edcd11a5e4d4c79310ff44d4"
+    },
+    "source:model_manifest": {
+      "bytes": 4235,
+      "path": "models/qwen3-1.7b/manifest.json",
+      "sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877"
+    },
+    "source:prompt": {
+      "bytes": 1079,
+      "path": "experiments/goemotions/qwen3-1.7b/prompts/exp-022-resource-v1.json",
+      "sha256": "2ce7083d41df7ff15292b4211bba26e5403d9cd66c67f8f12f9386cb99bf328c"
+    },
+    "source:runner": {
+      "bytes": 47658,
+      "path": "experiments/goemotions/qwen3-1.7b/run_full_dev.py",
+      "sha256": "ec2615c44b6c13d9843dabd344f3e2bcc05e44b1df05e2215771b7dc5a4a41ee"
+    },
+    "source:verifier": {
+      "bytes": 51492,
+      "path": "experiments/goemotions/qwen3-1.7b/verify_full_dev.py",
+      "sha256": "f36d6417a0bcaa194635d398de0de7d95b155104996b325ef5aefc99cdc1b534"
+    },
+    "stdout.log": {
+      "bytes": 10649,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/stdout.log",
+      "sha256": "2df91156cdd844c05b724b83c2fb969be92d454439bf955d1cb5c0a9a9d4bc87"
+    },
+    "zero-shot/metrics.json": {
+      "bytes": 8739,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/zero-shot/metrics.json",
+      "sha256": "b96fffc2955182958e15b5718720024aaa6803d39e27823c8f69a6d544cbd3c0"
+    },
+    "zero-shot/multilabel-confusion-matrix.csv": {
+      "bytes": 789,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/zero-shot/multilabel-confusion-matrix.csv",
+      "sha256": "bc49796fa4cbcb9ec34f9a62d213dc0aaf4654db1c1fb4671dbb87673841f823"
+    },
+    "zero-shot/per-label-metrics.csv": {
+      "bytes": 2220,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/zero-shot/per-label-metrics.csv",
+      "sha256": "e3146e05d648a9bd3d776fbed5ef6030109c4c2818ea62806f8200af8d880b0b"
+    },
+    "zero-shot/predictions.csv": {
+      "bytes": 1470641,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/zero-shot/predictions.csv",
+      "sha256": "4e6101914b2e90e1ebe5aa0359189b0ff4cf476b3d76b26a8e6c8a4af5a805ee"
+    }
+  },
+  "completed_generation_pairs": 10852,
+  "dev_rows": 5426,
+  "experiment_id": "EXP-025",
+  "independent_metric_library": "scikit-learn",
+  "max_absolute_numeric_difference": 0.0,
+  "privacy": {
+    "invalid_raw_generation_stored": false,
+    "prompt_expanded_input_stored": false,
+    "raw_input_text_stored": false,
+    "upstream_comment_id_stored": false
+  },
+  "status": "Passed",
+  "test_split_absent": true,
+  "verified_at_utc": "2026-07-31T17:03:04.905763+00:00",
+  "verifier": {
+    "bytes": 51492,
+    "path": "experiments/goemotions/qwen3-1.7b/verify_full_dev.py",
+    "sha256": "f36d6417a0bcaa194635d398de0de7d95b155104996b325ef5aefc99cdc1b534"
+  }
+}

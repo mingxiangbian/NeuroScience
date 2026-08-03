@@ -1,0 +1,225 @@
+{
+  "accessed_splits": [
+    "dev"
+  ],
+  "api_cost_usd": 0,
+  "artifacts": {
+    "REPORT.md": {
+      "bytes": 7270,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/REPORT.md",
+      "sha256": "89eebd92dd100c47ccdc8e50901c29b9f3750d1badcfc234b4720e2a344a7899"
+    },
+    "aggregate_summary.json": {
+      "bytes": 3452,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/aggregate_summary.json",
+      "sha256": "194fd4f8b9d5119fb0467ce6a82a5421fd95c75ee12c7c4e835bcc5a7f30398d"
+    },
+    "analysis_manifest.json": {
+      "bytes": 7128,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/analysis_manifest.json",
+      "sha256": "4f982e08fa12eeb038dc9764b80bfbde27593c570a6bf0b3cba6f336895db1dc"
+    },
+    "condition_stability.csv": {
+      "bytes": 7677,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/condition_stability.csv",
+      "sha256": "588e93912fd9b69fe45ce9c2be5bad4e6c7b299a64f73e24df492923ed1dd144"
+    },
+    "error_modes.csv": {
+      "bytes": 2016,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/error_modes.csv",
+      "sha256": "f9b88c9bf31f0c0e5fa9d18158b560b6ba927f3c566afc24796956b00bc40500"
+    },
+    "manual_annotations.csv": {
+      "bytes": 6933,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/manual_annotations.csv",
+      "sha256": "dbf9020f7de73064464aa3b690b7f9bfe0dfa991b723962d7f020b00d92a1022"
+    },
+    "manual_review.json": {
+      "bytes": 2280,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/manual_review.json",
+      "sha256": "32969d0d4ad4941c9f6dd0dc8ad93b66719957140ba3b91df1936863f529a5b1"
+    },
+    "missed_spurious_pairs.csv": {
+      "bytes": 84876,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/missed_spurious_pairs.csv",
+      "sha256": "328e6013fd7a8d98fcbd04bf95b4f646e1c586fb95ba05528fcd1566ab8c5c1c"
+    },
+    "official_reference.json": {
+      "bytes": 1469,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/official_reference.json",
+      "sha256": "0f8a94d2d0b235909101f717f503ae044e00ae1c26dea2b4f4f04d603f642553"
+    },
+    "pairwise_transitions.csv": {
+      "bytes": 2466,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/pairwise_transitions.csv",
+      "sha256": "8e4434572e68800e64cebe1abba801de015b5face60f42f4330efb697078769a"
+    },
+    "per_label_metrics.csv": {
+      "bytes": 17411,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/per_label_metrics.csv",
+      "sha256": "cafec243684bdab5badce8ed65a5f1c1f73442a6727da6fa31c172bbfbacff09"
+    },
+    "qualitative_counts.csv": {
+      "bytes": 7195,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/qualitative_counts.csv",
+      "sha256": "dc2a4478c479189db1faed6ffe8ee2a402dcd737bf604a4ff27c101a86749c61"
+    },
+    "qualitative_summary.json": {
+      "bytes": 888,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/qualitative_summary.json",
+      "sha256": "0743cc6b22f5ec101efc39487273e110c24ab3f156999e54743ded7464b52255"
+    },
+    "sample_manifest.csv": {
+      "bytes": 7376,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/sample_manifest.csv",
+      "sha256": "59d81000e2a3b75c695fd7e1b5d20dc568d7e83e5cfd231767ce8b47e7621e73"
+    },
+    "seed_agreement.csv": {
+      "bytes": 667,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/seed_agreement.csv",
+      "sha256": "00bfed31957cd4233a97c7a2371da683344785195df2336557e65a0b25a02979"
+    },
+    "slice_metrics.csv": {
+      "bytes": 6802,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/slice_metrics.csv",
+      "sha256": "9ba1f88c92fc86f54a6b1c41d02f9ba0297f94cae9a9446c3abe36ec9b579747"
+    }
+  },
+  "completed_at_utc": "2026-08-02T14:28:56.749615+00:00",
+  "config": {
+    "bytes": 6328,
+    "path": "experiments/goemotions/error-analysis/configs/exp-030-frozen-dev-error-analysis.json",
+    "sha256": "ddae1be3128d62cb59adef020af617d426fffb0c3b5f0f382e63c7d739dbab82"
+  },
+  "data": {
+    "dev": {
+      "bytes": 439059,
+      "path": "data/goemotions/official/dev.tsv",
+      "sha256": "575489c079c9de1097062a01738f998590d6b7ead66dd1c9fd1d2ba01fd8bc62"
+    },
+    "labels": {
+      "bytes": 248,
+      "path": "data/goemotions/official/emotions.txt",
+      "sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89"
+    },
+    "test_absent": true
+  },
+  "experiment_id": "EXP-030",
+  "git": {
+    "branch": "main",
+    "commit": "53a1399b1eddde3839a40860c3c5c0d62bb942cd",
+    "dirty": true,
+    "dirty_path_count": 38
+  },
+  "implementation": {
+    "analyzer": {
+      "bytes": 44731,
+      "path": "experiments/goemotions/error-analysis/analyze_frozen_dev_errors.py",
+      "sha256": "552fe73ce55a338aa2865fcc34af0e86b5699ab91f7f06477df251f2f79c0483"
+    },
+    "summarizer": {
+      "bytes": 26531,
+      "path": "experiments/goemotions/error-analysis/summarize_review.py",
+      "sha256": "44e886bed1973e3e87b385461fa4939c74ceeb72a38286223af48729bab8c88c"
+    }
+  },
+  "official_reference_boundary": "Official values are final-test references only; no matched validation comparison is claimed.",
+  "prediction_artifacts": {
+    "exp-020-bert": [
+      {
+        "bytes": 3502379,
+        "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/seed-42/predictions.csv",
+        "sha256": "eadde158ab9d9b42a0dffc554ec662b6d9aeb7bd4376c32c1c6ac310dc7e57b3"
+      },
+      {
+        "bytes": 3502228,
+        "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/seed-43/predictions.csv",
+        "sha256": "cdae577732f10872326ab0ef263e61ad3a736ae56a224f9b5fdcbbe70a29e317"
+      },
+      {
+        "bytes": 3504885,
+        "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/seed-44/predictions.csv",
+        "sha256": "b4d35702dc75eb75f2aba20cf5e94c53fad516b52de769c910bfe856c99d3bce"
+      }
+    ],
+    "exp-025-frozen-qwen": [
+      {
+        "bytes": 1562084,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/few-shot-synthetic-3/predictions.csv",
+        "sha256": "0e44154e8202e9e3f30f3f4b0da5570b872698d7e62e600370782cc784228ee5"
+      }
+    ],
+    "exp-029-lora-qwen": [
+      {
+        "bytes": 1450077,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-42/zero-shot/predictions.csv",
+        "sha256": "9ba3dbcc444fa1c0c1e4491e6679a961a577e1fbd8018a1c1bf16161d277cc63"
+      },
+      {
+        "bytes": 1449828,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/zero-shot/predictions.csv",
+        "sha256": "e4e7d4b28aa9ae7e685d0832cedd04566990f8f5cb0894e474c9bccdbfc4fffd"
+      },
+      {
+        "bytes": 1452270,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-44/zero-shot/predictions.csv",
+        "sha256": "f21750dad0a4c770f63e017e160a45cea7ba6311ed9cc7a91e8583457d40bf1a"
+      }
+    ]
+  },
+  "privacy": {
+    "private_selected_text": {
+      "bytes": 8464,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/private/selected_text.private.jsonl",
+      "sha256": "b8d49df52aae0055d86f43422c71b482104fbb631b8abd374e458b60b6d2de70"
+    },
+    "public_raw_text": false,
+    "public_upstream_comment_ids": false
+  },
+  "protocol": {
+    "bytes": 7883,
+    "path": "experiments/goemotions/error-analysis/protocols/exp-030-frozen-dev-error-analysis.md",
+    "sha256": "e1456e68acf5df8a4c246e25c2eb7e22d295c27a6265f0292fd152f6ed6774aa"
+  },
+  "reproduction_commands": [
+    "python3 experiments/goemotions/error-analysis/analyze_frozen_dev_errors.py",
+    "python3 experiments/goemotions/error-analysis/summarize_review.py",
+    "python3 experiments/goemotions/error-analysis/verify_error_analysis.py"
+  ],
+  "reviewed_rows": 48,
+  "rq_ids": [
+    "RQ-G1",
+    "RQ-G2"
+  ],
+  "source_verifications": {
+    "exp-020-bert": {
+      "status": "Verified",
+      "verification": {
+        "bytes": 1499,
+        "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/verification.json",
+        "sha256": "0a97b9af655c26d33d6c7e96aa1b54c301be2ec31ba222ccafbdad8b79d3780b"
+      }
+    },
+    "exp-025-frozen-qwen": {
+      "status": "Passed",
+      "verification": {
+        "bytes": 6077,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/verification.json",
+        "sha256": "3d095e27e24052f64e55cbeeeed2f37775b129f3c4de111f4c90b2e1bde9279c"
+      }
+    },
+    "exp-029-lora-qwen": {
+      "status": "Passed",
+      "verification": {
+        "bytes": 1303,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/multi-seed-verification.json",
+        "sha256": "798257185d17b797b3e131924688e30a43d2b87fa0e84acb54183751d090e2cd"
+      }
+    }
+  },
+  "split": "dev",
+  "stage": "descriptive-frozen-dev-error-analysis",
+  "status": "CompletedAwaitingVerification",
+  "test_split_accessed": false,
+  "tier": "Major"
+}

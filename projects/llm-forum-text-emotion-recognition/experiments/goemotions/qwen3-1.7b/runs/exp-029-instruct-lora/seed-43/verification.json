@@ -1,0 +1,94 @@
+{
+  "artifact_count": 15,
+  "artifacts": {
+    "aggregate-metrics.json": {
+      "bytes": 20875,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/aggregate-metrics.json",
+      "sha256": "704d1b6801f0672d3efc15cd59021fe1caaecdacf690d0f0d044a2135be087f7"
+    },
+    "condition-summary.csv": {
+      "bytes": 805,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/condition-summary.csv",
+      "sha256": "227e61ddc01a0cb4774ea45cc411439aba2b958228270436eb47cf3c12fc9f40"
+    },
+    "few-shot-synthetic-3/metrics.json": {
+      "bytes": 8654,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/few-shot-synthetic-3/metrics.json",
+      "sha256": "a8dbf62a6dbae1b977c8f1cfdbe40b037aed9d4eb609e008d9513a6f07ad9c6b"
+    },
+    "few-shot-synthetic-3/multilabel-confusion-matrix.csv": {
+      "bytes": 796,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/few-shot-synthetic-3/multilabel-confusion-matrix.csv",
+      "sha256": "141ae81929ac85b2ae912c00c1db45e29f3a2fa34a2603057a654e1b589f7fb5"
+    },
+    "few-shot-synthetic-3/per-label-metrics.csv": {
+      "bytes": 2206,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/few-shot-synthetic-3/per-label-metrics.csv",
+      "sha256": "7fd853836d1deb6516fa6ae6b3697fe866e25ec59cbe674ca91dd18ecc8ec08c"
+    },
+    "few-shot-synthetic-3/predictions.csv": {
+      "bytes": 1484408,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/few-shot-synthetic-3/predictions.csv",
+      "sha256": "3e20aed9d8c5f2d6690e4cf0e29102df47365211db615a8af7341c8d5000e0b8"
+    },
+    "generation-records.jsonl": {
+      "bytes": 9004009,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/generation-records.jsonl",
+      "sha256": "b06ca8e63862ccd795ea9afaf44c011a18ec84bcfad8ab8d3b210efb40772f8a"
+    },
+    "history.csv": {
+      "bytes": 9547,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/history.csv",
+      "sha256": "a2c5182ff517d76c35a84ea8d765cb0fb21b175af69b1191fbff4fcaa62acc60"
+    },
+    "paired-bootstrap.json": {
+      "bytes": 4780,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/paired-bootstrap.json",
+      "sha256": "33562628fef059c22d0e835dcafc79d7eab482e4d8f39d8de79100c0210f5890"
+    },
+    "run.json": {
+      "bytes": 5488,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/run.json",
+      "sha256": "fa6c23b880b03a339405ade6eb9c4bb7ffc4f2f16d1331f562bbabff6157ca4e"
+    },
+    "stdout.log": {
+      "bytes": 39313,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/stdout.log",
+      "sha256": "ac88ad7078822f591eb272a16769599de73a9dd3ee622a23fef98ebecc1717cb"
+    },
+    "zero-shot/metrics.json": {
+      "bytes": 8647,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/zero-shot/metrics.json",
+      "sha256": "504db0afcfb6f859c45b3c466096964d876894cc58a5f8bd8df42d442b84b84d"
+    },
+    "zero-shot/multilabel-confusion-matrix.csv": {
+      "bytes": 782,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/zero-shot/multilabel-confusion-matrix.csv",
+      "sha256": "66e2b59c6ace010ef0ccb5c9f425f13398596dfd5afec8735cfd683866c95190"
+    },
+    "zero-shot/per-label-metrics.csv": {
+      "bytes": 2163,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/zero-shot/per-label-metrics.csv",
+      "sha256": "4475980920b7a90db7d46543ec6b02c57a19dd01fc788580baf2ea92defc2606"
+    },
+    "zero-shot/predictions.csv": {
+      "bytes": 1449828,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/zero-shot/predictions.csv",
+      "sha256": "e4e7d4b28aa9ae7e685d0832cedd04566990f8f5cb0894e474c9bccdbfc4fffd"
+    }
+  },
+  "completed_at_utc": "2026-08-02T04:49:07.645075+00:00",
+  "continue_remaining_seeds": null,
+  "experiment_id": "EXP-029",
+  "metrics_recomputed_from_predictions": true,
+  "paired_bootstrap_recomputed": true,
+  "privacy_schema_passed": true,
+  "resource_gates_passed": true,
+  "seed": 43,
+  "selected_condition": "zero-shot",
+  "selected_macro_f1": 0.443673469401069,
+  "selected_minus_frozen_exp_025": 0.2025093146521534,
+  "status": "Passed",
+  "test_absent": true,
+  "test_split_accessed": false
+}

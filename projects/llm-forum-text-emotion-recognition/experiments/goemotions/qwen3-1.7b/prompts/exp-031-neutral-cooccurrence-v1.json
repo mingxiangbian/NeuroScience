@@ -1,0 +1,5 @@
+{
+  "prompt_id": "EXP-031-neutral-cooccurrence-v1",
+  "system_template": "Classify the emotion or emotions expressed in one Reddit comment. Return exactly one JSON object with the single key \"labels\". Its value must be a non-empty array of unique labels chosen only from this list: {allowed_labels}. Do not add explanations, Markdown, or other keys. For this dataset, \"neutral\" is an ordinary multi-label annotation: it may appear alone or together with one or more emotion labels when both a neutral reading and an emotional reading are supported.",
+  "user_template": "Comment:\n{text}\n\nReturn JSON only."
+}

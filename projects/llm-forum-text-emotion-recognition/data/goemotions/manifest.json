@@ -1,0 +1,182 @@
+{
+  "cross_split": {
+    "train_dev_comment_id_overlap": 0,
+    "train_dev_exact_text_overlap": {
+      "dev_rows": 43,
+      "dev_rows_with_matching_train_label_set": 33,
+      "dev_rows_without_matching_train_label_set": 10,
+      "interpretation": "Different upstream comments can share identical short text; the official split is preserved for benchmark comparability.",
+      "review_status": "reviewed_preserve_official_split",
+      "train_rows": 84,
+      "unique_exact_texts": 41
+    }
+  },
+  "files": {
+    "dev.tsv": {
+      "bytes": 439059,
+      "expected_rows": 5426,
+      "path": "data/goemotions/official/dev.tsv",
+      "sha256": "575489c079c9de1097062a01738f998590d6b7ead66dd1c9fd1d2ba01fd8bc62",
+      "source_url": "https://raw.githubusercontent.com/google-research/google-research/8dadc6c56e2c2e51a9dd7e0d4bf2840922b4b6c0/goemotions/data/dev.tsv"
+    },
+    "emotions.txt": {
+      "bytes": 248,
+      "path": "data/goemotions/official/emotions.txt",
+      "sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89",
+      "source_url": "https://raw.githubusercontent.com/google-research/google-research/8dadc6c56e2c2e51a9dd7e0d4bf2840922b4b6c0/goemotions/data/emotions.txt"
+    },
+    "train.tsv": {
+      "bytes": 3519053,
+      "expected_rows": 43410,
+      "path": "data/goemotions/official/train.tsv",
+      "sha256": "1c254a142be5c00e80d819b9ae1bbd36d94b2eeb8f4b1271846508d57e57d9c5",
+      "source_url": "https://raw.githubusercontent.com/google-research/google-research/8dadc6c56e2c2e51a9dd7e0d4bf2840922b4b6c0/goemotions/data/train.tsv"
+    }
+  },
+  "generated_at_utc": "2026-07-30T16:05:51.011060+00:00",
+  "labels": {
+    "count": 28,
+    "ordered": [
+      "admiration",
+      "amusement",
+      "anger",
+      "annoyance",
+      "approval",
+      "caring",
+      "confusion",
+      "curiosity",
+      "desire",
+      "disappointment",
+      "disapproval",
+      "disgust",
+      "embarrassment",
+      "excitement",
+      "fear",
+      "gratitude",
+      "grief",
+      "joy",
+      "love",
+      "nervousness",
+      "optimism",
+      "pride",
+      "realization",
+      "relief",
+      "remorse",
+      "sadness",
+      "surprise",
+      "neutral"
+    ],
+    "sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89"
+  },
+  "privacy": {
+    "contains_raw_text": false,
+    "contains_upstream_comment_ids": false
+  },
+  "protocol_id": "DATA-GOE-V1",
+  "source": {
+    "repository": "https://github.com/google-research/google-research",
+    "revision": "8dadc6c56e2c2e51a9dd7e0d4bf2840922b4b6c0",
+    "subdirectory": "goemotions/data"
+  },
+  "splits": {
+    "dev": {
+      "duplicate_comment_ids": 0,
+      "duplicate_texts_within_split": 3,
+      "label_cardinality": {
+        "1": 4548,
+        "2": 809,
+        "3": 62,
+        "4": 7
+      },
+      "label_occurrences": {
+        "admiration": 488,
+        "amusement": 303,
+        "anger": 195,
+        "annoyance": 303,
+        "approval": 397,
+        "caring": 153,
+        "confusion": 152,
+        "curiosity": 248,
+        "desire": 77,
+        "disappointment": 163,
+        "disapproval": 292,
+        "disgust": 97,
+        "embarrassment": 35,
+        "excitement": 96,
+        "fear": 90,
+        "gratitude": 358,
+        "grief": 13,
+        "joy": 172,
+        "love": 252,
+        "nervousness": 21,
+        "neutral": 1766,
+        "optimism": 209,
+        "pride": 15,
+        "realization": 127,
+        "relief": 18,
+        "remorse": 68,
+        "sadness": 143,
+        "surprise": 129
+      },
+      "multi_label_rows": 878,
+      "rows": 5426,
+      "unique_comment_ids": 5426
+    },
+    "test": {
+      "exists": false,
+      "expected_rows": 5427,
+      "path": "data/goemotions/official/test.tsv",
+      "status": "not_acquired"
+    },
+    "train": {
+      "duplicate_comment_ids": 0,
+      "duplicate_texts_within_split": 183,
+      "label_cardinality": {
+        "1": 36308,
+        "2": 6541,
+        "3": 532,
+        "4": 28,
+        "5": 1
+      },
+      "label_occurrences": {
+        "admiration": 4130,
+        "amusement": 2328,
+        "anger": 1567,
+        "annoyance": 2470,
+        "approval": 2939,
+        "caring": 1087,
+        "confusion": 1368,
+        "curiosity": 2191,
+        "desire": 641,
+        "disappointment": 1269,
+        "disapproval": 2022,
+        "disgust": 793,
+        "embarrassment": 303,
+        "excitement": 853,
+        "fear": 596,
+        "gratitude": 2662,
+        "grief": 77,
+        "joy": 1452,
+        "love": 2086,
+        "nervousness": 164,
+        "neutral": 14219,
+        "optimism": 1581,
+        "pride": 111,
+        "realization": 1110,
+        "relief": 153,
+        "remorse": 545,
+        "sadness": 1326,
+        "surprise": 1060
+      },
+      "multi_label_rows": 7102,
+      "rows": 43410,
+      "unique_comment_ids": 43410
+    }
+  },
+  "status": "verified",
+  "storage": {
+    "data_root": "data/goemotions",
+    "official_dir": "data/goemotions/official",
+    "raw_data_gitignored": true
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "artifact_records_checked": 11,
+  "checks": {
+    "aggregate_row_count": 1421,
+    "annotation_rows": 42,
+    "deterministic_sample_rows": 42,
+    "official_label_rows": 1421,
+    "prediction_artifacts": 10,
+    "prediction_rows": 14210,
+    "shared_error_rows": 87
+  },
+  "completed_at": "2026-07-30T19:45:52.296200+08:00",
+  "experiment_id": "EXP-017",
+  "privacy": {
+    "private_file_gitignored": true,
+    "private_file_tracked": false,
+    "private_rows_verified": 42,
+    "public_files_scanned": 13,
+    "raw_text_leak_count": 0
+  },
+  "public_artifacts": {
+    "REPORT.md": {
+      "bytes": 6690,
+      "sha256": "bfc4f0ca7ee095151d1f0c9ff061a8fe9f7758feedcf3c23db8fcbad36847f5b"
+    },
+    "aggregate_summary.json": {
+      "bytes": 1007,
+      "sha256": "171d100bcbe4fa2315bc9a84a8dac82f9f8f2a90a4ba5611583f7c879e7b8e06"
+    },
+    "condition_stability.csv": {
+      "bytes": 2141,
+      "sha256": "4c5e74c36a3c641500722b684d0e301879d02e6f3814a153f7e388e20dd64a6c"
+    },
+    "manual_annotations.csv": {
+      "bytes": 5552,
+      "sha256": "0b7aef7b4a6fb555f482ec52ea517256cedf1f765029640e3dc61e083f012b6b"
+    },
+    "manual_review.json": {
+      "bytes": 2358,
+      "sha256": "be955043fedb32f6ced2f0ed090bb44ac5b2319096a9cb4575ce41cf8d32d5b6"
+    },
+    "pairwise_transitions.csv": {
+      "bytes": 7182,
+      "sha256": "8e1fbd652373c176b00e44b6c064d75e1c5f6faa4425d48a12d0ad707e9a4c26"
+    },
+    "qualitative_counts.csv": {
+      "bytes": 6474,
+      "sha256": "d161e5cd7e1def2b5d29b1977580393f42b634f09f676ad9d25b747cdfb4ba6a"
+    },
+    "qualitative_summary.json": {
+      "bytes": 1063,
+      "sha256": "9b3245be0549ad91f738a15a1237857062d3b6dd8b65ae3cbd76c514922087ed"
+    },
+    "run.json": {
+      "bytes": 5460,
+      "sha256": "7261907d12d97fe4ea7838d48b1d8eeb1419804e1d194aaf0d5b7627c964fc46"
+    },
+    "sample_manifest.csv": {
+      "bytes": 11283,
+      "sha256": "7c3ed3d628ea98502c2c8ce2bef63227835becf34f1dcd91704ac3914440c0f5"
+    },
+    "seed_confusions.csv": {
+      "bytes": 4463,
+      "sha256": "4a679bc74c920934de8290e365e0173cf965a076f60846096946cb8663049780"
+    },
+    "stable_error_overlaps.csv": {
+      "bytes": 2619,
+      "sha256": "9cfef91c4190fa86d5b7472eb0f3e6fa56732a69f6f39b6e91632bf93b30f03c"
+    },
+    "stdout.log": {
+      "bytes": 124,
+      "sha256": "ee732804473be370611b9b874beff1e7f22153c35352d19483f94d60bca2c3a6"
+    }
+  },
+  "status": "Verified",
+  "verification_scope": [
+    "Pinned source and data hashes",
+    "Ten prediction artifacts and row-label alignment",
+    "Full-split stability, confusion, transition, and overlap recomputation",
+    "Deterministic preregistered sample membership",
+    "Manual annotation identity and allowed schema",
+    "Qualitative aggregate recomputation",
+    "Recorded artifact hashes",
+    "Gitignore and raw-text leakage boundary",
+    "Required report findings and limitations"
+  ]
+}

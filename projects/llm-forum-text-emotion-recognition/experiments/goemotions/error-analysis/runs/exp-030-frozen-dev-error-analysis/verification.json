@@ -1,0 +1,92 @@
+{
+  "analysis_rows": 5426,
+  "annotation_rows": 48,
+  "artifacts": {
+    "report": {
+      "bytes": 7270,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/REPORT.md",
+      "sha256": "89eebd92dd100c47ccdc8e50901c29b9f3750d1badcfc234b4720e2a344a7899"
+    },
+    "run": {
+      "bytes": 9446,
+      "path": "experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/run.json",
+      "sha256": "a395fdc3b5789153cd39417e47177f8e1b08739d249c1f3fbaab406a6bf7e1b3"
+    }
+  },
+  "completed_at_utc": "2026-08-02T14:31:34.106484+00:00",
+  "config": {
+    "bytes": 6328,
+    "path": "experiments/goemotions/error-analysis/configs/exp-030-frozen-dev-error-analysis.json",
+    "sha256": "ddae1be3128d62cb59adef020af617d426fffb0c3b5f0f382e63c7d739dbab82"
+  },
+  "experiment_id": "EXP-030",
+  "manual_artifacts_checked": 4,
+  "max_absolute_numeric_difference": 0.0,
+  "prediction_files_checked": 7,
+  "privacy": {
+    "private_file_gitignored": true,
+    "private_file_tracked": false,
+    "private_rows_verified": 48,
+    "public_csvs_scanned": 10,
+    "public_files_scanned": 17,
+    "raw_text_leak_count": 0
+  },
+  "protocol": {
+    "bytes": 7883,
+    "path": "experiments/goemotions/error-analysis/protocols/exp-030-frozen-dev-error-analysis.md",
+    "sha256": "e1456e68acf5df8a4c246e25c2eb7e22d295c27a6265f0292fd152f6ed6774aa"
+  },
+  "public_artifacts_checked": 16,
+  "recomputed_csvs": [
+    "condition_stability.csv",
+    "error_modes.csv",
+    "missed_spurious_pairs.csv",
+    "pairwise_transitions.csv",
+    "per_label_metrics.csv",
+    "sample_manifest.csv",
+    "seed_agreement.csv",
+    "slice_metrics.csv"
+  ],
+  "recomputed_jsons": [
+    "aggregate_summary.json",
+    "official_reference.json",
+    "qualitative_summary.json"
+  ],
+  "report_regenerated_exactly": true,
+  "sample_selection_deterministic": true,
+  "source_verifications": {
+    "exp-020-bert": {
+      "status": "Verified",
+      "verification": {
+        "bytes": 1499,
+        "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/verification.json",
+        "sha256": "0a97b9af655c26d33d6c7e96aa1b54c301be2ec31ba222ccafbdad8b79d3780b"
+      }
+    },
+    "exp-025-frozen-qwen": {
+      "status": "Passed",
+      "verification": {
+        "bytes": 6077,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/verification.json",
+        "sha256": "3d095e27e24052f64e55cbeeeed2f37775b129f3c4de111f4c90b2e1bde9279c"
+      }
+    },
+    "exp-029-lora-qwen": {
+      "status": "Passed",
+      "verification": {
+        "bytes": 1303,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/multi-seed-verification.json",
+        "sha256": "798257185d17b797b3e131924688e30a43d2b87fa0e84acb54183751d090e2cd"
+      }
+    }
+  },
+  "split": "dev",
+  "status": "Verified",
+  "test_absent": true,
+  "test_accessed": false,
+  "verifier": {
+    "bytes": 16300,
+    "path": "experiments/goemotions/error-analysis/verify_error_analysis.py",
+    "sha256": "511e62f8f03c6f3b2b3a06c788828c3db906fa4838b6d17bc8237dff617865dd"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "created_at_utc": "2026-08-01T09:02:48.556570+00:00",
+  "error": "Probe fitting exceeded the frozen wall-time budget",
+  "error_type": "TimeoutError",
+  "experiment_id": "EXP-028",
+  "status": "Failed",
+  "test_split_accessed": false,
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/fit_frozen_probe.py\", line 739, in main\n    execute(args, output_dir, logger)\n  File \"/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/fit_frozen_probe.py\", line 670, in execute\n    raise TimeoutError(\"Probe fitting exceeded the frozen wall-time budget\")\nTimeoutError: Probe fitting exceeded the frozen wall-time budget\n"
+}

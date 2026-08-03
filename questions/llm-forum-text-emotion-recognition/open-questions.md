@@ -60,14 +60,18 @@ Next action:
 
 Why it matters: 题目包含 LLM，但这不意味着 LLM 必然性能更好。需要预先定义比较维度，避免项目退化为 API 演示。
 
-Current view: 至少比较 Macro-F1、按类别指标、格式有效率、稳定性、成本和延迟；解释生成仅作为附加功能。
+Current view: GoEmotions 的 EXP-018 简单多标签基线与 EXP-020 BERT-base-cased
+dev 基线已经冻结，可以据此登记 zero-shot/few-shot LLM 对照。比较维度包括
+Macro-F1、按类别指标、格式有效率、稳定性、成本和延迟。核心问题是 LLM 是否
+真正增加无需监督微调的能力，还是只成为成本更高的分类器；解释生成仅作为附加
+功能。TweetEval 分数不能作为 GoEmotions LLM 的性能对照。
 
-Status: open
+Status: open; ready for protocol; GoEmotions test gate remains closed
 
 Next action:
 
-- 先完成 TF-IDF 与 BERT/RoBERTa 基线。
-- 固定 zero-shot/few-shot 提示、解析和重试规则。
+- 固定首个 LLM 的精确版本、zero-shot/few-shot 提示、标签解析和重试规则。
+- 预登记成本、延迟、示例选择和数据处理边界，再读取任何 LLM 结果。
 - 根据基线结果决定是否需要 LoRA。
 
 ## Q5. 上下文收益是否只发生在特定失败类型？

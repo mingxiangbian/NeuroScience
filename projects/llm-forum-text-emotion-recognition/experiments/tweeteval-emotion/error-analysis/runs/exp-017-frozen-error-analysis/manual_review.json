@@ -1,0 +1,55 @@
+{
+  "artifacts": {
+    "manual_annotations": {
+      "bytes": 5552,
+      "contains_raw_text": false,
+      "path": "experiments/tweeteval-emotion/error-analysis/runs/exp-017-frozen-error-analysis/manual_annotations.csv",
+      "sha256": "0b7aef7b4a6fb555f482ec52ea517256cedf1f765029640e3dc61e083f012b6b",
+      "tracked": true
+    },
+    "qualitative_counts": {
+      "bytes": 6474,
+      "contains_raw_text": false,
+      "path": "experiments/tweeteval-emotion/error-analysis/runs/exp-017-frozen-error-analysis/qualitative_counts.csv",
+      "sha256": "d161e5cd7e1def2b5d29b1977580393f42b634f09f676ad9d25b747cdfb4ba6a",
+      "tracked": true
+    },
+    "qualitative_summary": {
+      "bytes": 1063,
+      "contains_raw_text": false,
+      "path": "experiments/tweeteval-emotion/error-analysis/runs/exp-017-frozen-error-analysis/qualitative_summary.json",
+      "sha256": "9b3245be0549ad91f738a15a1237857062d3b6dd8b65ae3cbd76c514922087ed",
+      "tracked": true
+    },
+    "stable_error_overlaps": {
+      "bytes": 2619,
+      "contains_raw_text": false,
+      "path": "experiments/tweeteval-emotion/error-analysis/runs/exp-017-frozen-error-analysis/stable_error_overlaps.csv",
+      "sha256": "9cfef91c4190fa86d5b7472eb0f3e6fa56732a69f6f39b6e91632bf93b30f03c",
+      "tracked": true
+    }
+  },
+  "completed_at": "2026-07-30T19:42:22.319611+08:00",
+  "config": {
+    "path": "experiments/tweeteval-emotion/error-analysis/configs/exp-017-frozen-error-analysis.json",
+    "sha256": "e5599d425baad66d50990d83a3a8e295edb5318f7c0260635c4506af04d44c75"
+  },
+  "experiment_id": "EXP-017",
+  "limitations": [
+    "One reviewer; no inter-rater reliability estimate.",
+    "Purposive sample; qualitative proportions are not full-test prevalence.",
+    "Possible context dependency cannot be verified from isolated TweetEval text.",
+    "Annotations are possible explanations, not relabeled ground truth or causal mechanisms."
+  ],
+  "manifest": {
+    "bytes": 11283,
+    "contains_raw_text": false,
+    "path": "experiments/tweeteval-emotion/error-analysis/runs/exp-017-frozen-error-analysis/sample_manifest.csv",
+    "sha256": "7c3ed3d628ea98502c2c8ce2bef63227835becf34f1dcd91704ac3914440c0f5",
+    "tracked": true
+  },
+  "raw_text_in_tracked_outputs": false,
+  "reviewer_count": 1,
+  "status": "manual_review_completed",
+  "wall_time_seconds": 0.0690755829855334
+}

@@ -1,0 +1,44 @@
+{
+  "conditions": {
+    "few-shot-synthetic-3": {
+      "mean_macro_f1": 0.4252647089201262,
+      "sample_std_macro_f1": 0.00485848408658435,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "values": [
+        0.4220430378583003,
+        0.42289804595366187,
+        0.4308530429484164
+      ]
+    },
+    "zero-shot": {
+      "mean_macro_f1": 0.4513736090059024,
+      "sample_std_macro_f1": 0.019212762339723015,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "values": [
+        0.43720532360391057,
+        0.443673469401069,
+        0.47324203401272763
+      ]
+    }
+  },
+  "experiment_id": "EXP-029",
+  "seed_count": 3,
+  "selected_minus_exp_020_mean": -0.038061414419030715,
+  "selected_minus_exp_025": 0.2102094542569868,
+  "selection": {
+    "difference_zero_minus_few": 0.02610890008577621,
+    "practical_tie": false,
+    "practical_tie_threshold": 0.005,
+    "reason": "higher mean Macro-F1 beyond the practical threshold",
+    "selected_condition": "zero-shot"
+  },
+  "status": "Verified"
+}

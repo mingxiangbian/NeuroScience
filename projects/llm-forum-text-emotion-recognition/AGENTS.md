@@ -41,6 +41,9 @@ Research Question -> Experiment -> Evidence -> Figure/Table -> Thesis Section
 - TweetEval emotion 的主指标为 Macro-F1，不得只报告 Accuracy。
 - 不得把 validation 数字写成 test 或公开 benchmark 数字。
 - 不得把 probe、SAE feature 或相关性直接写成模型或人类的情绪机制。
+- 不得直接比较 TweetEval 四分类单标签分数与 GoEmotions 28 标签多标签分数。
+- GoEmotions LLM 对照只能在同数据集的简单多标签与 BERT/RoBERTa 监督基线
+  冻结后登记；LLM 不替代 TweetEval 已完成的传统分类器与 RoBERTa 比较。
 
 原始论坛文本、Tweet、用户标识和含原文的错误案例默认不得提交到公开 Git。
 使用自建论坛数据时，应在可行情况下按 `thread_id` 或等价群组划分，避免同一会话
