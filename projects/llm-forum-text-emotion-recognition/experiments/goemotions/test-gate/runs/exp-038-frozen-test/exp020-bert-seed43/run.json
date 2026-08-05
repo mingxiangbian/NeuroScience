@@ -1,0 +1,39 @@
+{
+  "artifacts": {
+    "metrics.json": {
+      "bytes": 6611,
+      "path": "experiments/goemotions/test-gate/runs/exp-038-frozen-test/exp020-bert-seed43/metrics.json",
+      "sha256": "4475d36cbd965ec26556d3c805caa104306c64feb8123d67db0d7e4300af057c"
+    },
+    "multilabel-confusion-matrix.csv": {
+      "bytes": 790,
+      "path": "experiments/goemotions/test-gate/runs/exp-038-frozen-test/exp020-bert-seed43/multilabel-confusion-matrix.csv",
+      "sha256": "6fb6112da8184590948cbe16ced3f8b406c9377149c8157975ed47f91477ac9b"
+    },
+    "per-label-metrics.csv": {
+      "bytes": 2139,
+      "path": "experiments/goemotions/test-gate/runs/exp-038-frozen-test/exp020-bert-seed43/per-label-metrics.csv",
+      "sha256": "617e5cd0ca7662199b8273d6c97eba8bbc48e20a5317254810528ba27e2d4908"
+    },
+    "predictions.csv": {
+      "bytes": 3503799,
+      "path": "experiments/goemotions/test-gate/runs/exp-038-frozen-test/exp020-bert-seed43/predictions.csv",
+      "sha256": "ae29161681901bf28c0a59a93cccffb87123b886d19a0d48ece6ed2e563b579e"
+    }
+  },
+  "completed_at_utc": "2026-08-04T03:32:59.586560+00:00",
+  "config_sha256": "87177da88dfb1ebb9bc78a71ac11aca87b8b85c98b126f40bb9c056eba316b0f",
+  "inference_seconds": 23.692788292013574,
+  "metrics": {
+    "macro_f1": 0.49413877946455254,
+    "micro_f1": 0.5917907081641859,
+    "subset_accuracy": 0.4398378477980468,
+    "weighted_f1": 0.590811935837604
+  },
+  "source_experiment_id": "EXP-020",
+  "status": "Completed; pending independent verification",
+  "test_rows_accessed": 5427,
+  "test_split_accessed": true,
+  "threshold": 0.3,
+  "unit_id": "exp020-bert-seed43"
+}

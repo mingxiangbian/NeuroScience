@@ -19,15 +19,26 @@ Status: opening-preparation
 
 Why it matters: 数据领域和语言决定可用预训练模型、标签设计、代码复现价值与跨域风险；平台条款和隐私边界决定数据能否采集、保存和公开。
 
-Current view: 尚未确认。现有论文包以英文数据为主，不能据此假定自建数据必须是英文。
+Current view: 2026-08-04 的官方 GoEmotions closed-corpus audit 已完成。48,836 个
+train/dev targets 中只有 157 个 parent comment 在 raw release 内有文本，48,679 个
+缺失 parent text；因此不能只靠 GoEmotions 官方发布构建大规模上下文数据。直接 API、
+抓取或第三方 archive 恢复仍为 `NO-GO`。Reddit 学术研究需要通过获批的 Reddit for
+Researchers 项目，ML/AI training 需要明确同意；其当前五年历史覆盖也没有说明能够
+访问 GoEmotions 的 2005--2019 年原始 parents。目标论坛与可替代的授权数据源仍未
+最终确认。
 
-Status: needs-supervisor-confirmation
+Status: blocked-by-source-authorization-and-historical-coverage
 
 Next action:
 
-- 向导师确认目标论坛或允许的数据来源。
-- 核查平台条款、研究使用条件、隐私字段和再分发限制。
-- 决定只保存派生特征、匿名化文本，还是可公开数据集。
+- 向导师确认学校能否提供 RFR 所需的 sponsor 与伦理批准或 exemption。
+- 向 Reddit 书面确认历史 parent 覆盖、ML/AI training、保存、删除和发表边界。
+- 若无法获批，比较具有明确上下文和训练许可的替代数据源，再由用户确认主数据路线。
+- closed-corpus 路线已由
+  [`DATA-FCTX-CJ-V1`](../../projects/llm-forum-text-emotion-recognition/experiments/forum-context/protocols/data-closed-corpus-parent-coverage-v1.md)
+  判定为不足以支撑大规模 Dataset A；任何外部 recovery 继续受
+  [`DATA-FCTX-PR-V1`](../../projects/llm-forum-text-emotion-recognition/experiments/forum-context/protocols/data-source-parent-recovery-pilot-v1.md)
+  约束。
 
 ## Q2. 主任务采用粗粒度单标签还是细粒度多标签？
 
@@ -48,6 +59,8 @@ Next action:
 Why it matters: 没有 `thread_id`、`parent_id`、回复顺序和匿名作者标识，就无法严格研究论坛上下文，也不能把结果写成 ERC。
 
 Current view: 第一版基线可以做单条文本分类；上下文实验需要从数据采集阶段保留结构。
+GoEmotions 官方 raw release 仅为 157/48,836 个 train/dev targets 提供 parent comment
+text，且 raw 未分 split，因此不能直接承担正式上下文实验。
 
 Status: open
 

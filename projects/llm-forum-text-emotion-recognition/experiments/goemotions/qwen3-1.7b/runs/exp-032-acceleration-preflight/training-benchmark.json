@@ -1,0 +1,132 @@
+{
+  "candidate_selected": false,
+  "conditions": {
+    "batch2-grad5": {
+      "adapter": {
+        "config": {
+          "bytes": 1751,
+          "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-032-acceleration-preflight/batch2-grad5/adapter_config.json",
+          "sha256": "7b8c432f2452e2eed3ee74634a25f47e233d9b961645f342be9d8cd373c1de78"
+        },
+        "lora_b_nonzero_tensors": 112,
+        "lora_b_tensor_count": 112,
+        "runtime_config": {
+          "bytes": 1164,
+          "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-032-acceleration-preflight/batch2-grad5/runtime-config.json",
+          "sha256": "75971751865595a2fde902fc3800453023e36b5b35fd128b2c68922cb1b10936"
+        },
+        "tensor_count": 224,
+        "weights": {
+          "bytes": 19947012,
+          "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-032-acceleration-preflight/batch2-grad5/adapters.safetensors",
+          "sha256": "8cafcc26060299380b5d06c6707c270a13f1f44ce36f2cd2be94699ac10948b8"
+        }
+      },
+      "batch_size": 2,
+      "command": [
+        "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/mlx_lm.lora",
+        "-c",
+        "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/private-cache/exp-032-acceleration-preflight/batch2-grad5/runtime-config.json"
+      ],
+      "completed_at_utc": "2026-08-03T04:27:49.183048+00:00",
+      "condition": "batch2-grad5",
+      "duration_seconds": 545.6070333750104,
+      "effective_batch_size": 10,
+      "final_train_loss": 0.204,
+      "grad_accumulation_steps": 5,
+      "history": {
+        "bytes": 1124,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-032-acceleration-preflight/training/batch2-grad5/history.csv",
+        "sha256": "377c022a9c210aa56487e8bd73cfaf4afe8c698cd9072259af381eb994db7467"
+      },
+      "history_reports": 25,
+      "iterations": 500,
+      "median_steady_iterations_per_second": 0.923,
+      "median_steady_rows_per_second": 1.846,
+      "memory_gate_passed": true,
+      "optimizer_updates": 100,
+      "peak_mlx_memory_gb": 5.179,
+      "processed_rows": 1000,
+      "projected_full_epoch_hours": 6.532141567352834,
+      "started_at_utc": "2026-08-03T04:18:43.391901+00:00",
+      "status": "Passed",
+      "stdout": {
+        "bytes": 3784,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-032-acceleration-preflight/training/batch2-grad5/stdout.log",
+        "sha256": "e35f36a283fecf22514eda777fccae5c5daa32b41b0b05d58e5ef14cc69982a2"
+      },
+      "steady_report_count": 25,
+      "trainable_parameters_reported": {
+        "percent": 0.289,
+        "total_millions": 1720.575,
+        "trainable_millions": 4.981
+      }
+    },
+    "batch5-grad2": {
+      "adapter": {
+        "config": {
+          "bytes": 1751,
+          "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-032-acceleration-preflight/batch5-grad2/adapter_config.json",
+          "sha256": "1c6deb638b9beb4d449c639cc430a1ac9c4fe132a146f07b1388f1ab8806c208"
+        },
+        "lora_b_nonzero_tensors": 112,
+        "lora_b_tensor_count": 112,
+        "runtime_config": {
+          "bytes": 1164,
+          "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-032-acceleration-preflight/batch5-grad2/runtime-config.json",
+          "sha256": "d19bce4135cad5050221446ac51d1e61bc416a27af126bc4d8fd3bdd071c50c5"
+        },
+        "tensor_count": 224,
+        "weights": {
+          "bytes": 19947012,
+          "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-032-acceleration-preflight/batch5-grad2/adapters.safetensors",
+          "sha256": "ccf63ab623916849855fb5c9054cf72444a1ff565c220f23b22ddd3271b12346"
+        }
+      },
+      "batch_size": 5,
+      "command": [
+        "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/mlx_lm.lora",
+        "-c",
+        "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/private-cache/exp-032-acceleration-preflight/batch5-grad2/runtime-config.json"
+      ],
+      "completed_at_utc": "2026-08-03T04:37:11.370883+00:00",
+      "condition": "batch5-grad2",
+      "duration_seconds": 562.0998367079883,
+      "effective_batch_size": 10,
+      "final_train_loss": 0.182,
+      "grad_accumulation_steps": 2,
+      "history": {
+        "bytes": 515,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-032-acceleration-preflight/training/batch5-grad2/history.csv",
+        "sha256": "b55c9bbd9e21c3e309fe165697505b5edc756373b931cfa3990544a36294b7d2"
+      },
+      "history_reports": 10,
+      "iterations": 200,
+      "median_steady_iterations_per_second": 0.3625,
+      "median_steady_rows_per_second": 1.8125,
+      "memory_gate_passed": true,
+      "optimizer_updates": 100,
+      "peak_mlx_memory_gb": 7.312,
+      "processed_rows": 1000,
+      "projected_full_epoch_hours": 6.652873563218391,
+      "started_at_utc": "2026-08-03T04:27:49.184028+00:00",
+      "status": "Passed",
+      "stdout": {
+        "bytes": 1907,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-032-acceleration-preflight/training/batch5-grad2/stdout.log",
+        "sha256": "8ea22642484e07793e9305fdd1535c88c9ded8b5aaf6a2ce626d2f99da8c5483"
+      },
+      "steady_report_count": 10,
+      "trainable_parameters_reported": {
+        "percent": 0.289,
+        "total_millions": 1720.575,
+        "trainable_millions": 4.981
+      }
+    }
+  },
+  "fixed_effective_batch_size": 10,
+  "fixed_optimizer_updates": 100,
+  "fixed_processed_rows": 1000,
+  "selected_condition": "batch2-grad5",
+  "steady_rows_per_second_speedup": 0.9818526543878656
+}

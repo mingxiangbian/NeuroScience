@@ -1,0 +1,147 @@
+{
+  "audit_id": "PRE-EXP-033",
+  "candidate_experiment_id": "EXP-033",
+  "created_date": "2026-08-03",
+  "scope": {
+    "accessed_splits": [
+      "train"
+    ],
+    "model_forward_or_backward_allowed": false,
+    "test_split_access_allowed": false,
+    "validation_split_access_allowed": false
+  },
+  "sources": {
+    "labels": {
+      "path": "data/goemotions/official/emotions.txt",
+      "sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89"
+    },
+    "model_manifest": {
+      "path": "models/qwen3-1.7b/manifest.json",
+      "sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877"
+    },
+    "open_constraint": {
+      "path": "experiments/goemotions/qwen3-1.7b/label_json_constraint_neutral_cooccurrence.py",
+      "sha256": "336218c9a44fc4d475d9197f05afcb81096f793e141e03fed96cbe76cb99d880"
+    },
+    "parent_exp_029_config": {
+      "path": "experiments/goemotions/qwen3-1.7b/configs/exp-029-instruct-lora.json",
+      "sha256": "14fe020eb86331d987561240ebfa1da70d724f0d622d74f7879a6364d4aba4ed"
+    },
+    "parent_exp_032_config": {
+      "path": "experiments/goemotions/qwen3-1.7b/configs/exp-032-acceleration-preflight.json",
+      "sha256": "07ff923caf53914e8422fee822ac4069c958f087f080fbb4e91235e0ecdd3e1a"
+    },
+    "parent_exp_032_verification": {
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-032-acceleration-preflight/verification.json",
+      "sha256": "e5cb81977b980dc44000549ed0f43d10ca2bd0ff92f2c835be3a84c374748471"
+    },
+    "prompt": {
+      "path": "experiments/goemotions/qwen3-1.7b/prompts/exp-031-neutral-cooccurrence-v1.json",
+      "sha256": "94479a8d543e75a22be48925bd44bd7767526747e9a13a986279ab634a531ec3"
+    },
+    "train": {
+      "path": "data/goemotions/official/train.tsv",
+      "sha256": "1c254a142be5c00e80d819b9ae1bbd36d94b2eeb8f4b1271846508d57e57d9c5"
+    }
+  },
+  "target_contract": {
+    "canonical_label_order": "ascending official numeric label ID",
+    "expected_gold_label_support": [
+      4130,
+      2328,
+      1567,
+      2470,
+      2939,
+      1087,
+      1368,
+      2191,
+      641,
+      1269,
+      2022,
+      793,
+      303,
+      853,
+      596,
+      2662,
+      77,
+      1452,
+      2086,
+      164,
+      1581,
+      111,
+      1110,
+      153,
+      545,
+      1326,
+      1060,
+      14219
+    ],
+    "expected_neutral_cooccurrence_rows": 1396,
+    "expected_train_rows": 43410,
+    "format": "compact JSON object with the sole non-empty labels array",
+    "official_gold_labels_preserved_exactly": true
+  },
+  "template_contract": {
+    "chat_template_path": "models/qwen3-1.7b/mlx-bf16/chat_template.jinja",
+    "chat_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+    "expected_empty_thinking_control_tokens": 4,
+    "inference_enable_thinking": false,
+    "tokenizer_config_path": "models/qwen3-1.7b/mlx-bf16/tokenizer_config.json",
+    "tokenizer_config_sha256": "ee8f6d44bf2353e6d3686c3adaf70e1ccfe9e6ed6822d0ab2f28cafdd7754792",
+    "tokenizer_path": "models/qwen3-1.7b/mlx-bf16/tokenizer.json",
+    "tokenizer_sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+    "training_wrapper_default_enable_thinking": true
+  },
+  "mlx_lm_contract": {
+    "datasets_source": {
+      "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm/tuner/datasets.py",
+      "sha256": "fa112840e6ea98a4ff18428792fe2ab023999c2da51ea64b3ebdf8657a152f17"
+    },
+    "packages": {
+      "mlx": "0.32.0",
+      "mlx-lm": "0.31.3",
+      "numpy": "2.4.6",
+      "python": "3.11.15",
+      "transformers": "5.14.1"
+    },
+    "tokenizer_utils_source": {
+      "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm/tokenizer_utils.py",
+      "sha256": "25784bb03c922d0d7832ce6c66a6cd4eb3a4820b6c5a8e583dedb63a018fb56a"
+    },
+    "trainer_source": {
+      "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm/tuner/trainer.py",
+      "sha256": "ee33ebdbd20a184108541cb490d08085485e71a82ffd6d68d7d216029ecd28fe"
+    }
+  },
+  "training_inheritance": {
+    "batch_size": 2,
+    "effective_batch_size": 10,
+    "epochs": 1,
+    "grad_accumulation_steps": 5,
+    "inference_prompt_execution": "full-prompt",
+    "iterations": 21705,
+    "learning_rate": 1e-05,
+    "lora_num_layers": 16,
+    "lora_rank": 8,
+    "lora_scale": 20.0,
+    "mask_prompt": true,
+    "max_sequence_length": 512,
+    "optimizer": "adam",
+    "optimizer_updates": 4341,
+    "seed": 42
+  },
+  "outputs": {
+    "audit_report": "experiments/goemotions/qwen3-1.7b/preflight/pre-exp-033-target-aligned-audit.json",
+    "private_data_root": "experiments/goemotions/qwen3-1.7b/private-cache/pre-exp-033-target-aligned-data",
+    "verification_report": "experiments/goemotions/qwen3-1.7b/preflight/pre-exp-033-target-aligned-verification.json"
+  },
+  "smoke_contract": {
+    "neutral_cooccurrence_rows": 16,
+    "rows": 64,
+    "must_cover_all_labels": true
+  },
+  "execution_gate": {
+    "formal_training_authorized": false,
+    "next_required_step": "Implement and audit the formal runner, then pass one short train-only smoke before asking for full-training authorization."
+  }
+}

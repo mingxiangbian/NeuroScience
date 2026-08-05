@@ -1,0 +1,51 @@
+{
+  "audit_id": "PRE-EXP-033-EXECUTION-V3",
+  "candidate_experiment_id": "EXP-033",
+  "created_date": "2026-08-03",
+  "scope": {
+    "accessed_splits": [
+      "train"
+    ],
+    "model_forward_or_backward_allowed": false,
+    "test_split_access_allowed": false,
+    "validation_split_access_allowed": false
+  },
+  "v2_evidence": {
+    "audit": {
+      "path": "experiments/goemotions/qwen3-1.7b/preflight/pre-exp-033-execution-v2-audit.json",
+      "sha256": "f4c7dfecec22f213977182819ea4f65276d4c62782bea6b9e074ebf858103a2a"
+    },
+    "auditor": {
+      "path": "experiments/goemotions/qwen3-1.7b/audit_target_aligned_execution_v2.py",
+      "sha256": "4eaab61911641c2aa62b551716180e729aa67fc426b25d8ce90253635a0f4ff0"
+    },
+    "contract": {
+      "path": "experiments/goemotions/qwen3-1.7b/preflight/pre-exp-033-execution-v2-contract.json",
+      "sha256": "1d7967caaaccb864aefa4ad91424b76486d48d158e2cf877a8bc580e5c08ed1d"
+    },
+    "verification": {
+      "path": "experiments/goemotions/qwen3-1.7b/preflight/pre-exp-033-execution-v2-verification.json",
+      "sha256": "c19b86b02c4c6f1121bd28a2c8f73c1c7f3e0cd0324216b3e659a9c2d0973ce9"
+    },
+    "verifier": {
+      "path": "experiments/goemotions/qwen3-1.7b/verify_target_aligned_execution_v2.py",
+      "sha256": "1873995d60aff115e88f886c3171038d6fd10c4dc6170fbcc3d01415c4ad7862"
+    }
+  },
+  "runtime_source_tree": {
+    "algorithm": "For every *.py file under root, sorted by POSIX relative path: append relative_path UTF-8, NUL, decimal byte count, NUL, lowercase file SHA-256, LF; SHA-256 the concatenation.",
+    "file_count": 166,
+    "glob": "**/*.py",
+    "manifest_sha256": "f2244007cd659ed6e63cf1c56e1a80e133d20dbb0aefa26574cda9f8fcb257a0",
+    "root": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm",
+    "total_bytes": 1531573
+  },
+  "outputs": {
+    "audit_report": "experiments/goemotions/qwen3-1.7b/preflight/pre-exp-033-execution-v3-audit.json",
+    "verification_report": "experiments/goemotions/qwen3-1.7b/preflight/pre-exp-033-execution-v3-verification.json"
+  },
+  "execution_gate": {
+    "formal_training_authorized": false,
+    "next_required_step": "Implement and hash-freeze the EXP-033 runner and runtime config generator, pass a no-model dry run, re-run this V3 verifier with --check, then request authorization for the 50-iteration train-only smoke."
+  }
+}

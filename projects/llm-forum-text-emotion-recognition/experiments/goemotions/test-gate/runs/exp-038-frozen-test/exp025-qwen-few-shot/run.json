@@ -1,0 +1,53 @@
+{
+  "accessed_splits": [
+    "test"
+  ],
+  "artifacts": {
+    "generation-records.jsonl": {
+      "bytes": 5138856,
+      "path": "experiments/goemotions/test-gate/runs/exp-038-frozen-test/exp025-qwen-few-shot/generation-records.jsonl",
+      "sha256": "33ee328c0e46d04d9c3a809c648bbd89a7d90f1be19c9bbdab655337b6df7bc5"
+    },
+    "metrics.json": {
+      "bytes": 8390,
+      "path": "experiments/goemotions/test-gate/runs/exp-038-frozen-test/exp025-qwen-few-shot/metrics.json",
+      "sha256": "3592c546024167b66348d9bcc71694ebcef249a931e100a14c8ee4476b88faf0"
+    },
+    "multilabel-confusion-matrix.csv": {
+      "bytes": 802,
+      "path": "experiments/goemotions/test-gate/runs/exp-038-frozen-test/exp025-qwen-few-shot/multilabel-confusion-matrix.csv",
+      "sha256": "88c78ff8f6061ebf02aef1ded1c6d0b0d3c0cef322e160ab0952f29ab24d2bf9"
+    },
+    "per-label-metrics.csv": {
+      "bytes": 2298,
+      "path": "experiments/goemotions/test-gate/runs/exp-038-frozen-test/exp025-qwen-few-shot/per-label-metrics.csv",
+      "sha256": "ff564f720586c84b924e95d3747549d3f186a5133cee0e0944f0ce94cedf7f33"
+    },
+    "predictions.csv": {
+      "bytes": 1728016,
+      "path": "experiments/goemotions/test-gate/runs/exp-038-frozen-test/exp025-qwen-few-shot/predictions.csv",
+      "sha256": "a9b003c43993ced4358395f459526bd450887167d2e22b0885d4519e724175eb"
+    }
+  },
+  "completed_at_utc": "2026-08-04T05:00:46.114806+00:00",
+  "config_sha256": "87177da88dfb1ebb9bc78a71ac11aca87b8b85c98b126f40bb9c056eba316b0f",
+  "generation_count": 5427,
+  "metrics": {
+    "macro_f1": 0.2336532565037923,
+    "micro_f1": 0.24927849927849927,
+    "subset_accuracy": 0.11203243044039064,
+    "weighted_f1": 0.2675501950217556
+  },
+  "progress": {
+    "completed": 5427,
+    "total": 5427
+  },
+  "raw_comment_ids_stored": false,
+  "raw_input_text_stored": false,
+  "source_experiment_id": "EXP-025",
+  "started_at_utc": "2026-08-04T03:34:02.699508+00:00",
+  "status": "Completed; pending independent verification",
+  "test_rows_accessed": 5427,
+  "test_split_accessed": true,
+  "unit_id": "exp025-qwen-few-shot"
+}

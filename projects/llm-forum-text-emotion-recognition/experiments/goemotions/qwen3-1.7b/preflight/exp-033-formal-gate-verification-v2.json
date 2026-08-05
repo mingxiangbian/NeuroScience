@@ -1,0 +1,117 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "completed_at_utc": "2026-08-03T08:18:43.071510+00:00",
+  "contract": {
+    "bytes": 6575,
+    "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-formal-gate-contract-v2.json",
+    "sha256": "154ed7097d593ae4be1ad096b61116204b17866d461aa127ecc5f36c49f3c515"
+  },
+  "dry_run": {
+    "bytes": 4830,
+    "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-formal-gate-dry-run-v2.json",
+    "sha256": "090c357e9980f241887bc28aa8e94aba4b8b7b26f8f1526986ba877b7fd9ac5d"
+  },
+  "experiment_id": "EXP-033",
+  "formal_training_authorized": false,
+  "gate_id": "EXP-033-FORMAL-GATE-V2",
+  "implementation": {
+    "imports_runner": false,
+    "verifier": {
+      "bytes": 16270,
+      "path": "experiments/goemotions/qwen3-1.7b/verify_target_aligned_formal_gate_v2.py",
+      "sha256": "1d0cc32ea1902bef7959ec734969776ecee66f377d2f52e09e8bf5ed90c1cd08"
+    }
+  },
+  "model_forward_or_backward_executed": false,
+  "next_required_step": "Create a separately hash-bound formal-seed-42 authorization, then execute the frozen train-only runtime once.",
+  "recalculated": {
+    "config": {
+      "bytes": 12302,
+      "path": "experiments/goemotions/qwen3-1.7b/configs/exp-033-target-aligned-lora-v3.json",
+      "sha256": "267ea25e997496c443a025efc741148943348c6220753faa8c3dae9aa09abea4"
+    },
+    "environment": {
+      "mlx_lm_source_tree": {
+        "file_count": 166,
+        "manifest_sha256": "f2244007cd659ed6e63cf1c56e1a80e133d20dbb0aefa26574cda9f8fcb257a0",
+        "total_bytes": 1531573
+      },
+      "mlx_lora_cli": {
+        "bytes": 199,
+        "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/mlx_lm.lora",
+        "sha256": "e809f4488d53ca0906a3ab224416b8c7c898b3ad786d59be828b10cd113be293"
+      },
+      "packages": {
+        "PyYAML": "6.0.3",
+        "huggingface-hub": "1.26.0",
+        "mlx": "0.32.0",
+        "mlx-lm": "0.31.3",
+        "numpy": "2.4.6",
+        "python": "3.11.15",
+        "safetensors": "0.8.0",
+        "tokenizers": "0.22.2",
+        "tqdm": "4.70.0",
+        "transformers": "5.14.1"
+      },
+      "python_executable": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python"
+    },
+    "formal_runtime": {
+      "bytes": 1340,
+      "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-runtime-seed-42-v3.json",
+      "sha256": "1c1182b6f54bcb038f76636e22be99c66ae6e068d7260261b632528c8dd602bb"
+    },
+    "mlx_lora_cli": {
+      "bytes": 199,
+      "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/mlx_lm.lora",
+      "sha256": "e809f4488d53ca0906a3ab224416b8c7c898b3ad786d59be828b10cd113be293"
+    },
+    "model": {
+      "file_count": 8,
+      "manifest": {
+        "bytes": 4235,
+        "path": "models/qwen3-1.7b/manifest.json",
+        "sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877"
+      },
+      "total_bytes": 3452636312
+    },
+    "runtime_semantics_sources": {
+      "config_and_optimizer": {
+        "bytes": 11055,
+        "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm/lora.py",
+        "sha256": "3f188fc6aef80efcb9938678af0548588122ed25845053cc555aece0ad2da5e7"
+      },
+      "dataset_and_prompt_mask": {
+        "bytes": 9588,
+        "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm/tuner/datasets.py",
+        "sha256": "fa112840e6ea98a4ff18428792fe2ab023999c2da51ea64b3ebdf8657a152f17"
+      },
+      "layer_selection": {
+        "bytes": 5515,
+        "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm/tuner/utils.py",
+        "sha256": "166eaf5e5f923113bed43614a5fb7319795fa0cac5a7fa319ea54e5f0045b553"
+      },
+      "training_loop": {
+        "bytes": 12582,
+        "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm/tuner/trainer.py",
+        "sha256": "ee33ebdbd20a184108541cb490d08085485e71a82ffd6d68d7d216029ecd28fe"
+      }
+    },
+    "smoke_verification": {
+      "bytes": 4195,
+      "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-smoke-verification.json",
+      "sha256": "dc4da29ab6073d6204e92ca9e33048c75ca71491c5cea85b8e8a9465b78ca7cd"
+    },
+    "test_split_absent": true,
+    "train_data": {
+      "bytes": 42366046,
+      "path": "experiments/goemotions/qwen3-1.7b/private-cache/pre-exp-033-target-aligned-data/train.jsonl",
+      "sha256": "493ecaafd6cd6ed5ee20f8ec3c262e291a6eee826a97816955b53effc1c1c09f"
+    }
+  },
+  "status": "Passed",
+  "test_split_accessed": false,
+  "validation_split_accessed": false,
+  "verification_id": "EXP-033-FORMAL-GATE-VERIFY-V2"
+}

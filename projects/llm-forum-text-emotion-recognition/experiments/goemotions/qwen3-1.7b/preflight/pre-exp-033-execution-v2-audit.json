@@ -1,0 +1,67 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "audit_id": "PRE-EXP-033-EXECUTION-V2",
+  "completed_at_utc": "2026-08-03T05:37:45.430136+00:00",
+  "contract": {
+    "bytes": 5847,
+    "path": "experiments/goemotions/qwen3-1.7b/preflight/pre-exp-033-execution-v2-contract.json",
+    "sha256": "1d7967caaaccb864aefa4ad91424b76486d48d158e2cf877a8bc580e5c08ed1d"
+  },
+  "execution_gate": {
+    "formal_training_authorized": false,
+    "model_forward_or_backward_executed": false,
+    "next_required_step": "Implement and hash-freeze the EXP-033 runner and runtime config generator, pass a no-model dry run, re-run this V2 verifier with --check, then request authorization for the 50-iteration train-only smoke."
+  },
+  "implementation": {
+    "auditor": {
+      "bytes": 9670,
+      "path": "experiments/goemotions/qwen3-1.7b/audit_target_aligned_execution_v2.py",
+      "sha256": "4eaab61911641c2aa62b551716180e729aa67fc426b25d8ce90253635a0f4ff0"
+    },
+    "verifier": {
+      "bytes": 4420,
+      "path": "experiments/goemotions/qwen3-1.7b/verify_target_aligned_execution_v2.py",
+      "sha256": "1873995d60aff115e88f886c3171038d6fd10c4dc6170fbcc3d01415c4ad7862"
+    }
+  },
+  "label_ontology": {
+    "count": 28,
+    "neutral_id": 27,
+    "order_sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89"
+  },
+  "resource_and_repetition_gates": {
+    "remaining_seeds_require_verified_improvement": true,
+    "repetition_gate_equals_exp_029": true,
+    "resource_budget_equals_exp_029": true,
+    "seed_42_required_first": true
+  },
+  "runtime": {
+    "frozen_source_count": 10,
+    "packages": {
+      "PyYAML": "6.0.3",
+      "huggingface-hub": "1.26.0",
+      "mlx": "0.32.0",
+      "mlx-lm": "0.31.3",
+      "numpy": "2.4.6",
+      "python": "3.11.15",
+      "safetensors": "0.8.0",
+      "tokenizers": "0.22.2",
+      "tqdm": "4.70.0",
+      "transformers": "5.14.1"
+    },
+    "python_executable": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python"
+  },
+  "status": "Passed",
+  "test_split_absent": true,
+  "test_split_accessed": false,
+  "v1_evidence": {
+    "boundary_smoke_rows": 64,
+    "check_mode_status": "Passed",
+    "check_stdout_sha256": "2937b98d7f20c677d39856ce20a942a0353a325b3607166bdb011830f19e3cff",
+    "complete_condition_inheritance_rechecked": true,
+    "model_files_rehashed_in_v1_check": 8
+  },
+  "validation_split_accessed": false
+}

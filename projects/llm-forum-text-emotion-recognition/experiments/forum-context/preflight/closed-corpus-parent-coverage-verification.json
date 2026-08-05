@@ -1,0 +1,54 @@
+{
+  "access_boundary": {
+    "external_parent_source_used": false,
+    "filtered_test_membership_used": false,
+    "filtered_test_tsv_read": false,
+    "raw_release_is_unpartitioned": true
+  },
+  "generated_at_utc": "2026-08-04T13:33:40.395876+00:00",
+  "implementation": {
+    "filename": "verify_closed_corpus_parent_coverage.py",
+    "sha256": "899bebe468823764e7b0996d4a795c3fecfdd4de4bbe5b01b0c55b4938530c89"
+  },
+  "method": "independent_sqlite_left_join",
+  "mismatches": [],
+  "report": {
+    "path": "experiments/forum-context/preflight/closed-corpus-parent-coverage.json",
+    "sha256": "d559072431b20a09e43105b48f4e5afcf133f74cff50d7b205e9754d2261ab48"
+  },
+  "status": "passed",
+  "verified_splits": {
+    "dev": {
+      "comment_parent": 3158,
+      "comment_parent_in_raw_text_available": 18,
+      "comment_parent_in_raw_unusable_text": 0,
+      "comment_parent_not_in_raw": 3140,
+      "missing_parent_id": 0,
+      "missing_parent_text_in_release": 5408,
+      "missing_parent_text_rate": 0.9966826391448581,
+      "parent_text_available_rate": 0.003317360855141909,
+      "self_parent": 0,
+      "submission_parent": 2268,
+      "target_matched_raw": 5426,
+      "target_missing_from_raw": 0,
+      "targets": 5426,
+      "unknown_parent_type": 0
+    },
+    "train": {
+      "comment_parent": 25691,
+      "comment_parent_in_raw_text_available": 139,
+      "comment_parent_in_raw_unusable_text": 0,
+      "comment_parent_not_in_raw": 25552,
+      "missing_parent_id": 0,
+      "missing_parent_text_in_release": 43271,
+      "missing_parent_text_rate": 0.9967979728173232,
+      "parent_text_available_rate": 0.0032020271826768026,
+      "self_parent": 0,
+      "submission_parent": 17719,
+      "target_matched_raw": 43410,
+      "target_missing_from_raw": 0,
+      "targets": 43410,
+      "unknown_parent_type": 0
+    }
+  }
+}

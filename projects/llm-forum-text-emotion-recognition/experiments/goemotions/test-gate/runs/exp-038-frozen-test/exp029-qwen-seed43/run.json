@@ -1,0 +1,53 @@
+{
+  "accessed_splits": [
+    "test"
+  ],
+  "artifacts": {
+    "generation-records.jsonl": {
+      "bytes": 4855220,
+      "path": "experiments/goemotions/test-gate/runs/exp-038-frozen-test/exp029-qwen-seed43/generation-records.jsonl",
+      "sha256": "6dcd126ddaec1a785229fca2e3833ab9e4e927866e99d1c19ac2c81f9168ecb8"
+    },
+    "metrics.json": {
+      "bytes": 8093,
+      "path": "experiments/goemotions/test-gate/runs/exp-038-frozen-test/exp029-qwen-seed43/metrics.json",
+      "sha256": "1ac84b63b556b5a2cc2bf38399b5a03a4f81c45712428ef0ef0253d3d2e863f1"
+    },
+    "multilabel-confusion-matrix.csv": {
+      "bytes": 781,
+      "path": "experiments/goemotions/test-gate/runs/exp-038-frozen-test/exp029-qwen-seed43/multilabel-confusion-matrix.csv",
+      "sha256": "0d9ddffa38e2dedea5ce035c2944fff36ce1c90dc4562a3fb5010fcf38b70085"
+    },
+    "per-label-metrics.csv": {
+      "bytes": 2106,
+      "path": "experiments/goemotions/test-gate/runs/exp-038-frozen-test/exp029-qwen-seed43/per-label-metrics.csv",
+      "sha256": "2acba0254845f5b7d988bc220872dce9cb5df7781dcf7323c574505b0d7eb0fe"
+    },
+    "predictions.csv": {
+      "bytes": 1620100,
+      "path": "experiments/goemotions/test-gate/runs/exp-038-frozen-test/exp029-qwen-seed43/predictions.csv",
+      "sha256": "f26c46a51672381ba25a85ea3b6aa3bc291b11f9d681612185b6d96e938e2886"
+    }
+  },
+  "completed_at_utc": "2026-08-04T07:13:34.765691+00:00",
+  "config_sha256": "87177da88dfb1ebb9bc78a71ac11aca87b8b85c98b126f40bb9c056eba316b0f",
+  "generation_count": 5427,
+  "metrics": {
+    "macro_f1": 0.42255929679801524,
+    "micro_f1": 0.5846930193439865,
+    "subset_accuracy": 0.5238621706283397,
+    "weighted_f1": 0.5479244079535885
+  },
+  "progress": {
+    "completed": 5427,
+    "total": 5427
+  },
+  "raw_comment_ids_stored": false,
+  "raw_input_text_stored": false,
+  "source_experiment_id": "EXP-029",
+  "started_at_utc": "2026-08-04T06:07:19.512633+00:00",
+  "status": "Completed; pending independent verification",
+  "test_rows_accessed": 5427,
+  "test_split_accessed": true,
+  "unit_id": "exp029-qwen-seed43"
+}

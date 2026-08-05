@@ -1,0 +1,40 @@
+{
+  "completed_at_utc": "2026-08-04T03:29:17.147111+00:00",
+  "config_sha256": "afc7e08d0a1ce97c170433fa9397a3abd63edc0ebce35931bdeb8da8d4e6def7",
+  "environment": {
+    "mps_available": true,
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.10.20",
+    "python_executable": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python",
+    "torch": "2.9.1"
+  },
+  "experiment_id": "EXP-038",
+  "status": "Passed",
+  "test_split_accessed": false,
+  "units": {
+    "exp018-tfidf": {
+      "maximum_probability_absolute_difference": 0.0,
+      "model_loaded": true,
+      "reference_rows": 2,
+      "tolerance": 1e-12
+    },
+    "exp020-bert-seed42": {
+      "maximum_probability_absolute_difference": 3.8743019104003906e-07,
+      "model_loaded": true,
+      "reference_rows": 2,
+      "tolerance": 2e-06
+    },
+    "exp020-bert-seed43": {
+      "maximum_probability_absolute_difference": 6.556510925292969e-07,
+      "model_loaded": true,
+      "reference_rows": 2,
+      "tolerance": 2e-06
+    },
+    "exp020-bert-seed44": {
+      "maximum_probability_absolute_difference": 1.0132789611816406e-06,
+      "model_loaded": true,
+      "reference_rows": 2,
+      "tolerance": 2e-06
+    }
+  }
+}

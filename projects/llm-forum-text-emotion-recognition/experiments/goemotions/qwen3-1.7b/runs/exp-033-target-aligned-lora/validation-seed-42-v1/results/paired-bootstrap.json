@@ -1,0 +1,34 @@
+{
+  "batch_size": 100,
+  "comparisons": {
+    "exp033-minus-exp025": {
+      "ci_95_percentile": {
+        "lower": 0.16697333909662296,
+        "upper": 0.20513651817592893
+      },
+      "left": "exp033",
+      "observed_macro_f1_difference": 0.1867950149290382,
+      "practical_effect": true,
+      "practical_threshold": 0.005,
+      "right": "exp025",
+      "two_sided_interval_excludes_zero": true
+    },
+    "exp033-minus-exp029": {
+      "ci_95_percentile": {
+        "lower": -0.02693783293551129,
+        "upper": 0.0014344598852224426
+      },
+      "left": "exp033",
+      "observed_macro_f1_difference": -0.0126782063493725,
+      "practical_effect": true,
+      "practical_threshold": 0.005,
+      "right": "exp029",
+      "two_sided_interval_excludes_zero": false
+    }
+  },
+  "confidence_interval": 0.95,
+  "replicates": 10000,
+  "resampling_unit": "dev row with replacement",
+  "seed": 20260803,
+  "statistic": "paired Macro-F1 difference"
+}

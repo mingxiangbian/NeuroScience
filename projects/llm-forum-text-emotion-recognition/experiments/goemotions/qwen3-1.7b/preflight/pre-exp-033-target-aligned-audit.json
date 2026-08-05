@@ -1,0 +1,243 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "audit_id": "PRE-EXP-033",
+  "candidate_experiment_id": "EXP-033",
+  "completed_at_utc": "2026-08-03T05:03:38.945941+00:00",
+  "contract": {
+    "bytes": 5235,
+    "path": "experiments/goemotions/qwen3-1.7b/preflight/pre-exp-033-target-aligned-contract.json",
+    "sha256": "a12eb95984225b93111b3b2bbb6123d0450fa4c78888031d22a9ae3cd2dae714"
+  },
+  "execution_gate": {
+    "formal_training_authorized": false,
+    "model_forward_or_backward_executed": false,
+    "next_required_step": "Implement and audit the formal runner, then pass one short train-only smoke before asking for full-training authorization."
+  },
+  "grammar": {
+    "old_closed_grammar_rejected_rows": 1396,
+    "open_grammar_accepted_rows": 43410,
+    "open_grammar_accepts_every_official_target": true
+  },
+  "implementation": {
+    "auditor": {
+      "bytes": 22361,
+      "path": "experiments/goemotions/qwen3-1.7b/audit_target_aligned_retraining.py",
+      "sha256": "35435def9af26d1920dbd7c18334ff93772ab2bdd927fc2f524f408fbfb4c1ce"
+    },
+    "verifier": {
+      "bytes": 16548,
+      "path": "experiments/goemotions/qwen3-1.7b/verify_target_aligned_preflight.py",
+      "sha256": "face27486d9b2b3fea8793a3d684d9a1017177956ffa275c3f073ee2c100ca7c"
+    }
+  },
+  "inheritance": {
+    "acceleration": {
+      "inference_prompt_execution": "full-prompt",
+      "training_condition": "batch2-grad5"
+    },
+    "training": {
+      "batch_size": 2,
+      "effective_batch_size": 10,
+      "epochs": 1,
+      "grad_accumulation_steps": 5,
+      "inference_prompt_execution": "full-prompt",
+      "iterations": 21705,
+      "learning_rate": 1e-05,
+      "lora_num_layers": 16,
+      "lora_rank": 8,
+      "lora_scale": 20.0,
+      "mask_prompt": true,
+      "max_sequence_length": 512,
+      "optimizer": "adam",
+      "optimizer_updates": 4341,
+      "seed": 42
+    }
+  },
+  "prepared_train": {
+    "bytes": 42366046,
+    "path": "experiments/goemotions/qwen3-1.7b/private-cache/pre-exp-033-target-aligned-data/train.jsonl",
+    "rows": 43410,
+    "sequence_token_lengths": {
+      "max": 512,
+      "mean": 196.04429854872149,
+      "min": 180,
+      "p50": 195.0,
+      "p95": 210.0,
+      "p99": 215.0
+    },
+    "sha256": "493ecaafd6cd6ed5ee20f8ec3c262e291a6eee826a97816955b53effc1c1c09f"
+  },
+  "privacy": {
+    "private_data_gitignored": true,
+    "public_comment_ids": false,
+    "public_raw_text": false
+  },
+  "smoke": {
+    "bytes": 62942,
+    "covers_all_labels": true,
+    "neutral_cooccurrence_rows": 16,
+    "path": "experiments/goemotions/qwen3-1.7b/private-cache/pre-exp-033-target-aligned-data/smoke/train.jsonl",
+    "row_numbers": [
+      647,
+      1004,
+      1367,
+      1382,
+      1551,
+      2053,
+      2074,
+      2561,
+      2856,
+      3739,
+      4060,
+      4932,
+      5239,
+      6706,
+      7023,
+      9002,
+      9172,
+      9344,
+      11753,
+      12480,
+      13346,
+      15403,
+      15416,
+      16127,
+      16235,
+      16250,
+      16948,
+      18561,
+      19033,
+      20680,
+      20862,
+      21726,
+      21963,
+      22041,
+      23247,
+      23595,
+      23681,
+      24535,
+      24627,
+      25525,
+      28107,
+      28334,
+      29416,
+      29493,
+      29619,
+      30407,
+      31632,
+      31974,
+      32086,
+      32095,
+      33743,
+      33822,
+      34528,
+      35020,
+      35305,
+      35615,
+      37380,
+      37398,
+      39271,
+      41030,
+      41518,
+      42074,
+      42539,
+      43214
+    ],
+    "rows": 64,
+    "sha256": "86b78763c72ee2897ddb04dde335b89548294aa798f36c2e14027b99882b5462"
+  },
+  "status": "Passed",
+  "target_contract": {
+    "canonical_label_order": "ascending official numeric label ID",
+    "cardinality_support": {
+      "1": 36308,
+      "2": 6541,
+      "3": 532,
+      "4": 28,
+      "5": 1
+    },
+    "exact_official_gold_preservation": true,
+    "label_support": {
+      "admiration": 4130,
+      "amusement": 2328,
+      "anger": 1567,
+      "annoyance": 2470,
+      "approval": 2939,
+      "caring": 1087,
+      "confusion": 1368,
+      "curiosity": 2191,
+      "desire": 641,
+      "disappointment": 1269,
+      "disapproval": 2022,
+      "disgust": 793,
+      "embarrassment": 303,
+      "excitement": 853,
+      "fear": 596,
+      "gratitude": 2662,
+      "grief": 77,
+      "joy": 1452,
+      "love": 2086,
+      "nervousness": 164,
+      "neutral": 14219,
+      "optimism": 1581,
+      "pride": 111,
+      "realization": 1110,
+      "relief": 153,
+      "remorse": 545,
+      "sadness": 1326,
+      "surprise": 1060
+    },
+    "neutral_cooccurrence_row_count": 1396,
+    "neutral_cooccurrence_row_numbers_sha256": "6d2ce3b10b41365eba24d5d5aaa1afce66f6b3f043d49204559deb4b8b0a59d9",
+    "target_stream_sha256": "658caa1a2d320042d7d4b88d74958df8529bf057465ddef66a600bc670988051"
+  },
+  "template_contract": {
+    "empty_thinking_control_token_count": 4,
+    "full_assistant_rendering_true_false_identical_rows": 43410,
+    "inference_prefix_plus_target_matches_full_training_sequence_rows": 43410,
+    "json_and_eos_token_lengths": {
+      "max": 23,
+      "mean": 8.128150195807418,
+      "min": 7,
+      "p50": 8.0,
+      "p95": 11.0,
+      "p99": 13.0
+    },
+    "loss_bearing_token_lengths": {
+      "max": 27,
+      "mean": 12.128150195807418,
+      "min": 11,
+      "p50": 12.0,
+      "p95": 15.0,
+      "p99": 17.0
+    },
+    "loss_boundary_note": "MLX-LM masks through the assistant prefix. Four empty-thinking control tokens remain loss-bearing; the JSON target follows the identical disabled-thinking inference prefix."
+  },
+  "test_split_absent": true,
+  "test_split_accessed": false,
+  "truncation": {
+    "affected_rows": 2,
+    "input_tail_only": true,
+    "max_sequence_tokens": 512,
+    "records": [
+      {
+        "final_characters": 384,
+        "final_tokens": 512,
+        "original_characters": 703,
+        "original_tokens": 829,
+        "row_number": 2547
+      },
+      {
+        "final_characters": 247,
+        "final_tokens": 512,
+        "original_characters": 542,
+        "original_tokens": 1035,
+        "row_number": 21640
+      }
+    ],
+    "target_preserved": true
+  },
+  "validation_split_accessed": false
+}

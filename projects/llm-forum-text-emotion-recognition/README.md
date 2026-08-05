@@ -57,12 +57,12 @@ TF-IDF + Logistic Regression
 -> Twitter-domain RoBERTa
 -> 验证训练、评估、test gate 和错误分析流程
 
-GoEmotions（当前阶段）
+GoEmotions（公开行为复现已完成）
 简单多标签基线
 -> BERT-base / RoBERTa 监督微调
--> 建立同一数据集上的冻结编码器基线
+-> 建立同一数据集上的冻结编码器基线与正式 test 结果
 
-GoEmotions 本地 LLM 对照（当前阶段）
+GoEmotions 本地 LLM 对照（行为线已完成）
 Qwen3-1.7B Instruct zero-shot / few-shot
 + Qwen3-1.7B Base / Instruct matched frozen probes
 -> 区分实用分类表现与 post-training 对表征可解码性的影响
@@ -74,7 +74,8 @@ Instruct LoRA
 
 后续
 冻结错误分析（EXP-030 已完成） -> neutral ontology 推理消融（EXP-031 已完成）
--> target-aligned retraining 候选 -> test gate -> 上下文 -> 内部表征 -> SAE
+-> 重训加速预检（EXP-032 已完成） -> target-aligned retraining（EXP-033 已完成）
+-> frozen test gate（EXP-038 已完成） -> 论坛上下文 -> 内部表征 -> SAE
 ```
 
 LLM 是后续新增的第三类模型路线，不替代 TweetEval 已完成的传统分类器与
@@ -169,6 +170,63 @@ RoBERTa 比较。模型分数只能在相同数据集、任务定义、split 和
   下降 `0.009132`，所有条件均产生 0 条 `neutral+emotion` 预测。正式分类为
   `no_material_inference_improvement`；这只说明推理时修正不足以改变当前冻结 adapter，
   不能替代 target-aligned retraining，也不支持内部机制结论。test 仍未获取。
+- 已完成并独立验证 train-only Minor EXP-032 加速预检。保持 100 次优化更新、1000 条
+  样本和有效 batch 10 不变时，`batch5-grad2` 的稳态吞吐只有 `batch2-grad5` 的
+  `0.981853`，峰值内存由 `5.179` GB 增至 `7.312` GB，因此后续重训保留
+  `batch2-grad5`。公共前缀 KV cache 在 32 条固定训练样本上获得 `1.275726x`
+  端到端速度，但只有 `31/32` 输出逐 token 一致；唯一分歧为 `surprise` 与
+  `disappointment`，因此拒绝该优化并保留完整 prompt 推理。该预检没有读取
+  validation/test，也不构成分类性能证据。
+- 已登记 Major EXP-033 target-aligned retraining，并完成独立 runner 的 no-model
+  dry-run 与复算。当前 V3 将 protocol、runner、独立 verifier 和 canonical MLX runtime
+  contract 全部绑定到 SHA-256；训练入口逐字段继承 EXP-029 的模型、LoRA、训练、资源和
+  seed 门，但只消费保留全部官方标签的冻结 JSONL。43,410 条 target 中的 1,396 条
+  `neutral+emotion` 均保留；smoke/formal runtime config 明确设置 `train=true`、
+  `val_batches=0`、`test=false`。V3 另修复并实测 stdout EOF 后的 wall-time 门。一次
+  显式授权的 50-iteration train-only smoke 已完成并由不导入 runner 的 verifier 独立
+  复算：10 次 optimizer update 用时 `73.061` 秒，峰值 MLX memory `7.208` GB，正式训练
+  投影 `8.109` 小时；224 个 LoRA 张量共 `4,980,736` 个参数，112 个 `lora_b` 张量均
+  非零。初末两个日志窗口的 train loss 为 `6.153`/`0.3545`，只证明边界小样本可训练，
+  不是 validation 性能。随后建立的 formal V2 gate 与 seed-42 单独授权已完成完整
+  train-only 运行：4,341 次 optimizer update 用时约 `7.49` 小时，峰值 `7.208` GB，
+  adapter 加载与真实前向均由独立 verifier 复核通过。
+- EXP-033 seed-42 dev validation 已完成并独立验证。Macro-F1=`0.427959`，相对匹配的
+  EXP-029 seed-42 aligned-open 参考下降 `0.012678`，paired 95% CI
+  `[-0.026938,+0.001434]`，因此预登记 target-alignment improvement gate 未通过。
+  全量 predicted cardinality 为 `1.058054`；174 条 gold `neutral+emotion` 上仍产生
+  0 条对应共现预测。该实验是 `Verified` 负结果而非运行失败；seeds 43/44 未执行，
+  test 未获取或读取。
+- 已完成并独立验证 Minor EXP-034。冻结 EXP-033 seed-42 adapter 在训练时见过的全部
+  1,396 条 `neutral+emotion` 样本上仍产生 0 条对应共现预测；gold/predicted
+  cardinality 为 `2.044413/1.019341`。26 条输出虽然包含多个标签，但没有一条同时包含
+  neutral。该结果排除了“主要只是 held-out 泛化失败”的简单解释，但不能进一步区分
+  exposure、token-level objective、标签顺序、优化/LoRA 容量或模型规模。
+- 已完成并独立验证 Major EXP-035 数据与标注审计。冻结 train 的 1,396/1,396 条
+  `neutral+emotion` target 全部由不同标注者投票经官方 `>=2` 阈值聚合形成，同一
+  标注者共选为 0；官方 simplified labels 全部精确复现。39 条含 unclear 投票。
+  冻结目的性复核的 48 条中有 6 条被编码为可能需要上下文，但该比例不能外推。
+  这把跨标注者聚合确认为当前异常结构的首要解释，不排除上下文或模型容量因素。
+- 已完成并独立验证 Major EXP-036 dev 逐标注者评分诊断。174/174 条对应
+  `neutral+emotion` dev target 仍为 aggregation-only，866 行 raw annotations 经官方
+  `>=2` 票规则全部精确复现。EXP-029 与 BERT 的 clear-rater expected set-F1 分别为
+  `0.363250 +/- 0.017685` 与 `0.362531 +/- 0.002371`，三 seed family delta
+  `+0.000720`、95% CI `[-0.018463,+0.019903]`，属于该切片上的 practical tie。
+  Qwen 的 official exact match 为 0，但 clear-rater expected/any-rater exact 为
+  `0.341284/0.852490`，说明 aggregate union 的 exact-match 与个体标注一致度不是同一
+  问题；该局部结果不能外推为完整 dev 上追平 BERT。
+- 已完成并独立验证 Major EXP-037 完整 dev 逐标注者评分诊断。5,426/5,426 条 dev
+  与 19,440 行 raw annotations 已复算，官方 `>=2` 票聚合 mismatch 为 0。BERT 与
+  EXP-029 的 clear-rater soft Macro-F1 为 `0.383471/0.347253`；EXP-029 - BERT
+  delta=`-0.036218`、95% CI `[-0.043834,-0.029494]`。相对 official Macro-F1 delta
+  的 shift 仅 `+0.001843` 且 CI 跨 0；clear-rater expected set-F1 delta 也为
+  `-0.010390`、CI 不跨 0。结论为 `gap_remains`：标注聚合影响局部评分语义，但不能
+  解释完整 dev 的总体性能差距。
+- 已完成并独立验证 EXP-038 一次性 GoEmotions test gate。EXP-018、EXP-020、
+  EXP-025、EXP-029 和 EXP-033 的 test Macro-F1 分别为 `0.196197`、
+  `0.488328 +/- 0.008771`、`0.233653`、`0.450652 +/- 0.032175` 和 `0.444675`。
+  BERT 比论文报告的 test 参照 `0.46` 高 `0.028328`；EXP-033 未超过 BERT，
+  历史 EXP-029 因训练 ontology 失配只保留为显式受限对照。9 个单元的预测、逐标签
+  指标、混淆矩阵与哈希均已复算；test 自此视为已消费。
 
 ### 尚未完成
 
@@ -178,13 +236,18 @@ RoBERTa 比较。模型分数只能在相同数据集、任务定义、split 和
   prompt/decoder 2x2、LoRA 与跨模型错误结构证据；Base/post-trained probe 的首次
   正式运行触发资源门，尚无 Verified 表征结论。尚未完成自建数据集、广义鲁棒性
   实验或可运行系统。
-- GoEmotions 的 BERT-base-cased dev 基线已经冻结；正式 test 尚未获取，
-  RoBERTa alternative 尚未执行。EXP-018 与 EXP-020 不再事后调参，后续阈值、
-  类别权重或模型变体必须使用新实验编号。
+- GoEmotions 的 BERT-base-cased dev 与正式 test 基线已经冻结；RoBERTa alternative
+  尚未执行，但不再为关闭当前复现阶段而补跑。EXP-018 与 EXP-020 不再事后调参，
+  后续阈值、类别权重或模型变体必须在新的开发数据上使用新实验编号。
 - Qwen3-1.7B Base/post-trained 本地环境、资源试跑、parser 修复门和 EXP-025/026
   full-dev 2x2 已完成并验证；EXP-027 probe smoke 已通过，EXP-028 正式 matched probe
-  因 wall-time 门失败并保留。EXP-029 三 seed LoRA、EXP-030 错误分析与 EXP-031
-  推理消融已完成并验证；target-aligned retraining 与新的正式 probe 尚未执行。
+  因 wall-time 门失败并保留。EXP-029 三 seed LoRA、EXP-030 错误分析、EXP-031
+  推理消融、EXP-032 加速预检及 EXP-033 seed-42 target-aligned 正式训练与 dev
+  validation 已完成并验证；EXP-034 进一步确认训练共现切片也没有目标共现输出，
+  EXP-035 则确认这些 official hard targets 全部来自跨标注者聚合，EXP-036 完成
+  174 条 dev 冲突切片的逐标注者评分，EXP-037 已把相同诊断扩展到完整 dev 并确认
+  总体差距仍存在，EXP-038 已完成正式 test。EXP-033 improvement gate 未通过；
+  正式 probe 与 EXP-033 seeds 43/44 未执行，也不作为当前 GoEmotions 阶段的关闭条件。
 
 ## Evidence Standard
 
@@ -204,10 +267,20 @@ RoBERTa 比较。模型分数只能在相同数据集、任务定义、split 和
 - [`data/goemotions/manifest.json`](data/goemotions/manifest.json): GoEmotions train/dev 固定快照的来源 revision、SHA-256、规模和数据质量检查。
 - [`experiments/goemotions/tfidf-ovr-logreg/runs/exp-018-tfidf-ovr-logreg/REPORT.md`](experiments/goemotions/tfidf-ovr-logreg/runs/exp-018-tfidf-ovr-logreg/REPORT.md): EXP-018 简单多标签基线结果、类别诊断和独立验证说明。
 - [`experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/REPORT.md`](experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/REPORT.md): EXP-020 BERT-base-cased 三随机种子 dev 复现、逐类诊断、论文边界和独立验证说明。
-- [`experiments/goemotions/qwen3-1.7b/README.md`](experiments/goemotions/qwen3-1.7b/README.md): Qwen3-1.7B 配对模型来源、EXP-021 至 EXP-031 的行为实验、probe 门和后续 LLM 实验顺序。
+- [`experiments/goemotions/qwen3-1.7b/README.md`](experiments/goemotions/qwen3-1.7b/README.md): Qwen3-1.7B 配对模型来源、EXP-021 至 EXP-034 的行为实验、probe 门和后续 LLM 实验顺序。
 - [`experiments/goemotions/qwen3-1.7b/runs/exp-028-matched-frozen-probe/FAILURE-REPORT.md`](experiments/goemotions/qwen3-1.7b/runs/exp-028-matched-frozen-probe/FAILURE-REPORT.md): EXP-028 资源门失败、诊断结果、独立产物审计和证据边界。
 - [`experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/REPORT.md`](experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/REPORT.md): EXP-029 三随机种子 LoRA dev 结果、冻结比较、资源记录和证据边界。
 - [`experiments/goemotions/qwen3-1.7b/runs/exp-031-neutral-ontology-inference-ablation/REPORT.md`](experiments/goemotions/qwen3-1.7b/runs/exp-031-neutral-ontology-inference-ablation/REPORT.md): EXP-031 三随机种子 neutral ontology 推理消融、冻结判定与 target-aligned retraining 边界。
+- [`experiments/goemotions/qwen3-1.7b/runs/exp-032-acceleration-preflight/verification.json`](experiments/goemotions/qwen3-1.7b/runs/exp-032-acceleration-preflight/verification.json): EXP-032 train-only batch 吞吐与公共前缀 KV cache 等价性预检。
+- [`experiments/goemotions/qwen3-1.7b/protocols/exp-033-target-aligned-lora-v3.md`](experiments/goemotions/qwen3-1.7b/protocols/exp-033-target-aligned-lora-v3.md): EXP-033 官方标签对齐重训、V3 wall-time 门、资源门与授权顺序。
+- [`experiments/goemotions/qwen3-1.7b/preflight/exp-033-runner-dry-run-verification-v3.json`](experiments/goemotions/qwen3-1.7b/preflight/exp-033-runner-dry-run-verification-v3.json): EXP-033 V3 独立 runner、冻结数据、MLX runtime contract、进程超时门和 train-only config 的 no-model 复算。
+- [`experiments/goemotions/qwen3-1.7b/preflight/exp-033-smoke-verification.json`](experiments/goemotions/qwen3-1.7b/preflight/exp-033-smoke-verification.json): EXP-033 50-iteration train-only smoke 的 loss、吞吐、内存、split 边界与 LoRA 权重独立复算。
+- [`experiments/goemotions/qwen3-1.7b/runs/exp-033-target-aligned-lora/REPORT.md`](experiments/goemotions/qwen3-1.7b/runs/exp-033-target-aligned-lora/REPORT.md): EXP-033 seed-42 正式训练、完整 dev 指标、配对比较、multi-label/neutral 诊断与证据边界。
+- [`experiments/goemotions/qwen3-1.7b/runs/exp-034-train-neutral-cooccurrence-diagnostic/REPORT.md`](experiments/goemotions/qwen3-1.7b/runs/exp-034-train-neutral-cooccurrence-diagnostic/REPORT.md): EXP-034 对已见训练共现样本的冻结回放、train-vs-dev 结构诊断与归因边界。
+- [`experiments/goemotions/annotation-audit/runs/exp-035-neutral-cooccurrence-annotation-audit/REPORT.md`](experiments/goemotions/annotation-audit/runs/exp-035-neutral-cooccurrence-annotation-audit/REPORT.md): EXP-035 对逐标注者投票、官方聚合复现、上下文可判别性和隐私边界的审计。
+- [`experiments/goemotions/disagreement-aware-evaluation/runs/exp-036-dev-rater-aware-diagnostic/REPORT.md`](experiments/goemotions/disagreement-aware-evaluation/runs/exp-036-dev-rater-aware-diagnostic/REPORT.md): EXP-036 对 174 条 dev 冲突切片、7 份冻结预测和逐标注者期望一致度的受控诊断。
+- [`experiments/goemotions/disagreement-aware-evaluation/runs/exp-037-full-dev-rater-aware-diagnostic/REPORT.md`](experiments/goemotions/disagreement-aware-evaluation/runs/exp-037-full-dev-rater-aware-diagnostic/REPORT.md): EXP-037 对完整 5,426 条 dev、soft-label Macro-F1、逐标注者一致度和总体差距解释的冻结诊断。
+- [`experiments/goemotions/test-gate/REPORT.md`](experiments/goemotions/test-gate/REPORT.md): EXP-038 一次性正式 test 的五组冻结结果、论文参照、资源记录、证据边界和独立验证说明。
 - [`experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/REPORT.md`](experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/REPORT.md): EXP-030 跨 BERT、冻结 Qwen 与 LoRA 的 dev 错误结构、匿名定性复核和官方结果边界。
 - [`../../questions/llm-forum-text-emotion-recognition/open-questions.md`](../../questions/llm-forum-text-emotion-recognition/open-questions.md): 会改变项目主线的开放问题。
 - [`../../sources/llm-forum-text-emotion-recognition-sources.md`](../../sources/llm-forum-text-emotion-recognition-sources.md): 论文、代码、数据与合规来源地图。
@@ -215,13 +288,13 @@ RoBERTa 比较。模型分数只能在相同数据集、任务定义、split 和
 
 ## Next Action
 
-1. 保持 EXP-020、EXP-025、EXP-029、EXP-030 和 EXP-031 冻结。EXP-031 已排除
-   “仅在推理时放开 neutral ontology 就能实质改善”的解释；下一步先讨论并预登记
-   一个新的 target-aligned retraining Major，在训练目标、prompt 和 decoder 三处都
-   保持官方 `neutral+emotion` 标签，而不在 EXP-029/031 上事后调参。
-2. 保留 EXP-028 的 `Failed` 状态；表征支线若继续，必须使用新的 matched-probe
-   实验编号、现实资源门和透明恢复政策，不得用其诊断值反向修改标签或读出规则。
-3. 并行向导师确认 GoEmotions 能否作为主要论坛数据，以及是否必须另行采集、
-   标注或加入线程上下文。
-4. GoEmotions test 继续关闭；只有候选模型、错误分析和论坛数据范围冻结后，才登记
-   一次性 test gate。在新的 validation 或 forum holdout 上开发上下文和鲁棒性方案。
+1. 冻结 EXP-038 及其全部来源模型；GoEmotions test 已消费，不再用于调参、模型选择、
+   prompt/threshold 修改或补跑 seeds 43/44。
+2. 将 GoEmotions 公开数据行为复现阶段视为阶段性完成：BERT 是 primary metric 最强
+   条件，1.7B LoRA 未超过 BERT，但已形成 prompting、LoRA、ontology、标注聚合、
+   错误分析和正式 test 的完整负结果证据链。
+3. 下一主线按导师意见转向带线程上下文的论坛数据。先确认目标论坛、语言、授权、
+   匿名化、标签体系与 `thread_id` holdout，再下载或标注数据；不能把已消费的
+   GoEmotions test 当成新方案的开发集。
+4. 保留 EXP-028 的 `Failed` 状态。内部表征或 SAE 只作为后续支线，必须使用新的
+   Major 编号、现实资源门和独立干预证据，不能从当前分类分数推出情绪机制。

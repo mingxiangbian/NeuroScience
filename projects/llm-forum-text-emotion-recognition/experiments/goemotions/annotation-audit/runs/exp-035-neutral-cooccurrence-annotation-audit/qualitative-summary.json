@@ -1,0 +1,45 @@
+{
+  "annotation_rows": 48,
+  "coding_counts": {
+    "annotation_interpretation": {
+      "cross_rater_disagreement_likely": 39,
+      "genuine_multilabel_possible": 4,
+      "uncertain": 2,
+      "unclear_case": 3
+    },
+    "label_coherence": {
+      "ambiguous": 9,
+      "both_plausible": 13,
+      "emotion_only_plausible": 24,
+      "neutral_only_plausible": 2
+    },
+    "reviewer_confidence": {
+      "high": 28,
+      "low": 2,
+      "medium": 18
+    },
+    "standalone_decidability": {
+      "context_likely_needed": 6,
+      "explicit": 24,
+      "implicit_but_decidable": 14,
+      "indeterminate": 4
+    }
+  },
+  "context_likely_needed_rate_in_purposive_sample": 0.125,
+  "context_likely_needed_rows": 6,
+  "context_trigger_counts": {
+    "external_event": 14,
+    "none": 17,
+    "pronoun_or_deixis": 12,
+    "reply_reference": 9,
+    "sarcasm_or_irony": 3
+  },
+  "private_notes_published": false,
+  "sample_role_counts": {
+    "aggregation_only": 16,
+    "any_unclear": 8,
+    "gold_cardinality_at_least_3": 4,
+    "residual_fill": 20
+  },
+  "sampling_inference_boundary": "Purposive frozen sample; qualitative proportions are descriptive and are not population estimates."
+}

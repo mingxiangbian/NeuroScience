@@ -1,0 +1,358 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "completed_at_utc": "2026-08-03T06:27:46.033065+00:00",
+  "config": {
+    "bytes": 9548,
+    "path": "experiments/goemotions/qwen3-1.7b/configs/exp-033-target-aligned-lora.json",
+    "sha256": "69523a6248f7abda9c5d08768089fccd48d758449d29270dbdf7862c244c2ea2"
+  },
+  "data": {
+    "labels": {
+      "count": 28,
+      "path": "data/goemotions/official/emotions.txt",
+      "sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89"
+    },
+    "prepared_train": {
+      "cardinality_support": {
+        "1": 36308,
+        "2": 6541,
+        "3": 532,
+        "4": 28,
+        "5": 1
+      },
+      "covers_all_labels": true,
+      "label_support": {
+        "admiration": 4130,
+        "amusement": 2328,
+        "anger": 1567,
+        "annoyance": 2470,
+        "approval": 2939,
+        "caring": 1087,
+        "confusion": 1368,
+        "curiosity": 2191,
+        "desire": 641,
+        "disappointment": 1269,
+        "disapproval": 2022,
+        "disgust": 793,
+        "embarrassment": 303,
+        "excitement": 853,
+        "fear": 596,
+        "gratitude": 2662,
+        "grief": 77,
+        "joy": 1452,
+        "love": 2086,
+        "nervousness": 164,
+        "neutral": 14219,
+        "optimism": 1581,
+        "pride": 111,
+        "realization": 1110,
+        "relief": 153,
+        "remorse": 545,
+        "sadness": 1326,
+        "surprise": 1060
+      },
+      "max_target_cardinality": 5,
+      "neutral_cooccurrence_rows": 1396,
+      "path": "experiments/goemotions/qwen3-1.7b/private-cache/pre-exp-033-target-aligned-data/train.jsonl",
+      "rows": 43410,
+      "sha256": "493ecaafd6cd6ed5ee20f8ec3c262e291a6eee826a97816955b53effc1c1c09f",
+      "target_stream_sha256": "658caa1a2d320042d7d4b88d74958df8529bf057465ddef66a600bc670988051"
+    },
+    "smoke_train": {
+      "cardinality_support": {
+        "1": 41,
+        "2": 20,
+        "3": 1,
+        "4": 1,
+        "5": 1
+      },
+      "covers_all_labels": true,
+      "label_support": {
+        "admiration": 7,
+        "amusement": 5,
+        "anger": 2,
+        "annoyance": 2,
+        "approval": 4,
+        "caring": 1,
+        "confusion": 3,
+        "curiosity": 3,
+        "desire": 1,
+        "disappointment": 4,
+        "disapproval": 2,
+        "disgust": 2,
+        "embarrassment": 1,
+        "excitement": 2,
+        "fear": 1,
+        "gratitude": 5,
+        "grief": 1,
+        "joy": 1,
+        "love": 2,
+        "nervousness": 1,
+        "neutral": 30,
+        "optimism": 3,
+        "pride": 1,
+        "realization": 3,
+        "relief": 1,
+        "remorse": 1,
+        "sadness": 2,
+        "surprise": 2
+      },
+      "max_target_cardinality": 5,
+      "neutral_cooccurrence_rows": 16,
+      "path": "experiments/goemotions/qwen3-1.7b/private-cache/pre-exp-033-execution-data/smoke/train.jsonl",
+      "rows": 64,
+      "sha256": "0fa3b51ff3ed68d3ba7460a7ace7d053faeb6dc5134967fdb113b826f0e13404",
+      "target_stream_sha256": "b1d29722c4f64c778d2a426dbb6b81cdf911aca19be58433cfc4532998ba3b2c"
+    },
+    "source_train": {
+      "bytes": 3519053,
+      "path": "data/goemotions/official/train.tsv",
+      "sha256": "1c254a142be5c00e80d819b9ae1bbd36d94b2eeb8f4b1271846508d57e57d9c5"
+    },
+    "test_split_absent": true
+  },
+  "environment": {
+    "mlx_lm_source_tree": {
+      "file_count": 166,
+      "manifest_sha256": "f2244007cd659ed6e63cf1c56e1a80e133d20dbb0aefa26574cda9f8fcb257a0",
+      "total_bytes": 1531573
+    },
+    "mlx_lora_cli": {
+      "bytes": 199,
+      "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/mlx_lm.lora",
+      "sha256": "e809f4488d53ca0906a3ab224416b8c7c898b3ad786d59be828b10cd113be293"
+    },
+    "packages": {
+      "PyYAML": "6.0.3",
+      "huggingface-hub": "1.26.0",
+      "mlx": "0.32.0",
+      "mlx-lm": "0.31.3",
+      "numpy": "2.4.6",
+      "python": "3.11.15",
+      "safetensors": "0.8.0",
+      "tokenizers": "0.22.2",
+      "tqdm": "4.70.0",
+      "transformers": "5.14.1"
+    },
+    "python_executable": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python"
+  },
+  "evidence_chain": {
+    "artifacts": [
+      {
+        "bytes": 2464,
+        "path": "experiments/goemotions/qwen3-1.7b/preflight/pre-exp-033-execution-v3-audit.json",
+        "sha256": "50b4f7b8395f68077ceefa4d7041c61ee9aa151df30c35af1cb7f7ed97ba9018"
+      },
+      {
+        "bytes": 2384,
+        "path": "experiments/goemotions/qwen3-1.7b/preflight/pre-exp-033-execution-v3-contract.json",
+        "sha256": "fdc5ed2f1bcbb015a33b800afeeca29f8bb38cc63810260a56fe88e22d8befba"
+      },
+      {
+        "bytes": 1182,
+        "path": "experiments/goemotions/qwen3-1.7b/preflight/pre-exp-033-execution-v3-verification.json",
+        "sha256": "dd2a5964eb4527f5e6e451be0c4fad9d7ad3b54dfcc4502f63356d05e9108ac4"
+      },
+      {
+        "bytes": 8007,
+        "path": "experiments/goemotions/qwen3-1.7b/configs/exp-029-instruct-lora.json",
+        "sha256": "14fe020eb86331d987561240ebfa1da70d724f0d622d74f7879a6364d4aba4ed"
+      },
+      {
+        "bytes": 596,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-032-acceleration-preflight/verification.json",
+        "sha256": "e5cb81977b980dc44000549ed0f43d10ca2bd0ff92f2c835be3a84c374748471"
+      },
+      {
+        "bytes": 6165,
+        "path": "experiments/goemotions/qwen3-1.7b/preflight/pre-exp-033-target-aligned-audit.json",
+        "sha256": "bb62876ac1d4f6017a78d3f1960e06968550fa0abb249d9fd31237f3e27e6aa9"
+      },
+      {
+        "bytes": 5235,
+        "path": "experiments/goemotions/qwen3-1.7b/preflight/pre-exp-033-target-aligned-contract.json",
+        "sha256": "a12eb95984225b93111b3b2bbb6123d0450fa4c78888031d22a9ae3cd2dae714"
+      },
+      {
+        "bytes": 963,
+        "path": "experiments/goemotions/qwen3-1.7b/preflight/pre-exp-033-target-aligned-verification.json",
+        "sha256": "0922eeb674a554556fbeb9520a1a279dadd7b3089a9468b1b8702deae1867259"
+      }
+    ],
+    "verified_count": 8
+  },
+  "experiment_id": "EXP-033",
+  "formal_training_authorized": false,
+  "implementation": {
+    "runner": {
+      "bytes": 39445,
+      "path": "experiments/goemotions/qwen3-1.7b/run_target_aligned_lora.py",
+      "sha256": "abec0a137a45a9452544a30482504bda9c423bc945125bd2abe7aca5361fe73a"
+    },
+    "verifier": {
+      "bytes": 24130,
+      "path": "experiments/goemotions/qwen3-1.7b/verify_target_aligned_runner_dry_run.py",
+      "sha256": "7935d7f730ec7f67ec699607b4b9184371ceea050ee5b6748dc9c9ac2a7f458b"
+    }
+  },
+  "inference_alignment": {
+    "constraint": {
+      "bytes": 2358,
+      "path": "experiments/goemotions/qwen3-1.7b/label_json_constraint_neutral_cooccurrence.py",
+      "sha256": "336218c9a44fc4d475d9197f05afcb81096f793e141e03fed96cbe76cb99d880"
+    },
+    "enable_thinking": false,
+    "prompt": {
+      "bytes": 616,
+      "path": "experiments/goemotions/qwen3-1.7b/prompts/exp-031-neutral-cooccurrence-v1.json",
+      "sha256": "94479a8d543e75a22be48925bd44bd7767526747e9a13a986279ab634a531ec3"
+    }
+  },
+  "inheritance": {
+    "fields": [
+      "model",
+      "preflight",
+      "repetition_gate",
+      "resource_budget",
+      "training"
+    ],
+    "parent_config": {
+      "bytes": 8007,
+      "path": "experiments/goemotions/qwen3-1.7b/configs/exp-029-instruct-lora.json",
+      "sha256": "14fe020eb86331d987561240ebfa1da70d724f0d622d74f7879a6364d4aba4ed"
+    },
+    "status": "Exact match"
+  },
+  "mlx_lora_subprocess_executed": false,
+  "model": {
+    "file_count": 8,
+    "manifest": {
+      "bytes": 4235,
+      "path": "models/qwen3-1.7b/manifest.json",
+      "sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877"
+    },
+    "total_bytes": 3452636312
+  },
+  "model_forward_or_backward_executed": false,
+  "next_required_step": "Independently verify this dry-run, re-run PRE-EXP-033 execution V3 with --check, then request explicit authorization for the 50-iteration train-only smoke.",
+  "output_boundary": {
+    "adapter_root_created": false,
+    "formal_run_root_created": false,
+    "runtime_configs_only": true
+  },
+  "runtime_configs": {
+    "formal_seed_42": {
+      "artifact": {
+        "bytes": 1340,
+        "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-runtime-seed-42.json",
+        "sha256": "1c1182b6f54bcb038f76636e22be99c66ae6e068d7260261b632528c8dd602bb"
+      },
+      "config": {
+        "adapter_path": "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/private-cache/exp-033-target-aligned-lora/seed-42",
+        "batch_size": 2,
+        "clear_cache_threshold": 0,
+        "data": "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/private-cache/pre-exp-033-target-aligned-data",
+        "fine_tune_type": "lora",
+        "grad_accumulation_steps": 5,
+        "grad_checkpoint": false,
+        "iters": 21705,
+        "learning_rate": 1e-05,
+        "lora_parameters": {
+          "dropout": 0.0,
+          "keys": [
+            "self_attn.q_proj",
+            "self_attn.k_proj",
+            "self_attn.v_proj",
+            "self_attn.o_proj",
+            "mlp.gate_proj",
+            "mlp.up_proj",
+            "mlp.down_proj"
+          ],
+          "rank": 8,
+          "scale": 20.0
+        },
+        "lr_schedule": null,
+        "mask_prompt": true,
+        "max_seq_length": 512,
+        "model": "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/models/qwen3-1.7b/mlx-bf16",
+        "num_layers": 16,
+        "optimizer": "adam",
+        "optimizer_config": {
+          "adam": {}
+        },
+        "project_name": null,
+        "report_to": null,
+        "resume_adapter_file": null,
+        "save_every": 5000,
+        "seed": 42,
+        "steps_per_eval": 21706,
+        "steps_per_report": 100,
+        "test": false,
+        "test_batches": 0,
+        "train": true,
+        "val_batches": 0
+      }
+    },
+    "smoke": {
+      "artifact": {
+        "bytes": 1329,
+        "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-runtime-smoke.json",
+        "sha256": "b3ae42a1df9971e43ffad9a7842af45d531b26a58310dd8d27dc34d3ff3056ef"
+      },
+      "config": {
+        "adapter_path": "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/private-cache/exp-033-target-aligned-lora/smoke",
+        "batch_size": 2,
+        "clear_cache_threshold": 0,
+        "data": "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/private-cache/pre-exp-033-execution-data/smoke",
+        "fine_tune_type": "lora",
+        "grad_accumulation_steps": 5,
+        "grad_checkpoint": false,
+        "iters": 50,
+        "learning_rate": 1e-05,
+        "lora_parameters": {
+          "dropout": 0.0,
+          "keys": [
+            "self_attn.q_proj",
+            "self_attn.k_proj",
+            "self_attn.v_proj",
+            "self_attn.o_proj",
+            "mlp.gate_proj",
+            "mlp.up_proj",
+            "mlp.down_proj"
+          ],
+          "rank": 8,
+          "scale": 20.0
+        },
+        "lr_schedule": null,
+        "mask_prompt": true,
+        "max_seq_length": 512,
+        "model": "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/models/qwen3-1.7b/mlx-bf16",
+        "num_layers": 16,
+        "optimizer": "adam",
+        "optimizer_config": {
+          "adam": {}
+        },
+        "project_name": null,
+        "report_to": null,
+        "resume_adapter_file": null,
+        "save_every": 51,
+        "seed": 42,
+        "steps_per_eval": 51,
+        "steps_per_report": 5,
+        "test": false,
+        "test_batches": 0,
+        "train": true,
+        "val_batches": 0
+      }
+    }
+  },
+  "smoke_training_authorized": false,
+  "stage": "runner-dry-run",
+  "status": "Passed",
+  "test_split_absent": true,
+  "test_split_accessed": false,
+  "tier": "Major preflight",
+  "validation_split_accessed": false
+}

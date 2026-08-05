@@ -88,6 +88,12 @@ project: llm-forum-text-emotion-recognition
 | EVID-018 | 2026-08-02 | EXP-029 Qwen3-1.7B 监督 LoRA 三 seed 在 GoEmotions dev 的选定 zero-shot Macro-F1 为 0.451374 +/- 0.019212；较 EXP-025 选定条件提高 0.210209，但仍比 EXP-020 均值低 0.038061；test 未获取 | 在训练前冻结 LoRA 位置、训练配置、三 seed 资源门、zero/few-shot 选择规则和 same-dataset 对照；实现训练、双条件全量生成、匿名预测、完整指标、bootstrap 与独立 verifier | `projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/` | 三个 seed 的 `verification.json` 与 `multi-seed-verification.json` 均通过；复算 32,556 条 condition-row 评估、指标、资源和哈希，确认 private adapters 被忽略、公开原文泄漏 0、test 不存在 | Verified |
 | EVID-019 | 2026-08-02 | EXP-030 显示 GoEmotions dev 上 LoRA subset accuracy 0.508293 高于 BERT 的 0.440963，但 Macro-F1 低 0.038061；LoRA 在多标签样本上约 0.043 exact-match，低于 BERT 的约 0.179；当前 Qwen ontology 使 174 条 neutral+emotion gold 结构性不可达 | 在读取错误原文前冻结 6 个抽样角色、最多 48 条案例与可能来源编码；复算 BERT、frozen Qwen 和 LoRA 共 7 份预测的总体、切片、逐类、转移与稳定性，并隔离私有原文 | `projects/llm-forum-text-emotion-recognition/experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/` | `verification.json` 复核 5,426 条 gold、7 份预测、48 条定性编码、8 个 CSV、3 个 JSON、确定性抽样和公开隐私边界；最大数值差异 0、公开原文泄漏 0、test 不存在 | Verified |
 | EVID-020 | 2026-08-03 | EXP-031 三 seed 推理消融中，old-prompt/open-decoder 与 closed condition 的预测完全一致；aligned-prompt/open-decoder 的 Macro-F1 仅提高 0.001682，Samples-F1、exact match 和 neutral 共现切片 Samples-F1 分别下降 0.003240、0.005529 和 0.009132，所有条件均未产生 neutral+emotion 预测 | 在读取新 dev 结果前冻结三条件、三个 seed、资源门、切片、paired bootstrap 和判定规则；复用冻结 EXP-029 adapters，只改变推理 prompt 与 decoder，并实现匿名全量产物和独立 verifier | `projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/runs/exp-031-neutral-ontology-inference-ablation/` | 三个 seed verification 与 `multi-seed-verification.json` 均通过；closed 条件精确复现 EXP-029，所有指标、切片、bootstrap、哈希、资源和隐私检查通过，test 不存在 | Verified |
+| EVID-021 | 2026-08-03 | EXP-033 seed-42 target-aligned LoRA 在 GoEmotions dev 的 Macro-F1 为 0.427959，较匹配的 EXP-029 seed-42 aligned-open 参考低 0.012678，paired 95% CI=[-0.026938,+0.001434]；174 条 neutral+emotion gold 仍无目标共现预测 | 修复训练 target 的 neutral ontology 失配；冻结并审计训练、模型、运行时、资源和 validation 合同，完成正式训练与匿名全量 dev 评估 | `projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/runs/exp-033-target-aligned-lora/` | formal training 与 validation verifier 均为 `Passed`；独立复算 adapter、训练轨迹、5,426 条预测、切片、bootstrap、资源、隐私和哈希，test 不存在 | Verified |
+| EVID-022 | 2026-08-04 | EXP-034 在 EXP-033 seed-42 adapter 见过的全部 1,396 条 neutral+emotion 训练样本上仍产生 0 条目标共现预测；predicted cardinality=1.019341，而 gold=2.044413 | 将冻结 adapter 回放到预登记的完整训练共现切片，区分“训练目标未学会”与“只在 held-out 数据上不泛化”；实现匿名产物和独立复算 | `projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/runs/exp-034-train-neutral-cooccurrence-diagnostic/` | `verification.json` 从官方 train TSV 与冻结 target 重建 1,396 条 gold，重新解析输出并复算指标、cardinality、共现计数、哈希和隐私边界；test 不存在，状态 `Passed` | Verified |
+| EVID-023 | 2026-08-04 | EXP-035 发现冻结 train 的 1,396/1,396 条 neutral+emotion target 都由不同标注者投票聚合形成，同一标注者共选为 0；39 条含 unclear 投票，48 条目的性复核中 6 条被编码为可能需要上下文 | 在读取原文前冻结完整 train allowlist、逐标注者聚合复现、48 条分层抽样和编码词表；流式核对官方 raw annotations，只持久化命中记录 | `projects/llm-forum-text-emotion-recognition/experiments/goemotions/annotation-audit/runs/exp-035-neutral-cooccurrence-annotation-audit/` | `verification.json` 独立重建 1,396 条 target、复算 6,936 行逐标注者记录、全部投票/抽样/定性汇总、报告与隐私边界；官方 `>=2` 聚合 mismatch=0，公开原文和上游 ID 泄漏=0，test 不存在 | Verified |
+| EVID-024 | 2026-08-04 | EXP-036 在 174 条 dev neutral+emotion 上发现 EXP-029 与 BERT 的 clear-rater expected set-F1 为 0.363250 与 0.362531，三 seed family delta=+0.000720、95% CI=[-0.018463,+0.019903]，属于 practical tie；Qwen 的 official exact match 为 0，但 expected/any-clear-rater exact match 为 0.341284/0.852490 | 在读取 dev raw votes 前冻结 174 条 allowlist、7 份既有预测、逐标注者评分语义、三组比较与 10,000 次 paired bootstrap；不训练、不推理、不选择模型 | `projects/llm-forum-text-emotion-recognition/experiments/goemotions/disagreement-aware-evaluation/runs/exp-036-dev-rater-aware-diagnostic/` | `verification.json` 不导入 runner，独立复算 866 行逐标注者记录、1,218 条样本级分数、全部 CSV/JSON、三组 bootstrap、artifact hash 与隐私边界；174/174 官方聚合精确复现，test 不存在 | Verified |
+| EVID-025 | 2026-08-04 | EXP-037 在完整 5,426 条 GoEmotions dev 上发现 EXP-029/BERT 的 official Macro-F1 为 0.451374/0.489435，clear-rater soft Macro-F1 为 0.347253/0.383471；soft delta=-0.036218、95% CI=[-0.043834,-0.029494]，相对 official delta 的 shift=+0.001843、CI 跨 0，整体差距仍存在 | 冻结全部 dev 行、7 份既有预测、clear-rater vote-fraction soft labels、逐标注者 set-F1、2,000 次 Macro-F1 bootstrap 与 10,000 次样本级 bootstrap；不训练、不推理、不选择模型 | `projects/llm-forum-text-emotion-recognition/experiments/goemotions/disagreement-aware-evaluation/runs/exp-037-full-dev-rater-aware-diagnostic/` | 修正版 V2 verifier 独立复算 19,440 行逐标注者记录、5,426 行结构、588 行逐标签指标、3 组比较和全部公开产物；最大数值差异 5.12e-13，公开文本/上游 ID/raw rater ID 泄漏为 0，test 不存在 | Verified |
+| EVID-026 | 2026-08-04 | EXP-038 一次性 GoEmotions test gate 中，EXP-020 BERT、EXP-029 历史 LoRA 和 EXP-033 target-aligned LoRA 的 Macro-F1 分别为 0.488328 +/- 0.008771、0.450652 +/- 0.032175 和 0.444675；BERT 比论文 test 参照 0.46 高 0.028328 | 在 test 获取前冻结 9 个单元、模型与配置哈希、dev 重放门、指标、资源上限和禁止 test 后选择规则；完成本地推理、匿名逐条产物、聚合与独立复算 | `projects/llm-forum-text-emotion-recognition/experiments/goemotions/test-gate/` | V2 verifier 重建 9 个 5,427 x 28 预测矩阵，复算完整指标和混淆矩阵并核对产物哈希；修正仅把生成标签 ID 从有序比较改为已验证唯一集合比较，未改变预测、指标或冻结配置 | Verified |
 
 ## Data Register
 
@@ -716,6 +722,162 @@ Failure or caveat: 该结果不能证明训练目标是唯一原因，也不能�
 Thesis destination: Table-G2-4；错误分析的 neutral co-occurrence failure mode；讨论章节的 supervision/inference mismatch 与因果边界
 ```
 
+### EXP-033: Target-Aligned LoRA, Seed 42
+
+```text
+Experiment ID: EXP-033
+Tier / RQ: Major / RQ-G2
+Status: Verified negative result；seed 42 formal train 与 validation 完成；seeds 43/44 未授权；test 未获取或读取
+Dataset and protocol: DATA-GOE-V1；train 43,410 rows、dev 5,426 rows、28 labels；训练 target 保留全部 1,396 条 neutral+emotion
+Provider and exact model: Qwen/Qwen3-1.7B revision 70d244cc86ccca08cf5af4e1e306ecf908b1ad5e；本地未量化 MLX BF16
+LoRA and training: final 16/28 blocks；q/k/v/o + gate/up/down；rank=8；4,980,736 trainable parameters；1 epoch；21,705 micro-iterations；4,341 optimizer updates；effective batch=10；constant lr=1e-5；seed=42
+Training verification: duration=26,963.19 s；peak MLX memory=7.208 GB；initial/final loss window=0.4410/0.1618；112/112 LoRA-B tensors non-zero；真实 load/forward logits finite；train-only
+Validation condition: final adapter；aligned prompt；open-neutral constrained label-name JSON；greedy；thinking off；max_new_tokens=64；每行一次；无 retry/repair；invalid-as-empty
+Primary metric: dev Macro-P/R/F1=0.568150/0.386679/0.427959
+Secondary metrics: Micro-F1=0.573055；Weighted-F1=0.549395；Samples-F1=0.584144；strict subset accuracy=0.501843；Hamming loss=0.034062；label accuracy=0.965938
+Cardinality and parser: gold/predicted cardinality=1.175820/1.058054；parser=5,426/5,426=100%；empty rows=0；finish reason stop=5,426/5,426
+Matched EXP-025 comparison: delta Macro-F1=+0.186795；paired 95% CI=[+0.166973,+0.205137]；repetition gate passed
+Matched seed-42 target-alignment comparison: EXP-033 - EXP-029 adapter under EXP-031 aligned-open inference=-0.012678；paired 95% CI=[-0.026938,+0.001434]；预登记 improvement gate failed
+BERT comparison: EXP-033 - EXP-020 three-seed mean=-0.061476；descriptive-only，非配对检验
+Multi-label slice: 878 rows；subset accuracy=0.047836；Samples-F1=0.472096；gold/predicted cardinality=2.086560/1.145786
+Neutral co-occurrence slice: 174 rows；subset accuracy=0；Samples-F1=0.561686；predicted neutral co-occurrence rows=0
+Resource and cost: validation active duration=4,927.41 s（约 82.1 min）；peak MLX memory=3.868 GB；median generation=0.902 s/row；API cost USD 0
+Adapter hash: c0077f484823970f0bbd507d63c605d51fbab6d770aaf03e95aeb1df8e7053ea
+Artifacts: experiments/goemotions/qwen3-1.7b/preflight/exp-033-formal-gate-contract-v2.json；preflight/exp-033-seed42-validation-contract-v1.json；runs/exp-033-target-aligned-lora/seed-42/；runs/exp-033-target-aligned-lora/validation-seed-42-v1/
+Reproduction command: run_target_aligned_formal_v2.py train --authorization preflight/exp-033-formal-authorization-v2.json；随后 run_target_aligned_validation_v1.py --contract preflight/exp-033-seed42-validation-contract-v1.json --contract-sha256 23e51743234c953d38d2ddf9905cc3af6eba6cb495713d971214fd48c971daa8
+Verification command: verify_target_aligned_formal_training_v2.py --check；随后 verify_target_aligned_validation_v1.py --contract preflight/exp-033-seed42-validation-contract-v1.json --contract-sha256 23e51743234c953d38d2ddf9905cc3af6eba6cb495713d971214fd48c971daa8 --check
+Verified by: formal training verification 与 validation verification 均 Passed；独立复算 adapter、训练轨迹、5,426 条预测、完整指标、切片、10,000 次 paired bootstrap、资源、隐私和哈希；test absent
+Decision: target_alignment_improvement_not_established；实验完成且可复现，不是执行失败；观察下降超过 0.005 practical threshold，但 95% CI 跨 0
+Result: 修复训练 target 的 ontology 失配没有在 seed 42 上提升全量 dev，也没有恢复 neutral 共现输出；模型仍明显偏向近单标签预测
+Failure or caveat: 单 seed dev-only；不能推出 target alignment 永远无效，也不能将差异归因于单一内部机制；seeds 43/44、test、上下文与内部表征均未评估
+Thesis destination: Table-G2-5；结果章节的 corrected retraining 负结果；讨论章节的 supervision mismatch、多标签读出偏差与负结果边界
+```
+
+### EXP-034: Train Neutral-co-occurrence Diagnostic
+
+```text
+Experiment ID: EXP-034
+Tier / RQ: Minor / RQ-G2；parent=EXP-033
+Status: Verified；仅回放最终 seed-42 adapter；不训练、不调参、不选 checkpoint；dev/test 未读取
+Question: EXP-033 adapter 能否在训练时见过的全部 neutral+emotion 样本上复现该标签结构，还是 validation 的 0 共现主要来自 held-out generalization failure？
+Dataset and slice: DATA-GOE-V1 train；完整 1,396 条 gold neutral+emotion；gold cardinality 2/3/4 标签分别为 1,335/60/1 条
+Frozen inference: EXP-033 final seed-42 adapter；aligned training prompt；open-neutral constrained label-name JSON；greedy；thinking off；每行一次；无 retry/repair
+Primary diagnostic: neutral co-prediction rows=0/1,396=0%；target-compatible co-prediction rows=0/1,396=0%
+Cardinality: gold/predicted mean=2.044413/1.019341；预测为 1/2/3 标签的行数=1,370/25/1
+Diagnostic metrics: subset accuracy=0；Samples-F1=0.537655；Macro-F1=0.308414；Micro-F1=0.535890；这些是训练切片记忆诊断，不是 held-out 性能
+Validation reference: 174 条 neutral+emotion dev 样本同样 0 共现；predicted cardinality=1.017241；Samples-F1=0.561686；Macro-F1=0.231780
+Resource and cost: active duration=1,255.98 s；peak MLX memory=3.879 GB；parser=1,396/1,396；API cost USD 0
+Artifacts: experiments/goemotions/qwen3-1.7b/configs/exp-034-train-neutral-cooccurrence-diagnostic.json；runs/exp-034-train-neutral-cooccurrence-diagnostic/
+Reproduction command: /Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/run_train_neutral_cooccurrence_diagnostic.py --config projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/configs/exp-034-train-neutral-cooccurrence-diagnostic.json --config-sha256 bbef0d67bd05cfba813651652c2cb9f85158cd76ffa39dd324500934cf29236a
+Verification command: /Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/verify_train_neutral_cooccurrence_diagnostic.py --config projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/configs/exp-034-train-neutral-cooccurrence-diagnostic.json --config-sha256 bbef0d67bd05cfba813651652c2cb9f85158cd76ffa39dd324500934cf29236a --check
+Verified by: 独立 verifier 不导入 runner；重建冻结训练切片、重新解析全部 raw output、复算指标与共现统计、核对产物哈希和隐私字段；test absent；状态 Passed
+Result: “只是不泛化到 held-out 样本”不足以解释失败；模型在已见训练样本上也没有学会输出 neutral+emotion 结构，表现为 under-learning 或近单标签生成偏差
+Failure or caveat: 不能由此区分样本稀少、token-level loss、标签顺序、优化/LoRA 容量或 1.7B 模型容量；不支持内部机制结论
+Decision consequence: 继续原样训练 EXP-033 seeds 43/44 的信息价值下降；下一步应先用新编号检验 exposure/objective，而不是把 seed 重复当作结构修复
+Thesis destination: Table-G2-6；结果章节的 train-vs-dev structural diagnostic；讨论章节的 learnability、generation bias 与因果边界
+```
+
+### EXP-035: GoEmotions Neutral Co-occurrence Annotation Audit
+
+```text
+Experiment ID: EXP-035
+Tier / RQ: Major / RQ-G2；parent=EXP-034
+Status: Verified；只审计冻结 train allowlist；不训练、不推理、不调参；simplified dev/test 未读取
+Question: 1,396 条 neutral+emotion target 是同一标注者直接共选，还是不同标注者判断经官方 >=2 票规则聚合后形成；单条文本的上下文与标签歧义有多大？
+Data protocol: DATA-GOE-ANNOT-AUDIT-V1；官方 Google Research revision 8dadc6c56e2c2e51a9dd7e0d4bf2840922b4b6c0
+Transport boundary: 官方 raw annotations 以三个完整 CSV 发布，运行时流经 42,742,918 bytes 和 211,225 行；只持久化冻结 train allowlist 命中的 6,936 行逐标注者记录，非匹配字段不保留
+Quantitative result: aggregation-only=1,396/1,396=100%；same-rater neutral+emotion co-selection=0/1,396；neutral 2/3 票=1,249/147 条；4/5 raters=44/1,352 条；含 unclear 投票=39/1,396=2.7937%
+Aggregation reproduction: 官方 >=2 票阈值精确复现 1,396/1,396 条 simplified targets；mismatch=0
+Qualitative sample: 冻结目的性抽样 48 条；standalone explicit/implicit/context-likely/indeterminate=24/14/6/4；cross-rater disagreement/genuine multilabel/unclear/uncertain=39/4/3/2；比例仅描述该目的性样本
+Artifacts: experiments/goemotions/annotation-audit/configs/exp-035-neutral-cooccurrence-annotation-audit.json；runs/exp-035-neutral-cooccurrence-annotation-audit/
+Reproduction command: python3 projects/llm-forum-text-emotion-recognition/experiments/goemotions/annotation-audit/run_annotation_audit.py --config projects/llm-forum-text-emotion-recognition/experiments/goemotions/annotation-audit/configs/exp-035-neutral-cooccurrence-annotation-audit.json --config-sha256 babfa6094cc8e4300398cd209b8689b0a15039f530ffec47b391bdc0425f51bd
+Verification command: python3 projects/llm-forum-text-emotion-recognition/experiments/goemotions/annotation-audit/verify_annotation_audit.py --config projects/llm-forum-text-emotion-recognition/experiments/goemotions/annotation-audit/configs/exp-035-neutral-cooccurrence-annotation-audit.json --config-sha256 babfa6094cc8e4300398cd209b8689b0a15039f530ffec47b391bdc0425f51bd --check
+Verified by: 独立 verifier 不导入 runner/finalizer；重建冻结 train allowlist，复算逐票聚合、全部公开 CSV/JSON、确定性抽样、48 条编码、报告、artifact hash 与隐私边界；最大数值差异 0；test absent
+Result: neutral+emotion 异常结构的首要解释是跨标注者聚合，而不是单个标注者同时表达 neutral 与情绪；直接要求生成式模型复现该 hard target 混入了数据协议层冲突
+Failure or caveat: 不能由此证明模型容量足够或上下文无关；48 条是目的性样本，6/48 的 context-likely 比例不可外推；未比较新的监督目标，也未访问 dev/test
+Decision consequence: 不直接继续 EXP-033 seeds 43/44；下一步先预登记 official hard labels 与聚合分歧感知目标的受控设计，再决定是否值得完整重训
+Thesis destination: Table-G2-7；数据与标注审计小节；讨论章节的 aggregated supervision、label semantics 与模型失败归因边界
+```
+
+### EXP-036: Dev Rater-aware Frozen-prediction Diagnostic
+
+```text
+Experiment ID: EXP-036
+Tier / RQ: Major / RQ-G2；parent=EXP-035
+Status: Verified；validation-only；不训练、不执行模型推理、不选择 checkpoint；test 未获取或读取
+Question: 对 174 条 official neutral+emotion dev 样本，若按“与随机一名 clear annotator 的期望一致度”评分，Qwen 相对 BERT 的差距是否仍存在？
+Data protocol: DATA-GOE-DEV-RATER-EVAL-V1；dev 5,426 rows；冻结 allowlist 174 rows；官方 Google Research revision 8dadc6c56e2c2e51a9dd7e0d4bf2840922b4b6c0
+Annotation integrity: raw per-rater rows=866；aggregation-only=174/174；same-rater neutral+emotion co-selection=0；含 unclear annotation 的样本=2；clear empty annotations=0；官方 >=2 票聚合 mismatch=0
+Frozen predictions: EXP-020 BERT seeds 42/43/44；EXP-029 selected zero-shot seeds 42/43/44；EXP-033 target-aligned seed 42；共 7 份已验证 prediction files
+Primary diagnostic metric: 每条样本先对 clear raters 的 set-F1 取平均，再对 174 条等权平均；不是 replacement ground truth，也不与 full-dev Macro-F1 比较
+Family result: EXP-020 official/clear-rater set-F1=0.557982 +/- 0.007475 / 0.362531 +/- 0.002371；EXP-029=0.562261 +/- 0.031754 / 0.363250 +/- 0.017685
+Primary paired comparison: EXP-029 - EXP-020 clear-rater set-F1=+0.000720，95% CI=[-0.018463,+0.019903]；46 win / 71 tie / 57 loss；classification=practical_tie_or_uncertain
+Exact-match interpretation: official exact match BERT/Qwen=0.090038/0；clear-rater expected exact=0.231705/0.341284；any-clear-rater exact=0.591954/0.852490。聚合 hard target 会惩罚近单标签 Qwen 的 official exact match，但主 set-F1 比较没有发生 material shift
+Secondary seed-42 result: EXP-033 - EXP-029 clear-rater set-F1=+0.007280，95% CI=[+0.000192,+0.016284]，6 win / 167 tie / 1 loss；这是单 seed、174-row slice 的局部差异，不建立整体模型优势
+Artifacts: experiments/goemotions/disagreement-aware-evaluation/configs/exp-036-dev-rater-aware-diagnostic.json；runs/exp-036-dev-rater-aware-diagnostic/
+Config SHA-256: 08ebf04951a164838072252ab1938447516b1ca8ead60f7134cda5809f88b2fb
+Reproduction command: python3 projects/llm-forum-text-emotion-recognition/experiments/goemotions/disagreement-aware-evaluation/run_rater_aware_evaluation.py --config projects/llm-forum-text-emotion-recognition/experiments/goemotions/disagreement-aware-evaluation/configs/exp-036-dev-rater-aware-diagnostic.json --config-sha256 08ebf04951a164838072252ab1938447516b1ca8ead60f7134cda5809f88b2fb
+Verification command: python3 projects/llm-forum-text-emotion-recognition/experiments/goemotions/disagreement-aware-evaluation/verify_rater_aware_evaluation.py --config projects/llm-forum-text-emotion-recognition/experiments/goemotions/disagreement-aware-evaluation/configs/exp-036-dev-rater-aware-diagnostic.json --config-sha256 08ebf04951a164838072252ab1938447516b1ca8ead60f7134cda5809f88b2fb --check
+Verified by: 独立 verifier 不导入 runner；重建 174 条 dev allowlist、逐标注者 scoring view 与 7 份预测，复算 1,218 条样本级分数、family summaries、三组 paired bootstrap、报告、artifact hash 和隐私边界；最大数值差异 0；test absent
+Result: 在这个跨标注者冲突切片上，没有证据表明 EXP-029 的期望逐标注者 set-F1 低于 BERT；同时 official exact-match 的 0 分主要反映它没有输出 aggregate union。该结论不能外推为 Qwen 在完整 GoEmotions dev 上追平 BERT
+Failure or caveat: 只覆盖目的性定义的 174 条；annotator agreement 不等于语义真值；raters 未见上下文；bootstrap 只重采样样本而不覆盖训练 seed 不确定性；不能支持内部机制结论
+Decision consequence: 不因这 174 条继续重训以强制生成 neutral+emotion；当时登记的下一依赖是扩展相同评分到完整 dev，该依赖现已由 EXP-037 完成
+Thesis destination: Table-G2-8；结果章节的 disagreement-aware diagnostic；讨论章节的 aggregated supervision、evaluation target 与 single-label generation bias 边界
+```
+
+### EXP-037: Full-dev Rater-aware Frozen-prediction Diagnostic
+
+```text
+Experiment ID: EXP-037
+Tier / RQ: Major / RQ-G2；parent=EXP-036
+Status: Verified；validation-only；不训练、不执行模型推理、不选择 checkpoint；test 未获取或读取
+Question: 把逐标注者评分扩展到完整 5,426 条 dev 后，标注聚合是否足以解释 EXP-029 相对 EXP-020 的总体性能差距？
+Data protocol: DATA-GOE-FULL-DEV-RATER-EVAL-V1；全部 dev 5,426 rows；官方 Google Research revision 8dadc6c56e2c2e51a9dd7e0d4bf2840922b4b6c0
+Annotation integrity: raw per-rater rows=19,440；clear-rater label set 存在分歧=4,596/5,426=84.7033%；official aggregate target 不匹配任何 clear individual rater=509/5,426=9.3808%；含 unclear annotation 的样本=203；官方 >=2 票聚合 mismatch=0
+Frozen predictions: EXP-020 BERT seeds 42/43/44；EXP-029 selected zero-shot seeds 42/43/44；EXP-033 target-aligned seed 42；共 7 份已验证 prediction files
+Primary diagnostic metric: 用每个标签在 clear raters 中的投票比例作为 soft target 计算 Macro-F1；同时报告逐样本 clear-rater expected set-F1。二者都不是 replacement ground truth，也不用于模型选择
+Family result: EXP-020 official/soft Macro-F1=0.489435 +/- 0.011063 / 0.383471 +/- 0.005210，expected rater set-F1=0.485977 +/- 0.001770；EXP-029=0.451374 +/- 0.019213 / 0.347253 +/- 0.014667，expected rater set-F1=0.475587 +/- 0.006934
+Primary paired comparison: EXP-029 - EXP-020 official Macro-F1 delta=-0.038061，95% CI=[-0.053195,-0.024016]；soft Macro-F1 delta=-0.036218，95% CI=[-0.043834,-0.029494]；soft-vs-official shift=+0.001843，95% CI=[-0.006779,+0.011015]；classification=gap_remains；material shift=false
+Expected-rater comparison: EXP-029 - EXP-020 expected set-F1=-0.010390，95% CI=[-0.015616,-0.005010]；1,404 win / 2,403 tie / 1,619 loss。逐标注者评分仍未消除总体差距
+Secondary seed-42 result: EXP-033 - EXP-029 soft Macro-F1=-0.005071，95% CI=[-0.011047,+0.000365]，classification=practical_tie_or_uncertain；expected set-F1=+0.004741，95% CI=[+0.001449,+0.008017]。单 seed、不同指标方向不一致，不建立 EXP-033 优势
+Artifacts: experiments/goemotions/disagreement-aware-evaluation/configs/exp-037-full-dev-rater-aware-diagnostic.json；runs/exp-037-full-dev-rater-aware-diagnostic/
+Config SHA-256: 34cab8d72d14a961f8ea6f2f18312f010f2ae6d2715272f66926c6305fb3c29d
+Reproduction command: python3 projects/llm-forum-text-emotion-recognition/experiments/goemotions/disagreement-aware-evaluation/run_full_dev_rater_aware_evaluation.py --config projects/llm-forum-text-emotion-recognition/experiments/goemotions/disagreement-aware-evaluation/configs/exp-037-full-dev-rater-aware-diagnostic.json --config-sha256 34cab8d72d14a961f8ea6f2f18312f010f2ae6d2715272f66926c6305fb3c29d
+Verification command: python3 projects/llm-forum-text-emotion-recognition/experiments/goemotions/disagreement-aware-evaluation/verify_full_dev_rater_aware_evaluation_v2.py --config projects/llm-forum-text-emotion-recognition/experiments/goemotions/disagreement-aware-evaluation/configs/exp-037-full-dev-rater-aware-diagnostic.json --config-sha256 34cab8d72d14a961f8ea6f2f18312f010f2ae6d2715272f66926c6305fb3c29d --check
+Verifier correction: 原冻结 verifier 首次核验仅因 JSON 把整数分布键序列化为字符串而停止；未修改 runner、config、protocol 或运行产物。V2 wrapper 只规范化该键类型后委托原 verifier 的数据、指标、bootstrap、产物和隐私检查，修正记录见 protocols/exp-037-verifier-correction-2026-08-04.md
+Verified by: V2 verifier 独立重建 5,426 条 dev、19,440 行逐标注者记录与 7 份预测，复算 588 行逐标签指标、三组 paired comparison、2,000/10,000 次 bootstrap、报告、artifact hash 和隐私边界；最大数值差异 5.1159e-13；test absent
+Result: 标注聚合会改变局部标签语义和部分样本的得分，但不能解释 EXP-029 与 BERT 的完整 dev 总体差距；EXP-036 的 174-row practical tie 是真实的局部边界，不可外推
+Failure or caveat: rater disagreement 不是正式的 inter-annotator agreement 估计，也不等于潜在人类情绪真值；raters 未见会话上下文；bootstrap 重采样样本而非训练 seed；这是行为证据，不支持内部机制结论
+Decision consequence: 不把 vote-distribution/soft-target 重训作为默认性能修复。若继续行为主线，优先冻结论坛数据与上下文协议；若继续表征主线，需在 EXP-028 Failed 之后登记资源可行的新 probe
+Thesis destination: Table-G2-9；结果章节的 full-dev disagreement-aware control；讨论章节的局部标注语义效应与总体模型性能差距边界
+```
+
+### EXP-038: GoEmotions Frozen Formal Test Gate
+
+```text
+Experiment ID: EXP-038
+Tier / RQ: Major / RQ-G1 + RQ-G2
+Status: Verified；official test 已消费；9 个冻结单元各执行一次；无 test 后调参、模型选择或重跑
+Data: DATA-GOE-V1 official test；5,427 rows；28 标签多标签；upstream revision 8dadc6c56e2c2e51a9dd7e0d4bf2840922b4b6c0；test SHA-256 0587b2dd8b27b97352adbfc3fb083d46005c8946657fdc2b1ca8b1cc7f1f8be4
+Frozen config: experiments/goemotions/test-gate/configs/exp-038-frozen-test.json；SHA-256 87177da88dfb1ebb9bc78a71ac11aca87b8b85c98b126f40bb9c056eba316b0f
+Primary metric: 28-label Macro-F1
+EXP-018 result: Macro-F1=0.196197；Micro-F1=0.382080；Weighted-F1=0.334114；subset accuracy=0.250046
+EXP-020 result: Macro-F1=0.488328 +/- 0.008771；Micro-F1=0.590427 +/- 0.001634；Weighted-F1=0.587884 +/- 0.002594；subset accuracy=0.443032 +/- 0.005061；3 seeds
+EXP-025 result: Macro-F1=0.233653；Micro-F1=0.249278；Weighted-F1=0.267550；subset accuracy=0.112032；single run
+EXP-029 result: Macro-F1=0.450652 +/- 0.032175；Micro-F1=0.579031 +/- 0.005213；Weighted-F1=0.555956 +/- 0.007159；subset accuracy=0.513543 +/- 0.009738；3 seeds；historical ontology-misaligned control
+EXP-033 result: Macro-F1=0.444675；Micro-F1=0.580163；Weighted-F1=0.559297；subset accuracy=0.513175；single seed；primary target-aligned LLM result
+Paper reference: GoEmotions BERT test Macro-F1=0.46；EXP-020 delta=+0.028328；同一 official split 和 full taxonomy，但现代 PyTorch/Transformers/MPS 与原 TensorFlow Estimator 实现不同，不声称 bitwise reproduction
+Main comparison: EXP-029 - BERT=-0.037676 Macro-F1；EXP-033 - BERT=-0.043653；EXP-033 - historical EXP-029 seed 42=+0.001032，仅为单 seed 描述性差异
+Generation resources: EXP-025 parser valid=99.9816%，median=0.949 s/row，peak=3.723 GB；EXP-029 三 seed parser=100%，median=0.729-0.811 s/row，peak=4.006 GB；EXP-033 parser=100%，median=0.763 s/row，peak=4.030 GB；API cost USD 0
+Artifacts: experiments/goemotions/test-gate/runs/exp-038-frozen-test/；REPORT.md；condition-summary.csv；aggregate-metrics.json；各单元匿名 predictions、per-label metrics 和 confusion matrices
+Verification command: /Users/phoenix/miniconda3/envs/emotion-roberta/bin/python projects/llm-forum-text-emotion-recognition/experiments/goemotions/test-gate/verify_frozen_test.py --config projects/llm-forum-text-emotion-recognition/experiments/goemotions/test-gate/configs/exp-038-frozen-test.json --config-sha256 87177da88dfb1ebb9bc78a71ac11aca87b8b85c98b126f40bb9c056eba316b0f
+Verifier correction: 注册 verifier 把生成 JSON 中的 label 顺序与 multi-hot 恢复出的 ID 排序直接比较，在 EXP-025 row 9 因同集合异序停止；EXP-038-VERIFY-V2 只增加 ID 类型、范围、唯一性检查并比较排序后的集合，不改变任何科学产物。原/新 verifier hash 均保存在 amendment 与 verification.json
+Verified by: 独立重建全部 9 个 5,427 x 28 矩阵，复算 aggregate/per-label metrics 和 confusion matrices，核对公开产物哈希、隐私边界、test 行数、冻结 config、无 post-test tuning 和无 model selection；status=Verified
+Result: BERT 是 primary metric 最强条件；1.7B LoRA 的 exact match 较高但 Macro-F1 较低，且预测标签基数偏低。GoEmotions 公开行为复现阶段可关闭，下一主线转向论坛数据和线程上下文
+Failure or caveat: EXP-029 ontology 失配；EXP-033 只有一个 seed；test 已消费，不能再用于任何开发；分类表现不支持内部情绪机制或人类情感生成结论
+Thesis destination: Table-G2-10；GoEmotions final test comparison；讨论章节的 dev-to-test 泛化、generative classifier trade-off、ontology 与证据边界
+```
+
 后续 LLM 实验继续使用以下登记模板：
 
 ```text
@@ -749,6 +911,12 @@ Measured gain or loss:
 | CTRL-005 | 预训练域变化是否改变稳定错误结构 | EXP-014 三 seed | EXP-015 三 seed | correct-seed transition、stable recovery/regression、error overlap | EXP-017 | Completed and verified |
 | CTRL-006 | finite-state decoder 是否改变 Qwen 最终标签而非只修复格式 | EXP-026 unrestricted zero/few-shot | EXP-025 constrained zero/few-shot | Macro-F1、parser validity、exact set agreement、Jaccard、latency | EXP-025、EXP-026 | Completed and verified |
 | CTRL-007 | EXP-029 的 neutral ontology 失配能否只靠推理策略修正 | old prompt + closed decoder | old prompt + open decoder；aligned prompt + open decoder | Macro-F1、Samples-F1、exact match、neutral co-occurrence slice、co-prediction count | EXP-031 | Completed and verified; no material inference improvement |
+| CTRL-008 | 保留 neutral+emotion 训练 target 是否改善 matched seed-42 行为 | EXP-029 seed-42 adapter + EXP-031 aligned-open inference | EXP-033 seed-42 target-aligned LoRA + matched aligned-open inference | Macro-F1、paired bootstrap、cardinality、neutral co-occurrence behavior | EXP-033 | Completed and verified; improvement gate failed |
+| CTRL-009 | EXP-033 的 0 条 neutral+emotion 输出是否主要是 held-out generalization failure | EXP-033 validation neutral+emotion slice | 同一冻结 adapter 在全部 train neutral+emotion 样本上的回放 | co-prediction count、gold/predicted cardinality、Samples-F1 | EXP-034 | Completed and verified; train 与 validation 均为 0 co-predictions |
+| CTRL-010 | neutral+emotion 是否代表单一标注者的可学习共现判断 | 同一标注者 neutral 与 emotion 共选 | 不同标注者投票经 >=2 阈值聚合成 simplified target | same-rater co-selection、vote counts、unclear、冻结文本复核 | EXP-035 | Completed and verified; 1,396/1,396 为 aggregation-only |
+| CTRL-011 | aggregate union 是否制造 Qwen 相对 BERT 的冲突切片评分差距 | official simplified target | clear-rater expected agreement；冻结 7 份 prediction files | official/clear-rater set-F1、exact match、paired bootstrap、relative shift | EXP-036 | Completed and verified; primary set-F1 practical tie，official exact-match 语义显著不同 |
+| CTRL-012 | 标注聚合是否解释完整 dev 上 Qwen 相对 BERT 的总体差距 | official hard target | clear-rater vote-fraction soft target 与 expected individual-rater agreement；冻结 7 份 prediction files | official/soft Macro-F1、expected set-F1、paired bootstrap、relative shift | EXP-037 | Completed and verified; soft delta=-0.036218，shift CI 跨 0，gap remains |
+| CTRL-013 | 冻结 dev 结论能否泛化到一次性 official test | EXP-018/020/025/029/033 的冻结 dev 条件 | 相同模型在 5,427 条 official test 上一次评估 | Macro/Micro/Weighted/Samples-F1、subset accuracy、per-label metrics、资源 | EXP-038 | Completed and verified; BERT Macro-F1=0.488328 +/- 0.008771，target-aligned LoRA=0.444675；test consumed |
 | ROB-001 | 模型是否依赖表面形式 | 原文本 | 否定、拼写、网络用语等受控扰动 | 性能下降幅度 | TBD | Planned |
 
 ## Failure Case Register
@@ -759,6 +927,7 @@ Measured gain or loss:
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | EXP-017-SAMPLE | 冻结的 high-confidence / domain recovery / domain regression / shared / ordinary 五组样本 | anger / joy / optimism / sadness | 四条件十个冻结输出 | 无对话上下文 | ontology overlap、model limitation、annotation uncertainty、surface noise、missing context | `experiments/tweeteval-emotion/error-analysis/runs/exp-017-frozen-error-analysis/` | 42 cases reviewed and verified |
 | EXP-030-SAMPLE | 冻结的 LoRA recovery / BERT regression / frozen-Qwen recovery / neutral cooccurrence / shared / ordinary 六组样本 | GoEmotions 28 标签多标签 | BERT、frozen Qwen 与 LoRA 共 7 份冻结输出 | 无对话上下文 | overlapping ontology、annotation uncertainty、model limitation、missing context、output policy、surface noise | `experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/` | 48 cases reviewed and verified |
+| EXP-035-SAMPLE | 冻结的 aggregation-only / unclear / high-cardinality / residual 四组样本 | GoEmotions neutral 与一个或多个 emotion | N/A；本实验审计逐标注者投票而非模型输出 | 单条 Reddit comment | cross-rater disagreement、genuine multilabel、unclear、missing context | `experiments/goemotions/annotation-audit/runs/exp-035-neutral-cooccurrence-annotation-audit/` | 48 cases reviewed and verified |
 
 每类至少记录代表性真阳性、假阳性和假阴性，并区分：
 
@@ -773,8 +942,8 @@ Measured gain or loss:
 | Deliverable | Required evidence | Path | Status |
 | --- | --- | --- | --- |
 | Data card | 来源、许可、字段、规模、标签、匿名化、划分 | TBD | Planned |
-| Baseline reproduction | 环境、命令、配置、日志、预测、指标 | `experiments/tweeteval-emotion/tfidf-logreg/`；`experiments/tweeteval-emotion/tfidf-linear-svm/`；`experiments/tweeteval-emotion/roberta-base/`；`experiments/tweeteval-emotion/test-gate/`；`experiments/tweeteval-emotion/error-analysis/`；`experiments/goemotions/tfidf-ovr-logreg/`；`experiments/goemotions/bert-base/`；`experiments/goemotions/error-analysis/` | TweetEval baseline/error analysis and GoEmotions simple/BERT/cross-model dev evidence complete; GoEmotions test and forum data pending |
-| LLM comparison | 模型版本、提示、解析、成本、延迟、对照 | `experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/`；`experiments/goemotions/qwen3-1.7b/runs/exp-026-unconstrained-decoder-ablation/`；`experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/`；`experiments/goemotions/qwen3-1.7b/runs/exp-031-neutral-ontology-inference-ablation/` | Prompt/decoder, three-seed LoRA and inference-policy ablation verified; formal probe, target-aligned retraining and test pending |
+| Baseline reproduction | 环境、命令、配置、日志、预测、指标 | `experiments/tweeteval-emotion/tfidf-logreg/`；`experiments/tweeteval-emotion/tfidf-linear-svm/`；`experiments/tweeteval-emotion/roberta-base/`；`experiments/tweeteval-emotion/test-gate/`；`experiments/tweeteval-emotion/error-analysis/`；`experiments/goemotions/tfidf-ovr-logreg/`；`experiments/goemotions/bert-base/`；`experiments/goemotions/error-analysis/`；`experiments/goemotions/test-gate/` | TweetEval 与 GoEmotions 的冻结 baseline、test gate 和错误/标注诊断均已验证；论坛数据 pending |
+| LLM comparison | 模型版本、提示、解析、成本、延迟、对照 | `experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/`；`experiments/goemotions/qwen3-1.7b/runs/exp-026-unconstrained-decoder-ablation/`；`experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/`；`experiments/goemotions/qwen3-1.7b/runs/exp-031-neutral-ontology-inference-ablation/`；`experiments/goemotions/qwen3-1.7b/runs/exp-033-target-aligned-lora/validation-seed-42-v1/`；`experiments/goemotions/test-gate/` | Prompt/decoder、three-seed LoRA、ontology ablation、target-aligned retraining 与一次性 formal test 均已验证；EXP-033 未超过 BERT；formal probe pending |
 | Robustness or ablation report | 预设问题、控制变量、完整结果 | `experiments/goemotions/qwen3-1.7b/runs/exp-026-unconstrained-decoder-ablation/joint-decoder-analysis.json`；`experiments/goemotions/qwen3-1.7b/runs/exp-031-neutral-ontology-inference-ablation/REPORT.md` | Decoder and neutral-ontology inference ablations verified; broader robustness pending |
 | Runnable demo | 启动说明、固定样例、限制说明 | TBD | Planned |
 | Technical report or thesis | 问题、方法、实验、结果、失败与反思 | TBD | Planned |
@@ -822,3 +991,7 @@ Measured gain or loss:
 | 2026-08-02 | 完成 EXP-029 Qwen3-1.7B 监督 LoRA 三随机种子训练、双条件全量 dev 评估与独立复算 | EVID-018 为 `Verified`；选定 zero-shot Macro-F1=0.451374 +/- 0.019212，较 frozen Qwen 选定条件 +0.210209、较 BERT 均值 -0.038061；test 未获取或读取 |
 | 2026-08-02 | 在读取原文前冻结并完成 EXP-030 跨 BERT、frozen Qwen 与 LoRA 的 GoEmotions dev 错误分析 | EVID-019 为 `Verified`；复算 7 份预测、5,426 条 gold 与 48 条匿名案例，识别 LoRA 的近单标签偏向、174 条 neutral+emotion 结构性不可达和多标签召回差距；公开原文泄漏 0，test 未获取 |
 | 2026-08-03 | 完成 EXP-031 三 seed neutral ontology inference-only 消融及独立复算 | EVID-020 为 `Verified`；decoder-only 预测完全不变，aligned inference Macro-F1 仅 +0.001682、neutral 共现切片 Samples-F1 -0.009132，分类为 `no_material_inference_improvement`；test 未获取或读取 |
+| 2026-08-04 | 冻结并完成 EXP-035 GoEmotions neutral 共现数据与标注审计 | EVID-023 为 `Verified`；1,396/1,396 条 target 均由跨标注者聚合形成，同一标注者共选为 0；官方 >=2 票规则精确复现，48 条目的性复核完成，公开原文和上游 ID 泄漏为 0，test 未获取或读取 |
+| 2026-08-04 | 冻结并完成 EXP-036 GoEmotions dev 逐标注者评分诊断 | EVID-024 为 `Verified`；174/174 条 dev target 均为 aggregation-only；EXP-029 与 BERT 的 clear-rater expected set-F1 差 +0.000720、CI 跨 0，局部 practical tie；test 未获取或读取 |
+| 2026-08-04 | 冻结并完成 EXP-037 GoEmotions 完整 dev 逐标注者评分诊断 | EVID-025 为 `Verified`；5,426/5,426 条 dev 和 19,440 行 raw annotations 复算通过；EXP-029 相对 BERT 的 soft Macro-F1 delta=-0.036218，relative shift CI 跨 0，标注聚合不能解释总体差距；test 未获取或读取 |
+| 2026-08-04 | 完成 EXP-038 GoEmotions 一次性冻结 test gate，并透明修正 verifier 的多标签顺序比较 | EVID-026 为 `Verified`；9 个冻结单元、5,427 条 test、完整指标、混淆矩阵、资源与哈希均复算通过；BERT Macro-F1=0.488328 +/- 0.008771，EXP-033=0.444675；test 自此已消费 |

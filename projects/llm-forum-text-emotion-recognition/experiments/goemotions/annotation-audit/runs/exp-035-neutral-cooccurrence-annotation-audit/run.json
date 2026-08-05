@@ -1,0 +1,125 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "active_duration_seconds": 4.285117625026032,
+  "artifacts": {
+    "aggregate-summary.json": {
+      "bytes": 924,
+      "path": "experiments/goemotions/annotation-audit/runs/exp-035-neutral-cooccurrence-annotation-audit/aggregate-summary.json",
+      "sha256": "daa59a9e0d3499d6db997dad22e72425a975340cdac5df4ad3288a7a0d198224"
+    },
+    "per-emotion-summary.csv": {
+      "bytes": 747,
+      "path": "experiments/goemotions/annotation-audit/runs/exp-035-neutral-cooccurrence-annotation-audit/per-emotion-summary.csv",
+      "sha256": "81f1c7ce0466ae754c516d289b97a591c54231f607449e0be2593e7a837e2035"
+    },
+    "row-audit.csv": {
+      "bytes": 163677,
+      "path": "experiments/goemotions/annotation-audit/runs/exp-035-neutral-cooccurrence-annotation-audit/row-audit.csv",
+      "sha256": "46d34684cdfe57430b0bdffa0c4ef138b0286a90ef8527b72a0426a9337cc233"
+    },
+    "sample-manifest.csv": {
+      "bytes": 7259,
+      "path": "experiments/goemotions/annotation-audit/runs/exp-035-neutral-cooccurrence-annotation-audit/sample-manifest.csv",
+      "sha256": "6b3edfcfe7be770febba23d95004a0dd57bdc7c6180147441d69f4188c1890ca"
+    },
+    "source-manifest.json": {
+      "bytes": 1648,
+      "path": "experiments/goemotions/annotation-audit/runs/exp-035-neutral-cooccurrence-annotation-audit/source-manifest.json",
+      "sha256": "42c0a326430f3a1babee5128f9ec8b053631a78851038975fb3fd1084a78f799"
+    },
+    "stdout.log": {
+      "bytes": 583,
+      "path": "experiments/goemotions/annotation-audit/runs/exp-035-neutral-cooccurrence-annotation-audit/stdout.log",
+      "sha256": "9f4a6dd3718d9e27c91ba5da99fbcfaa7d08076d6aa70cad3fb688b310105d80"
+    },
+    "vote-patterns.csv": {
+      "bytes": 167,
+      "path": "experiments/goemotions/annotation-audit/runs/exp-035-neutral-cooccurrence-annotation-audit/vote-patterns.csv",
+      "sha256": "2fcd94739ad057b9e8fc29c566ae94d59d757f5dee5f0ee77f20663ea8dc531d"
+    }
+  },
+  "command": [
+    "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/goemotions/annotation-audit/run_annotation_audit.py",
+    "--config",
+    "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/goemotions/annotation-audit/configs/exp-035-neutral-cooccurrence-annotation-audit.json",
+    "--config-sha256",
+    "babfa6094cc8e4300398cd209b8689b0a15039f530ffec47b391bdc0425f51bd"
+  ],
+  "completed_at_utc": "2026-08-03T18:59:54.849696+00:00",
+  "config": {
+    "path": "experiments/goemotions/annotation-audit/configs/exp-035-neutral-cooccurrence-annotation-audit.json",
+    "sha256": "babfa6094cc8e4300398cd209b8689b0a15039f530ffec47b391bdc0425f51bd"
+  },
+  "data_protocol": "DATA-GOE-ANNOT-AUDIT-V1",
+  "environment": {
+    "machine": "arm64",
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+    "processor": "arm",
+    "python": "3.14.3 (main, Feb  3 2026, 15:32:20) [Clang 17.0.0 (clang-1700.6.3.2)]"
+  },
+  "experiment_id": "EXP-035",
+  "git": {
+    "commit": "3c1c2d4d9178e8b8235fb2a52c41f844ba897cc7",
+    "dirty": true
+  },
+  "parent_experiment": "EXP-034",
+  "research_question": "For frozen GoEmotions train rows labelled neutral plus at least one emotion, how often is the target produced only by cross-rater aggregation, and how often is the standalone text plausibly context-dependent or label-ambiguous?",
+  "resource_budget": {
+    "api_cost_usd": 0,
+    "full_archive_successful_passes": 1,
+    "manual_review_rows": 48,
+    "maximum_wall_minutes": 45
+  },
+  "result_summary": {
+    "aggregation_only_rate": 1.0,
+    "aggregation_only_rows": 1396,
+    "any_unclear_rate": 0.027936962750716332,
+    "any_unclear_rows": 39,
+    "decision": "annotation_aggregation_is_primary_for_target_structure",
+    "duplicate_comment_rater_pairs": 0,
+    "neutral_vote_distribution": {
+      "2": 1249,
+      "3": 147
+    },
+    "official_threshold_reproduction_mismatches": 0,
+    "rater_count_distribution": {
+      "4": 44,
+      "5": 1352
+    },
+    "rows": 1396,
+    "same_rater_coselection_count_distribution": {
+      "0": 1396
+    },
+    "same_rater_coselection_rate": 0.0,
+    "same_rater_coselection_rows": 0,
+    "transport_boundary": {
+      "nonmatching_raw_records_persisted": 0,
+      "raw_archive_objects_streamed": 3,
+      "simplified_dev_accessed": false,
+      "simplified_test_accessed": false,
+      "simplified_test_exists": false,
+      "train_allowlist_only_persisted": true
+    },
+    "unclear_count_distribution": {
+      "0": 1357,
+      "1": 39
+    }
+  },
+  "sample_rows": 48,
+  "split": "train-neutral-cooccurrence-only",
+  "stage": "annotation-audit",
+  "started_at_utc": "2026-08-03T18:59:50.564863+00:00",
+  "status": "Quantitative audit completed; manual review pending",
+  "test_boundary": {
+    "nonmatching_raw_records_persisted": 0,
+    "raw_archive_objects_streamed": 3,
+    "simplified_dev_accessed": false,
+    "simplified_test_accessed": false,
+    "simplified_test_exists": false,
+    "train_allowlist_only_persisted": true
+  },
+  "tier": "Major",
+  "warnings": []
+}

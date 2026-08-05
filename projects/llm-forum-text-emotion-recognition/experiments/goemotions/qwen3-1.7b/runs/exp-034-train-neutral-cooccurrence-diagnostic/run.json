@@ -1,0 +1,381 @@
+{
+  "active_duration_seconds": 1255.9822239169735,
+  "artifacts": {
+    "comparison.json": {
+      "bytes": 683,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-034-train-neutral-cooccurrence-diagnostic/comparison.json",
+      "sha256": "3dcb92b9b96847878cefcef45bf05f017e8be88f30510eedfc34ad1e9ba9b8b2"
+    },
+    "diagnostics.json": {
+      "bytes": 399,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-034-train-neutral-cooccurrence-diagnostic/diagnostics.json",
+      "sha256": "6bf8625e20290d8158ff6a86c3072d02d0fa23d19c27ff41a57fb9f31b7a9d2b"
+    },
+    "metrics.json": {
+      "bytes": 8261,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-034-train-neutral-cooccurrence-diagnostic/metrics.json",
+      "sha256": "e73e349b82fc444029c208c970b17633f3d8f3fa8b49096e510b117945b725e2"
+    },
+    "multilabel-confusion-matrix.csv": {
+      "bytes": 735,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-034-train-neutral-cooccurrence-diagnostic/multilabel-confusion-matrix.csv",
+      "sha256": "e2b54d19eb31a1fd0b91c070a2546382a790d8c8125a50f21cac232cdf7cfe7e"
+    },
+    "per-label-metrics.csv": {
+      "bytes": 1758,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-034-train-neutral-cooccurrence-diagnostic/per-label-metrics.csv",
+      "sha256": "fc210d370a63ed71e6f691ac0f0eed9c10d0f5f8f23f50078bafe3f4c36df450"
+    },
+    "predictions.csv": {
+      "bytes": 354112,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-034-train-neutral-cooccurrence-diagnostic/predictions.csv",
+      "sha256": "69705eeee03a37f39b844335fc5e9e0dddd0078caebd26eee9f5a975f4b8dae1"
+    },
+    "predictions.jsonl": {
+      "bytes": 1451166,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-034-train-neutral-cooccurrence-diagnostic/predictions.jsonl",
+      "sha256": "846778c754c2ad36a4c32302e27d1231e11a9b3870b6d7fe09bdb0e8a721dad4"
+    },
+    "stdout.log": {
+      "bytes": 582,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-034-train-neutral-cooccurrence-diagnostic/stdout.log",
+      "sha256": "7d7a7cb1e84c8c100c3be759446b09de60376509ecbe414ee71d999ba1fa8f72"
+    }
+  },
+  "command": [
+    "projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/run_train_neutral_cooccurrence_diagnostic.py",
+    "--config",
+    "projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/configs/exp-034-train-neutral-cooccurrence-diagnostic.json",
+    "--config-sha256",
+    "bbef0d67bd05cfba813651652c2cb9f85158cd76ffa39dd324500934cf29236a"
+  ],
+  "completed_at_utc": "2026-08-03T18:22:35.241092+00:00",
+  "config": {
+    "bytes": 4902,
+    "path": "experiments/goemotions/qwen3-1.7b/configs/exp-034-train-neutral-cooccurrence-diagnostic.json",
+    "sha256": "bbef0d67bd05cfba813651652c2cb9f85158cd76ffa39dd324500934cf29236a"
+  },
+  "experiment_id": "EXP-034",
+  "git": {
+    "commit": "3c1c2d4d9178e8b8235fb2a52c41f844ba897cc7",
+    "dirty": true
+  },
+  "parent_experiment": "EXP-033",
+  "peak_mlx_memory_gb": 3.879226832,
+  "progress": {
+    "completed": 1396,
+    "total": 1396
+  },
+  "result_summary": {
+    "comparison": {
+      "interpretation_boundary": "Training-slice performance measures memorization only; validation remains the held-out generalization evidence.",
+      "train": {
+        "macro_f1": 0.30841396784196207,
+        "neutral_coprediction_rate": 0.0,
+        "neutral_coprediction_rows": 0,
+        "predicted_label_cardinality": 1.0193409742120343,
+        "rows": 1396,
+        "samples_f1": 0.537655205348615,
+        "subset_accuracy": 0.0
+      },
+      "validation": {
+        "macro_f1": 0.2317798462787247,
+        "neutral_coprediction_rate": 0.0,
+        "neutral_coprediction_rows": 0,
+        "predicted_label_cardinality": 1.0172413793103448,
+        "rows": 174,
+        "samples_f1": 0.5616858237547891,
+        "subset_accuracy": 0.0
+      }
+    },
+    "diagnostics": {
+      "gold_cardinality_distribution": {
+        "2": 1335,
+        "3": 60,
+        "4": 1
+      },
+      "neutral_coprediction_rate": 0.0,
+      "neutral_coprediction_rows": 0,
+      "predicted_cardinality_distribution": {
+        "1": 1370,
+        "2": 25,
+        "3": 1
+      },
+      "predicted_label_cardinality": 1.0193409742120343,
+      "rows": 1396,
+      "target_compatible_coprediction_rate": 0.0,
+      "target_compatible_coprediction_rows": 0
+    },
+    "task": {
+      "accuracy": 0.0,
+      "accuracy_definition": "strict subset/exact-match accuracy",
+      "hamming_loss": 0.050782848956201394,
+      "label_accuracy": 0.9492171510437986,
+      "label_cardinality": {
+        "gold_mean": 2.0444126074498565,
+        "predicted_mean": 1.0193409742120343
+      },
+      "macro": {
+        "f1": 0.30841396784196207,
+        "precision": 0.5782264984732056,
+        "recall": 0.24024667729740715
+      },
+      "micro": {
+        "f1": 0.535889642272621,
+        "precision": 0.8053408292340126,
+        "recall": 0.401541695865452
+      },
+      "per_label": {
+        "admiration": {
+          "f1": 0.5569620253164557,
+          "label_id": 0,
+          "precision": 0.6875,
+          "predicted_support": 64,
+          "recall": 0.46808510638297873,
+          "support": 94
+        },
+        "amusement": {
+          "f1": 0.8347826086956521,
+          "label_id": 1,
+          "precision": 0.8275862068965517,
+          "predicted_support": 58,
+          "recall": 0.8421052631578947,
+          "support": 57
+        },
+        "anger": {
+          "f1": 0.4444444444444444,
+          "label_id": 2,
+          "precision": 0.6857142857142857,
+          "predicted_support": 35,
+          "recall": 0.3287671232876712,
+          "support": 73
+        },
+        "annoyance": {
+          "f1": 0.25136612021857924,
+          "label_id": 3,
+          "precision": 0.45098039215686275,
+          "predicted_support": 51,
+          "recall": 0.17424242424242425,
+          "support": 132
+        },
+        "approval": {
+          "f1": 0.3176895306859206,
+          "label_id": 4,
+          "precision": 0.5866666666666667,
+          "predicted_support": 75,
+          "recall": 0.21782178217821782,
+          "support": 202
+        },
+        "caring": {
+          "f1": 0.34408602150537637,
+          "label_id": 5,
+          "precision": 0.5,
+          "predicted_support": 32,
+          "recall": 0.26229508196721313,
+          "support": 61
+        },
+        "confusion": {
+          "f1": 0.38620689655172413,
+          "label_id": 6,
+          "precision": 0.5957446808510638,
+          "predicted_support": 47,
+          "recall": 0.2857142857142857,
+          "support": 98
+        },
+        "curiosity": {
+          "f1": 0.6613545816733067,
+          "label_id": 7,
+          "precision": 0.6240601503759399,
+          "predicted_support": 133,
+          "recall": 0.7033898305084746,
+          "support": 118
+        },
+        "desire": {
+          "f1": 0.5,
+          "label_id": 8,
+          "precision": 0.6470588235294118,
+          "predicted_support": 17,
+          "recall": 0.4074074074074074,
+          "support": 27
+        },
+        "disappointment": {
+          "f1": 0.2222222222222222,
+          "label_id": 9,
+          "precision": 0.4,
+          "predicted_support": 25,
+          "recall": 0.15384615384615385,
+          "support": 65
+        },
+        "disapproval": {
+          "f1": 0.4046242774566474,
+          "label_id": 10,
+          "precision": 0.546875,
+          "predicted_support": 64,
+          "recall": 0.3211009174311927,
+          "support": 109
+        },
+        "disgust": {
+          "f1": 0.16666666666666666,
+          "label_id": 11,
+          "precision": 0.42857142857142855,
+          "predicted_support": 7,
+          "recall": 0.10344827586206896,
+          "support": 29
+        },
+        "embarrassment": {
+          "f1": 0.15384615384615385,
+          "label_id": 12,
+          "precision": 1.0,
+          "predicted_support": 1,
+          "recall": 0.08333333333333333,
+          "support": 12
+        },
+        "excitement": {
+          "f1": 0.0,
+          "label_id": 13,
+          "precision": 0.0,
+          "predicted_support": 5,
+          "recall": 0.0,
+          "support": 21
+        },
+        "fear": {
+          "f1": 0.38461538461538464,
+          "label_id": 14,
+          "precision": 0.8333333333333334,
+          "predicted_support": 6,
+          "recall": 0.25,
+          "support": 20
+        },
+        "gratitude": {
+          "f1": 0.25,
+          "label_id": 15,
+          "precision": 1.0,
+          "predicted_support": 2,
+          "recall": 0.14285714285714285,
+          "support": 14
+        },
+        "grief": {
+          "f1": 0.0,
+          "label_id": 16,
+          "precision": 0.0,
+          "predicted_support": 0,
+          "recall": 0.0,
+          "support": 2
+        },
+        "joy": {
+          "f1": 0.25,
+          "label_id": 17,
+          "precision": 0.6363636363636364,
+          "predicted_support": 11,
+          "recall": 0.15555555555555556,
+          "support": 45
+        },
+        "love": {
+          "f1": 0.6060606060606061,
+          "label_id": 18,
+          "precision": 0.7142857142857143,
+          "predicted_support": 28,
+          "recall": 0.5263157894736842,
+          "support": 38
+        },
+        "nervousness": {
+          "f1": 0.0,
+          "label_id": 19,
+          "precision": 0.0,
+          "predicted_support": 0,
+          "recall": 0.0,
+          "support": 8
+        },
+        "neutral": {
+          "f1": 0.6717411988582302,
+          "label_id": 27,
+          "precision": 1.0,
+          "predicted_support": 706,
+          "recall": 0.505730659025788,
+          "support": 1396
+        },
+        "optimism": {
+          "f1": 0.21818181818181817,
+          "label_id": 20,
+          "precision": 0.8571428571428571,
+          "predicted_support": 7,
+          "recall": 0.125,
+          "support": 48
+        },
+        "pride": {
+          "f1": 0.0,
+          "label_id": 21,
+          "precision": 0.0,
+          "predicted_support": 0,
+          "recall": 0.0,
+          "support": 6
+        },
+        "realization": {
+          "f1": 0.12345679012345678,
+          "label_id": 22,
+          "precision": 1.0,
+          "predicted_support": 5,
+          "recall": 0.06578947368421052,
+          "support": 76
+        },
+        "relief": {
+          "f1": 0.2222222222222222,
+          "label_id": 23,
+          "precision": 1.0,
+          "predicted_support": 1,
+          "recall": 0.125,
+          "support": 8
+        },
+        "remorse": {
+          "f1": 0.0,
+          "label_id": 24,
+          "precision": 0.0,
+          "predicted_support": 3,
+          "recall": 0.0,
+          "support": 4
+        },
+        "sadness": {
+          "f1": 0.42696629213483145,
+          "label_id": 25,
+          "precision": 0.6129032258064516,
+          "predicted_support": 31,
+          "recall": 0.3275862068965517,
+          "support": 58
+        },
+        "surprise": {
+          "f1": 0.23809523809523808,
+          "label_id": 26,
+          "precision": 0.5555555555555556,
+          "predicted_support": 9,
+          "recall": 0.15151515151515152,
+          "support": 33
+        }
+      },
+      "prediction_diagnostics": {
+        "empty_prediction_rows": 0,
+        "neutral_coprediction_rows": 0
+      },
+      "primary": {
+        "name": "macro_f1",
+        "value": 0.30841396784196207
+      },
+      "samples": {
+        "f1": 0.537655205348615,
+        "precision": 0.8122015281757402,
+        "recall": 0.40341451766953196
+      },
+      "subset_accuracy": 0.0,
+      "weighted": {
+        "f1": 0.5195578736842523,
+        "precision": 0.8028702562130698,
+        "recall": 0.401541695865452
+      }
+    }
+  },
+  "seed": 42,
+  "split": "train-neutral-cooccurrence-only",
+  "started_at_utc": "2026-08-03T18:01:39.122579+00:00",
+  "status": "Completed; pending independent verification",
+  "test_split_accessed": false,
+  "tier": "Minor"
+}

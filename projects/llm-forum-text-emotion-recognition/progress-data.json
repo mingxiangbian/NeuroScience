@@ -5,9 +5,9 @@
     "directoryLabel": "情感与智能体",
     "title": "论坛文本情感识别",
     "englishTitle": "Forum Text Emotion Recognition",
-    "stage": "GoEmotions EXP-030 错误分析与 EXP-031 neutral ontology 推理消融已验证；下一候选为 target-aligned retraining。",
-    "curatedAt": "2026-08-03",
-    "evidenceThrough": "2026-08-03",
+    "stage": "GoEmotions EXP-038 一次性正式 test 已验证并消费；公开行为复现阶段关闭，下一步冻结论坛数据与线程上下文协议。",
+    "curatedAt": "2026-08-04",
+    "evidenceThrough": "2026-08-04",
     "staleAfterDays": 45,
     "scope": "静态研究进度与证据展示；不运行模型，不接收文本输入。"
   },
@@ -54,48 +54,48 @@
     }
   ],
   "activeEvidenceSpine": {
-    "title": "RQ-G2 · Neutral ontology 消融证据链",
-    "summary": "EXP-031 已验证 inference-only correction 不足以修复 EXP-029 的 neutral 共现失配；下一步需用新编号检验 target-aligned retraining。",
+    "title": "RQ-G1 · G2 · GoEmotions 正式测试证据链",
+    "summary": "EXP-038 已在 5,427 条 official test 上一次性评估 9 个冻结单元；BERT Macro-F1 为 0.488328 +/- 0.008771，target-aligned Qwen LoRA 为 0.444675。",
     "nodes": [
       {
         "kind": "research-question",
         "label": "Research question",
-        "ref": "RQ-G2",
-        "title": "适配阶段改变了什么？",
-        "detail": "区分 prompt、decoder、训练目标、post-training 与 LoRA 的行为收益，并保留独立表征问题。",
-        "status": "active"
+        "ref": "RQ-G1 · RQ-G2",
+        "title": "监督编码器与本地 LLM 谁真正泛化？",
+        "detail": "在同一 28 标签、同一 official test 和同一评估器下比较简单基线、BERT、prompting 与 LoRA。",
+        "status": "completed"
       },
       {
         "kind": "experiment",
         "label": "Experiment",
-        "ref": "EXP-031",
-        "title": "Neutral co-occurrence inference ablation",
-        "detail": "复用三个冻结 EXP-029 adapters，对 closed、decoder-open 与 prompt/decoder aligned 三种推理策略完成全量 dev 配对消融。",
+        "ref": "EXP-038",
+        "title": "Frozen formal test gate",
+        "detail": "test 获取前冻结 9 个单元、哈希、dev 重放门、指标和资源上限；每个单元只运行一次，无 test 后选择。",
         "status": "verified"
       },
       {
         "kind": "evidence",
         "label": "Evidence",
-        "ref": "EVID-020",
-        "title": "推理消融三 seed 结果已验证",
-        "detail": "decoder-only 预测完全不变；aligned inference Macro-F1 +0.001682，neutral 共现切片 Samples-F1 -0.009132。",
+        "ref": "EVID-026",
+        "title": "GoEmotions 正式测试已验证",
+        "detail": "BERT 为 primary metric 最强条件；历史 LoRA 为 0.450652 +/- 0.032175，target-aligned seed 42 为 0.444675，均未超过 BERT。",
         "status": "verified",
-        "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-031-neutral-co-occurrence-inference-ablation"
+        "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-038-goemotions-frozen-formal-test-gate"
       },
       {
         "kind": "claim",
         "label": "Current claim",
-        "ref": "Inference-policy claim",
-        "title": "推理修正不足，不能替代重新训练",
-        "detail": "三种条件都没有产生 neutral 共现预测；结果只排除 inference-only correction 足够的解释，不证明训练目标是唯一原因。",
+        "ref": "Frozen test claim",
+        "title": "1.7B 生成式分类器未超过监督 BERT",
+        "detail": "LoRA 提高了 frozen prompting，但在 Macro-F1 上仍落后 BERT；较高 exact match 伴随较低预测标签基数，不能替代类别平衡指标。",
         "status": "verified"
       },
       {
         "kind": "next",
         "label": "Next dependency",
-        "ref": "New EXP ID",
-        "title": "讨论并预登记 target-aligned retraining",
-        "detail": "用新实验编号在训练目标、prompt 和 decoder 中一致保留官方 neutral 共现标签；GoEmotions test 继续关闭。",
+        "ref": "Forum context protocol",
+        "title": "冻结论坛数据与线程上下文",
+        "detail": "GoEmotions test 已消费。下一主线先确认论坛、授权、匿名化、标签和 thread-level holdout，再开发上下文模型；表征支线继续保持独立。",
         "status": "active",
         "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/README.md"
       }
@@ -145,8 +145,38 @@
       "rq": "RQ-G2"
     },
     {
-      "label": "Target-aligned retraining、正式 probe 与论坛上下文",
-      "detail": "行为线需新编号检验 corrected retraining；表征线需新实验编号；forum data 与 holdout 边界仍待确认",
+      "label": "EXP-033/034 target-aligned 训练与已见样本诊断",
+      "detail": "seed-42 improvement gate 未通过；已见的 1,396 条 train 共现样本仍为 0 条目标共现输出",
+      "status": "verified",
+      "rq": "RQ-G2"
+    },
+    {
+      "label": "EXP-035 数据与标注审计",
+      "detail": "1,396/1,396 条 target 均由跨标注者聚合形成；同一标注者 neutral+emotion 共选为 0",
+      "status": "verified",
+      "rq": "RQ-G2"
+    },
+    {
+      "label": "EXP-036 dev 逐标注者评分诊断",
+      "detail": "174-row 冲突切片上 EXP-029 与 BERT 的 clear-rater expected set-F1 为 practical tie；不改变 full-dev official 结果",
+      "status": "verified",
+      "rq": "RQ-G2"
+    },
+    {
+      "label": "EXP-037 完整 dev 逐标注者评分诊断",
+      "detail": "soft Macro-F1 delta=-0.036218，relative shift CI 跨 0；标注聚合不能解释 Qwen-BERT 总体差距",
+      "status": "verified",
+      "rq": "RQ-G2"
+    },
+    {
+      "label": "EXP-038 GoEmotions frozen test gate",
+      "detail": "9 个冻结单元一次性评估并独立复算；BERT Macro-F1 0.488328 +/- 0.008771，target-aligned LoRA 0.444675；test 已消费",
+      "status": "verified",
+      "rq": "RQ-G1 · RQ-G2"
+    },
+    {
+      "label": "论坛数据与上下文协议",
+      "detail": "冻结 forum data、thread context、授权、匿名化、标注与 holdout；表征线需新实验编号和现实资源门",
       "status": "active",
       "rq": "RQ-G2"
     }
@@ -299,26 +329,26 @@
     },
     "goEmotions": {
       "label": "GoEmotions",
-      "evaluation": "DEV · 28 标签多标签 · Macro-F1",
-      "gate": "Official test 未获取，test gate 关闭",
+      "evaluation": "Official test · 28 标签多标签 · Macro-F1",
+      "gate": "EXP-038 Frozen Test Gate · Verified · Consumed",
       "comparisonContract": {
-        "split": "dev",
+        "split": "official-test",
         "taskType": "multi-label",
         "labelCount": 28,
         "metric": "Macro-F1",
         "scale": [0, 1],
-        "testGate": "closed",
+        "testGate": "consumed",
         "comparisonScope": "within-dataset-only"
       },
-      "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-020-goemotions-bert-base-cased-three-seed-fine-tuning",
+      "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-038-goemotions-frozen-formal-test-gate",
       "models": [
         {
           "experiment": "EXP-018",
           "label": "TF-IDF OVR",
-          "value": 0.203644,
+          "value": 0.196197,
           "std": null,
           "rq": "RQ-G1",
-          "note": "固定阈值 0.5 的简单多标签基线。",
+          "note": "固定阈值 0.5 的简单多标签 test 基线。",
           "visualRole": "reference",
           "uncertainty": {
             "kind": "deterministic",
@@ -331,15 +361,15 @@
             "delta": null,
             "interpretation": "reference"
           },
-          "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-018-goemotions-tf-idf--one-vs-rest-logistic-regression"
+          "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-038-goemotions-frozen-formal-test-gate"
         },
       {
         "experiment": "EXP-025",
         "label": "Qwen constrained few-shot",
-        "value": 0.241164,
+        "value": 0.233653,
           "std": null,
           "rq": "RQ-G2",
-          "note": "冻结 dev 规则下选定的生成式行为条件。",
+          "note": "由 dev 冻结规则选定的生成式 test 条件；single run。",
           "visualRole": "reference",
           "uncertainty": {
             "kind": "not-estimated",
@@ -349,54 +379,169 @@
           },
           "comparison": {
             "baselineExperiment": "EXP-018",
-            "delta": 0.03752,
+            "delta": 0.037456,
             "interpretation": "descriptive-only"
         },
-        "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-025-constrained-qwen3-17b-zerofew-shot"
+        "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-038-goemotions-frozen-formal-test-gate"
       },
       {
         "experiment": "EXP-029",
-        "label": "Qwen3-1.7B + LoRA",
-        "value": 0.451374,
-        "std": 0.019212,
+        "label": "Qwen3-1.7B + LoRA · legacy",
+        "value": 0.450652,
+        "std": 0.032175,
         "rq": "RQ-G2",
-        "note": "三随机种子监督 LoRA；冻结规则选择 zero-shot；仅为 dev 结果。",
-        "visualRole": "selected",
+        "note": "三随机种子 test；训练时移除 1,396 个 neutral 共现标签，保留为 ontology-misaligned 历史对照。",
+        "visualRole": "negative",
         "uncertainty": {
           "kind": "sample-standard-deviation",
-          "value": 0.019212,
+          "value": 0.032175,
           "runs": 3,
           "label": "3 seeds · sample SD"
         },
         "comparison": {
-          "baselineExperiment": "EXP-025",
-          "delta": 0.21021,
-          "interpretation": "controlled-dev"
+          "baselineExperiment": "EXP-020",
+          "delta": -0.037676,
+          "interpretation": "controlled-test-with-ontology-caveat"
         },
-        "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-029-supervised-lora-for-qwen3-17b"
+        "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-038-goemotions-frozen-formal-test-gate"
       },
       {
         "experiment": "EXP-020",
           "label": "BERT-base-cased",
-          "value": 0.489435,
-          "std": 0.011063,
+          "value": 0.488328,
+          "std": 0.008771,
           "rq": "RQ-G1",
-          "note": "三随机种子监督编码器基线；仅为 dev 结果。",
-          "visualRole": "verified",
+          "note": "三随机种子监督编码器 test 基线；primary metric 最强条件。",
+          "visualRole": "selected",
           "uncertainty": {
             "kind": "sample-standard-deviation",
-            "value": 0.011063,
+            "value": 0.008771,
             "runs": 3,
             "label": "3 seeds · sample SD"
           },
           "comparison": {
             "baselineExperiment": "EXP-018",
-            "delta": 0.285791,
+            "delta": 0.292131,
             "interpretation": "descriptive-only"
           },
-          "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-020-goemotions-bert-base-cased-three-seed-fine-tuning"
+          "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-038-goemotions-frozen-formal-test-gate"
+        },
+        {
+          "experiment": "EXP-033",
+          "label": "Qwen3-1.7B + LoRA · aligned",
+          "value": 0.444675,
+          "std": null,
+          "rq": "RQ-G2",
+          "note": "保留完整 official target 的 target-aligned test 结果；single seed，是主要 aligned LLM 条件。",
+          "visualRole": "negative",
+          "uncertainty": {
+            "kind": "not-estimated",
+            "value": null,
+            "runs": 1,
+            "label": "single run · uncertainty unavailable"
+          },
+          "comparison": {
+            "baselineExperiment": "EXP-020",
+            "delta": -0.043653,
+            "interpretation": "controlled-test-single-seed"
+          },
+          "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-038-goemotions-frozen-formal-test-gate"
         }
       ],
+      "raterAwareDiagnostic": {
+        "experiment": "EXP-036",
+        "slice": "174 dev rows · neutral plus emotion · aggregation-only",
+        "metric": "Expected set-F1 against a clear individual annotator",
+        "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-036-dev-rater-aware-frozen-prediction-diagnostic",
+        "conditions": [
+          {
+            "label": "BERT-base-cased",
+            "runs": 3,
+            "officialSetF1": 0.557982,
+            "raterAwareSetF1": 0.362531,
+            "raterAwareStd": 0.002371,
+            "expectedRaterExact": 0.231705,
+            "anyRaterExact": 0.591954
+          },
+          {
+            "label": "Qwen3-1.7B + LoRA",
+            "runs": 3,
+            "officialSetF1": 0.562261,
+            "raterAwareSetF1": 0.36325,
+            "raterAwareStd": 0.017685,
+            "expectedRaterExact": 0.341284,
+            "anyRaterExact": 0.85249
+          }
+        ],
+        "comparison": {
+          "delta": 0.00072,
+          "ci95": [
+            -0.018463,
+            0.019903
+          ],
+          "classification": "practical_tie_or_uncertain"
+        },
+        "boundary": "仅解释 174-row 冲突切片；不是 replacement ground truth，不改变 full-dev Macro-F1，也不用于选择模型。"
+      },
+      "fullDevRaterAwareDiagnostic": {
+        "experiment": "EXP-037",
+        "scope": "5,426 dev rows · 19,440 matched per-rater annotations",
+        "metric": "Clear-rater vote-fraction soft-label Macro-F1",
+        "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-037-full-dev-rater-aware-frozen-prediction-diagnostic",
+        "conditions": [
+          {
+            "label": "BERT-base-cased",
+            "runs": 3,
+            "officialMacroF1": 0.489435,
+            "softMacroF1": 0.383471,
+            "softMacroStd": 0.00521,
+            "expectedRaterSetF1": 0.485977,
+            "expectedRaterSetF1Std": 0.00177
+          },
+          {
+            "label": "Qwen3-1.7B + LoRA",
+            "runs": 3,
+            "officialMacroF1": 0.451374,
+            "softMacroF1": 0.347253,
+            "softMacroStd": 0.014667,
+            "expectedRaterSetF1": 0.475587,
+            "expectedRaterSetF1Std": 0.006934
+          },
+          {
+            "label": "Target-aligned Qwen3-1.7B + LoRA",
+            "runs": 1,
+            "officialMacroF1": 0.427959,
+            "softMacroF1": 0.334503,
+            "softMacroStd": null,
+            "expectedRaterSetF1": 0.475033,
+            "expectedRaterSetF1Std": null
+          }
+        ],
+        "comparison": {
+          "officialDelta": -0.038061,
+          "officialCi95": [-0.053195, -0.024016],
+          "softDelta": -0.036218,
+          "softCi95": [-0.043834, -0.029494],
+          "shift": 0.001843,
+          "shiftCi95": [-0.006779, 0.011015],
+          "expectedSetF1Delta": -0.01039,
+          "expectedSetF1Ci95": [-0.015616, -0.00501],
+          "classification": "gap_remains",
+          "materialShift": false
+        },
+        "annotation": {
+          "rows": 5426,
+          "matchedAnnotationRows": 19440,
+          "clearRaterDisagreementRows": 4596,
+          "clearRaterDisagreementRate": 0.847033,
+          "aggregateTargetNotAnyClearRaterRows": 509,
+          "aggregateTargetNotAnyClearRaterRate": 0.093808,
+          "anyUnclearRows": 203,
+          "anyUnclearRate": 0.037412,
+          "officialAggregationMismatches": 0
+        },
+        "boundary": "保留 EXP-036 的局部 practical tie，但完整 dev 结论为 gap_remains；soft scoring 不是 replacement ground truth，也不用于选择模型。"
+      },
       "longTail": {
         "emptyPredictions": "3,261 / 5,426",
         "emptyRate": "60.10%",
@@ -478,8 +623,8 @@
   "actionDock": {
     "nextAction": {
       "status": "active",
-      "title": "讨论并预登记 target-aligned retraining",
-      "detail": "EXP-031 已排除 inference-only correction 足够的解释；下一 Major 应统一官方训练目标、开放 prompt 与 decoder，test 继续关闭。",
+      "title": "冻结论坛数据与线程上下文协议",
+      "detail": "EXP-038 已关闭 GoEmotions 公开行为复现且 test 已消费；下一步确认论坛、语言、授权、匿名化、标签与 thread-level holdout，再建立上下文基线。",
       "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/README.md"
     },
     "blockers": [
@@ -502,8 +647,8 @@
       },
       {
         "label": "GoEmotions",
-        "status": "preserved",
-        "detail": "Closed · official test unavailable"
+        "status": "verified",
+        "detail": "Frozen · Verified · Consumed"
       },
       {
         "label": "Forum holdout",
@@ -513,6 +658,26 @@
     ]
   },
   "recentChanges": [
+    {
+      "date": "2026-08-04",
+      "title": "EXP-038 GoEmotions 一次性正式 test gate 完成并独立验证"
+    },
+    {
+      "date": "2026-08-04",
+      "title": "EXP-037 完整 dev 逐标注者评分完成并独立验证"
+    },
+    {
+      "date": "2026-08-04",
+      "title": "EXP-036 dev 逐标注者评分诊断完成并独立验证"
+    },
+    {
+      "date": "2026-08-04",
+      "title": "EXP-035 neutral 共现数据与标注审计完成并独立验证"
+    },
+    {
+      "date": "2026-08-04",
+      "title": "EXP-034 已见训练样本 neutral 共现诊断完成并独立验证"
+    },
     {
       "date": "2026-08-03",
       "title": "EXP-031 三 seed neutral ontology 推理消融完成并独立验证"
@@ -540,10 +705,16 @@
   ],
   "futurePlan": [
     {
+      "status": "verified",
+      "label": "DONE",
+      "title": "GoEmotions frozen test gate",
+      "detail": "EXP-038 已完成并验证；BERT Macro-F1 0.488328 +/- 0.008771，target-aligned LoRA 0.444675；test 已消费。"
+    },
+    {
       "status": "planned",
       "label": "NEXT",
-      "title": "Target-aligned retraining",
-      "detail": "使用新实验编号统一官方训练目标、开放 prompt 与 decoder；与冻结 EXP-029/031 配对比较，不读取 test。"
+      "title": "Forum data and thread context protocol",
+      "detail": "确认数据平台、授权、匿名化、标签和 thread-level holdout，再在新的 validation/holdout 上开发上下文模型。"
     },
     {
       "status": "planned",

@@ -1,0 +1,123 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "completed_at_utc": "2026-08-03T07:17:34.277440+00:00",
+  "experiment_id": "EXP-033",
+  "formal_training_authorized": false,
+  "implementation": {
+    "imports_runner": false,
+    "verifier": {
+      "bytes": 23475,
+      "path": "experiments/goemotions/qwen3-1.7b/verify_target_aligned_smoke_v1.py",
+      "sha256": "2b820a84cbd0e9436ee8f7125f2e3ac8a89e232e8a75aef34367f1bfb4c94333"
+    }
+  },
+  "next_required_step": "Freeze this smoke verification into a new formal-execution runner contract, then obtain separate authorization before seed-42 formal training.",
+  "recalculated": {
+    "adapter": {
+      "lora_b_nonzero_tensors": 112,
+      "lora_b_tensor_count": 112,
+      "tensor_count": 224,
+      "trainable_parameter_count": 4980736,
+      "weights": {
+        "bytes": 19947012,
+        "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-033-target-aligned-lora/smoke/adapters.safetensors",
+        "sha256": "e22fdb57eea7db9652c799c76531a8f3dc2133ab30093f3e1a267e817dfef887"
+      }
+    },
+    "authorization": {
+      "bytes": 882,
+      "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-smoke-authorization-v3.json",
+      "sha256": "f078415c662ef7d32107e60ecdc372c23f96a4281748f7c3692fa9b2154a4a08"
+    },
+    "data": {
+      "cardinality_support": {
+        "1": 41,
+        "2": 20,
+        "3": 1,
+        "4": 1,
+        "5": 1
+      },
+      "covers_all_labels": true,
+      "label_support": {
+        "admiration": 7,
+        "amusement": 5,
+        "anger": 2,
+        "annoyance": 2,
+        "approval": 4,
+        "caring": 1,
+        "confusion": 3,
+        "curiosity": 3,
+        "desire": 1,
+        "disappointment": 4,
+        "disapproval": 2,
+        "disgust": 2,
+        "embarrassment": 1,
+        "excitement": 2,
+        "fear": 1,
+        "gratitude": 5,
+        "grief": 1,
+        "joy": 1,
+        "love": 2,
+        "nervousness": 1,
+        "neutral": 30,
+        "optimism": 3,
+        "pride": 1,
+        "realization": 3,
+        "relief": 1,
+        "remorse": 1,
+        "sadness": 2,
+        "surprise": 2
+      },
+      "max_target_cardinality": 5,
+      "neutral_cooccurrence_rows": 16,
+      "path": "experiments/goemotions/qwen3-1.7b/private-cache/pre-exp-033-execution-data/smoke/train.jsonl",
+      "rows": 64,
+      "sha256": "0fa3b51ff3ed68d3ba7460a7ace7d053faeb6dc5134967fdb113b826f0e13404",
+      "target_stream_sha256": "b1d29722c4f64c778d2a426dbb6b81cdf911aca19be58433cfc4532998ba3b2c"
+    },
+    "dry_run_verification": {
+      "bytes": 17685,
+      "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-runner-dry-run-verification-v3.json",
+      "sha256": "59a3409b1e8eb37174617736d4944fe24b6d91b2101413f4d45fdc850b8da9a3"
+    },
+    "history": {
+      "duration_seconds": 73.06123579101404,
+      "final_loss_window": 0.35450000000000004,
+      "initial_loss_window": 6.1530000000000005,
+      "median_iterations_per_second": 0.7435,
+      "micro_iterations": 50,
+      "optimizer_updates": 10,
+      "peak_mlx_memory_gb": 7.208,
+      "projected_formal_training_hours": 8.109168347904058,
+      "reporting_rows": 10,
+      "trainable_parameters_reported": {
+        "percent": 0.289,
+        "total_millions": 1720.575,
+        "trainable_millions": 4.981
+      }
+    },
+    "runtime_config": {
+      "bytes": 1329,
+      "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-runtime-smoke-v3.json",
+      "sha256": "b3ae42a1df9971e43ffad9a7842af45d531b26a58310dd8d27dc34d3ff3056ef"
+    },
+    "runtime_contract": {
+      "bytes": 5521,
+      "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-canonical-mlx-runtime-v2.json",
+      "sha256": "506129d94de565557f7ea7b0d17adc1188c23d6d4d85a4fcd80e0c262c55d8f3"
+    },
+    "smoke_report": {
+      "bytes": 5009,
+      "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-smoke.json",
+      "sha256": "8bb933b6bbdc14fc70f0f18e4debc90f138eb007acfc95cff1b558cdbae5a226"
+    }
+  },
+  "smoke_training_authorized": true,
+  "status": "Passed",
+  "test_split_absent": true,
+  "test_split_accessed": false,
+  "validation_split_accessed": false,
+  "verification_id": "EXP-033-SMOKE-VERIFY-V1"
+}

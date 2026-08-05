@@ -1,0 +1,251 @@
+{
+  "comparisons": [
+    {
+      "candidate": {
+        "condition": "qwen3-1.7b-instruct-lora",
+        "label": "EXP-029 three-seed mean",
+        "seeds": [
+          42,
+          43,
+          44
+        ]
+      },
+      "comparison_id": "exp029-family-minus-exp020-family",
+      "reference": {
+        "condition": "bert-base-cased",
+        "label": "EXP-020 three-seed mean",
+        "seeds": [
+          42,
+          43,
+          44
+        ]
+      }
+    },
+    {
+      "candidate": {
+        "condition": "qwen3-1.7b-target-aligned-lora",
+        "label": "EXP-033 seed 42",
+        "seeds": [
+          42
+        ]
+      },
+      "comparison_id": "exp033-seed42-minus-exp029-seed42",
+      "reference": {
+        "condition": "qwen3-1.7b-instruct-lora",
+        "label": "EXP-029 seed 42",
+        "seeds": [
+          42
+        ]
+      }
+    },
+    {
+      "candidate": {
+        "condition": "qwen3-1.7b-target-aligned-lora",
+        "label": "EXP-033 seed 42",
+        "seeds": [
+          42
+        ]
+      },
+      "comparison_id": "exp033-seed42-minus-exp020-seed42",
+      "reference": {
+        "condition": "bert-base-cased",
+        "label": "EXP-020 seed 42",
+        "seeds": [
+          42
+        ]
+      }
+    }
+  ],
+  "data_protocol": "DATA-GOE-DEV-RATER-EVAL-V1",
+  "experiment_id": "EXP-036",
+  "implementation": {
+    "data_protocol": {
+      "path": "experiments/goemotions/protocols/data-dev-rater-evaluation-v1.md",
+      "sha256": "a1faa9994181599d8a261413e6f81e101429589000ed2e65cd74d46624164251"
+    },
+    "experiment_protocol": {
+      "path": "experiments/goemotions/disagreement-aware-evaluation/protocols/exp-036-dev-rater-aware-diagnostic.md",
+      "sha256": "eca56f3762da45db985d4e4eb07832b4fbebeb5ecc5f9754da3290ae32665644"
+    },
+    "runner": {
+      "path": "experiments/goemotions/disagreement-aware-evaluation/run_rater_aware_evaluation.py",
+      "sha256": "769f4bd04d281ed451c0762a9e070842bfa0fa0e111be00cbae517fe17e4ad12"
+    },
+    "tests": {
+      "path": "experiments/goemotions/disagreement-aware-evaluation/tests/test_rater_aware_evaluation.py",
+      "sha256": "c9334005c6328eff25859c7b3529ef0747ad3a1f4f33f164802efb532d5ad399"
+    },
+    "verifier": {
+      "path": "experiments/goemotions/disagreement-aware-evaluation/verify_rater_aware_evaluation.py",
+      "sha256": "1a85bc95d36f883ae7216990df84dcfc5ac2947abd9599ef5598a9edaae26fea"
+    }
+  },
+  "labels": [
+    "admiration",
+    "amusement",
+    "anger",
+    "annoyance",
+    "approval",
+    "caring",
+    "confusion",
+    "curiosity",
+    "desire",
+    "disappointment",
+    "disapproval",
+    "disgust",
+    "embarrassment",
+    "excitement",
+    "fear",
+    "gratitude",
+    "grief",
+    "joy",
+    "love",
+    "nervousness",
+    "optimism",
+    "pride",
+    "realization",
+    "relief",
+    "remorse",
+    "sadness",
+    "surprise",
+    "neutral"
+  ],
+  "official_source": {
+    "repository": "google-research/google-research",
+    "revision": "8dadc6c56e2c2e51a9dd7e0d4bf2840922b4b6c0"
+  },
+  "outputs": {
+    "run_dir": "experiments/goemotions/disagreement-aware-evaluation/runs/exp-036-dev-rater-aware-diagnostic"
+  },
+  "parent_experiment": "EXP-035",
+  "predictions": [
+    {
+      "condition": "bert-base-cased",
+      "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/seed-42/predictions.csv",
+      "run_id": "exp-020-seed-42",
+      "seed": 42,
+      "sha256": "eadde158ab9d9b42a0dffc554ec662b6d9aeb7bd4376c32c1c6ac310dc7e57b3",
+      "verification_path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/verification.json",
+      "verification_sha256": "0a97b9af655c26d33d6c7e96aa1b54c301be2ec31ba222ccafbdad8b79d3780b",
+      "verification_status": "Verified"
+    },
+    {
+      "condition": "bert-base-cased",
+      "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/seed-43/predictions.csv",
+      "run_id": "exp-020-seed-43",
+      "seed": 43,
+      "sha256": "cdae577732f10872326ab0ef263e61ad3a736ae56a224f9b5fdcbbe70a29e317",
+      "verification_path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/verification.json",
+      "verification_sha256": "0a97b9af655c26d33d6c7e96aa1b54c301be2ec31ba222ccafbdad8b79d3780b",
+      "verification_status": "Verified"
+    },
+    {
+      "condition": "bert-base-cased",
+      "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/seed-44/predictions.csv",
+      "run_id": "exp-020-seed-44",
+      "seed": 44,
+      "sha256": "b4d35702dc75eb75f2aba20cf5e94c53fad516b52de769c910bfe856c99d3bce",
+      "verification_path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/verification.json",
+      "verification_sha256": "0a97b9af655c26d33d6c7e96aa1b54c301be2ec31ba222ccafbdad8b79d3780b",
+      "verification_status": "Verified"
+    },
+    {
+      "condition": "qwen3-1.7b-instruct-lora",
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-42/zero-shot/predictions.csv",
+      "run_id": "exp-029-seed-42",
+      "seed": 42,
+      "sha256": "9ba3dbcc444fa1c0c1e4491e6679a961a577e1fbd8018a1c1bf16161d277cc63",
+      "verification_path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/multi-seed-verification.json",
+      "verification_sha256": "798257185d17b797b3e131924688e30a43d2b87fa0e84acb54183751d090e2cd",
+      "verification_status": "Passed"
+    },
+    {
+      "condition": "qwen3-1.7b-instruct-lora",
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/zero-shot/predictions.csv",
+      "run_id": "exp-029-seed-43",
+      "seed": 43,
+      "sha256": "e4e7d4b28aa9ae7e685d0832cedd04566990f8f5cb0894e474c9bccdbfc4fffd",
+      "verification_path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/multi-seed-verification.json",
+      "verification_sha256": "798257185d17b797b3e131924688e30a43d2b87fa0e84acb54183751d090e2cd",
+      "verification_status": "Passed"
+    },
+    {
+      "condition": "qwen3-1.7b-instruct-lora",
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-44/zero-shot/predictions.csv",
+      "run_id": "exp-029-seed-44",
+      "seed": 44,
+      "sha256": "f21750dad0a4c770f63e017e160a45cea7ba6311ed9cc7a91e8583457d40bf1a",
+      "verification_path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/multi-seed-verification.json",
+      "verification_sha256": "798257185d17b797b3e131924688e30a43d2b87fa0e84acb54183751d090e2cd",
+      "verification_status": "Passed"
+    },
+    {
+      "condition": "qwen3-1.7b-target-aligned-lora",
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-033-target-aligned-lora/validation-seed-42-v1/results/predictions.csv",
+      "run_id": "exp-033-seed-42",
+      "seed": 42,
+      "sha256": "1a68d0b698f599a765007a9b454f9a7bbda22ffa6ecc29a48af2e958659fafb0",
+      "verification_path": "experiments/goemotions/qwen3-1.7b/runs/exp-033-target-aligned-lora/validation-seed-42-v1/verification.json",
+      "verification_sha256": "792adfa670e179dfb130b25ac247b8837ddfa083b2901911b69b5851e8ed509f",
+      "verification_status": "Passed"
+    }
+  ],
+  "raw_sources": [
+    {
+      "content_length": 14174600,
+      "etag": "8803568f912b257630aa623afd633cd0",
+      "last_modified": "Thu, 25 Jun 2020 16:58:54 GMT",
+      "md5_base64": "iANWj5ErJXYwqmI6/WM80A==",
+      "name": "goemotions_1.csv",
+      "raw_annotation_rows": 70000,
+      "sha256": "cac049036bad5d68d1081f72b65f2cc51e4df82af05e3e22cfa747051cac1af3",
+      "url": "https://storage.googleapis.com/gresearch/goemotions/data/full_dataset/goemotions_1.csv"
+    },
+    {
+      "content_length": 14173154,
+      "etag": "b216e5afec22df139809f737f0d18b64",
+      "last_modified": "Thu, 25 Jun 2020 16:58:54 GMT",
+      "md5_base64": "shblr+wi3xOYCfc38NGLZA==",
+      "name": "goemotions_2.csv",
+      "raw_annotation_rows": 70000,
+      "sha256": "f699ecc5aa425c1720c1d02475f1e41815244b680bd75b282eb770d2c76cd84d",
+      "url": "https://storage.googleapis.com/gresearch/goemotions/data/full_dataset/goemotions_2.csv"
+    },
+    {
+      "content_length": 14395164,
+      "etag": "b7d95087f78a54a7860a35e0272049e5",
+      "last_modified": "Thu, 25 Jun 2020 16:58:54 GMT",
+      "md5_base64": "t9lQh/eKVKeGCjXgJyBJ5Q==",
+      "name": "goemotions_3.csv",
+      "raw_annotation_rows": 71225,
+      "sha256": "467f1e7191af00f2e76cc7f425885c2dc304bea8aff284b10e8c460d22f2e1af",
+      "url": "https://storage.googleapis.com/gresearch/goemotions/data/full_dataset/goemotions_3.csv"
+    }
+  ],
+  "research_question": "On the 174 GoEmotions dev rows whose simplified target contains neutral plus emotion, does the performance gap between frozen Qwen LoRA and BERT remain when predictions are scored by expected agreement with a clear individual annotator?",
+  "resource_budget": {
+    "api_cost_usd": 0,
+    "bootstrap_iterations_per_comparison": 10000,
+    "full_archive_successful_passes": 1,
+    "maximum_formal_runs": 1,
+    "maximum_wall_minutes": 45,
+    "model_inference_calls": 0
+  },
+  "selection": {
+    "dev_path": "data/goemotions/official/dev.tsv",
+    "dev_rows": 5426,
+    "dev_sha256": "575489c079c9de1097062a01738f998590d6b7ead66dd1c9fd1d2ba01fd8bc62",
+    "expected_rows": 174,
+    "labels_path": "data/goemotions/official/emotions.txt",
+    "labels_sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89",
+    "simplified_test_path": "data/goemotions/official/test.tsv",
+    "source_dev_rows_sha256": "99368f7f6f014acb46bd96e0a7c6cb38acc60e31daedb5f2e07b9b5d86fd2c4f"
+  },
+  "statistics": {
+    "bootstrap_iterations": 10000,
+    "bootstrap_seed": 20260804,
+    "material_shift_threshold": 0.02,
+    "practical_tie_threshold": 0.005
+  },
+  "tier": "Major"
+}

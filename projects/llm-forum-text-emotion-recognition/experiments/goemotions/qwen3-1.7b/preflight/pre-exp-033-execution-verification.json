@@ -1,0 +1,35 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "audit_id": "PRE-EXP-033-EXECUTION",
+  "checked_at_utc": "2026-08-03T05:26:10.584716+00:00",
+  "contract_sha256": "ea49c3d6278312aceda64ee3d046892dfe093b0fe345fbb049904a04b4b80ca4",
+  "formal_training_authorized": false,
+  "independent_checks": {
+    "actual_chat_dataset_rows": 64,
+    "all_model_manifest_files_rehashed": 8,
+    "boundary_smoke_max_sequence_tokens": 512,
+    "boundary_smoke_max_target_cardinality": 5,
+    "boundary_smoke_neutral_cooccurrence_rows": 16,
+    "complete_model_condition_inherited": true,
+    "complete_preflight_condition_inherited": true,
+    "complete_training_condition_inherited": true,
+    "runtime_and_tokenizer_rechecked": true,
+    "test_split_absent": true
+  },
+  "mode": "initial-write",
+  "model_forward_or_backward_executed": false,
+  "next_required_step": "Implement a formal EXP-033 runner that consumes this exact contract, re-run the verifier in check mode, then pass the 50-iteration train-only smoke.",
+  "report_sha256": "fbff87bf3036996fad8cce889f535fd55d5cae78d295e0a0ae7407d09c38fe6a",
+  "runtime_packages": {
+    "mlx": "0.32.0",
+    "mlx-lm": "0.31.3",
+    "numpy": "2.4.6",
+    "python": "3.11.15",
+    "transformers": "5.14.1"
+  },
+  "status": "Passed",
+  "test_split_accessed": false,
+  "validation_split_accessed": false
+}

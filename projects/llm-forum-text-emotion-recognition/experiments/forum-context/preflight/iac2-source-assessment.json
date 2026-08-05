@@ -1,0 +1,619 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-08-04T17:34:46.667825+00:00",
+  "privacy": "Aggregate audit only. No forum text, usernames, or source URLs are emitted.",
+  "source_release": {
+    "official_page": "https://nlds.engineering.ucsc.edu/iac2/",
+    "official_drive_folder": "https://drive.google.com/drive/folders/11UMZbpLaLOkxT53vVWUHVJkdyWL1H7Gx",
+    "release_dump_date": "2016-05-18",
+    "variant": "no_parse"
+  },
+  "corpora": {
+    "createdebate": {
+      "artifact": {
+        "path_basename": "createdebate_released_no_parse_2016_05_18.sql.gz",
+        "compressed_bytes": 602050,
+        "sha256": "9f94cd56ba09eecb3831581900e8ccc3523cc0c351e60ef7c1f6e2b0b21e12fb"
+      },
+      "table_rows": {
+        "author": 743,
+        "dataset_metadata": 20,
+        "discussion": 63,
+        "discussion_topic": 63,
+        "post": 3051,
+        "quote": 778,
+        "text": 3875,
+        "topic": 31
+      },
+      "metadata": {
+        "fields": [
+          "author",
+          "changelog",
+          "cite",
+          "contact",
+          "current version date",
+          "dependencies",
+          "description",
+          "full official name",
+          "language tag",
+          "license",
+          "notes",
+          "original publication date",
+          "schema format",
+          "simple name",
+          "source url",
+          "synopsis",
+          "title",
+          "tools used",
+          "url",
+          "version"
+        ],
+        "selected_values": {
+          "title": "Internet Argument Corpus: CreateDebate",
+          "version": "2.0",
+          "original publication date": "2016-05-25",
+          "current version date": "2016-05-25",
+          "language tag": "eng",
+          "synopsis": "The CreateDebate dataset consists of discussions from a debate oriented website. Discussions are often but not necessarily two sided debates with posters declaring their side at time of posting. Replies may be marked by their author as disputed, clarified, or supported. The released version is a gun control specific subset f the site.",
+          "notes": "Not all debates are two sided and not all two sided debates feature sides (either or both) that correspond to opposing topic stances."
+        },
+        "license_related_entries": {
+          "license": ""
+        }
+      },
+      "scope": {
+        "linked_topics": [
+          {
+            "topic_id": 9,
+            "label": "gun control",
+            "discussions": 63
+          }
+        ],
+        "discussions_with_topic_link": 63,
+        "topic_link_coverage": 1.0,
+        "topic_ontology_size": 31,
+        "creation_date_min": "2008-05-07 23:06:11",
+        "creation_date_max": "2015-12-24 12:05:47"
+      },
+      "threads": {
+        "discussions": 63,
+        "posts": 3051,
+        "authors": 743,
+        "discussion_size_posts": {
+          "median": 24,
+          "p90": 86,
+          "p95": 133,
+          "max": 642
+        }
+      },
+      "post_text": {
+        "missing_text_row": 0,
+        "nonempty": 3051,
+        "placeholder": 0,
+        "html_like": 0,
+        "passes_minimal_gate": 3003,
+        "minimal_gate_definition": "at least 20 stripped characters and 5 ASCII word tokens; not a deletion placeholder"
+      },
+      "parent_links": {
+        "parent_id_nonnull": 2058,
+        "parent_missing_flag": 0,
+        "resolved_in_same_discussion": 2058,
+        "resolved_and_parent_missing_zero": 2058,
+        "usable_text_pairs": 1999
+      },
+      "quote_links": {
+        "quote_rows": 778,
+        "source_post_id_nonnull": 778,
+        "source_offsets_nonnull": 778,
+        "same_discussion": 778,
+        "unique_response_source_pairs": 290,
+        "resolved_unique_pairs": 290,
+        "usable_text_pairs": 289
+      },
+      "argument_relations": {
+        "response_type_counts": {
+          "NULL": 993,
+          "clarified": 129,
+          "disputed": 1703,
+          "supported": 226
+        },
+        "is_rebuttal_counts": {}
+      },
+      "fourforums_annotations": {
+        "qr_entries_linked_to_post_quote": 0,
+        "qr_task1_average_rows": 0,
+        "qr_entries_with_task1_average": 0,
+        "qr_task1_num_annotations": {
+          "count": 0,
+          "min": null,
+          "max": null,
+          "mean": null
+        },
+        "qr_task1_emotion_fact": {
+          "count": 0,
+          "min": null,
+          "max": null,
+          "mean": null
+        },
+        "qr_task1_attacking_respectful": {
+          "count": 0,
+          "min": null,
+          "max": null,
+          "mean": null
+        },
+        "qr_task1_nasty_nice": {
+          "count": 0,
+          "min": null,
+          "max": null,
+          "mean": null
+        },
+        "qr_task1_sarcasm_yes": {
+          "count": 0,
+          "min": null,
+          "max": null,
+          "mean": null
+        },
+        "p123_entries": 0,
+        "p123_entries_with_resolved_context_response": 0,
+        "p123_average_rows": 0,
+        "p123_entries_with_average": 0
+      }
+    },
+    "convinceme": {
+      "artifact": {
+        "path_basename": "convinceme_no_parse_2016_05_18.sql.gz",
+        "compressed_bytes": 13111796,
+        "sha256": "bf6192cfb20bae701c0f9158ca00645517e96648a255c8bcc5d4498323845c14"
+      },
+      "table_rows": {
+        "author": 5783,
+        "dataset_metadata": 20,
+        "discussion": 5413,
+        "discussion_topic": 187,
+        "post": 65368,
+        "text": 65368,
+        "topic": 31
+      },
+      "metadata": {
+        "fields": [
+          "author",
+          "changelog",
+          "cite",
+          "contact",
+          "current version date",
+          "dependencies",
+          "description",
+          "full official name",
+          "language tag",
+          "license",
+          "notes",
+          "original publication date",
+          "schema format",
+          "simple name",
+          "source url",
+          "synopsis",
+          "title",
+          "tools used",
+          "url",
+          "version"
+        ],
+        "selected_values": {
+          "title": "Internet Argument Corpus: ConvinceMe",
+          "version": "2.0",
+          "original publication date": "2016-05-25",
+          "current version date": "2016-05-25",
+          "language tag": "eng",
+          "synopsis": "The ConvinceMe dataset consists of discussions from a debate oriented website. Discussions are two sided debates with posters declaring their side at time of posting. All replies are intended to be rebuttals. There are roughly 65,000 posts in 5400 discussions by 5500 authors.",
+          "notes": "Not all posts have identifiable parents, in these instances <posts.parent_missing=true> (also <posts.parent_post_id=null> but this occurs with top-level posts as well). Because replies are required to be on the side opposite their parent post, people who wish to reply to posts on their own side may sometimes post replies on the side they don't support."
+        },
+        "license_related_entries": {
+          "license": ""
+        }
+      },
+      "scope": {
+        "linked_topics": [
+          {
+            "topic_id": 3,
+            "label": "abortion",
+            "discussions": 28
+          },
+          {
+            "topic_id": 4,
+            "label": "climate change",
+            "discussions": 11
+          },
+          {
+            "topic_id": 5,
+            "label": "communism vs capitalism",
+            "discussions": 8
+          },
+          {
+            "topic_id": 6,
+            "label": "death penalty",
+            "discussions": 27
+          },
+          {
+            "topic_id": 7,
+            "label": "evolution",
+            "discussions": 17
+          },
+          {
+            "topic_id": 13,
+            "label": "existence of God",
+            "discussions": 18
+          },
+          {
+            "topic_id": 8,
+            "label": "gay marriage",
+            "discussions": 18
+          },
+          {
+            "topic_id": 9,
+            "label": "gun control",
+            "discussions": 20
+          },
+          {
+            "topic_id": 16,
+            "label": "immigration",
+            "discussions": 6
+          },
+          {
+            "topic_id": 11,
+            "label": "Israel/Palestine",
+            "discussions": 2
+          },
+          {
+            "topic_id": 17,
+            "label": "legalized prostitution",
+            "discussions": 5
+          },
+          {
+            "topic_id": 10,
+            "label": "marijuana legalization",
+            "discussions": 18
+          },
+          {
+            "topic_id": 18,
+            "label": "minimum wage: pro or con",
+            "discussions": 1
+          },
+          {
+            "topic_id": 15,
+            "label": "obamacare",
+            "discussions": 4
+          },
+          {
+            "topic_id": 24,
+            "label": "vegetarianism",
+            "discussions": 3
+          },
+          {
+            "topic_id": 20,
+            "label": "women in the military",
+            "discussions": 1
+          }
+        ],
+        "discussions_with_topic_link": 187,
+        "topic_link_coverage": 0.03454646222058008,
+        "topic_ontology_size": 31,
+        "creation_date_min": "2007-01-02 00:00:00",
+        "creation_date_max": "2012-09-18 00:00:00"
+      },
+      "threads": {
+        "discussions": 5413,
+        "posts": 65368,
+        "authors": 5783,
+        "discussion_size_posts": {
+          "median": 8,
+          "p90": 24,
+          "p95": 33,
+          "max": 592
+        }
+      },
+      "post_text": {
+        "missing_text_row": 0,
+        "nonempty": 65367,
+        "placeholder": 0,
+        "html_like": 1,
+        "passes_minimal_gate": 63141,
+        "minimal_gate_definition": "at least 20 stripped characters and 5 ASCII word tokens; not a deletion placeholder"
+      },
+      "parent_links": {
+        "parent_id_nonnull": 33148,
+        "parent_missing_flag": 1625,
+        "resolved_in_same_discussion": 33148,
+        "resolved_and_parent_missing_zero": 33148,
+        "usable_text_pairs": 31519
+      },
+      "quote_links": {
+        "quote_rows": 0,
+        "source_post_id_nonnull": 0,
+        "source_offsets_nonnull": 0,
+        "same_discussion": 0,
+        "unique_response_source_pairs": 0,
+        "resolved_unique_pairs": 0,
+        "usable_text_pairs": 0
+      },
+      "argument_relations": {
+        "response_type_counts": {},
+        "is_rebuttal_counts": {
+          "1": 65368
+        }
+      },
+      "fourforums_annotations": {
+        "qr_entries_linked_to_post_quote": 0,
+        "qr_task1_average_rows": 0,
+        "qr_entries_with_task1_average": 0,
+        "qr_task1_num_annotations": {
+          "count": 0,
+          "min": null,
+          "max": null,
+          "mean": null
+        },
+        "qr_task1_emotion_fact": {
+          "count": 0,
+          "min": null,
+          "max": null,
+          "mean": null
+        },
+        "qr_task1_attacking_respectful": {
+          "count": 0,
+          "min": null,
+          "max": null,
+          "mean": null
+        },
+        "qr_task1_nasty_nice": {
+          "count": 0,
+          "min": null,
+          "max": null,
+          "mean": null
+        },
+        "qr_task1_sarcasm_yes": {
+          "count": 0,
+          "min": null,
+          "max": null,
+          "mean": null
+        },
+        "p123_entries": 0,
+        "p123_entries_with_resolved_context_response": 0,
+        "p123_average_rows": 0,
+        "p123_entries_with_average": 0
+      }
+    },
+    "fourforums": {
+      "artifact": {
+        "path_basename": "fourforums_no_parse_2016_05_18.sql.gz",
+        "compressed_bytes": 171653459,
+        "sha256": "e26e6d27a5fc88ee5837b3838f099f8268d42fe50fbbd9cd88b66dfe7744dd9c"
+      },
+      "table_rows": {
+        "author": 3452,
+        "dataset_metadata": 20,
+        "discussion": 11079,
+        "discussion_topic": 2894,
+        "mturk_2010_p123_average_response": 11991,
+        "mturk_2010_p123_entry": 11998,
+        "mturk_2010_p123_post": 20391,
+        "mturk_2010_qr_entry": 10003,
+        "mturk_2010_qr_task1_average_response": 9982,
+        "post": 414453,
+        "quote": 539658,
+        "text": 954111,
+        "topic": 31
+      },
+      "metadata": {
+        "fields": [
+          "author",
+          "changelog",
+          "cite",
+          "contact",
+          "current version date",
+          "dependencies",
+          "description",
+          "full official name",
+          "language tag",
+          "license",
+          "notes",
+          "original publication date",
+          "schema format",
+          "simple name",
+          "source url",
+          "synopsis",
+          "title",
+          "tools used",
+          "url",
+          "version"
+        ],
+        "selected_values": {
+          "title": "Internet Argument Corpus: 4forums",
+          "version": "2.0",
+          "original publication date": "2012-05-23",
+          "current version date": "2016-05-25",
+          "language tag": "eng",
+          "synopsis": "The 4forums dataset consists of discussions from a debate oriented website.",
+          "notes": "Not all debates are two sided and not all two sided debates feature sides (either or both) that correspond to opposing topic stances."
+        },
+        "license_related_entries": {
+          "license": ""
+        }
+      },
+      "scope": {
+        "linked_topics": [
+          {
+            "topic_id": 3,
+            "label": "abortion",
+            "discussions": 550
+          },
+          {
+            "topic_id": 4,
+            "label": "climate change",
+            "discussions": 62
+          },
+          {
+            "topic_id": 5,
+            "label": "communism vs capitalism",
+            "discussions": 38
+          },
+          {
+            "topic_id": 6,
+            "label": "death penalty",
+            "discussions": 32
+          },
+          {
+            "topic_id": 7,
+            "label": "evolution",
+            "discussions": 856
+          },
+          {
+            "topic_id": 13,
+            "label": "existence of God",
+            "discussions": 100
+          },
+          {
+            "topic_id": 8,
+            "label": "gay marriage",
+            "discussions": 305
+          },
+          {
+            "topic_id": 22,
+            "label": "gays in the military",
+            "discussions": 2
+          },
+          {
+            "topic_id": 9,
+            "label": "gun control",
+            "discussions": 905
+          },
+          {
+            "topic_id": 16,
+            "label": "immigration",
+            "discussions": 3
+          },
+          {
+            "topic_id": 17,
+            "label": "legalized prostitution",
+            "discussions": 3
+          },
+          {
+            "topic_id": 10,
+            "label": "marijuana legalization",
+            "discussions": 14
+          },
+          {
+            "topic_id": 18,
+            "label": "minimum wage: pro or con",
+            "discussions": 4
+          },
+          {
+            "topic_id": 15,
+            "label": "obamacare",
+            "discussions": 8
+          },
+          {
+            "topic_id": 14,
+            "label": "School Uniforms",
+            "discussions": 3
+          },
+          {
+            "topic_id": 12,
+            "label": "socialized medicine",
+            "discussions": 2
+          },
+          {
+            "topic_id": 24,
+            "label": "vegetarianism",
+            "discussions": 1
+          },
+          {
+            "topic_id": 20,
+            "label": "women in the military",
+            "discussions": 6
+          }
+        ],
+        "discussions_with_topic_link": 2894,
+        "topic_link_coverage": 0.26121491109305894,
+        "topic_ontology_size": 31,
+        "creation_date_min": "2003-01-26 09:40:00",
+        "creation_date_max": "2012-09-18 02:53:00"
+      },
+      "threads": {
+        "discussions": 11079,
+        "posts": 414453,
+        "authors": 3452,
+        "discussion_size_posts": {
+          "median": 17,
+          "p90": 91,
+          "p95": 137,
+          "max": 1291
+        }
+      },
+      "post_text": {
+        "missing_text_row": 0,
+        "nonempty": 414436,
+        "placeholder": 0,
+        "html_like": 1550,
+        "passes_minimal_gate": 405723,
+        "minimal_gate_definition": "at least 20 stripped characters and 5 ASCII word tokens; not a deletion placeholder"
+      },
+      "parent_links": {
+        "parent_id_nonnull": 403374,
+        "parent_missing_flag": 0,
+        "resolved_in_same_discussion": 403374,
+        "resolved_and_parent_missing_zero": 403374,
+        "usable_text_pairs": 389648
+      },
+      "quote_links": {
+        "quote_rows": 539658,
+        "source_post_id_nonnull": 512789,
+        "source_offsets_nonnull": 484309,
+        "same_discussion": 512789,
+        "unique_response_source_pairs": 310529,
+        "resolved_unique_pairs": 310529,
+        "usable_text_pairs": 302140
+      },
+      "argument_relations": {
+        "response_type_counts": {},
+        "is_rebuttal_counts": {}
+      },
+      "fourforums_annotations": {
+        "qr_entries_linked_to_post_quote": 9975,
+        "qr_task1_average_rows": 9982,
+        "qr_entries_with_task1_average": 9954,
+        "qr_task1_num_annotations": {
+          "count": 9982,
+          "min": 1.0,
+          "max": 7.0,
+          "mean": 5.4102384291725105
+        },
+        "qr_task1_emotion_fact": {
+          "count": 9982,
+          "min": -5.0,
+          "max": 5.0,
+          "mean": 0.23089872139851733
+        },
+        "qr_task1_attacking_respectful": {
+          "count": 9982,
+          "min": -5.0,
+          "max": 5.0,
+          "mean": 0.4933227423362052
+        },
+        "qr_task1_nasty_nice": {
+          "count": 9982,
+          "min": -5.0,
+          "max": 5.0,
+          "mean": 0.7848267584652374
+        },
+        "qr_task1_sarcasm_yes": {
+          "count": 9982,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.1458768736726107
+        },
+        "p123_entries": 11998,
+        "p123_entries_with_resolved_context_response": 11987,
+        "p123_average_rows": 11991,
+        "p123_entries_with_average": 11991
+      }
+    }
+  }
+}

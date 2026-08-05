@@ -1,0 +1,127 @@
+{
+  "adapter": {
+    "config": {
+      "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-033-target-aligned-lora/seed-42/adapter_config.json",
+      "sha256": "53df3c1ac4a1ce5b5f4c31e4d00687bb67aef961aca5ff5deefea0384c7d2b0a"
+    },
+    "seed": 42,
+    "weights": {
+      "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-033-target-aligned-lora/seed-42/adapters.safetensors",
+      "sha256": "c0077f484823970f0bbd507d63c605d51fbab6d770aaf03e95aeb1df8e7053ea"
+    }
+  },
+  "comparison": {
+    "validation_neutral_cooccurrence_slice": {
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-033-target-aligned-lora/validation-seed-42-v1/results/slice-metrics.json",
+      "sha256": "5b20bc1b6335f7f281c76c82f5124f22ad4f8a11ef9ae73726f239781b83a397"
+    }
+  },
+  "data": {
+    "labels": {
+      "path": "data/goemotions/official/emotions.txt",
+      "sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89"
+    },
+    "prepared_train": {
+      "path": "experiments/goemotions/qwen3-1.7b/private-cache/pre-exp-033-target-aligned-data/train.jsonl",
+      "sha256": "493ecaafd6cd6ed5ee20f8ec3c262e291a6eee826a97816955b53effc1c1c09f"
+    },
+    "source_train": {
+      "path": "data/goemotions/official/train.tsv",
+      "rows": 43410,
+      "sha256": "1c254a142be5c00e80d819b9ae1bbd36d94b2eeb8f4b1271846508d57e57d9c5"
+    },
+    "target_alignment_verification": {
+      "path": "experiments/goemotions/qwen3-1.7b/preflight/pre-exp-033-target-aligned-verification.json",
+      "sha256": "0922eeb674a554556fbeb9520a1a279dadd7b3089a9468b1b8702deae1867259"
+    },
+    "test_access": false,
+    "test_path": "data/goemotions/official/test.tsv"
+  },
+  "decoding": {
+    "condition": "aligned-prompt-open-neutral",
+    "enable_thinking": false,
+    "generation_per_sample": 1,
+    "invalid_prediction": "empty",
+    "max_new_tokens": 64,
+    "repair": false,
+    "retry": false,
+    "sampler": "greedy",
+    "temperature": 0.0
+  },
+  "experiment_id": "EXP-034",
+  "implementation": {
+    "constraint": {
+      "path": "experiments/goemotions/qwen3-1.7b/label_json_constraint_neutral_cooccurrence.py",
+      "sha256": "336218c9a44fc4d475d9197f05afcb81096f793e141e03fed96cbe76cb99d880"
+    },
+    "generation_helper": {
+      "path": "experiments/goemotions/qwen3-1.7b/run_lora.py",
+      "sha256": "effbd2a5803b78289543eff13a7ceec59867dbdbbfc0b8a78bb1de9a87f3cc5f"
+    },
+    "metrics": {
+      "path": "experiments/goemotions/qwen3-1.7b/llm_full_dev_metrics.py",
+      "sha256": "38e50c725a5f065d0babb263ad497b5d8dc21ad6edcd11a5e4d4c79310ff44d4"
+    },
+    "runner": {
+      "path": "experiments/goemotions/qwen3-1.7b/run_train_neutral_cooccurrence_diagnostic.py",
+      "sha256": "6395a3cae9813d0b3df5128fc335b16f15dcf95e7fe862626bf4d78ea3e415bd"
+    },
+    "verifier": {
+      "path": "experiments/goemotions/qwen3-1.7b/verify_train_neutral_cooccurrence_diagnostic.py",
+      "sha256": "26a8461103dbdb733dddc4fe5ce708950f1724938599afa4f82456ed8a7d1e10"
+    }
+  },
+  "metrics": {
+    "diagnostic_primary": "neutral_coprediction_rate",
+    "reported": [
+      "neutral_coprediction_rows",
+      "neutral_coprediction_rate",
+      "target_compatible_coprediction_rows",
+      "subset_accuracy",
+      "samples_f1",
+      "macro_f1",
+      "micro_f1",
+      "predicted_label_cardinality"
+    ]
+  },
+  "model": {
+    "local_path": "models/qwen3-1.7b/mlx-bf16",
+    "manifest": {
+      "path": "models/qwen3-1.7b/manifest.json",
+      "sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877"
+    },
+    "repo_id": "Qwen/Qwen3-1.7B",
+    "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e"
+  },
+  "outputs": {
+    "run_dir": "experiments/goemotions/qwen3-1.7b/runs/exp-034-train-neutral-cooccurrence-diagnostic"
+  },
+  "parent_experiment": "EXP-033",
+  "question": "Can the frozen EXP-033 seed-42 adapter reproduce neutral-plus-emotion targets on the exact training examples it saw?",
+  "registered_at": "2026-08-04",
+  "resource_budget": {
+    "active_wall_time_hours_max": 1.0,
+    "api_cost_usd_max": 0.0,
+    "peak_mlx_memory_gb_max": 14.0,
+    "runs_max": 1
+  },
+  "scope": {
+    "checkpoint_selection": false,
+    "expected_gold_cardinality": {
+      "2": 1335,
+      "3": 60,
+      "4": 1
+    },
+    "expected_rows": 1396,
+    "final_adapter_only": true,
+    "source_row_numbers_sha256": "6d2ce3b10b41365eba24d5d5aaa1afce66f6b3f043d49204559deb4b8b0a59d9",
+    "split": "train-neutral-cooccurrence-only"
+  },
+  "status": "Registered",
+  "stop_rule": "This run diagnoses memorization versus generalization only. It cannot select a checkpoint, tune the model, or support a held-out performance claim.",
+  "tier": "Minor",
+  "training_verification": {
+    "path": "experiments/goemotions/qwen3-1.7b/runs/exp-033-target-aligned-lora/seed-42/verification.json",
+    "sha256": "5de427748d6fe467d369b64a7e3493067279ba983814d6380958e8824a41d557"
+  }
+}

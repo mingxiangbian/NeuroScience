@@ -1,0 +1,28 @@
+{
+  "authorized": true,
+  "authorized_at_utc": "2026-08-03T08:18:43.071510+00:00",
+  "config_path": "experiments/goemotions/qwen3-1.7b/configs/exp-033-target-aligned-lora-v3.json",
+  "config_sha256": "267ea25e997496c443a025efc741148943348c6220753faa8c3dae9aa09abea4",
+  "contract_id": "EXP-033-FORMAL-GATE-V2",
+  "contract_path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-formal-gate-contract-v2.json",
+  "contract_sha256": "154ed7097d593ae4be1ad096b61116204b17866d461aa127ecc5f36c49f3c515",
+  "experiment_id": "EXP-033",
+  "gate_verification_id": "EXP-033-FORMAL-GATE-VERIFY-V2",
+  "gate_verification_path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-formal-gate-verification-v2.json",
+  "gate_verification_sha256": "befdafd9bc908b1e26579f06c574225409f87a58fc09c519e4afaf3730a712a8",
+  "runtime_config_path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-runtime-seed-42-v3.json",
+  "runtime_config_sha256": "1c1182b6f54bcb038f76636e22be99c66ae6e068d7260261b632528c8dd602bb",
+  "scope": {
+    "seeds": [
+      42
+    ],
+    "test_split": false,
+    "train": true,
+    "validation_split": false
+  },
+  "smoke_verification_id": "EXP-033-SMOKE-VERIFY-V1",
+  "smoke_verification_path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-smoke-verification.json",
+  "smoke_verification_sha256": "dc4da29ab6073d6204e92ca9e33048c75ca71491c5cea85b8e8a9465b78ca7cd",
+  "stage": "formal-seed-42",
+  "user_authorization_context": "Proceed through seed-42 training, independent verification, and validation evaluation; do not access test."
+}

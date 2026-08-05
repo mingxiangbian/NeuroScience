@@ -1,0 +1,185 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "audit_id": "PRE-EXP-033-EXECUTION",
+  "complete_inheritance": {
+    "model_equals_exp_029": true,
+    "preflight_equals_exp_029": true,
+    "training_equals_exp_029": true,
+    "training_sha256": "58a184ee1f606bd80342cf6a6bbb68c86b2fffbfb03f72c1a18593efc9c5e3f2"
+  },
+  "completed_at_utc": "2026-08-03T05:25:48.366456+00:00",
+  "contract": {
+    "bytes": 6254,
+    "path": "experiments/goemotions/qwen3-1.7b/preflight/pre-exp-033-execution-contract.json",
+    "sha256": "ea49c3d6278312aceda64ee3d046892dfe093b0fe345fbb049904a04b4b80ca4"
+  },
+  "execution_gate": {
+    "formal_training_authorized": false,
+    "model_forward_or_backward_executed": false,
+    "next_required_step": "Implement a formal EXP-033 runner that consumes this exact contract, re-run the verifier in check mode, then pass the 50-iteration train-only smoke."
+  },
+  "implementation": {
+    "auditor": {
+      "bytes": 17758,
+      "path": "experiments/goemotions/qwen3-1.7b/audit_target_aligned_execution.py",
+      "sha256": "b88de263bb9c43284fd5dcd6d24021018e5af2dae0b69123689036ae17a583eb"
+    },
+    "verifier": {
+      "bytes": 12436,
+      "path": "experiments/goemotions/qwen3-1.7b/verify_target_aligned_execution.py",
+      "sha256": "e48fd27874c3a6ff8710187601e037ce0c7d4dac4087e07d6fbf3b3fa11d4a40"
+    }
+  },
+  "model": {
+    "files": [
+      {
+        "bytes": 81,
+        "path": "README.md",
+        "sha256": "748c964f9b7e5f2c3770ce013bbc0153be7c54311d9692c343b6188eefe77ac6"
+      },
+      {
+        "bytes": 4168,
+        "path": "chat_template.jinja",
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "bytes": 816,
+        "path": "config.json",
+        "sha256": "41eb9baa243fc92dadd6ac800e1c073efcbc1cee198e360de07470420b7ef0a6"
+      },
+      {
+        "bytes": 239,
+        "path": "generation_config.json",
+        "sha256": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2"
+      },
+      {
+        "bytes": 3441185441,
+        "path": "model.safetensors",
+        "sha256": "51dc5e7fe6cade6082d91065daea84fe46522c64e77ecba10a83d5cbd53f66e4"
+      },
+      {
+        "bytes": 22188,
+        "path": "model.safetensors.index.json",
+        "sha256": "5bc27eb752e76bec3235ce08f98789307f6b3f00f3be241d9fa42a3a50c9fbe8"
+      },
+      {
+        "bytes": 11422650,
+        "path": "tokenizer.json",
+        "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+      },
+      {
+        "bytes": 729,
+        "path": "tokenizer_config.json",
+        "sha256": "ee8f6d44bf2353e6d3686c3adaf70e1ccfe9e6ed6822d0ab2f28cafdd7754792"
+      }
+    ],
+    "manifest": {
+      "bytes": 4235,
+      "path": "models/qwen3-1.7b/manifest.json",
+      "sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877"
+    },
+    "verified_file_count": 8,
+    "verified_total_bytes": 3452636312
+  },
+  "privacy": {
+    "public_comment_ids": false,
+    "public_raw_text": false
+  },
+  "runtime": {
+    "chat_dataset_process_executed_rows": 64,
+    "packages": {
+      "mlx": "0.32.0",
+      "mlx-lm": "0.31.3",
+      "numpy": "2.4.6",
+      "python": "3.11.15",
+      "transformers": "5.14.1"
+    },
+    "tokenizer_wrapper_has_thinking": true
+  },
+  "smoke": {
+    "bytes": 64026,
+    "control_token_counts": [
+      4
+    ],
+    "covers_all_labels": true,
+    "includes_all_truncated_rows": true,
+    "max_sequence_tokens": 512,
+    "max_target_cardinality": 5,
+    "neutral_cooccurrence_rows": 16,
+    "path": "experiments/goemotions/qwen3-1.7b/private-cache/pre-exp-033-execution-data/smoke/train.jsonl",
+    "row_numbers": [
+      515,
+      525,
+      1529,
+      2547,
+      2682,
+      2720,
+      2986,
+      3210,
+      3515,
+      3983,
+      4836,
+      4958,
+      5206,
+      5556,
+      6686,
+      7402,
+      7874,
+      8809,
+      9858,
+      11048,
+      11480,
+      11536,
+      13143,
+      15258,
+      15414,
+      15459,
+      16114,
+      16739,
+      17150,
+      18038,
+      18872,
+      20612,
+      21256,
+      21640,
+      21708,
+      21752,
+      22829,
+      23574,
+      25292,
+      25647,
+      25701,
+      26168,
+      27090,
+      28550,
+      29538,
+      30226,
+      30845,
+      34515,
+      34843,
+      35205,
+      35752,
+      36756,
+      37228,
+      37426,
+      38118,
+      38964,
+      39076,
+      40411,
+      40478,
+      40615,
+      41261,
+      41307,
+      42725,
+      42943
+    ],
+    "rows": 64,
+    "sha256": "0fa3b51ff3ed68d3ba7460a7ace7d053faeb6dc5134967fdb113b826f0e13404"
+  },
+  "status": "Passed",
+  "test_split_absent": true,
+  "test_split_accessed": false,
+  "validation_split_accessed": false
+}

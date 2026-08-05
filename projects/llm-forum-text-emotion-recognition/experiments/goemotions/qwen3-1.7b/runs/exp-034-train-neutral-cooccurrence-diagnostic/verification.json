@@ -1,0 +1,78 @@
+{
+  "recalculated": {
+    "artifacts": {
+      "comparison.json": {
+        "bytes": 683,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-034-train-neutral-cooccurrence-diagnostic/comparison.json",
+        "sha256": "3dcb92b9b96847878cefcef45bf05f017e8be88f30510eedfc34ad1e9ba9b8b2"
+      },
+      "diagnostics.json": {
+        "bytes": 399,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-034-train-neutral-cooccurrence-diagnostic/diagnostics.json",
+        "sha256": "6bf8625e20290d8158ff6a86c3072d02d0fa23d19c27ff41a57fb9f31b7a9d2b"
+      },
+      "metrics.json": {
+        "bytes": 8261,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-034-train-neutral-cooccurrence-diagnostic/metrics.json",
+        "sha256": "e73e349b82fc444029c208c970b17633f3d8f3fa8b49096e510b117945b725e2"
+      },
+      "multilabel-confusion-matrix.csv": {
+        "bytes": 735,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-034-train-neutral-cooccurrence-diagnostic/multilabel-confusion-matrix.csv",
+        "sha256": "e2b54d19eb31a1fd0b91c070a2546382a790d8c8125a50f21cac232cdf7cfe7e"
+      },
+      "per-label-metrics.csv": {
+        "bytes": 1758,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-034-train-neutral-cooccurrence-diagnostic/per-label-metrics.csv",
+        "sha256": "fc210d370a63ed71e6f691ac0f0eed9c10d0f5f8f23f50078bafe3f4c36df450"
+      },
+      "predictions.csv": {
+        "bytes": 354112,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-034-train-neutral-cooccurrence-diagnostic/predictions.csv",
+        "sha256": "69705eeee03a37f39b844335fc5e9e0dddd0078caebd26eee9f5a975f4b8dae1"
+      },
+      "predictions.jsonl": {
+        "bytes": 1451166,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-034-train-neutral-cooccurrence-diagnostic/predictions.jsonl",
+        "sha256": "846778c754c2ad36a4c32302e27d1231e11a9b3870b6d7fe09bdb0e8a721dad4"
+      },
+      "run.json": {
+        "bytes": 11953,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-034-train-neutral-cooccurrence-diagnostic/run.json",
+        "sha256": "aeaf62257b62ed86b94bf8501e396dccbd6e270a001bf4fc3a31bcf680d1c72e"
+      },
+      "stdout.log": {
+        "bytes": 582,
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-034-train-neutral-cooccurrence-diagnostic/stdout.log",
+        "sha256": "7d7a7cb1e84c8c100c3be759446b09de60376509ecbe414ee71d999ba1fa8f72"
+      }
+    },
+    "config": {
+      "bytes": 4902,
+      "path": "experiments/goemotions/qwen3-1.7b/configs/exp-034-train-neutral-cooccurrence-diagnostic.json",
+      "sha256": "bbef0d67bd05cfba813651652c2cb9f85158cd76ffa39dd324500934cf29236a"
+    },
+    "recalculated": {
+      "macro_f1": 0.30841396784196207,
+      "micro_f1": 0.535889642272621,
+      "neutral_coprediction_rate": 0.0,
+      "neutral_coprediction_rows": 0,
+      "predicted_cardinality_distribution": {
+        "1": 1370,
+        "2": 25,
+        "3": 1
+      },
+      "predicted_label_cardinality": 1.0193409742120343,
+      "samples_f1": 0.537655205348615,
+      "subset_accuracy": 0.0,
+      "target_compatible_coprediction_rate": 0.0,
+      "target_compatible_coprediction_rows": 0
+    },
+    "rows": 1396,
+    "test_split_absent": true,
+    "test_split_accessed": false
+  },
+  "status": "Passed",
+  "verification_id": "EXP-034-VERIFY-V1",
+  "verified_at_utc": "2026-08-03T18:22:52.448693+00:00"
+}

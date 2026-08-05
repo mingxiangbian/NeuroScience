@@ -1,0 +1,71 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "audit_id": "PRE-EXP-033-EXECUTION-V3",
+  "completed_at_utc": "2026-08-03T05:53:39.308206+00:00",
+  "contract": {
+    "bytes": 2384,
+    "path": "experiments/goemotions/qwen3-1.7b/preflight/pre-exp-033-execution-v3-contract.json",
+    "sha256": "fdc5ed2f1bcbb015a33b800afeeca29f8bb38cc63810260a56fe88e22d8befba"
+  },
+  "execution_gate": {
+    "formal_training_authorized": false,
+    "model_forward_or_backward_executed": false,
+    "next_required_step": "Implement and hash-freeze the EXP-033 runner and runtime config generator, pass a no-model dry run, re-run this V3 verifier with --check, then request authorization for the 50-iteration train-only smoke."
+  },
+  "implementation": {
+    "auditor": {
+      "bytes": 11128,
+      "path": "experiments/goemotions/qwen3-1.7b/audit_target_aligned_execution_v3.py",
+      "sha256": "e1a9e711e0db195ed5f8cffcc8a1323df8f75e7c1e1e63c18afffcb8e1df6c85"
+    },
+    "verifier": {
+      "bytes": 12958,
+      "path": "experiments/goemotions/qwen3-1.7b/verify_target_aligned_execution_v3.py",
+      "sha256": "bdf0e46aabc2fa3e66b4c0c73a2c857fc3d64858a91aa921974193c95498ddeb"
+    },
+    "verifier_reuses_auditor_logic": false
+  },
+  "label_ontology": {
+    "count": 28,
+    "neutral_id": 27,
+    "sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89"
+  },
+  "resource_and_repetition_gates": {
+    "repetition_gate_equals_exp_029": true,
+    "resource_budget_equals_exp_029": true,
+    "seed_42_required_first": true
+  },
+  "runtime": {
+    "packages": {
+      "PyYAML": "6.0.3",
+      "huggingface-hub": "1.26.0",
+      "mlx": "0.32.0",
+      "mlx-lm": "0.31.3",
+      "numpy": "2.4.6",
+      "python": "3.11.15",
+      "safetensors": "0.8.0",
+      "tokenizers": "0.22.2",
+      "tqdm": "4.70.0",
+      "transformers": "5.14.1"
+    },
+    "python_executable": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+    "python_source_tree": {
+      "file_count": 166,
+      "manifest_sha256": "f2244007cd659ed6e63cf1c56e1a80e133d20dbb0aefa26574cda9f8fcb257a0",
+      "total_bytes": 1531573
+    }
+  },
+  "status": "Passed",
+  "test_split_absent": true,
+  "test_split_accessed": false,
+  "v1_recheck": {
+    "boundary_smoke_rows": 64,
+    "model_files_rehashed": 8,
+    "status": "Passed",
+    "stdout_sha256": "42131438b995d11fa9a54ad8f1c94a181365aee2c83efe61699071c35192dc03"
+  },
+  "v2_chain_rechecked": true,
+  "validation_split_accessed": false
+}

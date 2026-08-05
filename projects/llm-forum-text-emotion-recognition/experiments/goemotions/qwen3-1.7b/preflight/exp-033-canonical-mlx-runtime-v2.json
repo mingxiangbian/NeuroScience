@@ -1,0 +1,158 @@
+{
+  "contract_id": "EXP-033-CANONICAL-MLX-RUNTIME-V2",
+  "created_date": "2026-08-03",
+  "effective_configs": {
+    "formal_seed_42": {
+      "adapter_path": "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/private-cache/exp-033-target-aligned-lora/seed-42",
+      "batch_size": 2,
+      "clear_cache_threshold": 0,
+      "data": "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/private-cache/pre-exp-033-target-aligned-data",
+      "fine_tune_type": "lora",
+      "grad_accumulation_steps": 5,
+      "grad_checkpoint": false,
+      "iters": 21705,
+      "learning_rate": 0.00001,
+      "lora_parameters": {
+        "dropout": 0.0,
+        "keys": [
+          "self_attn.q_proj",
+          "self_attn.k_proj",
+          "self_attn.v_proj",
+          "self_attn.o_proj",
+          "mlp.gate_proj",
+          "mlp.up_proj",
+          "mlp.down_proj"
+        ],
+        "rank": 8,
+        "scale": 20.0
+      },
+      "lr_schedule": null,
+      "mask_prompt": true,
+      "max_seq_length": 512,
+      "model": "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/models/qwen3-1.7b/mlx-bf16",
+      "num_layers": 16,
+      "optimizer": "adam",
+      "optimizer_config": {
+        "adam": {}
+      },
+      "project_name": null,
+      "report_to": null,
+      "resume_adapter_file": null,
+      "save_every": 5000,
+      "seed": 42,
+      "steps_per_eval": 21706,
+      "steps_per_report": 100,
+      "test": false,
+      "test_batches": 0,
+      "train": true,
+      "val_batches": 0
+    },
+    "smoke": {
+      "adapter_path": "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/private-cache/exp-033-target-aligned-lora/smoke",
+      "batch_size": 2,
+      "clear_cache_threshold": 0,
+      "data": "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/goemotions/qwen3-1.7b/private-cache/pre-exp-033-execution-data/smoke",
+      "fine_tune_type": "lora",
+      "grad_accumulation_steps": 5,
+      "grad_checkpoint": false,
+      "iters": 50,
+      "learning_rate": 0.00001,
+      "lora_parameters": {
+        "dropout": 0.0,
+        "keys": [
+          "self_attn.q_proj",
+          "self_attn.k_proj",
+          "self_attn.v_proj",
+          "self_attn.o_proj",
+          "mlp.gate_proj",
+          "mlp.up_proj",
+          "mlp.down_proj"
+        ],
+        "rank": 8,
+        "scale": 20.0
+      },
+      "lr_schedule": null,
+      "mask_prompt": true,
+      "max_seq_length": 512,
+      "model": "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/models/qwen3-1.7b/mlx-bf16",
+      "num_layers": 16,
+      "optimizer": "adam",
+      "optimizer_config": {
+        "adam": {}
+      },
+      "project_name": null,
+      "report_to": null,
+      "resume_adapter_file": null,
+      "save_every": 51,
+      "seed": 42,
+      "steps_per_eval": 51,
+      "steps_per_report": 5,
+      "test": false,
+      "test_batches": 0,
+      "train": true,
+      "val_batches": 0
+    }
+  },
+  "execution_gate": {
+    "formal_training_enabled": false,
+    "formal_unlock_requirement": "Freeze and verify a dedicated EXP-033 smoke verifier, then register a new formal-execution contract.",
+    "smoke_requires_current_dry_run_check": true
+  },
+  "mlx_semantics_sources": {
+    "config_and_optimizer": {
+      "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm/lora.py",
+      "sha256": "3f188fc6aef80efcb9938678af0548588122ed25845053cc555aece0ad2da5e7"
+    },
+    "dataset_and_prompt_mask": {
+      "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm/tuner/datasets.py",
+      "sha256": "fa112840e6ea98a4ff18428792fe2ab023999c2da51ea64b3ebdf8657a152f17"
+    },
+    "layer_selection": {
+      "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm/tuner/utils.py",
+      "sha256": "166eaf5e5f923113bed43614a5fb7319795fa0cac5a7fa319ea54e5f0045b553"
+    },
+    "training_loop": {
+      "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm/tuner/trainer.py",
+      "sha256": "ee33ebdbd20a184108541cb490d08085485e71a82ffd6d68d7d216029ecd28fe"
+    }
+  },
+  "semantic_assertions": {
+    "adapted_block_indices": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27
+    ],
+    "formal_micro_iterations": 21705,
+    "formal_optimizer_updates": 4341,
+    "gradient_update_rule": "optimizer update when micro-iteration modulo grad_accumulation_steps equals zero",
+    "layer_selection_rule": "model.layers[-max(num_layers, 0):]",
+    "learning_rate_schedule": "constant scalar 1e-5 because lr_schedule is null",
+    "mask_prompt": true,
+    "model_hidden_layers": 28,
+    "smoke_micro_iterations": 50,
+    "smoke_optimizer_updates": 10
+  },
+  "source_contracts": {
+    "execution_v3": {
+      "path": "experiments/goemotions/qwen3-1.7b/preflight/pre-exp-033-execution-v3-contract.json",
+      "sha256": "fdc5ed2f1bcbb015a33b800afeeca29f8bb38cc63810260a56fe88e22d8befba"
+    },
+    "exp_029_config": {
+      "path": "experiments/goemotions/qwen3-1.7b/configs/exp-029-instruct-lora.json",
+      "sha256": "14fe020eb86331d987561240ebfa1da70d724f0d622d74f7879a6364d4aba4ed"
+    }
+  }
+}

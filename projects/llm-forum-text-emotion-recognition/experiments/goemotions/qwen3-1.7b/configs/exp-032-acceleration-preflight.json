@@ -1,0 +1,134 @@
+{
+  "artifacts": {
+    "private_adapter_root": "experiments/goemotions/qwen3-1.7b/private-cache/exp-032-acceleration-preflight",
+    "prepared_train_path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-029-lora-data/train.jsonl",
+    "run_root": "experiments/goemotions/qwen3-1.7b/runs/exp-032-acceleration-preflight"
+  },
+  "data": {
+    "access_policy": "train-only; validation and test are forbidden",
+    "dataset_protocol": "DATA-GOE-V1",
+    "labels_path": "data/goemotions/official/emotions.txt",
+    "labels_sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89",
+    "prepared_train_rows": 43410,
+    "prepared_train_sha256": "16ddfd4562c3a7f780e0d115a1ff88af31a8149b8bd89fd9eb9c882534338dd2",
+    "train_path": "data/goemotions/official/train.tsv",
+    "train_sha256": "1c254a142be5c00e80d819b9ae1bbd36d94b2eeb8f4b1271846508d57e57d9c5"
+  },
+  "experiment_id": "EXP-032",
+  "implementation": {
+    "constraint_path": "experiments/goemotions/qwen3-1.7b/label_json_constraint_neutral_cooccurrence.py",
+    "constraint_sha256": "336218c9a44fc4d475d9197f05afcb81096f793e141e03fed96cbe76cb99d880",
+    "ontology_runner_path": "experiments/goemotions/qwen3-1.7b/run_neutral_ontology_ablation.py",
+    "ontology_runner_sha256": "08e739f3aa9b3b0bc353769a47587a346f53ea29192d3d0bf0c474052b05097b",
+    "parent_config_path": "experiments/goemotions/qwen3-1.7b/configs/exp-029-instruct-lora.json",
+    "parent_config_sha256": "14fe020eb86331d987561240ebfa1da70d724f0d622d74f7879a6364d4aba4ed",
+    "parent_runner_path": "experiments/goemotions/qwen3-1.7b/run_lora.py",
+    "parent_runner_sha256": "effbd2a5803b78289543eff13a7ceec59867dbdbbfc0b8a78bb1de9a87f3cc5f",
+    "runner_path": "experiments/goemotions/qwen3-1.7b/run_acceleration_preflight.py",
+    "runner_sha256": "e5f2fee053cfddd361d1c059e8170cac964557cf70f969a68a505c67005d11d4",
+    "verifier_path": "experiments/goemotions/qwen3-1.7b/verify_acceleration_preflight.py",
+    "verifier_sha256": "174b4a42b60342f726b849089fcd3aaadb35b51292d4240a55f95dd8676ef269"
+  },
+  "inference_cache": {
+    "adapter_path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-029-instruct-lora/seed-42/adapters.safetensors",
+    "adapter_sha256": "77624d77d2ba2225dcf51e7fbf9a8131aa746bfd0004d72ae203360fedfe88ff",
+    "comparison": "full-prompt sequential generation versus one reusable longest-common-prefix KV cache",
+    "decoder": "neutral-cooccurrence constrained greedy decoding",
+    "exact_token_identity_required": true,
+    "max_new_tokens": 64,
+    "minimum_end_to_end_speedup": 1.05,
+    "prompt_path": "experiments/goemotions/qwen3-1.7b/prompts/exp-031-neutral-cooccurrence-v1.json",
+    "prompt_sha256": "94479a8d543e75a22be48925bd44bd7767526747e9a13a986279ab634a531ec3",
+    "sample_row_numbers": [
+      93,
+      334,
+      726,
+      1293,
+      2411,
+      2568,
+      2660,
+      3155,
+      6228,
+      6420,
+      8180,
+      8655,
+      8724,
+      9243,
+      10038,
+      10066,
+      10182,
+      11236,
+      11628,
+      11911,
+      12641,
+      13129,
+      13456,
+      13790,
+      13813,
+      13866,
+      15044,
+      15124,
+      15968,
+      15986,
+      16908,
+      17713
+    ],
+    "sample_split": "train",
+    "sampler": "greedy",
+    "seed": 42,
+    "temperature": 0.0
+  },
+  "model": {
+    "local_path": "models/qwen3-1.7b/mlx-bf16",
+    "manifest_path": "models/qwen3-1.7b/manifest.json",
+    "manifest_sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877",
+    "precision": "bfloat16",
+    "quantized": false,
+    "repo_id": "Qwen/Qwen3-1.7B",
+    "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e"
+  },
+  "parent_experiments": [
+    "EXP-029",
+    "EXP-031"
+  ],
+  "registration_date": "2026-08-03",
+  "resource_budget": {
+    "api_cost_usd_max": 0,
+    "cache_wall_time_minutes_max": 10,
+    "peak_mlx_memory_gb_max": 14.0,
+    "training_condition_wall_time_minutes_max": 30,
+    "training_runs_max": 2
+  },
+  "rq_id": "RQ-G2",
+  "stage": "target-aligned-retraining-acceleration-preflight",
+  "status": "Registered",
+  "tier": "Minor",
+  "training_benchmark": {
+    "candidate_selection_gate": {
+      "minimum_steady_rows_per_second_speedup": 1.2,
+      "peak_mlx_memory_gb_max": 13.5,
+      "require_finite_training_log": true
+    },
+    "conditions": {
+      "batch2-grad5": {
+        "batch_size": 2,
+        "grad_accumulation_steps": 5,
+        "iterations": 500
+      },
+      "batch5-grad2": {
+        "batch_size": 5,
+        "grad_accumulation_steps": 2,
+        "iterations": 200
+      }
+    },
+    "effective_batch_size": 10,
+    "fixed_optimizer_updates": 100,
+    "fixed_processed_rows": 1000,
+    "learning_rate": 1e-05,
+    "max_sequence_length": 512,
+    "optimizer": "adam",
+    "seed": 42,
+    "steps_per_report": 20,
+    "unique_change": "micro-batch size and reciprocal gradient accumulation only; effective batch, optimizer updates, processed rows, data, seed, model, LoRA, learning rate, and sequence limit remain fixed"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "accessed_splits": [
+    "test"
+  ],
+  "completed_at_utc": "2026-08-04T03:33:24.346954+00:00",
+  "config_sha256": "87177da88dfb1ebb9bc78a71ac11aca87b8b85c98b126f40bb9c056eba316b0f",
+  "experiment_id": "EXP-038",
+  "stage": "classical-and-bert-test",
+  "started_at_utc": "2026-08-04T03:32:08.592787+00:00",
+  "status": "Completed; pending independent verification",
+  "test": {
+    "label_cardinality": {
+      "1": 4590,
+      "2": 774,
+      "3": 61,
+      "4": 2
+    },
+    "rows": 5427,
+    "unique_comment_ids": 5427
+  },
+  "test_rows_accessed": 5427,
+  "test_split_accessed": true,
+  "units": {
+    "exp018-tfidf": {
+      "macro_f1": 0.19619660244216863,
+      "micro_f1": 0.38208045033423244,
+      "subset_accuracy": 0.250046065966464,
+      "weighted_f1": 0.3341136652066917
+    },
+    "exp020-bert-seed42": {
+      "macro_f1": 0.4782388378006135,
+      "micro_f1": 0.5908747544946367,
+      "subset_accuracy": 0.4488667772249862,
+      "weighted_f1": 0.5869662775455913
+    },
+    "exp020-bert-seed43": {
+      "macro_f1": 0.49413877946455254,
+      "micro_f1": 0.5917907081641859,
+      "subset_accuracy": 0.4398378477980468,
+      "weighted_f1": 0.590811935837604
+    },
+    "exp020-bert-seed44": {
+      "macro_f1": 0.49260697301468503,
+      "micro_f1": 0.5886166603844704,
+      "subset_accuracy": 0.4403906393956145,
+      "weighted_f1": 0.5858745402869189
+    }
+  }
+}

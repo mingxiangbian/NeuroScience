@@ -1,0 +1,41 @@
+{
+  "completed_at_utc": "2026-08-04T09:36:49.372939+00:00",
+  "config_sha256": "87177da88dfb1ebb9bc78a71ac11aca87b8b85c98b126f40bb9c056eba316b0f",
+  "experiment_id": "EXP-038",
+  "started_at_utc": "2026-08-04T03:34:02.699014+00:00",
+  "status": "Completed; pending independent verification",
+  "test_rows_accessed": 5427,
+  "test_split_accessed": true,
+  "units": {
+    "exp025-qwen-few-shot": {
+      "macro_f1": 0.2336532565037923,
+      "micro_f1": 0.24927849927849927,
+      "subset_accuracy": 0.11203243044039064,
+      "weighted_f1": 0.2675501950217556
+    },
+    "exp029-qwen-seed42": {
+      "macro_f1": 0.44364294136910615,
+      "micro_f1": 0.5779716466739367,
+      "subset_accuracy": 0.5122535470794177,
+      "weighted_f1": 0.5616671003315823
+    },
+    "exp029-qwen-seed43": {
+      "macro_f1": 0.42255929679801524,
+      "micro_f1": 0.5846930193439865,
+      "subset_accuracy": 0.5238621706283397,
+      "weighted_f1": 0.5479244079535885
+    },
+    "exp029-qwen-seed44": {
+      "macro_f1": 0.48575414150042384,
+      "micro_f1": 0.5744290715119187,
+      "subset_accuracy": 0.5045144647134697,
+      "weighted_f1": 0.558275592345349
+    },
+    "exp033-qwen-seed42-target-aligned": {
+      "macro_f1": 0.44467516701518317,
+      "micro_f1": 0.5801628177438113,
+      "subset_accuracy": 0.5131748664086973,
+      "weighted_f1": 0.5592973234217796
+    }
+  }
+}

@@ -49,8 +49,26 @@ GoEmotions 公开数据实验分支。
   不改变任何预测；同时对齐 prompt 与 decoder 后 Macro-F1 平均仅 `+0.001682`，
   neutral 共现切片 Samples-F1 为 `-0.009132`，所有条件均未产生 neutral 共现预测。
   正式分类为 `no_material_inference_improvement`，不等价于 target-aligned retraining。
-- `test.tsv` 未获取。
-- test 内容不得在单独的 `TEST-READY` 授权前获取、读取或评估。
+- `EXP-033` seed-42 target-aligned LoRA 与 `EXP-034` train 回放均已独立验证：前者
+  dev Macro-F1 为 `0.427959` 且未通过 improvement gate，后者在模型见过的全部
+  1,396 条 `neutral+emotion` 训练样本上仍为 0 条目标共现输出。
+- `EXP-035` 数据与标注审计已独立验证：1,396/1,396 条 `neutral+emotion` target
+  都由跨标注者投票聚合形成，同一标注者共选为 0；官方 `>=2` 票 simplified labels
+  精确复现。48 条冻结目的性复核中 6 条被编码为可能需要上下文，但不可外推。
+- `EXP-036` dev 逐标注者评分诊断已独立验证：174/174 条对应 target 仍为
+  aggregation-only。EXP-029/BERT 的 clear-rater expected set-F1 为
+  `0.363250/0.362531`，family delta=`+0.000720`、95% CI 跨 0，属于该冲突切片上的
+  practical tie；official exact-match 与个体标注一致度不能混为同一指标。
+- `EXP-037` 完整 dev 逐标注者评分诊断已独立验证：5,426 条 dev 和 19,440 行
+  raw annotations 全部重建，官方聚合 mismatch 为 0。EXP-029/BERT 的 clear-rater
+  soft Macro-F1 为 `0.347253/0.383471`，delta=`-0.036218`、95% CI 不跨 0；相对
+  official delta 的 shift=`+0.001843` 且 CI 跨 0，结论为 `gap_remains`。
+- `EXP-038` 一次性正式 test gate 已完成并独立验证。EXP-018、EXP-020、EXP-025、
+  EXP-029 和 EXP-033 的 test Macro-F1 分别为 `0.196197`、
+  `0.488328 +/- 0.008771`、`0.233653`、`0.450652 +/- 0.032175` 和 `0.444675`。
+  BERT 相对论文 test 参照 `0.46` 高 `0.028328`；历史 EXP-029 保留 ontology 失配
+  标记，EXP-033 是主要 target-aligned LLM 结果。
+- GoEmotions test 已消费；此后不得用它进行模型选择、prompt/threshold 修改或重训。
 - EXP-018 的全局阈值固定为 `0.5`，EXP-020 固定为论文条件 `0.3`；两者
   均不得在原实验编号下事后调参。
 
@@ -72,6 +90,13 @@ GoEmotions 公开数据实验分支。
   EXP-031 neutral ontology 推理消融。
 - [`error-analysis/`](error-analysis/)：EXP-030 冻结协议、跨模型全量 dev 错误结构、
   48 条匿名定性复核、公开报告和独立 verifier。
+- [`annotation-audit/`](annotation-audit/)：EXP-035 的逐标注者投票聚合、冻结文本复核、
+  公开报告和独立 verifier。
+- [`disagreement-aware-evaluation/`](disagreement-aware-evaluation/)：EXP-036 的
+  174-row 冲突切片和 EXP-037 的完整 dev 逐标注者评分、soft-label Macro-F1、paired
+  bootstrap、7 份冻结预测和独立 verifier。
+- [`test-gate/`](test-gate/)：EXP-038 的冻结协议、9 个正式测试单元、完整指标、
+  匿名预测、聚合结果、verifier 修正说明和独立验证记录。
 
 ## Storage Boundary
 
@@ -86,12 +111,11 @@ projects/llm-forum-text-emotion-recognition/
 
 ## Next Step
 
-1. 保持 EXP-018、EXP-020、EXP-025、EXP-029、EXP-030 和 EXP-031 冻结，test
-   继续关闭。
-2. EXP-031 已显示 inference-only correction 不足。下一步先讨论并登记新的
-   target-aligned retraining Major，在训练目标、prompt 和 decoder 中一致保留官方
-   `neutral+emotion` 标签；不得事后修改 EXP-025/029/031 的配置或证据状态。
-3. 表征支线若继续，必须在 EXP-028 失败之后使用新实验编号、现实资源门和透明恢复
-   规则；不得把 EXP-028 的诊断值升级为 Verified 结论。
-4. 与导师并行确认 GoEmotions 是否可作为主要论坛数据，还是必须另行采集与标注；
-   GoEmotions test 继续关闭。
+1. 保持 EXP-018、EXP-020、EXP-025、EXP-029、EXP-033 和 EXP-038 的配置与 test
+   结果冻结；test 已消费，不再用于开发。
+2. GoEmotions 公开数据复现阶段可阶段性关闭：BERT 是 primary metric 最强条件，
+   target-aligned 1.7B LoRA 未超过 BERT，但负结果及错误归因链完整。
+3. 下一主线是根据导师意见冻结论坛数据、线程上下文、授权、匿名化、标注和
+   thread-level holdout 协议，再复用已验证的训练与评估链路。
+4. 表征支线若继续，必须在 EXP-028 失败之后使用新实验编号、现实资源门和透明恢复
+   规则；不得把 EXP-028 的诊断值升级为 Verified 机制结论。

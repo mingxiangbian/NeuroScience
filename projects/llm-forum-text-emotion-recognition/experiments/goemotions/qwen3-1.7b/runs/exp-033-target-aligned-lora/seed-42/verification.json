@@ -1,0 +1,196 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "completed_at_utc": "2026-08-03T15:55:33.203715+00:00",
+  "contract": {
+    "bytes": 6575,
+    "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-formal-gate-contract-v2.json",
+    "sha256": "154ed7097d593ae4be1ad096b61116204b17866d461aa127ecc5f36c49f3c515"
+  },
+  "experiment_id": "EXP-033",
+  "formal_training_verified": true,
+  "implementation": {
+    "imports_runner": false,
+    "verifier": {
+      "bytes": 29010,
+      "path": "experiments/goemotions/qwen3-1.7b/verify_target_aligned_formal_training_v2.py",
+      "sha256": "eb2c43a090a2573001d11cec4e2e241b55374dc22401abab472267008ce72cc7"
+    }
+  },
+  "next_required_step": "Freeze and independently audit a validation-only inference contract for the seed-42 adapter; test and seeds 43/44 remain closed.",
+  "recalculated": {
+    "adapter": {
+      "checkpoints": [
+        {
+          "bytes": 19947012,
+          "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-033-target-aligned-lora/seed-42/0005000_adapters.safetensors",
+          "sha256": "08e9d8aae24d38d250baa19720a139b0e7cbdfe80a7b20a9368f43d0ca85b521"
+        },
+        {
+          "bytes": 19947012,
+          "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-033-target-aligned-lora/seed-42/0010000_adapters.safetensors",
+          "sha256": "a985e50d577ec52dc06c24cda2a7eec97dac64b3db374ff058340a75dacfc7a0"
+        },
+        {
+          "bytes": 19947012,
+          "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-033-target-aligned-lora/seed-42/0015000_adapters.safetensors",
+          "sha256": "22d57c11519d98e29a725defce50ed97e55fc34764ea4ca6e32c3cc82ae47541"
+        },
+        {
+          "bytes": 19947012,
+          "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-033-target-aligned-lora/seed-42/0020000_adapters.safetensors",
+          "sha256": "67468e3a8fd7e20abd7d714876c52d249f1fc6f2106cc32704409bf535415ce7"
+        }
+      ],
+      "config": {
+        "bytes": 1640,
+        "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-033-target-aligned-lora/seed-42/adapter_config.json",
+        "sha256": "53df3c1ac4a1ce5b5f4c31e4d00687bb67aef961aca5ff5deefea0384c7d2b0a"
+      },
+      "lora_b_nonzero_tensors": 112,
+      "lora_b_tensor_count": 112,
+      "tensor_count": 224,
+      "trainable_parameter_count": 4980736,
+      "weights": {
+        "bytes": 19947012,
+        "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-033-target-aligned-lora/seed-42/adapters.safetensors",
+        "sha256": "c0077f484823970f0bbd507d63c605d51fbab6d770aaf03e95aeb1df8e7053ea"
+      }
+    },
+    "authorization": {
+      "bytes": 1561,
+      "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-formal-authorization-v2.json",
+      "sha256": "635e4481c4139186cb28efc0742e3b16d93b11c7a8e5f403d644b0585e7e15c1"
+    },
+    "history": {
+      "duration_seconds": 26963.192875000008,
+      "final_loss_window": 0.1618,
+      "initial_loss_window": 0.441,
+      "median_iterations_per_second": 0.793,
+      "micro_iterations": 21705,
+      "optimizer_updates": 4341,
+      "peak_mlx_memory_gb": 7.208,
+      "reporting_rows": 218,
+      "trainable_parameters_reported": {
+        "percent": 0.289,
+        "total_millions": 1720.575,
+        "trainable_millions": 4.981
+      },
+      "trained_tokens": 569891
+    },
+    "loadability": {
+      "finite_logits": true,
+      "input_tokens": 8,
+      "logit_shape": [
+        1,
+        8,
+        151936
+      ],
+      "model_and_adapter_loaded": true,
+      "peak_mlx_memory_gb": 3.490735156
+    },
+    "preconditions": {
+      "config": {
+        "bytes": 12302,
+        "path": "experiments/goemotions/qwen3-1.7b/configs/exp-033-target-aligned-lora-v3.json",
+        "sha256": "267ea25e997496c443a025efc741148943348c6220753faa8c3dae9aa09abea4"
+      },
+      "environment": {
+        "mlx_lm_source_tree": {
+          "file_count": 166,
+          "manifest_sha256": "f2244007cd659ed6e63cf1c56e1a80e133d20dbb0aefa26574cda9f8fcb257a0",
+          "total_bytes": 1531573
+        },
+        "mlx_lora_cli": {
+          "bytes": 199,
+          "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/mlx_lm.lora",
+          "sha256": "e809f4488d53ca0906a3ab224416b8c7c898b3ad786d59be828b10cd113be293"
+        },
+        "packages": {
+          "PyYAML": "6.0.3",
+          "huggingface-hub": "1.26.0",
+          "mlx": "0.32.0",
+          "mlx-lm": "0.31.3",
+          "numpy": "2.4.6",
+          "python": "3.11.15",
+          "safetensors": "0.8.0",
+          "tokenizers": "0.22.2",
+          "tqdm": "4.70.0",
+          "transformers": "5.14.1"
+        },
+        "python_executable": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python"
+      },
+      "formal_runtime": {
+        "bytes": 1340,
+        "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-runtime-seed-42-v3.json",
+        "sha256": "1c1182b6f54bcb038f76636e22be99c66ae6e068d7260261b632528c8dd602bb"
+      },
+      "mlx_lora_cli": {
+        "bytes": 199,
+        "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/mlx_lm.lora",
+        "sha256": "e809f4488d53ca0906a3ab224416b8c7c898b3ad786d59be828b10cd113be293"
+      },
+      "model": {
+        "file_count": 8,
+        "manifest": {
+          "bytes": 4235,
+          "path": "models/qwen3-1.7b/manifest.json",
+          "sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877"
+        },
+        "total_bytes": 3452636312
+      },
+      "runtime_semantics_sources": {
+        "config_and_optimizer": {
+          "bytes": 11055,
+          "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm/lora.py",
+          "sha256": "3f188fc6aef80efcb9938678af0548588122ed25845053cc555aece0ad2da5e7"
+        },
+        "dataset_and_prompt_mask": {
+          "bytes": 9588,
+          "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm/tuner/datasets.py",
+          "sha256": "fa112840e6ea98a4ff18428792fe2ab023999c2da51ea64b3ebdf8657a152f17"
+        },
+        "layer_selection": {
+          "bytes": 5515,
+          "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm/tuner/utils.py",
+          "sha256": "166eaf5e5f923113bed43614a5fb7319795fa0cac5a7fa319ea54e5f0045b553"
+        },
+        "training_loop": {
+          "bytes": 12582,
+          "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm/tuner/trainer.py",
+          "sha256": "ee33ebdbd20a184108541cb490d08085485e71a82ffd6d68d7d216029ecd28fe"
+        }
+      },
+      "smoke_verification": {
+        "bytes": 4195,
+        "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-smoke-verification.json",
+        "sha256": "dc4da29ab6073d6204e92ca9e33048c75ca71491c5cea85b8e8a9465b78ca7cd"
+      },
+      "test_split_absent": true,
+      "train_data": {
+        "bytes": 42366046,
+        "path": "experiments/goemotions/qwen3-1.7b/private-cache/pre-exp-033-target-aligned-data/train.jsonl",
+        "sha256": "493ecaafd6cd6ed5ee20f8ec3c262e291a6eee826a97816955b53effc1c1c09f"
+      }
+    },
+    "run": {
+      "bytes": 7170,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-033-target-aligned-lora/seed-42/run.json",
+      "sha256": "7ca7a1a4e95efd257b6d520e25075dc2fa0fc8bc532a6753a65fe4d3f2a9e42c"
+    },
+    "runtime_config": {
+      "bytes": 1340,
+      "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-runtime-seed-42-v3.json",
+      "sha256": "1c1182b6f54bcb038f76636e22be99c66ae6e068d7260261b632528c8dd602bb"
+    }
+  },
+  "remaining_training_seeds_authorized": false,
+  "seed": 42,
+  "status": "Passed",
+  "test_split_absent": true,
+  "test_split_accessed": false,
+  "validation_evaluation_authorized": true,
+  "validation_split_accessed": false,
+  "verification_id": "EXP-033-FORMAL-TRAIN-VERIFY-V2"
+}

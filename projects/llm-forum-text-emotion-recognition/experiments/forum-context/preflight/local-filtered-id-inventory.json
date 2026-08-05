@@ -1,0 +1,47 @@
+{
+  "artifact_id": "PRE-FCTX-001",
+  "generated_at_utc": "2026-08-04T13:03:58Z",
+  "scope": "metadata_only_from_existing_manifest",
+  "protocol_id": "DATA-FCTX-PR-V1",
+  "input": {
+    "path": "data/goemotions/manifest.json",
+    "sha256": "06e1198585c25e9872c8877d887b0d5481e0692309216f7c4239e76af6d18ddf"
+  },
+  "splits_included": {
+    "train": {
+      "rows": 43410,
+      "unique_comment_ids": 43410,
+      "duplicate_comment_ids": 0
+    },
+    "dev": {
+      "rows": 5426,
+      "unique_comment_ids": 5426,
+      "duplicate_comment_ids": 0
+    }
+  },
+  "cross_split": {
+    "train_dev_comment_id_overlap": 0,
+    "combined_unique_comment_ids": 48836
+  },
+  "schema_findings": {
+    "filtered_tsv_comment_id_field": true,
+    "official_raw_release_has_id_field": true,
+    "official_raw_release_has_parent_id_field": true,
+    "empirical_raw_join_checked": false,
+    "parent_text_recovery_checked": false
+  },
+  "access_boundary": {
+    "goemotions_test_read_by_this_preflight": false,
+    "google_raw_csv_downloaded": false,
+    "reddit_api_called": false,
+    "third_party_archive_used": false,
+    "new_comment_or_parent_text_stored": false,
+    "upstream_ids_written_to_artifact": false
+  },
+  "decision": {
+    "direct_reddit_parent_recovery": "no_go",
+    "google_raw_parent_join": "blocked_pending_source_review",
+    "dataset_a_construction": "blocked",
+    "next_allowed_action": "institutional_and_reddit_authorization"
+  }
+}

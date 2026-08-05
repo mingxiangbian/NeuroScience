@@ -1,0 +1,349 @@
+{
+  "accessed_splits": [
+    "test"
+  ],
+  "checks": {
+    "all_nine_units_recomputed": true,
+    "artifact_hashes_match": true,
+    "config_sha256_match": true,
+    "confusion_matrices_match": true,
+    "model_selection_after_test": false,
+    "post_test_tuning": false,
+    "private_text_or_comment_ids_in_predictions": false,
+    "test_rows": 5427
+  },
+  "completed_at_utc": "2026-08-04T09:40:19.345678+00:00",
+  "experiment_id": "EXP-038",
+  "recomputed_groups": {
+    "exp018-tfidf": {
+      "macro_f1": {
+        "count": 1,
+        "mean": 0.19619660244216863,
+        "sample_std": 0.0,
+        "values": [
+          0.19619660244216863
+        ]
+      },
+      "macro_precision": {
+        "count": 1,
+        "mean": 0.6090312611289033,
+        "sample_std": 0.0,
+        "values": [
+          0.6090312611289033
+        ]
+      },
+      "macro_recall": {
+        "count": 1,
+        "mean": 0.1402480433137451,
+        "sample_std": 0.0,
+        "values": [
+          0.1402480433137451
+        ]
+      },
+      "micro_f1": {
+        "count": 1,
+        "mean": 0.38208045033423244,
+        "sample_std": 0.0,
+        "values": [
+          0.38208045033423244
+        ]
+      },
+      "samples_f1": {
+        "count": 1,
+        "mean": 0.2796818377249554,
+        "sample_std": 0.0,
+        "values": [
+          0.2796818377249554
+        ]
+      },
+      "subset_accuracy": {
+        "count": 1,
+        "mean": 0.250046065966464,
+        "sample_std": 0.0,
+        "values": [
+          0.250046065966464
+        ]
+      },
+      "weighted_f1": {
+        "count": 1,
+        "mean": 0.3341136652066917,
+        "sample_std": 0.0,
+        "values": [
+          0.3341136652066917
+        ]
+      }
+    },
+    "exp020-bert": {
+      "macro_f1": {
+        "count": 3,
+        "mean": 0.4883281967599504,
+        "sample_std": 0.008771144788893133,
+        "values": [
+          0.4782388378006135,
+          0.49413877946455254,
+          0.49260697301468503
+        ]
+      },
+      "macro_precision": {
+        "count": 3,
+        "mean": 0.48324607492538924,
+        "sample_std": 0.016946610161170245,
+        "values": [
+          0.463703254644919,
+          0.49215364042183124,
+          0.49388132970941745
+        ]
+      },
+      "macro_recall": {
+        "count": 3,
+        "mean": 0.5083804194777879,
+        "sample_std": 0.007083385623272749,
+        "values": [
+          0.5009575485715851,
+          0.515066765437169,
+          0.5091169444246096
+        ]
+      },
+      "micro_f1": {
+        "count": 3,
+        "mean": 0.5904273743477643,
+        "sample_std": 0.001633632937302906,
+        "values": [
+          0.5908747544946367,
+          0.5917907081641859,
+          0.5886166603844704
+        ]
+      },
+      "samples_f1": {
+        "count": 3,
+        "mean": 0.5994287820158467,
+        "sample_std": 0.0024392759343936183,
+        "values": [
+          0.6011301517105828,
+          0.6005220809532584,
+          0.5966341133836988
+        ]
+      },
+      "subset_accuracy": {
+        "count": 3,
+        "mean": 0.44303175480621587,
+        "sample_std": 0.00506083092073326,
+        "values": [
+          0.4488667772249862,
+          0.4398378477980468,
+          0.4403906393956145
+        ]
+      },
+      "weighted_f1": {
+        "count": 3,
+        "mean": 0.5878842512233714,
+        "sample_std": 0.002593544960243473,
+        "values": [
+          0.5869662775455913,
+          0.590811935837604,
+          0.5858745402869189
+        ]
+      }
+    },
+    "exp025-qwen-base": {
+      "macro_f1": {
+        "count": 1,
+        "mean": 0.2336532565037923,
+        "sample_std": 0.0,
+        "values": [
+          0.2336532565037923
+        ]
+      },
+      "macro_precision": {
+        "count": 1,
+        "mean": 0.23251675257985352,
+        "sample_std": 0.0,
+        "values": [
+          0.23251675257985352
+        ]
+      },
+      "macro_recall": {
+        "count": 1,
+        "mean": 0.3976532852028164,
+        "sample_std": 0.0,
+        "values": [
+          0.3976532852028164
+        ]
+      },
+      "micro_f1": {
+        "count": 1,
+        "mean": 0.24927849927849927,
+        "sample_std": 0.0,
+        "values": [
+          0.24927849927849927
+        ]
+      },
+      "samples_f1": {
+        "count": 1,
+        "mean": 0.2659983445500305,
+        "sample_std": 0.0,
+        "values": [
+          0.2659983445500305
+        ]
+      },
+      "subset_accuracy": {
+        "count": 1,
+        "mean": 0.11203243044039064,
+        "sample_std": 0.0,
+        "values": [
+          0.11203243044039064
+        ]
+      },
+      "weighted_f1": {
+        "count": 1,
+        "mean": 0.2675501950217556,
+        "sample_std": 0.0,
+        "values": [
+          0.2675501950217556
+        ]
+      }
+    },
+    "exp029-qwen-lora-legacy": {
+      "macro_f1": {
+        "count": 3,
+        "mean": 0.45065212655584846,
+        "sample_std": 0.03217520173949062,
+        "values": [
+          0.44364294136910615,
+          0.42255929679801524,
+          0.48575414150042384
+        ]
+      },
+      "macro_precision": {
+        "count": 3,
+        "mean": 0.5931426273430035,
+        "sample_std": 0.017203410833142977,
+        "values": [
+          0.5740083327220846,
+          0.5980873920087861,
+          0.6073321572981396
+        ]
+      },
+      "macro_recall": {
+        "count": 3,
+        "mean": 0.4099396307684611,
+        "sample_std": 0.036535152299199514,
+        "values": [
+          0.4046535354426602,
+          0.3763354681844942,
+          0.4488298886782291
+        ]
+      },
+      "micro_f1": {
+        "count": 3,
+        "mean": 0.5790312458432806,
+        "sample_std": 0.005213369263212452,
+        "values": [
+          0.5779716466739367,
+          0.5846930193439865,
+          0.5744290715119187
+        ]
+      },
+      "samples_f1": {
+        "count": 3,
+        "mean": 0.5874156554090219,
+        "sample_std": 0.006812969440732073,
+        "values": [
+          0.5862477734782876,
+          0.5947370730123632,
+          0.581262119736415
+        ]
+      },
+      "subset_accuracy": {
+        "count": 3,
+        "mean": 0.5135433941404091,
+        "sample_std": 0.009738131757305143,
+        "values": [
+          0.5122535470794177,
+          0.5238621706283397,
+          0.5045144647134697
+        ]
+      },
+      "weighted_f1": {
+        "count": 3,
+        "mean": 0.5559557002101733,
+        "sample_std": 0.007159037860507472,
+        "values": [
+          0.5616671003315823,
+          0.5479244079535885,
+          0.558275592345349
+        ]
+      }
+    },
+    "exp033-qwen-target-aligned": {
+      "macro_f1": {
+        "count": 1,
+        "mean": 0.44467516701518317,
+        "sample_std": 0.0,
+        "values": [
+          0.44467516701518317
+        ]
+      },
+      "macro_precision": {
+        "count": 1,
+        "mean": 0.5941826378501407,
+        "sample_std": 0.0,
+        "values": [
+          0.5941826378501407
+        ]
+      },
+      "macro_recall": {
+        "count": 1,
+        "mean": 0.4025249206888007,
+        "sample_std": 0.0,
+        "values": [
+          0.4025249206888007
+        ]
+      },
+      "micro_f1": {
+        "count": 1,
+        "mean": 0.5801628177438113,
+        "sample_std": 0.0,
+        "values": [
+          0.5801628177438113
+        ]
+      },
+      "samples_f1": {
+        "count": 1,
+        "mean": 0.5902068142532487,
+        "sample_std": 0.0,
+        "values": [
+          0.5902068142532487
+        ]
+      },
+      "subset_accuracy": {
+        "count": 1,
+        "mean": 0.5131748664086973,
+        "sample_std": 0.0,
+        "values": [
+          0.5131748664086973
+        ]
+      },
+      "weighted_f1": {
+        "count": 1,
+        "mean": 0.5592973234217796,
+        "sample_std": 0.0,
+        "values": [
+          0.5592973234217796
+        ]
+      }
+    }
+  },
+  "status": "Verified",
+  "test_split_accessed": true,
+  "verifier": {
+    "path": "experiments/goemotions/test-gate/verify_frozen_test.py",
+    "sha256": "dc1353e18ce31a17ef9e1702756c286f510aa9869bba9e5b0eadcd2f42143298"
+  },
+  "verifier_amendment": {
+    "id": "EXP-038-VERIFY-V2",
+    "reason": "The registered verifier compared ordered generated label IDs with a label-ID-sorted multi-hot reconstruction. V2 compares validated unique ID sets.",
+    "registered_verifier_sha256": "08687120e4dea5337fb23fa6e9ce9e152ae38dcfde97544b450b270ce8f3f675",
+    "scientific_outputs_changed": false
+  }
+}

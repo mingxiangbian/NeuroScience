@@ -2,6 +2,7 @@
 
 ---
 date: 2026-07-23
+last-reviewed: 2026-08-05
 status: active
 tags: [emotion-recognition, forum-text, llm, sources]
 project: llm-forum-text-emotion-recognition
@@ -37,9 +38,29 @@ project: llm-forum-text-emotion-recognition
 | Dataset | Relevance | Known boundary | Decision |
 | --- | --- | --- | --- |
 | TweetEval emotion | 适合先验证训练和评估管线 | Twitter 四分类与论坛长文本存在领域差异 | reproduce first |
-| GoEmotions | 58,009 条英文 Reddit 评论，27 类情绪加 neutral，可多标签 | 标签粒度高，官方基线环境较旧 | primary reference |
+| GoEmotions | 58,009 条英文 Reddit 评论，27 类情绪加 neutral，可多标签 | 官方 raw release 可闭集关联 metadata，但 train/dev 仅 157/48,836 个 parent comment 有文本；raw 未分 split | benchmark completed; closed-corpus context not viable at scale |
+| IAC 2.0 | 三个英文论辩论坛子库；4forums 有大量显式 parent 与 quote-response 关系 | 没有类别情绪标签；官方允许免费研究使用，但没有语料专属开放许可证或公开再分发条款，且含用户名及部分人口属性 | conditional research-use candidate; [audit complete](llm-forum-text-emotion-recognition-iac2-assessment.md) |
 | SemEval-2018 Affect in Tweets | SpanEmo 的英语多标签实验来源 | 需单独核查数据获取与许可 | pending review |
 | 自建论坛数据 | 与最终题目最直接相关 | 平台、授权、隐私、语言和再分发均未确认 | blocked |
+
+## Forum Context Compliance Check
+
+Reviewed: 2026-08-05
+
+| Source | Current official statement relevant to this project | Project consequence |
+| --- | --- | --- |
+| [GoEmotions README](https://github.com/google-research/google-research/blob/8dadc6c56e2c2e51a9dd7e0d4bf2840922b4b6c0/goemotions/README.md) | filtered TSV 的第三列为 comment ID；raw release 包含 `id`、`parent_id`、subreddit 和时间等元数据 | 闭集 join 已验证：48,836 个 train/dev targets 全部匹配 metadata，但只有 157 个 parent comment 在 raw 中有文本；详见 `DATA-FCTX-CJ-V1` |
+| [GoEmotions paper](https://aclanthology.org/2020.acl-main.372/) | 来源评论覆盖 Reddit 2005 年至 2019 年 1 月 | parent recovery 需要能覆盖这一历史区间的数据源 |
+| [Reddit developer access](https://support.reddithelp.com/hc/en-us/articles/14945211791892-Developer-Platform-Accessing-Reddit-Data) | 当前唯一授权的学术研究路径是 Reddit for Researchers；ML/AI training 需要明确同意 | 普通 API、网页抓取和未授权第三方工具不能用于本毕设恢复或训练 |
+| [Reddit for Researchers](https://support.reddithelp.com/hc/en-us/articles/49381918834964-Reddit-for-Researchers-Program) | 申请需要高校身份、机构 sponsor 和伦理批准或 exemption；当前数据说明为五年历史并有六个月延迟 | 标准覆盖没有说明包含 GoEmotions 的 2005--2019 parents，必须书面确认 |
+| [Responsible Builder Policy](https://support.reddithelp.com/hc/en-us/articles/42728983564564-Responsible-Builder-Policy) | 未经 RFR 的研究数据收集不被允许；数据保留、删除和 AI training 均受限制 | 在批准前不得下载新增 Reddit 数据、恢复 parent 或训练模型 |
+| [Deleted-data handling](https://support.reddithelp.com/hc/en-us/articles/24656943463828-What-happens-when-I-delete-my-data) | 第三方应停止展示或使用已删除内容 | 正式数据协议必须包含删除同步和销毁规则 |
+| [IAC 2.0 official release](https://nlds.engineering.ucsc.edu/iac2/) and [UCSC corpora policy](https://nlds.engineering.ucsc.edu/software/) | 官方 MySQL dump 提供显式 parent、quote 和论辩标注；UCSC 将 IAC V2 列为可供其他研究者免费研究使用；本地实测 4forums 有 403,374 个可解析 parent links | 本地非商业毕设标注、训练和评估有条件通过；没有类别情绪 gold labels，也没有原文、衍生数据、商用或 checkpoint 的明确发布权，详见 [专项评估](llm-forum-text-emotion-recognition-iac2-assessment.md) |
+
+当前决定记录于
+[`DATA-FCTX-PR-V1`](../projects/llm-forum-text-emotion-recognition/experiments/forum-context/protocols/data-source-parent-recovery-pilot-v1.md)
+与
+[`DATA-FCTX-CJ-V1`](../projects/llm-forum-text-emotion-recognition/experiments/forum-context/protocols/data-closed-corpus-parent-coverage-v1.md)。
 
 ## Source Checks Before Use
 

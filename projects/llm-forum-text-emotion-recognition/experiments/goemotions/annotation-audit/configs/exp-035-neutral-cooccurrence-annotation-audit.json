@@ -1,0 +1,166 @@
+{
+  "coding": {
+    "annotation_interpretation": [
+      "cross_rater_disagreement_likely",
+      "genuine_multilabel_possible",
+      "unclear_case",
+      "uncertain"
+    ],
+    "context_trigger": [
+      "reply_reference",
+      "pronoun_or_deixis",
+      "sarcasm_or_irony",
+      "external_event",
+      "none"
+    ],
+    "label_coherence": [
+      "both_plausible",
+      "emotion_only_plausible",
+      "neutral_only_plausible",
+      "ambiguous"
+    ],
+    "reviewer_confidence": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "standalone_decidability": [
+      "explicit",
+      "implicit_but_decidable",
+      "context_likely_needed",
+      "indeterminate"
+    ]
+  },
+  "data_protocol": "DATA-GOE-ANNOT-AUDIT-V1",
+  "experiment_id": "EXP-035",
+  "implementation": {
+    "data_protocol": {
+      "path": "experiments/goemotions/protocols/data-annotation-audit-v1.md",
+      "sha256": "d844cd76ecf55b31d49faa537255499252eed06ad225e1624c50827cdf763df6"
+    },
+    "experiment_protocol": {
+      "path": "experiments/goemotions/annotation-audit/protocols/exp-035-neutral-cooccurrence-annotation-audit.md",
+      "sha256": "0d9e96b63b0a0ca9b848504934e0779a761672ddb3c6b8877c7beeffd09e8936"
+    },
+    "finalizer": {
+      "path": "experiments/goemotions/annotation-audit/finalize_annotation_audit.py",
+      "sha256": "4ea7cbfd9a608d4c4d09b5e97a76d971e762300567abde14bd061174ea593ac1"
+    },
+    "runner": {
+      "path": "experiments/goemotions/annotation-audit/run_annotation_audit.py",
+      "sha256": "84e75195a0f31d014a7c1d1c678e60dca16ecd8f6621467ab39a80d82c2616a1"
+    },
+    "verifier": {
+      "path": "experiments/goemotions/annotation-audit/verify_annotation_audit.py",
+      "sha256": "ad74c1355f9a36a969d64bedb05f70a58f99b7c67f96feed3f306c3968d9e0b2"
+    }
+  },
+  "labels": [
+    "admiration",
+    "amusement",
+    "anger",
+    "annoyance",
+    "approval",
+    "caring",
+    "confusion",
+    "curiosity",
+    "desire",
+    "disappointment",
+    "disapproval",
+    "disgust",
+    "embarrassment",
+    "excitement",
+    "fear",
+    "gratitude",
+    "grief",
+    "joy",
+    "love",
+    "nervousness",
+    "optimism",
+    "pride",
+    "realization",
+    "relief",
+    "remorse",
+    "sadness",
+    "surprise",
+    "neutral"
+  ],
+  "official_source": {
+    "repository": "google-research/google-research",
+    "revision": "8dadc6c56e2c2e51a9dd7e0d4bf2840922b4b6c0"
+  },
+  "outputs": {
+    "run_dir": "experiments/goemotions/annotation-audit/runs/exp-035-neutral-cooccurrence-annotation-audit"
+  },
+  "parent_experiment": "EXP-034",
+  "qualitative_sample": {
+    "maximum_rows": 48,
+    "ranking_salt": "20260804:EXP-035",
+    "roles": [
+      {
+        "limit": 16,
+        "name": "aggregation_only"
+      },
+      {
+        "limit": 16,
+        "name": "same_rater_coselection"
+      },
+      {
+        "limit": 8,
+        "name": "any_unclear"
+      },
+      {
+        "limit": 4,
+        "name": "gold_cardinality_at_least_3"
+      },
+      {
+        "limit": null,
+        "name": "residual_fill"
+      }
+    ]
+  },
+  "raw_sources": [
+    {
+      "content_length": 14174600,
+      "etag": "8803568f912b257630aa623afd633cd0",
+      "last_modified": "Thu, 25 Jun 2020 16:58:54 GMT",
+      "md5_base64": "iANWj5ErJXYwqmI6/WM80A==",
+      "name": "goemotions_1.csv",
+      "url": "https://storage.googleapis.com/gresearch/goemotions/data/full_dataset/goemotions_1.csv"
+    },
+    {
+      "content_length": 14173154,
+      "etag": "b216e5afec22df139809f737f0d18b64",
+      "last_modified": "Thu, 25 Jun 2020 16:58:54 GMT",
+      "md5_base64": "shblr+wi3xOYCfc38NGLZA==",
+      "name": "goemotions_2.csv",
+      "url": "https://storage.googleapis.com/gresearch/goemotions/data/full_dataset/goemotions_2.csv"
+    },
+    {
+      "content_length": 14395164,
+      "etag": "b7d95087f78a54a7860a35e0272049e5",
+      "last_modified": "Thu, 25 Jun 2020 16:58:54 GMT",
+      "md5_base64": "t9lQh/eKVKeGCjXgJyBJ5Q==",
+      "name": "goemotions_3.csv",
+      "url": "https://storage.googleapis.com/gresearch/goemotions/data/full_dataset/goemotions_3.csv"
+    }
+  ],
+  "research_question": "For frozen GoEmotions train rows labelled neutral plus at least one emotion, how often is the target produced only by cross-rater aggregation, and how often is the standalone text plausibly context-dependent or label-ambiguous?",
+  "resource_budget": {
+    "api_cost_usd": 0,
+    "full_archive_successful_passes": 1,
+    "manual_review_rows": 48,
+    "maximum_wall_minutes": 45
+  },
+  "selection": {
+    "expected_rows": 1396,
+    "labels_path": "data/goemotions/official/emotions.txt",
+    "labels_sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89",
+    "simplified_test_path": "data/goemotions/official/test.tsv",
+    "source_train_rows_sha256": "6d2ce3b10b41365eba24d5d5aaa1afce66f6b3f043d49204559deb4b8b0a59d9",
+    "train_path": "data/goemotions/official/train.tsv",
+    "train_rows": 43410,
+    "train_sha256": "1c254a142be5c00e80d819b9ae1bbd36d94b2eeb8f4b1271846508d57e57d9c5"
+  },
+  "tier": "Major"
+}

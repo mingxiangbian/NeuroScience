@@ -113,23 +113,23 @@ assert.deepEqual(
 );
 assert.deepEqual(
   emotionData.verifiedEvidence.goEmotions.models.map((model) => model.value),
-  [0.203644, 0.241164, 0.451374, 0.489435],
-  "GoEmotions should expose the verified dev baselines and LoRA result without mixing TweetEval scores",
+  [0.196197, 0.233653, 0.450652, 0.488328, 0.444675],
+  "GoEmotions should expose the EXP-038 verified test matrix without mixing TweetEval scores",
 );
-assert.match(emotionData.verifiedEvidence.goEmotions.evaluation, /^DEV ·/, "GoEmotions results should be labeled as dev evidence");
-assert.match(emotionData.verifiedEvidence.goEmotions.gate, /test gate 关闭/, "GoEmotions should not imply official test access");
+assert.match(emotionData.verifiedEvidence.goEmotions.evaluation, /^Official test ·/, "GoEmotions results should be labeled as official test evidence");
+assert.match(emotionData.verifiedEvidence.goEmotions.gate, /Verified · Consumed/, "GoEmotions should expose the consumed frozen test gate");
 assert.deepEqual(
   emotionData.activeEvidenceSpine.nodes.map((node) => node.kind),
   ["research-question", "experiment", "evidence", "claim", "next"],
   "the active evidence spine should keep the RQ-to-next semantic order",
 );
-assert.equal(emotionData.activeEvidenceSpine.nodes[0].ref, "RQ-G2", "the active spine should belong to the active LLM research question");
-assert.equal(emotionData.activeEvidenceSpine.nodes[1].ref, "EXP-031", "the active spine should identify the completed ontology ablation");
-assert.equal(emotionData.activeEvidenceSpine.nodes[1].status, "verified", "EXP-031 should expose its independently verified status");
-assert.equal(emotionData.activeEvidenceSpine.nodes[2].ref, "EVID-020", "the ontology ablation should map to its evidence-ledger entry");
-assert.equal(emotionData.activeEvidenceSpine.nodes[2].status, "verified", "the EXP-031 aggregate should be verified evidence");
-assert.match(emotionData.activeEvidenceSpine.nodes[3].detail, /neutral.*0|inference-only/i, "the active claim should preserve the negative inference-only result");
-assert.notEqual(emotionData.activeEvidenceSpine.nodes[4].ref, "EXP-031", "the next dependency must not reuse the completed experiment ID");
+assert.equal(emotionData.activeEvidenceSpine.nodes[0].ref, "RQ-G1 · RQ-G2", "the active spine should connect the supervised and LLM test questions");
+assert.equal(emotionData.activeEvidenceSpine.nodes[1].ref, "EXP-038", "the active spine should identify the frozen formal test gate");
+assert.equal(emotionData.activeEvidenceSpine.nodes[1].status, "verified", "EXP-038 should expose its independently verified status");
+assert.equal(emotionData.activeEvidenceSpine.nodes[2].ref, "EVID-026", "the formal test should map to its evidence-ledger entry");
+assert.equal(emotionData.activeEvidenceSpine.nodes[2].status, "verified", "the EXP-038 aggregate should be verified evidence");
+assert.match(emotionData.activeEvidenceSpine.nodes[3].detail, /Macro-F1|BERT|标签基数/i, "the active claim should preserve the primary-metric and cardinality boundary");
+assert.notEqual(emotionData.activeEvidenceSpine.nodes[4].ref, "EXP-038", "the next dependency must not reuse the completed experiment ID");
 assert.equal(
   emotionData.dependencyRoute.find((step) => step.label.startsWith("EXP-028")).status,
   "failed",
@@ -142,13 +142,58 @@ assert.doesNotMatch(
 );
 assert.match(
   `${emotionData.actionDock.nextAction.title} ${emotionData.actionDock.nextAction.detail}`,
-  /target-aligned|训练目标.*prompt.*decoder/i,
-  "the next action should pre-register target-aligned retraining",
+  /上下文|probe|表征|论坛/i,
+  "the next action should expose the behavior-versus-representation scope gate",
 );
 assert.equal(
   emotionData.dependencyRoute.find((step) => step.label.startsWith("EXP-031")).status,
   "verified",
   "EXP-031 should remain independently verified in the dependency route",
+);
+assert.equal(
+  emotionData.dependencyRoute.find((step) => step.label.startsWith("EXP-035")).status,
+  "verified",
+  "EXP-035 should remain independently verified in the dependency route",
+);
+assert.equal(
+  emotionData.dependencyRoute.find((step) => step.label.startsWith("EXP-036")).status,
+  "verified",
+  "EXP-036 should be independently verified in the dependency route",
+);
+assert.equal(
+  emotionData.dependencyRoute.find((step) => step.label.startsWith("EXP-037")).status,
+  "verified",
+  "EXP-037 should be independently verified in the dependency route",
+);
+assert.equal(
+  emotionData.dependencyRoute.find((step) => step.label.startsWith("EXP-038")).status,
+  "verified",
+  "EXP-038 should be independently verified in the dependency route",
+);
+assert.equal(
+  emotionData.verifiedEvidence.goEmotions.raterAwareDiagnostic.comparison.classification,
+  "practical_tie_or_uncertain",
+  "the 174-row diagnostic should remain a local practical tie",
+);
+assert.equal(
+  emotionData.verifiedEvidence.goEmotions.raterAwareDiagnostic.boundary.includes("不改变 full-dev Macro-F1"),
+  true,
+  "the rater-aware diagnostic must not replace the full-dev official comparison",
+);
+assert.equal(
+  emotionData.verifiedEvidence.goEmotions.fullDevRaterAwareDiagnostic.comparison.classification,
+  "gap_remains",
+  "the full-dev diagnostic should preserve the verified Qwen-BERT gap",
+);
+assert.equal(
+  emotionData.verifiedEvidence.goEmotions.fullDevRaterAwareDiagnostic.comparison.materialShift,
+  false,
+  "rater-aware soft scoring should not be presented as a material shift",
+);
+assert.equal(
+  emotionData.verifiedEvidence.goEmotions.fullDevRaterAwareDiagnostic.comparison.softDelta,
+  -0.036218,
+  "the dashboard should expose the frozen full-dev soft Macro-F1 delta",
 );
 assert.deepEqual(
   emotionData.actionDock.testGates.map((gate) => gate.label),
@@ -171,15 +216,15 @@ assert.deepEqual(
 assert.deepEqual(
   emotionData.verifiedEvidence.goEmotions.comparisonContract,
   {
-    split: "dev",
+    split: "official-test",
     taskType: "multi-label",
     labelCount: 28,
     metric: "Macro-F1",
     scale: [0, 1],
-    testGate: "closed",
+    testGate: "consumed",
     comparisonScope: "within-dataset-only",
   },
-  "GoEmotions should expose a separate DEV-only comparison contract",
+  "GoEmotions should expose a separate consumed official-test comparison contract",
 );
 for (const dataset of [emotionData.verifiedEvidence.tweetEval, emotionData.verifiedEvidence.goEmotions]) {
   const models = new Map(dataset.models.map((model) => [model.experiment, model]));
@@ -204,7 +249,8 @@ assert.equal(emotionData.verifiedEvidence.tweetEval.models.find((model) => model
 assert.equal(emotionData.verifiedEvidence.tweetEval.models.find((model) => model.experiment === "EXP-015").comparison.delta, 0.017328, "domain pretraining should keep its frozen positive delta");
 assert.equal(emotionData.verifiedEvidence.goEmotions.models.find((model) => model.experiment === "EXP-020").comparison.interpretation, "descriptive-only", "different GoEmotions thresholds should not be presented as a pure ablation");
 assert.equal(emotionData.verifiedEvidence.goEmotions.models.find((model) => model.experiment === "EXP-029").uncertainty.runs, 3, "LoRA should report all three registered seeds");
-assert.equal(emotionData.verifiedEvidence.goEmotions.models.find((model) => model.experiment === "EXP-029").comparison.delta, 0.21021, "LoRA should preserve its frozen selected-Qwen dev delta");
+assert.equal(emotionData.verifiedEvidence.goEmotions.models.find((model) => model.experiment === "EXP-029").comparison.delta, -0.037676, "legacy LoRA should preserve its frozen test gap to BERT");
+assert.equal(emotionData.verifiedEvidence.goEmotions.models.find((model) => model.experiment === "EXP-033").uncertainty.runs, 1, "target-aligned LoRA should remain a single-seed test result");
 assert.doesNotMatch(
   JSON.stringify(emotionData.verifiedEvidence),
   /EXP-028|0\.310534|0\.306373/,

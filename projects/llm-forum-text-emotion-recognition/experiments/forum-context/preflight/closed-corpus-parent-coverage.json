@@ -1,0 +1,127 @@
+{
+  "access_boundary": {
+    "filtered_test_membership_used": false,
+    "filtered_test_tsv_read": false,
+    "missing_parents_backfilled": false,
+    "raw_emotion_labels_used": false,
+    "raw_release_is_unpartitioned": true,
+    "reddit_api_called": false,
+    "reddit_page_scraped": false,
+    "third_party_archive_used": false
+  },
+  "aggregate": {
+    "comment_parent": 28849,
+    "comment_parent_in_raw_text_available": 157,
+    "comment_parent_in_raw_unusable_text": 0,
+    "comment_parent_not_in_raw": 28692,
+    "missing_parent_id": 0,
+    "missing_parent_text_in_release": 48679,
+    "missing_parent_text_rate": 0.9967851584896388,
+    "parent_text_available_rate": 0.003214841510361209,
+    "self_parent": 0,
+    "submission_parent": 19987,
+    "target_matched_raw": 48836,
+    "target_missing_from_raw": 0,
+    "targets": 48836,
+    "unknown_parent_type": 0
+  },
+  "generated_at_utc": "2026-08-04T13:33:33.678609+00:00",
+  "implementation": {
+    "filename": "audit_closed_corpus_parent_coverage.py",
+    "sha256": "3cd3d33fadf3d6ffa84f0af746acc96a8bbdbb09fc7fe14c815b0a0fe407b045"
+  },
+  "privacy": {
+    "contains_comment_text": false,
+    "contains_parent_ids": false,
+    "contains_target_ids": false,
+    "contains_usernames": false,
+    "raw_text_processed_for_parent_availability": true
+  },
+  "protocol": {
+    "path": "experiments/forum-context/protocols/data-closed-corpus-parent-coverage-v1.md",
+    "sha256": "4bd382abf0e4214a89badfbf27766a93264d6cd6bb42d374c7f484342ab2d053"
+  },
+  "protocol_id": "DATA-FCTX-CJ-V1",
+  "raw_release": {
+    "conflict_field_occurrences": {},
+    "conflicting_unique_ids": 0,
+    "duplicate_annotation_rows": 153214,
+    "files": [
+      {
+        "bytes": 14174600,
+        "filename": "goemotions_1.csv",
+        "sha256": "cac049036bad5d68d1081f72b65f2cc51e4df82af05e3e22cfa747051cac1af3",
+        "source_url": "https://storage.googleapis.com/gresearch/goemotions/data/full_dataset/goemotions_1.csv"
+      },
+      {
+        "bytes": 14173154,
+        "filename": "goemotions_2.csv",
+        "sha256": "f699ecc5aa425c1720c1d02475f1e41815244b680bd75b282eb770d2c76cd84d",
+        "source_url": "https://storage.googleapis.com/gresearch/goemotions/data/full_dataset/goemotions_2.csv"
+      },
+      {
+        "bytes": 14395164,
+        "filename": "goemotions_3.csv",
+        "sha256": "467f1e7191af00f2e76cc7f425885c2dc304bea8aff284b10e8c460d22f2e1af",
+        "source_url": "https://storage.googleapis.com/gresearch/goemotions/data/full_dataset/goemotions_3.csv"
+      }
+    ],
+    "rater_annotation_rows": 211225,
+    "unique_comments": 58011
+  },
+  "splits": {
+    "dev": {
+      "counts": {
+        "comment_parent": 3158,
+        "comment_parent_in_raw_text_available": 18,
+        "comment_parent_in_raw_unusable_text": 0,
+        "comment_parent_not_in_raw": 3140,
+        "missing_parent_id": 0,
+        "missing_parent_text_in_release": 5408,
+        "missing_parent_text_rate": 0.9966826391448581,
+        "parent_text_available_rate": 0.003317360855141909,
+        "self_parent": 0,
+        "submission_parent": 2268,
+        "target_matched_raw": 5426,
+        "target_missing_from_raw": 0,
+        "targets": 5426,
+        "unique_available_parent_ids": 18,
+        "unique_comment_parent_ids": 3155,
+        "unknown_parent_type": 0
+      },
+      "source": {
+        "bytes": 439059,
+        "path": "data/goemotions/official/dev.tsv",
+        "sha256": "575489c079c9de1097062a01738f998590d6b7ead66dd1c9fd1d2ba01fd8bc62"
+      },
+      "split": "dev"
+    },
+    "train": {
+      "counts": {
+        "comment_parent": 25691,
+        "comment_parent_in_raw_text_available": 139,
+        "comment_parent_in_raw_unusable_text": 0,
+        "comment_parent_not_in_raw": 25552,
+        "missing_parent_id": 0,
+        "missing_parent_text_in_release": 43271,
+        "missing_parent_text_rate": 0.9967979728173232,
+        "parent_text_available_rate": 0.0032020271826768026,
+        "self_parent": 0,
+        "submission_parent": 17719,
+        "target_matched_raw": 43410,
+        "target_missing_from_raw": 0,
+        "targets": 43410,
+        "unique_available_parent_ids": 139,
+        "unique_comment_parent_ids": 25622,
+        "unknown_parent_type": 0
+      },
+      "source": {
+        "bytes": 3519053,
+        "path": "data/goemotions/official/train.tsv",
+        "sha256": "1c254a142be5c00e80d819b9ae1bbd36d94b2eeb8f4b1271846508d57e57d9c5"
+      },
+      "split": "train"
+    }
+  },
+  "status": "completed"
+}

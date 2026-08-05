@@ -1,0 +1,25 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "audit_id": "PRE-EXP-033",
+  "completed_at_utc": "2026-08-03T05:05:07.880895+00:00",
+  "formal_training_authorized": false,
+  "independent_checks": {
+    "all_official_targets_preserved": true,
+    "all_prepared_rows_reconstructed": 43410,
+    "closed_grammar_rejected_exactly_neutral_cooccurrences": 1396,
+    "full_prompt_inherited_from_exp_032": true,
+    "mlx_lm_target_context_equivalence_rows": 43410,
+    "neutral_cooccurrence_rows": 1396,
+    "private_data_gitignored": true,
+    "smoke_covers_all_labels": true,
+    "smoke_neutral_cooccurrence_rows": 16,
+    "training_hyperparameters_inherited_from_exp_029": true
+  },
+  "model_forward_or_backward_executed": false,
+  "next_required_step": "Implement and audit the formal runner, then pass one short train-only smoke before asking for full-training authorization.",
+  "status": "Passed",
+  "test_split_accessed": false,
+  "validation_split_accessed": false
+}

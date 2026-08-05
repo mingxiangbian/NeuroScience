@@ -1,0 +1,53 @@
+{
+  "accessed_splits": [
+    "test"
+  ],
+  "artifacts": {
+    "generation-records.jsonl": {
+      "bytes": 4951069,
+      "path": "experiments/goemotions/test-gate/runs/exp-038-frozen-test/exp033-qwen-seed42-target-aligned/generation-records.jsonl",
+      "sha256": "8d161e20ff32ab1d78c4ca3b7aa5133c30b7260cea3deb8c732a1cb313585837"
+    },
+    "metrics.json": {
+      "bytes": 8092,
+      "path": "experiments/goemotions/test-gate/runs/exp-038-frozen-test/exp033-qwen-seed42-target-aligned/metrics.json",
+      "sha256": "6b712a35bc25f7c952e144cc824ca6cadfc84e055f363c20f7fbc8088d614827"
+    },
+    "multilabel-confusion-matrix.csv": {
+      "bytes": 779,
+      "path": "experiments/goemotions/test-gate/runs/exp-038-frozen-test/exp033-qwen-seed42-target-aligned/multilabel-confusion-matrix.csv",
+      "sha256": "a084fa113ab7a5cb6f50fba4b527280111e07046da036e487ad090210f626e92"
+    },
+    "per-label-metrics.csv": {
+      "bytes": 2106,
+      "path": "experiments/goemotions/test-gate/runs/exp-038-frozen-test/exp033-qwen-seed42-target-aligned/per-label-metrics.csv",
+      "sha256": "f4288f3f9ab3f6dceb51b64bfaecfcac3ff44382193032cd0f0c03cd4b7ef65e"
+    },
+    "predictions.csv": {
+      "bytes": 1608194,
+      "path": "experiments/goemotions/test-gate/runs/exp-038-frozen-test/exp033-qwen-seed42-target-aligned/predictions.csv",
+      "sha256": "a02a8054c2b409a4797797ad93a6bdb14c41b035061635fc0f7dac28374e11e0"
+    }
+  },
+  "completed_at_utc": "2026-08-04T09:36:39.191095+00:00",
+  "config_sha256": "87177da88dfb1ebb9bc78a71ac11aca87b8b85c98b126f40bb9c056eba316b0f",
+  "generation_count": 5427,
+  "metrics": {
+    "macro_f1": 0.44467516701518317,
+    "micro_f1": 0.5801628177438113,
+    "subset_accuracy": 0.5131748664086973,
+    "weighted_f1": 0.5592973234217796
+  },
+  "progress": {
+    "completed": 5427,
+    "total": 5427
+  },
+  "raw_comment_ids_stored": false,
+  "raw_input_text_stored": false,
+  "source_experiment_id": "EXP-033",
+  "started_at_utc": "2026-08-04T08:27:16.269843+00:00",
+  "status": "Completed; pending independent verification",
+  "test_rows_accessed": 5427,
+  "test_split_accessed": true,
+  "unit_id": "exp033-qwen-seed42-target-aligned"
+}

@@ -1,0 +1,61 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "completed_at_utc": "2026-08-03T08:05:59.063946+00:00",
+  "contract": {
+    "bytes": 5671,
+    "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-formal-gate-contract-v1.json",
+    "sha256": "bcaa61d1ddea50c7f3dfda6f74d7d8183370ba22ab9fda5196c69362aa73ab70"
+  },
+  "dry_run": {
+    "bytes": 2616,
+    "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-formal-gate-dry-run-v1.json",
+    "sha256": "901fa63ab331754367ee1977c6de6c2dd0d4cc0eaab9e2ca306252b54f153bfe"
+  },
+  "experiment_id": "EXP-033",
+  "formal_training_authorized": false,
+  "gate_id": "EXP-033-FORMAL-GATE-V1",
+  "implementation": {
+    "imports_runner": false,
+    "verifier": {
+      "bytes": 11801,
+      "path": "experiments/goemotions/qwen3-1.7b/verify_target_aligned_formal_gate_v1.py",
+      "sha256": "a951a3f9ddd5d423b90f1c820983c0b34ce9a571082684c164cb884b9ef4852c"
+    }
+  },
+  "model_forward_or_backward_executed": false,
+  "next_required_step": "Create a separately hash-bound formal-seed-42 authorization, then execute the frozen train-only runtime once.",
+  "recalculated": {
+    "config": {
+      "bytes": 12302,
+      "path": "experiments/goemotions/qwen3-1.7b/configs/exp-033-target-aligned-lora-v3.json",
+      "sha256": "267ea25e997496c443a025efc741148943348c6220753faa8c3dae9aa09abea4"
+    },
+    "formal_runtime": {
+      "bytes": 1340,
+      "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-runtime-seed-42-v3.json",
+      "sha256": "1c1182b6f54bcb038f76636e22be99c66ae6e068d7260261b632528c8dd602bb"
+    },
+    "mlx_lora_cli": {
+      "bytes": 199,
+      "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/mlx_lm.lora",
+      "sha256": "e809f4488d53ca0906a3ab224416b8c7c898b3ad786d59be828b10cd113be293"
+    },
+    "smoke_verification": {
+      "bytes": 4195,
+      "path": "experiments/goemotions/qwen3-1.7b/preflight/exp-033-smoke-verification.json",
+      "sha256": "dc4da29ab6073d6204e92ca9e33048c75ca71491c5cea85b8e8a9465b78ca7cd"
+    },
+    "test_split_absent": true,
+    "train_data": {
+      "bytes": 42366046,
+      "path": "experiments/goemotions/qwen3-1.7b/private-cache/pre-exp-033-target-aligned-data/train.jsonl",
+      "sha256": "493ecaafd6cd6ed5ee20f8ec3c262e291a6eee826a97816955b53effc1c1c09f"
+    }
+  },
+  "status": "Passed",
+  "test_split_accessed": false,
+  "validation_split_accessed": false,
+  "verification_id": "EXP-033-FORMAL-GATE-VERIFY-V1"
+}

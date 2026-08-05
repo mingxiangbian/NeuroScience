@@ -1,0 +1,128 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "api_cost_usd": 0,
+  "artifacts": {
+    "cache_records": {
+      "bytes": 32566,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-032-acceleration-preflight/kv-cache-records.json",
+      "sha256": "3346140fc0ea6e74ff9a82ca62685230948cade20f0e106885426a1a6a42454b"
+    },
+    "cache_summary": {
+      "bytes": 658,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-032-acceleration-preflight/kv-cache-summary.json",
+      "sha256": "2673798714a9adbf182b335c8b6f80f1abd0976d6488c1149f08a7c2c9cba6d0"
+    },
+    "training_summary": {
+      "bytes": 5675,
+      "path": "experiments/goemotions/qwen3-1.7b/runs/exp-032-acceleration-preflight/training-benchmark.json",
+      "sha256": "c1672704499e84fd84046e371f3d691f611cb338a9d0d6547ee5de8db1bff9ba"
+    }
+  },
+  "command": [
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+    "experiments/goemotions/qwen3-1.7b/run_acceleration_preflight.py",
+    "run"
+  ],
+  "completed_at_utc": "2026-08-03T04:38:04.628077+00:00",
+  "data": {
+    "cache_sample_rows": 32,
+    "prepared_training_rows_available": 43410,
+    "split": "train",
+    "test_rows_accessed": 0,
+    "training_rows_processed_per_condition": 1000,
+    "validation_rows_accessed": 0
+  },
+  "duration_seconds": 1161.286524,
+  "environment": {
+    "huggingface-hub": "1.26.0",
+    "mlx": "0.32.0",
+    "mlx-lm": "0.31.3",
+    "numpy": "2.4.6",
+    "transformers": "5.14.1"
+  },
+  "experiment_id": "EXP-032",
+  "git": {
+    "commit": "3c1c2d4d9178e8b8235fb2a52c41f844ba897cc7",
+    "dirty": true,
+    "dirty_path_count": 26
+  },
+  "hardware": {
+    "architecture": "arm64",
+    "chip": "Apple M3",
+    "memory_bytes": 17179869184,
+    "platform": "macOS-26.5.2-arm64-arm-64bit"
+  },
+  "inference_cache_decision": {
+    "end_to_end_speedup": 1.2757256103656265,
+    "exact_token_identity_rate": 0.96875,
+    "selected": "full-prompt"
+  },
+  "raw_comment_ids_stored": false,
+  "raw_input_text_stored": false,
+  "rq_id": "RQ-G2",
+  "source_artifacts": {
+    "config": {
+      "bytes": 4996,
+      "path": "experiments/goemotions/qwen3-1.7b/configs/exp-032-acceleration-preflight.json",
+      "sha256": "07ff923caf53914e8422fee822ac4069c958f087f080fbb4e91235e0ecdd3e1a"
+    },
+    "constraint": {
+      "bytes": 2358,
+      "path": "experiments/goemotions/qwen3-1.7b/label_json_constraint_neutral_cooccurrence.py",
+      "sha256": "336218c9a44fc4d475d9197f05afcb81096f793e141e03fed96cbe76cb99d880"
+    },
+    "labels": {
+      "bytes": 248,
+      "path": "data/goemotions/official/emotions.txt",
+      "sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89"
+    },
+    "model_manifest": {
+      "bytes": 4235,
+      "path": "models/qwen3-1.7b/manifest.json",
+      "sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877"
+    },
+    "ontology_runner": {
+      "bytes": 44154,
+      "path": "experiments/goemotions/qwen3-1.7b/run_neutral_ontology_ablation.py",
+      "sha256": "08e739f3aa9b3b0bc353769a47587a346f53ea29192d3d0bf0c474052b05097b"
+    },
+    "parent_config": {
+      "bytes": 8007,
+      "path": "experiments/goemotions/qwen3-1.7b/configs/exp-029-instruct-lora.json",
+      "sha256": "14fe020eb86331d987561240ebfa1da70d724f0d622d74f7879a6364d4aba4ed"
+    },
+    "parent_runner": {
+      "bytes": 68098,
+      "path": "experiments/goemotions/qwen3-1.7b/run_lora.py",
+      "sha256": "effbd2a5803b78289543eff13a7ceec59867dbdbbfc0b8a78bb1de9a87f3cc5f"
+    },
+    "prompt": {
+      "bytes": 616,
+      "path": "experiments/goemotions/qwen3-1.7b/prompts/exp-031-neutral-cooccurrence-v1.json",
+      "sha256": "94479a8d543e75a22be48925bd44bd7767526747e9a13a986279ab634a531ec3"
+    },
+    "runner": {
+      "bytes": 32573,
+      "path": "experiments/goemotions/qwen3-1.7b/run_acceleration_preflight.py",
+      "sha256": "e5f2fee053cfddd361d1c059e8170cac964557cf70f969a68a505c67005d11d4"
+    },
+    "verifier": {
+      "bytes": 11780,
+      "path": "experiments/goemotions/qwen3-1.7b/verify_acceleration_preflight.py",
+      "sha256": "174b4a42b60342f726b849089fcd3aaadb35b51292d4240a55f95dd8676ef269"
+    }
+  },
+  "stage": "target-aligned-retraining-acceleration-preflight",
+  "started_at_utc": "2026-08-03T04:18:43.341567+00:00",
+  "status": "Completed",
+  "test_split_accessed": false,
+  "tier": "Minor",
+  "training_decision": {
+    "selected": "batch2-grad5",
+    "steady_rows_per_second_speedup": 0.9818526543878656
+  },
+  "validation_split_accessed": false,
+  "working_directory": "/Users/phoenix/Assistant/NeuroScience"
+}

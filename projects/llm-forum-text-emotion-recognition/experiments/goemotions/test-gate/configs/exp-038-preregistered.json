@@ -1,0 +1,540 @@
+{
+  "authorization": {
+    "approved": true,
+    "approved_at": "2026-08-04",
+    "scope": "One formal test inference for each of the nine listed frozen units",
+    "source": "Explicit user authorization in the active Codex task"
+  },
+  "data": {
+    "dev": {
+      "bytes": 439059,
+      "expected_rows": 5426,
+      "path": "data/goemotions/official/dev.tsv",
+      "sha256": "575489c079c9de1097062a01738f998590d6b7ead66dd1c9fd1d2ba01fd8bc62"
+    },
+    "labels": {
+      "bytes": 248,
+      "path": "data/goemotions/official/emotions.txt",
+      "sha256": "45c3ef86782d2a4d7fedcd6d8c111aa0d0e94720689bd164fac94fefb4495a89"
+    },
+    "source_revision": "8dadc6c56e2c2e51a9dd7e0d4bf2840922b4b6c0",
+    "test": {
+      "expected_rows": 5427,
+      "path": "data/goemotions/official/test.tsv",
+      "sha256": "TO_BE_BOUND_AFTER_ACQUISITION",
+      "source_url": "https://raw.githubusercontent.com/google-research/google-research/8dadc6c56e2c2e51a9dd7e0d4bf2840922b4b6c0/goemotions/data/test.tsv"
+    }
+  },
+  "evaluation": {
+    "accuracy_definition": "strict subset/exact-match accuracy",
+    "practical_tie_absolute_macro_f1": 0.005,
+    "primary_metric": "macro_f1_all_28_labels",
+    "required_metrics": [
+      "macro_precision",
+      "macro_recall",
+      "macro_f1",
+      "micro_precision",
+      "micro_recall",
+      "micro_f1",
+      "weighted_precision",
+      "weighted_recall",
+      "weighted_f1",
+      "samples_precision",
+      "samples_recall",
+      "samples_f1",
+      "strict_subset_accuracy",
+      "hamming_loss",
+      "label_accuracy",
+      "per_label_precision_recall_f1_support",
+      "per_label_multilabel_confusion_matrix",
+      "gold_and_predicted_label_cardinality",
+      "empty_prediction_rows"
+    ],
+    "three_seed_dispersion": "sample_standard_deviation"
+  },
+  "experiment_id": "EXP-038",
+  "external_reference": {
+    "directly_comparable_boundary": "Same official test split and full 28-label task, but a modern PyTorch/Transformers/MPS implementation rather than the paper's TensorFlow Estimator code",
+    "paper_bert_test_macro_f1": 0.46,
+    "paper_reference_artifact": {
+      "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/aggregate_metrics.json",
+      "sha256": "5e81a8877bdbade1fd8de1d8280253c2d014c1033ef6aebf51cafc3e36d16e7e"
+    }
+  },
+  "output_dir": "experiments/goemotions/test-gate/runs/exp-038-frozen-test",
+  "registered_artifacts": {
+    "acquisition": {
+      "path": "experiments/goemotions/test-gate/acquire_test.py",
+      "sha256": "c0acffbbdc44074ed16a8c27d850799ad896423e2031df67c1cfadb2ca43012c"
+    },
+    "classical_bert_runner": {
+      "path": "experiments/goemotions/test-gate/evaluate_classical_bert.py",
+      "sha256": "ec9a6409df350e5e9d114365cbb032ac60eea43708fded3cde86bb3c364e7e25"
+    },
+    "common": {
+      "path": "experiments/goemotions/test-gate/test_gate_common.py",
+      "sha256": "1bcf2842a15f3aa842875b69aa2cb7e363c41e59201cd119290ee6f0e11c92b6"
+    },
+    "finalizer": {
+      "path": "experiments/goemotions/test-gate/finalize_frozen_test.py",
+      "sha256": "e88cb83c32cdd98789923ade1d72043e98fcd77c00cac439bb80753696bd5d77"
+    },
+    "qwen_metrics": {
+      "path": "experiments/goemotions/qwen3-1.7b/llm_full_dev_metrics.py",
+      "sha256": "38e50c725a5f065d0babb263ad497b5d8dc21ad6edcd11a5e4d4c79310ff44d4"
+    },
+    "qwen_runner": {
+      "path": "experiments/goemotions/test-gate/evaluate_qwen.py",
+      "sha256": "9d290fb77ff57b225f5fd3a71928907cfd57589713596e9807e81abab4b61501"
+    },
+    "protocol": {
+      "path": "experiments/goemotions/test-gate/protocols/exp-038-frozen-test-gate.md",
+      "sha256": "f73516207db0c7d22fe054b5f4fc3a505e2bbcc57663f562d9829fe8aac29fb3"
+    },
+    "verifier": {
+      "path": "experiments/goemotions/test-gate/verify_frozen_test.py",
+      "sha256": "08687120e4dea5337fb23fa6e9ce9e152ae38dcfde97544b450b270ce8f3f675"
+    }
+  },
+  "report_groups": [
+    {
+      "family": "TF-IDF + OVR Logistic Regression",
+      "historical_ontology_alignment": "aligned with the official 28-label targets",
+      "id": "exp018-tfidf",
+      "unit_ids": [
+        "exp018-tfidf"
+      ]
+    },
+    {
+      "family": "BERT-base-cased supervised encoder",
+      "historical_ontology_alignment": "aligned with the official 28-label targets",
+      "id": "exp020-bert",
+      "unit_ids": [
+        "exp020-bert-seed42",
+        "exp020-bert-seed43",
+        "exp020-bert-seed44"
+      ]
+    },
+    {
+      "family": "Qwen3-1.7B post-trained prompting",
+      "historical_ontology_alignment": "inference ontology forbids neutral plus emotion",
+      "id": "exp025-qwen-base",
+      "unit_ids": [
+        "exp025-qwen-few-shot"
+      ]
+    },
+    {
+      "family": "Qwen3-1.7B LoRA historical",
+      "historical_ontology_alignment": "misaligned: neutral removed from 1396 co-occurring train targets",
+      "id": "exp029-qwen-lora-legacy",
+      "unit_ids": [
+        "exp029-qwen-seed42",
+        "exp029-qwen-seed43",
+        "exp029-qwen-seed44"
+      ]
+    },
+    {
+      "family": "Qwen3-1.7B LoRA target-aligned",
+      "historical_ontology_alignment": "aligned: exact official 28-label target retained",
+      "id": "exp033-qwen-target-aligned",
+      "unit_ids": [
+        "exp033-qwen-seed42-target-aligned"
+      ]
+    }
+  ],
+  "resource_budget": {
+    "api_cost_usd_max": 0,
+    "bert_classical_wall_time_hours_max_total": 2,
+    "formal_test_units": 9,
+    "peak_mlx_memory_gb_max": 14,
+    "qwen_wall_time_hours_max_per_unit": 4,
+    "qwen_wall_time_hours_max_total": 20
+  },
+  "rq_ids": [
+    "RQ-G1",
+    "RQ-G2"
+  ],
+  "stage": "formal-frozen-test-gate",
+  "test_policy": {
+    "allow_checkpoint_selection": false,
+    "allow_ensemble": false,
+    "allow_post_result_tuning": false,
+    "evaluate_every_listed_unit_once": true,
+    "technical_resume_only": true
+  },
+  "tier": "Major",
+  "units": [
+    {
+      "family": "TF-IDF + OVR Logistic Regression",
+      "historical_ontology_alignment": "aligned with the official 28-label targets",
+      "id": "exp018-tfidf",
+      "model": {
+        "path": "experiments/goemotions/tfidf-ovr-logreg/runs/exp-018-tfidf-ovr-logreg/model.joblib",
+        "sha256": "7448ab735691dde2f87f48bf85d00c640fe36ee0b668bf4e8f8a4d08ff22e452"
+      },
+      "seed": null,
+      "source_experiment_id": "EXP-018",
+      "source_predictions": {
+        "path": "experiments/goemotions/tfidf-ovr-logreg/runs/exp-018-tfidf-ovr-logreg/predictions.csv",
+        "sha256": "c54d1ba5ee1c4f78122db5c8cedaffa33211b5e15165520a4f9eb9ada263d901"
+      },
+      "source_run": {
+        "path": "experiments/goemotions/tfidf-ovr-logreg/runs/exp-018-tfidf-ovr-logreg/run.json",
+        "sha256": "c7b29b8bfd393437e41813444894b12e3467aca4c3d99433402fe4ea8da60e6c"
+      },
+      "source_verification": {
+        "path": "experiments/goemotions/tfidf-ovr-logreg/runs/exp-018-tfidf-ovr-logreg/verification.json",
+        "sha256": "8876122b537119f9292296245febc51f3e499fee94c82022cb01d62c79fa7874"
+      },
+      "threshold": 0.5,
+      "type": "sklearn_joblib",
+      "validation_macro_f1": 0.20364430957028798
+    },
+    {
+      "batch_size": 64,
+      "family": "BERT-base-cased supervised encoder",
+      "historical_ontology_alignment": "aligned with the official 28-label targets",
+      "id": "exp020-bert-seed42",
+      "max_sequence_length": 50,
+      "model": {
+        "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/seed-42/final-model/model.safetensors",
+        "sha256": "f141c4b1b55e8828ef34148d640796c506e8385bee1f02b26e5c36791358fa5d"
+      },
+      "model_config": {
+        "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/seed-42/final-model/config.json",
+        "sha256": "53c2da2f51690dd04994a3804924ddebfc8b93f6c59918b18964b5957ac57c19"
+      },
+      "model_manifest": {
+        "path": "models/bert-base-cased/manifest.json",
+        "sha256": "795076f67146a80a2bd875d198305dcd663c84feccdf314b7b426354a1b6d75b"
+      },
+      "seed": 42,
+      "source_experiment_id": "EXP-020",
+      "source_predictions": {
+        "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/seed-42/predictions.csv",
+        "sha256": "eadde158ab9d9b42a0dffc554ec662b6d9aeb7bd4376c32c1c6ac310dc7e57b3"
+      },
+      "source_run": {
+        "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/run.json",
+        "sha256": "8775f32ce7b10a1933230988d3757f4f110a802a98b013cc42d6b1cd2217c6b8"
+      },
+      "source_verification": {
+        "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/verification.json",
+        "sha256": "0a97b9af655c26d33d6c7e96aa1b54c301be2ec31ba222ccafbdad8b79d3780b"
+      },
+      "threshold": 0.3,
+      "tokenizer_snapshot": "models/bert-base-cased/snapshot",
+      "type": "bert_checkpoint",
+      "validation_macro_f1": 0.4787528584349316
+    },
+    {
+      "batch_size": 64,
+      "family": "BERT-base-cased supervised encoder",
+      "historical_ontology_alignment": "aligned with the official 28-label targets",
+      "id": "exp020-bert-seed43",
+      "max_sequence_length": 50,
+      "model": {
+        "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/seed-43/final-model/model.safetensors",
+        "sha256": "533ea076ac8d8affcb05a26b77f400647fda5210df8a327924c2fb2b617c7485"
+      },
+      "model_config": {
+        "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/seed-43/final-model/config.json",
+        "sha256": "53c2da2f51690dd04994a3804924ddebfc8b93f6c59918b18964b5957ac57c19"
+      },
+      "model_manifest": {
+        "path": "models/bert-base-cased/manifest.json",
+        "sha256": "795076f67146a80a2bd875d198305dcd663c84feccdf314b7b426354a1b6d75b"
+      },
+      "seed": 43,
+      "source_experiment_id": "EXP-020",
+      "source_predictions": {
+        "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/seed-43/predictions.csv",
+        "sha256": "cdae577732f10872326ab0ef263e61ad3a736ae56a224f9b5fdcbbe70a29e317"
+      },
+      "source_run": {
+        "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/run.json",
+        "sha256": "8775f32ce7b10a1933230988d3757f4f110a802a98b013cc42d6b1cd2217c6b8"
+      },
+      "source_verification": {
+        "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/verification.json",
+        "sha256": "0a97b9af655c26d33d6c7e96aa1b54c301be2ec31ba222ccafbdad8b79d3780b"
+      },
+      "threshold": 0.3,
+      "tokenizer_snapshot": "models/bert-base-cased/snapshot",
+      "type": "bert_checkpoint",
+      "validation_macro_f1": 0.48870872238694635
+    },
+    {
+      "batch_size": 64,
+      "family": "BERT-base-cased supervised encoder",
+      "historical_ontology_alignment": "aligned with the official 28-label targets",
+      "id": "exp020-bert-seed44",
+      "max_sequence_length": 50,
+      "model": {
+        "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/seed-44/final-model/model.safetensors",
+        "sha256": "56b9fd21e5cc8e0a8820f2d47b3a1e4dcf3b47802deeeed271e1bed2afc0b526"
+      },
+      "model_config": {
+        "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/seed-44/final-model/config.json",
+        "sha256": "53c2da2f51690dd04994a3804924ddebfc8b93f6c59918b18964b5957ac57c19"
+      },
+      "model_manifest": {
+        "path": "models/bert-base-cased/manifest.json",
+        "sha256": "795076f67146a80a2bd875d198305dcd663c84feccdf314b7b426354a1b6d75b"
+      },
+      "seed": 44,
+      "source_experiment_id": "EXP-020",
+      "source_predictions": {
+        "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/seed-44/predictions.csv",
+        "sha256": "b4d35702dc75eb75f2aba20cf5e94c53fad516b52de769c910bfe856c99d3bce"
+      },
+      "source_run": {
+        "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/run.json",
+        "sha256": "8775f32ce7b10a1933230988d3757f4f110a802a98b013cc42d6b1cd2217c6b8"
+      },
+      "source_verification": {
+        "path": "experiments/goemotions/bert-base/runs/exp-020-bert-base-cased/verification.json",
+        "sha256": "0a97b9af655c26d33d6c7e96aa1b54c301be2ec31ba222ccafbdad8b79d3780b"
+      },
+      "threshold": 0.3,
+      "tokenizer_snapshot": "models/bert-base-cased/snapshot",
+      "type": "bert_checkpoint",
+      "validation_macro_f1": 0.5008434894529215
+    },
+    {
+      "constraint": {
+        "path": "experiments/goemotions/qwen3-1.7b/label_json_constraint.py",
+        "sha256": "6e4d1d21d79d2fed3c8a5d118748591db6e72cfcfefb74386f913fb5fd164efa"
+      },
+      "constraint_mode": "closed-neutral",
+      "family": "Qwen3-1.7B post-trained prompting",
+      "historical_ontology_alignment": "inference ontology forbids neutral plus emotion",
+      "id": "exp025-qwen-few-shot",
+      "max_new_tokens": 64,
+      "model_manifest": {
+        "path": "models/qwen3-1.7b/manifest.json",
+        "sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877"
+      },
+      "model_path": "models/qwen3-1.7b/mlx-bf16",
+      "prompt": {
+        "path": "experiments/goemotions/qwen3-1.7b/prompts/exp-022-resource-v1.json",
+        "sha256": "2ce7083d41df7ff15292b4211bba26e5403d9cd66c67f8f12f9386cb99bf328c"
+      },
+      "prompt_mode": "closed-neutral",
+      "scientific_condition": "few-shot-synthetic-3",
+      "seed": null,
+      "sequence_score_space": "closed-neutral constrained label-name JSON",
+      "source_experiment_id": "EXP-025",
+      "source_predictions": {
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/generation-records.jsonl",
+        "sha256": "eb4eaa30c3426a3b08697624d3dbbe73c437b5f5b0d8e433e7d2d4313cd4aa5f"
+      },
+      "source_run": {
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/run.json",
+        "sha256": "bad55270df92503f64ab7bb1090587346ad9f9ca82d78fbd70fc6e66874f8063"
+      },
+      "source_verification": {
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/verification.json",
+        "sha256": "3d095e27e24052f64e55cbeeeed2f37775b129f3c4de111f4c90b2e1bde9279c"
+      },
+      "type": "qwen_generation",
+      "validation_macro_f1": 0.2411641547489156
+    },
+    {
+      "adapter_config": {
+        "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-029-instruct-lora/seed-42/adapter_config.json",
+        "sha256": "2cb6f916d898538442369cb1b1bf7348d6764d557fdc64b2dc4121fc8876d48f"
+      },
+      "adapter_weights": {
+        "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-029-instruct-lora/seed-42/adapters.safetensors",
+        "sha256": "77624d77d2ba2225dcf51e7fbf9a8131aa746bfd0004d72ae203360fedfe88ff"
+      },
+      "constraint": {
+        "path": "experiments/goemotions/qwen3-1.7b/label_json_constraint.py",
+        "sha256": "6e4d1d21d79d2fed3c8a5d118748591db6e72cfcfefb74386f913fb5fd164efa"
+      },
+      "constraint_mode": "closed-neutral",
+      "family": "Qwen3-1.7B LoRA historical",
+      "historical_ontology_alignment": "misaligned: neutral removed from 1396 co-occurring train targets",
+      "id": "exp029-qwen-seed42",
+      "max_new_tokens": 64,
+      "model_manifest": {
+        "path": "models/qwen3-1.7b/manifest.json",
+        "sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877"
+      },
+      "model_path": "models/qwen3-1.7b/mlx-bf16",
+      "prompt": {
+        "path": "experiments/goemotions/qwen3-1.7b/prompts/exp-022-resource-v1.json",
+        "sha256": "2ce7083d41df7ff15292b4211bba26e5403d9cd66c67f8f12f9386cb99bf328c"
+      },
+      "prompt_mode": "closed-neutral",
+      "scientific_condition": "zero-shot",
+      "seed": 42,
+      "sequence_score_space": "closed-neutral constrained label-name JSON",
+      "source_experiment_id": "EXP-029",
+      "source_predictions": {
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-42/generation-records.jsonl",
+        "sha256": "41f191377fd14ff2667a90c064178cb665f9d0e6b5ccbe197302423562bad980"
+      },
+      "source_run": {
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-42/run.json",
+        "sha256": "50e0750a2ed5347df43c43dda2b0184c1da12a7f483ab53d7e8b230de0c7a6b6"
+      },
+      "source_verification": {
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-42/verification.json",
+        "sha256": "6a80bd7a76299c803d04baf27e28f0984540c1cd3d1488bb572120478e508b87"
+      },
+      "type": "qwen_generation",
+      "validation_macro_f1": 0.43720532360391057
+    },
+    {
+      "adapter_config": {
+        "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-029-instruct-lora/seed-43/adapter_config.json",
+        "sha256": "bf130be560285a980a45a33170ffeddd3f4a6706c6c1539a588b60eea3305247"
+      },
+      "adapter_weights": {
+        "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-029-instruct-lora/seed-43/adapters.safetensors",
+        "sha256": "8265d98f1ab8bb3ea40dff901aede2b56dba520c351acf97ea26f0a6e0e8f806"
+      },
+      "constraint": {
+        "path": "experiments/goemotions/qwen3-1.7b/label_json_constraint.py",
+        "sha256": "6e4d1d21d79d2fed3c8a5d118748591db6e72cfcfefb74386f913fb5fd164efa"
+      },
+      "constraint_mode": "closed-neutral",
+      "family": "Qwen3-1.7B LoRA historical",
+      "historical_ontology_alignment": "misaligned: neutral removed from 1396 co-occurring train targets",
+      "id": "exp029-qwen-seed43",
+      "max_new_tokens": 64,
+      "model_manifest": {
+        "path": "models/qwen3-1.7b/manifest.json",
+        "sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877"
+      },
+      "model_path": "models/qwen3-1.7b/mlx-bf16",
+      "prompt": {
+        "path": "experiments/goemotions/qwen3-1.7b/prompts/exp-022-resource-v1.json",
+        "sha256": "2ce7083d41df7ff15292b4211bba26e5403d9cd66c67f8f12f9386cb99bf328c"
+      },
+      "prompt_mode": "closed-neutral",
+      "scientific_condition": "zero-shot",
+      "seed": 43,
+      "sequence_score_space": "closed-neutral constrained label-name JSON",
+      "source_experiment_id": "EXP-029",
+      "source_predictions": {
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/generation-records.jsonl",
+        "sha256": "b06ca8e63862ccd795ea9afaf44c011a18ec84bcfad8ab8d3b210efb40772f8a"
+      },
+      "source_run": {
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/run.json",
+        "sha256": "fa6c23b880b03a339405ade6eb9c4bb7ffc4f2f16d1331f562bbabff6157ca4e"
+      },
+      "source_verification": {
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-43/verification.json",
+        "sha256": "527e08e2ba03b6f5cfa990e2d319fd0299bd4e5b0b6b9ebd9032e1409bc9f65e"
+      },
+      "type": "qwen_generation",
+      "validation_macro_f1": 0.443673469401069
+    },
+    {
+      "adapter_config": {
+        "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-029-instruct-lora/seed-44/adapter_config.json",
+        "sha256": "316c1090010c32ac62c595d85e3330d74b7b6d576b093e5af21650822cd5b89f"
+      },
+      "adapter_weights": {
+        "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-029-instruct-lora/seed-44/adapters.safetensors",
+        "sha256": "fd0c3a33add30eb24c62c7154eea8f20aab090a8d1f85159046ca263943b2e48"
+      },
+      "constraint": {
+        "path": "experiments/goemotions/qwen3-1.7b/label_json_constraint.py",
+        "sha256": "6e4d1d21d79d2fed3c8a5d118748591db6e72cfcfefb74386f913fb5fd164efa"
+      },
+      "constraint_mode": "closed-neutral",
+      "family": "Qwen3-1.7B LoRA historical",
+      "historical_ontology_alignment": "misaligned: neutral removed from 1396 co-occurring train targets",
+      "id": "exp029-qwen-seed44",
+      "max_new_tokens": 64,
+      "model_manifest": {
+        "path": "models/qwen3-1.7b/manifest.json",
+        "sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877"
+      },
+      "model_path": "models/qwen3-1.7b/mlx-bf16",
+      "prompt": {
+        "path": "experiments/goemotions/qwen3-1.7b/prompts/exp-022-resource-v1.json",
+        "sha256": "2ce7083d41df7ff15292b4211bba26e5403d9cd66c67f8f12f9386cb99bf328c"
+      },
+      "prompt_mode": "closed-neutral",
+      "scientific_condition": "zero-shot",
+      "seed": 44,
+      "sequence_score_space": "closed-neutral constrained label-name JSON",
+      "source_experiment_id": "EXP-029",
+      "source_predictions": {
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-44/generation-records.jsonl",
+        "sha256": "628ce6dd0951ede4344619d73b3c24a67595fac96951ac0b1e29e3a40b617096"
+      },
+      "source_run": {
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-44/run.json",
+        "sha256": "e7557998f32c691305bd46a0afb763a907a49042352ed6824f8e2ab15f2bc358"
+      },
+      "source_verification": {
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/seed-44/verification.json",
+        "sha256": "0911d5c4def04fc72f6466c11a33fceb7ce23c92432f6d9bf1b96375a3acbca2"
+      },
+      "type": "qwen_generation",
+      "validation_macro_f1": 0.47324203401272763
+    },
+    {
+      "adapter_config": {
+        "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-033-target-aligned-lora/seed-42/adapter_config.json",
+        "sha256": "53df3c1ac4a1ce5b5f4c31e4d00687bb67aef961aca5ff5deefea0384c7d2b0a"
+      },
+      "adapter_weights": {
+        "path": "experiments/goemotions/qwen3-1.7b/private-cache/exp-033-target-aligned-lora/seed-42/adapters.safetensors",
+        "sha256": "c0077f484823970f0bbd507d63c605d51fbab6d770aaf03e95aeb1df8e7053ea"
+      },
+      "constraint": {
+        "path": "experiments/goemotions/qwen3-1.7b/label_json_constraint_neutral_cooccurrence.py",
+        "sha256": "336218c9a44fc4d475d9197f05afcb81096f793e141e03fed96cbe76cb99d880"
+      },
+      "constraint_mode": "open-neutral",
+      "family": "Qwen3-1.7B LoRA target-aligned",
+      "historical_ontology_alignment": "aligned: exact official 28-label target retained",
+      "id": "exp033-qwen-seed42-target-aligned",
+      "max_new_tokens": 64,
+      "model_manifest": {
+        "path": "models/qwen3-1.7b/manifest.json",
+        "sha256": "7c1e0e53e6340d5ce33c366569a07763be41546045017870cc149a8f50d1e877"
+      },
+      "model_path": "models/qwen3-1.7b/mlx-bf16",
+      "prompt": {
+        "path": "experiments/goemotions/qwen3-1.7b/prompts/exp-031-neutral-cooccurrence-v1.json",
+        "sha256": "94479a8d543e75a22be48925bd44bd7767526747e9a13a986279ab634a531ec3"
+      },
+      "prompt_mode": "open-neutral",
+      "scientific_condition": "aligned-prompt-open-neutral",
+      "seed": 42,
+      "sequence_score_space": "open-neutral constrained label-name JSON",
+      "source_experiment_id": "EXP-033",
+      "source_predictions": {
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-033-target-aligned-lora/validation-seed-42-v1/predictions.jsonl",
+        "sha256": "8e113e637debd330195d26043a0b4d6381b59988da5ede569b8326c36219d5aa"
+      },
+      "source_run": {
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-033-target-aligned-lora/validation-seed-42-v1/run.json",
+        "sha256": "2a6c9034b40d5e6fccefbe13054647f5ce02806d71a7ccbf7056d1c4d61aefab"
+      },
+      "source_verification": {
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-033-target-aligned-lora/validation-seed-42-v1/verification.json",
+        "sha256": "792adfa670e179dfb130b25ac247b8837ddfa083b2901911b69b5851e8ed509f"
+      },
+      "training_run": {
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-033-target-aligned-lora/seed-42/run.json",
+        "sha256": "7ca7a1a4e95efd257b6d520e25075dc2fa0fc8bc532a6753a65fe4d3f2a9e42c"
+      },
+      "training_verification": {
+        "path": "experiments/goemotions/qwen3-1.7b/runs/exp-033-target-aligned-lora/seed-42/verification.json",
+        "sha256": "5de427748d6fe467d369b64a7e3493067279ba983814d6380958e8824a41d557"
+      },
+      "type": "qwen_generation",
+      "validation_macro_f1": 0.4279591696779538
+    }
+  ]
+}

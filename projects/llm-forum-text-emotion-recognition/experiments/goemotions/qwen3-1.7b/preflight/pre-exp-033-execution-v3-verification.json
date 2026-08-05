@@ -1,0 +1,28 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "audit_id": "PRE-EXP-033-EXECUTION-V3",
+  "checked_at_utc": "2026-08-03T05:53:56.639116+00:00",
+  "contract_sha256": "fdc5ed2f1bcbb015a33b800afeeca29f8bb38cc63810260a56fe88e22d8befba",
+  "formal_training_authorized": false,
+  "independent_checks": {
+    "auditor_logic_imported": false,
+    "full_mlx_lm_python_source_files_rehashed": 166,
+    "label_order_and_neutral_id_rechecked": true,
+    "resource_budget_rechecked": true,
+    "runtime_packages_rechecked": 10,
+    "seed_repetition_gate_rechecked": true,
+    "test_split_absent": true,
+    "v1_check_mode_reexecuted": true,
+    "v1_model_files_rehashed": 8,
+    "v1_smoke_rows_rechecked": 64
+  },
+  "mode": "initial-write",
+  "model_forward_or_backward_executed": false,
+  "next_required_step": "Implement and hash-freeze the EXP-033 runner and runtime config generator, pass a no-model dry run, re-run this V3 verifier with --check, then request authorization for the 50-iteration train-only smoke.",
+  "report_sha256": "50b4f7b8395f68077ceefa4d7041c61ee9aa151df30c35af1cb7f7ed97ba9018",
+  "status": "Passed",
+  "test_split_accessed": false,
+  "validation_split_accessed": false
+}
