@@ -1160,8 +1160,10 @@ function renderOverviewDashboard(module) {
 
 function getCareerUnitRuntime(module) {
   const units = module.units ?? [];
-  const firstOpenIndex = units.findIndex((unit) => !taskState[unit.taskId]);
-  const settledCount = firstOpenIndex === -1 ? units.length : firstOpenIndex;
+  const firstSourceOpenIndex = units.findIndex((unit) => unit.status !== "settled");
+  const sourceSettledCount = firstSourceOpenIndex === -1 ? units.length : firstSourceOpenIndex;
+  let settledCount = sourceSettledCount;
+  while (settledCount < units.length && taskState[units[settledCount].taskId]) settledCount += 1;
   const runtimeUnits = units.map((unit, index) => ({
     ...unit,
     runtimeStatus: index < settledCount

@@ -30,6 +30,7 @@ const VALID_PLAN_SCOPES = new Set(["long-term", "interview"]);
 const VALID_NAVIGATION_GROUPS = new Set(["north-star", "systems", "practice", "interview"]);
 const VALID_MODULE_ROLES = new Set(["control", "domain", "support", "record", "interview"]);
 const UNIT_GROUP_STATUSES = new Map([
+  ["已结算单元", "settled"],
   ["活动单元", "active"],
   ["近期队列", "frozen"],
 ]);
@@ -402,6 +403,13 @@ function validateModule(record, expectedId, expectedTitle) {
     if (!Array.isArray(record.units) || record.units.length === 0) throw new Error(`${expectedId} has no settlement units`);
     if (new Set(record.units.map((unit) => unit.id)).size !== record.units.length) throw new Error(`${expectedId} has duplicate settlement unit ids`);
     if (record.units.filter((unit) => unit.status === "active").length !== 1) throw new Error(`${expectedId} must have exactly one active settlement unit`);
+    const activeUnitIndex = record.units.findIndex((unit) => unit.status === "active");
+    if (record.units.slice(0, activeUnitIndex).some((unit) => unit.status !== "settled")) {
+      throw new Error(`${expectedId} units before the active unit must be settled`);
+    }
+    if (record.units.slice(activeUnitIndex + 1).some((unit) => unit.status !== "frozen")) {
+      throw new Error(`${expectedId} units after the active unit must be frozen`);
+    }
     if (record.units.some((unit) => !Array.isArray(unit.goalMapping?.subsystemIds) || unit.goalMapping.subsystemIds.length === 0)) {
       throw new Error(`${expectedId} has a settlement unit without an explicit subsystem mapping`);
     }

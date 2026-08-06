@@ -5,24 +5,23 @@
 
 ## 当前状态
 
-- **活动单元**：U1 修掩码
-- **已结算**：0 个
+- **活动单元**：U2 揭穿作弊
+- **已结算**：1 个
 - **玩耍券**：0 张
 
 ## 断点（下次从这里开始）
 
 > 每次 session 结束写三行：做到哪了 / 下一步第一个动作 / 有没有墙。也可以直接告诉 Claude，由它写。
 
-- U1 未开始。启动动作（**顺序关键，先存基线再改代码**）：
-  1. 给 `train.py` 加几行，把每步 loss 存进文件（现在只打印不保存）；
-  2. 跑一次**未修复**的代码，存下作弊基线的 loss 序列——这一步跳过就永远没有对比基线了；
-  3. 打开 `model.py` 第 48 行，把 `is_causal=False` 改为 `True`（删掉那行错误注释），重训；
-  4. 两条曲线画进同一张图。**预期修复后 loss 更高——旧的低分是作弊的假分数，loss 上升正是修复成功的证据，不是修坏了。**
+- **做到哪了**：U1 已结算。完成 causal / non-causal 的 epoch-average loss 对照；causal 每轮略高但快速追上，两组最终接近随机末位决定的 `0.6908` 理论下限。
+- **下一步第一个动作**：为 U2 先写一个最小 eval case——固定一段训练中未见的递增前缀，分别定义 teacher-forced 观测与“只给前缀、逐 token 生成”的 expected behavior。
+- **有没有墙**：non-causal 与 causal checkpoint 没有分别命名保存，U2 开始时需要先生成两份可区分、不会互相覆盖的模型权重；U1 也没有逐 step 原始 loss 日志，此限制已入结算笔记。
 
 ## 结算记录
 
 | # | 日期 | 单元 | 产物 | sessions |
 | --- | --- | --- | --- | --- |
+| 1 | 2026-08-07 | U1 修掩码 · 实验单元 | `Transformer-Decoder-Toy-Project/loss_mask_comparison.png`、`plot_loss_comparison.py`；[Causal Mask：低 Loss 为什么可能是假象](roadmap/modules/evals-debugging.md#causal-mask低-loss-为什么可能是假象) | ≥2（跨会话） |
 
 ## 校准记录
 

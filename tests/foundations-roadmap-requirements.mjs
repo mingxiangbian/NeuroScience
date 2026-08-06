@@ -112,6 +112,10 @@ for (const [id] of requiredModules) {
     assert.match(moduleMarkdown, /status: learning[\s\S]*learning_progress: 0/, "evals should be learning without claiming independent readiness");
     assert.match(moduleMarkdown, /input[\s\S]*expected[\s\S]*actual[\s\S]*assertion[\s\S]*metric[\s\S]*evidence/, "the D2 eval note should retain the six-part case anatomy");
   }
+  if (id === "llm-systems") {
+    assert.match(moduleMarkdown, /status: learning[\s\S]*learning_progress: 0/, "LLM Systems should be learning after U1 without claiming module completion");
+    assert.match(moduleMarkdown, /长期能力地图，不是 U1 的前置课程或逐项打卡清单/, "LLM Systems should distinguish its long-term map from the active settlement unit");
+  }
 }
 
 execFileSync(process.execPath, [buildScriptUrl.pathname], { stdio: "pipe" });
@@ -246,7 +250,8 @@ assert.match(codeListingJs, /cancelSchedule = globalThis\.clearTimeout/, "copy f
 assert.match(codeListingJs, /const copyAttempt = \+\+copyAttemptVersion/, "copy feedback should let the latest activation own the visible state");
 assert.match(codeListingJs, /cancelSchedule\(resetTimerId\)/, "copy feedback should cancel an earlier reset before starting a new attempt");
 assert.doesNotMatch(js, /status !== "complete"/, "Foundations should not use a status rejected by its builder");
-assert.match(js, /function getCareerUnitRuntime\(module\)[\s\S]*taskState\[unit\.taskId\]/, "Career Roadmap should derive settlement state from stable unit task ids");
+assert.match(js, /function getCareerUnitRuntime\(module\)[\s\S]*taskState\[units\[settledCount\]\.taskId\]/, "Career Roadmap should derive local settlement state from stable unit task ids after the source floor");
+assert.match(js, /unit\.status !== "settled"[\s\S]*sourceSettledCount/, "Career Roadmap should treat committed source settlements as the durable runtime floor");
 assert.match(js, /runtimeStatus: index < settledCount[\s\S]*"settled"[\s\S]*"active"[\s\S]*"frozen"/, "Career Roadmap should expose settled, active, and frozen runtime states");
 assert.match(js, /function settleCareerUnit\(module, unitId\)[\s\S]*taskState\[runtime\.activeUnit\.taskId\] = true;[\s\S]*saveTaskState\(taskState\)/, "Career Roadmap should settle only its active unit through the shared local task store");
 assert.match(js, /state\.data\.project\.navigationGroups/, "Foundations navigation should use the generated group contract");
@@ -521,8 +526,8 @@ assert.match(
 );
 assert.match(
   careerSections["任务"],
-  /<strong>预期结果：修复后 loss 上升。这不是修坏了——旧的低 loss 是作弊的假分数，loss 变高正是修复成功的证据<\/strong>。产物/,
-  "Career U1 expected result should render as emphasis without exposing Markdown delimiters",
+  /已结算（2026-08-07）[\s\S]*<strong>顿悟点：低 teacher-forced training loss 不能证明自回归生成正确，信息边界与评估条件必须和推理一致。<\/strong>/,
+  "Career U1 settlement result should render its evidence-backed insight without exposing Markdown delimiters",
 );
 assert.doesNotMatch(
   `${careerSections["目标"]}${careerSections["任务"]}`,
@@ -536,8 +541,8 @@ assert.doesNotMatch(
 );
 const careerUnits = byId["career-roadmap"].units;
 assert.deepEqual(careerUnits.map(({ id, title, type, sessions, status }) => ({ id, title, type, sessions, status })), [
-  { id: "U1", title: "修掩码", type: "实验单元", sessions: { min: 1, max: 2 }, status: "active" },
-  { id: "U2", title: "揭穿作弊", type: "实验单元", sessions: { min: 1, max: 2 }, status: "frozen" },
+  { id: "U1", title: "修掩码", type: "实验单元", sessions: { min: 1, max: 2 }, status: "settled" },
+  { id: "U2", title: "揭穿作弊", type: "实验单元", sessions: { min: 1, max: 2 }, status: "active" },
   { id: "U3", title: "第一篇笔记", type: "理论单元", sessions: { min: 1, max: 1 }, status: "frozen" },
   { id: "U4", title: "SFT 试驾", type: "实现单元", sessions: { min: 2, max: 4 }, status: "frozen" },
   { id: "U5", title: "DPO 试驾", type: "实验单元", sessions: { min: 2, max: 4 }, status: "frozen" },
@@ -625,6 +630,7 @@ assert.deepEqual(byId.coding.knowledgeNotes.map((note) => note.title), ["deque�
 assert.deepEqual(byId["evals-debugging"].knowledgeNotes.map((note) => note.title), [
   "Eval Case 的六层结构",
   "Benchmark 与 Agent Behavior Eval",
+  "Causal Mask：低 Loss 为什么可能是假象",
 ]);
 for (const id of ["career-roadmap", "interview-sprint", "agent-design", "llm-systems", "rag-memory", "research-reading", "behavioral-strategy", "logs", "overview"]) {
   assert.equal(byId[id].knowledgeNotes.length, 0, `${id} should not expose shallow knowledge notes`);

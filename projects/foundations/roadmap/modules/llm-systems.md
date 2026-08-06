@@ -1,9 +1,9 @@
 ---
 id: llm-systems
 title: LLM Systems
-status: not-started
+status: learning
 learning_progress: 0
-last_updated: 2026-07-18
+last_updated: 2026-08-07
 priority: high
 plan_scope: long-term
 navigation_group: systems
@@ -20,9 +20,11 @@ subsystems: 1,6
 
 ## 当前状态
 
-已经有从零实现 decoder-only Transformer 和训练小模型的经验，但因果掩码错误暴露出验证纪律不足。当前活动单元 U1–U3 先修复并解释这个问题；后续 U4–U6 再把 post-training 原理接到人格试驾。
+已经有从零实现 decoder-only Transformer 和训练小模型的经验。U1 已通过 causal / non-causal 对照解释未来 token 泄漏、teacher forcing 与 training loss 的证据边界；详细实验笔记归入 Evals & Diagnostics。当前活动单元 U2 将比较 held-out teacher-forced loss 与自回归生成；后续 U3 完成失败分析，U4–U6 再把 post-training 原理接到人格试驾。
 
 基座模型是必须理解的底层能力，推理系统是其他子系统运行的地基；两者都服务长期系统，不单独形成脱离贾维斯 0.x 的课程表。
+
+下列“核心知识”是长期能力地图，不是 U1 的前置课程或逐项打卡清单。知识只在活动单元中形成可指认的理解或证据后登记。
 
 ## 核心知识
 
@@ -83,7 +85,7 @@ subsystems: 1,6
 
 ## 时间线
 
-- 当前：未开始；U1–U3 用 causal mask 失败建立模型验证纪律。
+- 当前：进行中；U1 已结算 causal mask 对照，U2 正在建立 teacher-forced 与自回归生成的指标对照。
 - 人格试驾解冻时：未开始；U4–U6 补齐 SFT / DPO 的机制、对照和行为解释。
 - 0.1 运行后：未开始；当上下文、流式输出、结构化返回或模型切换成为真实瓶颈时，加入对应推理实验。
 - 系统墙出现时：未开始；按需进入 batching、KV cache、serving、成本或底层实现，不提前制造课程债。

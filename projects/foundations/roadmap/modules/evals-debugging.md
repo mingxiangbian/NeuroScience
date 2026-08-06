@@ -3,7 +3,7 @@ id: evals-debugging
 title: Evals & Diagnostics
 status: learning
 learning_progress: 0
-last_updated: 2026-07-18
+last_updated: 2026-08-07
 priority: high
 plan_scope: long-term
 navigation_group: practice
@@ -18,7 +18,7 @@ subsystems: 1,2,3,4,5,6
 
 ## 当前状态
 
-当前队列将用 U1–U3 的 causal mask 错误建立第一条完整证据链：先保存作弊基线，再修复、对照 teacher-forced loss 与自回归生成，最后解释指标为什么曾经给出假象。
+U1 已完成 causal / non-causal 的训练 loss 对照，并记录了简单数据、随机末位与单 seed 带来的证据边界。当前活动单元 U2 将比较 teacher-forced held-out loss 与只给前缀的自回归生成，继续建立第一条完整证据链；U3 再把指标假象与失败原因写成完整分析。
 
 已有 Cyrene eval case 审计和 benchmark 边界笔记可作为经验资产，但不会直接替代贾维斯 0.x 上的新验证结果。
 
@@ -92,7 +92,7 @@ Runtime 负责稳定发出事件；本模块负责用这些事件复核行为、
 
 ## 时间线
 
-- 当前：未开始；U1–U3 完成错误基线、修复对照、两类指标和失败分析。
+- 当前：进行中；U1 已完成错误基线与修复对照，U2 正在比较两类指标，U3 将完成失败分析。
 - 每个实现或实验单元：未开始；在结算前补齐最小测试、证据和失败解释。
 - 跨子系统接入时：未开始；增加接口冲突、错误传播和恢复 case。
 - 已知行为稳定后：未开始；把关键 case 固化为可重放 regression suite，并保留版本与原始 evidence。
@@ -274,3 +274,70 @@ Cyrene 的归档 deterministic full profile 为 67 cases：59 passed、8 skipped
 #### 一句话总结
 
 可信评估把性能分布、行为正确性、数据 scope 和证据边界分开报告，再用同一批可重放运行解释它们之间的取舍。
+
+### Causal Mask：低 Loss 为什么可能是假象
+
+> U1 通过一次只改变 `is_causal` 的对照实验确认了一个边界：decoder 在 next-token prediction 中看到未来输入时，teacher-forced loss 可能因标签泄漏而虚低。
+
+`causal attention` · `teacher forcing` · `future-token leakage` · `autoregressive evaluation`
+
+#### 核心定义
+
+Decoder-only 模型在位置 \(t\) 的目标是根据已有前缀预测下一个 token：
+
+\[
+p(x_{t+1}\mid x_{\le t})
+\]
+
+**Causal attention** 只允许位置 \(t\) 读取位置 \(0\ldots t\)，使训练时的信息边界与自回归生成一致。**Non-causal attention** 允许读取左右上下文；它适用于目标已被遮住的 BERT 式 masked language modeling，但直接用于右移标签的 next-token prediction 时可能暴露答案。
+
+#### 核心机制
+
+本实验使用右移一位的 target：
+
+```text
+input:  [1, 2, 3, 4, ...]
+target: [2, 3, 4, 5, ..., random]
+```
+
+当 `is_causal=False` 时，位置 \(t\) 能读取 `input[t+1]`，而它恰好等于 `target[t]`，形成 future-token leakage。当 `is_causal=True` 时，位置 \(t\) 只能读取当前及之前的输入，必须学习合法的 `x → x+1` 规律。修复的目的不是保证 loss 大幅升高，而是切断生成时不存在的信息通道。
+
+#### 逐步示例
+
+实验固定随机种子、数据生成方式、模型和训练超参数，只改变：
+
+```python
+is_causal=False  # 对照
+is_causal=True   # 修复
+```
+
+| Epoch | Non-causal | Causal | Causal − Non-causal |
+| --- | ---: | ---: | ---: |
+| 1 | 5.1974 | 5.2715 | 0.0741 |
+| 2 | 1.1752 | 1.2561 | 0.0809 |
+| 3 | 0.7454 | 0.7540 | 0.0086 |
+| 10 | 0.6956 | 0.6971 | 0.0015 |
+
+Causal loss 每轮稍高，方向上支持“切断泄漏会失去训练捷径”，但没有出现预期中的巨大最终差距。递增规律很简单，causal 模型很快学会了合法解；同时，每条长度为 10 的 target 最后一个 token 从 1000 类中随机抽取，即使前 9 个位置全部预测正确，平均交叉熵下限仍约为：
+
+\[
+\frac{\ln(1000)}{10}\approx0.6908
+\]
+
+因此两条曲线最终接近 `0.69`，主要反映随机末位造成的不可约损失，而不是两种信息边界具有相同的生成能力。
+
+#### 边界与常见错误
+
+- 只有一个随机种子，不能把差距大小解释为稳定效应或统计显著性。
+- 数据是重复的简单递增序列，不能推出 causal 模型在一般数据上总是更慢。
+- 图中使用手动记录的 epoch averages；训练程序没有自动保存逐 step 原始日志。
+- 低 training loss 不能证明模型会正确自回归生成。
+- 换成 held-out split 仍不足以揭穿 non-causal teacher forcing：未见序列右侧依然包含答案。
+- 真正的生成评估必须只提供前缀，让模型逐 token 生成；这是 U2 要检验的问题。
+- 当前 toy decoder 不是标准 GPT，但两次运行共用同一实现，因此不破坏这次单变量对照。
+
+本地产物位于 `Transformer-Decoder-Toy-Project` 工作区：`loss_mask_comparison.png` 保存 epoch-average 对比图，`plot_loss_comparison.py` 保存绘图数据和理论下限；两者目前尚未提交到远端仓库。
+
+#### 一句话总结
+
+Causal mask 的价值不是让 loss 更漂亮，而是让训练与生成遵守同一信息边界；未来答案一旦泄漏，低 loss 可能只证明模型会利用捷径，而不证明它会生成。

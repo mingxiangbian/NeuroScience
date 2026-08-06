@@ -25,7 +25,11 @@ function assertCompleteArticles(markdown, expectedTitles) {
 }
 
 assertCompleteArticles(readModule("coding"), ["deque、stack 与 queue", "单调队列"]);
-assertCompleteArticles(readModule("evals-debugging"), ["Eval Case 的六层结构", "Benchmark 与 Agent Behavior Eval"]);
+assertCompleteArticles(readModule("evals-debugging"), [
+  "Eval Case 的六层结构",
+  "Benchmark 与 Agent Behavior Eval",
+  "Causal Mask：低 Loss 为什么可能是假象",
+]);
 
 const roadmapData = JSON.parse(readFileSync(new URL("../projects/foundations/roadmap/roadmap-data.json", import.meta.url), "utf8"));
 const codingArticle = roadmapData.modules
