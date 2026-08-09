@@ -1,6 +1,11 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { formatTarget, renderNow } from "../projects/language/ielts-academic/site/reader-renderers.js";
+import {
+  formatTarget,
+  getSprintDay,
+  renderNow,
+  renderSprintPlan,
+} from "../projects/language/ielts-academic/site/reader-renderers.js";
 
 const read = (path) => readFileSync(new URL(path, import.meta.url), "utf8");
 
@@ -50,9 +55,12 @@ assert.match(renderers, /function renderEvidence/);
 assert.match(renderers, /scoreHistory\?\.entries/);
 assert.match(renderers, /function renderSettlements/);
 assert.match(renderers, /事件触发校准/);
+assert.match(renderers, /function renderSprintPlan/);
+assert.match(renderers, /口试排程/);
+assert.match(renderers, /conditionalReserve/);
 assert.match(renderers, /function renderCompactDocumentCard/);
 assert.match(renderers, /compact-document-grid/);
-assert.doesNotMatch(renderers, /WEEKS|renderSwimlane|renderDailyTasks|renderCheckpoint|\.week\b/);
+assert.doesNotMatch(renderers, /WEEKS|renderSwimlane|renderDailyTasks|renderCheckpointMilestones|\.week\b/);
 assert.doesNotMatch(renderers, /0\.0.*Gap|完成第 1 周诊断/);
 
 assert.match(references, /function renderReferenceChips/);
@@ -96,6 +104,9 @@ assert.match(css, /--reader-surface:\s*#faf7ef/);
 assert.match(css, /--reader-red:\s*#a33e35/);
 assert.match(css, /\.current-action::before/);
 assert.match(css, /\.unit-record::before/);
+assert.match(css, /\.sprint-speaking-window/);
+assert.match(css, /\.sprint-task-row/);
+assert.match(css, /\.sprint-reserve/);
 assert.doesNotMatch(css, /radial-gradient|linear-gradient/);
 assert.doesNotMatch(css, /\.task-list|\.swimlane|\.dashboard-grid|\.module-progress-summary/);
 
@@ -105,11 +116,31 @@ assert.match(indexHtml, /id="note-panel"/);
 assert.match(workflow, /npm run build:ielts/);
 assert.match(workflow, /npm run test:all/);
 
-assert.equal(data.unitLedger.activeUnit, null);
-assert.equal(data.unitLedger.suggestedUnit.id, "D1");
-assert.equal(data.derived.currentTrigger, "baseline-complete");
+assert.equal(data.derived.learningState, data.unitLedger.state);
+assert.equal(
+  data.derived.currentTrigger,
+  data.calibrationEvents.events.find((event) => event.status !== "decided")?.id ?? null,
+);
+const runtimeUnits = [
+  data.unitLedger.activeUnit,
+  data.unitLedger.suggestedUnit,
+  ...data.unitLedger.queue,
+  ...data.unitLedger.settled,
+].filter(Boolean);
+for (const unit of runtimeUnits) {
+  assert.equal(data.references.targets.some((target) => target.id === `unit:${unit.id}`), true);
+}
 assert.equal(Array.isArray(data.references.targets), true);
 assert.equal(Array.isArray(data.build.validationIssues), true);
+assert.equal(getSprintDay(data.sprintPlan, "2026-08-09").template, "halfDay");
+assert.equal(getSprintDay(data.sprintPlan, "2026-08-09").day, 1);
+assert.equal(getSprintDay(data.sprintPlan, "2026-09-06"), null);
+const sprintHtml = renderSprintPlan(data);
+assert.match(sprintHtml, /口试排程/);
+assert.match(sprintHtml, /4\.5 小时/);
+assert.match(sprintHtml, /条件加练/);
+assert.match(sprintHtml, /8月25–26日/);
+assert.doesNotMatch(sprintHtml, /undefined|null/);
 assert.equal(formatTarget({ overall: 7.5, perSkillFloor: null }), "总分 7.5 · 单项线待确认");
 assert.equal(formatTarget({ overall: 8, perSkillFloor: 7.5 }), "总分 8.0 · 单项 7.5+");
 

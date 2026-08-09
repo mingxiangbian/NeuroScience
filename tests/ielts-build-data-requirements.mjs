@@ -26,6 +26,77 @@ function makeSuggestedUnit(overrides = {}) {
   };
 }
 
+function makeValidSprintPlan(overrides = {}) {
+  const base = {
+    schemaVersion: 1,
+    id: "one-day-sprint",
+    status: "active",
+    lastUpdated: "2026-08-09",
+    exam: {
+      date: "2026-08-29",
+      writtenMode: "paper",
+      speakingDate: null,
+      speakingScheduleStatus: "awaiting-admission-ticket",
+      usualSpeakingWindow: {
+        startDate: "2026-08-22",
+        endDate: "2026-09-05",
+        source: "registration email",
+        boundary: "The appointment remains provisional until the admission ticket is released.",
+      },
+      admissionTicketExpectedBy: "2026-08-21",
+      durationDays: 1,
+      dayOneAvailableMinutes: 60,
+    },
+    speakingContingency: {
+      status: "provisional-until-admission-ticket",
+      readinessDeadline: "2026-08-20",
+      replanTrigger: "Replan when the admission ticket is released.",
+      rules: ["Protect the 48 hours around the speaking test."],
+    },
+    objective: {
+      overall: 7.5,
+      targetProfile: { listening: 7.5, reading: 7.5, writing: 7.5, speaking: 7.5 },
+    },
+    dailyBudget: {
+      standardMinutes: 60,
+      maximumMinutes: 60,
+      finalDayMinutes: 60,
+      templateMinutes: { halfDay: 60, standard: 60, taper: 60 },
+      templates: {
+        halfDay: [{
+          id: "focus",
+          label: "Focus",
+          minutes: 60,
+          materialType: "unseen sample",
+          expectedArtifact: "original answer",
+          reviewMethod: "compare against evidence",
+        }],
+      },
+    },
+    operatingRules: ["Keep one active repair unit."],
+    paperEvidenceProtocol: ["Photograph the first answer before checking."],
+    phases: [{ id: "P1", label: "Start", startDay: 1, endDay: 1, purpose: "Collect evidence." }],
+    checkpoints: [{
+      id: "CP1",
+      day: 1,
+      date: "2026-08-09",
+      label: "Baseline",
+      requiredEvidence: "One original answer.",
+      decisionRules: ["Use the evidence to choose the next repair."],
+    }],
+    days: [{
+      day: 1,
+      date: "2026-08-09",
+      phase: "P1",
+      template: "halfDay",
+      focus: "Collect a baseline.",
+      tasks: { focus: "Complete one unseen sample." },
+      gate: "Original answer retained.",
+    }],
+  };
+  return { ...base, ...overrides };
+}
+
 function makeValidInputs(overrides = {}) {
   const base = {
     scoreProfile: {
@@ -89,6 +160,25 @@ function makeValidInputs(overrides = {}) {
 }
 
 assert.deepEqual(validateSiteDataInputs(makeValidInputs()), { fatalIssues: [], warningIssues: [] });
+
+assert.deepEqual(
+  validateSiteDataInputs(makeValidInputs({ sprintPlan: makeValidSprintPlan() })),
+  { fatalIssues: [], warningIssues: [] },
+);
+
+const missingSprintTask = makeValidSprintPlan();
+missingSprintTask.days[0].tasks = {};
+const missingSprintTaskResult = validateSiteDataInputs(makeValidInputs({ sprintPlan: missingSprintTask }));
+assert.equal(missingSprintTaskResult.fatalIssues.some((issue) => issue.type === "missing_daily_task"), true);
+
+const infeasibleSprint = makeValidSprintPlan({
+  objective: {
+    overall: 8,
+    targetProfile: { listening: 7, reading: 7, writing: 7, speaking: 7 },
+  },
+});
+const infeasibleSprintResult = validateSiteDataInputs(makeValidInputs({ sprintPlan: infeasibleSprint }));
+assert.equal(infeasibleSprintResult.fatalIssues.some((issue) => issue.type === "infeasible_target_math"), true);
 
 const missingSkills = validateSiteDataInputs(makeValidInputs({
   scoreProfile: {

@@ -1,4 +1,305 @@
 {
   "schemaVersion": 2,
-  "errors": []
+  "errors": [
+    {
+      "id": "E001",
+      "skill": "listening",
+      "impact": "high",
+      "status": "active",
+      "description": "漏听一题后，在后续录音继续播放时仍回想旧题，导致后续题目的定位和完整语义处理受损。",
+      "evidence": [
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-01"
+      ],
+      "reviewMethod": "在独立 Listening 题组中记录每次漏听后的切换动作，并检查后续两题是否仍能保持题号定位和完整语义处理。",
+      "openedAt": "2026-07-23",
+      "lastSeenAt": "2026-07-23",
+      "repairUnitId": null,
+      "consecutiveCleanSamples": 0,
+      "fixedEvidence": []
+    },
+    {
+      "id": "E002",
+      "skill": "listening",
+      "impact": "high",
+      "status": "improving",
+      "description": "无法稳定识别并等待完整答案窗口：有时提前用相关词作答并停止监听，有时漏过答案后抓取后续显眼词；均未验证原文证据、题干语法和完整语义。",
+      "evidence": [
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-01",
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-02",
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-03",
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-05",
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-07",
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-08",
+        "journal/entries/2026-07-24-l1-listening-answer-window-repair.md#结果与答案窗口核对"
+      ],
+      "reviewMethod": "复盘独立 Listening 题组时标记题干限定、完整答案窗口、显眼干扰词或选项、决定性信息和最终答案；检查是否听完整个相关话轮，并同时满足原文证据、题干语法与完整语义。",
+      "openedAt": "2026-07-23",
+      "lastSeenAt": "2026-07-24",
+      "repairUnitId": "L1",
+      "consecutiveCleanSamples": 0,
+      "fixedEvidence": []
+    },
+    {
+      "id": "E003",
+      "skill": "listening",
+      "impact": "medium",
+      "status": "active",
+      "description": "地图题中无法完整解码空间关系短语：漏掉参照物限定或关系尾部，并可能误辨方向表达，导致选择错误的参照物和位置。",
+      "evidence": [
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-06"
+      ],
+      "reviewMethod": "在独立地图题中逐题标记参照物、限定属性、方向关系和目标位置；作答后核对是否听全关系短语，并检查地图定位是否与全部条件一致。",
+      "openedAt": "2026-07-23",
+      "lastSeenAt": "2026-07-23",
+      "repairUnitId": null,
+      "consecutiveCleanSamples": 0,
+      "fixedEvidence": []
+    },
+    {
+      "id": "E004",
+      "skill": "reading",
+      "impact": "high",
+      "status": "active",
+      "description": "段落信息匹配题中忽略了字母可重复使用的明示规则，把段落错误地视为一一对应，导致正确候选被排除并产生连锁错配。",
+      "evidence": [
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-02"
+      ],
+      "reviewMethod": "开始每组段落匹配题前先复述字母是否允许重复；作答时不因某段已使用而排除它，并在复盘中检查每个答案是否有独立原文证据。",
+      "openedAt": "2026-07-23",
+      "lastSeenAt": "2026-07-23",
+      "repairUnitId": null,
+      "consecutiveCleanSamples": 0,
+      "fixedEvidence": []
+    },
+    {
+      "id": "E005",
+      "skill": "reading",
+      "impact": "high",
+      "status": "active",
+      "description": "阅读判断中把关键词共现或合理场景推测当成原文命题证据，没有核验题目中的主体、关系和限定是否被文本明确支持。",
+      "evidence": [
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-01",
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-02",
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-03"
+      ],
+      "reviewMethod": "对判断题和多选题的每个候选项拆分主体、关系与限定，分别标记为原文明示、直接矛盾或未陈述；不得用常识或场景合理性补足缺失关系。",
+      "openedAt": "2026-07-23",
+      "lastSeenAt": "2026-07-23",
+      "repairUnitId": null,
+      "consecutiveCleanSamples": 0,
+      "fixedEvidence": []
+    },
+    {
+      "id": "E006",
+      "skill": "reading",
+      "impact": "high",
+      "status": "active",
+      "description": "已经定位到关键证据时，短语或答案词的词义缺口仍使证据失效，随后用 NOT GIVEN、附近熟词或错误释义代替。",
+      "evidence": [
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-01",
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-02"
+      ],
+      "reviewMethod": "复盘已定位但答错的题目时记录阻塞词、句法角色、上下文可推含义和最终替代动作；下一批同题型检查能否在不认识单词时仍依靠句法与上下文保留正确证据边界。",
+      "openedAt": "2026-07-23",
+      "lastSeenAt": "2026-07-23",
+      "repairUnitId": null,
+      "consecutiveCleanSamples": 0,
+      "fixedEvidence": []
+    },
+    {
+      "id": "E007",
+      "skill": "reading",
+      "impact": "high",
+      "status": "active",
+      "description": "Reading Part 2 第 14–19 题整个段落匹配题组首遍阅读未形成任何答案后仍持续重读，缺少策略切换和止损边界；进入 Part 3 时仅剩约 11 分钟，导致第 31–36 题未读原文作答、第 37–40 题只能粗略阅读。",
+      "evidence": [
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-02",
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-03"
+      ],
+      "reviewMethod": "在下一次完整阅读模拟中记录每篇开始与结束时间、触发止损的题号，以及 Part 3 各题是否阅读到直接证据；猜对题不计为稳定掌握。",
+      "openedAt": "2026-07-23",
+      "lastSeenAt": "2026-07-23",
+      "repairUnitId": null,
+      "consecutiveCleanSamples": 0,
+      "fixedEvidence": []
+    },
+    {
+      "id": "E008",
+      "skill": "reading",
+      "impact": "high",
+      "status": "active",
+      "description": "单词孤立出现时可能认识，但读到复杂句末尾时前半句信息已经丢失，无法在一次阅读中整合完整命题；重读只能以很高时间成本换取部分理解改善，并妨碍段落匹配。",
+      "evidence": [
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-02"
+      ],
+      "reviewMethod": "从同篇文章抽取复杂句，分别标记生词、从句边界、逻辑关系和指代；只读一遍后口述句意并检查信息保留，区分词义缺口、句法解析失败与读后保持失败。",
+      "openedAt": "2026-07-24",
+      "lastSeenAt": "2026-07-24",
+      "repairUnitId": null,
+      "consecutiveCleanSamples": 0,
+      "fixedEvidence": []
+    },
+    {
+      "id": "E009",
+      "skill": "writing",
+      "impact": "high",
+      "status": "active",
+      "description": "Task 2 无法稳定判断观点何时已经足够可用并承诺执行；切题性、论证强度、例子可用性和英文可表达性会同时触发怀疑。本次保留原方案，但在写出下一句前持续停顿；既往完成大纲后曾在成文中实际删换观点。",
+      "evidence": [
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-02"
+      ],
+      "reviewMethod": "在限时 Task 2 中记录构思结束条件、初始论点、每次想更换观点的时间与原因，以及最终是否改换；结合成文结果判断原方案是否实际不足，而不是只记录主观不满意。",
+      "openedAt": "2026-07-24",
+      "lastSeenAt": "2026-07-24",
+      "repairUnitId": null,
+      "consecutiveCleanSamples": 0,
+      "fixedEvidence": []
+    },
+    {
+      "id": "E010",
+      "skill": "writing",
+      "impact": "high",
+      "status": "active",
+      "description": "Task 2 论证缺少可快速调用的例证素材；即使意识到需要例子，也会完全想不到内容，不知道有哪些素材可用。本次冷启动还出现了没有及时触发例证动作的问题。",
+      "evidence": [
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-02"
+      ],
+      "reviewMethod": "对后续多个 Task 2 样本分别记录每个主体段是否需要例证、是否在动笔前检索到素材、是否实际写入，以及失败属于无素材、未触发还是英文表达受阻。",
+      "openedAt": "2026-07-24",
+      "lastSeenAt": "2026-07-24",
+      "repairUnitId": null,
+      "consecutiveCleanSamples": 0,
+      "fixedEvidence": []
+    },
+    {
+      "id": "E011",
+      "skill": "writing",
+      "impact": "medium",
+      "status": "active",
+      "description": "Task 1 为避免重复 `number(s)` 和 `participants` 而主动替换核心统计名词；本次冷启动样本中，这种变化引入了多处不自然的 `numbers of`，准确性收益低于替换成本。",
+      "evidence": [
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-01"
+      ],
+      "reviewMethod": "在后续多个 Task 1 样本中标记核心统计名词的重复、主动替换、搭配和主谓一致错误；比较保留标准结构与强行换词时的准确率和用时。",
+      "openedAt": "2026-07-24",
+      "lastSeenAt": "2026-07-24",
+      "repairUnitId": null,
+      "consecutiveCleanSamples": 0,
+      "fixedEvidence": []
+    },
+    {
+      "id": "E012",
+      "skill": "writing",
+      "impact": "medium",
+      "status": "active",
+      "description": "Task 1 结尾把最低活动误写为 table tennis，尽管实际知道应为 amateur dramatics；错误与前文趋势描述矛盾，并因没有最终检查而保留。",
+      "evidence": [
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-01"
+      ],
+      "reviewMethod": "在后续 Task 1 样本中逐项核对 overview 与正文里的对象名称、最高最低和趋势方向，记录实体标签写错是否再次出现以及检查能否捕获。",
+      "openedAt": "2026-07-24",
+      "lastSeenAt": "2026-07-24",
+      "repairUnitId": null,
+      "consecutiveCleanSamples": 0,
+      "fixedEvidence": []
+    },
+    {
+      "id": "E013",
+      "skill": "writing",
+      "impact": "medium",
+      "status": "active",
+      "description": "Task 1 知道需要 Overview，但为追求一到两句话的简洁，只选择最高和最低，未同时概括图中最显著的升降趋势；问题是主特征筛选不足，不是篇幅过短。",
+      "evidence": [
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-01"
+      ],
+      "reviewMethod": "在后续 Task 1 样本中先列出候选主特征，再核对 Overview 是否在一到两句话内覆盖最显著趋势与关键比较，而不是只报告终点最高最低。",
+      "openedAt": "2026-07-24",
+      "lastSeenAt": "2026-07-24",
+      "repairUnitId": null,
+      "consecutiveCleanSamples": 0,
+      "fixedEvidence": []
+    },
+    {
+      "id": "E014",
+      "skill": "writing",
+      "impact": "high",
+      "status": "active",
+      "description": "实时英文组织会停顿，主要阻塞在合适词汇与搭配的检索，次要阻塞在句子结构和语法选择；不经过完整中文翻译，但本次两篇冷启动样本均出现相关准确性问题。",
+      "evidence": [
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-01",
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-02",
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-03"
+      ],
+      "reviewMethod": "在后续多个限时写作样本中标记句前停顿，并区分内容、词汇搭配、句法和语法来源；结合成文错误核对主观停顿是否对应实际准确性损失。",
+      "openedAt": "2026-07-24",
+      "lastSeenAt": "2026-07-24",
+      "repairUnitId": null,
+      "consecutiveCleanSamples": 0,
+      "fixedEvidence": []
+    },
+    {
+      "id": "E015",
+      "skill": "speaking",
+      "impact": "high",
+      "status": "active",
+      "description": "实时口语中主动词汇提取速度不足，频繁出现填充停顿、重复开头、半句重启和寻找词汇；随后依赖 help、thing、think、maybe 等泛化词维持表达，影响流利度和精确性。",
+      "evidence": [
+        "journal/entries/2026-08-09-speaking-transcript-diagnostic.md#e015主动词汇提取与重启"
+      ],
+      "reviewMethod": "每次保留无提示首遍录音，转写后统计因找词引发的长停顿、重复和重启；同题第二遍只能使用已掌握的简单替代表达，检查是否减少重启而不牺牲内容。",
+      "openedAt": "2026-08-09",
+      "lastSeenAt": "2026-08-09",
+      "repairUnitId": null,
+      "consecutiveCleanSamples": 0,
+      "fixedEvidence": []
+    },
+    {
+      "id": "E016",
+      "skill": "speaking",
+      "impact": "high",
+      "status": "active",
+      "description": "自发口语中高频语法、词形与搭配不稳定，主谓一致、介词、可数性、动词形式和形容词/名词选择在不同话题中重复出错，部分句子需要听者重新解析。",
+      "evidence": [
+        "journal/entries/2026-08-09-speaking-transcript-diagnostic.md#e016高频语法与词形不稳定"
+      ],
+      "reviewMethod": "从首遍录音中每次只提取三类最高频错误，先用稳定短句重写，再在不同题目中复用；连续三份独立录音未再出现同类错误才增加 clean sample。",
+      "openedAt": "2026-08-09",
+      "lastSeenAt": "2026-08-09",
+      "repairUnitId": null,
+      "consecutiveCleanSamples": 0,
+      "fixedEvidence": []
+    },
+    {
+      "id": "E017",
+      "skill": "speaking",
+      "impact": "medium",
+      "status": "active",
+      "description": "口头题目解析不稳定：较长问题或包含不熟悉常见词时需要重复或解释，可能在 Part 1 和 Part 3 中因没有书面题卡而延迟作答或答偏。",
+      "evidence": [
+        "journal/entries/2026-08-09-speaking-transcript-diagnostic.md#e017口头题目解析风险"
+      ],
+      "reviewMethod": "使用不显示文字的问题音频完成 Part 1/3 练习；每题先用一句话复述所问关系，再回答。记录需要重复、误解或答偏的题目，区分听清失败与词义缺口。",
+      "openedAt": "2026-08-09",
+      "lastSeenAt": "2026-08-09",
+      "repairUnitId": null,
+      "consecutiveCleanSamples": 0,
+      "fixedEvidence": []
+    },
+    {
+      "id": "E018",
+      "skill": "speaking",
+      "impact": "high",
+      "status": "active",
+      "description": "Part 2 已有可用内容，但容易把 cue card 提示点当作互相分离的问题，或围绕抽象观点重复说明；缺少一条由具体场景、动作、细节、结果和反思连接起来的叙述主线。",
+      "evidence": [
+        "journal/entries/2026-08-09-speaking-transcript-diagnostic.md#e018part-2-主线与展开"
+      ],
+      "reviewMethod": "用一张只含六类关键词的真实经历卡完成两分钟首遍录音；检查是否形成单一叙述主线、是否覆盖具体细节，以及是否在不重复同一观点的情况下达到 90–120 秒。",
+      "openedAt": "2026-08-09",
+      "lastSeenAt": "2026-08-09",
+      "repairUnitId": null,
+      "consecutiveCleanSamples": 0,
+      "fixedEvidence": []
+    }
+  ]
 }

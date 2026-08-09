@@ -1,57 +1,74 @@
 {
   "schemaVersion": 2,
-  "state": "not-started",
-  "lastUpdated": "2026-07-19",
-  "runMode": "not-yet-run",
+  "state": "planning-baseline-complete",
+  "lastUpdated": "2026-08-09",
+  "runMode": "deadline-sprint",
   "target": {
     "overall": 7.5,
-    "perSkillFloor": null
+    "perSkillFloor": 6.5
   },
   "currentEstimate": {
-    "overall": null,
-    "confidence": "unverified",
-    "summary": "尚无真实诊断证据，当前不能判断总分或最弱技能。"
+    "overall": 5.5,
+    "confidence": "low",
+    "summary": "20 天计划使用的工作基线为 Listening 5.5、Reading 6.0、Writing 5.5、Speaking 5.5，折算 Overall 5.5。L/R 来自一次完整客观测试；W 来自冷启动文本建议分；S 来自语音对话转写的 5.0–5.5 区间中心值，发音仍未验证，因此该 Overall 只用于资源分配。"
   },
   "skills": [
     {
       "id": "listening",
       "label": "Listening",
-      "estimatedBand": null,
-      "confidence": "unverified",
-      "evidenceBasis": ["No timed Listening diagnostic has been recorded in this JSON file yet."],
+      "estimatedBand": 5.5,
+      "confidence": "high",
+      "evidenceBasis": [
+        "2026-07-23 Cambridge 19 Test 1 电脑模拟考试：21/40，Band 5.5。",
+        "考试体验复盘正在进行，当前已记录首个空未完成后注意力停留并影响第 5 题。"
+      ],
       "unverifiedDimensions": ["spelling", "synonym recognition", "section 4 academic comprehension", "speed tracking"],
-      "riskLevel": "unknown"
+      "riskLevel": "high"
     },
     {
       "id": "reading",
       "label": "Reading",
-      "estimatedBand": null,
-      "confidence": "unverified",
-      "evidenceBasis": ["No timed Reading diagnostic has been recorded in this JSON file yet."],
+      "estimatedBand": 6.0,
+      "confidence": "high",
+      "evidenceBasis": [
+        "2026-07-23 Cambridge 19 Test 1 电脑模拟考试：26/40，Band 6.0。",
+        "考后回忆显示第二篇首题耗时过长并挤压第三篇时间，题目级复盘待完成。"
+      ],
       "unverifiedDimensions": ["TFNG", "matching headings", "multiple choice", "time allocation"],
-      "riskLevel": "unknown"
+      "riskLevel": "high"
     },
     {
       "id": "writing",
       "label": "Writing",
-      "estimatedBand": null,
-      "confidence": "unverified",
-      "evidenceBasis": ["No scored Task 1 or Task 2 sample has been recorded in this JSON file yet."],
-      "unverifiedDimensions": ["Task 1 overview", "Task 2 argument development", "grammar accuracy", "lexical control"],
-      "riskLevel": "unknown"
+      "estimatedBand": 5.5,
+      "confidence": "low",
+      "evidenceBasis": [
+        "2026-07-23 Cambridge 19 Test 1 已保留 Task 1（171 词）和 Task 2（280 词）原文。",
+        "两篇作文已依据 IELTS 官方 Writing Band Descriptors 分别独立评分，并完成一次一致性校准；Task 1 与 Task 2 的建议区间均为 5.0–5.5，中心值均为 5.5。",
+        "按 Task 2 双倍权重，本次 Writing 中心估计为 5.5；这是长期未练后的单次冷启动、无检查样本，且尚未用官方已知分样本校准考官，不能视为稳定水平。"
+      ],
+      "unverifiedDimensions": ["多次限时样本的稳定性", "考官已知分样本校准", "Task 2 例证检索稳定性", "限时语言准确性"],
+      "riskLevel": "high"
     },
     {
       "id": "speaking",
       "label": "Speaking",
-      "estimatedBand": null,
-      "confidence": "unverified",
-      "evidenceBasis": ["No recorded Speaking diagnostic has been recorded in this JSON file yet."],
-      "unverifiedDimensions": ["pronunciation", "real-time fluency", "Part 2 expansion", "Part 3 abstraction"],
-      "riskLevel": "unknown"
+      "estimatedBand": 5.5,
+      "confidence": "low",
+      "evidenceBasis": [
+        "2026-08-09 已读取持续多轮的 ChatGPT 语音对话转写，覆盖 Part 1 式短答、Part 2 素材讨论和较长自发表达。",
+        "文本可见维度的建议区间为 5.0–5.5，计划使用中心值 5.5；词汇提取、频繁重启、高频语法和 Part 2 组织问题均有跨话题证据。",
+        "原始音频当前不可得，不能判断发音、重音和真实语音清晰度；大量样本经过提示和即时纠错，因此绝对分数置信度低。"
+      ],
+      "unverifiedDimensions": ["pronunciation", "无提示完整口试的稳定性"],
+      "riskLevel": "high"
     }
   ],
   "risks": [
-    "四项真实诊断证据均未录入，当前不能判断最弱技能。",
-    "没有录音证据时，口语发音和实时流利度仍无法验证。"
+    "听力和阅读目前只有一次完整模考证据，稳定水平仍需独立样本验证。",
+    "写作 5.0–5.5 仅为本次冷启动文本的建议区间；考官尚未经过官方已知分样本校准，不能把中心值 5.5 当作正式或稳定成绩。",
+    "口语中心值来自带有教练提示的语音对话转写，原始音频不可得；发音和完整无提示口试稳定性仍未验证。",
+    "口试具体日期尚未公布；报名邮件给出的常规窗口为 2026-08-22 至 2026-09-05，后半程排程必须在准考证发布后重新校准。",
+    "Overall 7.5 需要四项分数和至少达到 29.0；当前计划以 L8.0 / R8.0 / W6.5 / S6.5 为激进路径，不能解释为结果承诺。"
   ]
 }

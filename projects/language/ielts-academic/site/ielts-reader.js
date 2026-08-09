@@ -23,6 +23,7 @@ import {
   renderNow,
   renderPromptLibrary,
   renderSettlements,
+  renderSprintPlan,
   renderUnits,
   renderValidation,
 } from "./reader-renderers.js";
@@ -100,6 +101,7 @@ function getPriorityLabel(priority) {
   const labels = {
     "current action": "当前动作",
     "unit ledger": "单元账本",
+    "exam sprint": "考试冲刺",
     "high-impact repair": "高影响修复",
     "evidence profile": "证据档案",
     "settlement record": "结算记录",
@@ -130,9 +132,12 @@ function buildReaderModules(data) {
       id: "units",
       title: "单元",
       status: data.unitLedger?.activeUnit ? "active" : data.unitLedger?.suggestedUnit ? "suggested" : "not-started",
-      priority: "unit ledger",
+      priority: data.sprintPlan?.status === "active" ? "exam sprint" : "unit ledger",
       lastUpdated,
-      sections: { 单元账本: renderModuleSafely("units", "单元账本", () => renderUnits(data)) },
+      sections: {
+        "20天冲刺": renderModuleSafely("units", "20天冲刺", () => renderSprintPlan(data)),
+        单元账本: renderModuleSafely("units", "单元账本", () => renderUnits(data)),
+      },
       knowledgeNotes: buildUnitNotes(data),
     }),
     createReaderModule({

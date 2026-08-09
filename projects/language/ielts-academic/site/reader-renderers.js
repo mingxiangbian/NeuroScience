@@ -141,6 +141,95 @@ function getBodyPreview(item, maxLength = 150) {
   return preview || title;
 }
 
+function getLocalIsoDate(date = new Date()) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function formatSprintDate(value) {
+  const match = String(value ?? "").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return value ?? "日期待定";
+  return `${Number(match[2])}月${Number(match[3])}日`;
+}
+
+function getSprintTemplate(sprintPlan, templateId) {
+  return toList(sprintPlan?.dailyBudget?.templates?.[templateId]);
+}
+
+function getSprintMinutes(sprintPlan, day) {
+  return getSprintTemplate(sprintPlan, day?.template).reduce((sum, block) => sum + Number(block.minutes || 0), 0);
+}
+
+function formatMinutesAsHours(minutes) {
+  const hours = Number(minutes || 0) / 60;
+  return Number.isInteger(hours) ? String(hours) : hours.toFixed(1);
+}
+
+export function getSprintDay(sprintPlan, date = getLocalIsoDate()) {
+  const days = toList(sprintPlan?.days);
+  if (days.length === 0) return null;
+  return days.find((day) => day.date === date)
+    ?? days.find((day) => String(day.date) > String(date))
+    ?? null;
+}
+
+function renderConditionalReserve(day) {
+  const reserve = day?.conditionalReserve;
+  if (!reserve) return "";
+  return `
+    <aside class="sprint-reserve">
+      <strong>条件加练 · ${escapeHtml(String(reserve.minutes))} 分钟</strong>
+      <span>${escapeHtml(reserve.condition)}</span>
+      <p>${escapeHtml(reserve.task)}</p>
+    </aside>
+  `;
+}
+
+function renderSprintTaskRows(sprintPlan, day, compact = false) {
+  const blocks = getSprintTemplate(sprintPlan, day?.template);
+  return `
+    <div class="sprint-task-rows${compact ? " sprint-task-rows-compact" : ""}">
+      ${blocks.map((block) => `
+        <div class="sprint-task-row">
+          <div class="sprint-task-label">
+            <strong>${escapeHtml(block.label)}</strong>
+            <span>${escapeHtml(String(block.minutes))} 分钟</span>
+          </div>
+          <p>${escapeHtml(day?.tasks?.[block.id] ?? "任务待定")}</p>
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderTodaySprint(sprintPlan) {
+  const day = getSprintDay(sprintPlan);
+  if (!day) return "";
+  const profile = sprintPlan.objective?.targetProfile ?? {};
+  return `
+    <section class="sprint-today" data-sprint-day="${escapeHtml(String(day.day))}">
+      <header class="sprint-today-header">
+        <div>
+          <p class="card-kicker">20 天纸笔冲刺 · 第 ${escapeHtml(String(day.day))} 天 · ${escapeHtml(formatSprintDate(day.date))}</p>
+          <h3>${escapeHtml(day.focus)}</h3>
+        </div>
+        <strong>${escapeHtml(formatMinutesAsHours(getSprintMinutes(sprintPlan, day)))} 小时</strong>
+      </header>
+      <dl class="sprint-score-route" aria-label="目标分数组合">
+        <div><dt>听力</dt><dd>${escapeHtml(formatBand(profile.listening))}</dd></div>
+        <div><dt>阅读</dt><dd>${escapeHtml(formatBand(profile.reading))}</dd></div>
+        <div><dt>写作</dt><dd>${escapeHtml(formatBand(profile.writing))}</dd></div>
+        <div><dt>口语</dt><dd>${escapeHtml(formatBand(profile.speaking))}</dd></div>
+      </dl>
+      ${renderSprintTaskRows(sprintPlan, day, true)}
+      ${renderConditionalReserve(day)}
+      <p class="sprint-gate"><strong>收工判据</strong>${escapeHtml(day.gate)}</p>
+    </section>
+  `;
+}
+
 function getAllUnits(unitLedger) {
   return [
     unitLedger?.activeUnit,
@@ -208,12 +297,147 @@ export function renderNow(data) {
               : ""
         }
       </article>
+      ${renderTodaySprint(data.sprintPlan)}
       <dl class="now-ledger" aria-label="当前决策边界">
         <div><dt>目标</dt><dd>${escapeHtml(formatTarget(data.project?.target ?? data.scoreProfile?.target))}</dd></div>
         <div><dt>成绩证据</dt><dd>${toList(data.scoreHistory?.entries).length ? `${toList(data.scoreHistory.entries).length} 条事件` : "尚无真实记录"}</dd></div>
         <div><dt>真实错误</dt><dd>${toList(data.errorLog?.errors).length ? `${toList(data.errorLog.errors).length} 个` : "尚未识别"}</dd></div>
         <div><dt>下一触发器</dt><dd>${escapeHtml(currentTrigger?.label ?? "等待首份真实诊断证据")}</dd></div>
       </dl>
+    </div>
+  `;
+}
+
+function renderSprintObjective(sprintPlan) {
+  const profile = sprintPlan.objective?.targetProfile ?? {};
+  const protection = sprintPlan.objective?.protectionProfile ?? {};
+  return `
+    <section class="sprint-objective">
+      <div class="sprint-objective-heading">
+        <div>
+          <p class="card-kicker">${escapeHtml(formatSprintDate(sprintPlan.exam?.date))} · ${sprintPlan.exam?.writtenMode === "paper" ? "纸笔考试" : escapeHtml(sprintPlan.exam?.writtenMode ?? "考试形式待定")}</p>
+          <h3>Overall ${escapeHtml(formatBand(sprintPlan.objective?.overall))} 激进路径</h3>
+        </div>
+        <span>${escapeHtml(String(sprintPlan.exam?.durationDays ?? 0))} 个日历日</span>
+      </div>
+      <dl class="sprint-score-route sprint-score-route-primary" aria-label="激进目标分数组合">
+        <div><dt>听力</dt><dd>${escapeHtml(formatBand(profile.listening))}</dd></div>
+        <div><dt>阅读</dt><dd>${escapeHtml(formatBand(profile.reading))}</dd></div>
+        <div><dt>写作</dt><dd>${escapeHtml(formatBand(profile.writing))}</dd></div>
+        <div><dt>口语</dt><dd>${escapeHtml(formatBand(profile.speaking))}</dd></div>
+      </dl>
+      <p class="sprint-math">${escapeHtml(sprintPlan.objective?.scoreMath)}</p>
+      <p class="sprint-boundary">${escapeHtml(sprintPlan.objective?.decisionBoundary)}</p>
+      <p class="sprint-protection">保护线：Overall ${escapeHtml(formatBand(protection.overall))} · 听 ${escapeHtml(formatBand(protection.listening))} · 读 ${escapeHtml(formatBand(protection.reading))} · 写 ${escapeHtml(formatBand(protection.writing))} · 说 ${escapeHtml(formatBand(protection.speaking))}</p>
+    </section>
+  `;
+}
+
+function renderSpeakingSchedule(sprintPlan) {
+  const exam = sprintPlan.exam ?? {};
+  const window = exam.usualSpeakingWindow ?? {};
+  const contingency = sprintPlan.speakingContingency ?? {};
+  const speakingDate = exam.speakingDate
+    ? formatSprintDate(exam.speakingDate)
+    : "等待准考证";
+  return `
+    <section class="sprint-speaking-window" data-schedule-status="${escapeHtml(exam.speakingScheduleStatus ?? "unknown")}">
+      <div class="ledger-heading"><h3>口试排程</h3><span>${escapeHtml(speakingDate)}</span></div>
+      <dl class="sprint-speaking-facts">
+        <div><dt>常规窗口</dt><dd>${escapeHtml(formatSprintDate(window.startDate))}–${escapeHtml(formatSprintDate(window.endDate))}</dd></div>
+        <div><dt>就绪截止</dt><dd>${escapeHtml(formatSprintDate(contingency.readinessDeadline))}</dd></div>
+        <div><dt>准考证</dt><dd>预计不晚于 ${escapeHtml(formatSprintDate(exam.admissionTicketExpectedBy))}</dd></div>
+      </dl>
+      <p class="sprint-speaking-boundary">${escapeHtml(window.boundary)}</p>
+      <p class="sprint-speaking-trigger"><strong>重排触发器</strong>${escapeHtml(contingency.replanTrigger)}</p>
+      <details class="sprint-speaking-rules">
+        <summary>查看口试前后调整规则</summary>
+        <ul>${toList(contingency.rules).map((rule) => `<li>${escapeHtml(rule)}</li>`).join("")}</ul>
+      </details>
+    </section>
+  `;
+}
+
+function renderSprintPhases(sprintPlan) {
+  return `
+    <section class="sprint-phases">
+      <div class="ledger-heading"><h3>五个阶段</h3><span>${toList(sprintPlan.phases).length}</span></div>
+      <div class="sprint-phase-list">
+        ${toList(sprintPlan.phases).map((phase) => `
+          <div class="sprint-phase-row">
+            <div><strong>${escapeHtml(phase.label)}</strong><span>第 ${escapeHtml(String(phase.startDay))}–${escapeHtml(String(phase.endDay))} 天</span></div>
+            <p>${escapeHtml(phase.purpose)}</p>
+          </div>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderSprintCheckpoints(sprintPlan) {
+  return `
+    <section class="sprint-checkpoints">
+      <div class="ledger-heading"><h3>四次检查点</h3><span>${toList(sprintPlan.checkpoints).length}</span></div>
+      <div class="sprint-checkpoint-table" role="table" aria-label="冲刺检查点">
+        ${toList(sprintPlan.checkpoints).map((checkpoint) => `
+          <details class="sprint-checkpoint" id="sprint-${escapeHtml(checkpoint.id)}">
+            <summary>
+              <span>${escapeHtml(checkpoint.id)} · ${escapeHtml(formatSprintDate(checkpoint.date))}</span>
+              <strong>${escapeHtml(checkpoint.label)}</strong>
+              <span>第 ${escapeHtml(String(checkpoint.day))} 天</span>
+            </summary>
+            <p>${escapeHtml(checkpoint.requiredEvidence)}</p>
+            <ul>${toList(checkpoint.decisionRules).map((rule) => `<li>${escapeHtml(rule)}</li>`).join("")}</ul>
+          </details>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderSprintDays(sprintPlan) {
+  const currentDay = getSprintDay(sprintPlan);
+  return `
+    <section class="sprint-calendar">
+      <div class="ledger-heading"><h3>每日执行</h3><span>${toList(sprintPlan.days).length}</span></div>
+      ${toList(sprintPlan.phases).map((phase) => {
+        const phaseDays = toList(sprintPlan.days).filter((day) => day.phase === phase.id);
+        return `
+          <section class="sprint-phase-days">
+            <header><strong>${escapeHtml(phase.label)}</strong><span>第 ${escapeHtml(String(phase.startDay))}–${escapeHtml(String(phase.endDay))} 天</span></header>
+            ${phaseDays.map((day) => `
+              <details class="sprint-day"${day.day === currentDay?.day ? " open" : ""} data-sprint-day="${escapeHtml(String(day.day))}">
+                <summary>
+                  <span>第 ${escapeHtml(String(day.day))} 天 · ${escapeHtml(formatSprintDate(day.date))}</span>
+                  <strong>${escapeHtml(day.focus)}</strong>
+                  <span>${escapeHtml(formatMinutesAsHours(getSprintMinutes(sprintPlan, day)))} 小时${day.conditionalReserve ? "基础" : ""}</span>
+                </summary>
+                ${renderSprintTaskRows(sprintPlan, day)}
+                ${renderConditionalReserve(day)}
+                <p class="sprint-gate"><strong>收工判据</strong>${escapeHtml(day.gate)}</p>
+              </details>
+            `).join("")}
+          </section>
+        `;
+      }).join("")}
+    </section>
+  `;
+}
+
+export function renderSprintPlan(data) {
+  const sprintPlan = data.sprintPlan;
+  if (!sprintPlan) return '<p class="empty-state">当前没有考试冲刺计划。</p>';
+  return `
+    <div class="sprint-plan-view">
+      ${renderSprintObjective(sprintPlan)}
+      ${renderSpeakingSchedule(sprintPlan)}
+      ${renderSprintPhases(sprintPlan)}
+      ${renderSprintCheckpoints(sprintPlan)}
+      ${renderSprintDays(sprintPlan)}
+      <details class="paper-evidence-protocol">
+        <summary>纸笔训练如何保留证据</summary>
+        <ol>${toList(sprintPlan.paperEvidenceProtocol).map((rule) => `<li>${escapeHtml(rule)}</li>`).join("")}</ol>
+      </details>
     </div>
   `;
 }

@@ -1,4 +1,42 @@
 {
   "schemaVersion": 2,
-  "entries": []
+  "entries": [
+    {
+      "id": "2026-07-23-c19-test-1-baseline",
+      "date": "2026-07-23",
+      "eventType": "baseline-mock",
+      "sourceType": "Cambridge 19 Academic Test 1 computer simulation",
+      "skills": {
+        "listening": 5.5,
+        "reading": 6.0,
+        "writing": 5.5,
+        "speaking": null
+      },
+      "overall": null,
+      "confidence": "partial",
+      "evidenceRefs": [
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md"
+      ],
+      "notes": "Listening 21/40，Reading 26/40。Writing 为本次单次冷启动文本的建议区间 5.0–5.5、中心值 5.5，已经过双份独立评分与一致性检查，但尚未使用官方已知分样本校准，不能外推为稳定水平。Speaking 尚未形成可结算评分，Overall 暂不计算。"
+    },
+    {
+      "id": "2026-08-09-planning-baseline",
+      "date": "2026-08-09",
+      "eventType": "planning-baseline",
+      "sourceType": "C19 Test 1 L/R/W evidence plus ChatGPT voice-conversation transcript",
+      "skills": {
+        "listening": 5.5,
+        "reading": 6.0,
+        "writing": 5.5,
+        "speaking": 5.5
+      },
+      "overall": 5.5,
+      "confidence": "low",
+      "evidenceRefs": [
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md",
+        "journal/entries/2026-08-09-speaking-transcript-diagnostic.md"
+      ],
+      "notes": "这是为 2026-08-29 纸笔考试配置 20 天计划的组合工作基线，不是同一场完整模考。Listening 与 Reading 为客观分数；Writing 为冷启动文本建议分；Speaking 使用转写可见维度 5.0–5.5 的中心值，发音未验证。"
+    }
+  ]
 }

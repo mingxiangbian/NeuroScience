@@ -4,20 +4,29 @@
     {
       "id": "baseline-complete",
       "label": "基线证据完成",
-      "status": "waiting",
+      "status": "decided",
       "condition": "四项中当前可提供的真实诊断证据均已录入，可以首次判断技能优先级。",
-      "evidenceRefs": [],
-      "decision": null,
-      "decidedAt": null
+      "evidenceRefs": [
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md",
+        "diagnostics/score-profile.json",
+        "diagnostics/error-log.json",
+        "plans/unit-ledger.json"
+      ],
+      "decision": "首次基线复盘已经结算。Listening 5.5、Reading 6.0、Writing 本次文本建议区间 5.0–5.5；Speaking 仅记录证据边界，因此 Overall 不计算。根据复现度、跨题型影响和反馈周期，先建议 L1 修复 E002；其他高影响错误在 L1 结算后重新排序。",
+      "decidedAt": "2026-07-24"
     },
     {
       "id": "error-set-changed",
       "label": "高影响错误集合变化",
-      "status": "waiting",
+      "status": "decided",
       "condition": "新增、修复或移除的高影响错误足以改变下一单元排序。",
-      "evidenceRefs": [],
-      "decision": null,
-      "decidedAt": null
+      "evidenceRefs": [
+        "journal/entries/2026-08-09-speaking-transcript-diagnostic.md",
+        "diagnostics/error-log.json",
+        "plans/unit-ledger.json"
+      ],
+      "decision": "口语新增 E015–E018，其中主动词汇提取、基础语言稳定和 Part 2 组织为高影响错误。当前 L2 已经开启，先按原判据结算 L2；随后在每日四科维护量之外，只保留一个自适应主修复单元，并由最近独立样本决定排序。",
+      "decidedAt": "2026-08-09"
     },
     {
       "id": "two-mocks-available",
@@ -40,11 +49,15 @@
     {
       "id": "external-deadline-changed",
       "label": "外部硬期限变化",
-      "status": "waiting",
+      "status": "decided",
       "condition": "报名、出分或申请硬期限变化，需要更新考试执行策略。",
-      "evidenceRefs": [],
-      "decision": null,
-      "decidedAt": null
+      "evidenceRefs": [
+        "diagnostics/score-profile.json",
+        "journal/entries/2026-08-09-speaking-transcript-diagnostic.md",
+        "plans/exam-sprint.json"
+      ],
+      "decision": "考试已确定为 2026-08-29 IELTS Academic 纸笔考试，口试具体时间等待准考证。启用 20 个日历日的 deadline sprint：Day 1 按实际剩余半天设为 270 分钟，完整日上限 540 分钟；Day 4/9/12 进行纸笔整场检查，Day 17–18 保留一个可移动的最终彩排窗口。口语按最早可能的 8 月 22 日倒排，在 8 月 20 日前完成就绪检查；具体日期公布后重排前后 48 小时。激进分数路径为 L8.0 / R8.0 / W6.5 / S6.5。",
+      "decidedAt": "2026-08-09"
     },
     {
       "id": "target-reached",

@@ -88,6 +88,7 @@ const scoreHistory = readJson("diagnostics/score-history.json");
 const errorLog = readJson("diagnostics/error-log.json");
 const unitLedger = readJson("plans/unit-ledger.json");
 const calibrationEvents = readJson("plans/calibration-events.json");
+const sprintPlan = readJson("plans/exam-sprint.json");
 const notes = indexNotes();
 const journal = indexJournal();
 const promptLibrary = findMarkdownDocuments(resolve(projectDir, "prompts"), projectDir, { includeReadme: false }).map(enrichMarkdownDoc);
@@ -99,6 +100,7 @@ const validationResult = validateSiteDataInputs({
   errorLog,
   unitLedger,
   calibrationEvents,
+  sprintPlan,
   notes,
   journal,
   promptLibrary,
@@ -138,6 +140,7 @@ const data = {
   errorLog,
   unitLedger,
   calibrationEvents,
+  sprintPlan,
   notes,
   journal,
   promptLibrary,

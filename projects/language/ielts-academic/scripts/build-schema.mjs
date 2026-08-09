@@ -87,6 +87,160 @@ function validateUnit(unit, path, fatalIssues, warningIssues, expectedStatus = "
   }
 }
 
+function validateSprintPlan(sprintPlan, fatalIssues) {
+  if (sprintPlan === undefined || sprintPlan === null) return;
+  if (!hasObject(sprintPlan)) {
+    fatalIssues.push(issue("fatal", "invalid_type", "sprintPlan", "sprintPlan must be an object"));
+    return;
+  }
+  for (const field of ["schemaVersion", "id", "status", "lastUpdated", "exam", "speakingContingency", "objective", "dailyBudget", "operatingRules", "paperEvidenceProtocol", "phases", "checkpoints", "days"]) {
+    requireField(sprintPlan[field], `sprintPlan.${field}`, fatalIssues);
+  }
+  if (sprintPlan.schemaVersion !== 1) {
+    fatalIssues.push(issue("fatal", "invalid_schema_version", "sprintPlan.schemaVersion", "sprintPlan.schemaVersion must be 1"));
+  }
+
+  const durationDays = Number(sprintPlan.exam?.durationDays);
+  if (!(durationDays > 0)) {
+    fatalIssues.push(issue("fatal", "invalid_duration", "sprintPlan.exam.durationDays", "sprintPlan.exam.durationDays must be positive"));
+  }
+  const days = normalizeArrayField(sprintPlan.days, "sprintPlan.days", fatalIssues);
+  const phases = normalizeArrayField(sprintPlan.phases, "sprintPlan.phases", fatalIssues);
+  const checkpoints = normalizeArrayField(sprintPlan.checkpoints, "sprintPlan.checkpoints", fatalIssues);
+  normalizeArrayField(sprintPlan.operatingRules, "sprintPlan.operatingRules", fatalIssues);
+  normalizeArrayField(sprintPlan.paperEvidenceProtocol, "sprintPlan.paperEvidenceProtocol", fatalIssues);
+  if (Number.isFinite(durationDays) && days.length !== durationDays) {
+    fatalIssues.push(issue("fatal", "invalid_sprint_length", "sprintPlan.days", `sprintPlan.days must contain ${durationDays} days`));
+  }
+  for (const field of ["speakingScheduleStatus", "usualSpeakingWindow", "admissionTicketExpectedBy", "dayOneAvailableMinutes"]) {
+    requireField(sprintPlan.exam?.[field], `sprintPlan.exam.${field}`, fatalIssues);
+  }
+  for (const field of ["startDate", "endDate", "source", "boundary"]) {
+    requireField(sprintPlan.exam?.usualSpeakingWindow?.[field], `sprintPlan.exam.usualSpeakingWindow.${field}`, fatalIssues);
+  }
+  for (const field of ["status", "readinessDeadline", "replanTrigger", "rules"]) {
+    requireField(sprintPlan.speakingContingency?.[field], `sprintPlan.speakingContingency.${field}`, fatalIssues);
+  }
+  normalizeArrayField(sprintPlan.speakingContingency?.rules, "sprintPlan.speakingContingency.rules", fatalIssues);
+
+  const targetProfile = sprintPlan.objective?.targetProfile;
+  const targetBands = ["listening", "reading", "writing", "speaking"].map((skill) => Number(targetProfile?.[skill]));
+  if (targetBands.some((band) => !Number.isFinite(band))) {
+    fatalIssues.push(issue("fatal", "invalid_target_profile", "sprintPlan.objective.targetProfile", "all four target bands must be numeric"));
+  } else {
+    const targetAverage = targetBands.reduce((sum, band) => sum + band, 0) / 4;
+    const targetOverall = Number(sprintPlan.objective?.overall);
+    if (!Number.isFinite(targetOverall) || targetAverage < targetOverall - 0.25) {
+      fatalIssues.push(issue("fatal", "infeasible_target_math", "sprintPlan.objective.targetProfile", "target profile cannot round to the requested overall band"));
+    }
+  }
+
+  const templates = sprintPlan.dailyBudget?.templates;
+  const templateMinutes = sprintPlan.dailyBudget?.templateMinutes;
+  if (!hasObject(templates) || Object.keys(templates).length === 0) {
+    fatalIssues.push(issue("fatal", "missing_templates", "sprintPlan.dailyBudget.templates", "at least one daily template is required"));
+  }
+  if (!hasObject(templateMinutes)) {
+    fatalIssues.push(issue("fatal", "missing_template_minutes", "sprintPlan.dailyBudget.templateMinutes", "daily template totals are required"));
+  }
+  for (const [field, templateId] of [["dayOneAvailableMinutes", "halfDay"], ["standardMinutes", "standard"], ["finalDayMinutes", "taper"]]) {
+    const declared = field === "dayOneAvailableMinutes"
+      ? Number(sprintPlan.exam?.[field])
+      : Number(sprintPlan.dailyBudget?.[field]);
+    if (Number.isFinite(declared) && Number(templateMinutes?.[templateId]) !== declared) {
+      fatalIssues.push(issue("fatal", "invalid_daily_total", `sprintPlan.dailyBudget.templateMinutes.${templateId}`, `${templateId} must match ${field}`));
+    }
+  }
+  const templateIds = new Set(Object.keys(hasObject(templates) ? templates : {}));
+  for (const [templateId, templateBlocks] of Object.entries(hasObject(templates) ? templates : {})) {
+    const blocks = normalizeArrayField(templateBlocks, `sprintPlan.dailyBudget.templates.${templateId}`, fatalIssues);
+    const blockIds = [];
+    let totalMinutes = 0;
+    blocks.forEach((block, index) => {
+      const path = `sprintPlan.dailyBudget.templates.${templateId}[${index}]`;
+      for (const field of ["id", "label", "minutes", "materialType", "expectedArtifact", "reviewMethod"]) {
+        requireField(block?.[field], `${path}.${field}`, fatalIssues);
+      }
+      if (!(Number(block?.minutes) > 0)) {
+        fatalIssues.push(issue("fatal", "invalid_duration", `${path}.minutes`, `${path}.minutes must be positive`));
+      }
+      blockIds.push(block?.id);
+      totalMinutes += Number(block?.minutes) || 0;
+    });
+    if (new Set(blockIds).size !== blockIds.length) {
+      fatalIssues.push(issue("fatal", "duplicate_id", `sprintPlan.dailyBudget.templates.${templateId}`, "daily block ids must be unique within a template"));
+    }
+    const expectedMinutes = Number(templateMinutes?.[templateId]);
+    if (Number.isFinite(expectedMinutes) && totalMinutes !== expectedMinutes) {
+      fatalIssues.push(issue("fatal", "invalid_daily_total", `sprintPlan.dailyBudget.templates.${templateId}`, `${templateId} totals ${totalMinutes} minutes instead of ${expectedMinutes}`));
+    } else if (!Number.isFinite(expectedMinutes)) {
+      fatalIssues.push(issue("fatal", "missing_template_minutes", `sprintPlan.dailyBudget.templateMinutes.${templateId}`, `${templateId} requires a numeric total`));
+    }
+  }
+  if (Number(sprintPlan.dailyBudget?.maximumMinutes) < Number(sprintPlan.dailyBudget?.standardMinutes)) {
+    fatalIssues.push(issue("fatal", "invalid_daily_limit", "sprintPlan.dailyBudget.maximumMinutes", "maximumMinutes cannot be lower than standardMinutes"));
+  }
+
+  const phaseIds = new Set(phases.map((phase) => phase?.id));
+  const dayNumbers = [];
+  const dayDates = [];
+  days.forEach((day, index) => {
+    const path = `sprintPlan.days[${index}]`;
+    for (const field of ["day", "date", "phase", "template", "focus", "tasks", "gate"]) {
+      requireField(day?.[field], `${path}.${field}`, fatalIssues);
+    }
+    dayNumbers.push(day?.day);
+    dayDates.push(day?.date);
+    if (!phaseIds.has(day?.phase)) {
+      fatalIssues.push(issue("fatal", "missing_reference", `${path}.phase`, `${path} references missing phase ${day?.phase}`));
+    }
+    if (!templateIds.has(day?.template)) {
+      fatalIssues.push(issue("fatal", "missing_reference", `${path}.template`, `${path} references missing template ${day?.template}`));
+      return;
+    }
+    if (!hasObject(day?.tasks)) {
+      fatalIssues.push(issue("fatal", "invalid_type", `${path}.tasks`, `${path}.tasks must be an object`));
+      return;
+    }
+    for (const block of templates[day.template]) {
+      if (typeof day.tasks[block.id] !== "string" || day.tasks[block.id].trim() === "") {
+        fatalIssues.push(issue("fatal", "missing_daily_task", `${path}.tasks.${block.id}`, `${path} must define a task for ${block.id}`));
+      }
+    }
+    if (day?.conditionalReserve !== undefined) {
+      for (const field of ["minutes", "condition", "task"]) {
+        requireField(day.conditionalReserve?.[field], `${path}.conditionalReserve.${field}`, fatalIssues);
+      }
+      if (!(Number(day.conditionalReserve?.minutes) > 0)) {
+        fatalIssues.push(issue("fatal", "invalid_duration", `${path}.conditionalReserve.minutes`, "conditional reserve minutes must be positive"));
+      }
+      const baseMinutes = templates[day.template].reduce((sum, block) => sum + (Number(block?.minutes) || 0), 0);
+      if (baseMinutes + Number(day.conditionalReserve?.minutes || 0) > Number(sprintPlan.dailyBudget?.maximumMinutes)) {
+        fatalIssues.push(issue("fatal", "invalid_daily_limit", `${path}.conditionalReserve`, "base template plus conditional reserve exceeds maximumMinutes"));
+      }
+    }
+  });
+  const expectedDayNumbers = Array.from({ length: days.length }, (_, index) => index + 1);
+  if (dayNumbers.some((day, index) => day !== expectedDayNumbers[index])) {
+    fatalIssues.push(issue("fatal", "invalid_day_sequence", "sprintPlan.days", "sprint days must be ordered consecutively from 1"));
+  }
+  if (new Set(dayDates).size !== dayDates.length) {
+    fatalIssues.push(issue("fatal", "duplicate_date", "sprintPlan.days", "sprint day dates must be unique"));
+  }
+
+  const validDays = new Set(dayNumbers);
+  checkpoints.forEach((checkpoint, index) => {
+    const path = `sprintPlan.checkpoints[${index}]`;
+    for (const field of ["id", "day", "date", "label", "requiredEvidence", "decisionRules"]) {
+      requireField(checkpoint?.[field], `${path}.${field}`, fatalIssues);
+    }
+    normalizeArrayField(checkpoint?.decisionRules, `${path}.decisionRules`, fatalIssues);
+    if (!validDays.has(checkpoint?.day)) {
+      fatalIssues.push(issue("fatal", "missing_reference", `${path}.day`, `${path} references missing sprint day ${checkpoint?.day}`));
+    }
+  });
+}
+
 export function validateSiteDataInputs(inputs) {
   const fatalIssues = [];
   const warningIssues = [];
@@ -95,6 +249,7 @@ export function validateSiteDataInputs(inputs) {
   const errorLog = inputs.errorLog ?? {};
   const unitLedger = inputs.unitLedger ?? {};
   const calibrationEvents = inputs.calibrationEvents ?? {};
+  const sprintPlan = inputs.sprintPlan;
   const notes = Array.isArray(inputs.notes) ? inputs.notes : [];
   const journal = Array.isArray(inputs.journal) ? inputs.journal : [];
   const errors = Array.isArray(errorLog.errors) ? errorLog.errors : [];
@@ -102,6 +257,7 @@ export function validateSiteDataInputs(inputs) {
   for (const [name, record] of Object.entries({ scoreProfile, scoreHistory, errorLog, unitLedger, calibrationEvents })) {
     requireSchemaV2(record, name, fatalIssues);
   }
+  validateSprintPlan(sprintPlan, fatalIssues);
 
   for (const field of ["schemaVersion", "target", "skills", "currentEstimate"]) {
     requireField(scoreProfile[field], `scoreProfile.${field}`, fatalIssues);

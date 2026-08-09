@@ -10,6 +10,7 @@ const requiredFiles = [
   "../projects/language/ielts-academic/plans/event-driven-study-system.md",
   "../projects/language/ielts-academic/plans/unit-ledger.json",
   "../projects/language/ielts-academic/plans/calibration-events.json",
+  "../projects/language/ielts-academic/plans/exam-sprint.json",
   "../projects/language/ielts-academic/plans/mock-test-strategy.md",
   "../projects/language/ielts-academic/plans/archive/legacy-8-week/README.md",
   "../projects/language/ielts-academic/plans/archive/legacy-8-week/8-week-diagnostic-driven-plan.md",
@@ -79,6 +80,7 @@ const projectReadme = read("../projects/language/ielts-academic/README.md");
 const eventSystem = read("../projects/language/ielts-academic/plans/event-driven-study-system.md");
 const unitLedger = JSON.parse(read("../projects/language/ielts-academic/plans/unit-ledger.json"));
 const calibrationEvents = JSON.parse(read("../projects/language/ielts-academic/plans/calibration-events.json"));
+const sprintPlan = JSON.parse(read("../projects/language/ielts-academic/plans/exam-sprint.json"));
 const scoreProfile = JSON.parse(read("../projects/language/ielts-academic/diagnostics/score-profile.json"));
 const scoreHistory = JSON.parse(read("../projects/language/ielts-academic/diagnostics/score-history.json"));
 const errorLog = JSON.parse(read("../projects/language/ielts-academic/diagnostics/error-log.json"));
@@ -101,22 +103,29 @@ const manifest = JSON.parse(read("../projects/manifest.json"));
 
 assert.match(languageReadme, /IELTS Academic/);
 assert.match(projectReadme, /Overall 7\.5/);
-assert.match(projectReadme, /per-skill floor remains unconfirmed/);
+assert.match(projectReadme, /2026-08-22 to 2026-09-05/);
+assert.match(projectReadme, /270 focused minutes/);
 assert.match(projectReadme, /event-driven-study-system\.md/);
 assert.doesNotMatch(projectReadme, /adaptive 8-week plan|daily flexible training|checkpoint-status\.json/i);
 
 assert.match(eventSystem, /同时最多一个活动单元/);
 assert.match(eventSystem, /连续 3 个独立新样本/);
-assert.match(eventSystem, /activeUnit.*null/s);
+assert.match(eventSystem, /当前学习状态只以 `unit-ledger\.json` 为准/);
+assert.match(eventSystem, /第 1 天只有半天，固定为 270 分钟/);
+assert.match(eventSystem, /口试前后 48 小时/);
 assert.equal(unitLedger.schemaVersion, 2);
-assert.equal(unitLedger.state, "not-started");
-assert.equal(unitLedger.activeUnit, null);
-assert.equal(unitLedger.suggestedUnit.id, "D1");
-assert.equal(unitLedger.suggestedUnit.status, "suggested");
-assert.equal(unitLedger.suggestedUnit.type, "diagnostic");
-assert.equal(unitLedger.suggestedUnit.durationMinutes, 40);
-assert.deepEqual(unitLedger.queue, []);
-assert.deepEqual(unitLedger.settled, []);
+assert.equal(unitLedger.activeUnit === null || unitLedger.activeUnit.status === "active", true);
+assert.equal(unitLedger.suggestedUnit === null || unitLedger.suggestedUnit.status === "suggested", true);
+assert.equal(unitLedger.state === "active", unitLedger.activeUnit !== null);
+assert.equal(Array.isArray(unitLedger.queue), true);
+assert.equal(Array.isArray(unitLedger.settled), true);
+const runtimeUnits = [
+  unitLedger.activeUnit,
+  unitLedger.suggestedUnit,
+  ...unitLedger.queue,
+  ...unitLedger.settled,
+].filter(Boolean);
+assert.equal(runtimeUnits.some((unit) => unit.id === "M1"), true);
 assert.equal(calibrationEvents.schemaVersion, 2);
 assert.deepEqual(calibrationEvents.events.map((event) => event.id), [
   "baseline-complete",
@@ -128,10 +137,16 @@ assert.deepEqual(calibrationEvents.events.map((event) => event.id), [
 ]);
 
 assert.equal(scoreProfile.target.overall, 7.5);
-assert.equal(scoreProfile.target.perSkillFloor, null);
+assert.equal(scoreProfile.target.perSkillFloor, 6.5);
 assert.equal(Object.hasOwn(scoreProfile.target, "timelineWeeks"), false);
-assert.deepEqual(scoreHistory.entries, []);
-assert.deepEqual(errorLog.errors, []);
+assert.equal(Array.isArray(scoreHistory.entries), true);
+assert.equal(scoreHistory.entries.some((entry) => entry.id === "2026-07-23-c19-test-1-baseline"), true);
+assert.equal(Array.isArray(errorLog.errors), true);
+assert.equal(sprintPlan.exam.speakingDate, null);
+assert.equal(sprintPlan.exam.dayOneAvailableMinutes, 270);
+assert.equal(sprintPlan.speakingContingency.readinessDeadline, "2026-08-20");
+assert.equal(sprintPlan.days.length, 20);
+assert.equal(sprintPlan.days[0].template, "halfDay");
 
 assert.match(orchestrator, /Do not invent a personal weakness profile/);
 assert.match(orchestrator, /Keep at most one active learning unit/);
@@ -168,9 +183,11 @@ assert.doesNotMatch(readerState, /TASK_STORAGE_KEY|loadTaskState|saveTaskState/)
 
 assert.match(buildScript, /plans\/unit-ledger\.json/);
 assert.match(buildScript, /plans\/calibration-events\.json/);
+assert.match(buildScript, /plans\/exam-sprint\.json/);
 assert.doesNotMatch(buildScript, /checkpoint-status\.json|checkpoints/);
 assert.match(buildSchema, /insufficient_fix_evidence/);
 assert.match(buildSchema, /deprecated_field/);
+assert.match(buildSchema, /conditionalReserve/);
 assert.match(buildReferences, /type, label, moduleId/);
 
 const ieltsProject = manifest.find((project) => project.id === "ielts-academic");
