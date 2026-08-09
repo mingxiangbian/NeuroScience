@@ -21,7 +21,7 @@
       "id": "E002",
       "skill": "listening",
       "impact": "high",
-      "status": "improving",
+      "status": "regressed",
       "description": "无法稳定识别并等待完整答案窗口：有时提前用相关词作答并停止监听，有时漏过答案后抓取后续显眼词；均未验证原文证据、题干语法和完整语义。",
       "evidence": [
         "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-01",
@@ -30,12 +30,13 @@
         "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-05",
         "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-07",
         "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-08",
-        "journal/entries/2026-07-24-l1-listening-answer-window-repair.md#结果与答案窗口核对"
+        "journal/entries/2026-07-24-l1-listening-answer-window-repair.md#结果与答案窗口核对",
+        "journal/entries/2026-07-24-l2-listening-answer-window-transfer.md#l2-结论"
       ],
-      "reviewMethod": "复盘独立 Listening 题组时标记题干限定、完整答案窗口、显眼干扰词或选项、决定性信息和最终答案；检查是否听完整个相关话轮，并同时满足原文证据、题干语法与完整语义。",
+      "reviewMethod": "复盘独立 Listening 题组时标记题干限定、评价主体、完整答案窗口、显眼干扰词、决定性关系和最终答案；检查直接评价与后续解释是否属于同一窗口，并同时满足原文证据、题干语法与完整语义。",
       "openedAt": "2026-07-23",
-      "lastSeenAt": "2026-07-24",
-      "repairUnitId": "L1",
+      "lastSeenAt": "2026-08-09",
+      "repairUnitId": "L3",
       "consecutiveCleanSamples": 0,
       "fixedEvidence": []
     },
@@ -97,11 +98,12 @@
       "description": "已经定位到关键证据时，短语或答案词的词义缺口仍使证据失效，随后用 NOT GIVEN、附近熟词或错误释义代替。",
       "evidence": [
         "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-01",
-        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-02"
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-02",
+        "journal/entries/2026-08-09-reading-complex-sentence-check.md#结论"
       ],
       "reviewMethod": "复盘已定位但答错的题目时记录阻塞词、句法角色、上下文可推含义和最终替代动作；下一批同题型检查能否在不认识单词时仍依靠句法与上下文保留正确证据边界。",
       "openedAt": "2026-07-23",
-      "lastSeenAt": "2026-07-23",
+      "lastSeenAt": "2026-08-09",
       "repairUnitId": null,
       "consecutiveCleanSamples": 0,
       "fixedEvidence": []
@@ -128,13 +130,14 @@
       "skill": "reading",
       "impact": "high",
       "status": "active",
-      "description": "单词孤立出现时可能认识，但读到复杂句末尾时前半句信息已经丢失，无法在一次阅读中整合完整命题；重读只能以很高时间成本换取部分理解改善，并妨碍段落匹配。",
+      "description": "复杂句一遍读取时通常能保留主题和部分动作，但在核心谓语陌生、动作/目的/结果嵌套，或形式主语、指代、让步与双重否定出现时，会错误压缩语义角色并改变完整命题；不能再简单归因为读到句尾后一概忘记前半句。",
       "evidence": [
-        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-02"
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-02",
+        "journal/entries/2026-08-09-reading-complex-sentence-check.md#结论"
       ],
-      "reviewMethod": "从同篇文章抽取复杂句，分别标记生词、从句边界、逻辑关系和指代；只读一遍后口述句意并检查信息保留，区分词义缺口、句法解析失败与读后保持失败。",
+      "reviewMethod": "从同篇文章抽取复杂句，只读一遍后依次口述主语与有限谓语、连接词、语义角色和整句结论；分别标记词义缺口、句法与指代解析、行动/目的/结果混合，以及真正的读后保持失败。",
       "openedAt": "2026-07-24",
-      "lastSeenAt": "2026-07-24",
+      "lastSeenAt": "2026-08-09",
       "repairUnitId": null,
       "consecutiveCleanSamples": 0,
       "fixedEvidence": []
@@ -144,13 +147,14 @@
       "skill": "writing",
       "impact": "high",
       "status": "active",
-      "description": "Task 2 无法稳定判断观点何时已经足够可用并承诺执行；切题性、论证强度、例子可用性和英文可表达性会同时触发怀疑。本次保留原方案，但在写出下一句前持续停顿；既往完成大纲后曾在成文中实际删换观点。",
+      "description": "Task 2 无法稳定判断观点何时已经足够可用并承诺执行；切题性、论证强度、例子可用性和英文可表达性会同时触发怀疑。2026-08-09 样本还把题目命题极性读反：总立场写为不同意，但第一段理由实际全部支持同意。外部纠正并锁定论证链后，十分钟成段过程中没有再次换观点。",
       "evidence": [
-        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-02"
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-02",
+        "journal/entries/2026-08-09-task2-idea-commitment-check.md#e009观点承诺"
       ],
-      "reviewMethod": "在限时 Task 2 中记录构思结束条件、初始论点、每次想更换观点的时间与原因，以及最终是否改换；结合成文结果判断原方案是否实际不足，而不是只记录主观不满意。",
+      "reviewMethod": "在未见 Task 2 中先原样写出需要判断的完整命题，再记录构思结束条件、初始论点、理由是否支持该立场、每次想更换观点的时间与原因，以及最终是否改换；只有无提示样本才能更新状态。",
       "openedAt": "2026-07-24",
-      "lastSeenAt": "2026-07-24",
+      "lastSeenAt": "2026-08-09",
       "repairUnitId": null,
       "consecutiveCleanSamples": 0,
       "fixedEvidence": []
@@ -160,13 +164,14 @@
       "skill": "writing",
       "impact": "high",
       "status": "active",
-      "description": "Task 2 论证缺少可快速调用的例证素材；即使意识到需要例子，也会完全想不到内容，不知道有哪些素材可用。本次冷启动还出现了没有及时触发例证动作的问题。",
+      "description": "Task 2 论证缺少可快速调用的例证素材；即使意识到需要例子，也会完全想不到内容，不知道有哪些素材可用。2026-08-09 五分钟大纲中第二个主体段仍无例证，第一个名人例子也不能支持题目；在明确‘人物/活动/即时结果/回扣’脚手架后才能形成可用课堂场景。",
       "evidence": [
-        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-02"
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-02",
+        "journal/entries/2026-08-09-task2-idea-commitment-check.md#e010例证检索"
       ],
-      "reviewMethod": "对后续多个 Task 2 样本分别记录每个主体段是否需要例证、是否在动笔前检索到素材、是否实际写入，以及失败属于无素材、未触发还是英文表达受阻。",
+      "reviewMethod": "对后续未见 Task 2 样本分别记录每个主体段是否在五分钟内形成‘人物/活动/即时结果/回扣’的具体化例证、是否实际写入，以及失败属于无素材、未触发、因果跳跃还是英文表达受阻。",
       "openedAt": "2026-07-24",
-      "lastSeenAt": "2026-07-24",
+      "lastSeenAt": "2026-08-09",
       "repairUnitId": null,
       "consecutiveCleanSamples": 0,
       "fixedEvidence": []
@@ -224,15 +229,16 @@
       "skill": "writing",
       "impact": "high",
       "status": "active",
-      "description": "实时英文组织会停顿，主要阻塞在合适词汇与搭配的检索，次要阻塞在句子结构和语法选择；不经过完整中文翻译，但本次两篇冷启动样本均出现相关准确性问题。",
+      "description": "实时英文组织会停顿，主要阻塞在合适词汇与搭配的检索，次要阻塞在句子结构和语法选择。2026-08-09 在观点和例证已锁定后，主体段十分钟完成且只报告一次搭配长停顿，但仍频繁出现语义主语、自然句型、词形搭配和主谓一致错误；十三分钟自查主要捕获局部动词形式，未稳定发现整句语义与搭配问题。",
       "evidence": [
         "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-01",
         "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-02",
-        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-03"
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-03",
+        "journal/entries/2026-08-09-task2-idea-commitment-check.md#e014英文输出与自查"
       ],
-      "reviewMethod": "在后续多个限时写作样本中标记句前停顿，并区分内容、词汇搭配、句法和语法来源；结合成文错误核对主观停顿是否对应实际准确性损失。",
+      "reviewMethod": "在后续多个限时写作样本中标记句前停顿，并区分内容、词汇搭配、句法和语法来源；检查时先核对语义主语和谓语关系，再核对主谓一致与搭配，并比较主观不确定项是否覆盖实际高影响错误。",
       "openedAt": "2026-07-24",
-      "lastSeenAt": "2026-07-24",
+      "lastSeenAt": "2026-08-09",
       "repairUnitId": null,
       "consecutiveCleanSamples": 0,
       "fixedEvidence": []

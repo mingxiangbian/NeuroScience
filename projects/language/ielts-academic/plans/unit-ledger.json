@@ -1,35 +1,61 @@
 {
   "schemaVersion": 2,
   "mode": "event-driven-settlement",
-  "state": "active",
-  "activeUnit": {
-    "id": "L2",
-    "type": "diagnostic",
-    "title": "Listening 答案窗口迁移验证",
-    "status": "active",
-    "reason": "L1 已完成原样本修订和差异解释，E002 具备 improving 证据，但尚无独立 clean sample；需要用未见材料验证该判断能否迁移到实时听力。",
-    "nextAction": "在雅思哥打开一组从未做过的 Cambridge Listening Section 3，停在题目预览页且不要播放；先固定题型、题干限定和记录方式。",
-    "durationMinutes": 15,
-    "materialType": "一组未做过的 Cambridge Listening Section 3 选择题或配对题，单次播放",
-    "expectedArtifact": "未经修改的首次答案、即时回忆、错误和不确定题的完整答案窗口，以及 E002 是否复发的迁移判断",
-    "reviewMethod": "答案公布前固定首次答案；公布后逐题比较显眼词、决定性关系和题干限定。若没有任何题仅凭显眼词或自行推断作答，则把 consecutiveCleanSamples 更新为 1；若再次出现，则记录复发证据。",
+  "state": "idle",
+  "activeUnit": null,
+  "suggestedUnit": {
+    "id": "L3",
+    "type": "repair",
+    "title": "Listening 评价窗口与关系保持",
+    "status": "suggested",
+    "reason": "L2 独立样本得到 7/10，但 Questions 23–24 和 30 再次出现显眼词先行、评价主体漂移和解释关系未整合，E002 已确认复发。",
+    "nextAction": "准备开始时，选一组未见的 Cambridge Listening Section 3 选择或配对题；播放前标出每组题要匹配的评价维度，单次播放中把直接评价和后续解释保持在同一答案窗口。",
+    "durationMinutes": 120,
+    "materialType": "L2 错误窗口的短复盘，加一组未见 Cambridge Listening Section 3 选择题或配对题",
+    "expectedArtifact": "未经修改的首次答案、评价主体、直接评价、后续解释、最终选项和漏题后的止损记录",
+    "reviewMethod": "逐题检查答案是否由完整评价关系支持；听到显眼名词或选项近义词只能形成候选，必须确认其修饰对象、语义角色和后续转折后才能提交。",
     "evidenceRefs": [
-      "journal/entries/2026-07-24-l1-listening-answer-window-repair.md#l1-结算"
+      "journal/entries/2026-07-24-l2-listening-answer-window-transfer.md#l2-结论"
     ],
     "errorRefs": [
       "E002"
     ],
     "settlementCriteria": [
-      "使用一组未做过的 Section 3 完成单次播放，并保留未经修改的首次答案",
-      "所有错误和不确定题均完成答案窗口核对",
-      "明确判断 E002 是 clean、仍在改善还是已经复发",
-      "依据独立样本更新 consecutiveCleanSamples、错误状态和下一单元"
-    ],
-    "openedAt": "2026-07-24"
+      "能重建 L2 的 Questions 23–24 和 30，并说明显眼词、评价主体、直接评价与后续解释各自的作用",
+      "使用一组未见 Section 3 完成单次播放，并保留未经修改的首次答案",
+      "没有任何答案只凭显眼词作出；若没有听清，能够标记不确定并继续当前题号",
+      "依据独立样本更新 E002 的状态和 consecutiveCleanSamples"
+    ]
   },
-  "suggestedUnit": null,
   "queue": [],
   "settled": [
+    {
+      "id": "L2",
+      "type": "diagnostic",
+      "title": "Listening 答案窗口迁移验证",
+      "status": "settled",
+      "reason": "L1 已完成原样本修订和差异解释，E002 具备 improving 证据，但尚无独立 clean sample；需要用未见材料验证该判断能否迁移到实时听力。",
+      "nextAction": "L2 已结算；等待考生明确开始建议单元 L3，在下一组未见材料中修复评价主体漂移和解释关系未整合。",
+      "durationMinutes": 90,
+      "materialType": "雅思哥 C21 Test 1 Part 3 Questions 21–30，单次播放",
+      "expectedArtifact": "未经修改的首次答案、全部错题答案窗口，以及 E002 是否复发的迁移判断",
+      "reviewMethod": "比较显眼词、评价主体、直接评价、后续解释和题干限定，区分听力关系保持错误与选项本身的词义解码错误。",
+      "evidenceRefs": [
+        "journal/entries/2026-07-24-l2-listening-answer-window-transfer.md#l2-结论"
+      ],
+      "errorRefs": [
+        "E002"
+      ],
+      "settlementCriteria": [
+        "使用一组未做过的 Section 3 完成单次播放，并保留未经修改的首次答案",
+        "所有错误和不确定题均完成答案窗口核对",
+        "明确判断 E002 是 clean、仍在改善还是已经复发",
+        "依据独立样本更新 consecutiveCleanSamples、错误状态和下一单元"
+      ],
+      "openedAt": "2026-07-24",
+      "settledAt": "2026-08-09",
+      "decision": "独立新材料首次作答 7/10。Questions 23–24 因显眼地域短语的修饰对象判断错误而多选 B，并漏掉 robot 到 new technology 的类别映射；Question 30 因漏掉 one-sided 后抓住 benefit people 而误选 D，未整合 focused on ... and ignored ... 的对比关系。Question 27 是选项 predictable/predictive 与 useful/used 的局部解码错误。E002 确认复发，状态更新为 regressed，连续独立 clean sample 保持 0；L2 作为诊断单元结算，不代表错误已修复。"
+    },
     {
       "id": "L1",
       "type": "repair",

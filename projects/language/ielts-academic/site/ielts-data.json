@@ -14,19 +14,28 @@
     "referenceIssues": []
   },
   "derived": {
-    "learningState": "active",
+    "learningState": "idle",
     "errorCounts": {
       "active": 17,
-      "improving": 1,
+      "improving": 0,
       "fixed": 0,
-      "regressed": 0
+      "regressed": 1
     },
-    "settledUnitCount": 2,
+    "settledUnitCount": 3,
     "evidenceEventCount": 2,
     "currentTrigger": "two-mocks-available"
   },
   "references": {
     "targets": [
+      {
+        "id": "unit:L3",
+        "rawId": "L3",
+        "type": "unit",
+        "label": "Listening 评价窗口与关系保持",
+        "moduleId": "units",
+        "sectionId": "unit-L3",
+        "sourcePath": "plans/unit-ledger.json"
+      },
       {
         "id": "unit:L2",
         "rawId": "L2",
@@ -121,7 +130,7 @@
         "id": "error:E008",
         "rawId": "E008",
         "type": "error",
-        "label": "单词孤立出现时可能认识，但读到复杂句末尾时前半句信息已经丢失，无法在一次阅读中整合完整命题；重读只能以很高时间成本换取部分理解改善，并妨碍段落匹配。",
+        "label": "复杂句一遍读取时通常能保留主题和部分动作，但在核心谓语陌生、动作/目的/结果嵌套，或形式主语、指代、让步与双重否定出现时，会错误压缩语义角色并改变完整命题；不能再简单归因为读到句尾后一概忘记前半句。",
         "moduleId": "errors",
         "sectionId": "error-E008",
         "sourcePath": "diagnostics/error-log.json"
@@ -130,7 +139,7 @@
         "id": "error:E009",
         "rawId": "E009",
         "type": "error",
-        "label": "Task 2 无法稳定判断观点何时已经足够可用并承诺执行；切题性、论证强度、例子可用性和英文可表达性会同时触发怀疑。本次保留原方案，但在写出下一句前持续停顿；既往完成大纲后曾在成文中实际删换观点。",
+        "label": "Task 2 无法稳定判断观点何时已经足够可用并承诺执行；切题性、论证强度、例子可用性和英文可表达性会同时触发怀疑。2026-08-09 样本还把题目命题极性读反：总立场写为不同意，但第一段理由实际全部支持同意。外部纠正并锁定论证链后，十分钟成段过程中没有再次换观点。",
         "moduleId": "errors",
         "sectionId": "error-E009",
         "sourcePath": "diagnostics/error-log.json"
@@ -139,7 +148,7 @@
         "id": "error:E010",
         "rawId": "E010",
         "type": "error",
-        "label": "Task 2 论证缺少可快速调用的例证素材；即使意识到需要例子，也会完全想不到内容，不知道有哪些素材可用。本次冷启动还出现了没有及时触发例证动作的问题。",
+        "label": "Task 2 论证缺少可快速调用的例证素材；即使意识到需要例子，也会完全想不到内容，不知道有哪些素材可用。2026-08-09 五分钟大纲中第二个主体段仍无例证，第一个名人例子也不能支持题目；在明确‘人物/活动/即时结果/回扣’脚手架后才能形成可用课堂场景。",
         "moduleId": "errors",
         "sectionId": "error-E010",
         "sourcePath": "diagnostics/error-log.json"
@@ -175,7 +184,7 @@
         "id": "error:E014",
         "rawId": "E014",
         "type": "error",
-        "label": "实时英文组织会停顿，主要阻塞在合适词汇与搭配的检索，次要阻塞在句子结构和语法选择；不经过完整中文翻译，但本次两篇冷启动样本均出现相关准确性问题。",
+        "label": "实时英文组织会停顿，主要阻塞在合适词汇与搭配的检索，次要阻塞在句子结构和语法选择。2026-08-09 在观点和例证已锁定后，主体段十分钟完成且只报告一次搭配长停顿，但仍频繁出现语义主语、自然句型、词形搭配和主谓一致错误；十三分钟自查主要捕获局部动词形式，未稳定发现整句语义与搭配问题。",
         "moduleId": "errors",
         "sectionId": "error-E014",
         "sourcePath": "diagnostics/error-log.json"
@@ -298,6 +307,15 @@
         "sourcePath": "notes/writing/task-2-argument-development.md"
       },
       {
+        "id": "journal:2026-08-09-task2-idea-commitment-check",
+        "rawId": "2026-08-09-task2-idea-commitment-check",
+        "type": "journal",
+        "label": "C21 Test 4 Task 2：观点承诺、例证与英文输出诊断",
+        "moduleId": "archive",
+        "sectionId": "journal-2026-08-09-task2-idea-commitment-check",
+        "sourcePath": "journal/entries/2026-08-09-task2-idea-commitment-check.md"
+      },
+      {
         "id": "journal:2026-08-09-speaking-transcript-diagnostic",
         "rawId": "2026-08-09-speaking-transcript-diagnostic",
         "type": "journal",
@@ -305,6 +323,15 @@
         "moduleId": "archive",
         "sectionId": "journal-2026-08-09-speaking-transcript-diagnostic",
         "sourcePath": "journal/entries/2026-08-09-speaking-transcript-diagnostic.md"
+      },
+      {
+        "id": "journal:2026-08-09-reading-complex-sentence-check",
+        "rawId": "2026-08-09-reading-complex-sentence-check",
+        "type": "journal",
+        "label": "C19 Passage 2：复杂句一遍读取诊断",
+        "moduleId": "archive",
+        "sectionId": "journal-2026-08-09-reading-complex-sentence-check",
+        "sourcePath": "journal/entries/2026-08-09-reading-complex-sentence-check.md"
       },
       {
         "id": "journal:2026-07-24-l2-listening-answer-window-transfer",
@@ -490,6 +517,11 @@
     "backlinks": {
       "error:E002": [
         {
+          "id": "unit:L3",
+          "type": "unit",
+          "label": "Listening 评价窗口与关系保持"
+        },
+        {
           "id": "unit:L2",
           "type": "unit",
           "label": "Listening 答案窗口迁移验证"
@@ -520,16 +552,16 @@
           "label": "Cambridge 19 Test 1 首次模考复盘"
         }
       ],
-      "journal/entries/2026-07-24-l1-listening-answer-window-repair.md#l1-结算": [
+      "journal/entries/2026-07-24-l2-listening-answer-window-transfer.md#l2-结论": [
+        {
+          "id": "unit:L3",
+          "type": "unit",
+          "label": "Listening 评价窗口与关系保持"
+        },
         {
           "id": "unit:L2",
           "type": "unit",
           "label": "Listening 答案窗口迁移验证"
-        },
-        {
-          "id": "unit:L1",
-          "type": "unit",
-          "label": "Listening 完整答案窗口与题干限定"
         }
       ],
       "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-02": [
@@ -561,6 +593,13 @@
         }
       ],
       "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-08": [
+        {
+          "id": "unit:L1",
+          "type": "unit",
+          "label": "Listening 完整答案窗口与题干限定"
+        }
+      ],
+      "journal/entries/2026-07-24-l1-listening-answer-window-repair.md#l1-结算": [
         {
           "id": "unit:L1",
           "type": "unit",
@@ -622,6 +661,11 @@
           "label": "C19 Test 1 首次完整模考复盘"
         },
         {
+          "id": "journal:2026-08-09-reading-complex-sentence-check",
+          "type": "journal",
+          "label": "C19 Passage 2：复杂句一遍读取诊断"
+        },
+        {
           "id": "journal:2026-07-23-c19-test-1-baseline-review",
           "type": "journal",
           "label": "Cambridge 19 Test 1 首次模考复盘"
@@ -646,6 +690,11 @@
           "label": "C19 Test 1 首次完整模考复盘"
         },
         {
+          "id": "journal:2026-08-09-reading-complex-sentence-check",
+          "type": "journal",
+          "label": "C19 Passage 2：复杂句一遍读取诊断"
+        },
+        {
           "id": "journal:2026-07-23-c19-test-1-baseline-review",
           "type": "journal",
           "label": "Cambridge 19 Test 1 首次模考复盘"
@@ -658,6 +707,11 @@
           "label": "C19 Test 1 首次完整模考复盘"
         },
         {
+          "id": "journal:2026-08-09-task2-idea-commitment-check",
+          "type": "journal",
+          "label": "C21 Test 4 Task 2：观点承诺、例证与英文输出诊断"
+        },
+        {
           "id": "journal:2026-07-23-c19-test-1-baseline-review",
           "type": "journal",
           "label": "Cambridge 19 Test 1 首次模考复盘"
@@ -668,6 +722,11 @@
           "id": "unit:M1",
           "type": "unit",
           "label": "C19 Test 1 首次完整模考复盘"
+        },
+        {
+          "id": "journal:2026-08-09-task2-idea-commitment-check",
+          "type": "journal",
+          "label": "C21 Test 4 Task 2：观点承诺、例证与英文输出诊断"
         },
         {
           "id": "journal:2026-07-23-c19-test-1-baseline-review",
@@ -718,6 +777,11 @@
           "label": "C19 Test 1 首次完整模考复盘"
         },
         {
+          "id": "journal:2026-08-09-task2-idea-commitment-check",
+          "type": "journal",
+          "label": "C21 Test 4 Task 2：观点承诺、例证与英文输出诊断"
+        },
+        {
           "id": "journal:2026-07-23-c19-test-1-baseline-review",
           "type": "journal",
           "label": "Cambridge 19 Test 1 首次模考复盘"
@@ -745,7 +809,7 @@
           "label": "基线证据完成"
         }
       ],
-      "unit:L1": [
+      "unit:L3": [
         {
           "id": "error:E002",
           "type": "error",
@@ -848,6 +912,7 @@
         }
       ],
       "unit:L2": [],
+      "unit:L1": [],
       "unit:M1": [],
       "evidence:2026-07-23-c19-test-1-baseline": [],
       "evidence:2026-08-09-planning-baseline": [],
@@ -857,7 +922,9 @@
       "calibration:regression-detected": [],
       "calibration:external-deadline-changed": [],
       "calibration:target-reached": [],
+      "journal:2026-08-09-task2-idea-commitment-check": [],
       "journal:2026-08-09-speaking-transcript-diagnostic": [],
+      "journal:2026-08-09-reading-complex-sentence-check": [],
       "journal:2026-07-24-l2-listening-answer-window-transfer": [],
       "journal:2026-07-24-l1-listening-answer-window-repair": [],
       "journal:2026-07-23-c19-test-1-baseline-review": [],
@@ -881,6 +948,11 @@
     }
   },
   "sourceLinks": [
+    {
+      "id": "unit:L3",
+      "label": "Listening 评价窗口与关系保持",
+      "path": "plans/unit-ledger.json"
+    },
     {
       "id": "unit:L2",
       "label": "Listening 答案窗口迁移验证",
@@ -933,17 +1005,17 @@
     },
     {
       "id": "error:E008",
-      "label": "单词孤立出现时可能认识，但读到复杂句末尾时前半句信息已经丢失，无法在一次阅读中整合完整命题；重读只能以很高时间成本换取部分理解改善，并妨碍段落匹配。",
+      "label": "复杂句一遍读取时通常能保留主题和部分动作，但在核心谓语陌生、动作/目的/结果嵌套，或形式主语、指代、让步与双重否定出现时，会错误压缩语义角色并改变完整命题；不能再简单归因为读到句尾后一概忘记前半句。",
       "path": "diagnostics/error-log.json"
     },
     {
       "id": "error:E009",
-      "label": "Task 2 无法稳定判断观点何时已经足够可用并承诺执行；切题性、论证强度、例子可用性和英文可表达性会同时触发怀疑。本次保留原方案，但在写出下一句前持续停顿；既往完成大纲后曾在成文中实际删换观点。",
+      "label": "Task 2 无法稳定判断观点何时已经足够可用并承诺执行；切题性、论证强度、例子可用性和英文可表达性会同时触发怀疑。2026-08-09 样本还把题目命题极性读反：总立场写为不同意，但第一段理由实际全部支持同意。外部纠正并锁定论证链后，十分钟成段过程中没有再次换观点。",
       "path": "diagnostics/error-log.json"
     },
     {
       "id": "error:E010",
-      "label": "Task 2 论证缺少可快速调用的例证素材；即使意识到需要例子，也会完全想不到内容，不知道有哪些素材可用。本次冷启动还出现了没有及时触发例证动作的问题。",
+      "label": "Task 2 论证缺少可快速调用的例证素材；即使意识到需要例子，也会完全想不到内容，不知道有哪些素材可用。2026-08-09 五分钟大纲中第二个主体段仍无例证，第一个名人例子也不能支持题目；在明确‘人物/活动/即时结果/回扣’脚手架后才能形成可用课堂场景。",
       "path": "diagnostics/error-log.json"
     },
     {
@@ -963,7 +1035,7 @@
     },
     {
       "id": "error:E014",
-      "label": "实时英文组织会停顿，主要阻塞在合适词汇与搭配的检索，次要阻塞在句子结构和语法选择；不经过完整中文翻译，但本次两篇冷启动样本均出现相关准确性问题。",
+      "label": "实时英文组织会停顿，主要阻塞在合适词汇与搭配的检索，次要阻塞在句子结构和语法选择。2026-08-09 在观点和例证已锁定后，主体段十分钟完成且只报告一次搭配长停顿，但仍频繁出现语义主语、自然句型、词形搭配和主谓一致错误；十三分钟自查主要捕获局部动词形式，未稳定发现整句语义与搭配问题。",
       "path": "diagnostics/error-log.json"
     },
     {
@@ -1032,9 +1104,19 @@
       "path": "notes/writing/task-2-argument-development.md"
     },
     {
+      "id": "journal:2026-08-09-task2-idea-commitment-check",
+      "label": "C21 Test 4 Task 2：观点承诺、例证与英文输出诊断",
+      "path": "journal/entries/2026-08-09-task2-idea-commitment-check.md"
+    },
+    {
       "id": "journal:2026-08-09-speaking-transcript-diagnostic",
       "label": "口语转写诊断与证据边界",
       "path": "journal/entries/2026-08-09-speaking-transcript-diagnostic.md"
+    },
+    {
+      "id": "journal:2026-08-09-reading-complex-sentence-check",
+      "label": "C19 Passage 2：复杂句一遍读取诊断",
+      "path": "journal/entries/2026-08-09-reading-complex-sentence-check.md"
     },
     {
       "id": "journal:2026-07-24-l2-listening-answer-window-transfer",
@@ -1294,7 +1376,7 @@
         "id": "E002",
         "skill": "listening",
         "impact": "high",
-        "status": "improving",
+        "status": "regressed",
         "description": "无法稳定识别并等待完整答案窗口：有时提前用相关词作答并停止监听，有时漏过答案后抓取后续显眼词；均未验证原文证据、题干语法和完整语义。",
         "evidence": [
           "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-01",
@@ -1303,12 +1385,13 @@
           "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-05",
           "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-07",
           "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-08",
-          "journal/entries/2026-07-24-l1-listening-answer-window-repair.md#结果与答案窗口核对"
+          "journal/entries/2026-07-24-l1-listening-answer-window-repair.md#结果与答案窗口核对",
+          "journal/entries/2026-07-24-l2-listening-answer-window-transfer.md#l2-结论"
         ],
-        "reviewMethod": "复盘独立 Listening 题组时标记题干限定、完整答案窗口、显眼干扰词或选项、决定性信息和最终答案；检查是否听完整个相关话轮，并同时满足原文证据、题干语法与完整语义。",
+        "reviewMethod": "复盘独立 Listening 题组时标记题干限定、评价主体、完整答案窗口、显眼干扰词、决定性关系和最终答案；检查直接评价与后续解释是否属于同一窗口，并同时满足原文证据、题干语法与完整语义。",
         "openedAt": "2026-07-23",
-        "lastSeenAt": "2026-07-24",
-        "repairUnitId": "L1",
+        "lastSeenAt": "2026-08-09",
+        "repairUnitId": "L3",
         "consecutiveCleanSamples": 0,
         "fixedEvidence": []
       },
@@ -1370,11 +1453,12 @@
         "description": "已经定位到关键证据时，短语或答案词的词义缺口仍使证据失效，随后用 NOT GIVEN、附近熟词或错误释义代替。",
         "evidence": [
           "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-01",
-          "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-02"
+          "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-02",
+          "journal/entries/2026-08-09-reading-complex-sentence-check.md#结论"
         ],
         "reviewMethod": "复盘已定位但答错的题目时记录阻塞词、句法角色、上下文可推含义和最终替代动作；下一批同题型检查能否在不认识单词时仍依靠句法与上下文保留正确证据边界。",
         "openedAt": "2026-07-23",
-        "lastSeenAt": "2026-07-23",
+        "lastSeenAt": "2026-08-09",
         "repairUnitId": null,
         "consecutiveCleanSamples": 0,
         "fixedEvidence": []
@@ -1401,13 +1485,14 @@
         "skill": "reading",
         "impact": "high",
         "status": "active",
-        "description": "单词孤立出现时可能认识，但读到复杂句末尾时前半句信息已经丢失，无法在一次阅读中整合完整命题；重读只能以很高时间成本换取部分理解改善，并妨碍段落匹配。",
+        "description": "复杂句一遍读取时通常能保留主题和部分动作，但在核心谓语陌生、动作/目的/结果嵌套，或形式主语、指代、让步与双重否定出现时，会错误压缩语义角色并改变完整命题；不能再简单归因为读到句尾后一概忘记前半句。",
         "evidence": [
-          "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-02"
+          "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-02",
+          "journal/entries/2026-08-09-reading-complex-sentence-check.md#结论"
         ],
-        "reviewMethod": "从同篇文章抽取复杂句，分别标记生词、从句边界、逻辑关系和指代；只读一遍后口述句意并检查信息保留，区分词义缺口、句法解析失败与读后保持失败。",
+        "reviewMethod": "从同篇文章抽取复杂句，只读一遍后依次口述主语与有限谓语、连接词、语义角色和整句结论；分别标记词义缺口、句法与指代解析、行动/目的/结果混合，以及真正的读后保持失败。",
         "openedAt": "2026-07-24",
-        "lastSeenAt": "2026-07-24",
+        "lastSeenAt": "2026-08-09",
         "repairUnitId": null,
         "consecutiveCleanSamples": 0,
         "fixedEvidence": []
@@ -1417,13 +1502,14 @@
         "skill": "writing",
         "impact": "high",
         "status": "active",
-        "description": "Task 2 无法稳定判断观点何时已经足够可用并承诺执行；切题性、论证强度、例子可用性和英文可表达性会同时触发怀疑。本次保留原方案，但在写出下一句前持续停顿；既往完成大纲后曾在成文中实际删换观点。",
+        "description": "Task 2 无法稳定判断观点何时已经足够可用并承诺执行；切题性、论证强度、例子可用性和英文可表达性会同时触发怀疑。2026-08-09 样本还把题目命题极性读反：总立场写为不同意，但第一段理由实际全部支持同意。外部纠正并锁定论证链后，十分钟成段过程中没有再次换观点。",
         "evidence": [
-          "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-02"
+          "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-02",
+          "journal/entries/2026-08-09-task2-idea-commitment-check.md#e009观点承诺"
         ],
-        "reviewMethod": "在限时 Task 2 中记录构思结束条件、初始论点、每次想更换观点的时间与原因，以及最终是否改换；结合成文结果判断原方案是否实际不足，而不是只记录主观不满意。",
+        "reviewMethod": "在未见 Task 2 中先原样写出需要判断的完整命题，再记录构思结束条件、初始论点、理由是否支持该立场、每次想更换观点的时间与原因，以及最终是否改换；只有无提示样本才能更新状态。",
         "openedAt": "2026-07-24",
-        "lastSeenAt": "2026-07-24",
+        "lastSeenAt": "2026-08-09",
         "repairUnitId": null,
         "consecutiveCleanSamples": 0,
         "fixedEvidence": []
@@ -1433,13 +1519,14 @@
         "skill": "writing",
         "impact": "high",
         "status": "active",
-        "description": "Task 2 论证缺少可快速调用的例证素材；即使意识到需要例子，也会完全想不到内容，不知道有哪些素材可用。本次冷启动还出现了没有及时触发例证动作的问题。",
+        "description": "Task 2 论证缺少可快速调用的例证素材；即使意识到需要例子，也会完全想不到内容，不知道有哪些素材可用。2026-08-09 五分钟大纲中第二个主体段仍无例证，第一个名人例子也不能支持题目；在明确‘人物/活动/即时结果/回扣’脚手架后才能形成可用课堂场景。",
         "evidence": [
-          "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-02"
+          "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-02",
+          "journal/entries/2026-08-09-task2-idea-commitment-check.md#e010例证检索"
         ],
-        "reviewMethod": "对后续多个 Task 2 样本分别记录每个主体段是否需要例证、是否在动笔前检索到素材、是否实际写入，以及失败属于无素材、未触发还是英文表达受阻。",
+        "reviewMethod": "对后续未见 Task 2 样本分别记录每个主体段是否在五分钟内形成‘人物/活动/即时结果/回扣’的具体化例证、是否实际写入，以及失败属于无素材、未触发、因果跳跃还是英文表达受阻。",
         "openedAt": "2026-07-24",
-        "lastSeenAt": "2026-07-24",
+        "lastSeenAt": "2026-08-09",
         "repairUnitId": null,
         "consecutiveCleanSamples": 0,
         "fixedEvidence": []
@@ -1497,15 +1584,16 @@
         "skill": "writing",
         "impact": "high",
         "status": "active",
-        "description": "实时英文组织会停顿，主要阻塞在合适词汇与搭配的检索，次要阻塞在句子结构和语法选择；不经过完整中文翻译，但本次两篇冷启动样本均出现相关准确性问题。",
+        "description": "实时英文组织会停顿，主要阻塞在合适词汇与搭配的检索，次要阻塞在句子结构和语法选择。2026-08-09 在观点和例证已锁定后，主体段十分钟完成且只报告一次搭配长停顿，但仍频繁出现语义主语、自然句型、词形搭配和主谓一致错误；十三分钟自查主要捕获局部动词形式，未稳定发现整句语义与搭配问题。",
         "evidence": [
           "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-01",
           "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-02",
-          "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-03"
+          "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-03",
+          "journal/entries/2026-08-09-task2-idea-commitment-check.md#e014英文输出与自查"
         ],
-        "reviewMethod": "在后续多个限时写作样本中标记句前停顿，并区分内容、词汇搭配、句法和语法来源；结合成文错误核对主观停顿是否对应实际准确性损失。",
+        "reviewMethod": "在后续多个限时写作样本中标记句前停顿，并区分内容、词汇搭配、句法和语法来源；检查时先核对语义主语和谓语关系，再核对主谓一致与搭配，并比较主观不确定项是否覆盖实际高影响错误。",
         "openedAt": "2026-07-24",
-        "lastSeenAt": "2026-07-24",
+        "lastSeenAt": "2026-08-09",
         "repairUnitId": null,
         "consecutiveCleanSamples": 0,
         "fixedEvidence": []
@@ -1579,35 +1667,61 @@
   "unitLedger": {
     "schemaVersion": 2,
     "mode": "event-driven-settlement",
-    "state": "active",
-    "activeUnit": {
-      "id": "L2",
-      "type": "diagnostic",
-      "title": "Listening 答案窗口迁移验证",
-      "status": "active",
-      "reason": "L1 已完成原样本修订和差异解释，E002 具备 improving 证据，但尚无独立 clean sample；需要用未见材料验证该判断能否迁移到实时听力。",
-      "nextAction": "在雅思哥打开一组从未做过的 Cambridge Listening Section 3，停在题目预览页且不要播放；先固定题型、题干限定和记录方式。",
-      "durationMinutes": 15,
-      "materialType": "一组未做过的 Cambridge Listening Section 3 选择题或配对题，单次播放",
-      "expectedArtifact": "未经修改的首次答案、即时回忆、错误和不确定题的完整答案窗口，以及 E002 是否复发的迁移判断",
-      "reviewMethod": "答案公布前固定首次答案；公布后逐题比较显眼词、决定性关系和题干限定。若没有任何题仅凭显眼词或自行推断作答，则把 consecutiveCleanSamples 更新为 1；若再次出现，则记录复发证据。",
+    "state": "idle",
+    "activeUnit": null,
+    "suggestedUnit": {
+      "id": "L3",
+      "type": "repair",
+      "title": "Listening 评价窗口与关系保持",
+      "status": "suggested",
+      "reason": "L2 独立样本得到 7/10，但 Questions 23–24 和 30 再次出现显眼词先行、评价主体漂移和解释关系未整合，E002 已确认复发。",
+      "nextAction": "准备开始时，选一组未见的 Cambridge Listening Section 3 选择或配对题；播放前标出每组题要匹配的评价维度，单次播放中把直接评价和后续解释保持在同一答案窗口。",
+      "durationMinutes": 120,
+      "materialType": "L2 错误窗口的短复盘，加一组未见 Cambridge Listening Section 3 选择题或配对题",
+      "expectedArtifact": "未经修改的首次答案、评价主体、直接评价、后续解释、最终选项和漏题后的止损记录",
+      "reviewMethod": "逐题检查答案是否由完整评价关系支持；听到显眼名词或选项近义词只能形成候选，必须确认其修饰对象、语义角色和后续转折后才能提交。",
       "evidenceRefs": [
-        "journal/entries/2026-07-24-l1-listening-answer-window-repair.md#l1-结算"
+        "journal/entries/2026-07-24-l2-listening-answer-window-transfer.md#l2-结论"
       ],
       "errorRefs": [
         "E002"
       ],
       "settlementCriteria": [
-        "使用一组未做过的 Section 3 完成单次播放，并保留未经修改的首次答案",
-        "所有错误和不确定题均完成答案窗口核对",
-        "明确判断 E002 是 clean、仍在改善还是已经复发",
-        "依据独立样本更新 consecutiveCleanSamples、错误状态和下一单元"
-      ],
-      "openedAt": "2026-07-24"
+        "能重建 L2 的 Questions 23–24 和 30，并说明显眼词、评价主体、直接评价与后续解释各自的作用",
+        "使用一组未见 Section 3 完成单次播放，并保留未经修改的首次答案",
+        "没有任何答案只凭显眼词作出；若没有听清，能够标记不确定并继续当前题号",
+        "依据独立样本更新 E002 的状态和 consecutiveCleanSamples"
+      ]
     },
-    "suggestedUnit": null,
     "queue": [],
     "settled": [
+      {
+        "id": "L2",
+        "type": "diagnostic",
+        "title": "Listening 答案窗口迁移验证",
+        "status": "settled",
+        "reason": "L1 已完成原样本修订和差异解释，E002 具备 improving 证据，但尚无独立 clean sample；需要用未见材料验证该判断能否迁移到实时听力。",
+        "nextAction": "L2 已结算；等待考生明确开始建议单元 L3，在下一组未见材料中修复评价主体漂移和解释关系未整合。",
+        "durationMinutes": 90,
+        "materialType": "雅思哥 C21 Test 1 Part 3 Questions 21–30，单次播放",
+        "expectedArtifact": "未经修改的首次答案、全部错题答案窗口，以及 E002 是否复发的迁移判断",
+        "reviewMethod": "比较显眼词、评价主体、直接评价、后续解释和题干限定，区分听力关系保持错误与选项本身的词义解码错误。",
+        "evidenceRefs": [
+          "journal/entries/2026-07-24-l2-listening-answer-window-transfer.md#l2-结论"
+        ],
+        "errorRefs": [
+          "E002"
+        ],
+        "settlementCriteria": [
+          "使用一组未做过的 Section 3 完成单次播放，并保留未经修改的首次答案",
+          "所有错误和不确定题均完成答案窗口核对",
+          "明确判断 E002 是 clean、仍在改善还是已经复发",
+          "依据独立样本更新 consecutiveCleanSamples、错误状态和下一单元"
+        ],
+        "openedAt": "2026-07-24",
+        "settledAt": "2026-08-09",
+        "decision": "独立新材料首次作答 7/10。Questions 23–24 因显眼地域短语的修饰对象判断错误而多选 B，并漏掉 robot 到 new technology 的类别映射；Question 30 因漏掉 one-sided 后抓住 benefit people 而误选 D，未整合 focused on ... and ignored ... 的对比关系。Question 27 是选项 predictable/predictive 与 useful/used 的局部解码错误。E002 确认复发，状态更新为 regressed，连续独立 clean sample 保持 0；L2 作为诊断单元结算，不代表错误已修复。"
+      },
       {
         "id": "L1",
         "type": "repair",
@@ -1757,7 +1871,7 @@
     "schemaVersion": 1,
     "id": "2026-08-09-20-day-paper-sprint",
     "status": "active",
-    "lastUpdated": "2026-08-09",
+    "lastUpdated": "2026-08-10",
     "exam": {
       "date": "2026-08-29",
       "writtenMode": "paper",
@@ -2174,23 +2288,23 @@
           "activeRepair": "完成已打开的 C21 Test 1 Part 3 第 21–30 题：预览题干后单次播放，冻结首次答案，再逐题核对完整答案窗口并结算 L2。",
           "reading": "回到 C19 Test 1 Reading Part 2 第 14–19 题，从原文抽取 6 个复杂句，标主句、逻辑词和指代，只读一遍后口述句意。",
           "writing": "用首次 Task 2 建立‘5 分钟即承诺’规则：写两点提纲、每点一个具体例子，再完成其中一个主体段。",
-          "speaking": "口语诊断不再重复；选一个真实经历题，1 分钟只写关键词，再录一遍 2 分钟无提示回答并标记停顿和重启。",
-          "close": "保存 L2 首次答案、口语首遍录音和读写产物；记录 L2 结论、错误更新和第 2 天唯一主修复。"
+          "speaking": "未完成，不补时；已并入第 3 天口语块。原任务为选择一个真实经历题，1 分钟只写关键词，再录一遍 2 分钟无提示回答并标记停顿和重启。",
+          "close": "第 1 天已按实际时间收口：保存 L2 首次答案和读写产物，记录 L2 结论与错误更新；未完成的口语首遍录音并入第 3 天。"
         },
-        "gate": "总学习不超过 270 分钟；L2 有明确结论；口语形成一份无提示首遍录音；阅读和写作各留下可复查产物。"
+        "gate": "实际收口：L2 已有明确结论，阅读和写作均留下可复查产物；口语未完成但不形成补课债务，已合并至第 3 天。"
       },
       {
         "day": 2,
         "date": "2026-08-10",
         "phase": "P1",
         "template": "standard",
-        "focus": "建立漏题止损、复杂句保持和准确表达底线。",
+        "focus": "建立漏题止损、答案窗口关系保持、复杂句保持和准确表达底线。",
         "tasks": {
           "listening": "做两组未见短题组；一旦漏题，两秒内写占位符并立即跟随当前题号，结束后检查后续两题是否仍受影响。",
           "reading": "完成 8 个复杂句的一遍读取与复述，再做一篇 20 分钟文章；区分词义缺口、句法解析和读后保持失败。",
           "writing": "练 3 个 Task 1 Overview，再用 20 分钟手写一篇；允许重复标准统计表达，不为变化强行替换核心名词。",
           "speaking": "连续回答 12 个 Part 1 问题，每题 20–30 秒；只使用稳定短句，重点检查主谓一致、词形和介词。",
-          "adaptive": "优先修复 E008；若 L2 显示 E001/E002 复发，则改为听力漏题恢复，并保留同样的修订产物。",
+          "adaptive": "执行建议单元 L3：针对 L2 中复发的 E002，练习锁定评价主体，并把直接评价与后续解释保持在同一答案窗口；保留首次答案、决定性关系和修订差异。",
           "close": "记录每项首次表现和修订差异，选出第 3 天唯一主修复机制。"
         },
         "gate": "漏题后不再出现连续两题失位；至少 6/8 个复杂句能保留主命题；Task 1 在 20 分钟内完成并检查实体名称。"
@@ -2205,11 +2319,11 @@
           "listening": "完成一组地图题和一组 Section 4 填空；地图题逐题写参照物、方向和限定，填空核对词性与拼写。",
           "reading": "做一组段落信息匹配，先确认字母能否重复；使用 17/20/23 分钟框架练习单题两分钟止损。",
           "writing": "对 6 道 Task 2 题各做不超过 5 分钟的两点提纲，从中选一题 40 分钟完成并预留 3 分钟检查。",
-          "speaking": "建立 2 张真实经历素材卡，每张只写人物、场景、冲突、动作、结果和反思；选一张完成 2 分钟回答。",
+          "speaking": "承接第 1 天未完成项，但不增加本日总时长：建立 2 张真实经历素材卡，每张只写人物、场景、冲突、动作、结果和反思；选一张严格用 1 分钟写关键词，再完成一遍 2 分钟无提示回答并标记停顿和重启。",
           "adaptive": "修复 E007 的时间止损：用一篇文章演练标记、跳过、回收，不追求首次全对。",
           "close": "写下一页纸笔模考流程：Listening 漏题动作、Reading 时间点、Writing 分配和 Speaking 不求完美规则。"
         },
-        "gate": "四科考场动作已写成一页清单；Task 2 在 40 分钟内完成；阅读没有因单题阻塞整篇。"
+        "gate": "四科考场动作已写成一页清单；Task 2 在 40 分钟内完成；阅读没有因单题阻塞整篇；口语留下一份 2 分钟无提示首遍录音。"
       },
       {
         "day": 4,
@@ -2519,6 +2633,33 @@
   ],
   "journal": [
     {
+      "id": "2026-08-09-task2-idea-commitment-check",
+      "path": "journal/entries/2026-08-09-task2-idea-commitment-check.md",
+      "title": "C21 Test 4 Task 2：观点承诺、例证与英文输出诊断",
+      "markdown": "---\ndate: 2026-08-09\ncompleted_at: 2026-08-10\nunit: daily-writing-maintenance\nrelated_errors: [E009, E010, E014]\nrelated_notes: []\n---\n\n# C21 Test 4 Task 2：观点承诺、例证与英文输出诊断\n\n## 材料与方法\n\n- 题目：`Some people argue that primary schools focus too much on formal learning. To what extent do you agree with this opinion? How important do you think it is for children to play as well as learn in the primary school classroom?`\n- 先复述两问并锁定立场，再完成一个五分钟窗口的大纲；每个主体段要求一个核心观点、原因和具体化例证。\n- 从大纲中选择原本未能检索到例证的第二个主体段，限时手写一段英文；记录超过约十秒的停顿、实时涂改和观点更换。\n- 保留未经修改的初稿；随后无辅助自查，再进行一次限量修订。写作练习在 8 月 9 日开始，修订在 8 月 10 日凌晨完成。\n\n## 审题与观点承诺\n\n### E009：观点承诺\n\n- 首次把第一问复述为“是否同意小学应该注重正规学习”，遗漏了题目真正要求判断的 `focus too much`。\n- 首次把 `play as well as learn` 概括为“寓学于乐”，没有保留“课堂中既学习也玩耍”的并列关系。\n- 在澄清后选择“不同意学校过度重视正规学习，同时认为课堂玩耍非常重要”，但五分钟大纲中的第一段理由全部说明过早或过多的正规学习会压缩兴趣探索并造成价值偏置，实际支持“同意”。\n- 指出命题极性与理由冲突后，考生把立场改为“同意”。随后完成英文主体段时没有更换“正面反馈”观点或“课堂导演游戏”例证。\n\n结论：本样本不支持把 E009 判为已改善。外部检查阻止了一次整篇立场错位，但在观点和论证链由提示锁定后，十分钟成段过程中没有再次换观点。下一次必须用未见题、无提示完成命题复述和立场一致性检查。\n\n## 例证检索\n\n### E010：例证检索\n\n- 第一段最初使用 Tom Holland 的个人经历，既不能直接说明小学是否过度重视正规学习，也没有形成可信的课堂因果链。\n- 第二段在五分钟窗口内没有找到例子。考生最初把一般性的因果解释称为例子，并质疑合理假设场景为什么可以承担例证功能。\n- 区分“因果论证”“事实证据”和“假设性具体化例证”后，形成两条场景：作业与备考挤占舞蹈探索，以及学生在课堂戏剧游戏中担任导演并获得排名之外的认可。\n- 两个场景最初都把即时课堂结果跳跃为成年职业或终身路线；将结果收回到兴趣探索、自信和课堂参与后，第二个场景成为可用例证。\n\n结论：E010 继续保持 active。经过明确的“人物/活动/即时结果/回扣”脚手架后能够生成例证，但本次不能证明五分钟内可以独立调用。\n\n## 英文初稿\n\n### E014：英文输出与自查\n\n- 主体段初稿用时 10 分钟。\n- 唯一明确超过约十秒的停顿是 `direct a full show`，考生想表达“导演了一部成功的戏”。\n- 所有涂改均发生在写作过程中；没有更换论点或例证。\n- 初稿已经包含“学业排名限制反馈来源 → 游戏提供另一条反馈路径 → 导演课堂活动 → 自信和参与度提高”的完整链条。\n- 初稿仍出现 `playing ... get positive feedback` 的语义主语错误、`Learning is a hard thing to have positive feedback` 的句型错误、`This lead to ... have`、`find/act/get/direct` 等动词形式错误，以及 `approve`、`full show`、`higher involvement` 等搭配或词形问题。\n\n## 无辅助自查与修订\n\n- 自查时列出 11 个不确定项，正确识别 `lead → leads`、`act → acting`、`get → gets`、`direct → directs` 以及并列结构问题，也意识到连接词、`acquire positive feedback`、`a hard thing` 和 `which` 可能不自然。\n- 自查没有识别出“活动不是反馈接收者”的语义角色问题，也没有识别 `approve` 需要名词、`full show` 不表示成功演出等高影响搭配问题。\n- 修订用时 13 分钟，没有产生重写整段或更换论证的冲动。\n- 修订后正确使用了 `This leads students ... to have ...`、`finds/acts/gets/directs`、`directs a successful play` 和 `encourages him to engage more actively in class`。\n- 修订后仍保留 `students ... receives`、`Children are difficult to have ...`、`feedback ... comes from high rank`、`fulfilment and approvals`，以及结尾中的 `another alternative`、`healthy mind student`、`continual learn`。考生只主观察觉 `healthy mind` 不自然，其余均未发现。\n\n## 结论\n\n- 当命题、观点和例证已经锁定时，本次一段英文在 10 分钟内完成，且只有一次明确的长停顿；当前证据不支持把主要耗时简单归因于持续构思或频繁换观点。\n- E014 仍然 active：输出速度在单段脚手架下可用，但语义主语、自然句型、词形搭配和主谓一致仍频繁损害准确性。\n- 自查优先捕获局部动词形式，较难捕获整句语义角色与自然搭配；同时一段产生 11 个候选修改点，说明完整作文中逐词怀疑仍可能挤占检查时间。\n- 本样本有逐步提示、例证脚手架和定向修订，不计入任何错误的独立 clean sample，也不启动第二个活动修复单元；当前唯一建议主修复仍为 L3 Listening。\n\n## 下一次验证\n\n- 使用一道未见 Task 2，五分钟内先写出题目要求判断的完整命题，再锁定立场、两个主体观点和每段一个具体化例证。\n- 不接受观点或例证提示；若五分钟结束仍有缺口，保留空白并记录，不延长构思。\n- 从中选择一个主体段限时 10 分钟成文，标记超过十秒的停顿；检查阶段先确认“谁执行动作、谁接收结果”，再检查主谓一致和搭配。\n- 只有独立样本同时满足立场与理由一致、两段均能检索到例证、成文不换观点，才可以分别考虑更新 E009 和 E010 的状态。\n",
+      "body": "# C21 Test 4 Task 2：观点承诺、例证与英文输出诊断\n\n## 材料与方法\n\n- 题目：`Some people argue that primary schools focus too much on formal learning. To what extent do you agree with this opinion? How important do you think it is for children to play as well as learn in the primary school classroom?`\n- 先复述两问并锁定立场，再完成一个五分钟窗口的大纲；每个主体段要求一个核心观点、原因和具体化例证。\n- 从大纲中选择原本未能检索到例证的第二个主体段，限时手写一段英文；记录超过约十秒的停顿、实时涂改和观点更换。\n- 保留未经修改的初稿；随后无辅助自查，再进行一次限量修订。写作练习在 8 月 9 日开始，修订在 8 月 10 日凌晨完成。\n\n## 审题与观点承诺\n\n### E009：观点承诺\n\n- 首次把第一问复述为“是否同意小学应该注重正规学习”，遗漏了题目真正要求判断的 `focus too much`。\n- 首次把 `play as well as learn` 概括为“寓学于乐”，没有保留“课堂中既学习也玩耍”的并列关系。\n- 在澄清后选择“不同意学校过度重视正规学习，同时认为课堂玩耍非常重要”，但五分钟大纲中的第一段理由全部说明过早或过多的正规学习会压缩兴趣探索并造成价值偏置，实际支持“同意”。\n- 指出命题极性与理由冲突后，考生把立场改为“同意”。随后完成英文主体段时没有更换“正面反馈”观点或“课堂导演游戏”例证。\n\n结论：本样本不支持把 E009 判为已改善。外部检查阻止了一次整篇立场错位，但在观点和论证链由提示锁定后，十分钟成段过程中没有再次换观点。下一次必须用未见题、无提示完成命题复述和立场一致性检查。\n\n## 例证检索\n\n### E010：例证检索\n\n- 第一段最初使用 Tom Holland 的个人经历，既不能直接说明小学是否过度重视正规学习，也没有形成可信的课堂因果链。\n- 第二段在五分钟窗口内没有找到例子。考生最初把一般性的因果解释称为例子，并质疑合理假设场景为什么可以承担例证功能。\n- 区分“因果论证”“事实证据”和“假设性具体化例证”后，形成两条场景：作业与备考挤占舞蹈探索，以及学生在课堂戏剧游戏中担任导演并获得排名之外的认可。\n- 两个场景最初都把即时课堂结果跳跃为成年职业或终身路线；将结果收回到兴趣探索、自信和课堂参与后，第二个场景成为可用例证。\n\n结论：E010 继续保持 active。经过明确的“人物/活动/即时结果/回扣”脚手架后能够生成例证，但本次不能证明五分钟内可以独立调用。\n\n## 英文初稿\n\n### E014：英文输出与自查\n\n- 主体段初稿用时 10 分钟。\n- 唯一明确超过约十秒的停顿是 `direct a full show`，考生想表达“导演了一部成功的戏”。\n- 所有涂改均发生在写作过程中；没有更换论点或例证。\n- 初稿已经包含“学业排名限制反馈来源 → 游戏提供另一条反馈路径 → 导演课堂活动 → 自信和参与度提高”的完整链条。\n- 初稿仍出现 `playing ... get positive feedback` 的语义主语错误、`Learning is a hard thing to have positive feedback` 的句型错误、`This lead to ... have`、`find/act/get/direct` 等动词形式错误，以及 `approve`、`full show`、`higher involvement` 等搭配或词形问题。\n\n## 无辅助自查与修订\n\n- 自查时列出 11 个不确定项，正确识别 `lead → leads`、`act → acting`、`get → gets`、`direct → directs` 以及并列结构问题，也意识到连接词、`acquire positive feedback`、`a hard thing` 和 `which` 可能不自然。\n- 自查没有识别出“活动不是反馈接收者”的语义角色问题，也没有识别 `approve` 需要名词、`full show` 不表示成功演出等高影响搭配问题。\n- 修订用时 13 分钟，没有产生重写整段或更换论证的冲动。\n- 修订后正确使用了 `This leads students ... to have ...`、`finds/acts/gets/directs`、`directs a successful play` 和 `encourages him to engage more actively in class`。\n- 修订后仍保留 `students ... receives`、`Children are difficult to have ...`、`feedback ... comes from high rank`、`fulfilment and approvals`，以及结尾中的 `another alternative`、`healthy mind student`、`continual learn`。考生只主观察觉 `healthy mind` 不自然，其余均未发现。\n\n## 结论\n\n- 当命题、观点和例证已经锁定时，本次一段英文在 10 分钟内完成，且只有一次明确的长停顿；当前证据不支持把主要耗时简单归因于持续构思或频繁换观点。\n- E014 仍然 active：输出速度在单段脚手架下可用，但语义主语、自然句型、词形搭配和主谓一致仍频繁损害准确性。\n- 自查优先捕获局部动词形式，较难捕获整句语义角色与自然搭配；同时一段产生 11 个候选修改点，说明完整作文中逐词怀疑仍可能挤占检查时间。\n- 本样本有逐步提示、例证脚手架和定向修订，不计入任何错误的独立 clean sample，也不启动第二个活动修复单元；当前唯一建议主修复仍为 L3 Listening。\n\n## 下一次验证\n\n- 使用一道未见 Task 2，五分钟内先写出题目要求判断的完整命题，再锁定立场、两个主体观点和每段一个具体化例证。\n- 不接受观点或例证提示；若五分钟结束仍有缺口，保留空白并记录，不延长构思。\n- 从中选择一个主体段限时 10 分钟成文，标记超过十秒的停顿；检查阶段先确认“谁执行动作、谁接收结果”，再检查主谓一致和搭配。\n- 只有独立样本同时满足立场与理由一致、两段均能检索到例证、成文不换观点，才可以分别考虑更新 E009 和 E010 的状态。",
+      "frontmatter": {
+        "date": "2026-08-09",
+        "completed_at": "2026-08-10",
+        "unit": "daily-writing-maintenance",
+        "related_errors": [
+          "E009",
+          "E010",
+          "E014"
+        ],
+        "related_notes": []
+      },
+      "html": "<h1>C21 Test 4 Task 2：观点承诺、例证与英文输出诊断</h1>\n<h2>材料与方法</h2>\n<ul>\n<li>题目：<code>Some people argue that primary schools focus too much on formal learning. To what extent do you agree with this opinion? How important do you think it is for children to play as well as learn in the primary school classroom?</code></li>\n<li>先复述两问并锁定立场，再完成一个五分钟窗口的大纲；每个主体段要求一个核心观点、原因和具体化例证。</li>\n<li>从大纲中选择原本未能检索到例证的第二个主体段，限时手写一段英文；记录超过约十秒的停顿、实时涂改和观点更换。</li>\n<li>保留未经修改的初稿；随后无辅助自查，再进行一次限量修订。写作练习在 8 月 9 日开始，修订在 8 月 10 日凌晨完成。</li>\n</ul>\n<h2>审题与观点承诺</h2>\n<h3>E009：观点承诺</h3>\n<ul>\n<li>首次把第一问复述为“是否同意小学应该注重正规学习”，遗漏了题目真正要求判断的 <code>focus too much</code>。</li>\n<li>首次把 <code>play as well as learn</code> 概括为“寓学于乐”，没有保留“课堂中既学习也玩耍”的并列关系。</li>\n<li>在澄清后选择“不同意学校过度重视正规学习，同时认为课堂玩耍非常重要”，但五分钟大纲中的第一段理由全部说明过早或过多的正规学习会压缩兴趣探索并造成价值偏置，实际支持“同意”。</li>\n<li>指出命题极性与理由冲突后，考生把立场改为“同意”。随后完成英文主体段时没有更换“正面反馈”观点或“课堂导演游戏”例证。</li>\n</ul>\n<p>结论：本样本不支持把 E009 判为已改善。外部检查阻止了一次整篇立场错位，但在观点和论证链由提示锁定后，十分钟成段过程中没有再次换观点。下一次必须用未见题、无提示完成命题复述和立场一致性检查。</p>\n<h2>例证检索</h2>\n<h3>E010：例证检索</h3>\n<ul>\n<li>第一段最初使用 Tom Holland 的个人经历，既不能直接说明小学是否过度重视正规学习，也没有形成可信的课堂因果链。</li>\n<li>第二段在五分钟窗口内没有找到例子。考生最初把一般性的因果解释称为例子，并质疑合理假设场景为什么可以承担例证功能。</li>\n<li>区分“因果论证”“事实证据”和“假设性具体化例证”后，形成两条场景：作业与备考挤占舞蹈探索，以及学生在课堂戏剧游戏中担任导演并获得排名之外的认可。</li>\n<li>两个场景最初都把即时课堂结果跳跃为成年职业或终身路线；将结果收回到兴趣探索、自信和课堂参与后，第二个场景成为可用例证。</li>\n</ul>\n<p>结论：E010 继续保持 active。经过明确的“人物/活动/即时结果/回扣”脚手架后能够生成例证，但本次不能证明五分钟内可以独立调用。</p>\n<h2>英文初稿</h2>\n<h3>E014：英文输出与自查</h3>\n<ul>\n<li>主体段初稿用时 10 分钟。</li>\n<li>唯一明确超过约十秒的停顿是 <code>direct a full show</code>，考生想表达“导演了一部成功的戏”。</li>\n<li>所有涂改均发生在写作过程中；没有更换论点或例证。</li>\n<li>初稿已经包含“学业排名限制反馈来源 → 游戏提供另一条反馈路径 → 导演课堂活动 → 自信和参与度提高”的完整链条。</li>\n<li>初稿仍出现 <code>playing ... get positive feedback</code> 的语义主语错误、<code>Learning is a hard thing to have positive feedback</code> 的句型错误、<code>This lead to ... have</code>、<code>find/act/get/direct</code> 等动词形式错误，以及 <code>approve</code>、<code>full show</code>、<code>higher involvement</code> 等搭配或词形问题。</li>\n</ul>\n<h2>无辅助自查与修订</h2>\n<ul>\n<li>自查时列出 11 个不确定项，正确识别 <code>lead → leads</code>、<code>act → acting</code>、<code>get → gets</code>、<code>direct → directs</code> 以及并列结构问题，也意识到连接词、<code>acquire positive feedback</code>、<code>a hard thing</code> 和 <code>which</code> 可能不自然。</li>\n<li>自查没有识别出“活动不是反馈接收者”的语义角色问题，也没有识别 <code>approve</code> 需要名词、<code>full show</code> 不表示成功演出等高影响搭配问题。</li>\n<li>修订用时 13 分钟，没有产生重写整段或更换论证的冲动。</li>\n<li>修订后正确使用了 <code>This leads students ... to have ...</code>、<code>finds/acts/gets/directs</code>、<code>directs a successful play</code> 和 <code>encourages him to engage more actively in class</code>。</li>\n<li>修订后仍保留 <code>students ... receives</code>、<code>Children are difficult to have ...</code>、<code>feedback ... comes from high rank</code>、<code>fulfilment and approvals</code>，以及结尾中的 <code>another alternative</code>、<code>healthy mind student</code>、<code>continual learn</code>。考生只主观察觉 <code>healthy mind</code> 不自然，其余均未发现。</li>\n</ul>\n<h2>结论</h2>\n<ul>\n<li>当命题、观点和例证已经锁定时，本次一段英文在 10 分钟内完成，且只有一次明确的长停顿；当前证据不支持把主要耗时简单归因于持续构思或频繁换观点。</li>\n<li>E014 仍然 active：输出速度在单段脚手架下可用，但语义主语、自然句型、词形搭配和主谓一致仍频繁损害准确性。</li>\n<li>自查优先捕获局部动词形式，较难捕获整句语义角色与自然搭配；同时一段产生 11 个候选修改点，说明完整作文中逐词怀疑仍可能挤占检查时间。</li>\n<li>本样本有逐步提示、例证脚手架和定向修订，不计入任何错误的独立 clean sample，也不启动第二个活动修复单元；当前唯一建议主修复仍为 L3 Listening。</li>\n</ul>\n<h2>下一次验证</h2>\n<ul>\n<li>使用一道未见 Task 2，五分钟内先写出题目要求判断的完整命题，再锁定立场、两个主体观点和每段一个具体化例证。</li>\n<li>不接受观点或例证提示；若五分钟结束仍有缺口，保留空白并记录，不延长构思。</li>\n<li>从中选择一个主体段限时 10 分钟成文，标记超过十秒的停顿；检查阶段先确认“谁执行动作、谁接收结果”，再检查主谓一致和搭配。</li>\n<li>只有独立样本同时满足立场与理由一致、两段均能检索到例证、成文不换观点，才可以分别考虑更新 E009 和 E010 的状态。</li>\n</ul>\n",
+      "text": "C21 Test 4 Task 2：观点承诺、例证与英文输出诊断 材料与方法 题目：Some people argue that primary schools focus too much on formal learning. To what extent do you agree with this opinion? How important do you think it is for children to play as well as learn in the primary school classroom? 先复述两问并锁定立场，再完成一个五分钟窗口的大纲；每个主体段要求一个核心观点、原因和具体化例证。 从大纲中选择原本未能检索到例证的第二个主体段，限时手写一段英文；记录超过约十秒的停顿、实时涂改和观点更换。 保留未经修改的初稿；随后无辅助自查，再进行一次限量修订。写作练习在 8 月 9 日开始，修订在 8 月 10 日凌晨完成。 审题与观点承诺 E009：观点承诺 首次把第一问复述为“是否同意小学应该注重正规学习”，遗漏了题目真正要求判断的 focus too much。 首次把 play as well as learn 概括为“寓学于乐”，没有保留“课堂中既学习也玩耍”的并列关系。 在澄清后选择“不同意学校过度重视正规学习，同时认为课堂玩耍非常重要”，但五分钟大纲中的第一段理由全部说明过早或过多的正规学习会压缩兴趣探索并造成价值偏置，实际支持“同意”。 指出命题极性与理由冲突后，考生把立场改为“同意”。随后完成英文主体段时没有更换“正面反馈”观点或“课堂导演游戏”例证。 结论：本样本不支持把 E009 判为已改善。外部检查阻止了一次整篇立场错位，但在观点和论证链由提示锁定后，十分钟成段过程中没有再次换观点。下一次必须用未见题、无提示完成命题复述和立场一致性检查。 例证检索 E010：例证检索 第一段最初使用 Tom Holland 的个人经历，既不能直接说明小学是否过度重视正规学习，也没有形成可信的课堂因果链。 第二段在五分钟窗口内没有找到例子。考生最初把一般性的因果解释称为例子，并质疑合理假设场景为什么可以承担例证功能。 区分“因果论证”“事实证据”和“假设性具体化例证”后，形成两条场景：作业与备考挤占舞蹈探索，以及学生在课堂戏剧游戏中担任导演并获得排名之外的认可。 两个场景最初都把即时课堂结果跳跃为成年职业或终身路线；将结果收回到兴趣探索、自信和课堂参与后，第二个场景成为可用例证。 结论：E010 继续保持 active。经过明确的“人物/活动/即时结果/回扣”脚手架后能够生成例证，但本次不能证明五分钟内可以独立调用。 英文初稿 E014：英文输出与自查 主体段初稿用时 10 分钟。 唯一明确超过约十秒的停顿是 direct a full show，考生想表达“导演了一部成功的戏”。 所有涂改均发生在写作过程中；没有更换论点或例证。 初稿已经包含“学业排名限制反馈来源 → 游戏提供另一条反馈路径 → 导演课堂活动 → 自信和参与度提高”的完整链条。 初稿仍出现 playing ... get positive feedback 的语义主语错误、Learning is a hard thing to have positive feedback 的句型错误、This lead to ... have、find/act/get/direct 等动词形式错误，以及 approve、full show、higher involvement 等搭配或词形问题。 无辅助自查与修订 自查时列出 11 个不确定项，正确识别 lead → leads、act → acting、get → gets、direct → directs 以及并列结构问题，也意识到连接词、acquire positive feedback、a hard thing 和 which 可能不自然。 自查没有识别出“活动不是反馈接收者”的语义角色问题，也没有识别 approve 需要名词、full show 不表示成功演出等高影响搭配问题。 修订用时 13 分钟，没有产生重写整段或更换论证的冲动。 修订后正确使用了 This leads students ... to have ...、finds/acts/gets/directs、directs a successful play 和 encourages him to engage more actively in class。 修订后仍保留 students ... receives、Children are difficult to have ...、feedback ... comes from high rank、fulfilment and approvals，以及结尾中的 another alternative、healthy mind student、continual learn。考生只主观察觉 healthy mind 不自然，其余均未发现。 结论 当命题、观点和例证已经锁定时，本次一段英文在 10 分钟内完成，且只有一次明确的长停顿；当前证据不支持把主要耗时简单归因于持续构思或频繁换观点。 E014 仍然 active：输出速度在单段脚手架下可用，但语义主语、自然句型、词形搭配和主谓一致仍频繁损害准确性。 自查优先捕获局部动词形式，较难捕获整句语义角色与自然搭配；同时一段产生 11 个候选修改点，说明完整作文中逐词怀疑仍可能挤占检查时间。 本样本有逐步提示、例证脚手架和定向修订，不计入任何错误的独立 clean sample，也不启动第二个活动修复单元；当前唯一建议主修复仍为 L3 Listening。 下一次验证 使用一道未见 Task 2，五分钟内先写出题目要求判断的完整命题，再锁定立场、两个主体观点和每段一个具体化例证。 不接受观点或例证提示；若五分钟结束仍有缺口，保留空白并记录，不延长构思。 从中选择一个主体段限时 10 分钟成文，标记超过十秒的停顿；检查阶段先确认“谁执行动作、谁接收结果”，再检查主谓一致和搭配。 只有独立样本同时满足立场与理由一致、两段均能检索到例证、成文不换观点，才可以分别考虑更新 E009 和 E010 的状态。",
+      "date": "2026-08-09",
+      "relatedErrors": [
+        "E009",
+        "E010",
+        "E014"
+      ],
+      "relatedNotes": []
+    },
+    {
       "id": "2026-08-09-speaking-transcript-diagnostic",
       "path": "journal/entries/2026-08-09-speaking-transcript-diagnostic.md",
       "title": "口语转写诊断与证据边界",
@@ -2548,11 +2689,35 @@
       "relatedNotes": []
     },
     {
+      "id": "2026-08-09-reading-complex-sentence-check",
+      "path": "journal/entries/2026-08-09-reading-complex-sentence-check.md",
+      "title": "C19 Passage 2：复杂句一遍读取诊断",
+      "markdown": "---\ndate: 2026-08-09\nunit: daily-reading-maintenance\nrelated_errors: [E006, E008]\nrelated_notes: []\n---\n\n# C19 Passage 2：复杂句一遍读取诊断\n\n## 材料与方法\n\n- 材料：Cambridge IELTS 19 Academic Test 1 Passage 2，`The pirates of the ancient Mediterranean`。\n- 范围：Questions 14–19 对应文章中的六个句子，覆盖段落 A–C。\n- 每句只读一遍，不查词、不回看；读完后口述主语、核心谓语、逻辑关系、语义角色、整句意思和不确定词。\n- 完成首次口述后才解释词义或结构，再由考生重新压缩句意。\n\n## 六句表现\n\n### 1. `Yet ... pirates prowled the Mediterranean ...`\n\n- 首次保留了主语 `pirates` 以及 `raiding`、`threatening` 两个尾部动作。\n- 将 `millennium` 错读为百年量级，并因不理解核心谓语 `prowled`，把“在地中海出没”补成原文没有的“在地中海诞生”。\n- 不确定词为 `raiding`、`millennium`、`swashbucklers`、`prowled`。解释后能够恢复时间对比和完整命题。\n\n### 2. `However, despite all efforts ... piracy could not be stopped.`\n\n- 一遍读取后正确保留让步关系、主句结论和“尝试了但没有成功”。\n- 仅把 `might` 过度具体化为武装力量，把 `ancient states` 说成朝代；核心命题未改变。\n\n### 3. `Only when ... did the Roman Republic organise a massive fleet ...`\n\n- 正确识别 `Only when` 的条件与倒装，也保留了“直到……才……”的关系。\n- 首次把“组建舰队”概括成已经采取军事行动，并把 `to eliminate piracy` 的目的升级为已经消灭海盗的结果。\n- `massive fleet` 不确定。区分实际行动、目的和结果后能够准确复述。\n\n### 4. `Under the command of ... Rome eradicated piracy ...`\n\n- 正确识别指挥者、核心结果、`transforming` 的结果关系，以及本句完成了上一句提出的目的。\n- `eradicated` 与 `Mare Nostrum` 不确定；把括号中的 `Our Sea` 误读为其他含义，但没有破坏“罗马消灭海盗”的主命题。\n\n### 5. `Although piracy ... is first recorded ... it is reasonable to assume ...`\n\n- 保留了最早记录与更早存在之间的总体对比，但把第一个形式主语 `it` 当成有指代的代词，把第二个 `it` 错指为时间。\n- 把“现存最早记录”表述成海盗第一次出现或诞生，并用“以此推断”替代了 `Although` 的让步关系。\n- 在说明形式主语、指代和记录边界后，能够区分有记录的事实与对实际存在时间的推断。\n\n### 6. `It was not unknown ... for governments to resort to pirates' services ...`\n\n- 正确保留政府、海盗服务、战争时期和对付敌人的主命题。\n- 将 `not unknown` 过度解释为经常发生；原文只能支持“并非没有发生过/并非没有先例”。\n- `resort to` 不确定；解释后能够把 `numbers` 保留为人数优势，并完成准确复述。\n\n## 结论\n\n- 当前证据不支持把问题简单概括为“读到句尾就忘掉前半句”。六句中，考生通常能够保留主题、部分时间背景和句尾动作，第二句的一遍整合完整成立。\n- E006 仍然成立：当 `millennium`、`prowled` 等词占据时间框架或核心谓语位置时，词义缺口会直接改变整句命题，并诱发原文没有的补全。\n- E008 需要收窄：主要困难是把动作、目的和结果压缩成一个结论，以及在形式主语、代词指代、让步和双重否定中错误分配语义角色；并非每次都发生一般性的短时保持失败。\n- 下一次阅读维护应先压缩“主语 + 有限谓语”，再标记连接词，最后区分行动、目的、结果、事实和推断。只有完成这三步后才允许形成整句结论。\n- 本次为每日阅读维护证据，不启动第二个活动修复单元；当前唯一建议主修复仍为 L3 Listening。\n",
+      "body": "# C19 Passage 2：复杂句一遍读取诊断\n\n## 材料与方法\n\n- 材料：Cambridge IELTS 19 Academic Test 1 Passage 2，`The pirates of the ancient Mediterranean`。\n- 范围：Questions 14–19 对应文章中的六个句子，覆盖段落 A–C。\n- 每句只读一遍，不查词、不回看；读完后口述主语、核心谓语、逻辑关系、语义角色、整句意思和不确定词。\n- 完成首次口述后才解释词义或结构，再由考生重新压缩句意。\n\n## 六句表现\n\n### 1. `Yet ... pirates prowled the Mediterranean ...`\n\n- 首次保留了主语 `pirates` 以及 `raiding`、`threatening` 两个尾部动作。\n- 将 `millennium` 错读为百年量级，并因不理解核心谓语 `prowled`，把“在地中海出没”补成原文没有的“在地中海诞生”。\n- 不确定词为 `raiding`、`millennium`、`swashbucklers`、`prowled`。解释后能够恢复时间对比和完整命题。\n\n### 2. `However, despite all efforts ... piracy could not be stopped.`\n\n- 一遍读取后正确保留让步关系、主句结论和“尝试了但没有成功”。\n- 仅把 `might` 过度具体化为武装力量，把 `ancient states` 说成朝代；核心命题未改变。\n\n### 3. `Only when ... did the Roman Republic organise a massive fleet ...`\n\n- 正确识别 `Only when` 的条件与倒装，也保留了“直到……才……”的关系。\n- 首次把“组建舰队”概括成已经采取军事行动，并把 `to eliminate piracy` 的目的升级为已经消灭海盗的结果。\n- `massive fleet` 不确定。区分实际行动、目的和结果后能够准确复述。\n\n### 4. `Under the command of ... Rome eradicated piracy ...`\n\n- 正确识别指挥者、核心结果、`transforming` 的结果关系，以及本句完成了上一句提出的目的。\n- `eradicated` 与 `Mare Nostrum` 不确定；把括号中的 `Our Sea` 误读为其他含义，但没有破坏“罗马消灭海盗”的主命题。\n\n### 5. `Although piracy ... is first recorded ... it is reasonable to assume ...`\n\n- 保留了最早记录与更早存在之间的总体对比，但把第一个形式主语 `it` 当成有指代的代词，把第二个 `it` 错指为时间。\n- 把“现存最早记录”表述成海盗第一次出现或诞生，并用“以此推断”替代了 `Although` 的让步关系。\n- 在说明形式主语、指代和记录边界后，能够区分有记录的事实与对实际存在时间的推断。\n\n### 6. `It was not unknown ... for governments to resort to pirates' services ...`\n\n- 正确保留政府、海盗服务、战争时期和对付敌人的主命题。\n- 将 `not unknown` 过度解释为经常发生；原文只能支持“并非没有发生过/并非没有先例”。\n- `resort to` 不确定；解释后能够把 `numbers` 保留为人数优势，并完成准确复述。\n\n## 结论\n\n- 当前证据不支持把问题简单概括为“读到句尾就忘掉前半句”。六句中，考生通常能够保留主题、部分时间背景和句尾动作，第二句的一遍整合完整成立。\n- E006 仍然成立：当 `millennium`、`prowled` 等词占据时间框架或核心谓语位置时，词义缺口会直接改变整句命题，并诱发原文没有的补全。\n- E008 需要收窄：主要困难是把动作、目的和结果压缩成一个结论，以及在形式主语、代词指代、让步和双重否定中错误分配语义角色；并非每次都发生一般性的短时保持失败。\n- 下一次阅读维护应先压缩“主语 + 有限谓语”，再标记连接词，最后区分行动、目的、结果、事实和推断。只有完成这三步后才允许形成整句结论。\n- 本次为每日阅读维护证据，不启动第二个活动修复单元；当前唯一建议主修复仍为 L3 Listening。",
+      "frontmatter": {
+        "date": "2026-08-09",
+        "unit": "daily-reading-maintenance",
+        "related_errors": [
+          "E006",
+          "E008"
+        ],
+        "related_notes": []
+      },
+      "html": "<h1>C19 Passage 2：复杂句一遍读取诊断</h1>\n<h2>材料与方法</h2>\n<ul>\n<li>材料：Cambridge IELTS 19 Academic Test 1 Passage 2，<code>The pirates of the ancient Mediterranean</code>。</li>\n<li>范围：Questions 14–19 对应文章中的六个句子，覆盖段落 A–C。</li>\n<li>每句只读一遍，不查词、不回看；读完后口述主语、核心谓语、逻辑关系、语义角色、整句意思和不确定词。</li>\n<li>完成首次口述后才解释词义或结构，再由考生重新压缩句意。</li>\n</ul>\n<h2>六句表现</h2>\n<h3>1. <code>Yet ... pirates prowled the Mediterranean ...</code></h3>\n<ul>\n<li>首次保留了主语 <code>pirates</code> 以及 <code>raiding</code>、<code>threatening</code> 两个尾部动作。</li>\n<li>将 <code>millennium</code> 错读为百年量级，并因不理解核心谓语 <code>prowled</code>，把“在地中海出没”补成原文没有的“在地中海诞生”。</li>\n<li>不确定词为 <code>raiding</code>、<code>millennium</code>、<code>swashbucklers</code>、<code>prowled</code>。解释后能够恢复时间对比和完整命题。</li>\n</ul>\n<h3>2. <code>However, despite all efforts ... piracy could not be stopped.</code></h3>\n<ul>\n<li>一遍读取后正确保留让步关系、主句结论和“尝试了但没有成功”。</li>\n<li>仅把 <code>might</code> 过度具体化为武装力量，把 <code>ancient states</code> 说成朝代；核心命题未改变。</li>\n</ul>\n<h3>3. <code>Only when ... did the Roman Republic organise a massive fleet ...</code></h3>\n<ul>\n<li>正确识别 <code>Only when</code> 的条件与倒装，也保留了“直到……才……”的关系。</li>\n<li>首次把“组建舰队”概括成已经采取军事行动，并把 <code>to eliminate piracy</code> 的目的升级为已经消灭海盗的结果。</li>\n<li><code>massive fleet</code> 不确定。区分实际行动、目的和结果后能够准确复述。</li>\n</ul>\n<h3>4. <code>Under the command of ... Rome eradicated piracy ...</code></h3>\n<ul>\n<li>正确识别指挥者、核心结果、<code>transforming</code> 的结果关系，以及本句完成了上一句提出的目的。</li>\n<li><code>eradicated</code> 与 <code>Mare Nostrum</code> 不确定；把括号中的 <code>Our Sea</code> 误读为其他含义，但没有破坏“罗马消灭海盗”的主命题。</li>\n</ul>\n<h3>5. <code>Although piracy ... is first recorded ... it is reasonable to assume ...</code></h3>\n<ul>\n<li>保留了最早记录与更早存在之间的总体对比，但把第一个形式主语 <code>it</code> 当成有指代的代词，把第二个 <code>it</code> 错指为时间。</li>\n<li>把“现存最早记录”表述成海盗第一次出现或诞生，并用“以此推断”替代了 <code>Although</code> 的让步关系。</li>\n<li>在说明形式主语、指代和记录边界后，能够区分有记录的事实与对实际存在时间的推断。</li>\n</ul>\n<h3>6. <code>It was not unknown ... for governments to resort to pirates' services ...</code></h3>\n<ul>\n<li>正确保留政府、海盗服务、战争时期和对付敌人的主命题。</li>\n<li>将 <code>not unknown</code> 过度解释为经常发生；原文只能支持“并非没有发生过/并非没有先例”。</li>\n<li><code>resort to</code> 不确定；解释后能够把 <code>numbers</code> 保留为人数优势，并完成准确复述。</li>\n</ul>\n<h2>结论</h2>\n<ul>\n<li>当前证据不支持把问题简单概括为“读到句尾就忘掉前半句”。六句中，考生通常能够保留主题、部分时间背景和句尾动作，第二句的一遍整合完整成立。</li>\n<li>E006 仍然成立：当 <code>millennium</code>、<code>prowled</code> 等词占据时间框架或核心谓语位置时，词义缺口会直接改变整句命题，并诱发原文没有的补全。</li>\n<li>E008 需要收窄：主要困难是把动作、目的和结果压缩成一个结论，以及在形式主语、代词指代、让步和双重否定中错误分配语义角色；并非每次都发生一般性的短时保持失败。</li>\n<li>下一次阅读维护应先压缩“主语 + 有限谓语”，再标记连接词，最后区分行动、目的、结果、事实和推断。只有完成这三步后才允许形成整句结论。</li>\n<li>本次为每日阅读维护证据，不启动第二个活动修复单元；当前唯一建议主修复仍为 L3 Listening。</li>\n</ul>\n",
+      "text": "C19 Passage 2：复杂句一遍读取诊断 材料与方法 材料：Cambridge IELTS 19 Academic Test 1 Passage 2，The pirates of the ancient Mediterranean。 范围：Questions 14–19 对应文章中的六个句子，覆盖段落 A–C。 每句只读一遍，不查词、不回看；读完后口述主语、核心谓语、逻辑关系、语义角色、整句意思和不确定词。 完成首次口述后才解释词义或结构，再由考生重新压缩句意。 六句表现 1. Yet ... pirates prowled the Mediterranean ... 首次保留了主语 pirates 以及 raiding、threatening 两个尾部动作。 将 millennium 错读为百年量级，并因不理解核心谓语 prowled，把“在地中海出没”补成原文没有的“在地中海诞生”。 不确定词为 raiding、millennium、swashbucklers、prowled。解释后能够恢复时间对比和完整命题。 2. However, despite all efforts ... piracy could not be stopped. 一遍读取后正确保留让步关系、主句结论和“尝试了但没有成功”。 仅把 might 过度具体化为武装力量，把 ancient states 说成朝代；核心命题未改变。 3. Only when ... did the Roman Republic organise a massive fleet ... 正确识别 Only when 的条件与倒装，也保留了“直到……才……”的关系。 首次把“组建舰队”概括成已经采取军事行动，并把 to eliminate piracy 的目的升级为已经消灭海盗的结果。 massive fleet 不确定。区分实际行动、目的和结果后能够准确复述。 4. Under the command of ... Rome eradicated piracy ... 正确识别指挥者、核心结果、transforming 的结果关系，以及本句完成了上一句提出的目的。 eradicated 与 Mare Nostrum 不确定；把括号中的 Our Sea 误读为其他含义，但没有破坏“罗马消灭海盗”的主命题。 5. Although piracy ... is first recorded ... it is reasonable to assume ... 保留了最早记录与更早存在之间的总体对比，但把第一个形式主语 it 当成有指代的代词，把第二个 it 错指为时间。 把“现存最早记录”表述成海盗第一次出现或诞生，并用“以此推断”替代了 Although 的让步关系。 在说明形式主语、指代和记录边界后，能够区分有记录的事实与对实际存在时间的推断。 6. It was not unknown ... for governments to resort to pirates' services ... 正确保留政府、海盗服务、战争时期和对付敌人的主命题。 将 not unknown 过度解释为经常发生；原文只能支持“并非没有发生过/并非没有先例”。 resort to 不确定；解释后能够把 numbers 保留为人数优势，并完成准确复述。 结论 当前证据不支持把问题简单概括为“读到句尾就忘掉前半句”。六句中，考生通常能够保留主题、部分时间背景和句尾动作，第二句的一遍整合完整成立。 E006 仍然成立：当 millennium、prowled 等词占据时间框架或核心谓语位置时，词义缺口会直接改变整句命题，并诱发原文没有的补全。 E008 需要收窄：主要困难是把动作、目的和结果压缩成一个结论，以及在形式主语、代词指代、让步和双重否定中错误分配语义角色；并非每次都发生一般性的短时保持失败。 下一次阅读维护应先压缩“主语 + 有限谓语”，再标记连接词，最后区分行动、目的、结果、事实和推断。只有完成这三步后才允许形成整句结论。 本次为每日阅读维护证据，不启动第二个活动修复单元；当前唯一建议主修复仍为 L3 Listening。",
+      "date": "2026-08-09",
+      "relatedErrors": [
+        "E006",
+        "E008"
+      ],
+      "relatedNotes": []
+    },
+    {
       "id": "2026-07-24-l2-listening-answer-window-transfer",
       "path": "journal/entries/2026-07-24-l2-listening-answer-window-transfer.md",
       "title": "L2：Listening 答案窗口迁移验证",
-      "markdown": "---\ndate: 2026-07-24\nunit: L2\nrelated_errors: [E002]\nrelated_notes: []\n---\n\n# L2：Listening 答案窗口迁移验证\n\n## 材料与证据边界\n\n- 材料：雅思哥 `C21-Test 1-Part 3`，Questions 21–30。\n- 录音长度：06:56，单次播放。\n- 考生按照 L2 的建议打开该 Section 3；检查题型时页面录音位置约为 00:01，尚未进行实质作答。\n- 在播放前只检查题目和选项，不查看答案、解析或原文。\n- 本单元用于验证 L1 的判断能否迁移到独立新材料，不把查看题目所用时间计入听力成绩。\n\n## 题型检查\n\n- Questions 21–22：五个选项中选择两个，目标是找出对学生影响最大的 lecture features。\n- Questions 23–24：五个选项中选择两个，目标是找出最让学生印象深刻的 research project details。\n- Questions 25–30：将六种 ocean biodiversity resources 与八种学生评价配对。\n\n## 播放前限定\n\n- 第 21–22 题要找的是学生对 lecture features 的影响判断，不是录音中出现的海洋主题词。\n- 第 23–24 题要找的是学生明确表示 impressed 的 project details，不是项目包含的任意事实。\n- 第 25–30 题要记录学生对每项 resource 的评价，不是 resource 本身讲了什么。\n- 双选题必须保留两个独立证据；一个选项被提到不等于它满足 `greatest impact` 或 `particularly impressed`。\n- 配对题必须用评价关系作答，例如受众、时效性、平衡性、证据、解释或解决方案；不得只按 resource 主题与选项关键词配对。\n\n## 核对前状态\n\n- L2 已开始，答案尚未形成。\n- E002 当前状态为 improving，连续独立 clean sample 为 0。\n- 播放前先由考生用自己的话复述三组题分别在问什么，再进行单次播放。\n",
-      "body": "# L2：Listening 答案窗口迁移验证\n\n## 材料与证据边界\n\n- 材料：雅思哥 `C21-Test 1-Part 3`，Questions 21–30。\n- 录音长度：06:56，单次播放。\n- 考生按照 L2 的建议打开该 Section 3；检查题型时页面录音位置约为 00:01，尚未进行实质作答。\n- 在播放前只检查题目和选项，不查看答案、解析或原文。\n- 本单元用于验证 L1 的判断能否迁移到独立新材料，不把查看题目所用时间计入听力成绩。\n\n## 题型检查\n\n- Questions 21–22：五个选项中选择两个，目标是找出对学生影响最大的 lecture features。\n- Questions 23–24：五个选项中选择两个，目标是找出最让学生印象深刻的 research project details。\n- Questions 25–30：将六种 ocean biodiversity resources 与八种学生评价配对。\n\n## 播放前限定\n\n- 第 21–22 题要找的是学生对 lecture features 的影响判断，不是录音中出现的海洋主题词。\n- 第 23–24 题要找的是学生明确表示 impressed 的 project details，不是项目包含的任意事实。\n- 第 25–30 题要记录学生对每项 resource 的评价，不是 resource 本身讲了什么。\n- 双选题必须保留两个独立证据；一个选项被提到不等于它满足 `greatest impact` 或 `particularly impressed`。\n- 配对题必须用评价关系作答，例如受众、时效性、平衡性、证据、解释或解决方案；不得只按 resource 主题与选项关键词配对。\n\n## 核对前状态\n\n- L2 已开始，答案尚未形成。\n- E002 当前状态为 improving，连续独立 clean sample 为 0。\n- 播放前先由考生用自己的话复述三组题分别在问什么，再进行单次播放。",
+      "markdown": "---\ndate: 2026-07-24\nunit: L2\nrelated_errors: [E002]\nrelated_notes: []\n---\n\n# L2：Listening 答案窗口迁移验证\n\n## 材料与证据边界\n\n- 材料：雅思哥 `C21-Test 1-Part 3`，Questions 21–30。\n- 录音长度：06:56，单次播放。\n- 考生按照 L2 的建议打开该 Section 3；检查题型时页面录音位置约为 00:01，尚未进行实质作答。\n- 在播放前只检查题目和选项，不查看答案、解析或原文。\n- 本单元用于验证 L1 的判断能否迁移到独立新材料，不把查看题目所用时间计入听力成绩。\n\n## 题型检查\n\n- Questions 21–22：五个选项中选择两个，目标是找出对学生影响最大的 lecture features。\n- Questions 23–24：五个选项中选择两个，目标是找出最让学生印象深刻的 research project details。\n- Questions 25–30：将六种 ocean biodiversity resources 与八种学生评价配对。\n\n## 播放前限定\n\n- 第 21–22 题要找的是学生对 lecture features 的影响判断，不是录音中出现的海洋主题词。\n- 第 23–24 题要找的是学生明确表示 impressed 的 project details，不是项目包含的任意事实。\n- 第 25–30 题要记录学生对每项 resource 的评价，不是 resource 本身讲了什么。\n- 双选题必须保留两个独立证据；一个选项被提到不等于它满足 `greatest impact` 或 `particularly impressed`。\n- 配对题必须用评价关系作答，例如受众、时效性、平衡性、证据、解释或解决方案；不得只按 resource 主题与选项关键词配对。\n\n## 核对前状态\n\n- L2 已开始，答案尚未形成。\n- E002 当前状态为 improving，连续独立 clean sample 为 0。\n- 播放前先由考生用自己的话复述三组题分别在问什么，再进行单次播放。\n\n## 首次作答结果（2026-08-09）\n\n- Questions 21–22：首次答案 `B, D`；正确答案 `B, D`。\n- Questions 23–24：首次答案 `B, E`；正确答案 `E, C`。保留了 E，但多选 B、漏选 C。\n- Questions 25–30：首次答案 `G, B, C, H, A, D`；正确答案 `G, B, F, H, A, E`。\n- 原始得分：`7/10`。答案在查看答案与原文前已经固定。\n\n## 错误与答案窗口核对\n\n### Questions 23–24\n\n- `all around the world` 被当成项目覆盖范围广，因而选择 B；完整关系实际说明参与者来自世界各地，对应 E 的 `the large range of specialists involved`。\n- 该错误不是没有听到显眼短语，而是没有确认短语修饰谁，出现了主体与指代归属漂移。\n- 录音以 robot 作为具体例子，考生没有把实例上收为 C 的 `the use of new technology`，属于局部的例子到类别映射失败。\n\n### Question 27\n\n- 考生理解了 `stating the obvious`、`everybody knows that anyway` 和“没有必要告诉大家”的原文逻辑，但把选项 `too predictable to be useful` 读成了近似 `too predictive to be used`。\n- `predictable` 表示内容或结果容易预料，`predictive` 表示具有预测能力；`useful` 也不等于 `used`。因此本题主要是选项词形与语义解码失败，不作为 E002 的直接证据。\n\n### Question 30\n\n- 直接评价是 `presented a rather one-sided picture`，对应 E 的 `does not give a balanced account`。\n- 后续 `focused on how this would benefit people and ignored the effects on the environment` 是对 `one-sided` 的解释，不是在提出改善方案。\n- 考生漏掉直接评价后抓住 `benefit people`，将其误配为 D；即使继续听到了后续内容，也没有保持“评价该 resource”的题干框架，也没有处理 `focused on ... and ignored ...` 的对比关系。\n- 考生最终能够说明：E 成立是因为 `one-sided` 与 `unbalanced` 同义；D 排除是因为原文没有提出任何改善办法。\n\n## L2 结论\n\n- 四项结算证据已经齐全：未见材料单次播放、未经修改的首次答案、全部错题答案窗口、E002 状态判断和下一单元方向均可定位。\n- E002 在独立样本中复发：Questions 23–24 使用显眼地域短语作答但没有核对修饰对象；Question 30 使用后续显眼内容作答但没有保持完整评价关系。\n- E002 更新为 `regressed`，连续独立 clean sample 仍为 `0`。L2 可以作为诊断单元结算，但这不代表 E002 已修复。\n- Question 27 暂记为局部选项语言缺口；除非后续样本再次出现相同词形或选项解码问题，否则不新建系统性错误编号。\n- 下一建议单元为 L3：Listening 评价窗口与关系保持。目标是在下一组未见材料中，先锁定评价主体，再把直接评价与后续解释作为同一答案窗口处理。\n",
+      "body": "# L2：Listening 答案窗口迁移验证\n\n## 材料与证据边界\n\n- 材料：雅思哥 `C21-Test 1-Part 3`，Questions 21–30。\n- 录音长度：06:56，单次播放。\n- 考生按照 L2 的建议打开该 Section 3；检查题型时页面录音位置约为 00:01，尚未进行实质作答。\n- 在播放前只检查题目和选项，不查看答案、解析或原文。\n- 本单元用于验证 L1 的判断能否迁移到独立新材料，不把查看题目所用时间计入听力成绩。\n\n## 题型检查\n\n- Questions 21–22：五个选项中选择两个，目标是找出对学生影响最大的 lecture features。\n- Questions 23–24：五个选项中选择两个，目标是找出最让学生印象深刻的 research project details。\n- Questions 25–30：将六种 ocean biodiversity resources 与八种学生评价配对。\n\n## 播放前限定\n\n- 第 21–22 题要找的是学生对 lecture features 的影响判断，不是录音中出现的海洋主题词。\n- 第 23–24 题要找的是学生明确表示 impressed 的 project details，不是项目包含的任意事实。\n- 第 25–30 题要记录学生对每项 resource 的评价，不是 resource 本身讲了什么。\n- 双选题必须保留两个独立证据；一个选项被提到不等于它满足 `greatest impact` 或 `particularly impressed`。\n- 配对题必须用评价关系作答，例如受众、时效性、平衡性、证据、解释或解决方案；不得只按 resource 主题与选项关键词配对。\n\n## 核对前状态\n\n- L2 已开始，答案尚未形成。\n- E002 当前状态为 improving，连续独立 clean sample 为 0。\n- 播放前先由考生用自己的话复述三组题分别在问什么，再进行单次播放。\n\n## 首次作答结果（2026-08-09）\n\n- Questions 21–22：首次答案 `B, D`；正确答案 `B, D`。\n- Questions 23–24：首次答案 `B, E`；正确答案 `E, C`。保留了 E，但多选 B、漏选 C。\n- Questions 25–30：首次答案 `G, B, C, H, A, D`；正确答案 `G, B, F, H, A, E`。\n- 原始得分：`7/10`。答案在查看答案与原文前已经固定。\n\n## 错误与答案窗口核对\n\n### Questions 23–24\n\n- `all around the world` 被当成项目覆盖范围广，因而选择 B；完整关系实际说明参与者来自世界各地，对应 E 的 `the large range of specialists involved`。\n- 该错误不是没有听到显眼短语，而是没有确认短语修饰谁，出现了主体与指代归属漂移。\n- 录音以 robot 作为具体例子，考生没有把实例上收为 C 的 `the use of new technology`，属于局部的例子到类别映射失败。\n\n### Question 27\n\n- 考生理解了 `stating the obvious`、`everybody knows that anyway` 和“没有必要告诉大家”的原文逻辑，但把选项 `too predictable to be useful` 读成了近似 `too predictive to be used`。\n- `predictable` 表示内容或结果容易预料，`predictive` 表示具有预测能力；`useful` 也不等于 `used`。因此本题主要是选项词形与语义解码失败，不作为 E002 的直接证据。\n\n### Question 30\n\n- 直接评价是 `presented a rather one-sided picture`，对应 E 的 `does not give a balanced account`。\n- 后续 `focused on how this would benefit people and ignored the effects on the environment` 是对 `one-sided` 的解释，不是在提出改善方案。\n- 考生漏掉直接评价后抓住 `benefit people`，将其误配为 D；即使继续听到了后续内容，也没有保持“评价该 resource”的题干框架，也没有处理 `focused on ... and ignored ...` 的对比关系。\n- 考生最终能够说明：E 成立是因为 `one-sided` 与 `unbalanced` 同义；D 排除是因为原文没有提出任何改善办法。\n\n## L2 结论\n\n- 四项结算证据已经齐全：未见材料单次播放、未经修改的首次答案、全部错题答案窗口、E002 状态判断和下一单元方向均可定位。\n- E002 在独立样本中复发：Questions 23–24 使用显眼地域短语作答但没有核对修饰对象；Question 30 使用后续显眼内容作答但没有保持完整评价关系。\n- E002 更新为 `regressed`，连续独立 clean sample 仍为 `0`。L2 可以作为诊断单元结算，但这不代表 E002 已修复。\n- Question 27 暂记为局部选项语言缺口；除非后续样本再次出现相同词形或选项解码问题，否则不新建系统性错误编号。\n- 下一建议单元为 L3：Listening 评价窗口与关系保持。目标是在下一组未见材料中，先锁定评价主体，再把直接评价与后续解释作为同一答案窗口处理。",
       "frontmatter": {
         "date": "2026-07-24",
         "unit": "L2",
@@ -2561,8 +2726,8 @@
         ],
         "related_notes": []
       },
-      "html": "<h1>L2：Listening 答案窗口迁移验证</h1>\n<h2>材料与证据边界</h2>\n<ul>\n<li>材料：雅思哥 <code>C21-Test 1-Part 3</code>，Questions 21–30。</li>\n<li>录音长度：06:56，单次播放。</li>\n<li>考生按照 L2 的建议打开该 Section 3；检查题型时页面录音位置约为 00:01，尚未进行实质作答。</li>\n<li>在播放前只检查题目和选项，不查看答案、解析或原文。</li>\n<li>本单元用于验证 L1 的判断能否迁移到独立新材料，不把查看题目所用时间计入听力成绩。</li>\n</ul>\n<h2>题型检查</h2>\n<ul>\n<li>Questions 21–22：五个选项中选择两个，目标是找出对学生影响最大的 lecture features。</li>\n<li>Questions 23–24：五个选项中选择两个，目标是找出最让学生印象深刻的 research project details。</li>\n<li>Questions 25–30：将六种 ocean biodiversity resources 与八种学生评价配对。</li>\n</ul>\n<h2>播放前限定</h2>\n<ul>\n<li>第 21–22 题要找的是学生对 lecture features 的影响判断，不是录音中出现的海洋主题词。</li>\n<li>第 23–24 题要找的是学生明确表示 impressed 的 project details，不是项目包含的任意事实。</li>\n<li>第 25–30 题要记录学生对每项 resource 的评价，不是 resource 本身讲了什么。</li>\n<li>双选题必须保留两个独立证据；一个选项被提到不等于它满足 <code>greatest impact</code> 或 <code>particularly impressed</code>。</li>\n<li>配对题必须用评价关系作答，例如受众、时效性、平衡性、证据、解释或解决方案；不得只按 resource 主题与选项关键词配对。</li>\n</ul>\n<h2>核对前状态</h2>\n<ul>\n<li>L2 已开始，答案尚未形成。</li>\n<li>E002 当前状态为 improving，连续独立 clean sample 为 0。</li>\n<li>播放前先由考生用自己的话复述三组题分别在问什么，再进行单次播放。</li>\n</ul>\n",
-      "text": "L2：Listening 答案窗口迁移验证 材料与证据边界 材料：雅思哥 C21-Test 1-Part 3，Questions 21–30。 录音长度：06:56，单次播放。 考生按照 L2 的建议打开该 Section 3；检查题型时页面录音位置约为 00:01，尚未进行实质作答。 在播放前只检查题目和选项，不查看答案、解析或原文。 本单元用于验证 L1 的判断能否迁移到独立新材料，不把查看题目所用时间计入听力成绩。 题型检查 Questions 21–22：五个选项中选择两个，目标是找出对学生影响最大的 lecture features。 Questions 23–24：五个选项中选择两个，目标是找出最让学生印象深刻的 research project details。 Questions 25–30：将六种 ocean biodiversity resources 与八种学生评价配对。 播放前限定 第 21–22 题要找的是学生对 lecture features 的影响判断，不是录音中出现的海洋主题词。 第 23–24 题要找的是学生明确表示 impressed 的 project details，不是项目包含的任意事实。 第 25–30 题要记录学生对每项 resource 的评价，不是 resource 本身讲了什么。 双选题必须保留两个独立证据；一个选项被提到不等于它满足 greatest impact 或 particularly impressed。 配对题必须用评价关系作答，例如受众、时效性、平衡性、证据、解释或解决方案；不得只按 resource 主题与选项关键词配对。 核对前状态 L2 已开始，答案尚未形成。 E002 当前状态为 improving，连续独立 clean sample 为 0。 播放前先由考生用自己的话复述三组题分别在问什么，再进行单次播放。",
+      "html": "<h1>L2：Listening 答案窗口迁移验证</h1>\n<h2>材料与证据边界</h2>\n<ul>\n<li>材料：雅思哥 <code>C21-Test 1-Part 3</code>，Questions 21–30。</li>\n<li>录音长度：06:56，单次播放。</li>\n<li>考生按照 L2 的建议打开该 Section 3；检查题型时页面录音位置约为 00:01，尚未进行实质作答。</li>\n<li>在播放前只检查题目和选项，不查看答案、解析或原文。</li>\n<li>本单元用于验证 L1 的判断能否迁移到独立新材料，不把查看题目所用时间计入听力成绩。</li>\n</ul>\n<h2>题型检查</h2>\n<ul>\n<li>Questions 21–22：五个选项中选择两个，目标是找出对学生影响最大的 lecture features。</li>\n<li>Questions 23–24：五个选项中选择两个，目标是找出最让学生印象深刻的 research project details。</li>\n<li>Questions 25–30：将六种 ocean biodiversity resources 与八种学生评价配对。</li>\n</ul>\n<h2>播放前限定</h2>\n<ul>\n<li>第 21–22 题要找的是学生对 lecture features 的影响判断，不是录音中出现的海洋主题词。</li>\n<li>第 23–24 题要找的是学生明确表示 impressed 的 project details，不是项目包含的任意事实。</li>\n<li>第 25–30 题要记录学生对每项 resource 的评价，不是 resource 本身讲了什么。</li>\n<li>双选题必须保留两个独立证据；一个选项被提到不等于它满足 <code>greatest impact</code> 或 <code>particularly impressed</code>。</li>\n<li>配对题必须用评价关系作答，例如受众、时效性、平衡性、证据、解释或解决方案；不得只按 resource 主题与选项关键词配对。</li>\n</ul>\n<h2>核对前状态</h2>\n<ul>\n<li>L2 已开始，答案尚未形成。</li>\n<li>E002 当前状态为 improving，连续独立 clean sample 为 0。</li>\n<li>播放前先由考生用自己的话复述三组题分别在问什么，再进行单次播放。</li>\n</ul>\n<h2>首次作答结果（2026-08-09）</h2>\n<ul>\n<li>Questions 21–22：首次答案 <code>B, D</code>；正确答案 <code>B, D</code>。</li>\n<li>Questions 23–24：首次答案 <code>B, E</code>；正确答案 <code>E, C</code>。保留了 E，但多选 B、漏选 C。</li>\n<li>Questions 25–30：首次答案 <code>G, B, C, H, A, D</code>；正确答案 <code>G, B, F, H, A, E</code>。</li>\n<li>原始得分：<code>7/10</code>。答案在查看答案与原文前已经固定。</li>\n</ul>\n<h2>错误与答案窗口核对</h2>\n<h3>Questions 23–24</h3>\n<ul>\n<li><code>all around the world</code> 被当成项目覆盖范围广，因而选择 B；完整关系实际说明参与者来自世界各地，对应 E 的 <code>the large range of specialists involved</code>。</li>\n<li>该错误不是没有听到显眼短语，而是没有确认短语修饰谁，出现了主体与指代归属漂移。</li>\n<li>录音以 robot 作为具体例子，考生没有把实例上收为 C 的 <code>the use of new technology</code>，属于局部的例子到类别映射失败。</li>\n</ul>\n<h3>Question 27</h3>\n<ul>\n<li>考生理解了 <code>stating the obvious</code>、<code>everybody knows that anyway</code> 和“没有必要告诉大家”的原文逻辑，但把选项 <code>too predictable to be useful</code> 读成了近似 <code>too predictive to be used</code>。</li>\n<li><code>predictable</code> 表示内容或结果容易预料，<code>predictive</code> 表示具有预测能力；<code>useful</code> 也不等于 <code>used</code>。因此本题主要是选项词形与语义解码失败，不作为 E002 的直接证据。</li>\n</ul>\n<h3>Question 30</h3>\n<ul>\n<li>直接评价是 <code>presented a rather one-sided picture</code>，对应 E 的 <code>does not give a balanced account</code>。</li>\n<li>后续 <code>focused on how this would benefit people and ignored the effects on the environment</code> 是对 <code>one-sided</code> 的解释，不是在提出改善方案。</li>\n<li>考生漏掉直接评价后抓住 <code>benefit people</code>，将其误配为 D；即使继续听到了后续内容，也没有保持“评价该 resource”的题干框架，也没有处理 <code>focused on ... and ignored ...</code> 的对比关系。</li>\n<li>考生最终能够说明：E 成立是因为 <code>one-sided</code> 与 <code>unbalanced</code> 同义；D 排除是因为原文没有提出任何改善办法。</li>\n</ul>\n<h2>L2 结论</h2>\n<ul>\n<li>四项结算证据已经齐全：未见材料单次播放、未经修改的首次答案、全部错题答案窗口、E002 状态判断和下一单元方向均可定位。</li>\n<li>E002 在独立样本中复发：Questions 23–24 使用显眼地域短语作答但没有核对修饰对象；Question 30 使用后续显眼内容作答但没有保持完整评价关系。</li>\n<li>E002 更新为 <code>regressed</code>，连续独立 clean sample 仍为 <code>0</code>。L2 可以作为诊断单元结算，但这不代表 E002 已修复。</li>\n<li>Question 27 暂记为局部选项语言缺口；除非后续样本再次出现相同词形或选项解码问题，否则不新建系统性错误编号。</li>\n<li>下一建议单元为 L3：Listening 评价窗口与关系保持。目标是在下一组未见材料中，先锁定评价主体，再把直接评价与后续解释作为同一答案窗口处理。</li>\n</ul>\n",
+      "text": "L2：Listening 答案窗口迁移验证 材料与证据边界 材料：雅思哥 C21-Test 1-Part 3，Questions 21–30。 录音长度：06:56，单次播放。 考生按照 L2 的建议打开该 Section 3；检查题型时页面录音位置约为 00:01，尚未进行实质作答。 在播放前只检查题目和选项，不查看答案、解析或原文。 本单元用于验证 L1 的判断能否迁移到独立新材料，不把查看题目所用时间计入听力成绩。 题型检查 Questions 21–22：五个选项中选择两个，目标是找出对学生影响最大的 lecture features。 Questions 23–24：五个选项中选择两个，目标是找出最让学生印象深刻的 research project details。 Questions 25–30：将六种 ocean biodiversity resources 与八种学生评价配对。 播放前限定 第 21–22 题要找的是学生对 lecture features 的影响判断，不是录音中出现的海洋主题词。 第 23–24 题要找的是学生明确表示 impressed 的 project details，不是项目包含的任意事实。 第 25–30 题要记录学生对每项 resource 的评价，不是 resource 本身讲了什么。 双选题必须保留两个独立证据；一个选项被提到不等于它满足 greatest impact 或 particularly impressed。 配对题必须用评价关系作答，例如受众、时效性、平衡性、证据、解释或解决方案；不得只按 resource 主题与选项关键词配对。 核对前状态 L2 已开始，答案尚未形成。 E002 当前状态为 improving，连续独立 clean sample 为 0。 播放前先由考生用自己的话复述三组题分别在问什么，再进行单次播放。 首次作答结果（2026-08-09） Questions 21–22：首次答案 B, D；正确答案 B, D。 Questions 23–24：首次答案 B, E；正确答案 E, C。保留了 E，但多选 B、漏选 C。 Questions 25–30：首次答案 G, B, C, H, A, D；正确答案 G, B, F, H, A, E。 原始得分：7/10。答案在查看答案与原文前已经固定。 错误与答案窗口核对 Questions 23–24 all around the world 被当成项目覆盖范围广，因而选择 B；完整关系实际说明参与者来自世界各地，对应 E 的 the large range of specialists involved。 该错误不是没有听到显眼短语，而是没有确认短语修饰谁，出现了主体与指代归属漂移。 录音以 robot 作为具体例子，考生没有把实例上收为 C 的 the use of new technology，属于局部的例子到类别映射失败。 Question 27 考生理解了 stating the obvious、everybody knows that anyway 和“没有必要告诉大家”的原文逻辑，但把选项 too predictable to be useful 读成了近似 too predictive to be used。 predictable 表示内容或结果容易预料，predictive 表示具有预测能力；useful 也不等于 used。因此本题主要是选项词形与语义解码失败，不作为 E002 的直接证据。 Question 30 直接评价是 presented a rather one-sided picture，对应 E 的 does not give a balanced account。 后续 focused on how this would benefit people and ignored the effects on the environment 是对 one-sided 的解释，不是在提出改善方案。 考生漏掉直接评价后抓住 benefit people，将其误配为 D；即使继续听到了后续内容，也没有保持“评价该 resource”的题干框架，也没有处理 focused on ... and ignored ... 的对比关系。 考生最终能够说明：E 成立是因为 one-sided 与 unbalanced 同义；D 排除是因为原文没有提出任何改善办法。 L2 结论 四项结算证据已经齐全：未见材料单次播放、未经修改的首次答案、全部错题答案窗口、E002 状态判断和下一单元方向均可定位。 E002 在独立样本中复发：Questions 23–24 使用显眼地域短语作答但没有核对修饰对象；Question 30 使用后续显眼内容作答但没有保持完整评价关系。 E002 更新为 regressed，连续独立 clean sample 仍为 0。L2 可以作为诊断单元结算，但这不代表 E002 已修复。 Question 27 暂记为局部选项语言缺口；除非后续样本再次出现相同词形或选项解码问题，否则不新建系统性错误编号。 下一建议单元为 L3：Listening 评价窗口与关系保持。目标是在下一组未见材料中，先锁定评价主体，再把直接评价与后续解释作为同一答案窗口处理。",
       "date": "2026-07-24",
       "relatedErrors": [
         "E002"
