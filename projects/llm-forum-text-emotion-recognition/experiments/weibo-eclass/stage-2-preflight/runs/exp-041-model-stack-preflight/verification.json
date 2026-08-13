@@ -1,0 +1,51 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "audit_id": "AUDIT-EXP-041-V1",
+  "check_count": 16,
+  "checks": [
+    "frozen-implementation-hashes",
+    "train-only-run-boundary",
+    "deterministic-selection-reconstruction",
+    "prompt-and-parser-independence",
+    "qwen-source-inventory",
+    "qwen-mlx-inventory",
+    "encoder-source-inventory",
+    "sequence-length-and-target-preservation",
+    "lora-train-only-data-schema",
+    "classical-finite-shape",
+    "encoder-finite-update",
+    "qwen-condition-coverage",
+    "qwen-independent-output-parse",
+    "qwen-aggregate-recalculation",
+    "lora-insertion-and-adapter",
+    "public-private-boundary"
+  ],
+  "experiment_id": "EXP-041",
+  "implementation": {
+    "imports_parser": false,
+    "imports_runner": false,
+    "verifier": {
+      "bytes": 29400,
+      "path": "experiments/weibo-eclass/stage-2-preflight/verify_preflight_exp041_audit.py",
+      "sha256": "e1fcd95c6801772e4a6905676c1351071cf715938e0e363445af9e75bc6ac4ee"
+    }
+  },
+  "lora_gate": "Passed",
+  "mismatches": 0,
+  "privacy": {
+    "private_directories_checked": 3,
+    "private_files_checked": 7,
+    "public_files_checked": 10,
+    "raw_id_matches": 0,
+    "raw_text_matches": 0,
+    "status": "Passed"
+  },
+  "recomputed_qwen_rows": 42,
+  "reconstructed_selection_rows": 56,
+  "status": "Passed",
+  "test_split_accessed": false,
+  "train_rows_reparsed": 5995,
+  "validation_split_accessed": false
+}

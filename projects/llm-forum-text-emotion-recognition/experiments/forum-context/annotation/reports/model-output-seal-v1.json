@@ -1,0 +1,95 @@
+{
+  "schema_version": "model-output-seal-v1",
+  "protocol_id": "DATA-FCTX-LABEL-V1",
+  "sealed_at_utc": "2026-08-06T07:57:52Z",
+  "scope": "mechanically_validated_private_model_outputs",
+  "content_reviewed": true,
+  "semantic_labels_disclosed": true,
+  "private_root": "data/iac2/annotations/pilot-v1/model-outputs",
+  "inputs": [
+    {
+      "stage": "A",
+      "filename": "stage-a-inputs-v1.jsonl",
+      "rows": 120,
+      "sha256": "99341ea453164587c4cf46a02c5e203d634ce1bf823d067a73ea609c15f41047"
+    },
+    {
+      "stage": "B",
+      "filename": "stage-b-inputs-v1.jsonl",
+      "rows": 120,
+      "sha256": "e7dc51c2053db37ad6639b50c553c261b23b2e514072c17d8b70f5deac13ba15"
+    }
+  ],
+  "contracts": [
+    {
+      "stage": "A",
+      "filename": "stage-a-model-annotation-contract-v1.md",
+      "sha256": "845aba11103ad25dbc3f86078cba92cd15b6ce4de302e2bcf2065e2aa219e34c"
+    },
+    {
+      "stage": "B",
+      "filename": "stage-b-model-annotation-contract-v1.md",
+      "sha256": "70c3c053fca6096fd41a52c8f7dbce8ba48a31aacb749b7084f44f72d5bac895"
+    }
+  ],
+  "outputs": [
+    {
+      "model_slot": "model_01",
+      "stage": "A",
+      "filename": "stage-a-model-annotations-v1.jsonl",
+      "rows": 120,
+      "bytes": 48983,
+      "sha256": "8f97773ccc7a9902813c57fc4e15f702f9a0a35964aa83f32e0ca69771738522"
+    },
+    {
+      "model_slot": "model_02",
+      "stage": "A",
+      "filename": "stage-a-model-annotations-v1-model-02.jsonl",
+      "rows": 120,
+      "bytes": 46494,
+      "sha256": "8022155dcb8dee5b4171807727203f2aeec12781c1838a6f9b96833bdcae59be"
+    },
+    {
+      "model_slot": "model_01",
+      "stage": "B",
+      "filename": "stage-b-model-annotations-v1.jsonl",
+      "rows": 120,
+      "bytes": 55842,
+      "sha256": "5053b7b2ac167586a6790065ef7493728fa1e5085125e1ed72d4a100f6966d02"
+    },
+    {
+      "model_slot": "model_02",
+      "stage": "B",
+      "filename": "stage-b-model-annotations-v1-model-02.jsonl",
+      "rows": 120,
+      "bytes": 55426,
+      "sha256": "712cd9ea3fbe6416d3827084380a8ca509c278773ef45da44300a65f210f092f"
+    }
+  ],
+  "mechanical_validation": {
+    "jsonl_parse": "passed",
+    "row_count": "passed",
+    "input_order_and_identity": "passed",
+    "allowed_fields": "passed",
+    "conditional_constraints": "passed",
+    "semantic_review": "performed_after_registered_amendment"
+  },
+  "execution_deviation": {
+    "status": "recorded",
+    "description": "Model outputs were generated before human-blind pass 1 and the blind-repeat pass, contrary to the frozen execution order.",
+    "containment": "Outputs were quarantined from the human annotator and were not loaded by its server during Human Pass 1. They were disclosed only after all 120 Human Pass 1 records were complete and the direct-comparison amendment was registered.",
+    "claim_boundary": "Strict compliance with the original model-assistance execution order and delayed intra-annotator consistency cannot be claimed. Human Pass 1 remains blind to model labels, but any later adjudication is model-assisted."
+  },
+  "disclosure": {
+    "date": "2026-08-07",
+    "authorization": "data-annotation-sampling-pilot-v1-amendment-2026-08-07-direct-comparison.md",
+    "human_checkpoint_sha256": "5e03ebbef49ae558db6b6ce426aaf95d3e819949431f4132762868da631ff03a",
+    "comparison_report": "three-source-comparison-v1.json",
+    "private_disagreement_rows": 106,
+    "private_disagreement_sha256": "b85136c226e5e82db43cfaaef2734f0b13e9e7271fde6cdf1c56abe83289720f"
+  },
+  "filesystem_seal": {
+    "output_file_mode": "0400",
+    "directory_mode": "0500"
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "command_history": [
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/stage-2-preflight/run_preflight.py static",
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/stage-2-preflight/run_preflight.py models",
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/stage-2-preflight/run_preflight.py tokenize",
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/stage-2-preflight/run_preflight.py classical",
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/stage-2-preflight/run_preflight.py encoder",
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/stage-2-preflight/run_preflight.py qwen"
+  ],
+  "config": {
+    "bytes": 3564,
+    "path": "experiments/weibo-eclass/stage-2-preflight/config.json",
+    "sha256": "2ad0f49408dad046d7abfd60a028df488eb171435bc93f5bb2ebf5d6c29ab24a"
+  },
+  "experiment_id": "EXP-040",
+  "git": {
+    "commit": "3244ff0fb1841324d8f33537af6d07c6f1dfd0c8",
+    "dirty": true,
+    "dirty_path_count": 49
+  },
+  "rq_ids": [
+    "RQ-F1",
+    "RQ-F2"
+  ],
+  "stage": "environment-model-parser-lora-preflight",
+  "stages": {
+    "classical": {
+      "artifact": {
+        "bytes": 790,
+        "path": "experiments/weibo-eclass/stage-2-preflight/runs/exp-040-model-stack-preflight/classical.json",
+        "sha256": "1e4bcced9b5946c45d5d5023b07d74eb366acdaa47b4ad6e830d0909546cf2ea"
+      },
+      "completed_at_utc": "2026-08-08T05:12:51.687504+00:00",
+      "duration_seconds": 1.1099772499874234,
+      "started_at_utc": "2026-08-08T05:12:50.577449+00:00",
+      "status": "Passed"
+    },
+    "encoder": {
+      "artifact": {
+        "bytes": 645,
+        "path": "experiments/weibo-eclass/stage-2-preflight/runs/exp-040-model-stack-preflight/encoder.json",
+        "sha256": "006631de72c0fe33575e79fc8557103d9741b4a5e353d498d7655708e98d4b8b"
+      },
+      "completed_at_utc": "2026-08-08T05:13:00.663822+00:00",
+      "duration_seconds": 4.066958750016056,
+      "started_at_utc": "2026-08-08T05:12:56.596778+00:00",
+      "status": "Passed"
+    },
+    "models": {
+      "artifact": {
+        "bytes": 897,
+        "path": "experiments/weibo-eclass/stage-2-preflight/runs/exp-040-model-stack-preflight/models.json",
+        "sha256": "bda3eff96056d9717992a13b7fc190b7c5e8a5bcd36a67cf8bf22e3c08aa706f"
+      },
+      "completed_at_utc": "2026-08-08T05:12:22.980855+00:00",
+      "duration_seconds": 108.77504070894793,
+      "started_at_utc": "2026-08-08T05:10:34.205364+00:00",
+      "status": "Passed"
+    },
+    "qwen": {
+      "artifact": {
+        "bytes": 6399,
+        "path": "experiments/weibo-eclass/stage-2-preflight/runs/exp-040-model-stack-preflight/qwen.json",
+        "sha256": "f40e752d00dc32ed5243476101c5d789bb968da78260dcbf71f8033238c07cf6"
+      },
+      "completed_at_utc": "2026-08-08T05:27:15.122906+00:00",
+      "duration_seconds": 837.0824820420239,
+      "started_at_utc": "2026-08-08T05:13:18.037848+00:00",
+      "status": "Failed"
+    },
+    "static": {
+      "artifact": {
+        "bytes": 2463,
+        "path": "experiments/weibo-eclass/stage-2-preflight/runs/exp-040-model-stack-preflight/static.json",
+        "sha256": "95be18fa978b582e01e18c45d0e31b0348c2fdfca5c966b5b600d64520b9bae6"
+      },
+      "completed_at_utc": "2026-08-08T05:10:10.412124+00:00",
+      "duration_seconds": 0.07556158397346735,
+      "started_at_utc": "2026-08-08T05:10:10.336491+00:00",
+      "status": "Passed"
+    },
+    "tokenize": {
+      "artifact": {
+        "bytes": 2141,
+        "path": "experiments/weibo-eclass/stage-2-preflight/runs/exp-040-model-stack-preflight/tokenization.json",
+        "sha256": "0033bb374d409b363f127ae93bebf5f2565722aa50f4bbb3d52843e2909ef914"
+      },
+      "completed_at_utc": "2026-08-08T05:12:44.074422+00:00",
+      "duration_seconds": 12.282807540963404,
+      "started_at_utc": "2026-08-08T05:12:31.791289+00:00",
+      "status": "Passed"
+    }
+  },
+  "started_at_utc": "2026-08-08T05:10:10.376262+00:00",
+  "status": "Failed",
+  "test_split_accessed": false,
+  "tier": "Minor",
+  "validation_split_accessed": false
+}

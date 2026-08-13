@@ -1,0 +1,28 @@
+{
+  "authorization_id": "EXP-049-FROZEN-TEST-AUTH-V1",
+  "authorized_at_utc": "2026-08-12T04:17:21Z",
+  "authorized_conditions_in_order": [
+    "m0-majority",
+    "m1-target-only",
+    "encoder-seed-42",
+    "encoder-seed-43",
+    "encoder-seed-44",
+    "qwen-reference",
+    "qwen-lora-seed-42",
+    "qwen-lora-seed-43",
+    "qwen-lora-seed-44"
+  ],
+  "authorized_formal_test_units": 9,
+  "authorized_split": "test",
+  "boundaries": {
+    "all_predictions_before_label_open": true,
+    "checkpoint_or_seed_selection_from_test": false,
+    "external_api_calls": false,
+    "one_final_label_opening_step": true,
+    "post_result_tuning": false,
+    "technical_resume_exact_prefix_only": true
+  },
+  "experiment_id": "EXP-049",
+  "source": "Explicit user instruction in the active Codex task: freeze TEST-READY, then perform test evaluation.",
+  "status": "Authorized"
+}

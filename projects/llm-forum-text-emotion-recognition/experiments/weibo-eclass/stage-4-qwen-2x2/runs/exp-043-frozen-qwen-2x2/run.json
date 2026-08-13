@@ -1,0 +1,228 @@
+{
+  "accessed_splits": [
+    "train",
+    "validation"
+  ],
+  "command_history": [
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/stage-4-qwen-2x2/run_stage4.py initialize",
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/stage-4-qwen-2x2/run_stage4.py smoke",
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/stage-4-qwen-2x2/run_stage4.py infer --condition A",
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/stage-4-qwen-2x2/run_stage4.py infer --condition B",
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/stage-4-qwen-2x2/run_stage4.py infer --condition C",
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/stage-4-qwen-2x2/run_stage4.py infer --condition D",
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/stage-4-qwen-2x2/run_stage4.py aggregate"
+  ],
+  "config": {
+    "bytes": 3746,
+    "path": "experiments/weibo-eclass/stage-4-qwen-2x2/runs/exp-043-frozen-qwen-2x2/frozen-config.json",
+    "sha256": "c2533e5536bf66c7f427331c86995ad68265a4c4a8dfd71bb5b10bfa1036b11e"
+  },
+  "environment": {
+    "architecture": "arm64",
+    "executable": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+    "packages": {
+      "mlx": "0.32.0",
+      "mlx-lm": "0.31.3",
+      "numpy": "2.4.6",
+      "safetensors": "0.8.0",
+      "tokenizers": "0.22.2",
+      "transformers": "5.14.1"
+    },
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.11.15"
+  },
+  "experiment_id": "EXP-043",
+  "frozen_artifacts": {
+    "parser": {
+      "bytes": 3954,
+      "path": "experiments/weibo-eclass/stage-4-qwen-2x2/runs/exp-043-frozen-qwen-2x2/frozen-label-parser.py",
+      "sha256": "429c8708da864086c11859449ebf427b8a681c20eec58900d97574d508067a21"
+    },
+    "prompt": {
+      "bytes": 1073,
+      "path": "experiments/weibo-eclass/stage-4-qwen-2x2/runs/exp-043-frozen-qwen-2x2/frozen-prompt-v1.json",
+      "sha256": "d9a92aab3a531b769c3b4794572cf0842536c7c38dcdd6a1cd4ac25885e6631b"
+    },
+    "requirements": {
+      "bytes": 99,
+      "path": "experiments/weibo-eclass/stage-4-qwen-2x2/runs/exp-043-frozen-qwen-2x2/frozen-requirements-lock.txt",
+      "sha256": "69072303ed0d899983f402fe81131f79c57c1154d45ae8550cff518f48bd70bc"
+    },
+    "runner": {
+      "bytes": 41632,
+      "path": "experiments/weibo-eclass/stage-4-qwen-2x2/runs/exp-043-frozen-qwen-2x2/frozen-runner.py",
+      "sha256": "b7ef5497dbd1efd0ef9ee36dff891abfc23ba15fa198dc8dc26930ce1b312016"
+    },
+    "test": {
+      "bytes": 3822,
+      "path": "experiments/weibo-eclass/stage-4-qwen-2x2/runs/exp-043-frozen-qwen-2x2/frozen-test.py",
+      "sha256": "18f172fc76ce858ed34cd80bf7a3c2bea3353e9e8eb09396f40429c38f2725d8"
+    },
+    "verifier": {
+      "bytes": 21851,
+      "path": "experiments/weibo-eclass/stage-4-qwen-2x2/runs/exp-043-frozen-qwen-2x2/frozen-verifier.py",
+      "sha256": "55fc8c88446efa70753a6f2a098cdf72a68cb706a95d4e3680fd7f67b5bd76f6"
+    }
+  },
+  "git": {
+    "commit": "3244ff0fb1841324d8f33537af6d07c6f1dfd0c8",
+    "dirty": true
+  },
+  "model": {
+    "adapter_loaded": false,
+    "inventory": {
+      "file_count": 9,
+      "files": [
+        {
+          "bytes": 81,
+          "path": "README.md",
+          "sha256": "748c964f9b7e5f2c3770ce013bbc0153be7c54311d9692c343b6188eefe77ac6"
+        },
+        {
+          "bytes": 4168,
+          "path": "chat_template.jinja",
+          "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+        },
+        {
+          "bytes": 816,
+          "path": "config.json",
+          "sha256": "2c76bf5093edd24543889d86fc21388837bcf6fbe5fed6848ff42ba4eb3c2838"
+        },
+        {
+          "bytes": 239,
+          "path": "generation_config.json",
+          "sha256": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2"
+        },
+        {
+          "bytes": 5321133607,
+          "path": "model-00001-of-00002.safetensors",
+          "sha256": "8769f2551e5c77b637e91dd6dcf25ef5a7fd11d67aec46418e2ddd71a7941a68"
+        },
+        {
+          "bytes": 2723848286,
+          "path": "model-00002-of-00002.safetensors",
+          "sha256": "c29469a393b2df3f4586eb238ae6650ad03d7e9b8219596fcab4c05e91441b37"
+        },
+        {
+          "bytes": 34462,
+          "path": "model.safetensors.index.json",
+          "sha256": "5e699a61da09415f33a625885364d3889a80acb6ab88aedaf6e195b2612addf4"
+        },
+        {
+          "bytes": 11422650,
+          "path": "tokenizer.json",
+          "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+        },
+        {
+          "bytes": 729,
+          "path": "tokenizer_config.json",
+          "sha256": "ee8f6d44bf2353e6d3686c3adaf70e1ccfe9e6ed6822d0ab2f28cafdd7754792"
+        }
+      ],
+      "total_bytes": 8056445038
+    },
+    "manifest": {
+      "bytes": 3959,
+      "path": "models/qwen3-4b/manifest.json",
+      "sha256": "da447350d9e43213dacc1202da03b50d7e7114b0a4fe2904ff353240b404a641"
+    },
+    "precision": "bfloat16",
+    "quantized": false,
+    "repo_id": "Qwen/Qwen3-4B",
+    "revision": "1cfa9a7208912126459214e8b04321603b3df60c"
+  },
+  "rq_ids": [
+    "RQ-F1",
+    "RQ-F2"
+  ],
+  "stage": "stage-4-frozen-qwen-context-reasoning-2x2",
+  "stages": {
+    "aggregate": {
+      "artifact": {
+        "bytes": 42537,
+        "path": "experiments/weibo-eclass/stage-4-qwen-2x2/runs/exp-043-frozen-qwen-2x2/aggregate_metrics.json",
+        "sha256": "f6c49293bc1ee7b9386bf83ffa16258616e84172a036544065e939b91cf8b286"
+      },
+      "completed_at_utc": "2026-08-09T00:52:33.594433+00:00",
+      "duration_seconds": 23.69189916702453,
+      "started_at_utc": "2026-08-09T00:52:09.901828+00:00",
+      "status": "Passed"
+    },
+    "condition_A": {
+      "artifact": {
+        "bytes": 9252,
+        "path": "experiments/weibo-eclass/stage-4-qwen-2x2/runs/exp-043-frozen-qwen-2x2/condition-A.json",
+        "sha256": "a4545fd7054e7bddee258f1cc7c777d042ee9eebc7fa0cc9f8077c0cd1151252"
+      },
+      "completed_at_utc": "2026-08-08T11:46:55.375362+00:00",
+      "duration_seconds": 923.3427585830214,
+      "started_at_utc": "2026-08-08T11:31:32.066345+00:00",
+      "status": "Passed"
+    },
+    "condition_B": {
+      "artifact": {
+        "bytes": 9273,
+        "path": "experiments/weibo-eclass/stage-4-qwen-2x2/runs/exp-043-frozen-qwen-2x2/condition-B.json",
+        "sha256": "9be72d8507b962e9f28a0a096f0a65ad247dbc5c6dded721ace1ad242416e2a6"
+      },
+      "completed_at_utc": "2026-08-08T12:03:35.079594+00:00",
+      "duration_seconds": 959.3630279169884,
+      "started_at_utc": "2026-08-08T11:47:35.446266+00:00",
+      "status": "Passed"
+    },
+    "condition_C": {
+      "artifact": {
+        "bytes": 9268,
+        "path": "experiments/weibo-eclass/stage-4-qwen-2x2/runs/exp-043-frozen-qwen-2x2/condition-C.json",
+        "sha256": "1919250aadd4e92e81983f1dbd30da734b44006616bc4e3b813b5808cb431c85"
+      },
+      "completed_at_utc": "2026-08-08T18:36:35.023906+00:00",
+      "duration_seconds": 23558.36837974994,
+      "started_at_utc": "2026-08-08T12:03:54.600560+00:00",
+      "status": "Passed"
+    },
+    "condition_D": {
+      "artifact": {
+        "bytes": 9277,
+        "path": "experiments/weibo-eclass/stage-4-qwen-2x2/runs/exp-043-frozen-qwen-2x2/condition-D.json",
+        "sha256": "2cff7f07177a675e06cc5dc7ac660a003bf16a94fb39c5b0ad8c6b9b5096351e"
+      },
+      "completed_at_utc": "2026-08-09T00:51:44.682534+00:00",
+      "duration_seconds": 22484.399115332984,
+      "started_at_utc": "2026-08-08T18:36:59.769530+00:00",
+      "status": "Passed"
+    },
+    "initialize": {
+      "artifact": {
+        "bytes": 379,
+        "path": "experiments/weibo-eclass/stage-4-qwen-2x2/runs/exp-043-frozen-qwen-2x2/initialize.json",
+        "sha256": "58bd9f05c89a3ad5b5077ee2d25c5092011d223432a7dbb5c10e061aeb23912f"
+      },
+      "completed_at_utc": "2026-08-08T11:27:15.736683+00:00",
+      "duration_seconds": 4.358610708964989,
+      "started_at_utc": "2026-08-08T11:27:11.377909+00:00",
+      "status": "Passed"
+    },
+    "smoke": {
+      "artifact": {
+        "bytes": 1382,
+        "path": "experiments/weibo-eclass/stage-4-qwen-2x2/runs/exp-043-frozen-qwen-2x2/smoke.json",
+        "sha256": "78677012595790926fd6ca9eb38d155de4b806317ea9b327f795ec25fdfa9488"
+      },
+      "completed_at_utc": "2026-08-08T11:31:11.485944+00:00",
+      "duration_seconds": 222.85316120798234,
+      "started_at_utc": "2026-08-08T11:27:28.644220+00:00",
+      "status": "Passed"
+    }
+  },
+  "started_at_utc": "2026-08-08T11:27:11.377909+00:00",
+  "status": "Verified",
+  "test_split_accessed": false,
+  "tier": "Major",
+  "validation_split_accessed": true,
+  "verification": {
+    "bytes": 633,
+    "path": "experiments/weibo-eclass/stage-4-qwen-2x2/runs/exp-043-frozen-qwen-2x2/verification.json",
+    "sha256": "0bb851ce4eef01bb0864fcffe017a112258da6157a754fc996cc4dc6a4e3ccd9"
+  }
+}

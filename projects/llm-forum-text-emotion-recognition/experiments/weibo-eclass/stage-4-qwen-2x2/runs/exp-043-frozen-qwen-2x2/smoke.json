@@ -1,0 +1,45 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "completed_at_utc": "2026-08-08T11:31:11.481910+00:00",
+  "experiment_id": "EXP-043",
+  "full_2x2_projected_seconds_with_safety_multiplier": 85961.96295715316,
+  "performance_metrics_computed": false,
+  "private_output_sha256": "63743a62bd26f6a87dd867d8808faa589fb4e796042198042559f0ef9b83efff",
+  "status": "Passed",
+  "summaries": {
+    "reasoning_off": {
+      "batch": {
+        "batch_elapsed_seconds": 7.229411209002137,
+        "generation_time": 1.6354625840904191,
+        "generation_tokens": 49,
+        "generation_tps": 29.960942229229843,
+        "peak_memory": 8.715199428,
+        "prompt_time": 5.581133831874467,
+        "prompt_tokens": 1621,
+        "prompt_tps": 290.4427753984847
+      },
+      "parser_valid_count": 8,
+      "parser_valid_rate": 1.0,
+      "rows": 8
+    },
+    "reasoning_on": {
+      "batch": {
+        "batch_elapsed_seconds": 209.02709937503096,
+        "generation_time": 204.63429314189125,
+        "generation_tokens": 4273,
+        "generation_tps": 20.88115307749101,
+        "peak_memory": 9.531647524,
+        "prompt_time": 4.327279441175051,
+        "prompt_tokens": 1589,
+        "prompt_tps": 367.20531262212984
+      },
+      "parser_valid_count": 7,
+      "parser_valid_rate": 0.875,
+      "rows": 8
+    }
+  },
+  "test_split_accessed": false,
+  "validation_split_accessed": false
+}

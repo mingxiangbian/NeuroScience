@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>Forum Emotion Blind Adjudication</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#case-content">跳到审阅内容</a>
+
+    <header class="app-bar">
+      <div class="app-identity">
+        <span class="app-mark" aria-hidden="true">A</span>
+        <div>
+          <strong>Source-blind Adjudication</strong>
+          <span id="dataset-mode" class="dataset-mode">Private diagnostic</span>
+        </div>
+      </div>
+
+      <div class="run-status" aria-label="审阅进度">
+        <div class="status-line">
+          <span id="stage-chip" class="stage-chip">Loading</span>
+          <span id="case-progress">0 / 40</span>
+        </div>
+        <progress id="progress-bar" max="40" value="0">0 / 40</progress>
+      </div>
+
+      <div class="session-status">
+        <span id="session-count">本轮 0 / 20</span>
+        <button id="end-session" class="button button-quiet" type="button">结束本轮</button>
+      </div>
+    </header>
+
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+
+    <div class="workspace">
+      <aside class="label-reference" aria-labelledby="label-reference-title">
+        <div class="reference-heading">
+          <h2 id="label-reference-title">标签参考</h2>
+          <span>V1 ontology</span>
+        </div>
+        <dl id="label-glossary" class="label-glossary">
+          <div><dt>anger</dt><dd>愤怒、谴责、敌意或激烈对抗</dd></div>
+          <div><dt>frustration</dt><dd>受阻、反复失败或沟通无效带来的挫败</dd></div>
+          <div><dt>disappointment</dt><dd>期待、承诺或结果落空</dd></div>
+          <div><dt>sadness</dt><dd>损失、痛苦或不幸带来的低落</dd></div>
+          <div><dt>fear</dt><dd>对威胁、危险或伤害的害怕</dd></div>
+          <div><dt>joy</dt><dd>明确的愉悦、开心或享受</dd></div>
+          <div><dt>surprise</dt><dd>对意外或违背预期事件的惊讶</dd></div>
+          <div><dt>confusion</dt><dd>明确表示无法理解、理清或解释</dd></div>
+          <div><dt>disgust</dt><dd>生理、道德或社会意义上的厌恶</dd></div>
+          <div><dt>cynicism</dt><dd>对诚意、动机或结果的嘲讽性不信任</dd></div>
+          <div><dt>neutral</dt><dd>没有清楚表达候选情绪，不等于难以判断</dd></div>
+          <div><dt>other_emotion</dt><dd>情绪明确但不在候选表中</dd></div>
+        </dl>
+        <div class="boundary-note">
+          <strong>判定对象</strong>
+          <p>只判断 target 发帖者在当前回复中传达的情绪；支持或反对本身不是情绪。</p>
+        </div>
+      </aside>
+
+      <main id="case-content" class="case-content" tabindex="-1">
+        <section id="loading-state" class="state-view loading-state" aria-label="正在载入">
+          <div class="skeleton skeleton-label"></div>
+          <div class="skeleton skeleton-title"></div>
+          <div class="skeleton skeleton-line"></div>
+          <div class="skeleton skeleton-line short"></div>
+        </section>
+
+        <section id="case-view" class="case-view" hidden>
+          <details class="mobile-reference">
+            <summary>查看标签边界</summary>
+            <div id="mobile-glossary"></div>
+          </details>
+
+          <a class="mobile-jump" href="#decision-panel">前往裁决</a>
+
+          <div class="case-heading">
+            <div>
+              <p id="stage-kicker" class="stage-kicker">Phase 1</p>
+              <h1 id="stage-title">Independent diagnosis</h1>
+            </div>
+            <span id="case-number" class="case-number">Blind case 001</span>
+          </div>
+
+          <div id="phase-lock" class="locked-banner" hidden>
+            <span class="lock-dot" aria-hidden="true"></span>
+            Phase 1 已锁定
+          </div>
+
+          <section class="reading-section" aria-labelledby="discussion-title-heading">
+            <div class="section-label">
+              <h2 id="discussion-title-heading">讨论标题</h2>
+              <span>Discussion title</span>
+            </div>
+            <p id="discussion-title" class="discussion-title"></p>
+          </section>
+
+          <section class="reading-section context-section" aria-labelledby="parent-heading">
+            <div class="section-label">
+              <h2 id="parent-heading">直接上文</h2>
+              <span>Direct parent</span>
+            </div>
+            <article id="parent-text" class="forum-text context-text"></article>
+          </section>
+
+          <section id="quotes-section" class="reading-section context-section" aria-labelledby="quotes-heading">
+            <div class="section-label">
+              <h2 id="quotes-heading">目标回复中的引用</h2>
+              <span id="quote-count">0 quotes</span>
+            </div>
+            <div id="quote-list" class="quote-list"></div>
+          </section>
+
+          <section class="reading-section target-section" aria-labelledby="target-heading">
+            <div class="section-label">
+              <h2 id="target-heading">目标回复</h2>
+              <span>Target comment</span>
+            </div>
+            <article id="target-text" class="forum-text target-text"></article>
+          </section>
+
+          <section id="phase-one-summary" class="phase-summary" hidden aria-labelledby="phase-summary-title">
+            <div class="section-label">
+              <h2 id="phase-summary-title">独立判断</h2>
+              <span>Locked</span>
+            </div>
+            <div id="summary-values" class="summary-values"></div>
+          </section>
+
+          <section id="candidate-section" class="candidate-section" hidden aria-labelledby="candidate-title">
+            <div class="section-label">
+              <h2 id="candidate-title">匿名候选决定</h2>
+              <span>Source identities hidden</span>
+            </div>
+            <div id="candidate-list" class="candidate-list"></div>
+          </section>
+        </section>
+
+        <section id="session-break-state" class="state-view terminal-state" hidden>
+          <p class="state-code">SESSION CLOSED</p>
+          <h1>本轮盲审已结束</h1>
+          <p>已锁定的记录已落盘。新一轮会从下一个未完成阶段继续。</p>
+          <button id="start-session" class="button button-primary" type="button">开始新一轮</button>
+        </section>
+
+        <section id="complete-state" class="state-view terminal-state" hidden>
+          <p class="state-code">DIAGNOSTIC COMPLETE</p>
+          <h1>40 个案例已完成</h1>
+          <p>来源仍保持封存。下一步是单独运行解盲汇总，不改写本轮记录。</p>
+        </section>
+      </main>
+
+      <aside id="decision-panel" class="decision-panel" aria-labelledby="decision-title">
+        <div class="panel-heading">
+          <div>
+            <p id="decision-stage" class="stage-kicker">Phase 1</p>
+            <h2 id="decision-title">独立诊断</h2>
+          </div>
+          <span id="lock-state" class="lock-state">未锁定</span>
+        </div>
+
+        <form id="phase-one-form" novalidate>
+          <fieldset class="form-group">
+            <legend>是否有明确情绪</legend>
+            <div class="segmented segmented-three">
+              <label><input type="radio" name="emotion_presence" value="clear_emotion" required><span>明确</span></label>
+              <label><input type="radio" name="emotion_presence" value="no_clear_emotion"><span>没有</span></label>
+              <label><input type="radio" name="emotion_presence" value="uncertain"><span>不确定</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <legend>立场</legend>
+            <div class="segmented segmented-five">
+              <label><input type="radio" name="stance" value="support" required><span>支持</span></label>
+              <label><input type="radio" name="stance" value="oppose"><span>反对</span></label>
+              <label><input type="radio" name="stance" value="mixed"><span>混合</span></label>
+              <label><input type="radio" name="stance" value="none"><span>无</span></label>
+              <label><input type="radio" name="stance" value="uncertain"><span>不确定</span></label>
+            </div>
+          </fieldset>
+
+          <div class="form-group">
+            <label class="field-label" for="unit-validity">标注单位</label>
+            <select id="unit-validity" name="unit_validity" required>
+              <option value="">请选择</option>
+              <option value="valid_single_unit">有效单一单位</option>
+              <option value="multi_segment_or_mixed_unit">多段或混合单位</option>
+              <option value="insufficient_context">上下文不足</option>
+              <option value="unusable">不可用</option>
+            </select>
+          </div>
+
+          <div class="decision-fields" data-decision-prefix="phase-one">
+            <fieldset class="form-group">
+              <legend>独立决定</legend>
+              <div class="segmented segmented-three">
+                <label><input type="radio" name="phase_one_status" value="labeled" required><span>可标注</span></label>
+                <label><input type="radio" name="phase_one_status" value="unclear"><span>不明确</span></label>
+                <label><input type="radio" name="phase_one_status" value="unusable"><span>不可用</span></label>
+              </div>
+            </fieldset>
+            <div id="phase-one-emotion-fields" class="form-group" hidden>
+              <label class="field-label" for="phase-one-emotion">主情绪</label>
+              <select id="phase-one-emotion" name="phase_one_emotion">
+                <option value="">请选择</option>
+              </select>
+              <div id="phase-one-other-field" class="sub-field" hidden>
+                <label class="field-label" for="phase-one-other">英文原子名称</label>
+                <input id="phase-one-other" type="text" maxlength="64" autocomplete="off" spellcheck="false">
+              </div>
+            </div>
+          </div>
+
+          <fieldset class="form-group">
+            <legend>判断信心</legend>
+            <div class="segmented segmented-three">
+              <label><input type="radio" name="confidence" value="low" required><span>Low</span></label>
+              <label><input type="radio" name="confidence" value="medium"><span>Medium</span></label>
+              <label><input type="radio" name="confidence" value="high"><span>High</span></label>
+            </div>
+          </fieldset>
+
+          <div class="form-group note-field">
+            <label class="field-label" for="phase-one-note">备注 <span>不可用时必填</span></label>
+            <textarea id="phase-one-note" rows="3" maxlength="1000"></textarea>
+          </div>
+
+          <p id="phase-one-error" class="form-error" role="alert" hidden></p>
+          <button class="button button-primary submit-button" type="submit">锁定 Phase 1 并显示候选</button>
+        </form>
+
+        <form id="phase-two-form" novalidate hidden>
+          <div id="candidate-assessment-fields"></div>
+
+          <fieldset class="form-group">
+            <legend>裁决结果</legend>
+            <div class="segmented segmented-two">
+              <label><input type="radio" name="resolution" value="final_decision" required><span>形成决定</span></label>
+              <label><input type="radio" name="resolution" value="no_stable_gold"><span>无稳定标签</span></label>
+            </div>
+          </fieldset>
+
+          <div id="final-decision-block" class="decision-fields" hidden>
+            <fieldset class="form-group">
+              <legend>最终决定</legend>
+              <div class="segmented segmented-three">
+                <label><input type="radio" name="final_status" value="labeled"><span>可标注</span></label>
+                <label><input type="radio" name="final_status" value="unclear"><span>不明确</span></label>
+                <label><input type="radio" name="final_status" value="unusable"><span>不可用</span></label>
+              </div>
+            </fieldset>
+            <div id="final-emotion-fields" class="form-group" hidden>
+              <label class="field-label" for="final-emotion">主情绪</label>
+              <select id="final-emotion" name="final_emotion">
+                <option value="">请选择</option>
+              </select>
+              <div id="final-other-field" class="sub-field" hidden>
+                <label class="field-label" for="final-other">英文原子名称</label>
+                <input id="final-other" type="text" maxlength="64" autocomplete="off" spellcheck="false">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="field-label" for="primary-reason">主要原因</label>
+            <select id="primary-reason" required>
+              <option value="">请选择</option>
+              <option value="stance_vs_emotion">立场与情绪混淆</option>
+              <option value="neutral_vs_unclear">neutral 与 unclear 边界</option>
+              <option value="anger_vs_frustration">anger 与 frustration 边界</option>
+              <option value="context_changes_interpretation">上下文改变解释</option>
+              <option value="multi_segment_or_mixed">多段或混合表达</option>
+              <option value="ontology_gap">标签体系缺口</option>
+              <option value="insufficient_context">上下文不足</option>
+              <option value="clear_protocol_violation">明确违反标注规则</option>
+              <option value="other_documented_reason">其他已记录原因</option>
+            </select>
+          </div>
+
+          <div class="form-group note-field">
+            <label class="field-label" for="phase-two-note">裁决备注 <span>无稳定标签或其他原因时必填</span></label>
+            <textarea id="phase-two-note" rows="4" maxlength="1000"></textarea>
+          </div>
+
+          <p id="phase-two-error" class="form-error" role="alert" hidden></p>
+          <button class="button button-primary submit-button" type="submit">锁定本案例裁决</button>
+        </form>
+      </aside>
+    </div>
+  </body>
+</html>

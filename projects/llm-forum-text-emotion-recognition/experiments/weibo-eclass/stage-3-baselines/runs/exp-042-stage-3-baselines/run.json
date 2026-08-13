@@ -1,0 +1,255 @@
+{
+  "accessed_splits": [
+    "train",
+    "validation"
+  ],
+  "artifacts": {
+    "aggregate_metrics": {
+      "bytes": 30224,
+      "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/aggregate_metrics.json",
+      "sha256": "838b5ae5085e0dc3d0e8113f71f986397bb59f1492a02fa6f5679f55cac33401"
+    },
+    "report": {
+      "bytes": 568,
+      "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/REPORT.md",
+      "sha256": "ce51cc42c64ffcf4d490051337e4710c96ff2be4156e741299cd4c696a4fd6fc"
+    },
+    "seed_summary": {
+      "bytes": 1160,
+      "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/seed_summary.csv",
+      "sha256": "764299f34851e9fd88d0e26abb99c1d3da4a314da495504207a322d15d6a2ac9"
+    }
+  },
+  "command_history": [
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/stage-3-baselines/run_stage3.py initialize",
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/stage-3-baselines/run_stage3.py m0-m1",
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/stage-3-baselines/run_stage3.py m2 --view target_only --seed 42",
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/stage-3-baselines/run_stage3.py m2 --view target_only --seed 43",
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/stage-3-baselines/run_stage3.py m2 --view target_only --seed 44",
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/stage-3-baselines/run_stage3.py m2 --view previous_context --seed 42",
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/stage-3-baselines/run_stage3.py m2 --view previous_context --seed 43",
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/stage-3-baselines/run_stage3.py m2 --view previous_context --seed 44",
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/stage-3-baselines/run_stage3.py aggregate"
+  ],
+  "config": {
+    "bytes": 4223,
+    "path": "experiments/weibo-eclass/stage-3-baselines/config.json",
+    "sha256": "60e5b2b4b8269d7ab95e6a344e64419a4e4280ebed65affbe08a64ba40bdf8a9"
+  },
+  "data": {
+    "manifest": {
+      "bytes": 2731,
+      "path": "data/weibo-emotion-corpus/eclass-v1.manifest.json",
+      "sha256": "54e929d7a9263c83d2895fd109fbdfb46b876043dec668d0fe25f30c149fd210"
+    },
+    "protocol_id": "DATA-WEIBO-TASK-V1",
+    "train": {
+      "bytes": 2286694,
+      "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/train.jsonl",
+      "sha256": "b1fd309acf45dfa4ad0c907ee3f373ea95fce751d51b637d402e289aa79d19e0"
+    },
+    "validation": {
+      "bytes": 486142,
+      "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/validation.jsonl",
+      "sha256": "99d80e1433bddea7b639983b8fa874e45d585318aa47eb87ab29581e02f72a4a"
+    }
+  },
+  "environment": {
+    "architecture": "arm64",
+    "device": "mps",
+    "environment_prefix": "/Users/phoenix/miniconda3/envs/emotion-roberta",
+    "executable": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python",
+    "mps_available": true,
+    "package_paths": {
+      "numpy": "/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/numpy/__init__.py",
+      "scikit-learn": "/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/sklearn/__init__.py",
+      "torch": "/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/torch/__init__.py",
+      "transformers": "/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/transformers/__init__.py"
+    },
+    "packages": {
+      "numpy": "2.2.6",
+      "safetensors": "0.8.0",
+      "scikit-learn": "1.7.2",
+      "torch": "2.9.1",
+      "transformers": "5.8.0"
+    },
+    "pip_check": "No broken requirements found.",
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.10.20",
+    "requirements_lock": {
+      "bytes": 1179,
+      "path": "experiments/weibo-eclass/stage-3-baselines/requirements-lock.txt",
+      "sha256": "123e455840fb9e5e9230cd3eb7feda625a8819c4cd3dbf82b91068a7d60797fd"
+    }
+  },
+  "execution_finished_at_utc": "2026-08-08T10:51:05.704566+00:00",
+  "experiment_id": "EXP-042",
+  "git": {
+    "branch": "main",
+    "commit": "3244ff0fb1841324d8f33537af6d07c6f1dfd0c8",
+    "dirty": true,
+    "dirty_path_count": 49
+  },
+  "model": {
+    "files": [
+      {
+        "bytes": 2068,
+        "path": "README.md",
+        "sha256": "37e3c3d8d583fa43b699166ecc69944f1c0508290d47dc54bb640425b5900531"
+      },
+      {
+        "bytes": 689,
+        "path": "config.json",
+        "sha256": "61609babfbada201546297d62f7f3a642d8fd2f1cefec5571c6cbd1e2e2132d9"
+      },
+      {
+        "bytes": 411578458,
+        "path": "pytorch_model.bin",
+        "sha256": "1ded5a5a1c7841dee6e47942f7b5bf2bcf6f73ff19197580f852f7f638f86b35"
+      },
+      {
+        "bytes": 112,
+        "path": "special_tokens_map.json",
+        "sha256": "303df45a03609e4ead04bc3dc1536d0ab19b5358db685b6f3da123d05ec200e3"
+      },
+      {
+        "bytes": 19,
+        "path": "tokenizer_config.json",
+        "sha256": "61785aeaba176fba6d6489f27dccfd2ddee6aee2af0e590451cab7d8b57e0874"
+      },
+      {
+        "bytes": 109540,
+        "path": "vocab.txt",
+        "sha256": "45bbac6b341c319adc98a532532882e91a9cefc0329aa57bac9ae761c27b291c"
+      }
+    ],
+    "manifest": {
+      "bytes": 1246,
+      "path": "models/chinese-roberta-wwm-ext/manifest.json",
+      "sha256": "c1629b5349d66f3a873c3d6bc4bc490089b86745941eebfaf70749e1e916cba5"
+    },
+    "repo_id": "hfl/chinese-roberta-wwm-ext",
+    "revision": "5c58d0b8ec1d9014354d691c538661bf00bfdb44",
+    "snapshot": "models/chinese-roberta-wwm-ext/snapshot",
+    "total_bytes": 411690886
+  },
+  "private_root": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-042-stage-3-baselines",
+  "resource_usage": {
+    "api_cost_usd": 0,
+    "device": "mps",
+    "elapsed_seconds": 2927.218486292055
+  },
+  "rq_ids": [
+    "RQ-F1"
+  ],
+  "stage": "stage-3-m0-m1-m2-train-dev",
+  "stages": {
+    "aggregate": {
+      "artifact": {
+        "bytes": 30224,
+        "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/aggregate_metrics.json",
+        "sha256": "838b5ae5085e0dc3d0e8113f71f986397bb59f1492a02fa6f5679f55cac33401"
+      },
+      "completed_at_utc": "2026-08-08T10:51:05.704561+00:00",
+      "duration_seconds": 0.0028665000572800636,
+      "started_at_utc": "2026-08-08T10:51:05.701118+00:00",
+      "status": "Completed"
+    },
+    "independent_verification": {
+      "artifact": {
+        "bytes": 924,
+        "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/verification.json",
+        "sha256": "a518135c9bbebf4fb9f6fb080f61c3996772d7d45a6077776ce6a4e99f0f9fb7"
+      },
+      "completed_at_utc": "2026-08-08T10:51:24.929766+00:00",
+      "status": "Verified"
+    },
+    "initialize": {
+      "completed_at_utc": "2026-08-08T09:59:09.690305+00:00",
+      "status": "Passed"
+    },
+    "m0_m1": {
+      "artifact": {
+        "bytes": 30906,
+        "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/m0-m1.json",
+        "sha256": "9f4af186a6cf730a9a9b259721c663f6148b460413983c374dd0eea288d05f08"
+      },
+      "completed_at_utc": "2026-08-08T09:59:21.840445+00:00",
+      "duration_seconds": 1.204970374936238,
+      "started_at_utc": "2026-08-08T09:59:20.633715+00:00",
+      "status": "Completed"
+    },
+    "m2__previous_context__seed_42": {
+      "artifact": {
+        "bytes": 2673,
+        "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/m2/previous_context/seed-42/run.json",
+        "sha256": "9d1a9f628ac7d373d56444a7035fbd6f925dc0a3851408ecacb44adf27260469"
+      },
+      "completed_at_utc": "2026-08-08T10:31:23.558071+00:00",
+      "duration_seconds": 560.4934177919058,
+      "started_at_utc": "2026-08-08T10:22:03.061651+00:00",
+      "status": "Completed"
+    },
+    "m2__previous_context__seed_43": {
+      "artifact": {
+        "bytes": 2673,
+        "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/m2/previous_context/seed-43/run.json",
+        "sha256": "10a6cff2aecff9aa4cc259549540fad58b9e2a731a1b65b5aff9de0594bfd2d8"
+      },
+      "completed_at_utc": "2026-08-08T10:40:45.728565+00:00",
+      "duration_seconds": 527.2196814590134,
+      "started_at_utc": "2026-08-08T10:32:00.265244+00:00",
+      "status": "Completed"
+    },
+    "m2__previous_context__seed_44": {
+      "artifact": {
+        "bytes": 2673,
+        "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/m2/previous_context/seed-44/run.json",
+        "sha256": "e05dc95b1e56a446d1c00d23b3e57842ebbe18281f8a28fac2570dbc1f12a558"
+      },
+      "completed_at_utc": "2026-08-08T10:50:44.581925+00:00",
+      "duration_seconds": 539.9362087080954,
+      "started_at_utc": "2026-08-08T10:41:44.676252+00:00",
+      "status": "Completed"
+    },
+    "m2__target_only__seed_42": {
+      "artifact": {
+        "bytes": 2637,
+        "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/m2/target_only/seed-42/run.json",
+        "sha256": "5e279ac785b1e5f117913a930ef1ce62a8fe10aff865ec0e8121177eb4443574"
+      },
+      "completed_at_utc": "2026-08-08T10:06:23.499325+00:00",
+      "duration_seconds": 406.932375082979,
+      "started_at_utc": "2026-08-08T09:59:36.564086+00:00",
+      "status": "Completed"
+    },
+    "m2__target_only__seed_43": {
+      "artifact": {
+        "bytes": 2638,
+        "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/m2/target_only/seed-43/run.json",
+        "sha256": "7fbfc9ad5b32f576e8572500465452b4c0c5be33e899693acb4d2f3f1189899c"
+      },
+      "completed_at_utc": "2026-08-08T10:13:48.008520+00:00",
+      "duration_seconds": 426.7280176250497,
+      "started_at_utc": "2026-08-08T10:06:41.277989+00:00",
+      "status": "Completed"
+    },
+    "m2__target_only__seed_44": {
+      "artifact": {
+        "bytes": 2639,
+        "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/m2/target_only/seed-44/run.json",
+        "sha256": "4c798084bf4fb2d5a45ee0050534d982eafaa5df0417d50d7a35eeb52c470b36"
+      },
+      "completed_at_utc": "2026-08-08T10:21:47.662598+00:00",
+      "duration_seconds": 461.45567579194903,
+      "started_at_utc": "2026-08-08T10:14:06.204528+00:00",
+      "status": "Completed"
+    }
+  },
+  "started_at_utc": "2026-08-08T09:59:09.690340+00:00",
+  "status": "Verified",
+  "test_split_accessed": false,
+  "tier": "Major",
+  "validation_split_accessed": true,
+  "verified_at_utc": "2026-08-08T10:51:24.929595+00:00"
+}

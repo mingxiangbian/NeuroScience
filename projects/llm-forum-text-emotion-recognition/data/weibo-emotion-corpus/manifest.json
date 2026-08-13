@@ -1,0 +1,47 @@
+{
+  "schema_version": "public-candidate-manifest-v1",
+  "protocol_id": "DATA-FCTX-PUBLIC-AUDIT-V1",
+  "generated_at_utc": "2026-08-07T17:28:23.714771+00:00",
+  "dataset": "Weibo Emotion Cause Corpus",
+  "audit_report": "experiments/forum-context/public-candidate-audit/reports/public-candidate-viability-audit-v1.json",
+  "source": {
+    "repository": "https://github.com/wjhou/Weibo-Emotion-Corpus",
+    "revision": "d385f8cdc7e7ab9ca1ec62b8202c664a5ba651f3",
+    "license": "Apache-2.0",
+    "files": [
+      {
+        "path": "data/weibo-emotion-corpus/official/emotion_cause_detection.tsv",
+        "bytes": 2215080,
+        "sha256": "200d3b5bdb0da6397e83d5b452b1e14f43e68c99d9fe68152c27561ed74007f3"
+      },
+      {
+        "path": "data/weibo-emotion-corpus/official/emotion_classification.tsv",
+        "bytes": 4176465,
+        "sha256": "cd31ced8f9a4034c83065099061a23df3b402797841d8ff120c459da55251793"
+      },
+      {
+        "path": "data/weibo-emotion-corpus/official/README.md",
+        "bytes": 849,
+        "sha256": "de8b196960b109b5cfa57dcd621f6ff2b8da01f1518df6cc1eb8a4db38d38f11"
+      },
+      {
+        "path": "data/weibo-emotion-corpus/official/LICENSE",
+        "bytes": 11357,
+        "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+      }
+    ]
+  },
+  "decision": "eligible_auxiliary",
+  "decision_basis": [
+    "the release is pinned and licensed, and its multi-user structure is explicit",
+    "the primary gold task is emotion-cause detection rather than generic target-author emotion recognition",
+    "the classification file interleaves cause scaffolds with emotion-clause rows and has no official split",
+    "the emotion labels mix discrete emotions, sentiment labels, no-emotion and a small number of composites",
+    "the structured context can support a cause/context auxiliary experiment after a separate mapping and split protocol"
+  ],
+  "privacy": {
+    "raw_text_tracked": false,
+    "upstream_ids_tracked": false,
+    "sample_text_tracked": false
+  }
+}

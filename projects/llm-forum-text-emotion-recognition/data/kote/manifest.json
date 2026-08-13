@@ -1,0 +1,47 @@
+{
+  "schema_version": "public-candidate-manifest-v1",
+  "protocol_id": "DATA-FCTX-PUBLIC-AUDIT-V1",
+  "generated_at_utc": "2026-08-07T17:28:23.714423+00:00",
+  "dataset": "KOTE",
+  "audit_report": "experiments/forum-context/public-candidate-audit/reports/public-candidate-viability-audit-v1.json",
+  "source": {
+    "repository": "https://github.com/searle-j/KOTE",
+    "revision": "cafd2c3f54a6f4b25ac74eaa02a2e76c3ef8c977",
+    "license": "MIT",
+    "test_access": "not_downloaded_not_parsed",
+    "files": [
+      {
+        "path": "data/kote/official/train.tsv",
+        "bytes": 6741184,
+        "sha256": "62c18dc385f7c140624b693a2806e98060daaf9e7427ceb7d050828d0a55f992"
+      },
+      {
+        "path": "data/kote/official/val.tsv",
+        "bytes": 857808,
+        "sha256": "c7d686ee1d63be7f57ec939f372ebdc4ada8eac1c9eeeeac207774976ab69a6e"
+      },
+      {
+        "path": "data/kote/official/README.md",
+        "bytes": 12445,
+        "sha256": "f8a8d2c9be975232d61a03b1e669dedb22e612e4c90f389268b4f8b2716a91fd"
+      },
+      {
+        "path": "data/kote/official/LICENSE",
+        "bytes": 1069,
+        "sha256": "485d03537f29b7a85d24e931e7d8e2b22a9235676a3584fde76dd0da79be5629"
+      }
+    ]
+  },
+  "decision": "eligible_training_control",
+  "decision_basis": [
+    "public pinned train and validation files with a repository license",
+    "expected row counts and a documented multi-label task whose released preprocessing reproduces the paper-reported mean cardinality",
+    "no reply, thread, author or platform fields, so no context claim is possible",
+    "the released no-emotion label can co-occur with emotion labels under the upstream vote transformation and needs an explicit downstream mapping rule"
+  ],
+  "privacy": {
+    "raw_text_tracked": false,
+    "upstream_ids_tracked": false,
+    "sample_text_tracked": false
+  }
+}

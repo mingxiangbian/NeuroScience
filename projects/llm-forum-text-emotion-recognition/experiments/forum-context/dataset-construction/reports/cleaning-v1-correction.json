@@ -1,0 +1,23 @@
+{
+  "schema_version": "1",
+  "pipeline_id": "DATA-FCTX-CLEAN-V1",
+  "recorded_at": "2026-08-05",
+  "status": "failed_schema_interpretation",
+  "stage": "before_independent_verification",
+  "reason_code": "quote_text_offset_treated_as_embedded_span",
+  "observed_aggregate": {
+    "quote_rows": 539658,
+    "assumed_exact_spans": 48,
+    "top_level_offsets_valid_as_insertion_points": 537778,
+    "top_level_quote_rows": 537778,
+    "nested_offsets_valid_in_parent_quote": 1880,
+    "nested_quote_rows": 1880
+  },
+  "invalid_artifacts": {
+    "aggregate_report": "cleaning-preflight-v1.json",
+    "private_database": "cleaning-v1.sqlite",
+    "private_database_sha256": "0495a7c857b97bca8609e951c0da4e62b5068d63b368ec1f40127d13b6c4c831"
+  },
+  "decision": "retain_as_failed_evidence_and_rebuild_under_DATA-FCTX-CLEAN-V2",
+  "public_text_or_identifiers": false
+}

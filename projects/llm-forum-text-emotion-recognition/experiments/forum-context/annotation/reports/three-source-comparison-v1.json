@@ -1,0 +1,3712 @@
+{
+  "amendment": "data-annotation-sampling-pilot-v1-amendment-2026-08-07-direct-comparison",
+  "claim_boundary": {
+    "formal_ontology_acceptance": false,
+    "inter_annotator_agreement": false,
+    "majority_vote_defines_gold": false,
+    "representative_prevalence_source": "representative group only"
+  },
+  "context_transitions": {
+    "all_primary": {
+      "human": {
+        "became_unclear": 2,
+        "changed_rate": 0.425,
+        "changed_total": 51,
+        "label_changed": 40,
+        "other_status_change": 4,
+        "resolved_from_unclear": 5,
+        "unchanged": 69
+      },
+      "model_01": {
+        "became_unclear": 1,
+        "changed_rate": 0.35,
+        "changed_total": 42,
+        "label_changed": 41,
+        "unchanged": 78
+      },
+      "model_02": {
+        "became_unclear": 1,
+        "changed_rate": 0.3,
+        "changed_total": 36,
+        "label_changed": 33,
+        "other_status_change": 2,
+        "unchanged": 84
+      }
+    },
+    "diag_distinct_quote": {
+      "human": {
+        "changed_rate": 0.4,
+        "changed_total": 4,
+        "label_changed": 4,
+        "unchanged": 6
+      },
+      "model_01": {
+        "changed_rate": 0.4,
+        "changed_total": 4,
+        "label_changed": 4,
+        "unchanged": 6
+      },
+      "model_02": {
+        "changed_rate": 0.2,
+        "changed_total": 2,
+        "label_changed": 2,
+        "unchanged": 8
+      }
+    },
+    "diag_hostility_affect": {
+      "human": {
+        "changed_rate": 0.5,
+        "changed_total": 5,
+        "label_changed": 4,
+        "resolved_from_unclear": 1,
+        "unchanged": 5
+      },
+      "model_01": {
+        "changed_rate": 0.6,
+        "changed_total": 6,
+        "label_changed": 6,
+        "unchanged": 4
+      },
+      "model_02": {
+        "changed_rate": 0.6,
+        "changed_total": 6,
+        "label_changed": 6,
+        "unchanged": 4
+      }
+    },
+    "diag_sarcasm": {
+      "human": {
+        "changed_rate": 0.3,
+        "changed_total": 3,
+        "label_changed": 2,
+        "resolved_from_unclear": 1,
+        "unchanged": 7
+      },
+      "model_01": {
+        "changed_rate": 0.4,
+        "changed_total": 4,
+        "label_changed": 4,
+        "unchanged": 6
+      },
+      "model_02": {
+        "changed_rate": 0.4,
+        "changed_total": 4,
+        "label_changed": 4,
+        "unchanged": 6
+      }
+    },
+    "diag_short_context": {
+      "human": {
+        "changed_rate": 0.6,
+        "changed_total": 6,
+        "label_changed": 1,
+        "other_status_change": 4,
+        "resolved_from_unclear": 1,
+        "unchanged": 4
+      },
+      "model_01": {
+        "changed_rate": 0.1,
+        "changed_total": 1,
+        "label_changed": 1,
+        "unchanged": 9
+      },
+      "model_02": {
+        "became_unclear": 1,
+        "changed_rate": 0.5,
+        "changed_total": 5,
+        "label_changed": 2,
+        "other_status_change": 2,
+        "unchanged": 5
+      }
+    },
+    "diagnostic_all": {
+      "human": {
+        "changed_rate": 0.45,
+        "changed_total": 18,
+        "label_changed": 11,
+        "other_status_change": 4,
+        "resolved_from_unclear": 3,
+        "unchanged": 22
+      },
+      "model_01": {
+        "changed_rate": 0.375,
+        "changed_total": 15,
+        "label_changed": 15,
+        "unchanged": 25
+      },
+      "model_02": {
+        "became_unclear": 1,
+        "changed_rate": 0.425,
+        "changed_total": 17,
+        "label_changed": 14,
+        "other_status_change": 2,
+        "unchanged": 23
+      }
+    },
+    "representative": {
+      "human": {
+        "became_unclear": 2,
+        "changed_rate": 0.4125,
+        "changed_total": 33,
+        "label_changed": 29,
+        "resolved_from_unclear": 2,
+        "unchanged": 47
+      },
+      "model_01": {
+        "became_unclear": 1,
+        "changed_rate": 0.3375,
+        "changed_total": 27,
+        "label_changed": 26,
+        "unchanged": 53
+      },
+      "model_02": {
+        "changed_rate": 0.2375,
+        "changed_total": 19,
+        "label_changed": 19,
+        "unchanged": 61
+      }
+    }
+  },
+  "generated_at_utc": "2026-08-07T12:59:27.444821+00:00",
+  "input_verification": {
+    "decision_contract": "passed",
+    "identity_mapping": "passed",
+    "model_outputs": {
+      "model_01_a": {
+        "filename": "stage-a-model-annotations-v1.jsonl",
+        "rows": 120,
+        "sha256": "8f97773ccc7a9902813c57fc4e15f702f9a0a35964aa83f32e0ca69771738522"
+      },
+      "model_01_b": {
+        "filename": "stage-b-model-annotations-v1.jsonl",
+        "rows": 120,
+        "sha256": "5053b7b2ac167586a6790065ef7493728fa1e5085125e1ed72d4a100f6966d02"
+      },
+      "model_02_a": {
+        "filename": "stage-a-model-annotations-v1-model-02.jsonl",
+        "rows": 120,
+        "sha256": "8022155dcb8dee5b4171807727203f2aeec12781c1838a6f9b96833bdcae59be"
+      },
+      "model_02_b": {
+        "filename": "stage-b-model-annotations-v1-model-02.jsonl",
+        "rows": 120,
+        "sha256": "712cd9ea3fbe6416d3827084380a8ca509c278773ef45da44300a65f210f092f"
+      }
+    }
+  },
+  "privacy": {
+    "forum_text_emitted": false,
+    "other_emotion_proposals_emitted": false,
+    "per_sample_labels_emitted": false,
+    "private_identifiers_emitted": false
+  },
+  "private_disagreement_sidecar": {
+    "contains_forum_text": false,
+    "filename": "three-source-disagreements-v1.jsonl",
+    "gitignored_required": true,
+    "rows": 106,
+    "sha256": "b85136c226e5e82db43cfaaef2734f0b13e9e7271fde6cdf1c56abe83289720f"
+  },
+  "protocol_id": "DATA-FCTX-LABEL-V1",
+  "schema_version": "three-source-comparison-v1",
+  "scope": {
+    "blind_repeats": "waived_by_amendment",
+    "diagnostic_cases": 40,
+    "human_source": "single_human_pass_1",
+    "model_sources": [
+      "model_01",
+      "model_02"
+    ],
+    "primary_cases": 120,
+    "representative_cases": 80
+  },
+  "stage_a": {
+    "all_primary": {
+      "confidence_distribution": {
+        "human": {
+          "high": 16,
+          "low": 22,
+          "medium": 82
+        },
+        "model_01": {
+          "high": 30,
+          "low": 12,
+          "medium": 78
+        },
+        "model_02": {
+          "high": 96,
+          "medium": 24
+        }
+      },
+      "decision_distribution": {
+        "human": {
+          "anger": 15,
+          "confusion": 10,
+          "cynicism": 6,
+          "disappointment": 5,
+          "disgust": 10,
+          "fear": 2,
+          "frustration": 14,
+          "joy": 9,
+          "neutral": 23,
+          "other_emotion": 9,
+          "sadness": 3,
+          "surprise": 1,
+          "unclear": 6,
+          "unusable": 7
+        },
+        "model_01": {
+          "anger": 27,
+          "cynicism": 24,
+          "disappointment": 1,
+          "fear": 3,
+          "frustration": 9,
+          "joy": 1,
+          "neutral": 48,
+          "other_emotion": 2,
+          "sadness": 1,
+          "surprise": 1,
+          "unusable": 3
+        },
+        "model_02": {
+          "anger": 23,
+          "cynicism": 18,
+          "disappointment": 2,
+          "disgust": 3,
+          "fear": 3,
+          "frustration": 11,
+          "joy": 2,
+          "neutral": 49,
+          "other_emotion": 3,
+          "sadness": 1,
+          "surprise": 2,
+          "unusable": 3
+        }
+      },
+      "pairwise": {
+        "human__model_01": {
+          "agree": 30,
+          "agreement_rate": 0.25,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 6,
+              "cynicism": 3,
+              "fear": 1,
+              "frustration": 1,
+              "neutral": 4
+            },
+            "confusion": {
+              "anger": 2,
+              "cynicism": 4,
+              "neutral": 4
+            },
+            "cynicism": {
+              "anger": 2,
+              "cynicism": 2,
+              "neutral": 2
+            },
+            "disappointment": {
+              "anger": 3,
+              "frustration": 1,
+              "neutral": 1
+            },
+            "disgust": {
+              "anger": 2,
+              "cynicism": 2,
+              "fear": 1,
+              "frustration": 2,
+              "neutral": 2,
+              "other_emotion": 1
+            },
+            "fear": {
+              "anger": 1,
+              "fear": 1
+            },
+            "frustration": {
+              "anger": 5,
+              "cynicism": 1,
+              "frustration": 2,
+              "neutral": 6
+            },
+            "joy": {
+              "anger": 1,
+              "cynicism": 3,
+              "disappointment": 1,
+              "neutral": 4
+            },
+            "neutral": {
+              "anger": 1,
+              "cynicism": 4,
+              "frustration": 2,
+              "joy": 1,
+              "neutral": 15
+            },
+            "other_emotion": {
+              "anger": 2,
+              "cynicism": 3,
+              "neutral": 4
+            },
+            "sadness": {
+              "anger": 1,
+              "neutral": 1,
+              "sadness": 1
+            },
+            "surprise": {
+              "neutral": 1
+            },
+            "unclear": {
+              "anger": 1,
+              "cynicism": 2,
+              "neutral": 3
+            },
+            "unusable": {
+              "frustration": 1,
+              "neutral": 1,
+              "other_emotion": 1,
+              "surprise": 1,
+              "unusable": 3
+            }
+          },
+          "disagree": 90,
+          "focal_disagreements": {
+            "anger_vs_frustration": 6,
+            "neutral_vs_unclear": 3
+          }
+        },
+        "human__model_02": {
+          "agree": 31,
+          "agreement_rate": 0.258333,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 5,
+              "cynicism": 2,
+              "disappointment": 1,
+              "disgust": 1,
+              "fear": 1,
+              "frustration": 2,
+              "neutral": 3
+            },
+            "confusion": {
+              "anger": 1,
+              "cynicism": 4,
+              "disgust": 1,
+              "neutral": 4
+            },
+            "cynicism": {
+              "anger": 1,
+              "cynicism": 1,
+              "frustration": 1,
+              "neutral": 2,
+              "surprise": 1
+            },
+            "disappointment": {
+              "anger": 4,
+              "neutral": 1
+            },
+            "disgust": {
+              "anger": 3,
+              "cynicism": 2,
+              "fear": 1,
+              "frustration": 2,
+              "other_emotion": 2
+            },
+            "fear": {
+              "anger": 1,
+              "fear": 1
+            },
+            "frustration": {
+              "anger": 3,
+              "cynicism": 2,
+              "frustration": 2,
+              "neutral": 7
+            },
+            "joy": {
+              "cynicism": 1,
+              "disappointment": 1,
+              "disgust": 1,
+              "joy": 1,
+              "neutral": 5
+            },
+            "neutral": {
+              "anger": 1,
+              "cynicism": 2,
+              "frustration": 2,
+              "joy": 1,
+              "neutral": 17
+            },
+            "other_emotion": {
+              "anger": 2,
+              "cynicism": 2,
+              "frustration": 1,
+              "neutral": 4
+            },
+            "sadness": {
+              "anger": 1,
+              "other_emotion": 1,
+              "sadness": 1
+            },
+            "surprise": {
+              "neutral": 1
+            },
+            "unclear": {
+              "anger": 1,
+              "cynicism": 2,
+              "neutral": 3
+            },
+            "unusable": {
+              "frustration": 1,
+              "neutral": 2,
+              "surprise": 1,
+              "unusable": 3
+            }
+          },
+          "disagree": 89,
+          "focal_disagreements": {
+            "anger_vs_frustration": 5,
+            "neutral_vs_unclear": 3
+          }
+        },
+        "model_01__model_02": {
+          "agree": 91,
+          "agreement_rate": 0.758333,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 19,
+              "cynicism": 4,
+              "disgust": 2,
+              "frustration": 2
+            },
+            "cynicism": {
+              "anger": 2,
+              "cynicism": 13,
+              "disgust": 1,
+              "frustration": 1,
+              "joy": 1,
+              "neutral": 5,
+              "surprise": 1
+            },
+            "disappointment": {
+              "disappointment": 1
+            },
+            "fear": {
+              "fear": 3
+            },
+            "frustration": {
+              "anger": 1,
+              "disappointment": 1,
+              "frustration": 6,
+              "neutral": 1
+            },
+            "joy": {
+              "joy": 1
+            },
+            "neutral": {
+              "anger": 1,
+              "cynicism": 1,
+              "frustration": 2,
+              "neutral": 42,
+              "other_emotion": 2
+            },
+            "other_emotion": {
+              "neutral": 1,
+              "other_emotion": 1
+            },
+            "sadness": {
+              "sadness": 1
+            },
+            "surprise": {
+              "surprise": 1
+            },
+            "unusable": {
+              "unusable": 3
+            }
+          },
+          "disagree": 29,
+          "focal_disagreements": {
+            "anger_vs_frustration": 3
+          }
+        }
+      },
+      "rows": 120,
+      "three_way": {
+        "all_three_different": 20,
+        "all_three_equal": 26,
+        "all_three_equal_rate": 0.216667,
+        "human_model_01_equal_model_02_differs": 4,
+        "human_model_02_equal_model_01_differs": 5,
+        "models_equal_human_differs": 65
+      }
+    },
+    "diag_distinct_quote": {
+      "confidence_distribution": {
+        "human": {
+          "high": 1,
+          "medium": 9
+        },
+        "model_01": {
+          "high": 4,
+          "low": 1,
+          "medium": 5
+        },
+        "model_02": {
+          "high": 10
+        }
+      },
+      "decision_distribution": {
+        "human": {
+          "anger": 1,
+          "frustration": 2,
+          "joy": 2,
+          "neutral": 3,
+          "other_emotion": 1,
+          "surprise": 1
+        },
+        "model_01": {
+          "anger": 3,
+          "cynicism": 1,
+          "frustration": 1,
+          "neutral": 5
+        },
+        "model_02": {
+          "anger": 2,
+          "cynicism": 1,
+          "frustration": 1,
+          "neutral": 6
+        }
+      },
+      "pairwise": {
+        "human__model_01": {
+          "agree": 5,
+          "agreement_rate": 0.5,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 1
+            },
+            "frustration": {
+              "anger": 1,
+              "frustration": 1
+            },
+            "joy": {
+              "cynicism": 1,
+              "neutral": 1
+            },
+            "neutral": {
+              "neutral": 3
+            },
+            "other_emotion": {
+              "anger": 1
+            },
+            "surprise": {
+              "neutral": 1
+            }
+          },
+          "disagree": 5,
+          "focal_disagreements": {
+            "anger_vs_frustration": 1
+          }
+        },
+        "human__model_02": {
+          "agree": 4,
+          "agreement_rate": 0.4,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "cynicism": 1
+            },
+            "frustration": {
+              "anger": 1,
+              "frustration": 1
+            },
+            "joy": {
+              "neutral": 2
+            },
+            "neutral": {
+              "neutral": 3
+            },
+            "other_emotion": {
+              "anger": 1
+            },
+            "surprise": {
+              "neutral": 1
+            }
+          },
+          "disagree": 6,
+          "focal_disagreements": {
+            "anger_vs_frustration": 1
+          }
+        },
+        "model_01__model_02": {
+          "agree": 8,
+          "agreement_rate": 0.8,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 2,
+              "cynicism": 1
+            },
+            "cynicism": {
+              "neutral": 1
+            },
+            "frustration": {
+              "frustration": 1
+            },
+            "neutral": {
+              "neutral": 5
+            }
+          },
+          "disagree": 2,
+          "focal_disagreements": {}
+        }
+      },
+      "rows": 10,
+      "three_way": {
+        "all_three_different": 1,
+        "all_three_equal": 4,
+        "all_three_equal_rate": 0.4,
+        "human_model_01_equal_model_02_differs": 1,
+        "models_equal_human_differs": 4
+      }
+    },
+    "diag_hostility_affect": {
+      "confidence_distribution": {
+        "human": {
+          "high": 1,
+          "low": 3,
+          "medium": 6
+        },
+        "model_01": {
+          "high": 3,
+          "medium": 7
+        },
+        "model_02": {
+          "high": 7,
+          "medium": 3
+        }
+      },
+      "decision_distribution": {
+        "human": {
+          "anger": 2,
+          "confusion": 2,
+          "disappointment": 1,
+          "disgust": 2,
+          "fear": 1,
+          "frustration": 1,
+          "unclear": 1
+        },
+        "model_01": {
+          "anger": 4,
+          "cynicism": 1,
+          "fear": 1,
+          "neutral": 3,
+          "other_emotion": 1
+        },
+        "model_02": {
+          "anger": 5,
+          "cynicism": 2,
+          "fear": 1,
+          "neutral": 1,
+          "other_emotion": 1
+        }
+      },
+      "pairwise": {
+        "human__model_01": {
+          "agree": 2,
+          "agreement_rate": 0.2,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 1,
+              "neutral": 1
+            },
+            "confusion": {
+              "anger": 1,
+              "neutral": 1
+            },
+            "disappointment": {
+              "anger": 1
+            },
+            "disgust": {
+              "neutral": 1,
+              "other_emotion": 1
+            },
+            "fear": {
+              "fear": 1
+            },
+            "frustration": {
+              "anger": 1
+            },
+            "unclear": {
+              "cynicism": 1
+            }
+          },
+          "disagree": 8,
+          "focal_disagreements": {
+            "anger_vs_frustration": 1
+          }
+        },
+        "human__model_02": {
+          "agree": 2,
+          "agreement_rate": 0.2,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 1,
+              "neutral": 1
+            },
+            "confusion": {
+              "anger": 1,
+              "cynicism": 1
+            },
+            "disappointment": {
+              "anger": 1
+            },
+            "disgust": {
+              "anger": 1,
+              "other_emotion": 1
+            },
+            "fear": {
+              "fear": 1
+            },
+            "frustration": {
+              "anger": 1
+            },
+            "unclear": {
+              "cynicism": 1
+            }
+          },
+          "disagree": 8,
+          "focal_disagreements": {
+            "anger_vs_frustration": 1
+          }
+        },
+        "model_01__model_02": {
+          "agree": 8,
+          "agreement_rate": 0.8,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 4
+            },
+            "cynicism": {
+              "cynicism": 1
+            },
+            "fear": {
+              "fear": 1
+            },
+            "neutral": {
+              "anger": 1,
+              "cynicism": 1,
+              "neutral": 1
+            },
+            "other_emotion": {
+              "other_emotion": 1
+            }
+          },
+          "disagree": 2,
+          "focal_disagreements": {}
+        }
+      },
+      "rows": 10,
+      "three_way": {
+        "all_three_different": 2,
+        "all_three_equal": 2,
+        "all_three_equal_rate": 0.2,
+        "models_equal_human_differs": 6
+      }
+    },
+    "diag_sarcasm": {
+      "confidence_distribution": {
+        "human": {
+          "high": 1,
+          "low": 2,
+          "medium": 7
+        },
+        "model_01": {
+          "low": 4,
+          "medium": 6
+        },
+        "model_02": {
+          "high": 6,
+          "medium": 4
+        }
+      },
+      "decision_distribution": {
+        "human": {
+          "anger": 1,
+          "confusion": 3,
+          "cynicism": 1,
+          "joy": 2,
+          "neutral": 1,
+          "other_emotion": 1,
+          "unclear": 1
+        },
+        "model_01": {
+          "anger": 2,
+          "cynicism": 6,
+          "disappointment": 1,
+          "frustration": 1
+        },
+        "model_02": {
+          "anger": 3,
+          "cynicism": 3,
+          "disappointment": 1,
+          "disgust": 1,
+          "frustration": 1,
+          "neutral": 1
+        }
+      },
+      "pairwise": {
+        "human__model_01": {
+          "agree": 0,
+          "agreement_rate": 0.0,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "cynicism": 1
+            },
+            "confusion": {
+              "cynicism": 3
+            },
+            "cynicism": {
+              "anger": 1
+            },
+            "joy": {
+              "anger": 1,
+              "disappointment": 1
+            },
+            "neutral": {
+              "frustration": 1
+            },
+            "other_emotion": {
+              "cynicism": 1
+            },
+            "unclear": {
+              "cynicism": 1
+            }
+          },
+          "disagree": 10,
+          "focal_disagreements": {}
+        },
+        "human__model_02": {
+          "agree": 1,
+          "agreement_rate": 0.1,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 1
+            },
+            "confusion": {
+              "cynicism": 2,
+              "neutral": 1
+            },
+            "cynicism": {
+              "anger": 1
+            },
+            "joy": {
+              "disappointment": 1,
+              "disgust": 1
+            },
+            "neutral": {
+              "frustration": 1
+            },
+            "other_emotion": {
+              "cynicism": 1
+            },
+            "unclear": {
+              "anger": 1
+            }
+          },
+          "disagree": 9,
+          "focal_disagreements": {}
+        },
+        "model_01__model_02": {
+          "agree": 6,
+          "agreement_rate": 0.6,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 1,
+              "disgust": 1
+            },
+            "cynicism": {
+              "anger": 2,
+              "cynicism": 3,
+              "neutral": 1
+            },
+            "disappointment": {
+              "disappointment": 1
+            },
+            "frustration": {
+              "frustration": 1
+            }
+          },
+          "disagree": 4,
+          "focal_disagreements": {}
+        }
+      },
+      "rows": 10,
+      "three_way": {
+        "all_three_different": 3,
+        "all_three_equal_rate": 0.0,
+        "human_model_02_equal_model_01_differs": 1,
+        "models_equal_human_differs": 6
+      }
+    },
+    "diag_short_context": {
+      "confidence_distribution": {
+        "human": {
+          "low": 8,
+          "medium": 2
+        },
+        "model_01": {
+          "low": 3,
+          "medium": 7
+        },
+        "model_02": {
+          "high": 7,
+          "medium": 3
+        }
+      },
+      "decision_distribution": {
+        "human": {
+          "joy": 1,
+          "sadness": 1,
+          "unclear": 2,
+          "unusable": 6
+        },
+        "model_01": {
+          "frustration": 1,
+          "neutral": 5,
+          "surprise": 1,
+          "unusable": 3
+        },
+        "model_02": {
+          "frustration": 1,
+          "neutral": 4,
+          "other_emotion": 1,
+          "surprise": 1,
+          "unusable": 3
+        }
+      },
+      "pairwise": {
+        "human__model_01": {
+          "agree": 3,
+          "agreement_rate": 0.3,
+          "confusion_rows_left_columns_right": {
+            "joy": {
+              "neutral": 1
+            },
+            "sadness": {
+              "neutral": 1
+            },
+            "unclear": {
+              "neutral": 2
+            },
+            "unusable": {
+              "frustration": 1,
+              "neutral": 1,
+              "surprise": 1,
+              "unusable": 3
+            }
+          },
+          "disagree": 7,
+          "focal_disagreements": {
+            "neutral_vs_unclear": 2
+          }
+        },
+        "human__model_02": {
+          "agree": 3,
+          "agreement_rate": 0.3,
+          "confusion_rows_left_columns_right": {
+            "joy": {
+              "neutral": 1
+            },
+            "sadness": {
+              "other_emotion": 1
+            },
+            "unclear": {
+              "neutral": 2
+            },
+            "unusable": {
+              "frustration": 1,
+              "neutral": 1,
+              "surprise": 1,
+              "unusable": 3
+            }
+          },
+          "disagree": 7,
+          "focal_disagreements": {
+            "neutral_vs_unclear": 2
+          }
+        },
+        "model_01__model_02": {
+          "agree": 9,
+          "agreement_rate": 0.9,
+          "confusion_rows_left_columns_right": {
+            "frustration": {
+              "frustration": 1
+            },
+            "neutral": {
+              "neutral": 4,
+              "other_emotion": 1
+            },
+            "surprise": {
+              "surprise": 1
+            },
+            "unusable": {
+              "unusable": 3
+            }
+          },
+          "disagree": 1,
+          "focal_disagreements": {}
+        }
+      },
+      "rows": 10,
+      "three_way": {
+        "all_three_different": 1,
+        "all_three_equal": 3,
+        "all_three_equal_rate": 0.3,
+        "models_equal_human_differs": 6
+      }
+    },
+    "diagnostic_all": {
+      "confidence_distribution": {
+        "human": {
+          "high": 3,
+          "low": 13,
+          "medium": 24
+        },
+        "model_01": {
+          "high": 7,
+          "low": 8,
+          "medium": 25
+        },
+        "model_02": {
+          "high": 30,
+          "medium": 10
+        }
+      },
+      "decision_distribution": {
+        "human": {
+          "anger": 4,
+          "confusion": 5,
+          "cynicism": 1,
+          "disappointment": 1,
+          "disgust": 2,
+          "fear": 1,
+          "frustration": 3,
+          "joy": 5,
+          "neutral": 4,
+          "other_emotion": 2,
+          "sadness": 1,
+          "surprise": 1,
+          "unclear": 4,
+          "unusable": 6
+        },
+        "model_01": {
+          "anger": 9,
+          "cynicism": 8,
+          "disappointment": 1,
+          "fear": 1,
+          "frustration": 3,
+          "neutral": 13,
+          "other_emotion": 1,
+          "surprise": 1,
+          "unusable": 3
+        },
+        "model_02": {
+          "anger": 10,
+          "cynicism": 6,
+          "disappointment": 1,
+          "disgust": 1,
+          "fear": 1,
+          "frustration": 3,
+          "neutral": 12,
+          "other_emotion": 2,
+          "surprise": 1,
+          "unusable": 3
+        }
+      },
+      "pairwise": {
+        "human__model_01": {
+          "agree": 10,
+          "agreement_rate": 0.25,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 2,
+              "cynicism": 1,
+              "neutral": 1
+            },
+            "confusion": {
+              "anger": 1,
+              "cynicism": 3,
+              "neutral": 1
+            },
+            "cynicism": {
+              "anger": 1
+            },
+            "disappointment": {
+              "anger": 1
+            },
+            "disgust": {
+              "neutral": 1,
+              "other_emotion": 1
+            },
+            "fear": {
+              "fear": 1
+            },
+            "frustration": {
+              "anger": 2,
+              "frustration": 1
+            },
+            "joy": {
+              "anger": 1,
+              "cynicism": 1,
+              "disappointment": 1,
+              "neutral": 2
+            },
+            "neutral": {
+              "frustration": 1,
+              "neutral": 3
+            },
+            "other_emotion": {
+              "anger": 1,
+              "cynicism": 1
+            },
+            "sadness": {
+              "neutral": 1
+            },
+            "surprise": {
+              "neutral": 1
+            },
+            "unclear": {
+              "cynicism": 2,
+              "neutral": 2
+            },
+            "unusable": {
+              "frustration": 1,
+              "neutral": 1,
+              "surprise": 1,
+              "unusable": 3
+            }
+          },
+          "disagree": 30,
+          "focal_disagreements": {
+            "anger_vs_frustration": 2,
+            "neutral_vs_unclear": 2
+          }
+        },
+        "human__model_02": {
+          "agree": 10,
+          "agreement_rate": 0.25,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 2,
+              "cynicism": 1,
+              "neutral": 1
+            },
+            "confusion": {
+              "anger": 1,
+              "cynicism": 3,
+              "neutral": 1
+            },
+            "cynicism": {
+              "anger": 1
+            },
+            "disappointment": {
+              "anger": 1
+            },
+            "disgust": {
+              "anger": 1,
+              "other_emotion": 1
+            },
+            "fear": {
+              "fear": 1
+            },
+            "frustration": {
+              "anger": 2,
+              "frustration": 1
+            },
+            "joy": {
+              "disappointment": 1,
+              "disgust": 1,
+              "neutral": 3
+            },
+            "neutral": {
+              "frustration": 1,
+              "neutral": 3
+            },
+            "other_emotion": {
+              "anger": 1,
+              "cynicism": 1
+            },
+            "sadness": {
+              "other_emotion": 1
+            },
+            "surprise": {
+              "neutral": 1
+            },
+            "unclear": {
+              "anger": 1,
+              "cynicism": 1,
+              "neutral": 2
+            },
+            "unusable": {
+              "frustration": 1,
+              "neutral": 1,
+              "surprise": 1,
+              "unusable": 3
+            }
+          },
+          "disagree": 30,
+          "focal_disagreements": {
+            "anger_vs_frustration": 2,
+            "neutral_vs_unclear": 2
+          }
+        },
+        "model_01__model_02": {
+          "agree": 31,
+          "agreement_rate": 0.775,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 7,
+              "cynicism": 1,
+              "disgust": 1
+            },
+            "cynicism": {
+              "anger": 2,
+              "cynicism": 4,
+              "neutral": 2
+            },
+            "disappointment": {
+              "disappointment": 1
+            },
+            "fear": {
+              "fear": 1
+            },
+            "frustration": {
+              "frustration": 3
+            },
+            "neutral": {
+              "anger": 1,
+              "cynicism": 1,
+              "neutral": 10,
+              "other_emotion": 1
+            },
+            "other_emotion": {
+              "other_emotion": 1
+            },
+            "surprise": {
+              "surprise": 1
+            },
+            "unusable": {
+              "unusable": 3
+            }
+          },
+          "disagree": 9,
+          "focal_disagreements": {}
+        }
+      },
+      "rows": 40,
+      "three_way": {
+        "all_three_different": 7,
+        "all_three_equal": 9,
+        "all_three_equal_rate": 0.225,
+        "human_model_01_equal_model_02_differs": 1,
+        "human_model_02_equal_model_01_differs": 1,
+        "models_equal_human_differs": 22
+      }
+    },
+    "representative": {
+      "confidence_distribution": {
+        "human": {
+          "high": 13,
+          "low": 9,
+          "medium": 58
+        },
+        "model_01": {
+          "high": 23,
+          "low": 4,
+          "medium": 53
+        },
+        "model_02": {
+          "high": 66,
+          "medium": 14
+        }
+      },
+      "decision_distribution": {
+        "human": {
+          "anger": 11,
+          "confusion": 5,
+          "cynicism": 5,
+          "disappointment": 4,
+          "disgust": 8,
+          "fear": 1,
+          "frustration": 11,
+          "joy": 4,
+          "neutral": 19,
+          "other_emotion": 7,
+          "sadness": 2,
+          "unclear": 2,
+          "unusable": 1
+        },
+        "model_01": {
+          "anger": 18,
+          "cynicism": 16,
+          "fear": 2,
+          "frustration": 6,
+          "joy": 1,
+          "neutral": 35,
+          "other_emotion": 1,
+          "sadness": 1
+        },
+        "model_02": {
+          "anger": 13,
+          "cynicism": 12,
+          "disappointment": 1,
+          "disgust": 2,
+          "fear": 2,
+          "frustration": 8,
+          "joy": 2,
+          "neutral": 37,
+          "other_emotion": 1,
+          "sadness": 1,
+          "surprise": 1
+        }
+      },
+      "pairwise": {
+        "human__model_01": {
+          "agree": 20,
+          "agreement_rate": 0.25,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 4,
+              "cynicism": 2,
+              "fear": 1,
+              "frustration": 1,
+              "neutral": 3
+            },
+            "confusion": {
+              "anger": 1,
+              "cynicism": 1,
+              "neutral": 3
+            },
+            "cynicism": {
+              "anger": 1,
+              "cynicism": 2,
+              "neutral": 2
+            },
+            "disappointment": {
+              "anger": 2,
+              "frustration": 1,
+              "neutral": 1
+            },
+            "disgust": {
+              "anger": 2,
+              "cynicism": 2,
+              "fear": 1,
+              "frustration": 2,
+              "neutral": 1
+            },
+            "fear": {
+              "anger": 1
+            },
+            "frustration": {
+              "anger": 3,
+              "cynicism": 1,
+              "frustration": 1,
+              "neutral": 6
+            },
+            "joy": {
+              "cynicism": 2,
+              "neutral": 2
+            },
+            "neutral": {
+              "anger": 1,
+              "cynicism": 4,
+              "frustration": 1,
+              "joy": 1,
+              "neutral": 12
+            },
+            "other_emotion": {
+              "anger": 1,
+              "cynicism": 2,
+              "neutral": 4
+            },
+            "sadness": {
+              "anger": 1,
+              "sadness": 1
+            },
+            "unclear": {
+              "anger": 1,
+              "neutral": 1
+            },
+            "unusable": {
+              "other_emotion": 1
+            }
+          },
+          "disagree": 60,
+          "focal_disagreements": {
+            "anger_vs_frustration": 4,
+            "neutral_vs_unclear": 1
+          }
+        },
+        "human__model_02": {
+          "agree": 21,
+          "agreement_rate": 0.2625,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 3,
+              "cynicism": 1,
+              "disappointment": 1,
+              "disgust": 1,
+              "fear": 1,
+              "frustration": 2,
+              "neutral": 2
+            },
+            "confusion": {
+              "cynicism": 1,
+              "disgust": 1,
+              "neutral": 3
+            },
+            "cynicism": {
+              "cynicism": 1,
+              "frustration": 1,
+              "neutral": 2,
+              "surprise": 1
+            },
+            "disappointment": {
+              "anger": 3,
+              "neutral": 1
+            },
+            "disgust": {
+              "anger": 2,
+              "cynicism": 2,
+              "fear": 1,
+              "frustration": 2,
+              "other_emotion": 1
+            },
+            "fear": {
+              "anger": 1
+            },
+            "frustration": {
+              "anger": 1,
+              "cynicism": 2,
+              "frustration": 1,
+              "neutral": 7
+            },
+            "joy": {
+              "cynicism": 1,
+              "joy": 1,
+              "neutral": 2
+            },
+            "neutral": {
+              "anger": 1,
+              "cynicism": 2,
+              "frustration": 1,
+              "joy": 1,
+              "neutral": 14
+            },
+            "other_emotion": {
+              "anger": 1,
+              "cynicism": 1,
+              "frustration": 1,
+              "neutral": 4
+            },
+            "sadness": {
+              "anger": 1,
+              "sadness": 1
+            },
+            "unclear": {
+              "cynicism": 1,
+              "neutral": 1
+            },
+            "unusable": {
+              "neutral": 1
+            }
+          },
+          "disagree": 59,
+          "focal_disagreements": {
+            "anger_vs_frustration": 3,
+            "neutral_vs_unclear": 1
+          }
+        },
+        "model_01__model_02": {
+          "agree": 60,
+          "agreement_rate": 0.75,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 12,
+              "cynicism": 3,
+              "disgust": 1,
+              "frustration": 2
+            },
+            "cynicism": {
+              "cynicism": 9,
+              "disgust": 1,
+              "frustration": 1,
+              "joy": 1,
+              "neutral": 3,
+              "surprise": 1
+            },
+            "fear": {
+              "fear": 2
+            },
+            "frustration": {
+              "anger": 1,
+              "disappointment": 1,
+              "frustration": 3,
+              "neutral": 1
+            },
+            "joy": {
+              "joy": 1
+            },
+            "neutral": {
+              "frustration": 2,
+              "neutral": 32,
+              "other_emotion": 1
+            },
+            "other_emotion": {
+              "neutral": 1
+            },
+            "sadness": {
+              "sadness": 1
+            }
+          },
+          "disagree": 20,
+          "focal_disagreements": {
+            "anger_vs_frustration": 3
+          }
+        }
+      },
+      "rows": 80,
+      "three_way": {
+        "all_three_different": 13,
+        "all_three_equal": 17,
+        "all_three_equal_rate": 0.2125,
+        "human_model_01_equal_model_02_differs": 3,
+        "human_model_02_equal_model_01_differs": 4,
+        "models_equal_human_differs": 43
+      }
+    }
+  },
+  "stage_b": {
+    "all_primary": {
+      "confidence_distribution": {
+        "human": {
+          "high": 42,
+          "low": 15,
+          "medium": 63
+        },
+        "model_01": {
+          "high": 33,
+          "low": 13,
+          "medium": 74
+        },
+        "model_02": {
+          "high": 84,
+          "low": 1,
+          "medium": 35
+        }
+      },
+      "decision_distribution": {
+        "human": {
+          "anger": 15,
+          "confusion": 10,
+          "cynicism": 5,
+          "disappointment": 2,
+          "disgust": 7,
+          "fear": 1,
+          "frustration": 14,
+          "joy": 4,
+          "neutral": 18,
+          "other_emotion": 30,
+          "sadness": 3,
+          "surprise": 3,
+          "unclear": 3,
+          "unusable": 5
+        },
+        "model_01": {
+          "anger": 23,
+          "cynicism": 16,
+          "disappointment": 1,
+          "disgust": 1,
+          "fear": 2,
+          "frustration": 24,
+          "joy": 4,
+          "neutral": 43,
+          "sadness": 1,
+          "surprise": 1,
+          "unclear": 1,
+          "unusable": 3
+        },
+        "model_02": {
+          "anger": 30,
+          "confusion": 1,
+          "cynicism": 12,
+          "disappointment": 1,
+          "disgust": 4,
+          "fear": 3,
+          "frustration": 6,
+          "joy": 5,
+          "neutral": 53,
+          "other_emotion": 1,
+          "sadness": 1,
+          "surprise": 1,
+          "unclear": 1,
+          "unusable": 1
+        }
+      },
+      "pairwise": {
+        "human__model_01": {
+          "agree": 31,
+          "agreement_rate": 0.258333,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 9,
+              "fear": 1,
+              "frustration": 4,
+              "neutral": 1
+            },
+            "confusion": {
+              "anger": 1,
+              "cynicism": 2,
+              "frustration": 3,
+              "neutral": 4
+            },
+            "cynicism": {
+              "anger": 1,
+              "cynicism": 1,
+              "disappointment": 1,
+              "joy": 1,
+              "neutral": 1
+            },
+            "disappointment": {
+              "anger": 1,
+              "frustration": 1
+            },
+            "disgust": {
+              "anger": 3,
+              "cynicism": 1,
+              "frustration": 2,
+              "neutral": 1
+            },
+            "fear": {
+              "neutral": 1
+            },
+            "frustration": {
+              "anger": 3,
+              "cynicism": 1,
+              "frustration": 6,
+              "neutral": 4
+            },
+            "joy": {
+              "joy": 1,
+              "neutral": 2,
+              "unclear": 1
+            },
+            "neutral": {
+              "anger": 1,
+              "cynicism": 2,
+              "fear": 1,
+              "frustration": 3,
+              "neutral": 10,
+              "unusable": 1
+            },
+            "other_emotion": {
+              "anger": 4,
+              "cynicism": 8,
+              "disgust": 1,
+              "frustration": 3,
+              "neutral": 14
+            },
+            "sadness": {
+              "frustration": 1,
+              "neutral": 1,
+              "sadness": 1
+            },
+            "surprise": {
+              "joy": 1,
+              "neutral": 1,
+              "surprise": 1
+            },
+            "unclear": {
+              "cynicism": 1,
+              "frustration": 1,
+              "neutral": 1
+            },
+            "unusable": {
+              "joy": 1,
+              "neutral": 2,
+              "unusable": 2
+            }
+          },
+          "disagree": 89,
+          "focal_disagreements": {
+            "anger_vs_frustration": 7,
+            "neutral_vs_unclear": 1
+          }
+        },
+        "human__model_02": {
+          "agree": 29,
+          "agreement_rate": 0.241667,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 8,
+              "cynicism": 1,
+              "fear": 2,
+              "neutral": 4
+            },
+            "confusion": {
+              "anger": 3,
+              "cynicism": 2,
+              "disgust": 1,
+              "neutral": 4
+            },
+            "cynicism": {
+              "anger": 1,
+              "cynicism": 2,
+              "joy": 1,
+              "neutral": 1
+            },
+            "disappointment": {
+              "anger": 1,
+              "neutral": 1
+            },
+            "disgust": {
+              "anger": 3,
+              "frustration": 1,
+              "neutral": 1,
+              "other_emotion": 1,
+              "surprise": 1
+            },
+            "fear": {
+              "cynicism": 1
+            },
+            "frustration": {
+              "anger": 4,
+              "cynicism": 2,
+              "disappointment": 1,
+              "disgust": 1,
+              "frustration": 2,
+              "neutral": 4
+            },
+            "joy": {
+              "joy": 3,
+              "neutral": 1
+            },
+            "neutral": {
+              "cynicism": 2,
+              "disgust": 1,
+              "fear": 1,
+              "frustration": 2,
+              "neutral": 12
+            },
+            "other_emotion": {
+              "anger": 9,
+              "cynicism": 2,
+              "disgust": 1,
+              "frustration": 1,
+              "neutral": 17
+            },
+            "sadness": {
+              "anger": 1,
+              "sadness": 1,
+              "unclear": 1
+            },
+            "surprise": {
+              "confusion": 1,
+              "joy": 1,
+              "neutral": 1
+            },
+            "unclear": {
+              "neutral": 3
+            },
+            "unusable": {
+              "neutral": 4,
+              "unusable": 1
+            }
+          },
+          "disagree": 91,
+          "focal_disagreements": {
+            "anger_vs_frustration": 4,
+            "neutral_vs_unclear": 3
+          }
+        },
+        "model_01__model_02": {
+          "agree": 70,
+          "agreement_rate": 0.583333,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 19,
+              "cynicism": 2,
+              "disgust": 1,
+              "neutral": 1
+            },
+            "cynicism": {
+              "anger": 5,
+              "cynicism": 4,
+              "neutral": 7
+            },
+            "disappointment": {
+              "cynicism": 1
+            },
+            "disgust": {
+              "disgust": 1
+            },
+            "fear": {
+              "fear": 2
+            },
+            "frustration": {
+              "anger": 5,
+              "cynicism": 2,
+              "disappointment": 1,
+              "disgust": 1,
+              "fear": 1,
+              "frustration": 5,
+              "neutral": 8,
+              "other_emotion": 1
+            },
+            "joy": {
+              "joy": 3,
+              "neutral": 1
+            },
+            "neutral": {
+              "anger": 1,
+              "cynicism": 3,
+              "disgust": 1,
+              "frustration": 1,
+              "joy": 1,
+              "neutral": 34,
+              "surprise": 1,
+              "unclear": 1
+            },
+            "sadness": {
+              "sadness": 1
+            },
+            "surprise": {
+              "confusion": 1
+            },
+            "unclear": {
+              "joy": 1
+            },
+            "unusable": {
+              "neutral": 2,
+              "unusable": 1
+            }
+          },
+          "disagree": 50,
+          "focal_disagreements": {
+            "anger_vs_frustration": 5,
+            "neutral_vs_unclear": 1
+          }
+        }
+      },
+      "rows": 120,
+      "three_way": {
+        "all_three_different": 32,
+        "all_three_equal": 21,
+        "all_three_equal_rate": 0.175,
+        "human_model_01_equal_model_02_differs": 10,
+        "human_model_02_equal_model_01_differs": 8,
+        "models_equal_human_differs": 49
+      }
+    },
+    "diag_distinct_quote": {
+      "confidence_distribution": {
+        "human": {
+          "high": 2,
+          "low": 1,
+          "medium": 7
+        },
+        "model_01": {
+          "high": 6,
+          "low": 1,
+          "medium": 3
+        },
+        "model_02": {
+          "high": 6,
+          "medium": 4
+        }
+      },
+      "decision_distribution": {
+        "human": {
+          "anger": 1,
+          "frustration": 3,
+          "joy": 1,
+          "neutral": 1,
+          "other_emotion": 2,
+          "surprise": 2
+        },
+        "model_01": {
+          "anger": 2,
+          "joy": 1,
+          "neutral": 7
+        },
+        "model_02": {
+          "anger": 2,
+          "cynicism": 1,
+          "frustration": 1,
+          "joy": 2,
+          "neutral": 4
+        }
+      },
+      "pairwise": {
+        "human__model_01": {
+          "agree": 2,
+          "agreement_rate": 0.2,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 1
+            },
+            "frustration": {
+              "anger": 1,
+              "neutral": 2
+            },
+            "joy": {
+              "neutral": 1
+            },
+            "neutral": {
+              "neutral": 1
+            },
+            "other_emotion": {
+              "neutral": 2
+            },
+            "surprise": {
+              "joy": 1,
+              "neutral": 1
+            }
+          },
+          "disagree": 8,
+          "focal_disagreements": {
+            "anger_vs_frustration": 1
+          }
+        },
+        "human__model_02": {
+          "agree": 3,
+          "agreement_rate": 0.3,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "cynicism": 1
+            },
+            "frustration": {
+              "anger": 2,
+              "frustration": 1
+            },
+            "joy": {
+              "joy": 1
+            },
+            "neutral": {
+              "neutral": 1
+            },
+            "other_emotion": {
+              "neutral": 2
+            },
+            "surprise": {
+              "joy": 1,
+              "neutral": 1
+            }
+          },
+          "disagree": 7,
+          "focal_disagreements": {
+            "anger_vs_frustration": 2
+          }
+        },
+        "model_01__model_02": {
+          "agree": 6,
+          "agreement_rate": 0.6,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 1,
+              "cynicism": 1
+            },
+            "joy": {
+              "joy": 1
+            },
+            "neutral": {
+              "anger": 1,
+              "frustration": 1,
+              "joy": 1,
+              "neutral": 4
+            }
+          },
+          "disagree": 4,
+          "focal_disagreements": {}
+        }
+      },
+      "rows": 10,
+      "three_way": {
+        "all_three_different": 1,
+        "all_three_equal": 1,
+        "all_three_equal_rate": 0.1,
+        "human_model_01_equal_model_02_differs": 1,
+        "human_model_02_equal_model_01_differs": 2,
+        "models_equal_human_differs": 5
+      }
+    },
+    "diag_hostility_affect": {
+      "confidence_distribution": {
+        "human": {
+          "high": 3,
+          "medium": 7
+        },
+        "model_01": {
+          "high": 2,
+          "low": 2,
+          "medium": 6
+        },
+        "model_02": {
+          "high": 5,
+          "medium": 5
+        }
+      },
+      "decision_distribution": {
+        "human": {
+          "anger": 4,
+          "confusion": 2,
+          "disgust": 1,
+          "frustration": 1,
+          "other_emotion": 2
+        },
+        "model_01": {
+          "anger": 2,
+          "cynicism": 2,
+          "disgust": 1,
+          "frustration": 4,
+          "neutral": 1
+        },
+        "model_02": {
+          "anger": 4,
+          "disgust": 2,
+          "fear": 1,
+          "neutral": 2,
+          "other_emotion": 1
+        }
+      },
+      "pairwise": {
+        "human__model_01": {
+          "agree": 3,
+          "agreement_rate": 0.3,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 2,
+              "frustration": 1,
+              "neutral": 1
+            },
+            "confusion": {
+              "cynicism": 1,
+              "frustration": 1
+            },
+            "disgust": {
+              "frustration": 1
+            },
+            "frustration": {
+              "frustration": 1
+            },
+            "other_emotion": {
+              "cynicism": 1,
+              "disgust": 1
+            }
+          },
+          "disagree": 7,
+          "focal_disagreements": {
+            "anger_vs_frustration": 1
+          }
+        },
+        "human__model_02": {
+          "agree": 2,
+          "agreement_rate": 0.2,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 2,
+              "fear": 1,
+              "neutral": 1
+            },
+            "confusion": {
+              "anger": 1,
+              "disgust": 1
+            },
+            "disgust": {
+              "other_emotion": 1
+            },
+            "frustration": {
+              "neutral": 1
+            },
+            "other_emotion": {
+              "anger": 1,
+              "disgust": 1
+            }
+          },
+          "disagree": 8,
+          "focal_disagreements": {}
+        },
+        "model_01__model_02": {
+          "agree": 4,
+          "agreement_rate": 0.4,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 2
+            },
+            "cynicism": {
+              "anger": 2
+            },
+            "disgust": {
+              "disgust": 1
+            },
+            "frustration": {
+              "disgust": 1,
+              "fear": 1,
+              "neutral": 1,
+              "other_emotion": 1
+            },
+            "neutral": {
+              "neutral": 1
+            }
+          },
+          "disagree": 6,
+          "focal_disagreements": {}
+        }
+      },
+      "rows": 10,
+      "three_way": {
+        "all_three_different": 5,
+        "all_three_equal": 2,
+        "all_three_equal_rate": 0.2,
+        "human_model_01_equal_model_02_differs": 1,
+        "models_equal_human_differs": 2
+      }
+    },
+    "diag_sarcasm": {
+      "confidence_distribution": {
+        "human": {
+          "high": 5,
+          "low": 2,
+          "medium": 3
+        },
+        "model_01": {
+          "medium": 10
+        },
+        "model_02": {
+          "high": 7,
+          "medium": 3
+        }
+      },
+      "decision_distribution": {
+        "human": {
+          "anger": 1,
+          "confusion": 3,
+          "cynicism": 1,
+          "joy": 1,
+          "neutral": 1,
+          "other_emotion": 3
+        },
+        "model_01": {
+          "anger": 4,
+          "cynicism": 3,
+          "frustration": 2,
+          "joy": 1
+        },
+        "model_02": {
+          "anger": 6,
+          "cynicism": 1,
+          "frustration": 1,
+          "joy": 1,
+          "neutral": 1
+        }
+      },
+      "pairwise": {
+        "human__model_01": {
+          "agree": 2,
+          "agreement_rate": 0.2,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 1
+            },
+            "confusion": {
+              "anger": 1,
+              "cynicism": 1,
+              "frustration": 1
+            },
+            "cynicism": {
+              "anger": 1
+            },
+            "joy": {
+              "joy": 1
+            },
+            "neutral": {
+              "frustration": 1
+            },
+            "other_emotion": {
+              "anger": 1,
+              "cynicism": 2
+            }
+          },
+          "disagree": 8,
+          "focal_disagreements": {}
+        },
+        "human__model_02": {
+          "agree": 2,
+          "agreement_rate": 0.2,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 1
+            },
+            "confusion": {
+              "anger": 1,
+              "cynicism": 1,
+              "neutral": 1
+            },
+            "cynicism": {
+              "anger": 1
+            },
+            "joy": {
+              "joy": 1
+            },
+            "neutral": {
+              "frustration": 1
+            },
+            "other_emotion": {
+              "anger": 3
+            }
+          },
+          "disagree": 8,
+          "focal_disagreements": {}
+        },
+        "model_01__model_02": {
+          "agree": 7,
+          "agreement_rate": 0.7,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 4
+            },
+            "cynicism": {
+              "anger": 2,
+              "cynicism": 1
+            },
+            "frustration": {
+              "frustration": 1,
+              "neutral": 1
+            },
+            "joy": {
+              "joy": 1
+            }
+          },
+          "disagree": 3,
+          "focal_disagreements": {}
+        }
+      },
+      "rows": 10,
+      "three_way": {
+        "all_three_different": 3,
+        "all_three_equal": 2,
+        "all_three_equal_rate": 0.2,
+        "models_equal_human_differs": 5
+      }
+    },
+    "diag_short_context": {
+      "confidence_distribution": {
+        "human": {
+          "high": 1,
+          "low": 5,
+          "medium": 4
+        },
+        "model_01": {
+          "high": 2,
+          "low": 6,
+          "medium": 2
+        },
+        "model_02": {
+          "high": 7,
+          "low": 1,
+          "medium": 2
+        }
+      },
+      "decision_distribution": {
+        "human": {
+          "neutral": 1,
+          "other_emotion": 2,
+          "sadness": 1,
+          "surprise": 1,
+          "unclear": 1,
+          "unusable": 4
+        },
+        "model_01": {
+          "frustration": 1,
+          "joy": 1,
+          "neutral": 4,
+          "surprise": 1,
+          "unusable": 3
+        },
+        "model_02": {
+          "confusion": 1,
+          "neutral": 7,
+          "unclear": 1,
+          "unusable": 1
+        }
+      },
+      "pairwise": {
+        "human__model_01": {
+          "agree": 3,
+          "agreement_rate": 0.3,
+          "confusion_rows_left_columns_right": {
+            "neutral": {
+              "unusable": 1
+            },
+            "other_emotion": {
+              "neutral": 2
+            },
+            "sadness": {
+              "neutral": 1
+            },
+            "surprise": {
+              "surprise": 1
+            },
+            "unclear": {
+              "frustration": 1
+            },
+            "unusable": {
+              "joy": 1,
+              "neutral": 1,
+              "unusable": 2
+            }
+          },
+          "disagree": 7,
+          "focal_disagreements": {}
+        },
+        "human__model_02": {
+          "agree": 2,
+          "agreement_rate": 0.2,
+          "confusion_rows_left_columns_right": {
+            "neutral": {
+              "neutral": 1
+            },
+            "other_emotion": {
+              "neutral": 2
+            },
+            "sadness": {
+              "unclear": 1
+            },
+            "surprise": {
+              "confusion": 1
+            },
+            "unclear": {
+              "neutral": 1
+            },
+            "unusable": {
+              "neutral": 3,
+              "unusable": 1
+            }
+          },
+          "disagree": 8,
+          "focal_disagreements": {
+            "neutral_vs_unclear": 1
+          }
+        },
+        "model_01__model_02": {
+          "agree": 4,
+          "agreement_rate": 0.4,
+          "confusion_rows_left_columns_right": {
+            "frustration": {
+              "neutral": 1
+            },
+            "joy": {
+              "neutral": 1
+            },
+            "neutral": {
+              "neutral": 3,
+              "unclear": 1
+            },
+            "surprise": {
+              "confusion": 1
+            },
+            "unusable": {
+              "neutral": 2,
+              "unusable": 1
+            }
+          },
+          "disagree": 6,
+          "focal_disagreements": {
+            "neutral_vs_unclear": 1
+          }
+        }
+      },
+      "rows": 10,
+      "three_way": {
+        "all_three_different": 3,
+        "all_three_equal": 1,
+        "all_three_equal_rate": 0.1,
+        "human_model_01_equal_model_02_differs": 2,
+        "human_model_02_equal_model_01_differs": 1,
+        "models_equal_human_differs": 3
+      }
+    },
+    "diagnostic_all": {
+      "confidence_distribution": {
+        "human": {
+          "high": 11,
+          "low": 8,
+          "medium": 21
+        },
+        "model_01": {
+          "high": 10,
+          "low": 9,
+          "medium": 21
+        },
+        "model_02": {
+          "high": 25,
+          "low": 1,
+          "medium": 14
+        }
+      },
+      "decision_distribution": {
+        "human": {
+          "anger": 6,
+          "confusion": 5,
+          "cynicism": 1,
+          "disgust": 1,
+          "frustration": 4,
+          "joy": 2,
+          "neutral": 3,
+          "other_emotion": 9,
+          "sadness": 1,
+          "surprise": 3,
+          "unclear": 1,
+          "unusable": 4
+        },
+        "model_01": {
+          "anger": 8,
+          "cynicism": 5,
+          "disgust": 1,
+          "frustration": 7,
+          "joy": 3,
+          "neutral": 12,
+          "surprise": 1,
+          "unusable": 3
+        },
+        "model_02": {
+          "anger": 12,
+          "confusion": 1,
+          "cynicism": 2,
+          "disgust": 2,
+          "fear": 1,
+          "frustration": 2,
+          "joy": 3,
+          "neutral": 14,
+          "other_emotion": 1,
+          "unclear": 1,
+          "unusable": 1
+        }
+      },
+      "pairwise": {
+        "human__model_01": {
+          "agree": 10,
+          "agreement_rate": 0.25,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 4,
+              "frustration": 1,
+              "neutral": 1
+            },
+            "confusion": {
+              "anger": 1,
+              "cynicism": 2,
+              "frustration": 2
+            },
+            "cynicism": {
+              "anger": 1
+            },
+            "disgust": {
+              "frustration": 1
+            },
+            "frustration": {
+              "anger": 1,
+              "frustration": 1,
+              "neutral": 2
+            },
+            "joy": {
+              "joy": 1,
+              "neutral": 1
+            },
+            "neutral": {
+              "frustration": 1,
+              "neutral": 1,
+              "unusable": 1
+            },
+            "other_emotion": {
+              "anger": 1,
+              "cynicism": 3,
+              "disgust": 1,
+              "neutral": 4
+            },
+            "sadness": {
+              "neutral": 1
+            },
+            "surprise": {
+              "joy": 1,
+              "neutral": 1,
+              "surprise": 1
+            },
+            "unclear": {
+              "frustration": 1
+            },
+            "unusable": {
+              "joy": 1,
+              "neutral": 1,
+              "unusable": 2
+            }
+          },
+          "disagree": 30,
+          "focal_disagreements": {
+            "anger_vs_frustration": 2
+          }
+        },
+        "human__model_02": {
+          "agree": 9,
+          "agreement_rate": 0.225,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 3,
+              "cynicism": 1,
+              "fear": 1,
+              "neutral": 1
+            },
+            "confusion": {
+              "anger": 2,
+              "cynicism": 1,
+              "disgust": 1,
+              "neutral": 1
+            },
+            "cynicism": {
+              "anger": 1
+            },
+            "disgust": {
+              "other_emotion": 1
+            },
+            "frustration": {
+              "anger": 2,
+              "frustration": 1,
+              "neutral": 1
+            },
+            "joy": {
+              "joy": 2
+            },
+            "neutral": {
+              "frustration": 1,
+              "neutral": 2
+            },
+            "other_emotion": {
+              "anger": 4,
+              "disgust": 1,
+              "neutral": 4
+            },
+            "sadness": {
+              "unclear": 1
+            },
+            "surprise": {
+              "confusion": 1,
+              "joy": 1,
+              "neutral": 1
+            },
+            "unclear": {
+              "neutral": 1
+            },
+            "unusable": {
+              "neutral": 3,
+              "unusable": 1
+            }
+          },
+          "disagree": 31,
+          "focal_disagreements": {
+            "anger_vs_frustration": 2,
+            "neutral_vs_unclear": 1
+          }
+        },
+        "model_01__model_02": {
+          "agree": 21,
+          "agreement_rate": 0.525,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 7,
+              "cynicism": 1
+            },
+            "cynicism": {
+              "anger": 4,
+              "cynicism": 1
+            },
+            "disgust": {
+              "disgust": 1
+            },
+            "frustration": {
+              "disgust": 1,
+              "fear": 1,
+              "frustration": 1,
+              "neutral": 3,
+              "other_emotion": 1
+            },
+            "joy": {
+              "joy": 2,
+              "neutral": 1
+            },
+            "neutral": {
+              "anger": 1,
+              "frustration": 1,
+              "joy": 1,
+              "neutral": 8,
+              "unclear": 1
+            },
+            "surprise": {
+              "confusion": 1
+            },
+            "unusable": {
+              "neutral": 2,
+              "unusable": 1
+            }
+          },
+          "disagree": 19,
+          "focal_disagreements": {
+            "neutral_vs_unclear": 1
+          }
+        }
+      },
+      "rows": 40,
+      "three_way": {
+        "all_three_different": 12,
+        "all_three_equal": 6,
+        "all_three_equal_rate": 0.15,
+        "human_model_01_equal_model_02_differs": 4,
+        "human_model_02_equal_model_01_differs": 3,
+        "models_equal_human_differs": 15
+      }
+    },
+    "representative": {
+      "confidence_distribution": {
+        "human": {
+          "high": 31,
+          "low": 7,
+          "medium": 42
+        },
+        "model_01": {
+          "high": 23,
+          "low": 4,
+          "medium": 53
+        },
+        "model_02": {
+          "high": 59,
+          "medium": 21
+        }
+      },
+      "decision_distribution": {
+        "human": {
+          "anger": 9,
+          "confusion": 5,
+          "cynicism": 4,
+          "disappointment": 2,
+          "disgust": 6,
+          "fear": 1,
+          "frustration": 10,
+          "joy": 2,
+          "neutral": 15,
+          "other_emotion": 21,
+          "sadness": 2,
+          "unclear": 2,
+          "unusable": 1
+        },
+        "model_01": {
+          "anger": 15,
+          "cynicism": 11,
+          "disappointment": 1,
+          "fear": 2,
+          "frustration": 17,
+          "joy": 1,
+          "neutral": 31,
+          "sadness": 1,
+          "unclear": 1
+        },
+        "model_02": {
+          "anger": 18,
+          "cynicism": 10,
+          "disappointment": 1,
+          "disgust": 2,
+          "fear": 2,
+          "frustration": 4,
+          "joy": 2,
+          "neutral": 39,
+          "sadness": 1,
+          "surprise": 1
+        }
+      },
+      "pairwise": {
+        "human__model_01": {
+          "agree": 21,
+          "agreement_rate": 0.2625,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 5,
+              "fear": 1,
+              "frustration": 3
+            },
+            "confusion": {
+              "frustration": 1,
+              "neutral": 4
+            },
+            "cynicism": {
+              "cynicism": 1,
+              "disappointment": 1,
+              "joy": 1,
+              "neutral": 1
+            },
+            "disappointment": {
+              "anger": 1,
+              "frustration": 1
+            },
+            "disgust": {
+              "anger": 3,
+              "cynicism": 1,
+              "frustration": 1,
+              "neutral": 1
+            },
+            "fear": {
+              "neutral": 1
+            },
+            "frustration": {
+              "anger": 2,
+              "cynicism": 1,
+              "frustration": 5,
+              "neutral": 2
+            },
+            "joy": {
+              "neutral": 1,
+              "unclear": 1
+            },
+            "neutral": {
+              "anger": 1,
+              "cynicism": 2,
+              "fear": 1,
+              "frustration": 2,
+              "neutral": 9
+            },
+            "other_emotion": {
+              "anger": 3,
+              "cynicism": 5,
+              "frustration": 3,
+              "neutral": 10
+            },
+            "sadness": {
+              "frustration": 1,
+              "sadness": 1
+            },
+            "unclear": {
+              "cynicism": 1,
+              "neutral": 1
+            },
+            "unusable": {
+              "neutral": 1
+            }
+          },
+          "disagree": 59,
+          "focal_disagreements": {
+            "anger_vs_frustration": 5,
+            "neutral_vs_unclear": 1
+          }
+        },
+        "human__model_02": {
+          "agree": 20,
+          "agreement_rate": 0.25,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 5,
+              "fear": 1,
+              "neutral": 3
+            },
+            "confusion": {
+              "anger": 1,
+              "cynicism": 1,
+              "neutral": 3
+            },
+            "cynicism": {
+              "cynicism": 2,
+              "joy": 1,
+              "neutral": 1
+            },
+            "disappointment": {
+              "anger": 1,
+              "neutral": 1
+            },
+            "disgust": {
+              "anger": 3,
+              "frustration": 1,
+              "neutral": 1,
+              "surprise": 1
+            },
+            "fear": {
+              "cynicism": 1
+            },
+            "frustration": {
+              "anger": 2,
+              "cynicism": 2,
+              "disappointment": 1,
+              "disgust": 1,
+              "frustration": 1,
+              "neutral": 3
+            },
+            "joy": {
+              "joy": 1,
+              "neutral": 1
+            },
+            "neutral": {
+              "cynicism": 2,
+              "disgust": 1,
+              "fear": 1,
+              "frustration": 1,
+              "neutral": 10
+            },
+            "other_emotion": {
+              "anger": 5,
+              "cynicism": 2,
+              "frustration": 1,
+              "neutral": 13
+            },
+            "sadness": {
+              "anger": 1,
+              "sadness": 1
+            },
+            "unclear": {
+              "neutral": 2
+            },
+            "unusable": {
+              "neutral": 1
+            }
+          },
+          "disagree": 60,
+          "focal_disagreements": {
+            "anger_vs_frustration": 2,
+            "neutral_vs_unclear": 2
+          }
+        },
+        "model_01__model_02": {
+          "agree": 49,
+          "agreement_rate": 0.6125,
+          "confusion_rows_left_columns_right": {
+            "anger": {
+              "anger": 12,
+              "cynicism": 1,
+              "disgust": 1,
+              "neutral": 1
+            },
+            "cynicism": {
+              "anger": 1,
+              "cynicism": 3,
+              "neutral": 7
+            },
+            "disappointment": {
+              "cynicism": 1
+            },
+            "fear": {
+              "fear": 2
+            },
+            "frustration": {
+              "anger": 5,
+              "cynicism": 2,
+              "disappointment": 1,
+              "frustration": 4,
+              "neutral": 5
+            },
+            "joy": {
+              "joy": 1
+            },
+            "neutral": {
+              "cynicism": 3,
+              "disgust": 1,
+              "neutral": 26,
+              "surprise": 1
+            },
+            "sadness": {
+              "sadness": 1
+            },
+            "unclear": {
+              "joy": 1
+            }
+          },
+          "disagree": 31,
+          "focal_disagreements": {
+            "anger_vs_frustration": 5
+          }
+        }
+      },
+      "rows": 80,
+      "three_way": {
+        "all_three_different": 20,
+        "all_three_equal": 15,
+        "all_three_equal_rate": 0.1875,
+        "human_model_01_equal_model_02_differs": 6,
+        "human_model_02_equal_model_01_differs": 5,
+        "models_equal_human_differs": 34
+      }
+    }
+  },
+  "stage_b_diagnostics": {
+    "all_primary": {
+      "context_sufficiency": {
+        "distribution": {
+          "human": {
+            "insufficient": 7,
+            "null": 5,
+            "sufficient": 105,
+            "uncertain": 3
+          },
+          "model_01": {
+            "null": 3,
+            "sufficient": 117
+          },
+          "model_02": {
+            "insufficient": 1,
+            "null": 1,
+            "sufficient": 118
+          }
+        },
+        "pairwise": {
+          "human__model_01": {
+            "agree": 106,
+            "agreement_rate": 0.883333,
+            "disagree": 14
+          },
+          "human__model_02": {
+            "agree": 105,
+            "agreement_rate": 0.875,
+            "disagree": 15
+          },
+          "model_01__model_02": {
+            "agree": 117,
+            "agreement_rate": 0.975,
+            "disagree": 3
+          }
+        },
+        "three_way_exact": 104,
+        "three_way_exact_rate": 0.866667
+      },
+      "mixed_emotion": {
+        "distribution": {
+          "human": {
+            "false": 93,
+            "null": 5,
+            "true": 22
+          },
+          "model_01": {
+            "false": 113,
+            "null": 3,
+            "true": 4
+          },
+          "model_02": {
+            "false": 100,
+            "null": 1,
+            "true": 19
+          }
+        },
+        "pairwise": {
+          "human__model_01": {
+            "agree": 92,
+            "agreement_rate": 0.766667,
+            "disagree": 28
+          },
+          "human__model_02": {
+            "agree": 91,
+            "agreement_rate": 0.758333,
+            "disagree": 29
+          },
+          "model_01__model_02": {
+            "agree": 101,
+            "agreement_rate": 0.841667,
+            "disagree": 19
+          }
+        },
+        "three_way_exact": 82,
+        "three_way_exact_rate": 0.683333
+      },
+      "sarcasm": {
+        "distribution": {
+          "human": {
+            "absent": 101,
+            "null": 5,
+            "present": 9,
+            "uncertain": 5
+          },
+          "model_01": {
+            "absent": 69,
+            "null": 3,
+            "present": 30,
+            "uncertain": 18
+          },
+          "model_02": {
+            "absent": 75,
+            "null": 1,
+            "present": 39,
+            "uncertain": 5
+          }
+        },
+        "pairwise": {
+          "human__model_01": {
+            "agree": 70,
+            "agreement_rate": 0.583333,
+            "disagree": 50
+          },
+          "human__model_02": {
+            "agree": 79,
+            "agreement_rate": 0.658333,
+            "disagree": 41
+          },
+          "model_01__model_02": {
+            "agree": 92,
+            "agreement_rate": 0.766667,
+            "disagree": 28
+          }
+        },
+        "three_way_exact": 64,
+        "three_way_exact_rate": 0.533333
+      }
+    },
+    "diag_distinct_quote": {
+      "context_sufficiency": {
+        "distribution": {
+          "human": {
+            "sufficient": 9,
+            "uncertain": 1
+          },
+          "model_01": {
+            "sufficient": 10
+          },
+          "model_02": {
+            "sufficient": 10
+          }
+        },
+        "pairwise": {
+          "human__model_01": {
+            "agree": 9,
+            "agreement_rate": 0.9,
+            "disagree": 1
+          },
+          "human__model_02": {
+            "agree": 9,
+            "agreement_rate": 0.9,
+            "disagree": 1
+          },
+          "model_01__model_02": {
+            "agree": 10,
+            "agreement_rate": 1.0,
+            "disagree": 0
+          }
+        },
+        "three_way_exact": 9,
+        "three_way_exact_rate": 0.9
+      },
+      "mixed_emotion": {
+        "distribution": {
+          "human": {
+            "false": 9,
+            "true": 1
+          },
+          "model_01": {
+            "false": 10
+          },
+          "model_02": {
+            "false": 8,
+            "true": 2
+          }
+        },
+        "pairwise": {
+          "human__model_01": {
+            "agree": 9,
+            "agreement_rate": 0.9,
+            "disagree": 1
+          },
+          "human__model_02": {
+            "agree": 7,
+            "agreement_rate": 0.7,
+            "disagree": 3
+          },
+          "model_01__model_02": {
+            "agree": 8,
+            "agreement_rate": 0.8,
+            "disagree": 2
+          }
+        },
+        "three_way_exact": 7,
+        "three_way_exact_rate": 0.7
+      },
+      "sarcasm": {
+        "distribution": {
+          "human": {
+            "absent": 10
+          },
+          "model_01": {
+            "absent": 7,
+            "present": 1,
+            "uncertain": 2
+          },
+          "model_02": {
+            "absent": 7,
+            "present": 2,
+            "uncertain": 1
+          }
+        },
+        "pairwise": {
+          "human__model_01": {
+            "agree": 7,
+            "agreement_rate": 0.7,
+            "disagree": 3
+          },
+          "human__model_02": {
+            "agree": 7,
+            "agreement_rate": 0.7,
+            "disagree": 3
+          },
+          "model_01__model_02": {
+            "agree": 7,
+            "agreement_rate": 0.7,
+            "disagree": 3
+          }
+        },
+        "three_way_exact": 6,
+        "three_way_exact_rate": 0.6
+      }
+    },
+    "diag_hostility_affect": {
+      "context_sufficiency": {
+        "distribution": {
+          "human": {
+            "sufficient": 10
+          },
+          "model_01": {
+            "sufficient": 10
+          },
+          "model_02": {
+            "sufficient": 10
+          }
+        },
+        "pairwise": {
+          "human__model_01": {
+            "agree": 10,
+            "agreement_rate": 1.0,
+            "disagree": 0
+          },
+          "human__model_02": {
+            "agree": 10,
+            "agreement_rate": 1.0,
+            "disagree": 0
+          },
+          "model_01__model_02": {
+            "agree": 10,
+            "agreement_rate": 1.0,
+            "disagree": 0
+          }
+        },
+        "three_way_exact": 10,
+        "three_way_exact_rate": 1.0
+      },
+      "mixed_emotion": {
+        "distribution": {
+          "human": {
+            "false": 5,
+            "true": 5
+          },
+          "model_01": {
+            "false": 10
+          },
+          "model_02": {
+            "false": 7,
+            "true": 3
+          }
+        },
+        "pairwise": {
+          "human__model_01": {
+            "agree": 5,
+            "agreement_rate": 0.5,
+            "disagree": 5
+          },
+          "human__model_02": {
+            "agree": 4,
+            "agreement_rate": 0.4,
+            "disagree": 6
+          },
+          "model_01__model_02": {
+            "agree": 7,
+            "agreement_rate": 0.7,
+            "disagree": 3
+          }
+        },
+        "three_way_exact": 3,
+        "three_way_exact_rate": 0.3
+      },
+      "sarcasm": {
+        "distribution": {
+          "human": {
+            "absent": 9,
+            "present": 1
+          },
+          "model_01": {
+            "absent": 5,
+            "present": 4,
+            "uncertain": 1
+          },
+          "model_02": {
+            "absent": 8,
+            "present": 2
+          }
+        },
+        "pairwise": {
+          "human__model_01": {
+            "agree": 4,
+            "agreement_rate": 0.4,
+            "disagree": 6
+          },
+          "human__model_02": {
+            "agree": 7,
+            "agreement_rate": 0.7,
+            "disagree": 3
+          },
+          "model_01__model_02": {
+            "agree": 7,
+            "agreement_rate": 0.7,
+            "disagree": 3
+          }
+        },
+        "three_way_exact": 4,
+        "three_way_exact_rate": 0.4
+      }
+    },
+    "diag_sarcasm": {
+      "context_sufficiency": {
+        "distribution": {
+          "human": {
+            "sufficient": 10
+          },
+          "model_01": {
+            "sufficient": 10
+          },
+          "model_02": {
+            "sufficient": 10
+          }
+        },
+        "pairwise": {
+          "human__model_01": {
+            "agree": 10,
+            "agreement_rate": 1.0,
+            "disagree": 0
+          },
+          "human__model_02": {
+            "agree": 10,
+            "agreement_rate": 1.0,
+            "disagree": 0
+          },
+          "model_01__model_02": {
+            "agree": 10,
+            "agreement_rate": 1.0,
+            "disagree": 0
+          }
+        },
+        "three_way_exact": 10,
+        "three_way_exact_rate": 1.0
+      },
+      "mixed_emotion": {
+        "distribution": {
+          "human": {
+            "false": 9,
+            "true": 1
+          },
+          "model_01": {
+            "false": 10
+          },
+          "model_02": {
+            "false": 10
+          }
+        },
+        "pairwise": {
+          "human__model_01": {
+            "agree": 9,
+            "agreement_rate": 0.9,
+            "disagree": 1
+          },
+          "human__model_02": {
+            "agree": 9,
+            "agreement_rate": 0.9,
+            "disagree": 1
+          },
+          "model_01__model_02": {
+            "agree": 10,
+            "agreement_rate": 1.0,
+            "disagree": 0
+          }
+        },
+        "three_way_exact": 9,
+        "three_way_exact_rate": 0.9
+      },
+      "sarcasm": {
+        "distribution": {
+          "human": {
+            "absent": 9,
+            "present": 1
+          },
+          "model_01": {
+            "absent": 2,
+            "present": 7,
+            "uncertain": 1
+          },
+          "model_02": {
+            "absent": 1,
+            "present": 9
+          }
+        },
+        "pairwise": {
+          "human__model_01": {
+            "agree": 3,
+            "agreement_rate": 0.3,
+            "disagree": 7
+          },
+          "human__model_02": {
+            "agree": 2,
+            "agreement_rate": 0.2,
+            "disagree": 8
+          },
+          "model_01__model_02": {
+            "agree": 8,
+            "agreement_rate": 0.8,
+            "disagree": 2
+          }
+        },
+        "three_way_exact": 2,
+        "three_way_exact_rate": 0.2
+      }
+    },
+    "diag_short_context": {
+      "context_sufficiency": {
+        "distribution": {
+          "human": {
+            "null": 4,
+            "sufficient": 5,
+            "uncertain": 1
+          },
+          "model_01": {
+            "null": 3,
+            "sufficient": 7
+          },
+          "model_02": {
+            "insufficient": 1,
+            "null": 1,
+            "sufficient": 8
+          }
+        },
+        "pairwise": {
+          "human__model_01": {
+            "agree": 6,
+            "agreement_rate": 0.6,
+            "disagree": 4
+          },
+          "human__model_02": {
+            "agree": 5,
+            "agreement_rate": 0.5,
+            "disagree": 5
+          },
+          "model_01__model_02": {
+            "agree": 7,
+            "agreement_rate": 0.7,
+            "disagree": 3
+          }
+        },
+        "three_way_exact": 4,
+        "three_way_exact_rate": 0.4
+      },
+      "mixed_emotion": {
+        "distribution": {
+          "human": {
+            "false": 6,
+            "null": 4
+          },
+          "model_01": {
+            "false": 7,
+            "null": 3
+          },
+          "model_02": {
+            "false": 8,
+            "null": 1,
+            "true": 1
+          }
+        },
+        "pairwise": {
+          "human__model_01": {
+            "agree": 7,
+            "agreement_rate": 0.7,
+            "disagree": 3
+          },
+          "human__model_02": {
+            "agree": 6,
+            "agreement_rate": 0.6,
+            "disagree": 4
+          },
+          "model_01__model_02": {
+            "agree": 7,
+            "agreement_rate": 0.7,
+            "disagree": 3
+          }
+        },
+        "three_way_exact": 5,
+        "three_way_exact_rate": 0.5
+      },
+      "sarcasm": {
+        "distribution": {
+          "human": {
+            "absent": 6,
+            "null": 4
+          },
+          "model_01": {
+            "absent": 6,
+            "null": 3,
+            "uncertain": 1
+          },
+          "model_02": {
+            "absent": 6,
+            "null": 1,
+            "uncertain": 3
+          }
+        },
+        "pairwise": {
+          "human__model_01": {
+            "agree": 6,
+            "agreement_rate": 0.6,
+            "disagree": 4
+          },
+          "human__model_02": {
+            "agree": 5,
+            "agreement_rate": 0.5,
+            "disagree": 5
+          },
+          "model_01__model_02": {
+            "agree": 7,
+            "agreement_rate": 0.7,
+            "disagree": 3
+          }
+        },
+        "three_way_exact": 4,
+        "three_way_exact_rate": 0.4
+      }
+    },
+    "diagnostic_all": {
+      "context_sufficiency": {
+        "distribution": {
+          "human": {
+            "null": 4,
+            "sufficient": 34,
+            "uncertain": 2
+          },
+          "model_01": {
+            "null": 3,
+            "sufficient": 37
+          },
+          "model_02": {
+            "insufficient": 1,
+            "null": 1,
+            "sufficient": 38
+          }
+        },
+        "pairwise": {
+          "human__model_01": {
+            "agree": 35,
+            "agreement_rate": 0.875,
+            "disagree": 5
+          },
+          "human__model_02": {
+            "agree": 34,
+            "agreement_rate": 0.85,
+            "disagree": 6
+          },
+          "model_01__model_02": {
+            "agree": 37,
+            "agreement_rate": 0.925,
+            "disagree": 3
+          }
+        },
+        "three_way_exact": 33,
+        "three_way_exact_rate": 0.825
+      },
+      "mixed_emotion": {
+        "distribution": {
+          "human": {
+            "false": 29,
+            "null": 4,
+            "true": 7
+          },
+          "model_01": {
+            "false": 37,
+            "null": 3
+          },
+          "model_02": {
+            "false": 33,
+            "null": 1,
+            "true": 6
+          }
+        },
+        "pairwise": {
+          "human__model_01": {
+            "agree": 30,
+            "agreement_rate": 0.75,
+            "disagree": 10
+          },
+          "human__model_02": {
+            "agree": 26,
+            "agreement_rate": 0.65,
+            "disagree": 14
+          },
+          "model_01__model_02": {
+            "agree": 32,
+            "agreement_rate": 0.8,
+            "disagree": 8
+          }
+        },
+        "three_way_exact": 24,
+        "three_way_exact_rate": 0.6
+      },
+      "sarcasm": {
+        "distribution": {
+          "human": {
+            "absent": 34,
+            "null": 4,
+            "present": 2
+          },
+          "model_01": {
+            "absent": 20,
+            "null": 3,
+            "present": 12,
+            "uncertain": 5
+          },
+          "model_02": {
+            "absent": 22,
+            "null": 1,
+            "present": 13,
+            "uncertain": 4
+          }
+        },
+        "pairwise": {
+          "human__model_01": {
+            "agree": 20,
+            "agreement_rate": 0.5,
+            "disagree": 20
+          },
+          "human__model_02": {
+            "agree": 21,
+            "agreement_rate": 0.525,
+            "disagree": 19
+          },
+          "model_01__model_02": {
+            "agree": 29,
+            "agreement_rate": 0.725,
+            "disagree": 11
+          }
+        },
+        "three_way_exact": 16,
+        "three_way_exact_rate": 0.4
+      }
+    },
+    "representative": {
+      "context_sufficiency": {
+        "distribution": {
+          "human": {
+            "insufficient": 7,
+            "null": 1,
+            "sufficient": 71,
+            "uncertain": 1
+          },
+          "model_01": {
+            "sufficient": 80
+          },
+          "model_02": {
+            "sufficient": 80
+          }
+        },
+        "pairwise": {
+          "human__model_01": {
+            "agree": 71,
+            "agreement_rate": 0.8875,
+            "disagree": 9
+          },
+          "human__model_02": {
+            "agree": 71,
+            "agreement_rate": 0.8875,
+            "disagree": 9
+          },
+          "model_01__model_02": {
+            "agree": 80,
+            "agreement_rate": 1.0,
+            "disagree": 0
+          }
+        },
+        "three_way_exact": 71,
+        "three_way_exact_rate": 0.8875
+      },
+      "mixed_emotion": {
+        "distribution": {
+          "human": {
+            "false": 64,
+            "null": 1,
+            "true": 15
+          },
+          "model_01": {
+            "false": 76,
+            "true": 4
+          },
+          "model_02": {
+            "false": 67,
+            "true": 13
+          }
+        },
+        "pairwise": {
+          "human__model_01": {
+            "agree": 62,
+            "agreement_rate": 0.775,
+            "disagree": 18
+          },
+          "human__model_02": {
+            "agree": 65,
+            "agreement_rate": 0.8125,
+            "disagree": 15
+          },
+          "model_01__model_02": {
+            "agree": 69,
+            "agreement_rate": 0.8625,
+            "disagree": 11
+          }
+        },
+        "three_way_exact": 58,
+        "three_way_exact_rate": 0.725
+      },
+      "sarcasm": {
+        "distribution": {
+          "human": {
+            "absent": 67,
+            "null": 1,
+            "present": 7,
+            "uncertain": 5
+          },
+          "model_01": {
+            "absent": 49,
+            "present": 18,
+            "uncertain": 13
+          },
+          "model_02": {
+            "absent": 53,
+            "present": 26,
+            "uncertain": 1
+          }
+        },
+        "pairwise": {
+          "human__model_01": {
+            "agree": 50,
+            "agreement_rate": 0.625,
+            "disagree": 30
+          },
+          "human__model_02": {
+            "agree": 58,
+            "agreement_rate": 0.725,
+            "disagree": 22
+          },
+          "model_01__model_02": {
+            "agree": 63,
+            "agreement_rate": 0.7875,
+            "disagree": 17
+          }
+        },
+        "three_way_exact": 48,
+        "three_way_exact_rate": 0.6
+      }
+    }
+  }
+}

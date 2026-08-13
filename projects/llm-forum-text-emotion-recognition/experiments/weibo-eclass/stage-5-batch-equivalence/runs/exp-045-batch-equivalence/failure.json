@@ -1,0 +1,16 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "corrective_action": "Register EXP-046 with return_dict=false and an explicit integer-token contract before sampling.",
+  "detected_at_utc": "2026-08-09T05:58:02Z",
+  "experiment_id": "EXP-045",
+  "inference_started": false,
+  "observed_default_list_length": 2,
+  "observed_default_type": "BatchEncoding",
+  "observed_explicit_integer_token_length": 201,
+  "reason": "AutoTokenizer.apply_chat_template returned a BatchEncoding by default; list(result) produced the keys input_ids and attention_mask rather than token IDs.",
+  "status": "Failed",
+  "test_split_accessed": false,
+  "validation_split_accessed": false
+}

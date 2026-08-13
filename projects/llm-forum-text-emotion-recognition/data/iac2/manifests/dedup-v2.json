@@ -1,0 +1,61 @@
+{
+  "schema_version": "1",
+  "pipeline_id": "DATA-FCTX-DEDUP-V2",
+  "generated_at": "2026-08-05T13:20:20.231139+00:00",
+  "artifact_status": "generated_pending_independent_verification",
+  "input": {
+    "manifest": "cleaning-v2.json",
+    "database_filename": "cleaning-v2.sqlite",
+    "database_sha256": "b1f3022320980c96c5353be16401764a78e0bc40ebb21d71399fe4efcb05fcc7"
+  },
+  "protocol": {
+    "filename": "data-deduplication-v2.md",
+    "sha256": "4ae7ac8b224eb6eacd746c34ac16a560536ad07d485d49835aabbf8db4dc2fcc"
+  },
+  "aggregate_report": {
+    "filename": "dedup-preflight-v2.json",
+    "sha256": "593dbc8a9bcab250e5677e03cadae001f9ecaa38ebc5c191144c8d2640ecb3bf"
+  },
+  "private_artifacts": {
+    "database": {
+      "filename": "dedup-v2.sqlite",
+      "size_bytes": 213626880,
+      "sha256": "13a5266a12f9574f073c3c7ce72e785e7d019573961507e1b0631f0a50bd7d4f"
+    },
+    "embeddings": {
+      "filename": "dedup-v2-post-embeddings.f32",
+      "size_bytes": 636550656,
+      "sha256": "e047e922e1b92e8c855582688fa8db32af03a611315fb704c13803091be3f594",
+      "shape": [
+        414421,
+        384
+      ],
+      "dtype": "float32"
+    },
+    "index": {
+      "filename": "dedup-v2-pair-hnsw.faiss",
+      "size_bytes": 1348317546,
+      "sha256": "98ee93ef4d0dee8926e2dc5e72c998ee6a281b780b44d007547ae969280907b2"
+    }
+  },
+  "reuse_provenance": {
+    "source_pipeline_id": "DATA-FCTX-DEDUP-V1",
+    "source_artifact_status": "failed_retrieval_quality_gate",
+    "source_manifest_filename": "dedup-v1.json",
+    "source_manifest_sha256": "943a4fb9d97deb61a00311b1007993782669a242bcdabf95354fd0a7a8e97739",
+    "source_report_filename": "dedup-preflight-v1.json",
+    "source_report_sha256": "e32e5d3df272b9e5b148ed9c406be47993318b3e12c49253af78aeaac9063491",
+    "embedding_filename": "dedup-v1-post-embeddings.f32",
+    "embedding_sha256": "e047e922e1b92e8c855582688fa8db32af03a611315fb704c13803091be3f594",
+    "index_filename": "dedup-v1-pair-hnsw.faiss",
+    "index_sha256": "0ea00b8ba104f393c0252063022e7fbb814b4898ddf8af66ebc8012493c83b3a",
+    "reused_components": [
+      "post_embeddings",
+      "HNSW_graph"
+    ],
+    "reused_decisions_or_edges": false
+  },
+  "contains_public_forum_text": false,
+  "contains_public_source_or_sample_ids": false,
+  "contains_public_embeddings": false
+}

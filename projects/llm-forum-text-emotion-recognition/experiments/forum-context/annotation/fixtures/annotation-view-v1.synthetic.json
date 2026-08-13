@@ -1,0 +1,40 @@
+{
+  "schema_version": "annotation-view-v1",
+  "protocol_id": "DATA-FCTX-LABEL-V1",
+  "dataset": {
+    "name": "IAC 2.0",
+    "subset": "4forums",
+    "cleaning_pipeline_id": "DATA-FCTX-CLEAN-V2",
+    "dedup_pipeline_id": "DATA-FCTX-DEDUP-V2"
+  },
+  "ids": {
+    "sample_uid": "smp_0000000000000000000000000000000000000000000000000000000000000001",
+    "thread_uid": "thr_0000000000000000000000000000000000000000000000000000000000000002",
+    "parent_uid": "pst_0000000000000000000000000000000000000000000000000000000000000003",
+    "target_uid": "pst_0000000000000000000000000000000000000000000000000000000000000004"
+  },
+  "context": {
+    "discussion_title": "Synthetic release schedule discussion",
+    "direct_parent_body": "The update was promised for Monday, but it has still not arrived.",
+    "target_quotes": [
+      {
+        "quote_index": 0,
+        "text": "The update will ship on Monday.",
+        "source_relation": "direct_parent",
+        "truncated": false,
+        "altered": false
+      }
+    ]
+  },
+  "target": {
+    "body": "Wonderful. Another deadline missed. [[QUOTE]]",
+    "full_with_quotes": "Wonderful. Another deadline missed. [[QUOTE]] The update will ship on Monday. [[/QUOTE]]"
+  },
+  "display_contract": {
+    "stage_a": "target.body",
+    "stage_b": "context+target",
+    "stage_a_locked_before_stage_b": true,
+    "future_replies_included": false,
+    "ancestor_chain_included": false
+  }
+}

@@ -1,0 +1,268 @@
+{
+  "schema_version": "1",
+  "protocol_id": "DATA-FCTX-SAMPLE-V1",
+  "verified_at_utc": "2026-08-06T03:28:33.340321+00:00",
+  "status": "passed",
+  "inputs": {
+    "source_filename": "fourforums_no_parse_2016_05_18.sql.gz",
+    "source_sha256": "e26e6d27a5fc88ee5837b3838f099f8268d42fe50fbbd9cd88b66dfe7744dd9c",
+    "cleaning_database_filename": "cleaning-v2.sqlite",
+    "cleaning_database_sha256": "b1f3022320980c96c5353be16401764a78e0bc40ebb21d71399fe4efcb05fcc7",
+    "dedup_database_filename": "dedup-v2.sqlite",
+    "dedup_database_sha256": "13a5266a12f9574f073c3c7ce72e785e7d019573961507e1b0631f0a50bd7d4f",
+    "sampling_protocol_filename": "data-annotation-sampling-pilot-v1.md",
+    "sampling_protocol_sha256": "8bff63614d73906d15a4327207dec319a57acac89bfcd8e9cfb488ba134bd5f9",
+    "label_protocol_filename": "data-label-calibration-view-v1.md",
+    "label_protocol_sha256": "0de4bf6243f223ea1a72b3fa48867b59abf6cd19ff95104ff53d00856b0d376a",
+    "preflight_report_filename": "sampling-preflight-v1.json",
+    "preflight_report_sha256": "0d8383ee3ac190331ee9a0dd6a7c42d0ba9e2f8af96468ef23670c77b61a07ff",
+    "sampling_manifest_filename": "sampling-manifest.jsonl",
+    "sampling_manifest_sha256": "54d15a5ce4e9e7ab7915c8058f15fbd3b4e989cb9776084d7b0ea428c8262d28",
+    "reserve_manifest_filename": "reserve-manifest.jsonl",
+    "reserve_manifest_sha256": "fbfbec887869a1c2d34358a98cfc7721c2eae0eafe9205c184d64ef6908e4381",
+    "verification_script_sha256": "84c614572ca25cc0d4ae6749d2f898edee97251467f4195e223b20b3fd031ecf"
+  },
+  "aggregate": {
+    "candidate_rows": 403183,
+    "primary_rows": 120,
+    "reserve_rows": 60,
+    "unique_threads": 180,
+    "non_null_review_cluster_rows": 1
+  },
+  "checks": [
+    {
+      "name": "preflight status",
+      "status": "passed",
+      "detail": "must be passed"
+    },
+    {
+      "name": "protocol identity",
+      "status": "passed",
+      "detail": "DATA-FCTX-SAMPLE-V1"
+    },
+    {
+      "name": "sampling protocol hash",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "input hash source",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "input hash cleaning_database",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "input hash dedup_database",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "input hash label_protocol",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "candidate frame count",
+      "status": "passed",
+      "detail": "rows=403183"
+    },
+    {
+      "name": "candidate view reconstruction",
+      "status": "passed",
+      "detail": "unreconstructible=0"
+    },
+    {
+      "name": "short flag rule",
+      "status": "passed",
+      "detail": "mismatches=0"
+    },
+    {
+      "name": "primary quota representative",
+      "status": "passed",
+      "detail": "rows=80 expected=80"
+    },
+    {
+      "name": "primary deterministic replay representative",
+      "status": "passed",
+      "detail": "ordered sample sequence"
+    },
+    {
+      "name": "primary quota diag_sarcasm",
+      "status": "passed",
+      "detail": "rows=10 expected=10"
+    },
+    {
+      "name": "primary deterministic replay diag_sarcasm",
+      "status": "passed",
+      "detail": "ordered sample sequence"
+    },
+    {
+      "name": "primary quota diag_hostility_affect",
+      "status": "passed",
+      "detail": "rows=10 expected=10"
+    },
+    {
+      "name": "primary deterministic replay diag_hostility_affect",
+      "status": "passed",
+      "detail": "ordered sample sequence"
+    },
+    {
+      "name": "primary quota diag_short_context",
+      "status": "passed",
+      "detail": "rows=10 expected=10"
+    },
+    {
+      "name": "primary deterministic replay diag_short_context",
+      "status": "passed",
+      "detail": "ordered sample sequence"
+    },
+    {
+      "name": "primary quota diag_distinct_quote",
+      "status": "passed",
+      "detail": "rows=10 expected=10"
+    },
+    {
+      "name": "primary deterministic replay diag_distinct_quote",
+      "status": "passed",
+      "detail": "ordered sample sequence"
+    },
+    {
+      "name": "reserve quota representative",
+      "status": "passed",
+      "detail": "rows=20 expected=20"
+    },
+    {
+      "name": "reserve deterministic replay representative",
+      "status": "passed",
+      "detail": "ordered sample sequence"
+    },
+    {
+      "name": "reserve quota diag_sarcasm",
+      "status": "passed",
+      "detail": "rows=10 expected=10"
+    },
+    {
+      "name": "reserve deterministic replay diag_sarcasm",
+      "status": "passed",
+      "detail": "ordered sample sequence"
+    },
+    {
+      "name": "reserve quota diag_hostility_affect",
+      "status": "passed",
+      "detail": "rows=10 expected=10"
+    },
+    {
+      "name": "reserve deterministic replay diag_hostility_affect",
+      "status": "passed",
+      "detail": "ordered sample sequence"
+    },
+    {
+      "name": "reserve quota diag_short_context",
+      "status": "passed",
+      "detail": "rows=10 expected=10"
+    },
+    {
+      "name": "reserve deterministic replay diag_short_context",
+      "status": "passed",
+      "detail": "ordered sample sequence"
+    },
+    {
+      "name": "reserve quota diag_distinct_quote",
+      "status": "passed",
+      "detail": "rows=10 expected=10"
+    },
+    {
+      "name": "reserve deterministic replay diag_distinct_quote",
+      "status": "passed",
+      "detail": "ordered sample sequence"
+    },
+    {
+      "name": "primary manifest rows",
+      "status": "passed",
+      "detail": "rows=120"
+    },
+    {
+      "name": "reserve manifest rows",
+      "status": "passed",
+      "detail": "rows=60"
+    },
+    {
+      "name": "global sample uniqueness",
+      "status": "passed",
+      "detail": "unique=180"
+    },
+    {
+      "name": "global thread uniqueness",
+      "status": "passed",
+      "detail": "unique=180"
+    },
+    {
+      "name": "global review-cluster uniqueness",
+      "status": "passed",
+      "detail": "non_null=1"
+    },
+    {
+      "name": "all manifest samples in candidate frame",
+      "status": "passed",
+      "detail": "candidate membership"
+    },
+    {
+      "name": "manifest field and lane eligibility",
+      "status": "passed",
+      "detail": "mismatches=0"
+    },
+    {
+      "name": "annotation order",
+      "status": "passed",
+      "detail": "mismatches=0"
+    },
+    {
+      "name": "sampling manifest hash",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "reserve manifest hash",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "private file modes",
+      "status": "passed",
+      "detail": "mode=0600"
+    },
+    {
+      "name": "private artifacts gitignored",
+      "status": "passed",
+      "detail": "git check-ignore"
+    },
+    {
+      "name": "repeat manifest deferred",
+      "status": "passed",
+      "detail": "not created before replacements"
+    },
+    {
+      "name": "preflight public payload privacy",
+      "status": "passed",
+      "detail": "violations=0"
+    },
+    {
+      "name": "preflight privacy claims",
+      "status": "passed",
+      "detail": "all emission/service flags false"
+    }
+  ],
+  "mismatch_count": 0,
+  "mismatches": [],
+  "public_payload_violations": [],
+  "privacy": {
+    "forum_text_emitted": false,
+    "source_or_hmac_ids_emitted": false,
+    "per_sample_records_emitted": false,
+    "external_services_used": false
+  }
+}

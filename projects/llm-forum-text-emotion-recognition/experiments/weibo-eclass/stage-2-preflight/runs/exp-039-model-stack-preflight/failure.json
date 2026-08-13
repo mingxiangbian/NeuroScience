@@ -1,0 +1,46 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "completed_at_utc": "2026-08-08T05:08:03Z",
+  "error": {
+    "exception": "KeyError",
+    "message": "assistant_target_template outer JSON braces were interpreted by str.format",
+    "stage": "static-prompt-contract"
+  },
+  "experiment_id": "EXP-039",
+  "frozen_implementation": {
+    "config": {
+      "bytes": 3564,
+      "path": "experiments/weibo-eclass/stage-2-preflight/runs/exp-039-model-stack-preflight/frozen-config.json",
+      "sha256": "b2c8b0443281c00c146d6a6509f23fd72677f1ccc9dac549330f0a11e0100214"
+    },
+    "parser": {
+      "bytes": 3975,
+      "path": "experiments/weibo-eclass/stage-2-preflight/runs/exp-039-model-stack-preflight/frozen-label-parser.py",
+      "sha256": "7fb43b548a9d8643961d846239d7134b0f39945ce14a22042eb6a6b9ca880470"
+    },
+    "prompt": {
+      "bytes": 1073,
+      "path": "experiments/weibo-eclass/stage-2-preflight/runs/exp-039-model-stack-preflight/frozen-prompt-v1.json",
+      "sha256": "d9a92aab3a531b769c3b4794572cf0842536c7c38dcdd6a1cd4ac25885e6631b"
+    },
+    "runner": {
+      "bytes": 60751,
+      "path": "experiments/weibo-eclass/stage-2-preflight/runs/exp-039-model-stack-preflight/frozen-runner.py",
+      "sha256": "d03e5bab0ef7ec31b30154355d348803462d8ff2fdb75c455d3f5b6094756e69"
+    },
+    "verifier": {
+      "bytes": 28505,
+      "path": "experiments/weibo-eclass/stage-2-preflight/runs/exp-039-model-stack-preflight/frozen-verifier.py",
+      "sha256": "daed777bede76e2208ef85659db9d8facc9563120c446c5c38e1e082781abb02"
+    }
+  },
+  "model_download_attempted": false,
+  "optimizer_steps": 0,
+  "private_selection_sha256": "fa50f5ed2f5b72b16154bfc87e7635a4617900db4edf85e8f7624b47249100b2",
+  "status": "Failed",
+  "test_split_accessed": false,
+  "training_started": false,
+  "validation_split_accessed": false
+}

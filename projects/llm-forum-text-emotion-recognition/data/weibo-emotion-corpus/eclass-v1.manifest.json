@@ -1,0 +1,70 @@
+{
+  "counts": {
+    "leakage_components": 2766,
+    "retained_rows": 8540,
+    "source_groups": 2943,
+    "split_rows": {
+      "test": 1273,
+      "train": 5995,
+      "validation": 1272
+    }
+  },
+  "private_artifacts": {
+    "near_duplicates": {
+      "bytes": 0,
+      "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/near-duplicate-candidates.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "private_manifest": {
+      "bytes": 2114,
+      "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/private-manifest.json",
+      "sha256": "1c1085eecf5ba0a010a106bd7517bc663095958de3f39ae8db19a6e598596875"
+    },
+    "test_inputs": {
+      "bytes": 471847,
+      "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/test.inputs.jsonl",
+      "sha256": "5229637a285179a3626858edc369664d159fe9c99cd7bb03aae8fbc868f4406e"
+    },
+    "test_labels": {
+      "bytes": 184562,
+      "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/test.labels.sealed.jsonl",
+      "sha256": "649ce91f58aa7550e76450c25a571f5dbbe3b03c70ba0e9e07fb53c84cdfd002"
+    },
+    "train": {
+      "bytes": 2286694,
+      "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/train.jsonl",
+      "sha256": "b1fd309acf45dfa4ad0c907ee3f373ea95fce751d51b637d402e289aa79d19e0"
+    },
+    "validation": {
+      "bytes": 486142,
+      "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/validation.jsonl",
+      "sha256": "99d80e1433bddea7b639983b8fa874e45d585318aa47eb87ab29581e02f72a4a"
+    }
+  },
+  "private_root": "data/weibo-emotion-corpus/derived-private/eclass-v1",
+  "protocol_id": "DATA-WEIBO-TASK-V1",
+  "public_report": {
+    "bytes": 6706,
+    "path": "experiments/forum-context/weibo-eclass/reports/data-weibo-eclass-v1.json",
+    "sha256": "07f3408f2b6fbedbff873ac4fb1578b609e3855721853a17eba435f30a5bc66d"
+  },
+  "schema_version": "weibo-eclass-task-manifest-v1",
+  "source": {
+    "license": "Apache-2.0",
+    "revision": "d385f8cdc7e7ab9ca1ec62b8202c664a5ba651f3",
+    "sha256": "cd31ced8f9a4034c83065099061a23df3b402797841d8ff120c459da55251793"
+  },
+  "status": "verified",
+  "test_gate": {
+    "inputs_contain_gold_labels": false,
+    "labels_gitignored": true,
+    "status": "sealed_not_authorized_for_model_access",
+    "test_inputs_sha256": "5229637a285179a3626858edc369664d159fe9c99cd7bb03aae8fbc868f4406e",
+    "test_labels_sha256": "649ce91f58aa7550e76450c25a571f5dbbe3b03c70ba0e9e07fb53c84cdfd002"
+  },
+  "verification_report": {
+    "bytes": 1318,
+    "path": "experiments/forum-context/weibo-eclass/reports/data-weibo-eclass-v1-verification.json",
+    "sha256": "44b56da8eae7eccf5b95e0d1f162425de05ecf3301602aff6fe00c648e3e829a"
+  }
+}

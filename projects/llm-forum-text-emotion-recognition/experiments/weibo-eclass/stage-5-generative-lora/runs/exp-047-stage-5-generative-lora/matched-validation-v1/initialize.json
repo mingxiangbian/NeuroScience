@@ -1,0 +1,41 @@
+{
+  "accessed_splits": [
+    "validation"
+  ],
+  "authorization": {
+    "bytes": 1170,
+    "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-matched-validation-authorization-v1.json",
+    "sha256": "c09b19f972dc4f1614918bd945f47cd7f6a060d44bae355721606cbc071cd4bf"
+  },
+  "completed_at_utc": "2026-08-10T17:52:36.472572+00:00",
+  "condition_order": [
+    "reference",
+    "seed-42",
+    "seed-43",
+    "seed-44"
+  ],
+  "experiment_id": "EXP-047",
+  "gates": {
+    "seed-42": {
+      "replay_verification_id": "EXP-047-SEED-42-REPLAY-VERIFY-V2",
+      "training_verification_id": "EXP-047-FORMAL-SEED-42-TRAIN-VERIFY-V2"
+    },
+    "seed-43": {
+      "replay_verification_id": "EXP-047-SEED-43-REPLAY-VERIFY-V1",
+      "training_verification_id": "EXP-047-FORMAL-SEED-43-ATTEMPT-2-TRAIN-VERIFY-V1"
+    },
+    "seed-44": {
+      "replay_verification_id": "EXP-047-SEED-44-REPLAY-VERIFY-V1",
+      "training_verification_id": "EXP-047-FORMAL-SEED-44-TRAIN-VERIFY-V1"
+    }
+  },
+  "model_files": {
+    "file_count": 9,
+    "total_bytes": 8056445038
+  },
+  "performance_metrics_computed": false,
+  "status": "Passed",
+  "test_split_accessed": false,
+  "validation_rows": 1272,
+  "validation_split_accessed": true
+}

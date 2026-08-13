@@ -1,0 +1,96 @@
+{
+  "accessed_splits": [
+    "validation"
+  ],
+  "authorization": {
+    "bytes": 1170,
+    "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-matched-validation-authorization-v1.json",
+    "sha256": "c09b19f972dc4f1614918bd945f47cd7f6a060d44bae355721606cbc071cd4bf"
+  },
+  "condition_order": [
+    "reference",
+    "seed-42",
+    "seed-43",
+    "seed-44"
+  ],
+  "contract": {
+    "bytes": 11410,
+    "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-matched-validation-contract-v1.json",
+    "sha256": "72b9ef256be16e009f8f42231976383394ce75c3a00531e07ba5e2feed51b3b2"
+  },
+  "experiment_id": "EXP-047",
+  "git": {
+    "commit": "9860d660730c39cba7302747aee852733d201069",
+    "dirty": true
+  },
+  "raw_outputs_stored_publicly": false,
+  "stages": {
+    "aggregate": {
+      "artifact": {
+        "bytes": 48877,
+        "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/matched-validation-v1/aggregate.json",
+        "sha256": "1cb2d4184cc935320fa0f5fec64444e3a865c558197ad4050495be53c880b86a"
+      },
+      "completed_at_utc": "2026-08-12T02:37:16.026821+00:00",
+      "report": {
+        "bytes": 828,
+        "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/matched-validation-v1/REPORT.md",
+        "sha256": "855d42cc608c9fb39ac4b5cb4dbda738cb618fcf7dbf3db438580f697e4b743c"
+      },
+      "status": "Passed"
+    },
+    "infer_reference": {
+      "artifact": {
+        "bytes": 9639,
+        "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/matched-validation-v1/condition-reference.json",
+        "sha256": "2e2bbea297f15346e19547585b67e74e862201b1aee9a2c2acb1541e162ca21f"
+      },
+      "completed_at_utc": "2026-08-11T15:51:23.371297+00:00",
+      "status": "Passed"
+    },
+    "infer_seed-42": {
+      "artifact": {
+        "bytes": 9700,
+        "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/matched-validation-v1/condition-seed-42.json",
+        "sha256": "43e45d0adeecf588bf80889ff056267029feb7342a7414486e896262afd2abef"
+      },
+      "completed_at_utc": "2026-08-11T16:39:01.594214+00:00",
+      "status": "Passed"
+    },
+    "infer_seed-43": {
+      "artifact": {
+        "bytes": 9718,
+        "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/matched-validation-v1/condition-seed-43.json",
+        "sha256": "d91526115f7e174faef3238f1fa43740199afd9069476331cfa0e3888b4e7bdc"
+      },
+      "completed_at_utc": "2026-08-12T01:50:26.234949+00:00",
+      "status": "Passed"
+    },
+    "infer_seed-44": {
+      "artifact": {
+        "bytes": 9693,
+        "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/matched-validation-v1/condition-seed-44.json",
+        "sha256": "8086002152362ed35f1f62d9970b8b9425e379fbb11ebad6c4c3c94803cd7039"
+      },
+      "completed_at_utc": "2026-08-12T02:34:52.572501+00:00",
+      "status": "Passed"
+    },
+    "initialize": {
+      "artifact": {
+        "bytes": 1236,
+        "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/matched-validation-v1/initialize.json",
+        "sha256": "1f5958fa2063c66efd590b1acae40e0b68e71f298b67dbee256f7769834b65cd"
+      },
+      "completed_at_utc": "2026-08-10T17:52:36.472572+00:00",
+      "status": "Passed"
+    }
+  },
+  "status": "Verified",
+  "test_split_accessed": false,
+  "validation_split_accessed": true,
+  "verification": {
+    "bytes": 2354,
+    "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/matched-validation-v1/verification.json",
+    "sha256": "42da926faa9fd4a18ed8d209d7d30bfd54403e8951e0b6b4bb3bb0aae0df90e9"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "aggregate": {
+    "eligible_rows_before_dedup": 10962,
+    "failed_groups": 1,
+    "logical_rows": 23127,
+    "max_context_or_ambiguity_allocation_error": 0.022315,
+    "max_label_allocation_error": 0.005882,
+    "near_duplicate_matches": 0,
+    "parse_failure_counts": {
+      "marker_multiplicity": 2
+    },
+    "raw_eclass_rows": 11075,
+    "retained_label_counts": {
+      "anger": 284,
+      "joy": 408,
+      "negative": 736,
+      "neutral": 401,
+      "no_emotion": 5929,
+      "positive": 646,
+      "sadness": 136
+    },
+    "retained_rows": 8540,
+    "scaffold_rows": 12052,
+    "split_ambiguous_target": {
+      "test": 45,
+      "train": 205,
+      "validation": 45
+    },
+    "split_context_available": {
+      "test": 938,
+      "train": 4260,
+      "validation": 940
+    },
+    "split_context_missing": {
+      "test": 335,
+      "train": 1735,
+      "validation": 332
+    },
+    "split_rows": {
+      "test": 1273,
+      "train": 5995,
+      "validation": 1272
+    }
+  },
+  "checks_failed": 0,
+  "checks_passed": 33,
+  "checks_total": 33,
+  "claim_boundary": "This verifies data construction and sealing only; no model result was produced or inspected.",
+  "failures": [],
+  "protocol_id": "DATA-WEIBO-TASK-V1",
+  "schema_version": "weibo-eclass-verification-report-v1",
+  "status": "verified"
+}

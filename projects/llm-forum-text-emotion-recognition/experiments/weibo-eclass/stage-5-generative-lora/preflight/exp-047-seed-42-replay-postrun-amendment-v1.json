@@ -1,0 +1,50 @@
+{
+  "amendment_id": "EXP-047-SEED-42-REPLAY-POSTRUN-AMENDMENT-V1",
+  "bindings": {
+    "base_replay_verifier": {
+      "bytes": 17062,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/verify_seed42_replay.py",
+      "sha256": "8dede1c9599ef9d296d1fd1dbffa2c28caf4e81d1c1544bb3f7df11f380a9abb"
+    },
+    "contract": {
+      "bytes": 5225,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-seed-42-replay-contract-v1.json",
+      "sha256": "cbf1c09f55854bd07b9dee9517ef41595199546987d960870181fe8d83dc11d7"
+    },
+    "postrun_verifier": {
+      "bytes": 6032,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/verify_seed42_replay_postrun.py",
+      "sha256": "f76b735fcbe125f47fbe610d7b9f270ccc9979bb85fe2836751ee40f2d257ee5"
+    },
+    "predecessor_verification": {
+      "bytes": 2622,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/seed-42-replay/verification.json",
+      "sha256": "2921715f7428009e5194ed4fb3f873ddda5992cce0f0ae93517ae7c60b5010c6"
+    }
+  },
+  "created_at_utc": "2026-08-09T17:35:19Z",
+  "experiment_id": "EXP-047",
+  "observed_failure": {
+    "field": "recalculated.privacy.public_json_files_scanned",
+    "first_run_value": 4,
+    "post_write_check_value": 5,
+    "reason": "The V1 verifier counted every JSON file in its output directory. Writing verification.json therefore changed the value that --check recomputed, although the four source run artifacts and all privacy results were unchanged."
+  },
+  "permitted_delta": {
+    "field": "recalculated.privacy.public_json_files_scanned",
+    "post_write_observed": 5,
+    "stable_source_artifact_count": 4
+  },
+  "scope": {
+    "changes_replay_outputs": false,
+    "permits_inference_rerun": false,
+    "permits_seed_43_or_44": false,
+    "permits_test_access": false,
+    "permits_validation_access": false,
+    "purpose": "Count only aggregate.json, pass-r1.json, pass-r2.json, and run.json as source-public artifacts while retaining verification.json as immutable predecessor evidence."
+  },
+  "seed": 42,
+  "status": "Registered",
+  "test_split_accessed": false,
+  "validation_split_accessed": false
+}

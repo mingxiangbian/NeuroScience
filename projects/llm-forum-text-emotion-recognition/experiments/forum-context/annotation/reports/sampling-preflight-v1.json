@@ -1,0 +1,306 @@
+{
+  "schema_version": "1",
+  "protocol_id": "DATA-FCTX-SAMPLE-V1",
+  "generated_at_utc": "2026-08-06T03:26:48.653185+00:00",
+  "status": "passed",
+  "blocked_reasons": [],
+  "inputs": {
+    "source": {
+      "filename": "fourforums_no_parse_2016_05_18.sql.gz",
+      "sha256": "e26e6d27a5fc88ee5837b3838f099f8268d42fe50fbbd9cd88b66dfe7744dd9c"
+    },
+    "cleaning_database": {
+      "filename": "cleaning-v2.sqlite",
+      "sha256": "b1f3022320980c96c5353be16401764a78e0bc40ebb21d71399fe4efcb05fcc7"
+    },
+    "dedup_database": {
+      "filename": "dedup-v2.sqlite",
+      "sha256": "13a5266a12f9574f073c3c7ce72e785e7d019573961507e1b0631f0a50bd7d4f"
+    },
+    "sampling_protocol": {
+      "filename": "data-annotation-sampling-pilot-v1.md",
+      "sha256": "8bff63614d73906d15a4327207dec319a57acac89bfcd8e9cfb488ba134bd5f9"
+    },
+    "label_protocol": {
+      "filename": "data-label-calibration-view-v1.md",
+      "sha256": "0de4bf6243f223ea1a72b3fa48867b59abf6cd19ff95104ff53d00856b0d376a"
+    }
+  },
+  "implementation": {
+    "script": "sample_iac2_pilot_v1.py",
+    "script_sha256": "0c8ae060e9ad5b05870905d18f318f89ac11199acf04d704e7040734c7e32e82",
+    "common_module": "sampling_common.py",
+    "common_module_sha256": "31285af290974ad948a4f9cf23ec0de7c523fea0850fc2c87d875e439ab7f42a",
+    "seed": "07f4b8c18479c240af5354cc1d316fb8",
+    "rank_formula": "SHA256(protocol_id\\nseed\\nlane\\nsample_uid)"
+  },
+  "candidate_frame": {
+    "candidate_rows": 403183,
+    "unreconstructible_rows": 0,
+    "short_flag_mismatches": 0,
+    "distinct_quote_candidate_rows": 37280,
+    "characteristics": {
+      "count": 403183,
+      "topic_linked": 146241,
+      "target_has_quote": 300108,
+      "target_short": 1757,
+      "distinct_quote": 37233,
+      "qr_annotated": 6937,
+      "sarcasm_eligible": 662,
+      "hostility_affect_eligible": 1153,
+      "any_soft_flag": 244805,
+      "any_severe_flag": 961,
+      "target_word_count_nearest_rank": {
+        "p50": 58,
+        "p90": 264,
+        "p95": 406
+      }
+    },
+    "diagnostic_pool_capacities": {
+      "representative": 403183,
+      "diag_sarcasm": 662,
+      "diag_hostility_affect": 1153,
+      "diag_short_context": 1757,
+      "diag_distinct_quote": 37233
+    }
+  },
+  "weak_metadata": {
+    "discussion_topic_rows": 2894,
+    "qr_entry_rows": 10003,
+    "qr_entry_rows_with_target": 9975,
+    "qr_average_rows": 9982,
+    "qr_joined_rows": 9954,
+    "qr_orphan_average_rows": 28,
+    "qr_conflicting_entry_keys": 0,
+    "qr_conflicting_average_keys": 0,
+    "qr_unique_annotated_targets": 7058,
+    "qr_sarcasm_eligible_targets": 671,
+    "qr_hostility_affect_eligible_targets": 1167,
+    "topic_linked_discussions": 2894
+  },
+  "selection": {
+    "primary": {
+      "representative": {
+        "quota": 80,
+        "qualifying_candidates": 403183,
+        "ranked_candidates_examined": 81,
+        "selected": 80,
+        "conflicts_before_quota": {
+          "thread": 1
+        },
+        "status": "passed"
+      },
+      "diag_sarcasm": {
+        "quota": 10,
+        "qualifying_candidates": 662,
+        "ranked_candidates_examined": 10,
+        "selected": 10,
+        "conflicts_before_quota": {},
+        "status": "passed"
+      },
+      "diag_hostility_affect": {
+        "quota": 10,
+        "qualifying_candidates": 1153,
+        "ranked_candidates_examined": 10,
+        "selected": 10,
+        "conflicts_before_quota": {},
+        "status": "passed"
+      },
+      "diag_short_context": {
+        "quota": 10,
+        "qualifying_candidates": 1757,
+        "ranked_candidates_examined": 16,
+        "selected": 10,
+        "conflicts_before_quota": {
+          "thread": 6
+        },
+        "status": "passed"
+      },
+      "diag_distinct_quote": {
+        "quota": 10,
+        "qualifying_candidates": 37233,
+        "ranked_candidates_examined": 10,
+        "selected": 10,
+        "conflicts_before_quota": {},
+        "status": "passed"
+      }
+    },
+    "reserves": {
+      "representative": {
+        "quota": 20,
+        "qualifying_candidates": 403183,
+        "ranked_candidates_examined": 20,
+        "selected": 20,
+        "conflicts_before_quota": {},
+        "status": "passed"
+      },
+      "diag_sarcasm": {
+        "quota": 10,
+        "qualifying_candidates": 662,
+        "ranked_candidates_examined": 11,
+        "selected": 10,
+        "conflicts_before_quota": {
+          "thread": 1
+        },
+        "status": "passed"
+      },
+      "diag_hostility_affect": {
+        "quota": 10,
+        "qualifying_candidates": 1153,
+        "ranked_candidates_examined": 13,
+        "selected": 10,
+        "conflicts_before_quota": {
+          "sample": 2,
+          "thread": 1
+        },
+        "status": "passed"
+      },
+      "diag_short_context": {
+        "quota": 10,
+        "qualifying_candidates": 1757,
+        "ranked_candidates_examined": 11,
+        "selected": 10,
+        "conflicts_before_quota": {
+          "thread": 1
+        },
+        "status": "passed"
+      },
+      "diag_distinct_quote": {
+        "quota": 10,
+        "qualifying_candidates": 37233,
+        "ranked_candidates_examined": 10,
+        "selected": 10,
+        "conflicts_before_quota": {},
+        "status": "passed"
+      }
+    },
+    "primary_rows": 120,
+    "reserve_rows": 60,
+    "unique_samples_across_primary_and_reserve": 180,
+    "unique_threads_across_primary_and_reserve": 180,
+    "non_null_review_cluster_rows": 1,
+    "unique_non_null_review_clusters": 1,
+    "selected_characteristics_by_primary_lane": {
+      "representative": {
+        "count": 80,
+        "topic_linked": 29,
+        "target_has_quote": 55,
+        "target_short": 0,
+        "distinct_quote": 7,
+        "qr_annotated": 1,
+        "sarcasm_eligible": 0,
+        "hostility_affect_eligible": 0,
+        "any_soft_flag": 44,
+        "any_severe_flag": 0,
+        "target_word_count_nearest_rank": {
+          "p50": 57,
+          "p90": 212,
+          "p95": 272
+        }
+      },
+      "diag_sarcasm": {
+        "count": 10,
+        "topic_linked": 10,
+        "target_has_quote": 10,
+        "target_short": 0,
+        "distinct_quote": 0,
+        "qr_annotated": 10,
+        "sarcasm_eligible": 10,
+        "hostility_affect_eligible": 6,
+        "any_soft_flag": 8,
+        "any_severe_flag": 0,
+        "target_word_count_nearest_rank": {
+          "p50": 20,
+          "p90": 47,
+          "p95": 114
+        }
+      },
+      "diag_hostility_affect": {
+        "count": 10,
+        "topic_linked": 10,
+        "target_has_quote": 10,
+        "target_short": 0,
+        "distinct_quote": 1,
+        "qr_annotated": 10,
+        "sarcasm_eligible": 1,
+        "hostility_affect_eligible": 10,
+        "any_soft_flag": 8,
+        "any_severe_flag": 0,
+        "target_word_count_nearest_rank": {
+          "p50": 37,
+          "p90": 305,
+          "p95": 329
+        }
+      },
+      "diag_short_context": {
+        "count": 10,
+        "topic_linked": 2,
+        "target_has_quote": 4,
+        "target_short": 10,
+        "distinct_quote": 1,
+        "qr_annotated": 0,
+        "sarcasm_eligible": 0,
+        "hostility_affect_eligible": 0,
+        "any_soft_flag": 10,
+        "any_severe_flag": 2,
+        "target_word_count_nearest_rank": {
+          "p50": 2,
+          "p90": 2,
+          "p95": 2
+        }
+      },
+      "diag_distinct_quote": {
+        "count": 10,
+        "topic_linked": 5,
+        "target_has_quote": 10,
+        "target_short": 0,
+        "distinct_quote": 10,
+        "qr_annotated": 2,
+        "sarcasm_eligible": 1,
+        "hostility_affect_eligible": 2,
+        "any_soft_flag": 8,
+        "any_severe_flag": 0,
+        "target_word_count_nearest_rank": {
+          "p50": 101,
+          "p90": 443,
+          "p95": 582
+        }
+      }
+    }
+  },
+  "blind_repeat_plan": {
+    "status": "deferred_until_after_unusable_replacements",
+    "representative": 16,
+    "each_diagnostic_lane": 2,
+    "total": 24,
+    "minimum_washout_hours": 72
+  },
+  "private_artifacts": {
+    "sampling_manifest": {
+      "filename": "sampling-manifest.jsonl",
+      "rows": 120,
+      "sha256": "54d15a5ce4e9e7ab7915c8058f15fbd3b4e989cb9776084d7b0ea428c8262d28",
+      "mode": "0o600",
+      "gitignored": true
+    },
+    "reserve_manifest": {
+      "filename": "reserve-manifest.jsonl",
+      "rows": 60,
+      "sha256": "fbfbec887869a1c2d34358a98cfc7721c2eae0eafe9205c184d64ef6908e4381",
+      "mode": "0o600",
+      "gitignored": true
+    },
+    "repeat_manifest": {
+      "status": "deferred_until_120_analyzable_cases",
+      "planned_rows": 24
+    }
+  },
+  "privacy": {
+    "forum_text_emitted": false,
+    "presented_quote_or_response_retained": false,
+    "source_ids_emitted": false,
+    "hmac_ids_emitted_in_public_report": false,
+    "per_sample_labels_emitted": false,
+    "external_services_used": false
+  }
+}

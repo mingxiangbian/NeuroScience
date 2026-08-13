@@ -1,0 +1,40 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "command_history": [
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/stage-2-preflight/run_preflight.py static"
+  ],
+  "config": {
+    "bytes": 3564,
+    "path": "experiments/weibo-eclass/stage-2-preflight/runs/exp-039-model-stack-preflight/frozen-config.json",
+    "sha256": "b2c8b0443281c00c146d6a6509f23fd72677f1ccc9dac549330f0a11e0100214"
+  },
+  "experiment_id": "EXP-039",
+  "git": {
+    "commit": "3244ff0fb1841324d8f33537af6d07c6f1dfd0c8",
+    "dirty": true,
+    "dirty_path_count": 49
+  },
+  "rq_ids": [
+    "RQ-F1",
+    "RQ-F2"
+  ],
+  "stage": "environment-model-parser-lora-preflight",
+  "stages": {
+    "static": {
+      "artifact": {
+        "bytes": 1824,
+        "path": "experiments/weibo-eclass/stage-2-preflight/runs/exp-039-model-stack-preflight/failure.json",
+        "sha256": "d7fcbd97dfae68885ca53a40c02a5fe88e2b303e75a1d509d1558bb2cd2f1191"
+      },
+      "completed_at_utc": "2026-08-08T05:08:03Z",
+      "status": "Failed"
+    }
+  },
+  "started_at_utc": "2026-08-08T05:07:02.034746+00:00",
+  "status": "Failed",
+  "test_split_accessed": false,
+  "tier": "Minor",
+  "validation_split_accessed": false
+}

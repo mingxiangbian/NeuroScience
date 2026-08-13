@@ -1,0 +1,112 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "checks": {
+    "context_prompt_rows": 28,
+    "missing_context_fallback_rows": 28,
+    "prompt_rows_checked": 56
+  },
+  "completed_at_utc": "2026-08-08T05:10:10.410797+00:00",
+  "data_protocol": "DATA-WEIBO-TASK-V1",
+  "experiment_id": "EXP-040",
+  "private_selection": {
+    "artifact_sha256": "fa50f5ed2f5b72b16154bfc87e7635a4617900db4edf85e8f7624b47249100b2",
+    "path_publicly_disclosed": false,
+    "row_level_data_public": false
+  },
+  "raw_ids_stored_publicly": false,
+  "raw_text_stored_publicly": false,
+  "selection_digest_sha256": "d99ee5f8aa5418b5012cfd5d56e660902f23738b51ccc44d5ec9296b9aedd2df",
+  "selection_rows": 56,
+  "status": "Passed",
+  "strata": [
+    {
+      "context_available": false,
+      "label": "anger",
+      "population": 91,
+      "selected": 4
+    },
+    {
+      "context_available": true,
+      "label": "anger",
+      "population": 107,
+      "selected": 4
+    },
+    {
+      "context_available": false,
+      "label": "joy",
+      "population": 118,
+      "selected": 4
+    },
+    {
+      "context_available": true,
+      "label": "joy",
+      "population": 168,
+      "selected": 4
+    },
+    {
+      "context_available": false,
+      "label": "negative",
+      "population": 148,
+      "selected": 4
+    },
+    {
+      "context_available": true,
+      "label": "negative",
+      "population": 368,
+      "selected": 4
+    },
+    {
+      "context_available": false,
+      "label": "neutral",
+      "population": 126,
+      "selected": 4
+    },
+    {
+      "context_available": true,
+      "label": "neutral",
+      "population": 155,
+      "selected": 4
+    },
+    {
+      "context_available": false,
+      "label": "no_emotion",
+      "population": 1032,
+      "selected": 4
+    },
+    {
+      "context_available": true,
+      "label": "no_emotion",
+      "population": 3134,
+      "selected": 4
+    },
+    {
+      "context_available": false,
+      "label": "positive",
+      "population": 176,
+      "selected": 4
+    },
+    {
+      "context_available": true,
+      "label": "positive",
+      "population": 276,
+      "selected": 4
+    },
+    {
+      "context_available": false,
+      "label": "sadness",
+      "population": 44,
+      "selected": 4
+    },
+    {
+      "context_available": true,
+      "label": "sadness",
+      "population": 52,
+      "selected": 4
+    }
+  ],
+  "test_split_accessed": false,
+  "train_rows_scanned": 5995,
+  "validation_split_accessed": false
+}

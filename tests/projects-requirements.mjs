@@ -13,6 +13,21 @@ const emotionPageUrl = new URL("../projects/llm-forum-text-emotion-recognition/i
 const emotionDataUrl = new URL("../projects/llm-forum-text-emotion-recognition/progress-data.json", import.meta.url);
 const emotionCssUrl = new URL("../projects/llm-forum-text-emotion-recognition/progress.css", import.meta.url);
 const emotionJsUrl = new URL("../projects/llm-forum-text-emotion-recognition/progress.js", import.meta.url);
+const exp047ProtocolUrl = new URL("../projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/protocols/exp-047-stage-5-generative-lora.md", import.meta.url);
+const exp047ConfigUrl = new URL("../projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-5-generative-lora/config.json", import.meta.url);
+const exp047DryRunUrl = new URL("../projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-runner-dry-run.json", import.meta.url);
+const exp047DryRunVerificationUrl = new URL("../projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-runner-dry-run-verification.json", import.meta.url);
+const exp047Seed44TrainingVerificationUrl = new URL("../projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/seed-44/verification.json", import.meta.url);
+const exp047Seed44ReplayVerificationUrl = new URL("../projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/seed-44-replay/verification.json", import.meta.url);
+const exp047MatchedAggregateUrl = new URL("../projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/matched-validation-v1/aggregate.json", import.meta.url);
+const exp047MatchedReportUrl = new URL("../projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/matched-validation-v1/REPORT.md", import.meta.url);
+const exp047MatchedVerificationUrl = new URL("../projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/matched-validation-v1/verification.json", import.meta.url);
+const exp048ProtocolUrl = new URL("../projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/protocols/exp-048-frozen-dev-error-analysis.md", import.meta.url);
+const exp048ReportUrl = new URL("../projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/REPORT.md", import.meta.url);
+const exp048VerificationUrl = new URL("../projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/verification.json", import.meta.url);
+const exp049ProtocolUrl = new URL("../projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/test-gate/protocols/exp-049-frozen-test-gate.md", import.meta.url);
+const exp049ReportUrl = new URL("../projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/REPORT.md", import.meta.url);
+const exp049VerificationUrl = new URL("../projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/verification.json", import.meta.url);
 const foundationsReadmeUrl = new URL("../projects/foundations/README.md", import.meta.url);
 const foundationsPlannerUrl = new URL("../projects/foundations/multi-agent-planner.md", import.meta.url);
 const foundationsRoadmapUrl = new URL("../projects/foundations/llm-agent-engineer-roadmap.md", import.meta.url);
@@ -29,6 +44,21 @@ assert.equal(existsSync(emotionPageUrl), true, "forum emotion recognition should
 assert.equal(existsSync(emotionDataUrl), true, "forum emotion recognition should expose sanitized progress data");
 assert.equal(existsSync(emotionCssUrl), true, "forum emotion recognition should expose project-scoped styles");
 assert.equal(existsSync(emotionJsUrl), true, "forum emotion recognition should expose project-scoped rendering logic");
+assert.equal(existsSync(exp047ProtocolUrl), true, "EXP-047 should expose its registered Major protocol");
+assert.equal(existsSync(exp047ConfigUrl), true, "EXP-047 should expose its machine-readable frozen config");
+assert.equal(existsSync(exp047DryRunUrl), true, "EXP-047 should expose its no-model dry-run report");
+assert.equal(existsSync(exp047DryRunVerificationUrl), true, "EXP-047 should expose independent dry-run verification");
+assert.equal(existsSync(exp047Seed44TrainingVerificationUrl), true, "EXP-047 should expose seed-44 training verification");
+assert.equal(existsSync(exp047Seed44ReplayVerificationUrl), true, "EXP-047 should expose seed-44 replay verification");
+assert.equal(existsSync(exp047MatchedAggregateUrl), true, "EXP-047 should expose its matched-validation aggregate");
+assert.equal(existsSync(exp047MatchedReportUrl), true, "EXP-047 should expose its matched-validation report");
+assert.equal(existsSync(exp047MatchedVerificationUrl), true, "EXP-047 should expose independent matched-validation verification");
+assert.equal(existsSync(exp048ProtocolUrl), true, "EXP-048 should expose its frozen error-analysis protocol");
+assert.equal(existsSync(exp048ReportUrl), true, "EXP-048 should expose its public error-analysis report");
+assert.equal(existsSync(exp048VerificationUrl), true, "EXP-048 should expose independent error-analysis verification");
+assert.equal(existsSync(exp049ProtocolUrl), true, "EXP-049 should expose its frozen test protocol");
+assert.equal(existsSync(exp049ReportUrl), true, "EXP-049 should expose its formal test report");
+assert.equal(existsSync(exp049VerificationUrl), true, "EXP-049 should expose independent test verification");
 assert.equal(existsSync(foundationsReadmeUrl), true, "foundations should include a README");
 assert.equal(existsSync(foundationsPlannerUrl), true, "foundations should include the reusable multi-agent planner");
 assert.equal(existsSync(foundationsRoadmapUrl), true, "foundations should include the LLM/Agent engineer roadmap");
@@ -45,6 +75,15 @@ const emotionDataText = readFileSync(emotionDataUrl, "utf8");
 const emotionData = JSON.parse(emotionDataText);
 const emotionCss = readFileSync(emotionCssUrl, "utf8");
 const emotionJs = readFileSync(emotionJsUrl, "utf8");
+const exp047Config = JSON.parse(readFileSync(exp047ConfigUrl, "utf8"));
+const exp047DryRun = JSON.parse(readFileSync(exp047DryRunUrl, "utf8"));
+const exp047DryRunVerification = JSON.parse(readFileSync(exp047DryRunVerificationUrl, "utf8"));
+const exp047Seed44TrainingVerification = JSON.parse(readFileSync(exp047Seed44TrainingVerificationUrl, "utf8"));
+const exp047Seed44ReplayVerification = JSON.parse(readFileSync(exp047Seed44ReplayVerificationUrl, "utf8"));
+const exp047MatchedAggregate = JSON.parse(readFileSync(exp047MatchedAggregateUrl, "utf8"));
+const exp047MatchedVerification = JSON.parse(readFileSync(exp047MatchedVerificationUrl, "utf8"));
+const exp048Verification = JSON.parse(readFileSync(exp048VerificationUrl, "utf8"));
+const exp049Verification = JSON.parse(readFileSync(exp049VerificationUrl, "utf8"));
 const bookmarkFontCmap = execFileSync("ttx", ["-q", "-t", "cmap", "-o", "-", fileURLToPath(bookmarkFontUrl)], {
   encoding: "utf8",
 });
@@ -103,7 +142,7 @@ assert.equal(emotionData.project.directoryLabel, "情感与智能体", "emotion 
 assert.equal(emotionData.project.title, "论坛文本情感识别", "emotion progress data should preserve the project title");
 assert.deepEqual(
   emotionData.researchQuestions.map((question) => question.id),
-  ["RQ-B1", "RQ-B2", "RQ-B3", "RQ-G1", "RQ-G2"],
+  ["RQ-B1", "RQ-B2", "RQ-B3", "RQ-G1", "RQ-G2", "RQ-F1", "RQ-F2"],
   "emotion progress page should expose the frozen research-question registry",
 );
 assert.deepEqual(
@@ -123,13 +162,68 @@ assert.deepEqual(
   ["research-question", "experiment", "evidence", "claim", "next"],
   "the active evidence spine should keep the RQ-to-next semantic order",
 );
-assert.equal(emotionData.activeEvidenceSpine.nodes[0].ref, "RQ-G1 · RQ-G2", "the active spine should connect the supervised and LLM test questions");
-assert.equal(emotionData.activeEvidenceSpine.nodes[1].ref, "EXP-038", "the active spine should identify the frozen formal test gate");
-assert.equal(emotionData.activeEvidenceSpine.nodes[1].status, "verified", "EXP-038 should expose its independently verified status");
-assert.equal(emotionData.activeEvidenceSpine.nodes[2].ref, "EVID-026", "the formal test should map to its evidence-ledger entry");
-assert.equal(emotionData.activeEvidenceSpine.nodes[2].status, "verified", "the EXP-038 aggregate should be verified evidence");
-assert.match(emotionData.activeEvidenceSpine.nodes[3].detail, /Macro-F1|BERT|标签基数/i, "the active claim should preserve the primary-metric and cardinality boundary");
-assert.notEqual(emotionData.activeEvidenceSpine.nodes[4].ref, "EXP-038", "the next dependency must not reuse the completed experiment ID");
+assert.equal(emotionData.activeEvidenceSpine.nodes[0].ref, "RQ-F1", "the active spine should connect the current same-task model question");
+assert.equal(emotionData.activeEvidenceSpine.nodes[1].ref, "EXP-049", "the active spine should identify the frozen formal test gate");
+assert.equal(emotionData.activeEvidenceSpine.nodes[1].status, "verified", "EXP-049 should be verified after independent reconstruction");
+assert.equal(emotionData.activeEvidenceSpine.nodes[2].ref, "EVID-044", "the active spine should expose the formal test evidence");
+assert.equal(emotionData.activeEvidenceSpine.nodes[2].status, "verified", "the formal test evidence should be verified");
+assert.match(emotionData.activeEvidenceSpine.nodes[2].detail, /0\.649621|0\.636612|11,457/i, "the verified evidence should preserve both model-family results and the reconstructed prediction count");
+assert.match(emotionData.activeEvidenceSpine.nodes[3].detail, /跨 0|encoder|机制/i, "the active claim should preserve the uncertainty and mechanism boundary");
+assert.match(emotionData.activeEvidenceSpine.nodes[4].ref, /Stage 9|post-test|read-only/i, "the next dependency should be read-only post-test work");
+assert.equal(exp047Config.experiment_id, "EXP-047", "the Stage 5 config should bind the registered experiment ID");
+assert.equal(exp047Config.status, "Registered", "the Stage 5 config should remain registered before execution");
+assert.equal(exp047Config.execution.authorized, false, "protocol registration must not authorize model execution");
+assert.equal(exp047Config.data.test_access, false, "EXP-047 must keep the sealed test closed");
+assert.deepEqual(exp047Config.training.seeds, [42, 43, 44], "EXP-047 should freeze all three formal seeds");
+assert.equal(exp047Config.generation.batch_size, 1, "EXP-047 reasoning-on inference should use singleton execution");
+assert.equal(exp047DryRun.status, "Passed", "EXP-047 no-model dry-run should pass before formal implementation");
+assert.equal(exp047DryRun.train.rows, 5995, "EXP-047 dry-run should render every frozen train row");
+assert.equal(exp047DryRun.train.truncated_rows, 0, "EXP-047 dry-run should not silently truncate train rows");
+assert.equal(exp047DryRun.model_weights_loaded, false, "EXP-047 dry-run must not load model weights");
+assert.equal(exp047DryRun.validation_split_accessed, false, "EXP-047 dry-run must keep validation closed");
+assert.equal(exp047DryRun.test_split_accessed, false, "EXP-047 dry-run must keep test closed");
+assert.equal(exp047DryRunVerification.status, "Passed", "EXP-047 dry-run verification should pass");
+assert.equal(exp047DryRunVerification.checks_passed, 11, "EXP-047 dry-run should pass all independent checks");
+assert.deepEqual(exp047DryRunVerification.mismatches, [], "EXP-047 dry-run verification should have zero mismatches");
+assert.equal(exp047Seed44TrainingVerification.status, "Passed", "EXP-047 seed-44 training verification should pass");
+assert.equal(exp047Seed44TrainingVerification.formal_training_verified, true, "EXP-047 seed-44 should pass the formal training gate");
+assert.equal(exp047Seed44TrainingVerification.validation_split_accessed, false, "EXP-047 seed-44 training must keep validation closed");
+assert.equal(exp047Seed44TrainingVerification.test_split_accessed, false, "EXP-047 seed-44 training must keep test closed");
+assert.equal(exp047Seed44ReplayVerification.status, "Passed", "EXP-047 seed-44 replay verification should pass");
+assert.deepEqual(
+  exp047Seed44ReplayVerification.recalculated.comparison,
+  { final_label_equal_count: 16, parser_state_equal_count: 16, raw_output_equal_count: 16, rows: 16 },
+  "EXP-047 seed-44 replay should preserve all three singleton equality gates",
+);
+assert.equal(exp047Seed44ReplayVerification.validation_split_accessed, false, "EXP-047 seed-44 replay must keep validation closed");
+assert.equal(exp047Seed44ReplayVerification.test_split_accessed, false, "EXP-047 seed-44 replay must keep test closed");
+assert.equal(exp047MatchedAggregate.status, "Verified", "EXP-047 matched validation should be verified");
+assert.equal(exp047MatchedAggregate.validation_split_accessed, true, "EXP-047 matched validation should record authorized validation access");
+assert.equal(exp047MatchedAggregate.test_split_accessed, false, "EXP-047 matched validation must keep test sealed");
+assert.equal(exp047MatchedAggregate.primary_contrast.reference_macro_f1, 0.33359776854597856, "EXP-047 should preserve the matched reference Macro-F1");
+assert.equal(exp047MatchedAggregate.primary_contrast.lora_macro_f1_mean, 0.562471137987231, "EXP-047 should preserve the three-seed LoRA mean");
+assert.equal(exp047MatchedAggregate.primary_contrast.lora_macro_f1_sample_std, 0.021407872500813357, "EXP-047 should preserve the sample SD");
+assert.equal(exp047MatchedAggregate.primary_contrast.mean_delta, 0.22887336944125247, "EXP-047 should preserve the matched mean delta");
+assert.equal(exp047MatchedAggregate.primary_contrast.decision, "material_improvement", "EXP-047 should preserve the frozen primary decision");
+assert.equal(exp047MatchedVerification.status, "Passed", "EXP-047 independent matched-validation verification should pass");
+assert.equal(exp047MatchedVerification.mismatch_count, 0, "EXP-047 matched-validation verification should have zero mismatches");
+assert.equal(exp047MatchedVerification.recalculated.formal_generations, 5088, "EXP-047 verifier should reconstruct all four full-validation conditions");
+assert.equal(exp047MatchedVerification.test_split_accessed, false, "EXP-047 verifier must confirm the sealed test was untouched");
+assert.equal(exp048Verification.status, "Verified", "EXP-048 independent error-analysis verification should pass");
+assert.equal(exp048Verification.analysis_rows, 1272, "EXP-048 should independently reconstruct every validation row");
+assert.equal(exp048Verification.prediction_files_checked, 7, "EXP-048 should verify the reference, three LoRA and three encoder prediction files");
+assert.equal(exp048Verification.annotation_rows, 48, "EXP-048 should verify every frozen qualitative annotation");
+assert.equal(exp048Verification.max_absolute_numeric_difference, 0, "EXP-048 independent recomputation should have zero numeric difference");
+assert.equal(exp048Verification.test_accessed, false, "EXP-048 must keep the sealed test untouched");
+assert.equal(exp049Verification.status, "Verified", "EXP-049 independent formal-test verification should pass");
+assert.equal(exp049Verification.mismatch_count, 0, "EXP-049 formal-test verification should have zero mismatches");
+assert.equal(exp049Verification.test_inputs_accessed, true, "EXP-049 should record authorized test-input access");
+assert.equal(exp049Verification.test_labels_accessed, true, "EXP-049 should record the one-time test-label opening");
+assert.equal(exp049Verification.recalculated.rows, 1273, "EXP-049 should independently reconstruct every formal test row");
+assert.equal(exp049Verification.recalculated.prediction_files, 9, "EXP-049 should independently verify all nine frozen prediction files");
+assert.equal(exp049Verification.recalculated.prediction_rows, 11457, "EXP-049 should independently verify all frozen row-level predictions");
+assert.equal(exp049Verification.recalculated.privacy.private_gitignored, true, "EXP-049 private outputs should remain Git ignored");
+assert.equal(exp049Verification.recalculated.privacy.private_tracked, false, "EXP-049 private outputs must not be tracked");
 assert.equal(
   emotionData.dependencyRoute.find((step) => step.label.startsWith("EXP-028")).status,
   "failed",
@@ -142,8 +236,38 @@ assert.doesNotMatch(
 );
 assert.match(
   `${emotionData.actionDock.nextAction.title} ${emotionData.actionDock.nextAction.detail}`,
-  /上下文|probe|表征|论坛/i,
-  "the next action should expose the behavior-versus-representation scope gate",
+  /只读|归档|系统|test 已消费/i,
+  "the next action should expose read-only post-test work without reopening model selection",
+);
+assert.equal(
+  emotionData.dependencyRoute.find((step) => step.label.startsWith("EXP-042")).status,
+  "verified",
+  "EXP-042 should be independently verified in the dependency route",
+);
+assert.equal(
+  emotionData.dependencyRoute.find((step) => step.label.startsWith("EXP-043")).status,
+  "verified",
+  "EXP-043 should be independently verified in the dependency route",
+);
+assert.equal(
+  emotionData.dependencyRoute.find((step) => step.label.startsWith("EXP-044/046")).status,
+  "verified",
+  "EXP-044/046 should expose the verified Stage 5 resource and runtime gates",
+);
+assert.equal(
+  emotionData.dependencyRoute.find((step) => step.label.startsWith("EXP-047")).status,
+  "verified",
+  "EXP-047 should be verified after independent matched-validation reconstruction",
+);
+assert.equal(
+  emotionData.dependencyRoute.find((step) => step.label.startsWith("EXP-048")).status,
+  "verified",
+  "EXP-048 should be verified after independent frozen-error reconstruction",
+);
+assert.equal(
+  emotionData.dependencyRoute.find((step) => step.label.startsWith("EXP-049")).status,
+  "verified",
+  "EXP-049 should be verified after independent frozen-test reconstruction",
 );
 assert.equal(
   emotionData.dependencyRoute.find((step) => step.label.startsWith("EXP-031")).status,
@@ -197,8 +321,13 @@ assert.equal(
 );
 assert.deepEqual(
   emotionData.actionDock.testGates.map((gate) => gate.label),
-  ["TweetEval", "GoEmotions", "Forum holdout"],
+  ["TweetEval", "GoEmotions", "Weibo EClass"],
   "the action dock should keep all test gates visible before evidence",
+);
+assert.deepEqual(
+  emotionData.actionDock.testGates.map((gate) => gate.detail),
+  ["Frozen · Verified · Consumed", "Frozen · Verified · Consumed", "Frozen · Verified · Consumed"],
+  "all completed formal test gates should be visibly frozen, verified and consumed",
 );
 assert.deepEqual(
   emotionData.verifiedEvidence.tweetEval.comparisonContract,

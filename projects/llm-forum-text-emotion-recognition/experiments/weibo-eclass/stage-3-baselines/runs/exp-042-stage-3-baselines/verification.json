@@ -1,0 +1,29 @@
+{
+  "accessed_splits": [
+    "train",
+    "validation"
+  ],
+  "check_count": 8,
+  "checks": [
+    "frozen_train_validation_hashes_and_counts",
+    "m0_predictions_metrics_and_tables",
+    "m1_predictions_scores_metrics_and_tables",
+    "six_m2_prediction_probability_metric_table_and_checkpoint_runs",
+    "m2_seed_aggregates_and_paired_deltas",
+    "m2_practical_tie_selection_rule",
+    "public_artifacts_exclude_private_row_and_group_ids",
+    "run_level_artifact_hashes"
+  ],
+  "completed_at_utc": "2026-08-08T10:51:24.929194+00:00",
+  "experiment_id": "EXP-042",
+  "mismatch_count": 0,
+  "private_checkpoint_bytes": 2457338190,
+  "status": "Verified",
+  "test_split_accessed": false,
+  "validation_split_accessed": true,
+  "verifier": {
+    "bytes": 20463,
+    "path": "experiments/weibo-eclass/stage-3-baselines/verify_stage3.py",
+    "sha256": "edf757c4f262243a65551e74bfbaac73357a5131bc9909ede84871fb4d676e4d"
+  }
+}

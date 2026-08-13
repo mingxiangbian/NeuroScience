@@ -1,0 +1,68 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "comparison_semantics": "same prompt, final labels include __invalid__ for strict-parse failure",
+  "comparisons": {
+    "batch8_composition": {
+      "final_label_equal_count": 14,
+      "final_label_equal_rate": 0.875,
+      "parser_state_equal_count": 14,
+      "parser_state_equal_rate": 0.875,
+      "raw_output_equal_count": 5,
+      "raw_output_equal_rate": 0.3125,
+      "rows": 16
+    },
+    "batch8_replay": {
+      "final_label_equal_count": 16,
+      "final_label_equal_rate": 1.0,
+      "parser_state_equal_count": 16,
+      "parser_state_equal_rate": 1.0,
+      "raw_output_equal_count": 16,
+      "raw_output_equal_rate": 1.0,
+      "rows": 16
+    },
+    "singleton_replay": {
+      "final_label_equal_count": 16,
+      "final_label_equal_rate": 1.0,
+      "parser_state_equal_count": 16,
+      "parser_state_equal_rate": 1.0,
+      "raw_output_equal_count": 16,
+      "raw_output_equal_rate": 1.0,
+      "rows": 16
+    },
+    "singleton_vs_batch8": {
+      "final_label_equal_count": 15,
+      "final_label_equal_rate": 0.9375,
+      "parser_state_equal_count": 15,
+      "parser_state_equal_rate": 0.9375,
+      "raw_output_equal_count": 0,
+      "raw_output_equal_rate": 0.0,
+      "rows": 16
+    }
+  },
+  "completed_at_utc": "2026-08-09T06:45:47.011796+00:00",
+  "decision": {
+    "gate_status": "Passed",
+    "recommended_execution_protocol": "singleton",
+    "requirements": [
+      "batch_size=completion_batch_size=prefill_batch_size=1",
+      "repeat the train-only replay after each adapter is trained and before dev access"
+    ],
+    "rules_applied": {
+      "batch_composition_label_agreement_min": 1.0,
+      "batch_replay_label_agreement_min": 1.0,
+      "fallback_if_no_stable_reasoning_on_mode": "block_reasoning_on_primary_pending_reasoning_off_replay",
+      "singleton_replay_label_agreement_min": 1.0
+    }
+  },
+  "experiment_id": "EXP-046",
+  "formal_generations": 80,
+  "gold_labels_used_for_performance": false,
+  "performance_metrics_computed": false,
+  "prompt_contract_identical_across_modes": true,
+  "raw_outputs_stored_publicly": false,
+  "status": "Passed",
+  "test_split_accessed": false,
+  "validation_split_accessed": false
+}

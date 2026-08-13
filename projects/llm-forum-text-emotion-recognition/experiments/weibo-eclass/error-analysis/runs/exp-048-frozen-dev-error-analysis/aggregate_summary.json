@@ -1,0 +1,99 @@
+{
+  "conditions": {
+    "encoder": {
+      "accuracy_mean": 0.7924528301886792,
+      "accuracy_sample_std": 0.00393081761006292,
+      "failed_output_rate_mean": 0.0,
+      "failed_output_rate_sample_std": 0.0,
+      "macro_f1_mean": 0.5949251214214263,
+      "macro_f1_sample_std": 0.012918783342489098,
+      "macro_precision_mean": 0.6159121100818253,
+      "macro_precision_sample_std": 0.017252084109863487,
+      "macro_recall_mean": 0.5844641993387615,
+      "macro_recall_sample_std": 0.012440571062041782,
+      "parse_valid_rate_mean": 1.0,
+      "parse_valid_rate_sample_std": 0.0,
+      "weighted_f1_mean": 0.7852792905577896,
+      "weighted_f1_sample_std": 0.0035770627609512475
+    },
+    "lora": {
+      "accuracy_mean": 0.7793501048218029,
+      "accuracy_sample_std": 0.00982966422091775,
+      "failed_output_rate_mean": 0.0,
+      "failed_output_rate_sample_std": 0.0,
+      "macro_f1_mean": 0.562471137987231,
+      "macro_f1_sample_std": 0.021407872500813357,
+      "macro_precision_mean": 0.6014672562793378,
+      "macro_precision_sample_std": 0.023392346958746976,
+      "macro_recall_mean": 0.5560830441401071,
+      "macro_recall_sample_std": 0.03058063180875711,
+      "parse_valid_rate_mean": 1.0,
+      "parse_valid_rate_sample_std": 0.0,
+      "weighted_f1_mean": 0.7743155581292821,
+      "weighted_f1_sample_std": 0.004313311478194457
+    },
+    "reference": {
+      "accuracy_mean": 0.22248427672955975,
+      "accuracy_sample_std": 0.0,
+      "failed_output_rate_mean": 0.09119496855345911,
+      "failed_output_rate_sample_std": 0.0,
+      "macro_f1_mean": 0.33359776854597856,
+      "macro_f1_sample_std": 0.0,
+      "macro_precision_mean": 0.3695646042961214,
+      "macro_precision_sample_std": 0.0,
+      "macro_recall_mean": 0.4864613262137243,
+      "macro_recall_sample_std": 0.0,
+      "parse_valid_rate_mean": 0.9088050314465409,
+      "parse_valid_rate_sample_std": 0.0,
+      "weighted_f1_mean": 0.2072221671613342,
+      "weighted_f1_sample_std": 0.0
+    }
+  },
+  "experiment_id": "EXP-048",
+  "label_support": {
+    "anger": 43,
+    "joy": 61,
+    "negative": 110,
+    "neutral": 60,
+    "no_emotion": 881,
+    "positive": 97,
+    "sadness": 20
+  },
+  "long_tail_labels": [
+    "anger",
+    "joy",
+    "neutral",
+    "positive",
+    "sadness"
+  ],
+  "row_count": 1272,
+  "sampling": {
+    "realized_role_counts": {
+      "encoder_over_lora": 8,
+      "format_recoveries": 8,
+      "lora_over_encoder": 8,
+      "seed_unstable_lora": 8,
+      "shared_stable_errors": 8,
+      "valid_reference_recoveries": 8
+    },
+    "unique_rows": 48
+  },
+  "split": "validation",
+  "stable_transitions": {
+    "encoder_to_lora": {
+      "higher_correct_rate": 87,
+      "lower_correct_rate": 111,
+      "stable_recovery": 10,
+      "stable_regression": 17,
+      "unchanged_correct_rate": 1047
+    },
+    "reference_to_lora": {
+      "higher_correct_rate": 107,
+      "lower_correct_rate": 60,
+      "stable_recovery": 725,
+      "stable_regression": 44,
+      "unchanged_correct_rate": 336
+    }
+  },
+  "test_accessed": false
+}

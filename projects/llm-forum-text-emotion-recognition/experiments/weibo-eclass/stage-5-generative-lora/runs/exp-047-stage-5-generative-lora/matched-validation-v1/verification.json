@@ -1,0 +1,64 @@
+{
+  "check_count": 10,
+  "checks": [
+    "contract, frozen source and runtime identity",
+    "explicit validation authorization and train-only gates",
+    "model manifest and local BF16 files",
+    "1,272 ordered records for each of four fresh-process conditions",
+    "independent prompt, token, parser and prediction reconstruction",
+    "metrics, slices, confusion matrices and parser accounting",
+    "group-level paired bootstrap and frozen primary decision",
+    "historical comparator provenance and resource budget",
+    "private file modes, gitignore and public privacy",
+    "validation-only split boundary and sealed test"
+  ],
+  "experiment_id": "EXP-047",
+  "mismatch_count": 0,
+  "mismatches": [],
+  "recalculated": {
+    "bootstrap_sha256": "1b73ab9addfc4bf3b6405e78812c29cf0daef2c78ba4bbd3aba3dd75b718d5ac",
+    "condition_metrics_sha256": "ea68e85865a136e30aafd58d6d515375eacc3af65335b9d780e9d0cf9a5e81f1",
+    "formal_generations": 5088,
+    "gate_verification_ids": {
+      "seed-42": {
+        "replay": "EXP-047-SEED-42-REPLAY-VERIFY-V2",
+        "training": "EXP-047-FORMAL-SEED-42-TRAIN-VERIFY-V2"
+      },
+      "seed-43": {
+        "replay": "EXP-047-SEED-43-REPLAY-VERIFY-V1",
+        "training": "EXP-047-FORMAL-SEED-43-ATTEMPT-2-TRAIN-VERIFY-V1"
+      },
+      "seed-44": {
+        "replay": "EXP-047-SEED-44-REPLAY-VERIFY-V1",
+        "training": "EXP-047-FORMAL-SEED-44-TRAIN-VERIFY-V1"
+      }
+    },
+    "macro_f1": {
+      "reference": 0.33359776854597856,
+      "seed-42": 0.55202826219447,
+      "seed-43": 0.5482887936777165,
+      "seed-44": 0.5870963580895064
+    },
+    "model_files": {
+      "file_count": 9,
+      "total_bytes": 8056445038
+    },
+    "primary_contrast": {
+      "decision": "material_improvement",
+      "lora_macro_f1_mean": 0.562471137987231,
+      "lora_macro_f1_sample_std": 0.021407872500813357,
+      "mean_delta": 0.22887336944125247,
+      "reference_macro_f1": 0.33359776854597856,
+      "rule": "mean(seed-42,seed-43,seed-44)-reference",
+      "threshold": 0.005
+    },
+    "private_prediction_files": 4,
+    "private_prediction_rows": 5088,
+    "public_source_files_scanned": 7,
+    "validation_rows": 1272
+  },
+  "status": "Passed",
+  "test_split_accessed": false,
+  "verification_id": "EXP-047-MATCHED-VALIDATION-VERIFY-V1",
+  "verified_at_utc": "2026-08-12T02:38:53.735014+00:00"
+}

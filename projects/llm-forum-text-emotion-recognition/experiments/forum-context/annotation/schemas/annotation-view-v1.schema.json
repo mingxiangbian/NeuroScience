@@ -1,0 +1,189 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.neuroscience.invalid/schemas/annotation-view-v1.schema.json",
+  "title": "IAC 2.0 Forum Emotion Annotation View V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "protocol_id",
+    "dataset",
+    "ids",
+    "context",
+    "target",
+    "display_contract"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "annotation-view-v1"
+    },
+    "protocol_id": {
+      "const": "DATA-FCTX-LABEL-V1"
+    },
+    "dataset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "subset",
+        "cleaning_pipeline_id",
+        "dedup_pipeline_id"
+      ],
+      "properties": {
+        "name": {
+          "const": "IAC 2.0"
+        },
+        "subset": {
+          "const": "4forums"
+        },
+        "cleaning_pipeline_id": {
+          "const": "DATA-FCTX-CLEAN-V2"
+        },
+        "dedup_pipeline_id": {
+          "const": "DATA-FCTX-DEDUP-V2"
+        }
+      }
+    },
+    "ids": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sample_uid",
+        "thread_uid",
+        "parent_uid",
+        "target_uid"
+      ],
+      "properties": {
+        "sample_uid": {
+          "type": "string",
+          "pattern": "^smp_[0-9a-f]{64}$"
+        },
+        "thread_uid": {
+          "type": "string",
+          "pattern": "^thr_[0-9a-f]{64}$"
+        },
+        "parent_uid": {
+          "type": "string",
+          "pattern": "^pst_[0-9a-f]{64}$"
+        },
+        "target_uid": {
+          "type": "string",
+          "pattern": "^pst_[0-9a-f]{64}$"
+        }
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "discussion_title",
+        "direct_parent_body",
+        "target_quotes"
+      ],
+      "properties": {
+        "discussion_title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "direct_parent_body": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_quotes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/quoteBlock"
+          }
+        }
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "body",
+        "full_with_quotes"
+      ],
+      "properties": {
+        "body": {
+          "type": "string",
+          "minLength": 1
+        },
+        "full_with_quotes": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "display_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stage_a",
+        "stage_b",
+        "stage_a_locked_before_stage_b",
+        "future_replies_included",
+        "ancestor_chain_included"
+      ],
+      "properties": {
+        "stage_a": {
+          "const": "target.body"
+        },
+        "stage_b": {
+          "const": "context+target"
+        },
+        "stage_a_locked_before_stage_b": {
+          "const": true
+        },
+        "future_replies_included": {
+          "const": false
+        },
+        "ancestor_chain_included": {
+          "const": false
+        }
+      }
+    }
+  },
+  "$defs": {
+    "quoteBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "quote_index",
+        "text",
+        "source_relation",
+        "truncated",
+        "altered"
+      ],
+      "properties": {
+        "quote_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_relation": {
+          "enum": [
+            "direct_parent",
+            "same_thread_other",
+            "external_or_unknown"
+          ]
+        },
+        "truncated": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "altered": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

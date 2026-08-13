@@ -1,0 +1,33 @@
+{
+  "authorization_id": "EXP-047-MATCHED-VALIDATION-AUTH-V1",
+  "authorized_at_utc": "2026-08-10T17:35:23Z",
+  "authorized_conditions_in_order": [
+    "reference",
+    "seed-42",
+    "seed-43",
+    "seed-44"
+  ],
+  "authorized_generations": 5088,
+  "authorized_split": "validation",
+  "boundaries": {
+    "additional_training": false,
+    "hyperparameter_or_prompt_changes": false,
+    "migration_experiments": false,
+    "sealed_test_access": false,
+    "test_ready_gate": false
+  },
+  "experiment_id": "EXP-047",
+  "generation_contract": {
+    "enable_thinking": true,
+    "input_view": "target_only",
+    "max_new_tokens": 1024,
+    "process_boundary": "fresh_process_per_condition",
+    "runtime": "local_mlx_bf16",
+    "singleton": true,
+    "temperature": 0.0
+  },
+  "preceding_gate_statement": "授权范围按上一道门锁定为 EXP-047 matched validation：一个无 adapter reference 加 seeds 42/43/44，使用冻结的 singleton reasoning-on 条件；sealed test、迁移实验和任何基于 validation 的追加调参仍不在本次授权内。",
+  "status": "Authorized",
+  "user_authorization_text": "授权",
+  "validation_rows_per_condition": 1272
+}

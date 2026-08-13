@@ -1,0 +1,483 @@
+{
+  "accessed_splits": [
+    "validation"
+  ],
+  "adapter": {
+    "bytes": 29384266,
+    "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/adapters/seed-44/adapters.safetensors",
+    "sha256": "673850b3931ee62f3fd57ef0eb276661fbbea423df96bc5aab63284a898f6fcc"
+  },
+  "completed_at_utc": "2026-08-12T02:34:52.543690+00:00",
+  "condition": "seed-44",
+  "experiment_id": "EXP-047",
+  "generation": {
+    "api_cost_usd": 0,
+    "batch_size": 1,
+    "command_elapsed_seconds": 2640.9076705840416,
+    "final_tokens": {
+      "count": 1272,
+      "max": 8,
+      "mean": 7.466194968553459,
+      "median": 8.0,
+      "min": 6,
+      "p95": 8.0,
+      "sum": 9497
+    },
+    "generated_tokens": {
+      "count": 1272,
+      "max": 11,
+      "mean": 10.46619496855346,
+      "median": 11.0,
+      "min": 9,
+      "p95": 11.0,
+      "sum": 13313
+    },
+    "generation_seconds": {
+      "count": 1272,
+      "max": 2.86245949997101,
+      "mean": 2.069723772670475,
+      "median": 2.0648464164696634,
+      "min": 1.8280147080076858,
+      "p95": 2.410474344110116,
+      "sum": 2632.688638836844
+    },
+    "peak_memory_gb": 8.497885716,
+    "prompt_tokens": {
+      "count": 1272,
+      "max": 243,
+      "mean": 200.13050314465409,
+      "median": 199.0,
+      "min": 195,
+      "p95": 206.0,
+      "sum": 254566
+    },
+    "thinking_tokens": {
+      "count": 1272,
+      "max": 2,
+      "mean": 2.0,
+      "median": 2.0,
+      "min": 2,
+      "p95": 2.0,
+      "sum": 2544
+    },
+    "throughput_generated_tokens_per_second": 5.056807631411307
+  },
+  "metrics": {
+    "all": {
+      "accuracy": 0.7838050314465409,
+      "confusion_columns": [
+        "anger",
+        "joy",
+        "negative",
+        "neutral",
+        "no_emotion",
+        "positive",
+        "sadness",
+        "__invalid__"
+      ],
+      "confusion_matrix": [
+        [
+          26,
+          0,
+          3,
+          0,
+          14,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          46,
+          1,
+          3,
+          9,
+          1,
+          1,
+          0
+        ],
+        [
+          7,
+          6,
+          57,
+          8,
+          28,
+          0,
+          4,
+          0
+        ],
+        [
+          1,
+          0,
+          7,
+          22,
+          28,
+          0,
+          2,
+          0
+        ],
+        [
+          10,
+          5,
+          23,
+          31,
+          798,
+          11,
+          3,
+          0
+        ],
+        [
+          0,
+          5,
+          1,
+          10,
+          42,
+          38,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          6,
+          1,
+          3,
+          0,
+          10,
+          0
+        ]
+      ],
+      "macro_f1": 0.5870963580895064,
+      "macro_precision": 0.6156443998219113,
+      "macro_recall": 0.5773056374130665,
+      "per_class": {
+        "anger": {
+          "f1": 0.5977011494252873,
+          "precision": 0.5909090909090909,
+          "recall": 0.6046511627906976,
+          "support": 43
+        },
+        "joy": {
+          "f1": 0.7479674796747967,
+          "precision": 0.7419354838709677,
+          "recall": 0.7540983606557377,
+          "support": 61
+        },
+        "negative": {
+          "f1": 0.548076923076923,
+          "precision": 0.5816326530612245,
+          "recall": 0.5181818181818182,
+          "support": 110
+        },
+        "neutral": {
+          "f1": 0.32592592592592595,
+          "precision": 0.29333333333333333,
+          "recall": 0.36666666666666664,
+          "support": 60
+        },
+        "no_emotion": {
+          "f1": 0.8851913477537436,
+          "precision": 0.8655097613882863,
+          "recall": 0.905788876276958,
+          "support": 881
+        },
+        "positive": {
+          "f1": 0.5170068027210885,
+          "precision": 0.76,
+          "recall": 0.3917525773195876,
+          "support": 97
+        },
+        "sadness": {
+          "f1": 0.4878048780487805,
+          "precision": 0.47619047619047616,
+          "recall": 0.5,
+          "support": 20
+        }
+      },
+      "rows": 1272,
+      "weighted_f1": 0.7790334257668524
+    },
+    "context_available": {
+      "accuracy": 0.8063829787234043,
+      "confusion_columns": [
+        "anger",
+        "joy",
+        "negative",
+        "neutral",
+        "no_emotion",
+        "positive",
+        "sadness",
+        "__invalid__"
+      ],
+      "confusion_matrix": [
+        [
+          16,
+          0,
+          2,
+          0,
+          9,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          27,
+          1,
+          2,
+          6,
+          1,
+          0,
+          0
+        ],
+        [
+          4,
+          1,
+          31,
+          4,
+          16,
+          0,
+          3,
+          0
+        ],
+        [
+          0,
+          0,
+          4,
+          13,
+          21,
+          0,
+          2,
+          0
+        ],
+        [
+          8,
+          4,
+          19,
+          23,
+          642,
+          8,
+          3,
+          0
+        ],
+        [
+          0,
+          5,
+          1,
+          4,
+          24,
+          22,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          4,
+          0,
+          2,
+          0,
+          7,
+          0
+        ]
+      ],
+      "macro_f1": 0.5726883680847731,
+      "macro_precision": 0.5889444404045686,
+      "macro_recall": 0.57217639095329,
+      "per_class": {
+        "anger": {
+          "f1": 0.5818181818181818,
+          "precision": 0.5714285714285714,
+          "recall": 0.5925925925925926,
+          "support": 27
+        },
+        "joy": {
+          "f1": 0.7297297297297297,
+          "precision": 0.7297297297297297,
+          "recall": 0.7297297297297297,
+          "support": 37
+        },
+        "negative": {
+          "f1": 0.5123966942148761,
+          "precision": 0.5,
+          "recall": 0.5254237288135594,
+          "support": 59
+        },
+        "neutral": {
+          "f1": 0.3023255813953488,
+          "precision": 0.2826086956521739,
+          "recall": 0.325,
+          "support": 40
+        },
+        "no_emotion": {
+          "f1": 0.8997897687456203,
+          "precision": 0.8916666666666667,
+          "recall": 0.9080622347949081,
+          "support": 707
+        },
+        "positive": {
+          "f1": 0.4999999999999999,
+          "precision": 0.7096774193548387,
+          "recall": 0.38596491228070173,
+          "support": 57
+        },
+        "sadness": {
+          "f1": 0.4827586206896552,
+          "precision": 0.4375,
+          "recall": 0.5384615384615384,
+          "support": 13
+        }
+      },
+      "rows": 940,
+      "weighted_f1": 0.8042135613784059
+    },
+    "first_clause": {
+      "accuracy": 0.7198795180722891,
+      "confusion_columns": [
+        "anger",
+        "joy",
+        "negative",
+        "neutral",
+        "no_emotion",
+        "positive",
+        "sadness",
+        "__invalid__"
+      ],
+      "confusion_matrix": [
+        [
+          10,
+          0,
+          1,
+          0,
+          5,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          19,
+          0,
+          1,
+          3,
+          0,
+          1,
+          0
+        ],
+        [
+          3,
+          5,
+          26,
+          4,
+          12,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          3,
+          9,
+          7,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          1,
+          4,
+          8,
+          156,
+          3,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          6,
+          18,
+          16,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          2,
+          1,
+          1,
+          0,
+          3,
+          0
+        ]
+      ],
+      "macro_f1": 0.6053883439544165,
+      "macro_precision": 0.6617070772412994,
+      "macro_recall": 0.5859419629920933,
+      "per_class": {
+        "anger": {
+          "f1": 0.625,
+          "precision": 0.625,
+          "recall": 0.625,
+          "support": 16
+        },
+        "joy": {
+          "f1": 0.7755102040816326,
+          "precision": 0.76,
+          "recall": 0.7916666666666666,
+          "support": 24
+        },
+        "negative": {
+          "f1": 0.5977011494252873,
+          "precision": 0.7222222222222222,
+          "recall": 0.5098039215686274,
+          "support": 51
+        },
+        "neutral": {
+          "f1": 0.3673469387755102,
+          "precision": 0.3103448275862069,
+          "recall": 0.45,
+          "support": 20
+        },
+        "no_emotion": {
+          "f1": 0.8297872340425532,
+          "precision": 0.7722772277227723,
+          "recall": 0.896551724137931,
+          "support": 174
+        },
+        "positive": {
+          "f1": 0.5423728813559322,
+          "precision": 0.8421052631578947,
+          "recall": 0.4,
+          "support": 40
+        },
+        "sadness": {
+          "f1": 0.5,
+          "precision": 0.6,
+          "recall": 0.42857142857142855,
+          "support": 7
+        }
+      },
+      "rows": 332,
+      "weighted_f1": 0.7109031213006042
+    }
+  },
+  "parser": {
+    "error_counts": {},
+    "likely_truncated_count": 0,
+    "valid_count": 1272,
+    "valid_rate": 1.0
+  },
+  "private_predictions_sha256": "8b1ff34de1ae5ab55f2890790b5747eff1f30039c3408c85e6d8c819a244f128",
+  "raw_outputs_stored_publicly": false,
+  "reasoning": true,
+  "rows": 1272,
+  "status": "Passed",
+  "test_split_accessed": false,
+  "validation_split_accessed": true,
+  "view": "target_only"
+}

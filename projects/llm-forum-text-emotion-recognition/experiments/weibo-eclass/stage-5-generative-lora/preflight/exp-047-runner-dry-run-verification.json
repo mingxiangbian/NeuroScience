@@ -1,0 +1,182 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "checks": [
+    {
+      "check": "registration-and-split-gates",
+      "detail": {
+        "execution_authorized": false,
+        "status": "Registered",
+        "test_access": false,
+        "validation_access": "deferred_until_all_adapters_pass_train_only_gates"
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "frozen-source-and-protocol-hashes",
+      "detail": {
+        "parser": "429c8708da864086c11859449ebf427b8a681c20eec58900d97574d508067a21",
+        "prompt": "d9a92aab3a531b769c3b4794572cf0842536c7c38dcdd6a1cd4ac25885e6631b",
+        "protocol": "8242a44ff9af153a5ae2eec6370e5775cd37f6fd54b8dbd5b0b461940a47e637",
+        "requirements": "69072303ed0d899983f402fe81131f79c57c1154d45ae8550cff518f48bd70bc",
+        "runner": "8670f89af4036a3bfba935c24b00e33b5309543b521f748348c5c2e9d9b6ecad",
+        "test": "85542c1b118b52b1716a1e3ce1ca56e5aca06a6a7f95fe4ef7d7607d34297ca3",
+        "verifier": "64b309b12d2811bc42151a7803af62b754b0a73a27b0e030bff0057fd2ecd508"
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "runner-has-only-no-model-dry-run-entrypoint",
+      "detail": {
+        "banned_imports": [],
+        "command_choices": [
+          "dry-run"
+        ],
+        "forbidden_calls": [],
+        "from_pretrained_calls": [
+          "AutoTokenizer.from_pretrained"
+        ],
+        "passed": true,
+        "transformers_imports": [
+          "AutoTokenizer"
+        ]
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "frozen-offline-runtime",
+      "detail": {
+        "mlx_lora_cli": {
+          "bytes": 199,
+          "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/mlx_lm.lora",
+          "sha256": "e809f4488d53ca0906a3ab224416b8c7c898b3ad786d59be828b10cd113be293"
+        },
+        "offline_environment": true,
+        "packages": {
+          "mlx": "0.32.0",
+          "mlx-lm": "0.31.3",
+          "numpy": "2.4.6",
+          "python": "3.11.15",
+          "safetensors": "0.8.0",
+          "tokenizers": "0.22.2",
+          "transformers": "5.14.1"
+        },
+        "python_executable": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python"
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "model-identity-hashed-without-weight-loading",
+      "detail": {
+        "file_count": 9,
+        "files_manifest_sha256": "c03cd949b6488439e071c0dff9f01a07fe88f0974e7dd40166beffcca2367da6",
+        "total_bytes": 8056445038
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "full-train-render-and-token-contract",
+      "detail": {
+        "label_counts": {
+          "anger": 198,
+          "joy": 286,
+          "negative": 516,
+          "neutral": 281,
+          "no_emotion": 4166,
+          "positive": 452,
+          "sadness": 96
+        },
+        "rows": 5995,
+        "supervised_token_lengths": {
+          "count": 5995,
+          "max": 13,
+          "mean": 12.40583819849875,
+          "min": 11,
+          "p50": 13.0,
+          "p95": 13.0,
+          "p99": 13.0
+        },
+        "token_lengths": {
+          "count": 5995,
+          "max": 289,
+          "mean": 212.69124270225188,
+          "min": 206,
+          "p50": 212.0,
+          "p95": 220.0,
+          "p99": 230.0
+        },
+        "truncated_rows": 0
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "private-prepared-train-is-exact-and-isolated",
+      "detail": {
+        "files": [
+          "lora-data/train.jsonl"
+        ],
+        "gitignored": true,
+        "modes": {
+          "lora_data": "0o700",
+          "private_root": "0o700",
+          "train": "0o600"
+        },
+        "prepared_sha256": "b3f25d0bb76d0a2678a83501f0a4a4e363d84be0cea82827852da96c7475abcb"
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "three-seed-train-only-runtime-configs",
+      "detail": {
+        "seeds": [
+          42,
+          43,
+          44
+        ],
+        "train_only": true
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "public-dry-run-report-reconstructs",
+      "detail": {
+        "accessed_splits": [
+          "train"
+        ],
+        "prepared_sha256": "b3f25d0bb76d0a2678a83501f0a4a4e363d84be0cea82827852da96c7475abcb",
+        "status": "Passed"
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "public-artifacts-contain-no-row-text-or-identifiers",
+      "detail": {
+        "public_files_scanned": 4,
+        "target_minimum_scan_length": 4
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "resource-and-count-arithmetic",
+      "detail": {
+        "formal_dev_generations": 5088,
+        "replay_generations": 96,
+        "total_active_hours_max": 116.0,
+        "training_iterations_per_seed": 11990
+      },
+      "status": "Passed"
+    }
+  ],
+  "checks_passed": 11,
+  "completed_at_utc": "2026-08-09T07:36:58.074432+00:00",
+  "experiment_id": "EXP-047",
+  "mismatches": [],
+  "model_execution": false,
+  "prepared_train_sha256": "b3f25d0bb76d0a2678a83501f0a4a4e363d84be0cea82827852da96c7475abcb",
+  "status": "Passed",
+  "test_split_accessed": false,
+  "training_executed": false,
+  "validation_split_accessed": false,
+  "verification_id": "EXP-047-RUNNER-DRY-RUN-VERIFY-V1"
+}

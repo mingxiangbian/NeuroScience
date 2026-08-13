@@ -1,0 +1,31 @@
+{
+  "schema_version": "annotation-record-v1",
+  "protocol_id": "DATA-FCTX-LABEL-V1",
+  "sample_uid": "smp_0000000000000000000000000000000000000000000000000000000000000001",
+  "view_sha256": "35e89b67bf81c16378f11648a6a8dfba109066514f2d160d168bfacaab1cde6b",
+  "annotator": {
+    "annotator_uid": "ann_synthetic_human",
+    "role": "human",
+    "annotation_mode": "blind"
+  },
+  "annotation_round": "calibration",
+  "target_only": {
+    "status": "labeled",
+    "primary_emotion": "frustration",
+    "other_emotion_text": null,
+    "confidence": "medium",
+    "note": null
+  },
+  "contextual": {
+    "status": "labeled",
+    "primary_emotion": "frustration",
+    "other_emotion_text": null,
+    "confidence": "high",
+    "sarcasm": "present",
+    "mixed_emotion": false,
+    "context_sufficiency": "sufficient",
+    "note": "Synthetic fixture only."
+  },
+  "started_at": "2026-08-05T12:00:00Z",
+  "completed_at": "2026-08-05T12:01:00Z"
+}

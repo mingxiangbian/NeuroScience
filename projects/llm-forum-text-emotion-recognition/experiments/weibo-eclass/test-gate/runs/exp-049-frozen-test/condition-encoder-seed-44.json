@@ -1,0 +1,56 @@
+{
+  "completed_at_utc": "2026-08-12T05:07:34.715558+00:00",
+  "condition": "encoder-seed-44",
+  "details": {
+    "checkpoint": {
+      "file_count": 4,
+      "files": [
+        {
+          "bytes": 1250,
+          "path": "config.json",
+          "sha256": "e439e514145488802aad69290f0bbec3056bb72da93af747126fce88e48efd92"
+        },
+        {
+          "bytes": 409115620,
+          "path": "model.safetensors",
+          "sha256": "32ee1bfcc5867412280d5fd4d791decc7cf755c64cfa1be840ae91fe5c3ada39"
+        },
+        {
+          "bytes": 439118,
+          "path": "tokenizer.json",
+          "sha256": "e3664152464ac6604e88e0b5348cb0819f5e2b75dc0a3f976dd4ab5058441b01"
+        },
+        {
+          "bytes": 377,
+          "path": "tokenizer_config.json",
+          "sha256": "86edfbd1d109094d4ea6a04c83822681bd05e495ced8de2cbcd6fea518da3440"
+        }
+      ],
+      "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-042-stage-3-baselines/m2/target_only/seed-44/final-model",
+      "total_bytes": 409556365
+    },
+    "inference_seconds": 5.241934709018096,
+    "input_tokens": {
+      "count": 1273,
+      "max": 126,
+      "mean": 17.68813825608798,
+      "median": 16,
+      "min": 9,
+      "p95": 29.0,
+      "sum": 22517
+    },
+    "private_predictions": {
+      "bytes": 651764,
+      "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-049-frozen-test/condition-encoder-seed-44-predictions.jsonl",
+      "sha256": "9983e4a0997f9d5101a028560ab4f7f3716e715e21ad72731da4a5ea61c453c4"
+    }
+  },
+  "experiment_id": "EXP-049",
+  "performance_metrics_computed": false,
+  "rows": 1273,
+  "status": "Completed; labels sealed",
+  "test_inputs_accessed": true,
+  "test_labels_accessed": false,
+  "total_seconds": 8.291421875008382,
+  "view": "target_only"
+}

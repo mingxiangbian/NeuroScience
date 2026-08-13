@@ -1,0 +1,241 @@
+{
+  "schema_version": "public-candidate-viability-audit-verification-v1",
+  "protocol_id": "DATA-FCTX-PUBLIC-AUDIT-V1",
+  "generated_at_utc": "2026-08-07T17:28:27.321840+00:00",
+  "status": "passed",
+  "checks_total": 35,
+  "checks_passed": 35,
+  "mismatches": [],
+  "checks": [
+    {
+      "name": "report.protocol",
+      "passed": true,
+      "observed": "DATA-FCTX-PUBLIC-AUDIT-V1",
+      "expected": "DATA-FCTX-PUBLIC-AUDIT-V1"
+    },
+    {
+      "name": "report.status",
+      "passed": true,
+      "observed": "completed",
+      "expected": "completed"
+    },
+    {
+      "name": "report.test_data_accessed",
+      "passed": true,
+      "observed": false,
+      "expected": false
+    },
+    {
+      "name": "report.training_performed",
+      "passed": true,
+      "observed": false,
+      "expected": false
+    },
+    {
+      "name": "report.external_api_or_hydration_performed",
+      "passed": true,
+      "observed": false,
+      "expected": false
+    },
+    {
+      "name": "report.privacy",
+      "passed": true,
+      "observed": true,
+      "expected": true
+    },
+    {
+      "name": "kote.test_absent",
+      "passed": true,
+      "observed": false,
+      "expected": false
+    },
+    {
+      "name": "kote.train_rows",
+      "passed": true,
+      "observed": 40000,
+      "expected": 40000
+    },
+    {
+      "name": "kote.validation_rows",
+      "passed": true,
+      "observed": 5000,
+      "expected": 5000
+    },
+    {
+      "name": "kote.train_all_three_columns",
+      "passed": true,
+      "observed": true,
+      "expected": true
+    },
+    {
+      "name": "kote.validation_all_three_columns",
+      "passed": true,
+      "observed": true,
+      "expected": true
+    },
+    {
+      "name": "kote.train_cardinality_mean",
+      "passed": true,
+      "observed": 7.911475,
+      "expected": 7.911475
+    },
+    {
+      "name": "kote.cross_split_id_overlap",
+      "passed": true,
+      "observed": 0,
+      "expected": 0
+    },
+    {
+      "name": "hotter.package_md5",
+      "passed": true,
+      "observed": "6f26a58c5771158c0f9492096222ad6c",
+      "expected": "6f26a58c5771158c0f9492096222ad6c"
+    },
+    {
+      "name": "hotter.annotation_rows",
+      "passed": true,
+      "observed": 19828,
+      "expected": 19828
+    },
+    {
+      "name": "hotter.task_count",
+      "passed": true,
+      "observed": 26,
+      "expected": 26
+    },
+    {
+      "name": "hotter.unique_target_keys",
+      "passed": true,
+      "observed": 12675,
+      "expected": 12675
+    },
+    {
+      "name": "hotter.emotion_label_values",
+      "passed": true,
+      "observed": [
+        "0",
+        "1",
+        "skip"
+      ],
+      "expected": [
+        "0",
+        "1",
+        "skip"
+      ]
+    },
+    {
+      "name": "hotter.no_hydrated_output",
+      "passed": true,
+      "observed": false,
+      "expected": false
+    },
+    {
+      "name": "weibo.cause_logical_records",
+      "passed": true,
+      "observed": 12586,
+      "expected": 12586
+    },
+    {
+      "name": "weibo.cause_physical_lines",
+      "passed": true,
+      "observed": 12600,
+      "expected": 12600
+    },
+    {
+      "name": "weibo.classification_logical_records",
+      "passed": true,
+      "observed": 23127,
+      "expected": 23127
+    },
+    {
+      "name": "weibo.classification_physical_lines",
+      "passed": true,
+      "observed": 24208,
+      "expected": 24208
+    },
+    {
+      "name": "weibo.scaffold_records",
+      "passed": true,
+      "observed": 12052,
+      "expected": 12052
+    },
+    {
+      "name": "weibo.emotion_records",
+      "passed": true,
+      "observed": 11075,
+      "expected": 11075
+    },
+    {
+      "name": "weibo.cross_file_multiset_overlap",
+      "passed": true,
+      "observed": {
+        "exact_common_rows": 120,
+        "left_only_rows": 12466,
+        "right_only_rows": 11932,
+        "left_unique_rows": 12586,
+        "right_unique_rows": 12052
+      },
+      "expected": {
+        "exact_common_rows": 120,
+        "left_only_rows": 12466,
+        "right_only_rows": 11932,
+        "left_unique_rows": 12586,
+        "right_unique_rows": 12052
+      }
+    },
+    {
+      "name": "kote.manifest_protocol",
+      "passed": true,
+      "observed": "DATA-FCTX-PUBLIC-AUDIT-V1",
+      "expected": "DATA-FCTX-PUBLIC-AUDIT-V1"
+    },
+    {
+      "name": "kote.manifest_decision",
+      "passed": true,
+      "observed": "eligible_training_control",
+      "expected": "eligible_training_control"
+    },
+    {
+      "name": "kote.all_raw_files_gitignored",
+      "passed": true,
+      "observed": 4,
+      "expected": 4
+    },
+    {
+      "name": "hotter-and-colder.manifest_protocol",
+      "passed": true,
+      "observed": "DATA-FCTX-PUBLIC-AUDIT-V1",
+      "expected": "DATA-FCTX-PUBLIC-AUDIT-V1"
+    },
+    {
+      "name": "hotter-and-colder.manifest_decision",
+      "passed": true,
+      "observed": "blocked_pending_review",
+      "expected": "blocked_pending_review"
+    },
+    {
+      "name": "hotter-and-colder.all_raw_files_gitignored",
+      "passed": true,
+      "observed": 5,
+      "expected": 5
+    },
+    {
+      "name": "weibo-emotion-corpus.manifest_protocol",
+      "passed": true,
+      "observed": "DATA-FCTX-PUBLIC-AUDIT-V1",
+      "expected": "DATA-FCTX-PUBLIC-AUDIT-V1"
+    },
+    {
+      "name": "weibo-emotion-corpus.manifest_decision",
+      "passed": true,
+      "observed": "eligible_auxiliary",
+      "expected": "eligible_auxiliary"
+    },
+    {
+      "name": "weibo-emotion-corpus.all_raw_files_gitignored",
+      "passed": true,
+      "observed": 4,
+      "expected": 4
+    }
+  ]
+}

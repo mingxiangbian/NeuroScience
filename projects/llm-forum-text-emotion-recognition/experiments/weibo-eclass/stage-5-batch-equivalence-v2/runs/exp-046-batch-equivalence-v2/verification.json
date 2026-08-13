@@ -1,0 +1,135 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "check_count": 12,
+  "checks": [
+    {
+      "check": "run-boundary",
+      "detail": {
+        "accessed_splits": [
+          "train"
+        ],
+        "status": "Awaiting Independent Verification"
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "frozen-input-hashes",
+      "detail": {
+        "train_rows_expected": 5995
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "frozen-implementation-hashes",
+      "detail": {
+        "config_sha256": "d00192338655ce3c92f35f0aa9852e5226f91e351fd9bf53d888f57388761c57",
+        "runner_sha256": "adbfb5e8a20d3ab55f26cdc5ebab7a911d9620fd2d79efb255b37adb97e8301d",
+        "test_sha256": "6a1c347215654b020225f86c5ab906e2603b2313775001591e6516b07d56baa4",
+        "verifier_sha256": "05711ef6a8bfda65f305c08151435d0448fad457d57711720372dcd0c6e3e664"
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "train-schema-and-count",
+      "detail": {
+        "rows": 5995
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "deterministic-representative-sample",
+      "detail": {
+        "label_counts": {
+          "anger": 1,
+          "joy": 1,
+          "negative": 1,
+          "neutral": 1,
+          "no_emotion": 10,
+          "positive": 1,
+          "sadness": 1
+        },
+        "rows": 16
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "batch-composition-stress",
+      "detail": {
+        "native_group_count": 2,
+        "stress_group_count": 2
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "public-sample-summary",
+      "detail": {
+        "selection_digest_sha256": "99f851612df7f5bc67792c9892655e126ded52a1618fca9113c3d3b9bbe0cebd"
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "mode-artifacts-and-independent-parser",
+      "detail": {
+        "batch8-length-stress": [],
+        "batch8-r1": [],
+        "batch8-r2": [],
+        "singleton-r1": [],
+        "singleton-r2": []
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "resource-gates",
+      "detail": {
+        "formal_generations": 80,
+        "wall_time_seconds": 2432.0841750830878
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "aggregate-recomputation",
+      "detail": {
+        "decision": {
+          "gate_status": "Passed",
+          "recommended_execution_protocol": "singleton",
+          "requirements": [
+            "batch_size=completion_batch_size=prefill_batch_size=1",
+            "repeat the train-only replay after each adapter is trained and before dev access"
+          ],
+          "rules_applied": {
+            "batch_composition_label_agreement_min": 1.0,
+            "batch_replay_label_agreement_min": 1.0,
+            "fallback_if_no_stable_reasoning_on_mode": "block_reasoning_on_primary_pending_reasoning_off_replay",
+            "singleton_replay_label_agreement_min": 1.0
+          }
+        },
+        "prompt_contract_identical": true
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "public-privacy-boundary",
+      "detail": {
+        "long_raw_text_matches": 0,
+        "raw_id_matches": 0
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "no-performance-claim",
+      "detail": {
+        "classification_metrics_present": false
+      },
+      "status": "Passed"
+    }
+  ],
+  "completed_at_utc": "2026-08-09T06:46:09.679899+00:00",
+  "experiment_id": "EXP-046",
+  "failed_checks": [],
+  "status": "Passed",
+  "test_split_accessed": false,
+  "validation_split_accessed": false,
+  "verifier_imported_runner": false
+}

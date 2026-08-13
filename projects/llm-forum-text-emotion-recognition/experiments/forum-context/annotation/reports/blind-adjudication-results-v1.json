@@ -1,0 +1,222 @@
+{
+  "analysis": {
+    "all_three_equal_controls": {
+      "all_candidates_supported_or_acceptable": 2,
+      "any_candidate_unsupported": 0,
+      "cases": 2,
+      "final_matches_unanimous_candidate": 2,
+      "no_stable_gold": 0
+    },
+    "candidate_assessment_by_source": {
+      "human": {
+        "assessment_counts": {
+          "acceptable_but_not_primary": 8,
+          "supported": 12,
+          "unsupported": 20
+        },
+        "cases": 40,
+        "strict_supported_rate": 0.3,
+        "supported_or_acceptable_rate": 0.5,
+        "unsupported_rate": 0.5
+      },
+      "model_01": {
+        "assessment_counts": {
+          "acceptable_but_not_primary": 3,
+          "supported": 29,
+          "unsupported": 8
+        },
+        "cases": 40,
+        "strict_supported_rate": 0.725,
+        "supported_or_acceptable_rate": 0.8,
+        "unsupported_rate": 0.2
+      },
+      "model_02": {
+        "assessment_counts": {
+          "acceptable_but_not_primary": 3,
+          "supported": 24,
+          "unsupported": 13
+        },
+        "cases": 40,
+        "strict_supported_rate": 0.6,
+        "supported_or_acceptable_rate": 0.675,
+        "unsupported_rate": 0.325
+      }
+    },
+    "independent_to_final": {
+      "changed": 21,
+      "changed_rate_among_final_decisions": 0.525,
+      "final_decision_cases": 40,
+      "unchanged": 19
+    },
+    "phase_1_diagnosis_by_frozen_stratum": {
+      "all_three_different": {
+        "cases": 10,
+        "emotion_presence": {
+          "clear_emotion": 8,
+          "no_clear_emotion": 1,
+          "uncertain": 1
+        },
+        "stance": {
+          "oppose": 7,
+          "uncertain": 3
+        },
+        "unit_validity": {
+          "unusable": 2,
+          "valid_single_unit": 8
+        }
+      },
+      "all_three_equal_control": {
+        "cases": 2,
+        "emotion_presence": {
+          "clear_emotion": 2
+        },
+        "stance": {
+          "none": 1,
+          "oppose": 1
+        },
+        "unit_validity": {
+          "valid_single_unit": 2
+        }
+      },
+      "human_context_shift": {
+        "cases": 5,
+        "emotion_presence": {
+          "clear_emotion": 4,
+          "uncertain": 1
+        },
+        "stance": {
+          "mixed": 1,
+          "none": 1,
+          "oppose": 2,
+          "uncertain": 1
+        },
+        "unit_validity": {
+          "unusable": 1,
+          "valid_single_unit": 4
+        }
+      },
+      "model_boundary_conflict": {
+        "cases": 8,
+        "emotion_presence": {
+          "clear_emotion": 7,
+          "uncertain": 1
+        },
+        "stance": {
+          "oppose": 7,
+          "uncertain": 1
+        },
+        "unit_validity": {
+          "unusable": 1,
+          "valid_single_unit": 7
+        }
+      },
+      "stance_candidate": {
+        "cases": 15,
+        "emotion_presence": {
+          "clear_emotion": 12,
+          "uncertain": 3
+        },
+        "stance": {
+          "mixed": 1,
+          "none": 1,
+          "oppose": 8,
+          "support": 3,
+          "uncertain": 2
+        },
+        "unit_validity": {
+          "multi_segment_or_mixed_unit": 1,
+          "unusable": 2,
+          "valid_single_unit": 12
+        }
+      }
+    },
+    "resolution": {
+      "counts": {
+        "final_decision": 40
+      },
+      "final_outcome_status_counts": {
+        "labeled": 39,
+        "unusable": 1
+      },
+      "no_stable_gold_rate": 0.0
+    },
+    "session_discipline": {
+      "completed_cases": 40,
+      "completed_per_session": [
+        20,
+        20
+      ],
+      "maximum_completed_in_one_session": 20,
+      "session_count": 2,
+      "session_limit": 20,
+      "session_limit_passed": true
+    },
+    "unsupported_reason_by_source": {
+      "human": {
+        "anger_vs_frustration": 3,
+        "insufficient_context": 1,
+        "multi_segment_or_mixed": 1,
+        "neutral_vs_unclear": 2,
+        "stance_vs_emotion": 13
+      },
+      "model_01": {
+        "anger_vs_frustration": 1,
+        "clear_protocol_violation": 1,
+        "context_changes_interpretation": 1,
+        "insufficient_context": 2,
+        "neutral_vs_unclear": 2,
+        "stance_vs_emotion": 1
+      },
+      "model_02": {
+        "anger_vs_frustration": 5,
+        "clear_protocol_violation": 1,
+        "context_changes_interpretation": 2,
+        "insufficient_context": 2,
+        "multi_segment_or_mixed": 1,
+        "stance_vs_emotion": 2
+      }
+    }
+  },
+  "claim_boundary": {
+    "creates_formal_gold": false,
+    "is_independent_reannotation": false,
+    "source_unblinded_for_aggregate_analysis": true,
+    "supports_inter_annotator_agreement": false,
+    "supports_model_accuracy_claims": false,
+    "supports_population_performance_claims": false
+  },
+  "completion": {
+    "completed_cases": 40,
+    "first_completed_at": "2026-08-07T14:45:09Z",
+    "last_completed_at": "2026-08-07T15:24:26Z",
+    "phase_1_complete": 40,
+    "phase_2_complete": 40
+  },
+  "generated_at_utc": "2026-08-07T15:32:20Z",
+  "input_verification": {
+    "bundle_hash": "passed",
+    "record_case_hashes": "passed",
+    "record_completeness": "passed",
+    "records_composite_sha256": "6787ea505d5346bd3af21366fe14d6f354ed4f0249bc02311fa04d65dda4ac93",
+    "session_log": "passed",
+    "source_map_hash": "passed"
+  },
+  "privacy": {
+    "forum_text_emitted": false,
+    "per_case_labels_emitted": false,
+    "per_case_source_mapping_emitted": false,
+    "private_identifiers_emitted": false
+  },
+  "sampling_boundary": {
+    "all_equal_control_cases": 2,
+    "design": "disagreement_enriched_stratified_diagnostic",
+    "representative_sample": false
+  },
+  "private_checkpoint_verification": {
+    "checkpoint_sha256": "7fe047f5ef2b234ec765a9c4c27facbb74f6b340644c2aa2aa557406a65d19af",
+    "private_seal_sha256": "51d1d03f003e5404ff4697ab53eba91c23ffdd66e0a40a6c59a3fa6bf0f5eae1"
+  },
+  "protocol_id": "DATA-FCTX-ADJ-DIAG-V1",
+  "schema_version": "blind-adjudication-results-v1",
+  "status": "completed_and_aggregate_unblinded"
+}

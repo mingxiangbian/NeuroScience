@@ -1,0 +1,56 @@
+{
+  "schema_version": "public-candidate-manifest-v1",
+  "protocol_id": "DATA-FCTX-PUBLIC-AUDIT-V1",
+  "generated_at_utc": "2026-08-07T17:28:23.714556+00:00",
+  "dataset": "Hotter and Colder",
+  "audit_report": "experiments/forum-context/public-candidate-audit/reports/public-candidate-viability-audit-v1.json",
+  "source": {
+    "repository_record": "http://hdl.handle.net/20.500.12537/352",
+    "license": "CC BY 4.0",
+    "expected_package_md5": "6f26a58c5771158c0f9492096222ad6c",
+    "observed_package_md5": "6f26a58c5771158c0f9492096222ad6c",
+    "checksum_matches": true,
+    "files": [
+      {
+        "path": "data/hotter-and-colder/official/Icelandic_Sentiment_Corpus.zip",
+        "bytes": 294803,
+        "sha256": "a550fe80db85ed7387f7e8b976bdc7004479a83df953e4bcf6ae7ad3ee1861ec",
+        "md5": "6f26a58c5771158c0f9492096222ad6c"
+      },
+      {
+        "path": "data/hotter-and-colder/official/clarin_submission/data_unhydrated.csv",
+        "bytes": 2006082,
+        "sha256": "b4b5a7b46622170829864a919a17325b0626e20447cf3f19bd5a19f04397c0b3"
+      },
+      {
+        "path": "data/hotter-and-colder/official/clarin_submission/hydration.py",
+        "bytes": 10672,
+        "sha256": "a8cfc283ba635ec6d8f193dfceaaeed18b5dba5d1850cc4c4e51455108611403"
+      },
+      {
+        "path": "data/hotter-and-colder/official/clarin_submission/README.md",
+        "bytes": 3897,
+        "sha256": "be329e05a084b70f8b2ac6c9fe7e6bc5d9a92509b1933f9a6039fe1ce524df69"
+      },
+      {
+        "path": "data/hotter-and-colder/official/clarin_submission/requirements.txt",
+        "bytes": 37,
+        "sha256": "679765d68152ea00019908b091e69ccb706cef851d61c18803d1b2194e38bbda"
+      }
+    ]
+  },
+  "decision": "blocked_pending_review",
+  "decision_basis": [
+    "the checksum and CC BY 4.0 release metadata are verifiable",
+    "the package contains labels and live links but no target or context text",
+    "the supplied script scrapes live pages, has no request timeout and processes only 50 rows by default",
+    "the script appends comment signatures and reconstructs chronological history rather than explicit reply edges",
+    "emotion tasks are separate binary annotation rows rather than a guaranteed complete label vector per target",
+    "the release counts and README label description do not exactly match the paper or observed emotion schema"
+  ],
+  "privacy": {
+    "raw_text_tracked": false,
+    "upstream_ids_tracked": false,
+    "sample_text_tracked": false
+  }
+}

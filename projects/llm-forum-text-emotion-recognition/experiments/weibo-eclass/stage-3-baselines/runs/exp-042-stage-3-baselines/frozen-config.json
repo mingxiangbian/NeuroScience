@@ -1,0 +1,131 @@
+{
+  "data": {
+    "labels": [
+      "joy",
+      "sadness",
+      "anger",
+      "positive",
+      "negative",
+      "neutral",
+      "no_emotion"
+    ],
+    "manifest_path": "data/weibo-emotion-corpus/eclass-v1.manifest.json",
+    "manifest_sha256": "54e929d7a9263c83d2895fd109fbdfb46b876043dec668d0fe25f30c149fd210",
+    "protocol_id": "DATA-WEIBO-TASK-V1",
+    "test_access": false,
+    "train_path": "data/weibo-emotion-corpus/derived-private/eclass-v1/train.jsonl",
+    "train_rows": 5995,
+    "train_sha256": "b1fd309acf45dfa4ad0c907ee3f373ea95fce751d51b637d402e289aa79d19e0",
+    "validation_access": true,
+    "validation_path": "data/weibo-emotion-corpus/derived-private/eclass-v1/validation.jsonl",
+    "validation_rows": 1272,
+    "validation_sha256": "99d80e1433bddea7b639983b8fa874e45d585318aa47eb87ab29581e02f72a4a"
+  },
+  "evaluation": {
+    "full_slice": "all",
+    "primary_metric": "macro_f1",
+    "practical_tie_absolute": 0.005,
+    "slices": [
+      "all",
+      "context_available",
+      "first_clause"
+    ],
+    "zero_division": 0
+  },
+  "experiment_id": "EXP-042",
+  "implementation": {
+    "protocol_path": "experiments/weibo-eclass/protocols/exp-042-stage-3-baselines.md",
+    "requirements_lock_path": "experiments/weibo-eclass/stage-3-baselines/requirements-lock.txt",
+    "requirements_lock_sha256": "123e455840fb9e5e9230cd3eb7feda625a8819c4cd3dbf82b91068a7d60797fd",
+    "runner_path": "experiments/weibo-eclass/stage-3-baselines/run_stage3.py",
+    "runner_sha256": "ebbed3799222848bd8a72ff980769e569298d542c587d8041602592f74aea7e6",
+    "test_path": "experiments/weibo-eclass/stage-3-baselines/test_stage3_helpers.py",
+    "test_sha256": "f387f53f90e5e5b908695a0bf35020c70af85d420d8ce8c9f9c846a6096ab43b",
+    "verifier_path": "experiments/weibo-eclass/stage-3-baselines/verify_stage3.py",
+    "verifier_sha256": "edf757c4f262243a65551e74bfbaac73357a5131bc9909ede84871fb4d676e4d"
+  },
+  "m0": {
+    "expected_majority_label": "no_emotion",
+    "selection_source": "train label counts"
+  },
+  "m1": {
+    "c": 1.0,
+    "char_analyzer": "char_wb",
+    "char_ngram_range": [
+      3,
+      5
+    ],
+    "class_weight": "balanced",
+    "classifier": "LinearSVC",
+    "lowercase": true,
+    "min_df": 2,
+    "random_state": 42,
+    "sublinear_tf": true,
+    "word_ngram_range": [
+      1,
+      2
+    ]
+  },
+  "m2": {
+    "adam_beta1": 0.9,
+    "adam_beta2": 0.999,
+    "adam_epsilon": 1e-08,
+    "class_weight": null,
+    "drop_last": false,
+    "epochs": 3,
+    "evaluation_batch_size": 64,
+    "gradient_accumulation_steps": 1,
+    "learning_rate": 2e-05,
+    "license": "apache-2.0",
+    "local_path": "models/chinese-roberta-wwm-ext/snapshot",
+    "loss": "CrossEntropyLoss",
+    "max_grad_norm": 1.0,
+    "max_sequence_length": 256,
+    "mixed_precision": false,
+    "model_manifest_path": "models/chinese-roberta-wwm-ext/manifest.json",
+    "model_manifest_sha256": "c1629b5349d66f3a873c3d6bc4bc490089b86745941eebfaf70749e1e916cba5",
+    "num_workers": 0,
+    "optimizer": "AdamW",
+    "repo_id": "hfl/chinese-roberta-wwm-ext",
+    "revision": "5c58d0b8ec1d9014354d691c538661bf00bfdb44",
+    "scheduler": "linear decay after linear warmup",
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "shuffle": true,
+    "train_batch_size": 16,
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.01,
+    "weight_decay_exclusions": [
+      "bias",
+      "LayerNorm.weight"
+    ]
+  },
+  "private_root": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-042-stage-3-baselines",
+  "prompt": {
+    "path": "experiments/weibo-eclass/stage-2-preflight/prompt-v1.json",
+    "sha256": "d9a92aab3a531b769c3b4794572cf0842536c7c38dcdd6a1cd4ac25885e6631b",
+    "views": [
+      "target_only",
+      "previous_context"
+    ]
+  },
+  "resource_budget": {
+    "api_cost_usd_max": 0,
+    "device": "Apple MPS",
+    "external_network": false,
+    "maximum_encoder_runs": 6,
+    "maximum_wall_minutes": 240,
+    "retained_encoder_checkpoints": 6,
+    "storage_bytes_max": 4294967296
+  },
+  "rq_ids": [
+    "RQ-F1"
+  ],
+  "run_dir": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines",
+  "stage": "stage-3-m0-m1-m2-train-dev",
+  "status": "Registered",
+  "tier": "Major"
+}

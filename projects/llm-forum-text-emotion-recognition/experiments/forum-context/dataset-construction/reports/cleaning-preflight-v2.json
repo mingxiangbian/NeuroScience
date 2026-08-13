@@ -1,0 +1,157 @@
+{
+  "schema_version": "2",
+  "pipeline_id": "DATA-FCTX-CLEAN-V2",
+  "generated_at": "2026-08-05T10:30:19.866201+00:00",
+  "status": "completed_pending_independent_verification",
+  "scope": {
+    "dataset": "Internet Argument Corpus 2.0",
+    "subset": "4forums",
+    "candidate_unit": "direct parent-target reply pair",
+    "labels_assigned": false,
+    "splits_assigned": false,
+    "external_services_used": false
+  },
+  "source_artifact": {
+    "filename": "fourforums_no_parse_2016_05_18.sql.gz",
+    "size_bytes": 171653459,
+    "sha256": "e26e6d27a5fc88ee5837b3838f099f8268d42fe50fbbd9cd88b66dfe7744dd9c"
+  },
+  "implementation": {
+    "script_sha256": "6796c0042a87501fabda5dae656f0c8bf569eecb764e6f0717522d09f05d6f4e",
+    "protocol_sha256": "10fb7a415e57982904f0fb7564d092df9d1fcf7b245ce4e5cd6fcfb2d7ee952b",
+    "elapsed_seconds": 320.91
+  },
+  "private_artifact": {
+    "filename": "cleaning-v2.sqlite",
+    "size_bytes": 2471235584,
+    "sha256": "b1f3022320980c96c5353be16401764a78e0bc40ebb21d71399fe4efcb05fcc7",
+    "git_tracking": "forbidden"
+  },
+  "counts": {
+    "source_table_rows": {
+      "discussion": 11079,
+      "post": 414453,
+      "quote": 539658,
+      "text": 954111
+    },
+    "discussions": 11079,
+    "posts": 414453,
+    "root_posts_not_candidates": 11079,
+    "declared_parent_candidates": 403374,
+    "eligible_candidates": 403336,
+    "excluded_candidates": 38,
+    "hard_reason_occurrences": {
+      "parent_empty": 7,
+      "parent_quote_only": 10,
+      "target_empty": 8,
+      "target_quote_only": 13
+    },
+    "soft_flag_occurrences": {
+      "parent_all_caps": 396,
+      "parent_decode_replacement": 23,
+      "parent_html_present": 1329,
+      "parent_long": 17035,
+      "parent_low_latin_ratio": 6,
+      "parent_no_lexical_tokens": 16,
+      "parent_possible_signature": 1421,
+      "parent_quote_decode_replacement": 14,
+      "parent_quote_heavy": 116181,
+      "parent_repeated_character": 13559,
+      "parent_short": 1391,
+      "parent_url_only": 479,
+      "target_all_caps": 301,
+      "target_decode_replacement": 16,
+      "target_html_present": 1199,
+      "target_long": 13485,
+      "target_low_latin_ratio": 9,
+      "target_no_lexical_tokens": 18,
+      "target_possible_signature": 1130,
+      "target_quote_decode_replacement": 20,
+      "target_quote_heavy": 128353,
+      "target_repeated_character": 12038,
+      "target_short": 1817,
+      "target_url_only": 477,
+      "timestamp_nonmonotonic": 25
+    }
+  },
+  "quote_reconstruction": {
+    "posts_with_quote_metadata": 301807,
+    "offset_status_occurrences": {
+      "valid_top_level": 537778,
+      "valid_nested": 1880,
+      "missing_offset": 0,
+      "missing_parent": 0,
+      "out_of_bounds": 0,
+      "cycle": 0
+    },
+    "text_status_occurrences": {
+      "present": 539630,
+      "empty": 28,
+      "missing": 0,
+      "decode_replacement": 28
+    },
+    "inserted": {
+      "top_level": 537778,
+      "nested": 1880,
+      "quote_text_characters": 163878992
+    },
+    "source_attributes": {
+      "truncated": 311034,
+      "altered": 29365,
+      "source_unresolved": 26869
+    }
+  },
+  "eligible_word_count_nearest_rank": {
+    "target": {
+      "min": 0,
+      "p25": 25,
+      "p50": 58,
+      "p75": 130,
+      "p95": 406,
+      "p99": 919,
+      "max": 12585
+    },
+    "parent": {
+      "min": 0,
+      "p25": 29,
+      "p50": 66,
+      "p75": 146,
+      "p95": 462,
+      "p99": 1022,
+      "max": 12585
+    }
+  },
+  "exact_duplication": {
+    "target": {
+      "clusters_with_multiple_rows": 583,
+      "rows_in_duplicate_clusters": 1899,
+      "max_cluster_size": 217
+    },
+    "pair": {
+      "clusters_with_multiple_rows": 116,
+      "rows_in_duplicate_clusters": 262,
+      "max_cluster_size": 16
+    },
+    "context_variant_rows": 1703,
+    "distinct_context_variant_targets": 486,
+    "action": "retained_for_later_thread-aware_sampling"
+  },
+  "thresholds": {
+    "short_word_tokens_lt": 3,
+    "long_word_tokens_gt": 512,
+    "quote_heavy_ratio_gte": 0.5,
+    "low_latin_min_letters": 20,
+    "low_latin_ratio_lt": 0.5,
+    "all_caps_min_ascii_letters": 10,
+    "all_caps_ratio_gte": 0.8,
+    "repeated_character_run_gte": 6
+  },
+  "privacy": {
+    "author_table_read": false,
+    "discussion_urls_retained": false,
+    "public_text_or_titles": false,
+    "public_source_ids": false,
+    "public_per_sample_ids": false,
+    "id_scheme": "private-key HMAC-SHA256"
+  }
+}

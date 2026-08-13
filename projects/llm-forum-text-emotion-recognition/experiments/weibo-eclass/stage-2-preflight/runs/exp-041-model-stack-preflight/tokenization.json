@@ -1,0 +1,96 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "completed_at_utc": "2026-08-08T05:33:36.142412+00:00",
+  "experiment_id": "EXP-041",
+  "lengths": {
+    "encoder_previous_context": {
+      "count": 5995,
+      "max": 149,
+      "mean": 26.758632193494577,
+      "min": 9,
+      "p50": 26.0,
+      "p95": 45.0,
+      "p99": 61.0600000000004
+    },
+    "encoder_target_only": {
+      "count": 5995,
+      "max": 140,
+      "mean": 16.7651376146789,
+      "min": 9,
+      "p50": 15.0,
+      "p95": 27.0,
+      "p99": 39.0
+    },
+    "qwen_previous_context_thinking_false": {
+      "count": 5995,
+      "max": 288,
+      "mean": 212.05037531276062,
+      "min": 199,
+      "p50": 212.0,
+      "p95": 224.0,
+      "p99": 236.0
+    },
+    "qwen_previous_context_thinking_true": {
+      "count": 5995,
+      "max": 284,
+      "mean": 208.05037531276062,
+      "min": 195,
+      "p50": 208.0,
+      "p95": 220.0,
+      "p99": 232.0
+    },
+    "qwen_target_only_thinking_false": {
+      "count": 5995,
+      "max": 281,
+      "mean": 204.2854045037531,
+      "min": 199,
+      "p50": 203.0,
+      "p95": 211.0,
+      "p99": 221.0
+    },
+    "qwen_target_only_thinking_true": {
+      "count": 5995,
+      "max": 277,
+      "mean": 200.2854045037531,
+      "min": 195,
+      "p50": 199.0,
+      "p95": 207.0,
+      "p99": 217.0
+    }
+  },
+  "limits": {
+    "encoder": 256,
+    "qwen": 512
+  },
+  "lora_smoke_data": {
+    "lengths": {
+      "count": 56,
+      "max": 228,
+      "mean": 213.83928571428572,
+      "min": 207,
+      "p50": 213.0,
+      "p95": 224.0,
+      "p99": 226.35000000000002
+    },
+    "private_artifact_sha256": "3daa20fdd7b7b24404225fcf74b75a9675a33ff2e9fb799ca75d327bfdf9f68c",
+    "row_level_data_public": false,
+    "rows": 56,
+    "views": {
+      "previous_context": 14,
+      "target_only": 42
+    }
+  },
+  "raw_ids_stored_publicly": false,
+  "raw_text_stored_publicly": false,
+  "status": "Passed",
+  "synthetic_target_preservation": "Passed",
+  "test_split_accessed": false,
+  "train_rows_scanned": 5995,
+  "truncations": {
+    "encoder_context_rows": 0,
+    "qwen_context_rows": 0
+  },
+  "validation_split_accessed": false
+}

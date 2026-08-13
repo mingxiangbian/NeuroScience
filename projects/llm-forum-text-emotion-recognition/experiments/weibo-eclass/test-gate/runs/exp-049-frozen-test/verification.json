@@ -1,0 +1,359 @@
+{
+  "check_count": 10,
+  "checks": [
+    "frozen contract, authorization, implementation and upstream evidence",
+    "1,273 test inputs and sealed labels by registered hashes and ordered IDs",
+    "nine private prediction files and exact row alignment",
+    "baseline decision/probability semantics without post-label model calls",
+    "independent Qwen prompt-token, parser, output-hash and token reconstruction",
+    "all aggregate, slice, per-label and confusion metrics",
+    "three-seed family means and sample standard deviations",
+    "three deterministic group-level paired bootstrap contrasts",
+    "single label-opening transition after all nine prediction files",
+    "resource budgets, private permissions, Git ignore and public privacy"
+  ],
+  "completed_at_utc": "2026-08-13T04:32:55.527623+00:00",
+  "contract": {
+    "bytes": 19158,
+    "path": "experiments/weibo-eclass/test-gate/configs/exp-049-test-ready.json",
+    "sha256": "d31577b2def7c8cedbcd0da44e71a0a271fa2fcf171fad85cbb1c062fe2d716e"
+  },
+  "experiment_id": "EXP-049",
+  "final_artifacts": {
+    "aggregate": {
+      "bytes": 279090,
+      "path": "experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/aggregate-metrics.json",
+      "sha256": "f6da550d9830250f66833ea24da33b5e619bd942170be5426c6efa1d3e62b130"
+    },
+    "report": {
+      "bytes": 2025,
+      "path": "experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/REPORT.md",
+      "sha256": "6f08ac3e58a479aa70c5343087f8ea9ab7994b7544ffa58d826d3445c691ebe2"
+    },
+    "run": {
+      "bytes": 12196,
+      "path": "experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/run.json",
+      "sha256": "59b6e055db73b46df80e1a52b970ca43cbbcfa4386a4bd362e44e7b1c76f06ca"
+    }
+  },
+  "independent_implementation": true,
+  "mismatch_count": 0,
+  "mismatches": [],
+  "recalculated": {
+    "contrasts": {
+      "encoder_mean_minus_m1": {
+        "candidate_units": [
+          "encoder-seed-42",
+          "encoder-seed-43",
+          "encoder-seed-44"
+        ],
+        "ci95": [
+          0.22692723200805337,
+          0.32405411804733925
+        ],
+        "decision": "material_improvement",
+        "groups": 337,
+        "observed_delta": 0.274859826300038,
+        "probability_delta_gt_zero": 1.0,
+        "reference_units": [
+          "m1-target-only"
+        ],
+        "repeats": 2000,
+        "resampling_unit": "group_id"
+      },
+      "lora_mean_minus_encoder_mean": {
+        "candidate_units": [
+          "qwen-lora-seed-42",
+          "qwen-lora-seed-43",
+          "qwen-lora-seed-44"
+        ],
+        "ci95": [
+          -0.045671144693890726,
+          0.024011203636488572
+        ],
+        "decision": "material_degradation",
+        "groups": 337,
+        "observed_delta": -0.013009108827316096,
+        "probability_delta_gt_zero": 0.2455,
+        "reference_units": [
+          "encoder-seed-42",
+          "encoder-seed-43",
+          "encoder-seed-44"
+        ],
+        "repeats": 2000,
+        "resampling_unit": "group_id"
+      },
+      "lora_mean_minus_qwen_reference": {
+        "candidate_units": [
+          "qwen-lora-seed-42",
+          "qwen-lora-seed-43",
+          "qwen-lora-seed-44"
+        ],
+        "ci95": [
+          0.2747794033940986,
+          0.3620676829475939
+        ],
+        "decision": "material_improvement",
+        "groups": 337,
+        "observed_delta": 0.3196912511814338,
+        "probability_delta_gt_zero": 1.0,
+        "reference_units": [
+          "qwen-reference"
+        ],
+        "repeats": 2000,
+        "resampling_unit": "group_id"
+      }
+    },
+    "families": {
+      "encoder": {
+        "accuracy": {
+          "mean": 0.8290128305839225,
+          "sample_std": 0.006349492355581131,
+          "values": [
+            0.8326787117046347,
+            0.821681068342498,
+            0.8326787117046347
+          ]
+        },
+        "family": "Chinese RoBERTa-WWM-ext supervised encoder",
+        "macro_f1": {
+          "mean": 0.6496213538818211,
+          "sample_std": 0.007365208934415943,
+          "values": [
+            0.6550283999575376,
+            0.641232833728844,
+            0.6526028279590816
+          ]
+        },
+        "macro_precision": {
+          "mean": 0.6750406285965358,
+          "sample_std": 0.006152474263888757,
+          "values": [
+            0.6816096855780628,
+            0.669413333077683,
+            0.6740988671338617
+          ]
+        },
+        "macro_recall": {
+          "mean": 0.6397284398930249,
+          "sample_std": 0.013169169362748747,
+          "values": [
+            0.6489393806131417,
+            0.6246446132690942,
+            0.6456013257968385
+          ]
+        },
+        "unit_count": 3,
+        "unit_ids": [
+          "encoder-seed-42",
+          "encoder-seed-43",
+          "encoder-seed-44"
+        ],
+        "weighted_f1": {
+          "mean": 0.824792710994443,
+          "sample_std": 0.0059316579298967645,
+          "values": [
+            0.8285953420983148,
+            0.817957881146064,
+            0.82782490973895
+          ]
+        }
+      },
+      "m0": {
+        "accuracy": {
+          "mean": 0.6928515318146111,
+          "sample_std": 0.0,
+          "values": [
+            0.6928515318146111
+          ]
+        },
+        "family": "Train-majority baseline",
+        "macro_f1": {
+          "mean": 0.11693735498839906,
+          "sample_std": 0.0,
+          "values": [
+            0.11693735498839906
+          ]
+        },
+        "macro_precision": {
+          "mean": 0.09897879025923016,
+          "sample_std": 0.0,
+          "values": [
+            0.09897879025923016
+          ]
+        },
+        "macro_recall": {
+          "mean": 0.14285714285714285,
+          "sample_std": 0.0,
+          "values": [
+            0.14285714285714285
+          ]
+        },
+        "unit_count": 1,
+        "unit_ids": [
+          "m0-majority"
+        ],
+        "weighted_f1": {
+          "mean": 0.5671415787104288,
+          "sample_std": 0.0,
+          "values": [
+            0.5671415787104288
+          ]
+        }
+      },
+      "m1": {
+        "accuracy": {
+          "mean": 0.6739984289080911,
+          "sample_std": 0.0,
+          "values": [
+            0.6739984289080911
+          ]
+        },
+        "family": "Target-only TF-IDF + LinearSVC",
+        "macro_f1": {
+          "mean": 0.37476152758178305,
+          "sample_std": 0.0,
+          "values": [
+            0.37476152758178305
+          ]
+        },
+        "macro_precision": {
+          "mean": 0.406484471781881,
+          "sample_std": 0.0,
+          "values": [
+            0.406484471781881
+          ]
+        },
+        "macro_recall": {
+          "mean": 0.3558426188892498,
+          "sample_std": 0.0,
+          "values": [
+            0.3558426188892498
+          ]
+        },
+        "unit_count": 1,
+        "unit_ids": [
+          "m1-target-only"
+        ],
+        "weighted_f1": {
+          "mean": 0.6622728202114949,
+          "sample_std": 0.0,
+          "values": [
+            0.6622728202114949
+          ]
+        }
+      },
+      "qwen_lora": {
+        "accuracy": {
+          "mean": 0.8248232521602513,
+          "sample_std": 0.0098114658262347,
+          "values": [
+            0.8138256087981147,
+            0.8279654359780048,
+            0.8326787117046347
+          ]
+        },
+        "family": "Qwen3-4B generative LoRA",
+        "macro_f1": {
+          "mean": 0.636612245054505,
+          "sample_std": 0.021429223655663007,
+          "values": [
+            0.6234513127934258,
+            0.6250459753077884,
+            0.6613394470623005
+          ]
+        },
+        "macro_precision": {
+          "mean": 0.6855849660377088,
+          "sample_std": 0.017544262017569933,
+          "values": [
+            0.6653923824744302,
+            0.6970939879850754,
+            0.6942685276536208
+          ]
+        },
+        "macro_recall": {
+          "mean": 0.6242187537429205,
+          "sample_std": 0.040948507820819664,
+          "values": [
+            0.646297446648875,
+            0.5769692045505889,
+            0.6493896100292975
+          ]
+        },
+        "unit_count": 3,
+        "unit_ids": [
+          "qwen-lora-seed-42",
+          "qwen-lora-seed-43",
+          "qwen-lora-seed-44"
+        ],
+        "weighted_f1": {
+          "mean": 0.8196147619276252,
+          "sample_std": 0.007233133878306218,
+          "values": [
+            0.8142095189405837,
+            0.8168032436976912,
+            0.8278315231446005
+          ]
+        }
+      },
+      "qwen_reference": {
+        "accuracy": {
+          "mean": 0.2246661429693637,
+          "sample_std": 0.0,
+          "values": [
+            0.2246661429693637
+          ]
+        },
+        "family": "Qwen3-4B matched no-adapter reference",
+        "macro_f1": {
+          "mean": 0.31692099387307116,
+          "sample_std": 0.0,
+          "values": [
+            0.31692099387307116
+          ]
+        },
+        "macro_precision": {
+          "mean": 0.3605265519927195,
+          "sample_std": 0.0,
+          "values": [
+            0.3605265519927195
+          ]
+        },
+        "macro_recall": {
+          "mean": 0.46170493340274105,
+          "sample_std": 0.0,
+          "values": [
+            0.46170493340274105
+          ]
+        },
+        "unit_count": 1,
+        "unit_ids": [
+          "qwen-reference"
+        ],
+        "weighted_f1": {
+          "mean": 0.22374149634383572,
+          "sample_std": 0.0,
+          "values": [
+            0.22374149634383572
+          ]
+        }
+      }
+    },
+    "prediction_files": 9,
+    "prediction_rows": 11457,
+    "privacy": {
+      "private_files_checked": 10,
+      "private_gitignored": true,
+      "private_tracked": false,
+      "public_files_scanned": 43,
+      "raw_text_leak_count": 0,
+      "source_id_leak_count": 0
+    },
+    "rows": 1273
+  },
+  "status": "Verified",
+  "test_inputs_accessed": true,
+  "test_labels_accessed": true,
+  "verification_id": "EXP-049-FROZEN-TEST-VERIFY-V1"
+}

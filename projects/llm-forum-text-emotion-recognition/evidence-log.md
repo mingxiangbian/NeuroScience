@@ -94,6 +94,24 @@ project: llm-forum-text-emotion-recognition
 | EVID-024 | 2026-08-04 | EXP-036 在 174 条 dev neutral+emotion 上发现 EXP-029 与 BERT 的 clear-rater expected set-F1 为 0.363250 与 0.362531，三 seed family delta=+0.000720、95% CI=[-0.018463,+0.019903]，属于 practical tie；Qwen 的 official exact match 为 0，但 expected/any-clear-rater exact match 为 0.341284/0.852490 | 在读取 dev raw votes 前冻结 174 条 allowlist、7 份既有预测、逐标注者评分语义、三组比较与 10,000 次 paired bootstrap；不训练、不推理、不选择模型 | `projects/llm-forum-text-emotion-recognition/experiments/goemotions/disagreement-aware-evaluation/runs/exp-036-dev-rater-aware-diagnostic/` | `verification.json` 不导入 runner，独立复算 866 行逐标注者记录、1,218 条样本级分数、全部 CSV/JSON、三组 bootstrap、artifact hash 与隐私边界；174/174 官方聚合精确复现，test 不存在 | Verified |
 | EVID-025 | 2026-08-04 | EXP-037 在完整 5,426 条 GoEmotions dev 上发现 EXP-029/BERT 的 official Macro-F1 为 0.451374/0.489435，clear-rater soft Macro-F1 为 0.347253/0.383471；soft delta=-0.036218、95% CI=[-0.043834,-0.029494]，相对 official delta 的 shift=+0.001843、CI 跨 0，整体差距仍存在 | 冻结全部 dev 行、7 份既有预测、clear-rater vote-fraction soft labels、逐标注者 set-F1、2,000 次 Macro-F1 bootstrap 与 10,000 次样本级 bootstrap；不训练、不推理、不选择模型 | `projects/llm-forum-text-emotion-recognition/experiments/goemotions/disagreement-aware-evaluation/runs/exp-037-full-dev-rater-aware-diagnostic/` | 修正版 V2 verifier 独立复算 19,440 行逐标注者记录、5,426 行结构、588 行逐标签指标、3 组比较和全部公开产物；最大数值差异 5.12e-13，公开文本/上游 ID/raw rater ID 泄漏为 0，test 不存在 | Verified |
 | EVID-026 | 2026-08-04 | EXP-038 一次性 GoEmotions test gate 中，EXP-020 BERT、EXP-029 历史 LoRA 和 EXP-033 target-aligned LoRA 的 Macro-F1 分别为 0.488328 +/- 0.008771、0.450652 +/- 0.032175 和 0.444675；BERT 比论文 test 参照 0.46 高 0.028328 | 在 test 获取前冻结 9 个单元、模型与配置哈希、dev 重放门、指标、资源上限和禁止 test 后选择规则；完成本地推理、匿名逐条产物、聚合与独立复算 | `projects/llm-forum-text-emotion-recognition/experiments/goemotions/test-gate/` | V2 verifier 重建 9 个 5,427 x 28 预测矩阵，复算完整指标和混淆矩阵并核对产物哈希；修正仅把生成标签 ID 从有序比较改为已验证唯一集合比较，未改变预测、指标或冻结配置 | Verified |
+| EVID-027 | 2026-08-05 | `DATA-FCTX-CLEAN-V2` 从 IAC 2.0 4forums 的 414,453 帖构建 403,374 个 parent-target 候选，其中 403,336 个通过保守 hard filter；539,658 条 quote 全部完成层级和 offset 核对 | 冻结确定性清洗、隐私、quote 重建和质量标记协议；实现流式 SQL 解析、私有 SQLite、HMAC ID、聚合报告、合成测试与独立 verifier；保留并纠正失败 V1 | `projects/llm-forum-text-emotion-recognition/experiments/forum-context/dataset-construction/` | 独立验证器复算 source/database/report hash、40 项数据库/计数/quote/重复/HMAC/隐私检查，mismatch=0；私有文本、源 ID、key 与数据库受 Git ignore 保护 | Verified |
+| EVID-028 | 2026-08-05 | `DATA-FCTX-DEDUP-V2` 在 403,336 个 eligible parent-target pairs 上保留 403,183 条，自动去除 139 条精确重复和 14 条纯格式差异；68,552 条 review-only 近邻边形成 249 个簇、涉及 1,308 条候选，semantic-only 自动删除为 0 | 冻结 pair-level 精确、词法与 MiniLM 语义近邻协议；实现本地 embedding、FAISS HNSW、直接代表项、隐私产物和独立 verifier；V1 未达召回门槛后保留失败证据，V2 仅复用哈希验证的向量与图并重算全部边和决策 | `projects/llm-forum-text-emotion-recognition/experiments/forum-context/dataset-construction/deduplication/` | 独立验证器通过 69 项 hash、SQLite、规则、分数、重放、隐私和检索检查，mismatch=0；mean recall@64=0.992554，门槛 0.98，`k=512` 饱和查询=0；私有文本、ID、向量与索引受 Git ignore 保护 | Verified |
+| EVID-029 | 2026-08-06 | `DATA-FCTX-SAMPLE-V1` 从 403,183 条候选中确定性选择 120 条 calibration 主样本和 60 条备用样本；180 条样本与 thread 均全局唯一，四个 diagnostic pool 容量均满足冻结配额 | 冻结 hash ranking、lane quota、thread/review-cluster 全局唯一性、reserve 与 blind-repeat 顺序；实现 metadata-only sampler、私有 HMAC manifest、聚合报告、合成测试和独立重放 verifier | `projects/llm-forum-text-emotion-recognition/experiments/forum-context/annotation/` | 独立 verifier 通过 45 项输入 hash、候选重建、配额、顺序、lane eligibility、唯一性、文件权限、Git ignore 和公开隐私检查，mismatch=0；公开报告无论坛文本、源/HMAC ID 或逐样本记录，24 条 blind repeats 尚未生成 | Verified |
+| EVID-030 | 2026-08-06 | 冻结的 120 条 calibration 主样本已按 annotation order 导出为私有 staged views；89 条含 target quote，共 164 个顶层引用块 | 从 V2 cleaning/dedup SQLite 只重建 title、direct parent、target body/full 与引用来源；输出 `0001.json` 至 `0120.json`，不写 sampling lane、IAC 弱标签、源 ID、人工标签或 repeat | `projects/llm-forum-text-emotion-recognition/experiments/forum-context/annotation/` | 独立 verifier 从数据库逐份重建并通过 34 项 hash、Schema、顺序、allowlist、权限、Git ignore 与公开隐私检查；mismatch、schema problem、hidden-metadata violation 均为 0，`records/` 与 repeat manifest 均不存在 | Verified |
+| EVID-031 | 2026-08-07 | 120 条 Human Pass 1 完成后，按预登记 amendment 直接比较 Human、Model 1 和 Model 2；Stage B 三方精确一致为 21/120，Human/Model 一致率约 25%，106 条至少有一次阶段分歧；结果暴露 stance 与 emotion 的任务错位 | 完成人工两阶段标注并固定只读 checkpoint；在语义检查前登记取消盲重标的影响边界；实现封存 hash、逐行身份和决策契约核验、聚合比较、私有分歧 sidecar、隐私扫描与公开诊断报告 | `projects/llm-forum-text-emotion-recognition/experiments/forum-context/annotation/reports/three-source-comparison-v1.md` | 比较脚本重验四份模型输出 hash 和 120 行映射，34 项标注测试通过，公开隐私违规为 0；尚无独立统计重算器，不生成 gold、不报告 IAA 或人工时间稳定性 | Completed |
+| EVID-032 | 2026-08-08 | `DATA-FCTX-PUBLIC-AUDIT-V1` 判定 KOTE 仅可作 C0 训练/控制候选，Weibo Emotion Cause Corpus 仅可作 C1 辅助，Hotter and Colder 因无打包文本、实时 hydration 与 schema 风险阻塞；三者均未被采用为最终数据集 | 在样本读取前冻结获取和审计边界；固定来源 revision 与 hashes，解析真实 schema、逻辑记录、标签、上下文覆盖和跨文件关系，做不留原文的确定性样本质量复核，并修正物理行数与逻辑记录混淆 | `projects/llm-forum-text-emotion-recognition/experiments/forum-context/public-candidate-audit/` | 独立 verifier 不导入生成器，重解析三份快照并复算关键计数、overlap、checksum、test/hydration 边界和全部 raw Git ignore；35/35 项通过，公开报告无行级文本、ID 或 URL | Verified |
+| EVID-033 | 2026-08-08 | `DATA-WEIBO-TASK-V1` 从 11,075 条 EClass 记录中冻结 8,540 条七分类样本；group/target/duplicate-disjoint split 为 train 5,995、validation 1,272、sealed test 1,273，6,138 条有局部前文 | 冻结 ontology、结构解析、隐私处理、canonicalization、泄漏 component、split 容差、paired views 与 test gate；实现确定性构建器、私有 HMAC 数据、公开聚合报告、合成测试和独立 verifier，并保留被替代的 pre-balance 版本 | `projects/llm-forum-text-emotion-recognition/experiments/forum-context/weibo-eclass/` | 独立 verifier 不导入构建器，重解析固定 source 并通过 33/33 项结构、计数、标签、去重、split、泄漏、视图、隐私和密封检查；10/10 单元测试通过，test labels Git ignored，未训练或评估模型 | Verified |
+| EVID-034 | 2026-08-08 | EXP-041 完成 Weibo Stage 2 train-only 模型栈预检：M1/M2 执行路径通过，Qwen3-4B 严格格式有效率 37/42，精确 16-block LoRA 两步更新与重载通过，峰值内存 8.65 GB | 冻结模型 revision、BF16 精度、paired prompt、thinking on/off、严格 parser、token budget、LoRA 插入位置和资源门；保留 EXP-039 target-rendering failure、EXP-040 384-token truncation failure 及原 verifier self-match failure | `projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-2-preflight/` | `AUDIT-EXP-041-V1` 不导入 runner/parser，重构 56 条选择、独立解析 42 条输出并核验模型清单、112 个 LoRA 插入、224 个 adapter tensors 与公私边界；16/16 检查、0 mismatch，validation/test 未访问，未计算性能指标 | Verified |
+| EVID-035 | 2026-08-08 | EXP-042 在冻结 Weibo validation 上得到 M0 Macro-F1/Accuracy=`0.116913`/`0.692610`；M1 target/context Macro-F1=`0.338267`/`0.271504`；M2 target/context 三 seed Macro-F1=`0.594925 +/- 0.012919`/`0.594219 +/- 0.012046`，配对 context delta=`-0.000706 +/- 0.024737`，按实际并列规则冻结 target-only | 预注册 Major；同一 train/dev、两个冻结视图、M2 三 seed、final epoch 3、unweighted cross-entropy；row-level predictions 与六个 checkpoint 私有保留，sealed test 未读取 | `projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/` | 独立 verifier 从私有预测重建全部 full/slice metrics、逐类表、混淆矩阵和 M2 aggregate，并核验 checkpoint、隐私与 split access；8/8 检查、0 mismatch | Verified |
+| EVID-036 | 2026-08-09 | EXP-043 在冻结 Weibo validation 完成 Qwen3-4B context x reasoning 2x2；A/B/C/D Macro-F1=`0.308684`/`0.281480`/`0.333818`/`0.317997`，按冻结主指标选择 C；观测 context contrast=`-0.021512`、95% CI=`[-0.037515,-0.006905]`，平均 reasoning contrast=`+0.030825`、95% CI=`[+0.007225,+0.057146]`，interaction CI 跨 0；C 比 EXP-042 M2 target-only 低 `0.261107` | 预注册 Major；同一 1,272 条 validation、四个固定条件、greedy batch inference、严格 parser、2,000 次配对 bootstrap、无 retry/repair；5,088 次正式生成、API cost USD 0，row-level prompt/output/prediction 私有保留，sealed test 未读取 | `projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-4-qwen-2x2/runs/exp-043-frozen-qwen-2x2/` | 独立 verifier 重新解析全部 raw output 并重建四条件指标、切片、factorial effects、选择、资源和隐私边界；10/10 检查、0 mismatch。reasoning on 的 Accuracy/Weighted-F1/格式有效率未同步改善；相同 first-clause prompts 只有 273/332 个 reasoning-on 标签一致，因此 D-C 不解释为纯语义 context effect | Verified |
+| EVID-037 | 2026-08-09 | EXP-044 在 train-only 代表性 200-step 预检中确认本机可运行 Qwen3-4B BF16 LoRA：耗时 `355.254 s`、稳态中位 `0.575 step/s`、峰值 `8.679 GB`；按 1.25 安全系数，2/3 epochs x 3 seeds 顺序训练投影为 `21.72`/`32.58 h`，不含 validation 生成与分析 | 登记 Minor 资源门；按标签比例和标签内 token 长度分位点确定性抽取 200 条 train，核对空 `<think>` wrapper + JSON 的 supervision mask，运行精确 112-point LoRA，保存数值 history、私有 adapter 和成本投影；validation/test 未访问 | `projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-5-cost-preflight/runs/exp-044-local-lora-cost-preflight/` | 独立 verifier 不导入 runner，重算输入哈希、完整 train 抽样、mask、runtime、20 行训练轨迹、224 个 adapter tensors、112 个非零 `lora_b`、成本和隐私边界；13/13 检查通过。该证据只支持技术与资源可行性，不支持分类性能 | Verified |
+| EVID-038 | 2026-08-09 | EXP-046 在 16 条 train-derived prompt 上确认 reasoning-on 输出依赖共同批次：singleton 与固定顺序 batch 8 的新进程重放均为 final label/parser/raw `16/16` 一致；改变 batch 8 共同成员后分别为 `14/16`、`14/16`、`5/16`，因此按预注册规则冻结 singleton | 保留 EXP-045 的 `BatchEncoding` 初始化失败并在模型推理前停止；EXP-046 显式校验整数 token IDs，执行五个新进程模式共 80 次生成，只比较 raw output、parser state 和 final label，不用 gold 计算性能 | `projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-5-batch-equivalence-v2/runs/exp-046-batch-equivalence-v2/` | 独立 verifier 不导入 runner，重建 5,995 条 train tokenization 与 16 条抽样，重算 strict parser、五模式摘要、四组一致性、资源和隐私边界；12/12 检查通过，峰值 `9.532 GB`，总记录墙钟 `2432.088 s`，validation/test 未访问 | Verified |
+| EVID-039 | 2026-08-10 | EXP-047 seed 42 按冻结合同完成 Qwen3-4B BF16 generative LoRA train-only：2 epochs、`11,990` micro-iterations、`160,736` trained tokens、耗时 `20,577.547 s`、峰值 `8.804 GB`；epoch-2 adapter 的 224 tensors、112/112 非零 `lora_b` tensors、7,340,032 个可训练参数和独立 load-forward 均通过。随后两次全新进程、16 条 singleton replay 的 final label/parser/raw 均为 `16/16` 一致 | 正式授权仅覆盖 seed 42 train split；保存 epoch-1/epoch-2 checkpoints、数值 history 和私有 raw replay。训练与回放各自的 V1 verifier 都暴露阶段状态缺陷：前者把预期 adapter 误判为 dry-run 私有根污染，后者把自身新写入的 verification 文件计入源文件数；均以 post-run amendment 和独立 V2 verifier 修正，没有重训或重跑推理 | `projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/` | 训练 V2 重算合同、环境、数据、history、adapter 哈希/权限并执行独立 load-forward；回放 V2 重新 tokenization、解析私有 raw output、核对两个 pass 与 4 个公开源文件且公开 raw 泄漏为 0。两者均为 `Passed`；validation/test 未访问，seeds 43/44 未授权，不支持 LoRA 分类性能结论 | Verified |
+| EVID-040 | 2026-08-10 | EXP-047 seed 43 按独立授权完成 Qwen3-4B BF16 generative LoRA train-only：attempt 2 为 2 epochs、`11,990` micro-iterations、`160,736` trained tokens、耗时 `20,548.721 s`、峰值 `8.804 GB`；epoch-2 adapter 的 224 tensors、112/112 非零 `lora_b` tensors、7,340,032 个可训练参数和独立 load-forward 均通过。随后两次全新进程、16 条 singleton replay 的 final label/parser/raw 均为 `16/16` 一致，parser-valid 也均为 `16/16` | 首次受限启动因无 Metal device 以 `-6` 退出，发生在第一个 training iteration 之前；失败 run/stdout 与空 adapter 目录原样保留。correction 将 attempt 2 输出改到全新追加式目录，重新通过 gate 后从头训练，没有覆盖、恢复或续训；正式访问仅覆盖 train split，保存 epoch-1/epoch-2 checkpoints、数值 history 和私有 raw replay | `projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/` | attempt 2 训练 verifier 重算合同、授权、环境、数据、history、adapter 哈希/权限并执行独立 load-forward；回放 verifier 重新 tokenization、解析私有 raw output、核对两个 pass 与 4 个公开源文件且公开 raw 泄漏为 0；两者及各自 `--check` 均为 `Passed`。validation/test 未访问，seed 44 未授权，不支持 LoRA 分类性能结论 | Verified |
+| EVID-041 | 2026-08-11 | EXP-047 seed 44 按独立授权完成 Qwen3-4B BF16 generative LoRA train-only：2 epochs、`11,990` micro-iterations、`160,736` trained tokens、耗时 `20,415.953 s`、峰值 `8.805 GB`；epoch-2 adapter 的 224 tensors、112/112 非零 `lora_b` tensors、7,340,032 个可训练参数和独立 load-forward 均通过。随后两次全新进程、16 条 singleton replay 的 final label/parser/raw 均为 `16/16` 一致，parser-valid 也均为 `16/16` | 授权、runtime、数据选择、实现源码和输出目录在训练前冻结并做哈希绑定；正式访问仅覆盖 train split，保存 epoch-1/epoch-2 checkpoints、数值 history 和私有 raw replay。回放合同在最终 adapter 与训练 verification 落盘后冻结，两遍分别使用全新进程 | `projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/` | 训练 verifier 重算合同、授权、环境、数据、history、adapter 哈希/权限并执行独立 load-forward；回放 verifier 重新 tokenization、解析私有 raw output、核对两个 pass 与 4 个公开源文件且公开 raw 泄漏为 0；两者及各自 `--check` 均为 `Passed`。validation/test 未访问，三 seed 门现已全部通过；仍不支持 LoRA 分类性能结论，下一步为 matched validation 授权门 | Verified |
+| EVID-042 | 2026-08-12 | EXP-047 在冻结的 1,272 条 Weibo EClass validation 上完成 matched singleton 比较：无 adapter reference Macro-F1=`0.333598`；LoRA seeds 42/43/44 为 `0.552028`/`0.548289`/`0.587096`，均值 `0.562471 +/- 0.021408`，按预注册规则相对 reference 提高 `+0.228873`，判定为 `material_improvement` | 显式授权只覆盖 validation；四个条件均使用同一 Qwen3-4B BF16、target-only、reasoning-on、singleton、greedy decoder、prompt/parser 和 1,272 行顺序。三 adapter 的 Accuracy 为 `0.768082`/`0.786164`/`0.783805`，parser-valid 均为 100%；reference 为 Accuracy `0.222484`、parser-valid `90.8805%`，其中 116 条可能因 1,024-token 上限截断 | `projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/matched-validation-v1/` | 独立 verifier 重建 5,088 次生成的 prompt、token、strict parser、预测、全量/切片指标、混淆矩阵和 2,000 次 group-level paired bootstrap，10 类检查、0 mismatch；三个 seed 相对 reference 的 Macro-F1 bootstrap 95% CI 均完全高于 0。LoRA 均值仍比 EXP-042 M2 target-only `0.594925` 低 `0.032454`，该跨架构差值仅作描述；sealed test 未访问 | Verified |
+| EVID-043 | 2026-08-12 | EXP-048 对 EXP-042/047 的 7 份冻结 validation 预测完成错误分析：LoRA 相对 reference 的 Accuracy 增益 `+0.556866` 中，116 条 reference output-failure slice 贡献 `+0.070755`，1,156 条 reference 有效输出贡献 `+0.486111`；因此改善不只是格式恢复。LoRA 相对 encoder 的 Macro-F1/Accuracy 差为 `-0.032454`/`-0.013103`，最大逐类 F1 劣势为 sadness `-0.084593`、neutral `-0.065775`、anger `-0.039949` 和 positive `-0.029494` | 在读取原文前冻结 Major 协议、六类目的性抽样和定性代码；只读取 validation 及既有预测，不重训、不重新推理、不调参。LoRA 三 seed 有 904 条 3/3 正确、201 条 0/3 错误和 167 条不稳定，最终标签两两一致率均值 `0.884`，低于 encoder 的 `0.943`；48 条匿名案例主要出现标签/数据不确定性、ontology 重叠、隐含情绪和 no_emotion 边界 | `projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/` | 独立 verifier 复算 1,272 行、7 份预测、9 份 CSV、3 份 JSON 和 48 条人工编码，最大数值差为 0；私有原文文件为 mode 0600、Git ignored，公开 raw-text 泄漏为 0；目的性样本计数不作总体 prevalence 推断，sealed test 未访问 | Verified |
+| EVID-044 | 2026-08-13 | EXP-049 按冻结 TEST-READY 合同完成 Weibo EClass 一次性正式 test：encoder/LoRA/matched no-adapter Qwen Macro-F1=`0.649621 +/- 0.007365`/`0.636612 +/- 0.021429`/`0.316921`；LoRA-reference delta=`+0.319691`，95% group-bootstrap CI=`[+0.274779,+0.362068]`；LoRA-encoder delta=`-0.013009`，CI=`[-0.045671,+0.024011]` | 在标签访问前冻结 M0、M1、encoder 三 seed、Qwen reference、LoRA 三 seed，共九个单元，以及 checkpoint、prompt、parser、指标、切片、bootstrap 和停止规则；先为每个单元生成 1,273 条预测，再只打开一次标签；不按 test 选最佳 seed | `projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/` | 独立 verifier 重建 9 个预测文件、11,457 条逐行预测、全部总体/切片/逐类指标及 2,000 次 group bootstrap，10 类检查、0 mismatch；10 个私有文件均 Git ignored 且未跟踪，公开 raw text/source ID 泄漏为 0。首次 finalizer 在指标落盘后因 null parser 的报告渲染错误停止；仅执行 report-only recovery，未重开标签、未重跑模型或指标 | Verified |
 
 ## Data Register
 
@@ -101,18 +119,20 @@ project: llm-forum-text-emotion-recognition
 
 | Field | Current value | Evidence path | Status |
 | --- | --- | --- | --- |
-| Target forum or domain | TBD | TBD | Planned |
-| Language | TBD | TBD | Planned |
-| Collection method | TBD | TBD | Planned |
-| Terms or authorization basis | TBD | TBD | Planned |
-| Raw sample count | TBD | TBD | Planned |
-| Deduplicated sample count | TBD | TBD | Planned |
-| Label set and definitions | TBD | TBD | Planned |
-| Number of annotators | TBD | TBD | Planned |
-| Inter-annotator agreement | TBD | TBD | Planned |
-| Anonymization procedure | TBD | TBD | Planned |
-| Train/dev/test split rule | 按 `thread_id` 划分是当前方案，尚待数据结构确认 | TBD | Planned |
-| Redistribution boundary | TBD | TBD | Planned |
+| Target forum or domain | Weibo EClass is the adopted primary task proxy; KOTE remains a C0 control candidate, IAC2 a closed challenge diagnosis, and Hotter is excluded | `experiments/forum-context/protocols/data-weibo-eclass-task-v1.md` | Verified limited-domain adoption |
+| Language | Chinese for the adopted primary task; language is an experimental property, not a quality rank | `experiments/forum-context/protocols/data-weibo-eclass-task-v1.md` | Verified |
+| Collection method | Official releases and pinned local snapshots only; no live Hotter hydration, new Reddit recovery or platform scraping | `experiments/forum-context/protocols/data-public-candidate-viability-audit-v1.md` | Verified boundary |
+| Terms or authorization basis | Weibo upstream repository revision `d385f8c` is Apache-2.0; other candidate-specific boundaries remain separate | `data/weibo-emotion-corpus/eclass-v1.manifest.json` | Verified for adopted task |
+| Raw sample count | Weibo source has 23,127 logical records: 12,052 ECause scaffold rows and 11,075 raw EClass rows | `experiments/forum-context/weibo-eclass/reports/data-weibo-eclass-v1.json` | Verified |
+| Deduplicated sample count | 8,540 retained EClass rows after exclusions and 2,422 same target-label canonicalization drops; 117 ambiguous targets retain 295 label-specific rows in shared leakage components | `experiments/forum-context/weibo-eclass/reports/data-weibo-eclass-v1.json` | Verified |
+| Calibration sample | The 120-case IAC2 calibration is a closed diagnostic and is not part of the adopted Weibo task | `experiments/forum-context/annotation/reports/three-source-comparison-v1.md` | Completed historical control |
+| Private annotation views | No new annotation view is required for Weibo EClass; the IAC2 staged views remain private historical diagnostics | `experiments/forum-context/annotation/README.md` | Not part of adopted task |
+| Label set and definitions | Frozen single-label set: joy, sadness, anger, positive, negative, neutral and no_emotion; fear and composite/unknown rows excluded | `experiments/forum-context/protocols/data-weibo-eclass-task-v1.md` | Verified |
+| Number of annotators | No new annotation was performed; the task uses upstream EClass labels, and the release does not expose row-level annotator provenance | `experiments/forum-context/protocols/data-weibo-eclass-task-v1.md` | Upstream limitation |
+| Inter-annotator agreement | Not available for the adopted EClass release; the earlier IAC2 human/model comparison is not IAA and cannot validate these labels | `experiments/forum-context/protocols/data-weibo-eclass-task-v1.md` | Not available |
+| Anonymization procedure | URL/mention masking plus private-key HMAC sample/group IDs; all row-level records and the key remain Git ignored | `experiments/forum-context/protocols/data-weibo-eclass-task-v1.md` | Verified |
+| Train/dev/test split rule | Leakage-component split binding source groups and duplicate targets: 5,995/1,272/1,273 with seed `20260808`; test labels sealed | `data/weibo-emotion-corpus/eclass-v1.manifest.json` | Verified |
+| Redistribution boundary | Upstream and derived row-level text remain in Git-ignored private directories; public artifacts contain protocols, code, hashes and aggregate statistics only | `experiments/forum-context/weibo-eclass/reports/data-weibo-eclass-v1-verification.json` | Verified |
 
 每次冻结数据版本时记录：
 
@@ -878,6 +898,77 @@ Failure or caveat: EXP-029 ontology 失配；EXP-033 只有一个 seed；test �
 Thesis destination: Table-G2-10；GoEmotions final test comparison；讨论章节的 dev-to-test 泛化、generative classifier trade-off、ontology 与证据边界
 ```
 
+### EXP-047: Weibo EClass Matched Generative-LoRA Validation
+
+```text
+Experiment ID: EXP-047
+Tier / RQ: Major / RQ-F1
+Status: Verified；matched validation completed；sealed test 未访问
+Data: DATA-WEIBO-TASK-V1 validation；1,272 rows；7 类单标签；335 个 group_id；target-only view
+Model/runtime: Qwen3-4B post-trained；本地 MLX BF16；reasoning on；greedy singleton；同 prompt、parser、token budget 与模型文件
+Conditions: matched no-adapter reference；epoch-2 LoRA adapters for seeds 42/43/44
+Primary metric: 7-label Macro-F1
+Reference result: Macro-F1=0.333598；Accuracy=0.222484；Weighted-F1=0.207222；parser-valid=90.8805%
+LoRA seed results: Macro-F1=0.552028/0.548289/0.587096；Accuracy=0.768082/0.786164/0.783805；Weighted-F1=0.773339/0.770574/0.779033；parser-valid=100% for all seeds
+Primary contrast: LoRA Macro-F1 mean=0.562471 +/- 0.021408；mean delta vs matched reference=+0.228873；frozen decision=material_improvement；threshold=0.005
+Bootstrap: 2,000 group_id resamples；seed-42 delta 95% CI=[0.168960,0.272580]；seed-43=[0.153160,0.275628]；seed-44=[0.191876,0.308171]；三者 P(delta>0)=1.0
+Historical encoder comparison: EXP-042 M2 target-only Macro-F1=0.594925 +/- 0.012919；EXP-047 LoRA mean delta=-0.032454，仅为同 split、同任务但跨架构的描述性差值
+Resources: four-condition command time=87,122.823 s；reference=79,098.411 s；LoRA seeds=2,814.599/2,568.905/2,640.908 s；maximum peak memory=8.498 GB；API cost USD 0
+Artifacts: experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/matched-validation-v1/；公开 aggregate/report/verification 与私有 4 x 1,272 row-level predictions
+Verification command: /Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-5-generative-lora/verify_matched_validation.py --check
+Verified by: EXP-047-MATCHED-VALIDATION-VERIFY-V1 重建 5,088 次生成及全部指标、bootstrap、资源、权限和 split boundary；10 类检查、0 mismatch
+Result: 监督 LoRA 对 matched frozen Qwen 产生明确且跨三 seed 稳定的行为收益，并把严格格式有效率提升到 100%；但三 seed 均值仍未超过 EXP-042 中文 encoder
+Failure or caveat: reference 的长 reasoning 造成 116 条疑似截断和约 21.97 小时耗时；LoRA 的极短输出同时改变了分类和生成行为，不能把收益解释为忠实推理或内部情绪机制；validation 已用于开发，不能声称 held-out 泛化
+Decision consequence: 进入冻结 dev 错误分析，重点检查少数类、no_emotion 多数类、格式恢复与真实分类收益；完成后再决定 TEST-READY，不直接读取 sealed test
+Thesis destination: Table-F1-3；Weibo 同任务 Stage 5 主比较；讨论章节的 LLM task adaptation、encoder gap、格式与成本边界
+```
+
+### EXP-048: Frozen Weibo EClass Dev Error Analysis
+
+```text
+Experiment ID: EXP-048
+Tier / RQ: Major / RQ-F1
+Status: Verified；validation-only descriptive analysis；sealed test 未访问
+Data: DATA-WEIBO-TASK-V1 validation；1,272 rows；7 类单标签；同一冻结 gold 与行顺序
+Frozen predictions: EXP-047 matched no-adapter reference；EXP-047 LoRA seeds 42/43/44；EXP-042 M2 target-only seeds 42/43/44
+Primary questions: LoRA 增益是否只来自格式恢复；LoRA 与 encoder 的剩余差距位于哪些类；错误是否跨 seed 稳定；预抽样原文显示哪些可能因素
+Aggregate results: reference/LoRA/encoder Macro-F1=`0.333598`/`0.562471`/`0.594925`；Accuracy=`0.222484`/`0.779350`/`0.792453`
+Format attribution: 116 条 reference output failures；该 slice 的 Accuracy 增益贡献 `+0.070755`；1,156 条 valid-output slice 贡献 `+0.486111`；合计 `+0.556866`
+Valid-output control: reference vs LoRA Accuracy=`0.244810` vs `0.779700`；Macro-F1=`0.342027` vs `0.577793`；640 条 reference valid-but-wrong 样本被 3/3 LoRA seeds 稳定恢复
+Encoder gap: LoRA minus encoder Macro-F1=`-0.032454`，Accuracy=`-0.013103`；sadness/neutral/anger/positive 的逐类 F1 差分别为 `-0.084593`/`-0.065775`/`-0.039949`/`-0.029494`
+Stability: LoRA 904 条 all-seed correct、201 条 all-seed wrong、167 条 mixed；encoder 为 970/224/78；LoRA/encoder pairwise final-label agreement mean=`0.884`/`0.943`
+Qualitative review: 冻结目的性抽样 48 条；primary possible source 为 annotation_data_uncertainty 21、overlapping_label_ontology 13、model_representation_limitation 9、missing_local_context 2、surface_form_noise 2、output_parser_or_policy 1
+Artifacts: experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/；公开 protocol/config/aggregate/tables/report/verification，私有 selected cases 与原文隔离
+Verification: 独立实现复算 7 份预测、1,272 行、9 份 CSV、3 份 JSON、48 条编码、哈希和权限；maximum absolute numeric difference=0，公开 raw leak=0
+Result: EXP-047 的行为收益包含显著的有效输出行标签改善，不只是 parser/truncation 修复；但 encoder 在少数类、边界类和稳定性上仍有优势
+Failure or caveat: 定性案例是六类目的性抽样，不是总体随机样本；人工代码只表示可能解释，不能改 gold、证明因果或推出 hidden-state/人类情绪机制
+Decision consequence: 不继续 validation 调参或启动迁移；下一步冻结 TEST-READY 候选、模型/prompt/parser/metrics/slices 和一次性 test 合同，等待用户单独授权
+Thesis destination: Table-F1-4；Weibo 错误结构、格式归因、少数类与 ontology 边界；讨论章节的生成式 LLM 与 encoder trade-off
+```
+
+### EXP-049: Weibo EClass Frozen Formal Test Gate
+
+```text
+Experiment ID: EXP-049
+Tier / RQ: Major / RQ-F1
+Status: Frozen / Verified / Consumed；正式 test 已消费
+Data: DATA-WEIBO-TASK-V1 test；1,273 rows；337 leakage groups；七类单标签
+Frozen units: M0 majority；M1 target-only LinearSVC；Chinese RoBERTa-WWM-ext seeds 42/43/44；Qwen3-4B matched no-adapter reference；generative LoRA seeds 42/43/44
+Access order: 九个单元全部完成 test predictions 后，finalizer 才一次性打开 test labels；标签打开后无模型调用
+Primary metric: Macro-F1；补充 Accuracy、Macro-P/R、Weighted-F1、逐类指标、混淆矩阵和预注册切片
+Unit results: M0=`0.116937`；M1=`0.374762`；encoder seeds=`0.655028/0.641233/0.652603`；reference=`0.316921`；LoRA seeds=`0.623451/0.625046/0.661339`
+Family results: encoder Macro-F1=`0.649621 +/- 0.007365`，Accuracy=`0.829013 +/- 0.006349`；LoRA Macro-F1=`0.636612 +/- 0.021429`，Accuracy=`0.824823 +/- 0.009811`
+Frozen contrasts: encoder-M1=`+0.274860`，CI=`[+0.226927,+0.324054]`；LoRA-reference=`+0.319691`，CI=`[+0.274779,+0.362068]`；LoRA-encoder=`-0.013009`，CI=`[-0.045671,+0.024011]`
+Parser/cost: reference parser-valid=`91.4375%`、生成约 `20.89 h`；三个 LoRA 均为 100% valid，三次生成合计约 `2.31 h`
+Verification: 独立实现复算 1,273 gold rows、9 个预测文件、11,457 条逐行预测、全部指标/切片/逐类/混淆矩阵和三组 2,000 次 group bootstrap；10 类检查、0 mismatch
+Privacy: row-level predictions、source IDs、原文、gold labels 与 Qwen reasoning 保持私有；10 个私有文件均 ignored/untracked；公开 raw text/source ID leak=0
+Incident: 首次 finalizer 已完成单次标签打开和全部指标落盘，但在报告渲染时因 non-generative parser 为 JSON null 抛错；使用只读取持久化 aggregate 的 recovery 生成报告并记录修复，未重开标签、未重跑模型或指标
+Result: 监督 LoRA 的 test 收益相对 matched frozen Qwen 明确泛化；LoRA 与强 encoder 的总体表现接近，但点估计低 `0.013009` 且置信区间跨 0，不能声称任一方具有确定优势
+Failure or caveat: frozen decision rule 把点估计低于 `-0.005` 记为 material_degradation，但统计区间跨 0；seed 44 的单次 LoRA 分数最高也不得被事后选为“最佳模型”；行为结果不支持内部机制结论
+Decision consequence: Weibo test 永久标记为 consumed；只允许对冻结预测做预登记、只读的 post-test analysis，禁止据此修改 prompt、parser、threshold、checkpoint、seed 或模型族
+Thesis destination: Table-F1-5；Weibo 正式 test 主表、泛化对比、成本/格式权衡与 test-gate 方法
+```
+
 后续 LLM 实验继续使用以下登记模板：
 
 ```text
@@ -917,6 +1008,10 @@ Measured gain or loss:
 | CTRL-011 | aggregate union 是否制造 Qwen 相对 BERT 的冲突切片评分差距 | official simplified target | clear-rater expected agreement；冻结 7 份 prediction files | official/clear-rater set-F1、exact match、paired bootstrap、relative shift | EXP-036 | Completed and verified; primary set-F1 practical tie，official exact-match 语义显著不同 |
 | CTRL-012 | 标注聚合是否解释完整 dev 上 Qwen 相对 BERT 的总体差距 | official hard target | clear-rater vote-fraction soft target 与 expected individual-rater agreement；冻结 7 份 prediction files | official/soft Macro-F1、expected set-F1、paired bootstrap、relative shift | EXP-037 | Completed and verified; soft delta=-0.036218，shift CI 跨 0，gap remains |
 | CTRL-013 | 冻结 dev 结论能否泛化到一次性 official test | EXP-018/020/025/029/033 的冻结 dev 条件 | 相同模型在 5,427 条 official test 上一次评估 | Macro/Micro/Weighted/Samples-F1、subset accuracy、per-label metrics、资源 | EXP-038 | Completed and verified; BERT Macro-F1=0.488328 +/- 0.008771，target-aligned LoRA=0.444675；test consumed |
+| CTRL-014 | 固定局部前文和 reasoning mode 是否分别改变冻结 Qwen 的单标签表现 | target-only / reasoning off | previous-context / reasoning on 的配对 2x2 | Macro-F1、Accuracy、Weighted-F1、parser validity、paired bootstrap、资源 | EXP-043 | Completed and verified; context average=-0.021512，reasoning average=+0.030825，interaction CI 跨 0；reasoning 的整体指标与成本存在权衡 |
+| CTRL-015 | reasoning-on 输出是否对 fresh-process replay、batch size 与共同批次组成稳定 | singleton 两次新进程重放 | 固定 batch 8 两次重放与 prompt-length batch 重排 | raw output、parser state、final-label agreement；不计算分类性能 | EXP-045、EXP-046 | EXP-045 初始化失败并保留；EXP-046 Verified，冻结 singleton，post-adapter/dev 前必须重放 |
+| CTRL-016 | generative LoRA 是否在完全 matched singleton validation 下改善同一 Qwen | 无 adapter Qwen3-4B reference | seeds 42/43/44 epoch-2 LoRA adapters | Macro-F1、Accuracy、Weighted-F1、parser validity、group bootstrap、资源 | EXP-047 | Completed and verified；LoRA mean delta=+0.228873，仍比 EXP-042 M2 低 0.032454（descriptive） |
+| CTRL-017 | EXP-047 的改善是否主要只是修复 reference 格式失败，且 LoRA 与 encoder 的剩余错误结构有何差异 | 116 条 reference output-failure slice；matched reference；EXP-042 encoder 三 seed | 1,156 条 reference valid-output slice；EXP-047 LoRA 三 seed；48 条预冻结目的性案例 | Accuracy 加性贡献、Macro-F1、逐类 F1、混淆、跨 seed 稳定性、匿名定性代码 | EXP-048 | Completed and verified；valid-output slice 贡献 `+0.486111` Accuracy，格式失败 slice 仅 `+0.070755`；LoRA 仍低于 encoder `0.032454` Macro-F1 |
 | ROB-001 | 模型是否依赖表面形式 | 原文本 | 否定、拼写、网络用语等受控扰动 | 性能下降幅度 | TBD | Planned |
 
 ## Failure Case Register
@@ -927,6 +1022,7 @@ Measured gain or loss:
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | EXP-017-SAMPLE | 冻结的 high-confidence / domain recovery / domain regression / shared / ordinary 五组样本 | anger / joy / optimism / sadness | 四条件十个冻结输出 | 无对话上下文 | ontology overlap、model limitation、annotation uncertainty、surface noise、missing context | `experiments/tweeteval-emotion/error-analysis/runs/exp-017-frozen-error-analysis/` | 42 cases reviewed and verified |
 | EXP-030-SAMPLE | 冻结的 LoRA recovery / BERT regression / frozen-Qwen recovery / neutral cooccurrence / shared / ordinary 六组样本 | GoEmotions 28 标签多标签 | BERT、frozen Qwen 与 LoRA 共 7 份冻结输出 | 无对话上下文 | overlapping ontology、annotation uncertainty、model limitation、missing context、output policy、surface noise | `experiments/goemotions/error-analysis/runs/exp-030-frozen-dev-error-analysis/` | 48 cases reviewed and verified |
+| EXP-048-SAMPLE | 冻结的 format recovery / valid-output recovery / LoRA regression / encoder recovery / seed instability / ordinary 六组样本 | Weibo EClass 七类单标签 | matched reference、LoRA 与 encoder 共 7 份冻结输出 | target-only；结构元数据记录局部前文可用性 | annotation/data uncertainty、overlapping ontology、model limitation、missing context、surface noise、output policy | `experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/` | 48 purposive cases reviewed and verified；not a prevalence estimate |
 | EXP-035-SAMPLE | 冻结的 aggregation-only / unclear / high-cardinality / residual 四组样本 | GoEmotions neutral 与一个或多个 emotion | N/A；本实验审计逐标注者投票而非模型输出 | 单条 Reddit comment | cross-rater disagreement、genuine multilabel、unclear、missing context | `experiments/goemotions/annotation-audit/runs/exp-035-neutral-cooccurrence-annotation-audit/` | 48 cases reviewed and verified |
 
 每类至少记录代表性真阳性、假阳性和假阴性，并区分：
@@ -941,8 +1037,8 @@ Measured gain or loss:
 
 | Deliverable | Required evidence | Path | Status |
 | --- | --- | --- | --- |
-| Data card | 来源、许可、字段、规模、标签、匿名化、划分 | TBD | Planned |
-| Baseline reproduction | 环境、命令、配置、日志、预测、指标 | `experiments/tweeteval-emotion/tfidf-logreg/`；`experiments/tweeteval-emotion/tfidf-linear-svm/`；`experiments/tweeteval-emotion/roberta-base/`；`experiments/tweeteval-emotion/test-gate/`；`experiments/tweeteval-emotion/error-analysis/`；`experiments/goemotions/tfidf-ovr-logreg/`；`experiments/goemotions/bert-base/`；`experiments/goemotions/error-analysis/`；`experiments/goemotions/test-gate/` | TweetEval 与 GoEmotions 的冻结 baseline、test gate 和错误/标注诊断均已验证；论坛数据 pending |
+| Data card | 来源、许可、字段、规模、标签、匿名化、划分 | `data/weibo-emotion-corpus/README.md`；`experiments/forum-context/protocols/data-weibo-eclass-task-v1.md`；`experiments/forum-context/weibo-eclass/reports/` | Weibo EClass data track verified; 33/33 independent checks passed |
+| Baseline reproduction | 环境、命令、配置、日志、预测、指标 | `experiments/tweeteval-emotion/tfidf-logreg/`；`experiments/tweeteval-emotion/tfidf-linear-svm/`；`experiments/tweeteval-emotion/roberta-base/`；`experiments/tweeteval-emotion/test-gate/`；`experiments/tweeteval-emotion/error-analysis/`；`experiments/goemotions/tfidf-ovr-logreg/`；`experiments/goemotions/bert-base/`；`experiments/goemotions/error-analysis/`；`experiments/goemotions/test-gate/`；`experiments/weibo-eclass/stage-2-preflight/`；`experiments/weibo-eclass/stage-3-baselines/` | TweetEval 与 GoEmotions 已验证；Weibo Stage 2 train-only 执行门及 Stage 3 same-task dev baselines 已验证，Stage 4 Qwen 2x2 待登记 |
 | LLM comparison | 模型版本、提示、解析、成本、延迟、对照 | `experiments/goemotions/qwen3-1.7b/runs/exp-025-full-dev-zero-few-shot/`；`experiments/goemotions/qwen3-1.7b/runs/exp-026-unconstrained-decoder-ablation/`；`experiments/goemotions/qwen3-1.7b/runs/exp-029-instruct-lora/`；`experiments/goemotions/qwen3-1.7b/runs/exp-031-neutral-ontology-inference-ablation/`；`experiments/goemotions/qwen3-1.7b/runs/exp-033-target-aligned-lora/validation-seed-42-v1/`；`experiments/goemotions/test-gate/` | Prompt/decoder、three-seed LoRA、ontology ablation、target-aligned retraining 与一次性 formal test 均已验证；EXP-033 未超过 BERT；formal probe pending |
 | Robustness or ablation report | 预设问题、控制变量、完整结果 | `experiments/goemotions/qwen3-1.7b/runs/exp-026-unconstrained-decoder-ablation/joint-decoder-analysis.json`；`experiments/goemotions/qwen3-1.7b/runs/exp-031-neutral-ontology-inference-ablation/REPORT.md` | Decoder and neutral-ontology inference ablations verified; broader robustness pending |
 | Runnable demo | 启动说明、固定样例、限制说明 | TBD | Planned |
@@ -995,3 +1091,22 @@ Measured gain or loss:
 | 2026-08-04 | 冻结并完成 EXP-036 GoEmotions dev 逐标注者评分诊断 | EVID-024 为 `Verified`；174/174 条 dev target 均为 aggregation-only；EXP-029 与 BERT 的 clear-rater expected set-F1 差 +0.000720、CI 跨 0，局部 practical tie；test 未获取或读取 |
 | 2026-08-04 | 冻结并完成 EXP-037 GoEmotions 完整 dev 逐标注者评分诊断 | EVID-025 为 `Verified`；5,426/5,426 条 dev 和 19,440 行 raw annotations 复算通过；EXP-029 相对 BERT 的 soft Macro-F1 delta=-0.036218，relative shift CI 跨 0，标注聚合不能解释总体差距；test 未获取或读取 |
 | 2026-08-04 | 完成 EXP-038 GoEmotions 一次性冻结 test gate，并透明修正 verifier 的多标签顺序比较 | EVID-026 为 `Verified`；9 个冻结单元、5,427 条 test、完整指标、混淆矩阵、资源与哈希均复算通过；BERT Macro-F1=0.488328 +/- 0.008771，EXP-033=0.444675；test 自此已消费 |
+| 2026-08-05 | 完成 IAC 2.0 4forums V2 文本清洗与质量过滤，并保留 V1 quote 语义失败记录 | EVID-027 为 `Verified`；403,374 个候选、403,336 个 eligible，539,658 条 quote 全部闭合；独立 verifier 40 项检查、0 mismatch，尚未标注或划分 |
+| 2026-08-05 | 完成 IAC 2.0 4forums `DATA-FCTX-DEDUP-V2` 精确、词法近似与语义近似去重，并保留 V1 检索门失败记录 | EVID-028 为 `Verified`；403,183 条自动去重后候选，153 条直接自动删除；249 个 review clusters 尚未裁决；独立 verifier 69 项检查、0 mismatch，mean recall@64=0.992554，semantic-only 自动删除=0 |
+| 2026-08-06 | 完成 `DATA-FCTX-SAMPLE-V1` metadata-only calibration 抽样预检和独立重放 | EVID-029 为 `Verified`；120 条主样本与 60 条备用样本来自 180 个不同 thread，四个诊断池容量通过；独立 verifier 45 项检查、0 mismatch，公开文本或 ID 泄漏为 0，blind repeats 尚未生成 |
+| 2026-08-06 | 导出并独立验证 120 条 `DATA-FCTX-LABEL-V1` 私有 staged views | EVID-030 为 `Verified`；独立 verifier 34 项检查、0 mismatch，全部视图与冻结 SQLite 逐份一致且不含 sampling/source metadata；人工标签、records 和 blind repeats 仍为 0 |
+| 2026-08-07 | 完成 Human Pass 1，并按预登记 amendment 进行 Human/Model 1/Model 2 直接比较 | EVID-031 为 `Completed`；三方 Stage B 精确一致 21/120，106 条存在阶段分歧，发现 `approval/disapproval` 驱动的 stance-emotion 任务错位；不生成 gold、IAA 或稳定性结论 |
+| 2026-08-08 | 完成 KOTE、Hotter and Colder 与 Weibo Emotion Cause Corpus 的固定版本可行性审计 | EVID-032 为 `Verified`；KOTE 通过 C0 候选门、Weibo 仅通过 auxiliary 门、Hotter 阻塞；独立 verifier 35/35 项通过，未下载 test、未 hydration、未训练或采用最终数据集 |
+| 2026-08-08 | 审计后明确排除 Hotter and Colder | 不改变 EVID-032 的客观审计结果；冻结快照仅保留追溯，不再 hydration，且不进入训练、模型选择、评估或论文主张 |
+| 2026-08-08 | 执行并独立验证 `DATA-WEIBO-TASK-V1`，采用 EClass 为下一阶段主数据轨 | EVID-033 为 `Verified`；8,540 条七分类 paired-view 样本按 leakage component 划分为 5,995/1,272/1,273，verifier 33/33、单元测试 10/10；test labels 密封，未训练模型 |
+| 2026-08-08 | 完成 EXP-041 Weibo Stage 2 train-only 模型栈预检并保留两次前序失败与 verifier amendment | EVID-034 为 `Verified`；Qwen 严格格式有效率 37/42，精确 LoRA 两步更新与重载通过，独立审计 16/16、0 mismatch；该结果不是分类准确率，validation/test 未访问 |
+| 2026-08-08 | 完成并独立验证 EXP-042 Weibo Stage 3 M0/M1/M2 train/dev baselines | EVID-035 为 `Verified`；M2 target/context Macro-F1=`0.594925 +/- 0.012919`/`0.594219 +/- 0.012046`，配对 context delta 实际并列并按规则选择 target-only；8/8 检查、0 mismatch，test 未读取 |
+| 2026-08-09 | 完成并独立验证 EXP-043 Weibo Stage 4 frozen Qwen context x reasoning 2x2 | EVID-036 为 `Verified`；按 Macro-F1 选择 C=`0.333818`，context 平均效应为负、reasoning 平均效应为正但 Accuracy/Weighted-F1/格式和成本未同步改善；10/10 检查、0 mismatch，test 未读取 |
+| 2026-08-09 | 完成并独立验证 EXP-044 Weibo Stage 5 本机 Qwen3-4B LoRA 成本预检 | EVID-037 为 `Verified`；200 step 耗时 `355.254 s`、峰值 `8.679 GB`，adapter 与重载通过；2 epochs x 3 seeds 的训练投影为 `21.72 h`，13/13 检查通过，validation/test 未读取且未报告性能指标 |
+| 2026-08-09 | 在模型推理前保留 EXP-045 tokenization 初始化失败，并完成 EXP-046 reasoning-on runtime-equivalence gate | EVID-038 为 `Verified`；singleton 重放三层 `16/16`，batch 组成重排后标签 `14/16`、raw `5/16`，冻结 singleton；12/12 检查通过，validation/test 未读取且未报告性能指标 |
+| 2026-08-10 | 完成 EXP-047 seed 42 正式 train-only、adapter load-forward 与双次 singleton replay，并保留两个 verifier 阶段状态缺陷及 amendment | EVID-039 为 `Verified`；训练与回放 V2 均 `Passed`，validation/test 未读取、seeds 43/44 未授权，不报告分类性能 |
+| 2026-08-10 | 完成 EXP-047 seed 43 正式 train-only、adapter load-forward 与双次 singleton replay，并保留首次受限 Metal 启动失败 | EVID-040 为 `Verified`；attempt 2 训练与回放 verifier 及 `--check` 均 `Passed`，validation/test 未读取、seed 44 未授权，不报告分类性能 |
+| 2026-08-11 | 完成 EXP-047 seed 44 正式 train-only、adapter load-forward 与双次 singleton replay | EVID-041 为 `Verified`；训练与回放 verifier 及 `--check` 均 `Passed`，至此三 seed 的训练/回放门全部完成；validation/test 未读取，不报告分类性能，下一步为 matched validation 授权门 |
+| 2026-08-12 | 完成 EXP-047 matched singleton validation 与独立复算 | EVID-042 为 `Verified`；LoRA Macro-F1=`0.562471 +/- 0.021408`，相对 matched reference `+0.228873` 且三个 group-bootstrap CI 均高于 0；仍比 EXP-042 M2 低 `0.032454`，test 未读取，下一步为冻结 dev 错误分析 |
+| 2026-08-12 | 完成 EXP-048 冻结 Weibo dev 错误分析、48 条目的性案例复核与独立复算 | EVID-043 为 `Verified`；LoRA 的主要 Accuracy 收益来自 reference 有效输出行而非仅格式失败，仍在少数类、ontology 边界和 seed 稳定性上落后 encoder；test 未读取，下一步为 TEST-READY 冻结清单 |
+| 2026-08-13 | 冻结 TEST-READY 合同并完成 EXP-049 Weibo 一次性正式 test、report-only finalization recovery 与独立复算 | EVID-044 为 `Verified`；9 个冻结单元、1,273 条 test、11,457 条预测和全部预注册比较均复算一致；LoRA 明确优于 matched Qwen，但与 encoder 的 `-0.013009` 差值 CI 跨 0；test 自此已消费 |

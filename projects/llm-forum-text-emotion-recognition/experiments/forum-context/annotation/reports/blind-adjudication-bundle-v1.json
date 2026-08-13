@@ -1,0 +1,59 @@
+{
+  "claim_boundary": {
+    "creates_formal_gold": false,
+    "is_independent_reannotation": false,
+    "source_unblinded": false,
+    "supports_inter_annotator_agreement": false
+  },
+  "generated_at_utc": "2026-08-07T13:43:13Z",
+  "input_verification": {
+    "disagreement_sidecar_hash": "passed",
+    "human_checkpoint_hash": "passed",
+    "model_output_seal_hashes": "passed",
+    "private_view_hashes": "passed",
+    "three_source_row_alignment": "passed"
+  },
+  "privacy": {
+    "forum_text_emitted": false,
+    "per_case_labels_emitted": false,
+    "per_case_source_mapping_emitted": false,
+    "private_identifiers_emitted": false
+  },
+  "private_outputs": {
+    "bundle": {
+      "contains_forum_text": true,
+      "filename": "bundle.jsonl",
+      "gitignored_required": true,
+      "rows": 40,
+      "sha256": "8bf8ae970ab79ab442a2322294070bc1462b14942548a939af57a88c83af7f6b"
+    },
+    "manifest": {
+      "filename": "manifest.json",
+      "gitignored_required": true,
+      "sha256": "928b6a304fb807e4b9cd8fb0210330d17f4d23213d69283d96017a75740688e5"
+    },
+    "source_map": {
+      "contains_source_mapping": true,
+      "filename": "source-map.jsonl",
+      "gitignored_required": true,
+      "rows": 40,
+      "sha256": "e9694e1e3b379478044312227a15dd60d71a73f352e715b7e18d63cf1652458f"
+    }
+  },
+  "protocol_id": "DATA-FCTX-ADJ-DIAG-V1",
+  "schema_version": "source-blind-adjudication-bundle-report-v1",
+  "selection": {
+    "cases": 40,
+    "seed": "f3b9b141f728d436b42e8fd8464c3c46",
+    "source_positions_balanced_to_within_one": true,
+    "stratum_counts": {
+      "all_three_different": 10,
+      "all_three_equal_control": 2,
+      "human_context_shift": 5,
+      "model_boundary_conflict": 8,
+      "stance_candidate": 15
+    },
+    "unique_cases": 40
+  },
+  "status": "prepared_not_adjudicated"
+}

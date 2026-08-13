@@ -1,0 +1,44 @@
+{
+  "schema_version": "1",
+  "pipeline_id": "DATA-FCTX-DEDUP-V1-RECALL-DIAGNOSTIC",
+  "generated_at": "2026-08-05T12:52:14.837613+00:00",
+  "status": "completed",
+  "candidate_rows": 403336,
+  "exact_representative_rows": 403190,
+  "audit_queries": 128,
+  "k": 64,
+  "results": [
+    {
+      "ef_search": 256,
+      "mean_recall_at_64": 0.9754638671875,
+      "min_recall_at_64": 0.640625,
+      "passes_mean_recall_0_98": false
+    },
+    {
+      "ef_search": 384,
+      "mean_recall_at_64": 0.983642578125,
+      "min_recall_at_64": 0.703125,
+      "passes_mean_recall_0_98": true
+    },
+    {
+      "ef_search": 512,
+      "mean_recall_at_64": 0.9881591796875,
+      "min_recall_at_64": 0.75,
+      "passes_mean_recall_0_98": true
+    },
+    {
+      "ef_search": 768,
+      "mean_recall_at_64": 0.9925537109375,
+      "min_recall_at_64": 0.828125,
+      "passes_mean_recall_0_98": true
+    },
+    {
+      "ef_search": 1024,
+      "mean_recall_at_64": 0.9942626953125,
+      "min_recall_at_64": 0.859375,
+      "passes_mean_recall_0_98": true
+    }
+  ],
+  "contains_public_forum_text": false,
+  "contains_public_source_or_sample_ids": false
+}

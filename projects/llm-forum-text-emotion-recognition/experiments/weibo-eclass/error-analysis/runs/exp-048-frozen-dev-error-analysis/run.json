@@ -1,0 +1,184 @@
+{
+  "accessed_splits": [
+    "validation"
+  ],
+  "api_cost_usd": 0,
+  "artifacts": {
+    "REPORT.md": {
+      "bytes": 5664,
+      "path": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/REPORT.md",
+      "sha256": "3b4fa96f93e4043cc6a31faa450bd646ef33cef79b4dddaa4ba45e3e7c464831"
+    },
+    "aggregate_summary.json": {
+      "bytes": 3065,
+      "path": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/aggregate_summary.json",
+      "sha256": "2682c79067cd9b070520810f608b5ab343b925c106a9c17eca5ce8c1d9d5daf2"
+    },
+    "class_gap.csv": {
+      "bytes": 744,
+      "path": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/class_gap.csv",
+      "sha256": "add82dcaeaa391fe63cdc3f3422d830c4a636dda84fce9d4df76d25d4b2ea55f"
+    },
+    "condition_stability.csv": {
+      "bytes": 1957,
+      "path": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/condition_stability.csv",
+      "sha256": "9ae0b23ca093b203ff0eb03831810087c4dbe8b8617099f396fe2380c7be2ae9"
+    },
+    "confusion_pairs.csv": {
+      "bytes": 8744,
+      "path": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/confusion_pairs.csv",
+      "sha256": "7d7f0d60802ddf887c298d3e5e2c248f12824b5fe38778ba0821740a1ff92673"
+    },
+    "format_attribution.json": {
+      "bytes": 1833,
+      "path": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/format_attribution.json",
+      "sha256": "5d2039b14048402ded22997ab0d1827782ffcf9490cb6e0a8a9a2c52d35d15c8"
+    },
+    "manual_annotations.csv": {
+      "bytes": 7348,
+      "path": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/manual_annotations.csv",
+      "sha256": "5609ed330279e5354b66f0ce35c797c8046703bfa91b2b1138b26afad2f2d906"
+    },
+    "manual_review.json": {
+      "bytes": 1263,
+      "path": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/manual_review.json",
+      "sha256": "d9fb3512237812eab2d2df1a56709cbd709477964bbef44777b856863d1b3fcc"
+    },
+    "pairwise_transitions.csv": {
+      "bytes": 2006,
+      "path": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/pairwise_transitions.csv",
+      "sha256": "f0ad72f7781469de9ffadcfbedd71bcc0e9520baf6d2035aad35879eea20f113"
+    },
+    "per_class_metrics.csv": {
+      "bytes": 3511,
+      "path": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/per_class_metrics.csv",
+      "sha256": "edfa4124fd5bc6217b82ea4aef16b0574d35e9284689ca855a2402e80d2697f8"
+    },
+    "qualitative_counts.csv": {
+      "bytes": 7376,
+      "path": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/qualitative_counts.csv",
+      "sha256": "9c1f90d736241c2970947b13e7d73082d9543db501502474b25c86c3e4de0e11"
+    },
+    "qualitative_summary.json": {
+      "bytes": 945,
+      "path": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/qualitative_summary.json",
+      "sha256": "a8fad726546980c69f5886c0c2c6c8a76cabf93b188be00c19d8de8568e38396"
+    },
+    "run_metrics.csv": {
+      "bytes": 988,
+      "path": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/run_metrics.csv",
+      "sha256": "0ad5ebc53c7d6b3e259962e00b386ac59cbef5e7557b96d2a32f8d6d8a4b4f90"
+    },
+    "sample_manifest.csv": {
+      "bytes": 7454,
+      "path": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/sample_manifest.csv",
+      "sha256": "235f00ae44873d9f5de73d8f5ce8257b80933e28e81d644c0e3df3c51392995c"
+    },
+    "seed_agreement.csv": {
+      "bytes": 493,
+      "path": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/seed_agreement.csv",
+      "sha256": "28c2418f20b7730a20285e6545b5145615d553bfac7cb3e748847b876c958e2d"
+    },
+    "slice_metrics.csv": {
+      "bytes": 7651,
+      "path": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/slice_metrics.csv",
+      "sha256": "47054f83531f7f72ccd3014fb4af22fea7a79ae1dde3a73debf8b658a4b3308b"
+    }
+  },
+  "command": "python3 experiments/weibo-eclass/error-analysis/analyze_frozen_dev_errors.py",
+  "completed_at_utc": "2026-08-12T03:38:37.380329+00:00",
+  "config": {
+    "bytes": 5010,
+    "path": "experiments/weibo-eclass/error-analysis/configs/exp-048-frozen-dev-error-analysis.json",
+    "sha256": "905b18ce0425be3f9f8434a82edb573fee44f60cd62e184a9f7807850d6c9513"
+  },
+  "data": {
+    "bytes": 486142,
+    "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/validation.jsonl",
+    "sha256": "99d80e1433bddea7b639983b8fa874e45d585318aa47eb87ab29581e02f72a4a"
+  },
+  "experiment_id": "EXP-048",
+  "git_commit": "9860d660730c39cba7302747aee852733d201069",
+  "git_dirty": true,
+  "implementation": {
+    "bytes": 45003,
+    "path": "experiments/weibo-eclass/error-analysis/analyze_frozen_dev_errors.py",
+    "sha256": "bac146ee07b38abc65dd52acc8478cc54b54f3a958ff7a5c03ce33be23f94402"
+  },
+  "prediction_artifacts": {
+    "encoder": [
+      {
+        "bytes": 291225,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-042-stage-3-baselines/m2/target_only/seed-42/predictions.csv",
+        "sha256": "7d45a061494162eba05579d0772d39ce4ea6239bbf8f6db0268e600471250d65"
+      },
+      {
+        "bytes": 290426,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-042-stage-3-baselines/m2/target_only/seed-43/predictions.csv",
+        "sha256": "227cfb58a70ad191b50305e76739679eec161f81ef1b06376fce1a9403d610c3"
+      },
+      {
+        "bytes": 291052,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-042-stage-3-baselines/m2/target_only/seed-44/predictions.csv",
+        "sha256": "e279a142268b247a4e3b6c8e52e5172313bb8ceab8e78899a3cfba7183df8f8a"
+      }
+    ],
+    "lora": [
+      {
+        "bytes": 1155394,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/validation-v1/condition-seed-42-predictions.jsonl",
+        "sha256": "22a6c8a6a81be57bae39f00330d0d152acbc8818bef1cc9fdcee43a0bca7386c"
+      },
+      {
+        "bytes": 1156454,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/validation-v1/condition-seed-43-predictions.jsonl",
+        "sha256": "8204dac4f816a6e7d372887876cc712984288285e0263c5c5d7a884c7e6235df"
+      },
+      {
+        "bytes": 1155950,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/validation-v1/condition-seed-44-predictions.jsonl",
+        "sha256": "8b1ff34de1ae5ab55f2890790b5747eff1f30039c3408c85e6d8c819a244f128"
+      }
+    ],
+    "reference": [
+      {
+        "bytes": 4393449,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/validation-v1/condition-reference-predictions.jsonl",
+        "sha256": "4d66c727b4515977d1e75e21e695f8d33029ea3ce4125aec67848bb20641b60d"
+      }
+    ]
+  },
+  "private_review_artifact": {
+    "bytes": 27645,
+    "path": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/private/selected_cases.private.jsonl",
+    "sha256": "e9d2afdcb099639f7e55e9889aed0e3961a57fe7f5d34ff512b16295ff716249"
+  },
+  "protocol": {
+    "bytes": 7711,
+    "path": "experiments/weibo-eclass/protocols/exp-048-frozen-dev-error-analysis.md",
+    "sha256": "fbedaafee6e5a4df899dd5fe32c1870b0c51fce5479ff1e8bff5388ed675ad4c"
+  },
+  "resource": {
+    "api_calls": 0,
+    "new_model_runs": 0,
+    "wall_seconds": 0.12976741697639227
+  },
+  "reviewed_rows": 48,
+  "source_verifications": [
+    {
+      "bytes": 924,
+      "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/verification.json",
+      "sha256": "a518135c9bbebf4fb9f6fb080f61c3996772d7d45a6077776ce6a4e99f0f9fb7"
+    },
+    {
+      "bytes": 2354,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/matched-validation-v1/verification.json",
+      "sha256": "42da926faa9fd4a18ed8d209d7d30bfd54403e8951e0b6b4bb3bb0aae0df90e9"
+    }
+  ],
+  "stage": "descriptive-frozen-validation-error-analysis",
+  "status": "Verified",
+  "test_accessed": false,
+  "tier": "Major",
+  "verified_at_utc": "2026-08-12T03:42:57.487121+00:00"
+}

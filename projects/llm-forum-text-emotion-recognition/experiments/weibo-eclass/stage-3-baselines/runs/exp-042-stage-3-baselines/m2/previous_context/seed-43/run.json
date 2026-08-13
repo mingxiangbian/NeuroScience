@@ -1,0 +1,70 @@
+{
+  "accessed_splits": [
+    "train",
+    "validation"
+  ],
+  "artifacts": {
+    "confusion_matrix": {
+      "bytes": 247,
+      "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/m2/previous_context/seed-43/confusion_matrix.csv",
+      "sha256": "ba748e6e66315f39ad167b52230308a4fe17df509ff56118b4aa76f4fa92d2b2"
+    },
+    "history": {
+      "bytes": 428,
+      "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/m2/previous_context/seed-43/history.csv",
+      "sha256": "9ccff9de775dcb9c4a9ce0da4fabbfd99329be4a71b05291e2005478e59904d9"
+    },
+    "metrics": {
+      "bytes": 9107,
+      "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/m2/previous_context/seed-43/metrics.json",
+      "sha256": "25711eefec14256b21a985092147b17d0baf511aef91c03d0178e2abd8fb49fb"
+    },
+    "per_class_metrics": {
+      "bytes": 1546,
+      "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/m2/previous_context/seed-43/per_class_metrics.csv",
+      "sha256": "e6b7ddabe1b7d456527e9217a71a7d791e232818eb9ae3377a70dd7edf242998"
+    }
+  },
+  "checkpoint": {
+    "file_count": 4,
+    "files": [
+      {
+        "bytes": 1250,
+        "path": "config.json",
+        "sha256": "e439e514145488802aad69290f0bbec3056bb72da93af747126fce88e48efd92"
+      },
+      {
+        "bytes": 409115620,
+        "path": "model.safetensors",
+        "sha256": "1ead60e0592e5f3b42dfa08aa58cfd30686c0bcbcd45ce2841328361c3b010b1"
+      },
+      {
+        "bytes": 439118,
+        "path": "tokenizer.json",
+        "sha256": "e3664152464ac6604e88e0b5348cb0819f5e2b75dc0a3f976dd4ab5058441b01"
+      },
+      {
+        "bytes": 377,
+        "path": "tokenizer_config.json",
+        "sha256": "86edfbd1d109094d4ea6a04c83822681bd05e495ced8de2cbcd6fea518da3440"
+      }
+    ],
+    "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-042-stage-3-baselines/m2/previous_context/seed-43/final-model",
+    "total_bytes": 409556365
+  },
+  "completed_at_utc": "2026-08-08T10:40:45.727527+00:00",
+  "duration_seconds": 527.2196814590134,
+  "experiment_id": "EXP-042",
+  "model_parameter_count": 102273031,
+  "private_predictions": {
+    "bytes": 290037,
+    "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-042-stage-3-baselines/m2/previous_context/seed-43/predictions.csv",
+    "sha256": "a1e81d74fc7be1705bc9f47649e1c39c85c090dcdd1f05baca5e8788347ab59a"
+  },
+  "seed": 43,
+  "status": "Completed",
+  "test_split_accessed": false,
+  "trainable_parameter_count": 102273031,
+  "validation_split_accessed": true,
+  "view": "previous_context"
+}

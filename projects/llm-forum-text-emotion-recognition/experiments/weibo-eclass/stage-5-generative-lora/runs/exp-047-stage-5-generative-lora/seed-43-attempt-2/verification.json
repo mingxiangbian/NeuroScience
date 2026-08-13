@@ -1,0 +1,99 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "completed_at_utc": "2026-08-10T09:23:46.847557+00:00",
+  "contract": {
+    "bytes": 10347,
+    "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-formal-seed-43-attempt-2-contract-v1.json",
+    "sha256": "6f44f5cafa8b46003b6b8e5b1580b5c1d669101a169c39f64a13cc98aff640d3"
+  },
+  "experiment_id": "EXP-047",
+  "formal_training_verified": true,
+  "implementation": {
+    "imports_runner": false,
+    "verifier": {
+      "bytes": 20567,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/verify_formal_seed43_attempt2_training.py",
+      "sha256": "1e940619e0bbd49f2ca6b894e4ee7ce5b1fcb6cd0bb2d663e8fe2abf7fcf3311"
+    }
+  },
+  "next_required_step": "Run the frozen two-pass singleton replay for seed 43; seed 44 and validation/test remain closed.",
+  "recalculated": {
+    "adapter": {
+      "checkpoints": [
+        {
+          "bytes": 29384266,
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/adapters/seed-43-attempt-2/0005995_adapters.safetensors",
+          "sha256": "30525c35d67dd9fdf4cbd5efaf6ccda7d59956918600654252af5851aa6b1fe8"
+        },
+        {
+          "bytes": 29384266,
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/adapters/seed-43-attempt-2/0011990_adapters.safetensors",
+          "sha256": "48b251a5420b791d8674c2d01216a480ee6096d84b37f44e4b6edfad4fc39aa2"
+        }
+      ],
+      "config": {
+        "bytes": 1725,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/adapters/seed-43-attempt-2/adapter_config.json",
+        "sha256": "89389ac675520633bc3966508bee21241d367c8ec713105ea263b2a0e75082d9"
+      },
+      "lora_b_nonzero_tensors": 112,
+      "lora_b_tensor_count": 112,
+      "tensor_count": 224,
+      "trainable_parameter_count": 7340032,
+      "weights": {
+        "bytes": 29384266,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/adapters/seed-43-attempt-2/adapters.safetensors",
+        "sha256": "48b251a5420b791d8674c2d01216a480ee6096d84b37f44e4b6edfad4fc39aa2"
+      }
+    },
+    "authorization": {
+      "bytes": 1578,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-formal-seed-43-attempt-2-authorization-v1.json",
+      "sha256": "e1c91ef5494d257ef235c916c9e828e125c7a31408c2a191336aa288d4ea91bf"
+    },
+    "gate_check": {
+      "return_code": 0,
+      "stdout": "{\"path\": \"experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-formal-seed-43-attempt-2-gate-verification-v1.json\", \"status\": \"Passed\"}"
+    },
+    "history": {
+      "duration_seconds": 20548.72148950002,
+      "final_loss_window": 0.0496,
+      "initial_loss_window": 0.2828,
+      "median_iterations_per_second": 0.588,
+      "micro_iterations": 11990,
+      "peak_mlx_memory_gb": 8.804,
+      "reporting_rows": 1199,
+      "trained_tokens": 160736
+    },
+    "loadability": {
+      "finite_logits": true,
+      "input_tokens": 8,
+      "logit_shape": [
+        1,
+        8,
+        151936
+      ],
+      "model_and_adapter_loaded": true,
+      "peak_mlx_memory_gb": 8.103583936
+    },
+    "run": {
+      "bytes": 3580,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/seed-43-attempt-2/run.json",
+      "sha256": "3ebe05d03b442e39561270d8296d93c83cb2a1547f3002a87999af0ca67a8aae"
+    },
+    "runtime_config": {
+      "bytes": 1403,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-runtime-seed-43-attempt-2.json",
+      "sha256": "21e28d82ed2f9864779acf89a5323baf9fb79b03648642e672a0fd06e5a1fd50"
+    }
+  },
+  "remaining_training_seeds_authorized": false,
+  "seed": 43,
+  "status": "Passed",
+  "test_split_accessed": false,
+  "validation_evaluation_authorized": false,
+  "validation_split_accessed": false,
+  "verification_id": "EXP-047-FORMAL-SEED-43-ATTEMPT-2-TRAIN-VERIFY-V1"
+}

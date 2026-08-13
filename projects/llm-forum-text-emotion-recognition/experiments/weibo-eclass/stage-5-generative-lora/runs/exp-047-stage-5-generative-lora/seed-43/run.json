@@ -1,0 +1,37 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "authorization": {
+    "bytes": 1241,
+    "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-formal-seed-43-authorization-v1.json",
+    "sha256": "2221fea23030c6ca541ccf195c6f7f8246b488512f4662013dda036514b649f8"
+  },
+  "command": [
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/mlx_lm.lora",
+    "-c",
+    "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-runtime-seed-43.json"
+  ],
+  "completed_at_utc": "2026-08-10T03:35:41.246225+00:00",
+  "contract": {
+    "bytes": 8922,
+    "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-formal-seed-43-contract-v1.json",
+    "sha256": "e8530e27d44665e9673651ac9ef6117ede34d5acc7c6d4fe3fbfdd43c536ee6a"
+  },
+  "error": {
+    "message": "MLX-LM formal training exited with status -6",
+    "traceback": "Traceback (most recent call last):\n  File \"/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-5-generative-lora/run_formal_seed43.py\", line 420, in run_formal\n    raise RuntimeError(f\"MLX-LM formal training exited with status {return_code}\")\nRuntimeError: MLX-LM formal training exited with status -6\n"
+  },
+  "experiment_id": "EXP-047",
+  "git": {
+    "commit": "9860d660730c39cba7302747aee852733d201069",
+    "dirty": true
+  },
+  "seed": 43,
+  "stage": "formal-seed-43-train-only",
+  "started_at_utc": "2026-08-10T03:35:41.052573+00:00",
+  "status": "Failed",
+  "test_split_accessed": false,
+  "tier": "Major",
+  "validation_split_accessed": false
+}

@@ -1,0 +1,123 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "command_history": [
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/stage-2-preflight/run_preflight.py static",
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/stage-2-preflight/run_preflight.py models",
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/stage-2-preflight/run_preflight.py tokenize",
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/stage-2-preflight/run_preflight.py classical",
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/stage-2-preflight/run_preflight.py encoder",
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/stage-2-preflight/run_preflight.py qwen",
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/stage-2-preflight/run_preflight.py lora"
+  ],
+  "config": {
+    "bytes": 3611,
+    "path": "experiments/weibo-eclass/stage-2-preflight/config.json",
+    "sha256": "12bb04be62e204a1e2e359b7b5d9a3889c26d9ba6f5f51a81960b959a2f15545"
+  },
+  "experiment_id": "EXP-041",
+  "git": {
+    "commit": "3244ff0fb1841324d8f33537af6d07c6f1dfd0c8",
+    "dirty": true,
+    "dirty_path_count": 49
+  },
+  "rq_ids": [
+    "RQ-F1",
+    "RQ-F2"
+  ],
+  "stage": "environment-model-parser-lora-preflight",
+  "stages": {
+    "classical": {
+      "artifact": {
+        "bytes": 791,
+        "path": "experiments/weibo-eclass/stage-2-preflight/runs/exp-041-model-stack-preflight/classical.json",
+        "sha256": "c79688158acdfab879478a57df157e7a834f3e68ff3b1da257dedfdc01705595"
+      },
+      "completed_at_utc": "2026-08-08T05:33:37.503199+00:00",
+      "duration_seconds": 0.8649417499545962,
+      "started_at_utc": "2026-08-08T05:33:36.638194+00:00",
+      "status": "Passed"
+    },
+    "encoder": {
+      "artifact": {
+        "bytes": 645,
+        "path": "experiments/weibo-eclass/stage-2-preflight/runs/exp-041-model-stack-preflight/encoder.json",
+        "sha256": "35fca92b8b2fb567a36aaf2ce2f88ea4b430924236e7762b8da039147383eeb3"
+      },
+      "completed_at_utc": "2026-08-08T05:33:41.237210+00:00",
+      "duration_seconds": 3.572945458930917,
+      "started_at_utc": "2026-08-08T05:33:37.664194+00:00",
+      "status": "Passed"
+    },
+    "lora": {
+      "artifact": {
+        "bytes": 1505,
+        "path": "experiments/weibo-eclass/stage-2-preflight/runs/exp-041-model-stack-preflight/lora.json",
+        "sha256": "cd8b74e07ba7df0e7802058ac98a96ea93a7f712d804c80e5e50a2560d6cc962"
+      },
+      "completed_at_utc": "2026-08-08T05:58:03.432805+00:00",
+      "duration_seconds": 18.26155420904979,
+      "started_at_utc": "2026-08-08T05:57:45.170767+00:00",
+      "status": "Passed"
+    },
+    "models": {
+      "artifact": {
+        "bytes": 897,
+        "path": "experiments/weibo-eclass/stage-2-preflight/runs/exp-041-model-stack-preflight/models.json",
+        "sha256": "93be3624666b5691d5b2d9d92d16a5a60db1ba1c801d8e7dd0d609843a52a8da"
+      },
+      "completed_at_utc": "2026-08-08T05:33:18.585904+00:00",
+      "duration_seconds": 9.174838832928799,
+      "started_at_utc": "2026-08-08T05:33:09.410894+00:00",
+      "status": "Passed"
+    },
+    "qwen": {
+      "artifact": {
+        "bytes": 6496,
+        "path": "experiments/weibo-eclass/stage-2-preflight/runs/exp-041-model-stack-preflight/qwen.json",
+        "sha256": "1be1af37f101864cb0a2bc63255d0be46e70a6dc770c769861474402691a18bf"
+      },
+      "completed_at_utc": "2026-08-08T05:57:27.006333+00:00",
+      "duration_seconds": 1414.817844041041,
+      "started_at_utc": "2026-08-08T05:33:52.184052+00:00",
+      "status": "Passed"
+    },
+    "static": {
+      "artifact": {
+        "bytes": 2463,
+        "path": "experiments/weibo-eclass/stage-2-preflight/runs/exp-041-model-stack-preflight/static.json",
+        "sha256": "6a7580abfa86dcb528909fa372e07f9d4c988826005e0260ad61e3f82881e01c"
+      },
+      "completed_at_utc": "2026-08-08T05:32:41.799617+00:00",
+      "duration_seconds": 0.08480329101439565,
+      "started_at_utc": "2026-08-08T05:32:41.714744+00:00",
+      "status": "Passed"
+    },
+    "tokenize": {
+      "artifact": {
+        "bytes": 2141,
+        "path": "experiments/weibo-eclass/stage-2-preflight/runs/exp-041-model-stack-preflight/tokenization.json",
+        "sha256": "a53fda4690d244748f8d89a91b5fdaf8ddf77e23ff117c741451862956dcb665"
+      },
+      "completed_at_utc": "2026-08-08T05:33:36.151902+00:00",
+      "duration_seconds": 9.874546791077591,
+      "started_at_utc": "2026-08-08T05:33:26.277110+00:00",
+      "status": "Passed"
+    }
+  },
+  "started_at_utc": "2026-08-08T05:32:41.763109+00:00",
+  "status": "Passed",
+  "test_split_accessed": false,
+  "tier": "Minor",
+  "validation_split_accessed": false,
+  "verification": {
+    "artifact": {
+      "bytes": 1433,
+      "path": "experiments/weibo-eclass/stage-2-preflight/runs/exp-041-model-stack-preflight/verification.json",
+      "sha256": "864372d92ad3455d41bc1828b293c02fbf5c6072c62ec16a5958ab1ed38315f2"
+    },
+    "audit_id": "AUDIT-EXP-041-V1",
+    "status": "Passed"
+  }
+}

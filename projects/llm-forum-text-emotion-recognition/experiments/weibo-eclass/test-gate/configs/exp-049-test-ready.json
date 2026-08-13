@@ -1,0 +1,580 @@
+{
+  "authorization": {
+    "bytes": 869,
+    "path": "experiments/weibo-eclass/test-gate/preflight/exp-049-authorization-v1.json",
+    "sha256": "8d77d4fe3c1885af4982ac97a960e7dfe97dd20c79e205eb28b3decc02a93d1c"
+  },
+  "condition_order": [
+    "m0-majority",
+    "m1-target-only",
+    "encoder-seed-42",
+    "encoder-seed-43",
+    "encoder-seed-44",
+    "qwen-reference",
+    "qwen-lora-seed-42",
+    "qwen-lora-seed-43",
+    "qwen-lora-seed-44"
+  ],
+  "contract_id": "EXP-049-TEST-READY-V1",
+  "data": {
+    "manifest": {
+      "bytes": 2731,
+      "path": "data/weibo-emotion-corpus/eclass-v1.manifest.json",
+      "sha256": "54e929d7a9263c83d2895fd109fbdfb46b876043dec668d0fe25f30c149fd210"
+    },
+    "protocol_id": "DATA-WEIBO-TASK-V1",
+    "test_inputs": {
+      "bytes": 471847,
+      "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/test.inputs.jsonl",
+      "rows": 1273,
+      "sha256": "5229637a285179a3626858edc369664d159fe9c99cd7bb03aae8fbc868f4406e"
+    },
+    "test_labels": {
+      "bytes": 184562,
+      "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/test.labels.sealed.jsonl",
+      "rows": 1273,
+      "sha256": "649ce91f58aa7550e76450c25a571f5dbbe3b03c70ba0e9e07fb53c84cdfd002"
+    },
+    "train": {
+      "bytes": 2286694,
+      "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/train.jsonl",
+      "rows": 5995,
+      "sha256": "b1fd309acf45dfa4ad0c907ee3f373ea95fce751d51b637d402e289aa79d19e0"
+    }
+  },
+  "encoder": {
+    "conditions": {
+      "encoder-seed-42": {
+        "checkpoint": {
+          "file_count": 4,
+          "files": [
+            {
+              "bytes": 1250,
+              "path": "config.json",
+              "sha256": "e439e514145488802aad69290f0bbec3056bb72da93af747126fce88e48efd92"
+            },
+            {
+              "bytes": 409115620,
+              "path": "model.safetensors",
+              "sha256": "253dfe19c9df441b161f3ac1777cc82f5824b773e5e9f2a68f86d2b3c47fd106"
+            },
+            {
+              "bytes": 439118,
+              "path": "tokenizer.json",
+              "sha256": "e3664152464ac6604e88e0b5348cb0819f5e2b75dc0a3f976dd4ab5058441b01"
+            },
+            {
+              "bytes": 377,
+              "path": "tokenizer_config.json",
+              "sha256": "86edfbd1d109094d4ea6a04c83822681bd05e495ced8de2cbcd6fea518da3440"
+            }
+          ],
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-042-stage-3-baselines/m2/target_only/seed-42/final-model",
+          "total_bytes": 409556365
+        },
+        "seed": 42,
+        "source_run": {
+          "bytes": 2637,
+          "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/m2/target_only/seed-42/run.json",
+          "sha256": "5e279ac785b1e5f117913a930ef1ce62a8fe10aff865ec0e8121177eb4443574"
+        }
+      },
+      "encoder-seed-43": {
+        "checkpoint": {
+          "file_count": 4,
+          "files": [
+            {
+              "bytes": 1250,
+              "path": "config.json",
+              "sha256": "e439e514145488802aad69290f0bbec3056bb72da93af747126fce88e48efd92"
+            },
+            {
+              "bytes": 409115620,
+              "path": "model.safetensors",
+              "sha256": "7346f06c07a8c27b908e0fdc3e2d39454fdcb3123bfb969bec83d8daa0fd9db8"
+            },
+            {
+              "bytes": 439118,
+              "path": "tokenizer.json",
+              "sha256": "e3664152464ac6604e88e0b5348cb0819f5e2b75dc0a3f976dd4ab5058441b01"
+            },
+            {
+              "bytes": 377,
+              "path": "tokenizer_config.json",
+              "sha256": "86edfbd1d109094d4ea6a04c83822681bd05e495ced8de2cbcd6fea518da3440"
+            }
+          ],
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-042-stage-3-baselines/m2/target_only/seed-43/final-model",
+          "total_bytes": 409556365
+        },
+        "seed": 43,
+        "source_run": {
+          "bytes": 2638,
+          "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/m2/target_only/seed-43/run.json",
+          "sha256": "7fbfc9ad5b32f576e8572500465452b4c0c5be33e899693acb4d2f3f1189899c"
+        }
+      },
+      "encoder-seed-44": {
+        "checkpoint": {
+          "file_count": 4,
+          "files": [
+            {
+              "bytes": 1250,
+              "path": "config.json",
+              "sha256": "e439e514145488802aad69290f0bbec3056bb72da93af747126fce88e48efd92"
+            },
+            {
+              "bytes": 409115620,
+              "path": "model.safetensors",
+              "sha256": "32ee1bfcc5867412280d5fd4d791decc7cf755c64cfa1be840ae91fe5c3ada39"
+            },
+            {
+              "bytes": 439118,
+              "path": "tokenizer.json",
+              "sha256": "e3664152464ac6604e88e0b5348cb0819f5e2b75dc0a3f976dd4ab5058441b01"
+            },
+            {
+              "bytes": 377,
+              "path": "tokenizer_config.json",
+              "sha256": "86edfbd1d109094d4ea6a04c83822681bd05e495ced8de2cbcd6fea518da3440"
+            }
+          ],
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-042-stage-3-baselines/m2/target_only/seed-44/final-model",
+          "total_bytes": 409556365
+        },
+        "seed": 44,
+        "source_run": {
+          "bytes": 2639,
+          "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/m2/target_only/seed-44/run.json",
+          "sha256": "4c798084bf4fb2d5a45ee0050534d982eafaa5df0417d50d7a35eeb52c470b36"
+        }
+      }
+    },
+    "evaluation_batch_size": 64,
+    "max_sequence_length": 256,
+    "model": {
+      "repo_id": "hfl/chinese-roberta-wwm-ext",
+      "revision": "5c58d0b8ec1d9014354d691c538661bf00bfdb44"
+    },
+    "runtime": {
+      "backend": "local_apple_metal_mps",
+      "packages": {
+        "numpy": "2.2.6",
+        "python": "3.10.20",
+        "safetensors": "0.8.0",
+        "scikit-learn": "1.7.2",
+        "torch": "2.9.1",
+        "transformers": "5.8.0"
+      },
+      "python_executable": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python"
+    }
+  },
+  "evaluation": {
+    "bootstrap_repeats": 2000,
+    "bootstrap_seed_namespace": "EXP-049-frozen-test-group-bootstrap-v1",
+    "contrasts": {
+      "encoder_mean_minus_m1": {
+        "candidate_units": [
+          "encoder-seed-42",
+          "encoder-seed-43",
+          "encoder-seed-44"
+        ],
+        "reference_units": [
+          "m1-target-only"
+        ]
+      },
+      "lora_mean_minus_encoder_mean": {
+        "candidate_units": [
+          "qwen-lora-seed-42",
+          "qwen-lora-seed-43",
+          "qwen-lora-seed-44"
+        ],
+        "reference_units": [
+          "encoder-seed-42",
+          "encoder-seed-43",
+          "encoder-seed-44"
+        ]
+      },
+      "lora_mean_minus_qwen_reference": {
+        "candidate_units": [
+          "qwen-lora-seed-42",
+          "qwen-lora-seed-43",
+          "qwen-lora-seed-44"
+        ],
+        "reference_units": [
+          "qwen-reference"
+        ]
+      }
+    },
+    "long_tail_labels": [
+      "anger",
+      "joy",
+      "neutral",
+      "sadness"
+    ],
+    "practical_tie_macro_f1": 0.005,
+    "primary_metric": "macro_f1",
+    "slices": [
+      "all",
+      "context_available",
+      "first_clause",
+      "ambiguous_target",
+      "unambiguous_target",
+      "no_emotion",
+      "emotion_label",
+      "long_tail_label"
+    ]
+  },
+  "experiment_id": "EXP-049",
+  "families": {
+    "encoder": {
+      "name": "Chinese RoBERTa-WWM-ext supervised encoder",
+      "unit_ids": [
+        "encoder-seed-42",
+        "encoder-seed-43",
+        "encoder-seed-44"
+      ]
+    },
+    "m0": {
+      "name": "Train-majority baseline",
+      "unit_ids": [
+        "m0-majority"
+      ]
+    },
+    "m1": {
+      "name": "Target-only TF-IDF + LinearSVC",
+      "unit_ids": [
+        "m1-target-only"
+      ]
+    },
+    "qwen_lora": {
+      "name": "Qwen3-4B generative LoRA",
+      "unit_ids": [
+        "qwen-lora-seed-42",
+        "qwen-lora-seed-43",
+        "qwen-lora-seed-44"
+      ]
+    },
+    "qwen_reference": {
+      "name": "Qwen3-4B matched no-adapter reference",
+      "unit_ids": [
+        "qwen-reference"
+      ]
+    }
+  },
+  "frozen_sources": {
+    "dataset_manifest": {
+      "bytes": 2731,
+      "path": "data/weibo-emotion-corpus/eclass-v1.manifest.json",
+      "sha256": "54e929d7a9263c83d2895fd109fbdfb46b876043dec668d0fe25f30c149fd210"
+    },
+    "encoder_manifest": {
+      "bytes": 1246,
+      "path": "models/chinese-roberta-wwm-ext/manifest.json",
+      "sha256": "c1629b5349d66f3a873c3d6bc4bc490089b86745941eebfaf70749e1e916cba5"
+    },
+    "encoder_requirements": {
+      "bytes": 1179,
+      "path": "experiments/weibo-eclass/stage-3-baselines/requirements-lock.txt",
+      "sha256": "123e455840fb9e5e9230cd3eb7feda625a8819c4cd3dbf82b91068a7d60797fd"
+    },
+    "exp042_config": {
+      "bytes": 4223,
+      "path": "experiments/weibo-eclass/stage-3-baselines/config.json",
+      "sha256": "60e5b2b4b8269d7ab95e6a344e64419a4e4280ebed65affbe08a64ba40bdf8a9"
+    },
+    "exp047_contract": {
+      "bytes": 11410,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-matched-validation-contract-v1.json",
+      "sha256": "72b9ef256be16e009f8f42231976383394ce75c3a00531e07ba5e2feed51b3b2"
+    },
+    "exp048_verification": {
+      "bytes": 2076,
+      "path": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/verification.json",
+      "sha256": "995d9448508b73ffcb1ed4f1c8ee8d48e25d7127891045f5862ffc41eae3f2e3"
+    },
+    "parser": {
+      "bytes": 3954,
+      "path": "experiments/weibo-eclass/stage-4-qwen-2x2/label_parser.py",
+      "sha256": "429c8708da864086c11859449ebf427b8a681c20eec58900d97574d508067a21"
+    },
+    "prompt": {
+      "bytes": 1073,
+      "path": "experiments/weibo-eclass/stage-2-preflight/prompt-v1.json",
+      "sha256": "d9a92aab3a531b769c3b4794572cf0842536c7c38dcdd6a1cd4ac25885e6631b"
+    },
+    "qwen_manifest": {
+      "bytes": 3959,
+      "path": "models/qwen3-4b/manifest.json",
+      "sha256": "da447350d9e43213dacc1202da03b50d7e7114b0a4fe2904ff353240b404a641"
+    },
+    "qwen_requirements": {
+      "bytes": 99,
+      "path": "experiments/weibo-eclass/stage-4-qwen-2x2/requirements-lock.txt",
+      "sha256": "69072303ed0d899983f402fe81131f79c57c1154d45ae8550cff518f48bd70bc"
+    },
+    "stage5_config": {
+      "bytes": 7717,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/config.json",
+      "sha256": "992e42535c7acf6fd503aa870f52825a30a90fd767280bf5ba06f43f69739b15"
+    }
+  },
+  "implementation": {
+    "builder": {
+      "bytes": 17097,
+      "path": "experiments/weibo-eclass/test-gate/build_test_ready_contract.py",
+      "sha256": "36415bcaec1ff1c50ffd59a28483e76e9ce74c883a864ca1d248314cb6c9deb0"
+    },
+    "common": {
+      "bytes": 16616,
+      "path": "experiments/weibo-eclass/test-gate/test_gate_common.py",
+      "sha256": "b62da7665211a1ea1ccb0e480bbdda7cb816764280c1e2d7a5766bbb8012a31c"
+    },
+    "final_verifier": {
+      "bytes": 42452,
+      "path": "experiments/weibo-eclass/test-gate/verify_frozen_test.py",
+      "sha256": "56db49158adbc5623692f38039218c1e654ee355f09b2a06cefd3435020cfacd"
+    },
+    "preflight_verifier": {
+      "bytes": 11902,
+      "path": "experiments/weibo-eclass/test-gate/verify_test_ready.py",
+      "sha256": "7e9e358b9c74c234fd955113f6ef9e1ba4a526a2e99b09e25bda0226b02a110d"
+    },
+    "protocol": {
+      "bytes": 8162,
+      "path": "experiments/weibo-eclass/test-gate/protocols/exp-049-frozen-test-gate.md",
+      "sha256": "ca591cd4f3bc6abe4813dd1f212e1cd06dc952696815953415aad7ee2a2d9b2c"
+    },
+    "runner": {
+      "bytes": 49027,
+      "path": "experiments/weibo-eclass/test-gate/run_frozen_test.py",
+      "sha256": "89576e612083c5b9d8a0865c6d4f8b632358792381401b356527597873c849ec"
+    },
+    "test": {
+      "bytes": 6409,
+      "path": "experiments/weibo-eclass/test-gate/test_test_gate.py",
+      "sha256": "ac13ddf697131059f5990dc524aee642dc9223745aaaef1a1071602a82671f6b"
+    }
+  },
+  "labels": [
+    "anger",
+    "joy",
+    "negative",
+    "neutral",
+    "no_emotion",
+    "positive",
+    "sadness"
+  ],
+  "outputs": {
+    "private_dir": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-049-frozen-test",
+    "public_dir": "experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test"
+  },
+  "qwen": {
+    "conditions": {
+      "qwen-lora-seed-42": {
+        "adapter": {
+          "bytes": 29384266,
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/adapters/seed-42/adapters.safetensors",
+          "sha256": "215bb1d28e5311dbf98e64abb4add028b083bbcc56e5a5b0f350824828c15af5"
+        },
+        "adapter_config": {
+          "bytes": 1705,
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/adapters/seed-42/adapter_config.json",
+          "sha256": "6e0dd7c22bf9fe069aab3ce5c32126e9ee8a730930bd6626b21517e139d2da6d"
+        },
+        "seed": 42
+      },
+      "qwen-lora-seed-43": {
+        "adapter": {
+          "bytes": 29384266,
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/adapters/seed-43-attempt-2/adapters.safetensors",
+          "sha256": "48b251a5420b791d8674c2d01216a480ee6096d84b37f44e4b6edfad4fc39aa2"
+        },
+        "adapter_config": {
+          "bytes": 1725,
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/adapters/seed-43-attempt-2/adapter_config.json",
+          "sha256": "89389ac675520633bc3966508bee21241d367c8ec713105ea263b2a0e75082d9"
+        },
+        "seed": 43
+      },
+      "qwen-lora-seed-44": {
+        "adapter": {
+          "bytes": 29384266,
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/adapters/seed-44/adapters.safetensors",
+          "sha256": "673850b3931ee62f3fd57ef0eb276661fbbea423df96bc5aab63284a898f6fcc"
+        },
+        "adapter_config": {
+          "bytes": 1705,
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/adapters/seed-44/adapter_config.json",
+          "sha256": "48b4777e97391de88c4f40ff68d0db641cd4c07c857db8fc278759f58e843c28"
+        },
+        "seed": 44
+      },
+      "qwen-reference": {
+        "adapter": null,
+        "adapter_config": null,
+        "seed": null
+      }
+    },
+    "generation": {
+      "batch_size": 1,
+      "completion_batch_size": 1,
+      "do_sample": false,
+      "enable_thinking": true,
+      "max_input_tokens": 512,
+      "max_new_tokens": 1024,
+      "prefill_batch_size": 1,
+      "prefill_step_size": 2048,
+      "temperature": 0.0,
+      "view": "target_only"
+    },
+    "model": {
+      "local_path": "models/qwen3-4b/mlx-bf16",
+      "manifest_path": "models/qwen3-4b/manifest.json",
+      "precision": "bfloat16",
+      "quantized": false,
+      "repo_id": "Qwen/Qwen3-4B",
+      "revision": "1cfa9a7208912126459214e8b04321603b3df60c"
+    },
+    "model_manifest": {
+      "bytes": 3959,
+      "path": "models/qwen3-4b/manifest.json",
+      "sha256": "da447350d9e43213dacc1202da03b50d7e7114b0a4fe2904ff353240b404a641"
+    },
+    "runtime": {
+      "backend": "local_apple_metal_mlx",
+      "packages": {
+        "mlx": "0.32.0",
+        "mlx-lm": "0.31.3",
+        "numpy": "2.4.6",
+        "python": "3.11.15",
+        "safetensors": "0.8.0",
+        "tokenizers": "0.22.2",
+        "transformers": "5.14.1"
+      },
+      "python_executable": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python"
+    }
+  },
+  "registered_at_utc": "2026-08-12T05:01:05.698686+00:00",
+  "resource_budget": {
+    "baseline_encoder_hours_max_total": 2,
+    "bootstrap_repeats": 2000,
+    "formal_test_units": 9,
+    "peak_mlx_memory_gb_max": 13,
+    "qwen_lora_hours_max_per_unit": 3,
+    "qwen_reference_hours_max": 30,
+    "qwen_total_hours_max": 39
+  },
+  "rq_ids": [
+    "RQ-F1"
+  ],
+  "stage": "formal-frozen-test-gate",
+  "status": "Frozen TEST-READY",
+  "test_policy": {
+    "all_predictions_before_label_open": true,
+    "allow_checkpoint_selection": false,
+    "allow_ensemble": false,
+    "allow_post_result_tuning": false,
+    "evaluate_every_unit_once": true,
+    "technical_resume_exact_prefix_only": true
+  },
+  "test_ready_verification_path": "experiments/weibo-eclass/test-gate/preflight/exp-049-test-ready-verification-v1.json",
+  "tier": "Major",
+  "traditional": {
+    "m0": {
+      "expected_majority_label": "no_emotion",
+      "selection_source": "train label counts"
+    },
+    "m1": {
+      "c": 1.0,
+      "char_analyzer": "char_wb",
+      "char_ngram_range": [
+        3,
+        5
+      ],
+      "class_weight": "balanced",
+      "classifier": "LinearSVC",
+      "lowercase": true,
+      "min_df": 2,
+      "random_state": 42,
+      "sublinear_tf": true,
+      "word_ngram_range": [
+        1,
+        2
+      ]
+    }
+  },
+  "unit_registry": {
+    "encoder-seed-42": {
+      "dev_macro_f1": 0.6098336406463812,
+      "seed": 42
+    },
+    "encoder-seed-43": {
+      "dev_macro_f1": 0.5870270105506048,
+      "seed": 43
+    },
+    "encoder-seed-44": {
+      "dev_macro_f1": 0.5879147130672928,
+      "seed": 44
+    },
+    "m0-majority": {
+      "dev_macro_f1": 0.11691327715480061,
+      "seed": null
+    },
+    "m1-target-only": {
+      "dev_macro_f1": 0.3382670361475599,
+      "seed": 42
+    },
+    "qwen-lora-seed-42": {
+      "dev_macro_f1": 0.55202826219447,
+      "seed": 42
+    },
+    "qwen-lora-seed-43": {
+      "dev_macro_f1": 0.5482887936777165,
+      "seed": 43
+    },
+    "qwen-lora-seed-44": {
+      "dev_macro_f1": 0.5870963580895064,
+      "seed": 44
+    },
+    "qwen-reference": {
+      "dev_macro_f1": 0.33359776854597856,
+      "seed": null
+    }
+  },
+  "upstream_verifications": [
+    {
+      "artifact": {
+        "bytes": 924,
+        "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/verification.json",
+        "sha256": "a518135c9bbebf4fb9f6fb080f61c3996772d7d45a6077776ce6a4e99f0f9fb7"
+      },
+      "expected_status": "Verified",
+      "required_fields": {
+        "test_split_accessed": false
+      }
+    },
+    {
+      "artifact": {
+        "bytes": 2354,
+        "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/matched-validation-v1/verification.json",
+        "sha256": "42da926faa9fd4a18ed8d209d7d30bfd54403e8951e0b6b4bb3bb0aae0df90e9"
+      },
+      "expected_status": "Passed",
+      "required_fields": {
+        "test_split_accessed": false
+      }
+    },
+    {
+      "artifact": {
+        "bytes": 2076,
+        "path": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/verification.json",
+        "sha256": "995d9448508b73ffcb1ed4f1c8ee8d48e25d7127891045f5862ffc41eae3f2e3"
+      },
+      "expected_status": "Verified",
+      "required_fields": {
+        "test_accessed": false
+      }
+    }
+  ]
+}

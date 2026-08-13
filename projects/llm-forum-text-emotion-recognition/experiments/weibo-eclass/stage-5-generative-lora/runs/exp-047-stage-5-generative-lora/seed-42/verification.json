@@ -1,0 +1,143 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "amendment": {
+    "bytes": 2905,
+    "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-formal-seed-42-postrun-amendment-v1.json",
+    "sha256": "95e7af53fc567f1ac83d345b3e882ba0aeac824f6286a9e6d6b70d4c5cd43d92"
+  },
+  "completed_at_utc": "2026-08-09T17:28:06.498350+00:00",
+  "contract": {
+    "bytes": 8362,
+    "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-formal-seed-42-contract-v1.json",
+    "sha256": "783d91ab9ec1240a7b52e8726d1dc8adfe8e7bbc712083700465b0182f6df2ff"
+  },
+  "experiment_id": "EXP-047",
+  "formal_training_verified": true,
+  "implementation": {
+    "amendment_verifier": {
+      "bytes": 10330,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/verify_formal_seed42_training_postrun.py",
+      "sha256": "1ac2b89806c1d4694efc3b32eee952aa355a87e9ab1491177ef447ccc92897c2"
+    },
+    "base_training_verifier": {
+      "bytes": 20507,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/verify_formal_seed42_training.py",
+      "sha256": "c4043c32f89a6e54ef3ddbb259d249bd3e917209459667f8c2479c61fbf1ed0f"
+    },
+    "imports_runner": false
+  },
+  "next_required_step": "Run the frozen two-pass singleton replay for seed 42; validation and seeds 43/44 remain closed.",
+  "original_contract_unchanged": true,
+  "postrun_amendment_applied": true,
+  "recalculated": {
+    "adapter": {
+      "checkpoints": [
+        {
+          "bytes": 29384266,
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/adapters/seed-42/0005995_adapters.safetensors",
+          "sha256": "0a989fa90c467a3c26c4c18764971c6cc55f275391dc3a1f31f7e8611db6364c"
+        },
+        {
+          "bytes": 29384266,
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/adapters/seed-42/0011990_adapters.safetensors",
+          "sha256": "215bb1d28e5311dbf98e64abb4add028b083bbcc56e5a5b0f350824828c15af5"
+        }
+      ],
+      "config": {
+        "bytes": 1705,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/adapters/seed-42/adapter_config.json",
+        "sha256": "6e0dd7c22bf9fe069aab3ce5c32126e9ee8a730930bd6626b21517e139d2da6d"
+      },
+      "lora_b_nonzero_tensors": 112,
+      "lora_b_tensor_count": 112,
+      "tensor_count": 224,
+      "trainable_parameter_count": 7340032,
+      "weights": {
+        "bytes": 29384266,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/adapters/seed-42/adapters.safetensors",
+        "sha256": "215bb1d28e5311dbf98e64abb4add028b083bbcc56e5a5b0f350824828c15af5"
+      }
+    },
+    "authorization": {
+      "bytes": 1233,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-formal-seed-42-authorization-v1.json",
+      "sha256": "7a6d7e1e3adfd6be26b733da912a72fc7e0241660e752b1cea6bf3ceb1391de5"
+    },
+    "gate_check": {
+      "amendment_id": "EXP-047-FORMAL-SEED-42-POSTRUN-AMENDMENT-V1",
+      "dry_run_postrun_delta": {
+        "accepted_check_delta": "private-prepared-train-is-exact-and-isolated",
+        "immutable_checks_reproduced": 10,
+        "postrun_private_files": [
+          "adapters/seed-42/0005995_adapters.safetensors",
+          "adapters/seed-42/0011990_adapters.safetensors",
+          "adapters/seed-42/adapter_config.json",
+          "adapters/seed-42/adapters.safetensors",
+          "lora-data/train.jsonl"
+        ],
+        "prepared_train_sha256": "b3f25d0bb76d0a2678a83501f0a4a4e363d84be0cea82827852da96c7475abcb",
+        "status": "Passed"
+      },
+      "formal_static_tests": {
+        "command": [
+          "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+          "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-5-generative-lora/test_formal_seed42.py"
+        ],
+        "return_code": 0,
+        "stdout": ""
+      },
+      "immutable_gate_sections_reproduced": [
+        "environment",
+        "model",
+        "runtime_and_data"
+      ],
+      "original_gate": {
+        "bytes": 5001,
+        "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-formal-seed-42-gate-verification-v1.json",
+        "sha256": "946da7a0ad5426b26408c983ded5b8b97d84fc79972274c23d61815b5cbdb3bc"
+      },
+      "status": "Passed"
+    },
+    "history": {
+      "duration_seconds": 20577.546572249965,
+      "final_loss_window": 0.041,
+      "initial_loss_window": 0.348,
+      "median_iterations_per_second": 0.575,
+      "micro_iterations": 11990,
+      "peak_mlx_memory_gb": 8.804,
+      "reporting_rows": 1199,
+      "trained_tokens": 160736
+    },
+    "loadability": {
+      "finite_logits": true,
+      "input_tokens": 8,
+      "logit_shape": [
+        1,
+        8,
+        151936
+      ],
+      "model_and_adapter_loaded": true,
+      "peak_mlx_memory_gb": 8.103583936
+    },
+    "run": {
+      "bytes": 3470,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/seed-42/run.json",
+      "sha256": "7105a99c447d4a76c3f0f69c4e5d2e91b3df02a57a2922914e825a87cfa71bfe"
+    },
+    "runtime_config": {
+      "bytes": 1393,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-runtime-seed-42.json",
+      "sha256": "8c6de5cf912d5d0837b56e9d81ecce562554670d372de6c5976552b22708dbca"
+    }
+  },
+  "remaining_training_seeds_authorized": false,
+  "seed": 42,
+  "status": "Passed",
+  "test_split_accessed": false,
+  "training_rerun": false,
+  "validation_evaluation_authorized": false,
+  "validation_split_accessed": false,
+  "verification_id": "EXP-047-FORMAL-SEED-42-TRAIN-VERIFY-V2"
+}

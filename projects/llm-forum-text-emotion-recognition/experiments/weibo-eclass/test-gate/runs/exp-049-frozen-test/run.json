@@ -1,0 +1,268 @@
+{
+  "accessed_splits": [],
+  "commands": [
+    {
+      "command": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/test-gate/run_frozen_test.py initialize",
+      "recorded_at_utc": "2026-08-12T05:04:12.931819+00:00"
+    },
+    {
+      "command": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/test-gate/run_frozen_test.py infer-baseline --condition m0-majority",
+      "recorded_at_utc": "2026-08-12T05:04:35.756239+00:00"
+    },
+    {
+      "command": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/test-gate/run_frozen_test.py infer-baseline --condition m1-target-only",
+      "recorded_at_utc": "2026-08-12T05:04:57.692421+00:00"
+    },
+    {
+      "command": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/test-gate/run_frozen_test.py infer-baseline --condition encoder-seed-42",
+      "recorded_at_utc": "2026-08-12T05:05:31.678560+00:00"
+    },
+    {
+      "command": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/test-gate/run_frozen_test.py infer-baseline --condition encoder-seed-43",
+      "recorded_at_utc": "2026-08-12T05:06:26.383126+00:00"
+    },
+    {
+      "command": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/weibo-eclass/test-gate/run_frozen_test.py infer-baseline --condition encoder-seed-44",
+      "recorded_at_utc": "2026-08-12T05:07:26.418745+00:00"
+    },
+    {
+      "command": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/test-gate/run_frozen_test.py infer-qwen --condition qwen-reference",
+      "recorded_at_utc": "2026-08-12T05:09:12.231744+00:00"
+    },
+    {
+      "command": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/test-gate/run_frozen_test.py infer-qwen --condition qwen-lora-seed-42",
+      "recorded_at_utc": "2026-08-13T02:06:23.122044+00:00"
+    },
+    {
+      "command": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/test-gate/run_frozen_test.py infer-qwen --condition qwen-lora-seed-43",
+      "recorded_at_utc": "2026-08-13T02:57:16.196909+00:00"
+    },
+    {
+      "command": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/test-gate/run_frozen_test.py infer-qwen --condition qwen-lora-seed-44",
+      "recorded_at_utc": "2026-08-13T03:42:27.136876+00:00"
+    },
+    {
+      "command": "python recover_finalize_report.py",
+      "recorded_at_utc": "2026-08-13T04:31:10.740056+00:00"
+    }
+  ],
+  "condition_order": [
+    "m0-majority",
+    "m1-target-only",
+    "encoder-seed-42",
+    "encoder-seed-43",
+    "encoder-seed-44",
+    "qwen-reference",
+    "qwen-lora-seed-42",
+    "qwen-lora-seed-43",
+    "qwen-lora-seed-44"
+  ],
+  "contract": {
+    "bytes": 19158,
+    "path": "experiments/weibo-eclass/test-gate/configs/exp-049-test-ready.json",
+    "sha256": "d31577b2def7c8cedbcd0da44e71a0a271fa2fcf171fad85cbb1c062fe2d716e"
+  },
+  "experiment_id": "EXP-049",
+  "git": {
+    "commit": "9860d660730c39cba7302747aee852733d201069",
+    "dirty": true
+  },
+  "label_opening": {
+    "artifact": {
+      "bytes": 508,
+      "path": "experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/label-opening.json",
+      "sha256": "c599d18e42e8639f38f4b0e78a76bc273a7d252f85445c44838be2e002f3174a"
+    },
+    "opened_at_utc": "2026-08-13T04:26:41.347660+00:00",
+    "status": "consumed"
+  },
+  "raw_outputs_stored_publicly": false,
+  "stages": {
+    "finalize": {
+      "aggregate": {
+        "bytes": 279090,
+        "path": "experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/aggregate-metrics.json",
+        "sha256": "f6da550d9830250f66833ea24da33b5e619bd942170be5426c6efa1d3e62b130"
+      },
+      "completed_at_utc": "2026-08-13T04:28:17.358974+00:00",
+      "recovery": {
+        "bytes": 1581,
+        "path": "experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/finalize-recovery.json",
+        "sha256": "3634c76b607f92cdd44b90de53ff30d854f203125a23789daf06439720d04acd"
+      },
+      "report": {
+        "bytes": 2025,
+        "path": "experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/REPORT.md",
+        "sha256": "6f08ac3e58a479aa70c5343087f8ea9ab7994b7544ffa58d826d3445c691ebe2"
+      },
+      "status": "Completed"
+    },
+    "infer__encoder-seed-42": {
+      "completed_at_utc": "2026-08-12T05:05:41.471239+00:00",
+      "private_predictions": {
+        "bytes": 651908,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-049-frozen-test/condition-encoder-seed-42-predictions.jsonl",
+        "sha256": "6803a826b4f99478b5adef49f57b36f87392d1167ccc6c76aa63733e488a46d3"
+      },
+      "public_summary": {
+        "bytes": 1812,
+        "path": "experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/condition-encoder-seed-42.json",
+        "sha256": "034579d3bbf79b2d9c59671a7199824488d070bbc6e7a9f71815345a08008cb5"
+      },
+      "started_at_utc": "2026-08-12T05:05:31.677486+00:00",
+      "status": "Completed",
+      "test_inputs_accessed": true,
+      "test_labels_accessed": false
+    },
+    "infer__encoder-seed-43": {
+      "completed_at_utc": "2026-08-12T05:06:35.050043+00:00",
+      "private_predictions": {
+        "bytes": 651141,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-049-frozen-test/condition-encoder-seed-43-predictions.jsonl",
+        "sha256": "9e52455381658f05d7388059f666943894a56f956675e8ad32ab984fc69c6e86"
+      },
+      "public_summary": {
+        "bytes": 1811,
+        "path": "experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/condition-encoder-seed-43.json",
+        "sha256": "b04d72eaa7031c387eb92fd569fbbd40186891871c29d77ba8f30291120af706"
+      },
+      "started_at_utc": "2026-08-12T05:06:26.382924+00:00",
+      "status": "Completed",
+      "test_inputs_accessed": true,
+      "test_labels_accessed": false
+    },
+    "infer__encoder-seed-44": {
+      "completed_at_utc": "2026-08-12T05:07:34.716298+00:00",
+      "private_predictions": {
+        "bytes": 651764,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-049-frozen-test/condition-encoder-seed-44-predictions.jsonl",
+        "sha256": "9983e4a0997f9d5101a028560ab4f7f3716e715e21ad72731da4a5ea61c453c4"
+      },
+      "public_summary": {
+        "bytes": 1812,
+        "path": "experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/condition-encoder-seed-44.json",
+        "sha256": "e6898274ccb1fb24ba4e97258d800a0ddc2baa3c33ccf64a434e95911ec508ae"
+      },
+      "started_at_utc": "2026-08-12T05:07:26.418588+00:00",
+      "status": "Completed",
+      "test_inputs_accessed": true,
+      "test_labels_accessed": false
+    },
+    "infer__m0-majority": {
+      "completed_at_utc": "2026-08-12T05:04:35.804538+00:00",
+      "private_predictions": {
+        "bytes": 336525,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-049-frozen-test/condition-m0-majority-predictions.jsonl",
+        "sha256": "0da10d9ada3b2884be24dfdc0131840750769fa91520c948f9f585ae8e65863c"
+      },
+      "public_summary": {
+        "bytes": 867,
+        "path": "experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/condition-m0-majority.json",
+        "sha256": "5b449a13c78dd7c9da326565792ebea44aa86408f72294cfaeb2b66ab357f8d8"
+      },
+      "started_at_utc": "2026-08-12T05:04:35.755994+00:00",
+      "status": "Completed",
+      "test_inputs_accessed": true,
+      "test_labels_accessed": false
+    },
+    "infer__m1-target-only": {
+      "completed_at_utc": "2026-08-12T05:05:00.762532+00:00",
+      "private_predictions": {
+        "bytes": 637466,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-049-frozen-test/condition-m1-target-only-predictions.jsonl",
+        "sha256": "e81ad50cd068364ff85c9aee64a5cbe943f50fbec0be138a29645bebb6017100"
+      },
+      "public_summary": {
+        "bytes": 793,
+        "path": "experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/condition-m1-target-only.json",
+        "sha256": "81b34f68272196d880ae24b6800e6b03da9839f6c16dd85a080c6900907e4c2d"
+      },
+      "started_at_utc": "2026-08-12T05:04:57.692208+00:00",
+      "status": "Completed",
+      "test_inputs_accessed": true,
+      "test_labels_accessed": false
+    },
+    "infer__qwen-lora-seed-42": {
+      "completed_at_utc": "2026-08-13T02:56:45.930940+00:00",
+      "private_predictions": {
+        "bytes": 1169286,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-049-frozen-test/condition-qwen-lora-seed-42-predictions.jsonl",
+        "sha256": "b0268a373869ef78fcb4ff8ef2d1d9d3ac5986abf5def48543c521b3e7979f4b"
+      },
+      "public_summary": {
+        "bytes": 1927,
+        "path": "experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/condition-qwen-lora-seed-42.json",
+        "sha256": "d3de43c7cb3d0e2a9eaec4f4e6150bbd3c32adcb6061178315e9299f52af953d"
+      },
+      "started_at_utc": "2026-08-13T02:06:23.121624+00:00",
+      "status": "Completed",
+      "test_inputs_accessed": true,
+      "test_labels_accessed": false
+    },
+    "infer__qwen-lora-seed-43": {
+      "completed_at_utc": "2026-08-13T03:42:00.947085+00:00",
+      "private_predictions": {
+        "bytes": 1170388,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-049-frozen-test/condition-qwen-lora-seed-43-predictions.jsonl",
+        "sha256": "c65849bf270a0fa8af79a2a11a34a02af94d3cb2d3f4431fc8c78ad6f2d73c54"
+      },
+      "public_summary": {
+        "bytes": 1923,
+        "path": "experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/condition-qwen-lora-seed-43.json",
+        "sha256": "3a39ec1b6857185dc35efc61845253743c3c64aa7e7399f0f64efad1cb0a85f9"
+      },
+      "started_at_utc": "2026-08-13T02:57:16.196594+00:00",
+      "status": "Completed",
+      "test_inputs_accessed": true,
+      "test_labels_accessed": false
+    },
+    "infer__qwen-lora-seed-44": {
+      "completed_at_utc": "2026-08-13T04:26:08.583067+00:00",
+      "private_predictions": {
+        "bytes": 1169809,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-049-frozen-test/condition-qwen-lora-seed-44-predictions.jsonl",
+        "sha256": "051376dafecb25c87e27510583406bdd0f1512800613a3f7f0077d90c4b75114"
+      },
+      "public_summary": {
+        "bytes": 1926,
+        "path": "experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/condition-qwen-lora-seed-44.json",
+        "sha256": "110fc7332750ed7d7aad4442effa7893a2e60c91e1f5df41d62c641221d8d16d"
+      },
+      "started_at_utc": "2026-08-13T03:42:27.136263+00:00",
+      "status": "Completed",
+      "test_inputs_accessed": true,
+      "test_labels_accessed": false
+    },
+    "infer__qwen-reference": {
+      "completed_at_utc": "2026-08-13T02:02:38.632747+00:00",
+      "private_predictions": {
+        "bytes": 4392529,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-049-frozen-test/condition-qwen-reference-predictions.jsonl",
+        "sha256": "b6fc78d9149ba94e11d4012e785e67df6fab558775182acd03704b32c3136d44"
+      },
+      "public_summary": {
+        "bytes": 2036,
+        "path": "experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/condition-qwen-reference.json",
+        "sha256": "c886bb472069d40cfda9b7bbba9790652d8366a1ac764e4980ca83aeb9c038c0"
+      },
+      "started_at_utc": "2026-08-12T05:09:12.231303+00:00",
+      "status": "Completed",
+      "test_inputs_accessed": true,
+      "test_labels_accessed": false
+    },
+    "initialize": {
+      "artifact": {
+        "bytes": 1145,
+        "path": "experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/initialize.json",
+        "sha256": "2cecf591b44a422a17cb9c07b5bde385da9abeaf51ee8615fe668e83c833e44f"
+      },
+      "completed_at_utc": "2026-08-12T05:04:12.883585+00:00",
+      "status": "Passed"
+    }
+  },
+  "started_at_utc": "2026-08-12T05:04:12.883585+00:00",
+  "status": "Verified",
+  "test_inputs_accessed": true,
+  "test_labels_accessed": true,
+  "tier": "Major"
+}

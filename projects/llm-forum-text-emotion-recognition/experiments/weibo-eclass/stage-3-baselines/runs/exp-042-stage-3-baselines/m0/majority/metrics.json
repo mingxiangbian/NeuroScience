@@ -1,0 +1,367 @@
+{
+  "label_counts": {
+    "anger": 198,
+    "joy": 286,
+    "negative": 516,
+    "neutral": 281,
+    "no_emotion": 4166,
+    "positive": 452,
+    "sadness": 96
+  },
+  "majority_label": "no_emotion",
+  "model_id": "M0",
+  "slices": {
+    "all": {
+      "accuracy": 0.6926100628930818,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          61
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          20
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          43
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          97
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          110
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          60
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          881
+        ]
+      ],
+      "macro_f1": 0.11691327715480061,
+      "macro_precision": 0.09894429469901168,
+      "macro_recall": 0.14285714285714285,
+      "per_class": {
+        "anger": {
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 43
+        },
+        "joy": {
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 61
+        },
+        "negative": {
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 110
+        },
+        "neutral": {
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 60
+        },
+        "no_emotion": {
+          "f1": 0.8183929400836043,
+          "precision": 0.6926100628930818,
+          "recall": 1.0,
+          "support": 881
+        },
+        "positive": {
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 97
+        },
+        "sadness": {
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 20
+        }
+      },
+      "rows": 1272,
+      "weighted_f1": 0.5668271857025593
+    },
+    "context_available": {
+      "accuracy": 0.752127659574468,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          37
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          13
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          27
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          57
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          59
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          40
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          707
+        ]
+      ],
+      "macro_f1": 0.12264723740133576,
+      "macro_precision": 0.10744680851063829,
+      "macro_recall": 0.14285714285714285,
+      "per_class": {
+        "anger": {
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 27
+        },
+        "joy": {
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 37
+        },
+        "negative": {
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 59
+        },
+        "neutral": {
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 40
+        },
+        "no_emotion": {
+          "f1": 0.8585306618093503,
+          "precision": 0.752127659574468,
+          "recall": 1.0,
+          "support": 707
+        },
+        "positive": {
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 57
+        },
+        "sadness": {
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 13
+        }
+      },
+      "rows": 940,
+      "weighted_f1": 0.6457246573395858
+    },
+    "first_clause": {
+      "accuracy": 0.5240963855421686,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          24
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          7
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          16
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          40
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          51
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          20
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          174
+        ]
+      ],
+      "macro_f1": 0.09824957651044608,
+      "macro_precision": 0.07487091222030981,
+      "macro_recall": 0.14285714285714285,
+      "per_class": {
+        "anger": {
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 16
+        },
+        "joy": {
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 24
+        },
+        "negative": {
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 51
+        },
+        "neutral": {
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 20
+        },
+        "no_emotion": {
+          "f1": 0.6877470355731226,
+          "precision": 0.5240963855421686,
+          "recall": 1.0,
+          "support": 174
+        },
+        "positive": {
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 40
+        },
+        "sadness": {
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 7
+        }
+      },
+      "rows": 332,
+      "weighted_f1": 0.36044573551121484
+    }
+  },
+  "view": "target_only"
+}

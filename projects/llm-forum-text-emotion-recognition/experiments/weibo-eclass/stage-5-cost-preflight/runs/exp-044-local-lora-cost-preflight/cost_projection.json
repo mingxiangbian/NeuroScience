@@ -1,0 +1,31 @@
+{
+  "api_cost_usd": 0,
+  "basis": "median steady-state iterations/second; training only; sequential seeds",
+  "median_iterations_per_second": 0.575,
+  "observed_peak_memory_gb": 8.679,
+  "observed_preflight_iterations": 200,
+  "observed_training_seconds": 355.2540283750277,
+  "p25_iterations_per_second": 0.568,
+  "p75_iterations_per_second": 0.58275,
+  "practical_local_training_decision": "Pending user decision",
+  "projections": [
+    {
+      "epochs": 2,
+      "one_seed_hours_raw": 5.792270531400967,
+      "one_seed_hours_with_safety": 7.240338164251209,
+      "three_seeds_hours_sequential_with_safety": 21.721014492753625
+    },
+    {
+      "epochs": 3,
+      "one_seed_hours_raw": 8.68840579710145,
+      "one_seed_hours_with_safety": 10.860507246376812,
+      "three_seeds_hours_sequential_with_safety": 32.58152173913044
+    }
+  ],
+  "safety_multiplier": 1.25,
+  "steady_state_after_iteration": 20,
+  "steady_state_report_count": 18,
+  "technical_feasibility": "Passed",
+  "training_rows": 5995,
+  "validation_and_inference_time_included": false
+}

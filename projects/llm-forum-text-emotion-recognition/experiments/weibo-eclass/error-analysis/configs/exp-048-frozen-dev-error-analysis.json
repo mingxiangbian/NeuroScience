@@ -1,0 +1,139 @@
+{
+  "annotation": {
+    "allowed_evidence_flags": [
+      "sarcasm_irony",
+      "negation",
+      "implicit_emotion",
+      "mixed_emotion",
+      "slang_noise",
+      "possible_context_dependency",
+      "annotation_ambiguity",
+      "lexical_cue_conflict",
+      "sentiment_emotion_overlap",
+      "weak_emotion_no_emotion_boundary",
+      "long_tail_class",
+      "none_observed"
+    ],
+    "allowed_primary_sources": [
+      "annotation_data_uncertainty",
+      "overlapping_label_ontology",
+      "missing_local_context",
+      "model_representation_limitation",
+      "output_parser_or_policy",
+      "surface_form_noise",
+      "uncertain"
+    ],
+    "confidence_levels": ["low", "medium", "high"]
+  },
+  "conditions": [
+    {
+      "expected_runs": 1,
+      "format": "generative_jsonl",
+      "id": "reference",
+      "name": "EXP-047 matched no-adapter reference",
+      "runs": [
+        {
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/validation-v1/condition-reference-predictions.jsonl",
+          "seed": null,
+          "sha256": "4d66c727b4515977d1e75e21e695f8d33029ea3ce4125aec67848bb20641b60d"
+        }
+      ]
+    },
+    {
+      "expected_runs": 3,
+      "format": "generative_jsonl",
+      "id": "lora",
+      "name": "EXP-047 Qwen3-4B generative LoRA",
+      "runs": [
+        {
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/validation-v1/condition-seed-42-predictions.jsonl",
+          "seed": 42,
+          "sha256": "22a6c8a6a81be57bae39f00330d0d152acbc8818bef1cc9fdcee43a0bca7386c"
+        },
+        {
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/validation-v1/condition-seed-43-predictions.jsonl",
+          "seed": 43,
+          "sha256": "8204dac4f816a6e7d372887876cc712984288285e0263c5c5d7a884c7e6235df"
+        },
+        {
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/validation-v1/condition-seed-44-predictions.jsonl",
+          "seed": 44,
+          "sha256": "8b1ff34de1ae5ab55f2890790b5747eff1f30039c3408c85e6d8c819a244f128"
+        }
+      ]
+    },
+    {
+      "expected_runs": 3,
+      "format": "encoder_csv",
+      "id": "encoder",
+      "name": "EXP-042 M2 Chinese encoder target-only",
+      "runs": [
+        {
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-042-stage-3-baselines/m2/target_only/seed-42/predictions.csv",
+          "seed": 42,
+          "sha256": "7d45a061494162eba05579d0772d39ce4ea6239bbf8f6db0268e600471250d65"
+        },
+        {
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-042-stage-3-baselines/m2/target_only/seed-43/predictions.csv",
+          "seed": 43,
+          "sha256": "227cfb58a70ad191b50305e76739679eec161f81ef1b06376fce1a9403d610c3"
+        },
+        {
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-042-stage-3-baselines/m2/target_only/seed-44/predictions.csv",
+          "seed": 44,
+          "sha256": "e279a142268b247a4e3b6c8e52e5172313bb8ceab8e78899a3cfba7183df8f8a"
+        }
+      ]
+    }
+  ],
+  "data": {
+    "labels": [
+      "anger",
+      "joy",
+      "negative",
+      "neutral",
+      "no_emotion",
+      "positive",
+      "sadness"
+    ],
+    "protocol_id": "DATA-WEIBO-TASK-V1",
+    "validation": {
+      "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/validation.jsonl",
+      "rows": 1272,
+      "sha256": "99d80e1433bddea7b639983b8fa874e45d585318aa47eb87ab29581e02f72a4a"
+    }
+  },
+  "experiment_id": "EXP-048",
+  "output_dir": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis",
+  "protocol": {
+    "path": "experiments/weibo-eclass/protocols/exp-048-frozen-dev-error-analysis.md"
+  },
+  "sampling": {
+    "long_tail_support_below": 100,
+    "maximum_unique_rows": 48,
+    "roles": [
+      {"id": "format_recoveries", "limit": 8},
+      {"id": "valid_reference_recoveries", "limit": 8},
+      {"id": "lora_over_encoder", "limit": 8},
+      {"id": "encoder_over_lora", "limit": 8},
+      {"id": "shared_stable_errors", "limit": 8},
+      {"id": "seed_unstable_lora", "limit": 8}
+    ],
+    "seed": "20260812"
+  },
+  "stage": "descriptive-frozen-validation-error-analysis",
+  "test_access": false,
+  "tier": "Major",
+  "upstream_verifications": [
+    {
+      "expected_status": "Verified",
+      "path": "experiments/weibo-eclass/stage-3-baselines/runs/exp-042-stage-3-baselines/verification.json",
+      "sha256": "a518135c9bbebf4fb9f6fb080f61c3996772d7d45a6077776ce6a4e99f0f9fb7"
+    },
+    {
+      "expected_status": "Passed",
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/matched-validation-v1/verification.json",
+      "sha256": "42da926faa9fd4a18ed8d209d7d30bfd54403e8951e0b6b4bb3bb0aae0df90e9"
+    }
+  ]
+}

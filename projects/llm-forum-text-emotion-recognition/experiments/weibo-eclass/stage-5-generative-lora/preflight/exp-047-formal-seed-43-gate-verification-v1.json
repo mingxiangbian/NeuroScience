@@ -1,0 +1,128 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "completed_at_utc": "2026-08-10T03:34:30.060571+00:00",
+  "contract": {
+    "bytes": 8922,
+    "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-formal-seed-43-contract-v1.json",
+    "sha256": "e8530e27d44665e9673651ac9ef6117ede34d5acc7c6d4fe3fbfdd43c536ee6a"
+  },
+  "experiment_id": "EXP-047",
+  "formal_training_authorized": false,
+  "implementation": {
+    "imports_runner": false,
+    "verifier": {
+      "bytes": 15432,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/verify_formal_seed43_gate.py",
+      "sha256": "450ead5f952302b56bde420132a0f6228a2cda15dda26536911fe13ae474e29d"
+    }
+  },
+  "model_forward_or_backward_executed": false,
+  "next_required_step": "Bind this seed-43-only authorization and execute once; seed 44 and validation/test remain closed.",
+  "outputs_absent_at_verification": true,
+  "recalculated": {
+    "environment": {
+      "mlx_lm_source_tree": {
+        "file_count": 166,
+        "manifest_sha256": "f2244007cd659ed6e63cf1c56e1a80e133d20dbb0aefa26574cda9f8fcb257a0",
+        "total_bytes": 1531573
+      },
+      "mlx_lora_cli": {
+        "bytes": 199,
+        "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/mlx_lm.lora",
+        "sha256": "e809f4488d53ca0906a3ab224416b8c7c898b3ad786d59be828b10cd113be293"
+      },
+      "packages": {
+        "mlx": "0.32.0",
+        "mlx-lm": "0.31.3",
+        "numpy": "2.4.6",
+        "python": "3.11.15",
+        "safetensors": "0.8.0",
+        "tokenizers": "0.22.2",
+        "transformers": "5.14.1"
+      },
+      "python_executable": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+      "semantics_sources": {
+        "datasets": {
+          "bytes": 9588,
+          "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm/tuner/datasets.py",
+          "sha256": "fa112840e6ea98a4ff18428792fe2ab023999c2da51ea64b3ebdf8657a152f17"
+        },
+        "lora_cli": {
+          "bytes": 11055,
+          "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm/lora.py",
+          "sha256": "3f188fc6aef80efcb9938678af0548588122ed25845053cc555aece0ad2da5e7"
+        },
+        "trainer": {
+          "bytes": 12582,
+          "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm/tuner/trainer.py",
+          "sha256": "ee33ebdbd20a184108541cb490d08085485e71a82ffd6d68d7d216029ecd28fe"
+        },
+        "tuner_utils": {
+          "bytes": 5515,
+          "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm/tuner/utils.py",
+          "sha256": "166eaf5e5f923113bed43614a5fb7319795fa0cac5a7fa319ea54e5f0045b553"
+        }
+      }
+    },
+    "model": {
+      "file_count": 9,
+      "files_manifest_sha256": "c03cd949b6488439e071c0dff9f01a07fe88f0974e7dd40166beffcca2367da6",
+      "manifest": {
+        "bytes": 3959,
+        "path": "models/qwen3-4b/manifest.json",
+        "sha256": "da447350d9e43213dacc1202da03b50d7e7114b0a4fe2904ff353240b404a641"
+      },
+      "total_bytes": 8056445038
+    },
+    "predecessors": {
+      "seed_42_replay_verification": {
+        "bytes": 3488,
+        "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/seed-42-replay-verification-v2.json",
+        "sha256": "300142f00f5c87567728ae57a779d81c4f011c8d8330413e48e93ccc17b50f70"
+      },
+      "seed_42_training_verification": {
+        "bytes": 5823,
+        "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/seed-42/verification.json",
+        "sha256": "da48232e6f80e978cd3c5935774569ab92dbcd25c2ce78ccc4ba38976f83c4e7"
+      }
+    },
+    "runtime_and_data": {
+      "config": {
+        "bytes": 7717,
+        "path": "experiments/weibo-eclass/stage-5-generative-lora/config.json",
+        "sha256": "992e42535c7acf6fd503aa870f52825a30a90fd767280bf5ba06f43f69739b15"
+      },
+      "formal_runtime": {
+        "bytes": 1393,
+        "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-runtime-seed-43.json",
+        "sha256": "5c8f2670abcacded377a5dae23f399796f6a041c2997fbbd5cfe08a6a188a718"
+      },
+      "private_data_gitignored": true,
+      "private_directory_mode": "0700",
+      "private_train_mode": "0600",
+      "train_data": {
+        "bytes": 5326059,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/lora-data/train.jsonl",
+        "sha256": "b3f25d0bb76d0a2678a83501f0a4a4e363d84be0cea82827852da96c7475abcb"
+      },
+      "train_rows": 5995
+    },
+    "subprocess_checks": {
+      "formal_static_tests": {
+        "command": [
+          "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+          "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/stage-5-generative-lora/test_formal_seed43.py"
+        ],
+        "return_code": 0,
+        "stdout": ""
+      }
+    }
+  },
+  "seed": 43,
+  "status": "Passed",
+  "test_split_accessed": false,
+  "validation_split_accessed": false,
+  "verification_id": "EXP-047-FORMAL-SEED-43-GATE-VERIFY-V1"
+}

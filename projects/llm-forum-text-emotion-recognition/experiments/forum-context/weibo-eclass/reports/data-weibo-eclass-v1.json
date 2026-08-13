@@ -1,0 +1,220 @@
+{
+  "deduplication": {
+    "ambiguous_target_rows_retained": 295,
+    "canonical_rows": 8540,
+    "claim_boundary": "lexical near-duplicate audit, not semantic equivalence",
+    "collapsed_same_target_label_rows": 2422,
+    "eligible_rows_before_dedup": 10962,
+    "multi_label_target_keys": 117,
+    "near_duplicate_candidate_pairs": 5956,
+    "near_duplicate_matches": 0,
+    "near_duplicate_method": "char_trigram_simhash_lsh_then_jaccard",
+    "near_duplicate_threshold": 0.9,
+    "normalized_target_keys": 8362,
+    "target_label_pairs": 8540
+  },
+  "frozen_date": "2026-08-08",
+  "limitations": [
+    "PrevCL is adjacent released context, not a verified reply parent or complete thread.",
+    "The source is Chinese microblog data rather than a broad modern forum sample.",
+    "Fear and composite labels are excluded from the frozen seven-class primary task.",
+    "Near-duplicate detection is lexical and approximate; it does not establish semantic identity.",
+    "The held-out split differs from the source paper's five-fold cross-validation protocol."
+  ],
+  "parsing": {
+    "exclusion_counts": {
+      "composite_or_unknown": 45,
+      "fear": 61,
+      "structure_failure_group": 7
+    },
+    "failed_source_groups": 1,
+    "parse_failure_counts": {
+      "marker_multiplicity": 2
+    },
+    "raw_eclass_rows": 11075,
+    "scaffold_rows_excluded": 12052,
+    "upstream_label_counts": {
+      "No_emotion": 6610,
+      "中性": 494,
+      "中性+快乐": 2,
+      "中性+正面": 1,
+      "中性+负面": 3,
+      "快乐": 1217,
+      "快乐+中性": 1,
+      "快乐+正面": 8,
+      "快乐+正面+中性": 1,
+      "快乐+负面": 3,
+      "恐惧": 61,
+      "恐惧+中性": 1,
+      "恐惧+负面": 2,
+      "悲伤": 293,
+      "悲伤+恐惧": 1,
+      "愤怒": 384,
+      "愤怒+负面": 2,
+      "正面": 892,
+      "正面+中性": 2,
+      "正面+快乐": 5,
+      "正面+负面": 1,
+      "负面": 1079,
+      "负面+快乐": 2,
+      "负面+快乐+正面": 1,
+      "负面+悲伤": 2,
+      "负面+愤怒": 3,
+      "负面+愤怒+正面": 1,
+      "负面+正面": 2,
+      "负面+正面+快乐": 1
+    }
+  },
+  "private_artifacts": {
+    "near_duplicates": {
+      "bytes": 0,
+      "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/near-duplicate-candidates.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "private_manifest": {
+      "bytes": 2114,
+      "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/private-manifest.json",
+      "sha256": "1c1085eecf5ba0a010a106bd7517bc663095958de3f39ae8db19a6e598596875"
+    },
+    "test_inputs": {
+      "bytes": 471847,
+      "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/test.inputs.jsonl",
+      "sha256": "5229637a285179a3626858edc369664d159fe9c99cd7bb03aae8fbc868f4406e"
+    },
+    "test_labels": {
+      "bytes": 184562,
+      "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/test.labels.sealed.jsonl",
+      "sha256": "649ce91f58aa7550e76450c25a571f5dbbe3b03c70ba0e9e07fb53c84cdfd002"
+    },
+    "train": {
+      "bytes": 2286694,
+      "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/train.jsonl",
+      "sha256": "b1fd309acf45dfa4ad0c907ee3f373ea95fce751d51b637d402e289aa79d19e0"
+    },
+    "validation": {
+      "bytes": 486142,
+      "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/validation.jsonl",
+      "sha256": "99d80e1433bddea7b639983b8fa874e45d585318aa47eb87ab29581e02f72a4a"
+    }
+  },
+  "protocol_id": "DATA-WEIBO-TASK-V1",
+  "retained": {
+    "context_available": 6138,
+    "context_missing": 2402,
+    "label_counts": {
+      "anger": 284,
+      "joy": 408,
+      "negative": 736,
+      "neutral": 401,
+      "no_emotion": 5929,
+      "positive": 646,
+      "sadness": 136
+    },
+    "leakage_components": 2766,
+    "previous_length_codepoints_when_available": {
+      "max": 118,
+      "mean": 8.773216,
+      "median": 7.0,
+      "min": 1,
+      "p95": 19
+    },
+    "rows": 8540,
+    "source_groups": 2943,
+    "target_length_codepoints": {
+      "max": 132,
+      "mean": 9.155504,
+      "median": 8.0,
+      "min": 1,
+      "p95": 20
+    }
+  },
+  "schema_version": "weibo-eclass-construction-report-v1",
+  "source": {
+    "file": {
+      "bytes": 4176465,
+      "path": "data/weibo-emotion-corpus/official/emotion_classification.tsv",
+      "sha256": "cd31ced8f9a4034c83065099061a23df3b402797841d8ff120c459da55251793"
+    },
+    "license": "Apache-2.0",
+    "logical_rows": 23127,
+    "physical_lines": 24208,
+    "repository": "https://github.com/wjhou/Weibo-Emotion-Corpus",
+    "revision": "d385f8cdc7e7ab9ca1ec62b8202c664a5ba651f3"
+  },
+  "split": {
+    "seed": 20260808,
+    "stratified_dimensions": [
+      "joy",
+      "sadness",
+      "anger",
+      "positive",
+      "negative",
+      "neutral",
+      "no_emotion",
+      "context_available",
+      "context_missing",
+      "ambiguous_target"
+    ],
+    "summary_without_test_label_distribution": {
+      "test": {
+        "ambiguous_target_rows": 45,
+        "components": 308,
+        "context_available": 938,
+        "context_missing": 335,
+        "groups": 337,
+        "row_fraction": 0.149063,
+        "rows": 1273
+      },
+      "train": {
+        "ambiguous_target_rows": 205,
+        "components": 2154,
+        "context_available": 4260,
+        "context_missing": 1735,
+        "groups": 2271,
+        "row_fraction": 0.701991,
+        "rows": 5995
+      },
+      "validation": {
+        "ambiguous_target_rows": 45,
+        "components": 304,
+        "context_available": 940,
+        "context_missing": 332,
+        "groups": 335,
+        "row_fraction": 0.148946,
+        "rows": 1272
+      }
+    },
+    "target_fractions": {
+      "test": 0.15,
+      "train": 0.7,
+      "validation": 0.15
+    },
+    "unit": "source_group_and_duplicate_bound_leakage_component"
+  },
+  "status": "constructed_awaiting_independent_verification",
+  "task": {
+    "future_context_used": false,
+    "labels": [
+      "joy",
+      "sadness",
+      "anger",
+      "positive",
+      "negative",
+      "neutral",
+      "no_emotion"
+    ],
+    "previous_context_semantics": "immediately preceding clause in the released multi-user group",
+    "type": "single_label_clause_emotion_classification",
+    "views": [
+      "target_only",
+      "previous_context"
+    ]
+  },
+  "test_gate": {
+    "inputs_contain_gold_labels": false,
+    "labels_gitignored": true,
+    "status": "sealed_not_authorized_for_model_access",
+    "test_inputs_sha256": "5229637a285179a3626858edc369664d159fe9c99cd7bb03aae8fbc868f4406e",
+    "test_labels_sha256": "649ce91f58aa7550e76450c25a571f5dbbe3b03c70ba0e9e07fb53c84cdfd002"
+  }
+}

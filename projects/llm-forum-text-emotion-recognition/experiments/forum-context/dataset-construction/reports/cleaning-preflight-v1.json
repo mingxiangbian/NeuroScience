@@ -1,0 +1,142 @@
+{
+  "schema_version": "1",
+  "pipeline_id": "DATA-FCTX-CLEAN-V1",
+  "generated_at": "2026-08-05T10:11:10.701276+00:00",
+  "status": "completed_pending_independent_verification",
+  "scope": {
+    "dataset": "Internet Argument Corpus 2.0",
+    "subset": "4forums",
+    "candidate_unit": "direct parent-target reply pair",
+    "labels_assigned": false,
+    "splits_assigned": false,
+    "external_services_used": false
+  },
+  "source_artifact": {
+    "filename": "fourforums_no_parse_2016_05_18.sql.gz",
+    "size_bytes": 171653459,
+    "sha256": "e26e6d27a5fc88ee5837b3838f099f8268d42fe50fbbd9cd88b66dfe7744dd9c"
+  },
+  "implementation": {
+    "script_sha256": "7a56f467c9adb719e1ca03d47aea2602a9626f93df4efcd6915b874d8bbf8f72",
+    "protocol_sha256": "cf60ab5dd75405b7a1ad160ca44664795368cdad9be449edaf7e075d7809cf41",
+    "elapsed_seconds": 281.868
+  },
+  "private_artifact": {
+    "filename": "cleaning-v1.sqlite",
+    "size_bytes": 2172235776,
+    "sha256": "0495a7c857b97bca8609e951c0da4e62b5068d63b368ec1f40127d13b6c4c831",
+    "git_tracking": "forbidden"
+  },
+  "counts": {
+    "source_table_rows": {
+      "discussion": 11079,
+      "post": 414453,
+      "quote": 539658,
+      "text": 954111
+    },
+    "discussions": 11079,
+    "posts": 414453,
+    "root_posts_not_candidates": 11079,
+    "declared_parent_candidates": 403374,
+    "eligible_candidates": 403330,
+    "excluded_candidates": 44,
+    "hard_reason_occurrences": {
+      "parent_empty": 17,
+      "parent_quote_only": 2,
+      "target_empty": 21,
+      "target_quote_only": 4
+    },
+    "soft_flag_occurrences": {
+      "parent_all_caps": 291,
+      "parent_decode_replacement": 23,
+      "parent_html_present": 1329,
+      "parent_html_quote_unverified": 2,
+      "parent_long": 16811,
+      "parent_low_latin_ratio": 6,
+      "parent_no_lexical_tokens": 40,
+      "parent_possible_signature": 1421,
+      "parent_quote_heavy": 5,
+      "parent_quote_span_unverified": 284133,
+      "parent_repeated_character": 13559,
+      "parent_short": 2206,
+      "parent_url_only": 479,
+      "target_all_caps": 176,
+      "target_decode_replacement": 16,
+      "target_html_present": 1199,
+      "target_html_quote_unverified": 1,
+      "target_long": 13287,
+      "target_low_latin_ratio": 9,
+      "target_no_lexical_tokens": 55,
+      "target_possible_signature": 1130,
+      "target_quote_heavy": 8,
+      "target_quote_span_unverified": 300231,
+      "target_repeated_character": 12037,
+      "target_short": 3228,
+      "target_url_only": 477,
+      "timestamp_nonmonotonic": 25
+    }
+  },
+  "quote_validation": {
+    "posts_with_quote_metadata": 301807,
+    "status_occurrences": {
+      "exact": 48,
+      "missing_offset": 0,
+      "missing_quote_text": 28,
+      "out_of_bounds": 147623,
+      "mismatch": 391959
+    }
+  },
+  "eligible_word_count_nearest_rank": {
+    "target": {
+      "min": 0,
+      "p25": 24,
+      "p50": 57,
+      "p75": 129,
+      "p95": 403,
+      "p99": 913,
+      "max": 12585
+    },
+    "parent": {
+      "min": 0,
+      "p25": 28,
+      "p50": 65,
+      "p75": 145,
+      "p95": 458,
+      "p99": 1017,
+      "max": 12585
+    }
+  },
+  "exact_duplication": {
+    "target": {
+      "clusters_with_multiple_rows": 662,
+      "rows_in_duplicate_clusters": 2139,
+      "max_cluster_size": 402
+    },
+    "pair": {
+      "clusters_with_multiple_rows": 118,
+      "rows_in_duplicate_clusters": 273,
+      "max_cluster_size": 29
+    },
+    "context_variant_rows": 1935,
+    "distinct_context_variant_targets": 561,
+    "action": "retained_for_later_thread-aware_sampling"
+  },
+  "thresholds": {
+    "short_word_tokens_lt": 3,
+    "long_word_tokens_gt": 512,
+    "quote_heavy_ratio_gte": 0.5,
+    "low_latin_min_letters": 20,
+    "low_latin_ratio_lt": 0.5,
+    "all_caps_min_ascii_letters": 10,
+    "all_caps_ratio_gte": 0.8,
+    "repeated_character_run_gte": 6
+  },
+  "privacy": {
+    "author_table_read": false,
+    "discussion_urls_retained": false,
+    "public_text_or_titles": false,
+    "public_source_ids": false,
+    "public_per_sample_ids": false,
+    "id_scheme": "private-key HMAC-SHA256"
+  }
+}

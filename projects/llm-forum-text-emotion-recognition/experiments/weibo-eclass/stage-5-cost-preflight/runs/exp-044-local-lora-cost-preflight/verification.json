@@ -1,0 +1,128 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "check_count": 13,
+  "checks": [
+    {
+      "check": "run-boundary",
+      "detail": {
+        "accessed_splits": [
+          "train"
+        ],
+        "status": "Awaiting Independent Verification"
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "frozen-input-hashes",
+      "detail": {
+        "train_rows_expected": 5995
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "train-schema-and-count",
+      "detail": {
+        "rows": 5995
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "deterministic-representative-sample",
+      "detail": {
+        "labels": {
+          "anger": 7,
+          "joy": 10,
+          "negative": 17,
+          "neutral": 9,
+          "no_emotion": 139,
+          "positive": 15,
+          "sadness": 3
+        },
+        "rows": 200
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "public-sample-summary",
+      "detail": {
+        "selection_digest_sha256": "79d3a56b3c1825143529b824cd3eebbb073062511d36be3faebd08c8d0cb0d10"
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "private-training-contract",
+      "detail": {
+        "test_file": false,
+        "train_rows": 200,
+        "validation_file": false
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "runtime-config",
+      "detail": {
+        "iterations": 200,
+        "seed": 42
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "training-history",
+      "detail": {
+        "last_iteration": 200,
+        "report_rows": 20
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "adapter-tensors",
+      "detail": {
+        "all_finite": true,
+        "lora_b_nonzero_tensors": 112,
+        "lora_b_tensor_count": 112,
+        "tensor_count": 224,
+        "trainable_parameter_count": 7340032
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "memory-gate",
+      "detail": {
+        "limit_gb": 13.0,
+        "peak_memory_gb": 8.679
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "cost-projection",
+      "detail": {
+        "median_iterations_per_second": 0.575
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "public-privacy-boundary",
+      "detail": {
+        "long_raw_text_matches": 0,
+        "raw_id_matches": 0
+      },
+      "status": "Passed"
+    },
+    {
+      "check": "no-performance-claim",
+      "detail": {
+        "classification_metrics_present": false
+      },
+      "status": "Passed"
+    }
+  ],
+  "completed_at_utc": "2026-08-09T05:41:03.520980+00:00",
+  "experiment_id": "EXP-044",
+  "failed_checks": [],
+  "status": "Passed",
+  "test_split_accessed": false,
+  "validation_split_accessed": false,
+  "verifier_imported_runner": false
+}

@@ -1,0 +1,63 @@
+{
+  "analysis_rows": 1272,
+  "annotation_rows": 48,
+  "artifacts_checked": 16,
+  "completed_at_utc": "2026-08-12T03:42:57.487587+00:00",
+  "config": {
+    "bytes": 5010,
+    "path": "experiments/weibo-eclass/error-analysis/configs/exp-048-frozen-dev-error-analysis.json",
+    "sha256": "905b18ce0425be3f9f8434a82edb573fee44f60cd62e184a9f7807850d6c9513"
+  },
+  "experiment_id": "EXP-048",
+  "independent_implementation": true,
+  "max_absolute_numeric_difference": 0.0,
+  "prediction_files_checked": 7,
+  "privacy": {
+    "private_file_gitignored": true,
+    "private_file_tracked": false,
+    "private_mode": "0o600",
+    "private_rows_verified": 48,
+    "public_files_scanned": 17,
+    "raw_value_leak_count": 0
+  },
+  "protocol": {
+    "bytes": 7711,
+    "path": "experiments/weibo-eclass/protocols/exp-048-frozen-dev-error-analysis.md",
+    "sha256": "fbedaafee6e5a4df899dd5fe32c1870b0c51fce5479ff1e8bff5388ed675ad4c"
+  },
+  "recomputed_csvs": [
+    "run_metrics.csv",
+    "per_class_metrics.csv",
+    "class_gap.csv",
+    "confusion_pairs.csv",
+    "condition_stability.csv",
+    "slice_metrics.csv",
+    "pairwise_transitions.csv",
+    "seed_agreement.csv",
+    "sample_manifest.csv"
+  ],
+  "recomputed_jsons": [
+    "aggregate_summary.json",
+    "format_attribution.json",
+    "qualitative_summary.json"
+  ],
+  "report": {
+    "bytes": 5664,
+    "path": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/REPORT.md",
+    "sha256": "3b4fa96f93e4043cc6a31faa450bd646ef33cef79b4dddaa4ba45e3e7c464831"
+  },
+  "run": {
+    "bytes": 8496,
+    "path": "experiments/weibo-eclass/error-analysis/runs/exp-048-frozen-dev-error-analysis/run.json",
+    "sha256": "59cfbc9eee85e56c330f5ecbfcfb5e44ebd774cba5c5a69b53b76238b25620e6"
+  },
+  "sample_selection_deterministic": true,
+  "split": "validation",
+  "status": "Verified",
+  "test_accessed": false,
+  "verifier": {
+    "bytes": 34219,
+    "path": "experiments/weibo-eclass/error-analysis/verify_error_analysis.py",
+    "sha256": "1b452cd904ec245e3ea48ecca1d62964fd2eb4457705b12f29c7f9eec68cee50"
+  }
+}

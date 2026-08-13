@@ -1,0 +1,53 @@
+{
+  "additive_contribution_check": 0.5568658280922432,
+  "definition": "Reference output failure means parse.valid=false or likely_truncated=true.",
+  "failed_output_stable_lora_recoveries": 85,
+  "macro_f1_decomposition_claimed": false,
+  "overall_accuracy_delta": 0.5568658280922433,
+  "overall_lora_accuracy_mean": 0.779350104821803,
+  "overall_reference_accuracy": 0.22248427672955975,
+  "reference_correct_stable_lora_regressions": 44,
+  "slices": {
+    "reference_output_failed": {
+      "gold_counts": {
+        "anger": 1,
+        "joy": 4,
+        "negative": 6,
+        "neutral": 8,
+        "no_emotion": 88,
+        "positive": 8,
+        "sadness": 1
+      },
+      "lora_accuracy_mean": 0.7758620689655172,
+      "lora_accuracy_sample_std": 0.008620689655172376,
+      "lora_macro_f1_mean": 0.3082598752756824,
+      "lora_macro_f1_sample_std": 0.06092467550505312,
+      "lora_minus_reference_accuracy": 0.7758620689655172,
+      "reference_accuracy": 0.0,
+      "reference_macro_f1": 0.0,
+      "rows": 116,
+      "weighted_accuracy_delta_contribution": 0.07075471698113207
+    },
+    "reference_output_valid": {
+      "gold_counts": {
+        "anger": 42,
+        "joy": 57,
+        "negative": 104,
+        "neutral": 52,
+        "no_emotion": 793,
+        "positive": 89,
+        "sadness": 19
+      },
+      "lora_accuracy_mean": 0.7797001153402537,
+      "lora_accuracy_sample_std": 0.010026146857389676,
+      "lora_macro_f1_mean": 0.5777932765170992,
+      "lora_macro_f1_sample_std": 0.021189504091822086,
+      "lora_minus_reference_accuracy": 0.5348904267589388,
+      "reference_accuracy": 0.24480968858131488,
+      "reference_macro_f1": 0.34202718951794614,
+      "rows": 1156,
+      "weighted_accuracy_delta_contribution": 0.4861111111111111
+    }
+  },
+  "valid_reference_stable_lora_recoveries": 640
+}

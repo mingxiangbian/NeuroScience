@@ -1,0 +1,174 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "command_history": [
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/stage-5-batch-equivalence-v2/run_batch_equivalence.py initialize",
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/stage-5-batch-equivalence-v2/run_batch_equivalence.py infer --mode singleton-r1",
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/stage-5-batch-equivalence-v2/run_batch_equivalence.py infer --mode singleton-r2",
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/stage-5-batch-equivalence-v2/run_batch_equivalence.py infer --mode batch8-r1",
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/stage-5-batch-equivalence-v2/run_batch_equivalence.py infer --mode batch8-r2",
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/stage-5-batch-equivalence-v2/run_batch_equivalence.py infer --mode batch8-length-stress",
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/stage-5-batch-equivalence-v2/run_batch_equivalence.py aggregate"
+  ],
+  "completed_at_utc": "2026-08-09T06:45:47.012867+00:00",
+  "data": {
+    "labels": [
+      "anger",
+      "joy",
+      "negative",
+      "neutral",
+      "no_emotion",
+      "positive",
+      "sadness"
+    ],
+    "protocol_id": "DATA-WEIBO-TASK-V1",
+    "sample_rows": 16,
+    "split": "train",
+    "train_rows": 5995,
+    "train_sha256": "b1fd309acf45dfa4ad0c907ee3f373ea95fce751d51b637d402e289aa79d19e0"
+  },
+  "environment": {
+    "mlx": "0.32.0",
+    "mlx-lm": "0.31.3",
+    "numpy": "2.4.6",
+    "python": "3.11.15",
+    "safetensors": "0.8.0",
+    "tokenizers": "0.22.2",
+    "transformers": "5.14.1"
+  },
+  "experiment_id": "EXP-046",
+  "git": {
+    "commit": "54b8a38548ecaa8667b8e0fc1fb9616263c0676e",
+    "dirty": true,
+    "dirty_path_count": 39
+  },
+  "implementation": {
+    "config_sha256": "d00192338655ce3c92f35f0aa9852e5226f91e351fd9bf53d888f57388761c57",
+    "runner_sha256": "adbfb5e8a20d3ab55f26cdc5ebab7a911d9620fd2d79efb255b37adb97e8301d",
+    "test_sha256": "6a1c347215654b020225f86c5ab906e2603b2313775001591e6516b07d56baa4",
+    "verifier_sha256": "05711ef6a8bfda65f305c08151435d0448fad457d57711720372dcd0c6e3e664"
+  },
+  "model": {
+    "local_path": "models/qwen3-4b/mlx-bf16",
+    "manifest_path": "models/qwen3-4b/manifest.json",
+    "manifest_sha256": "da447350d9e43213dacc1202da03b50d7e7114b0a4fe2904ff353240b404a641",
+    "precision": "bfloat16",
+    "quantized": false,
+    "repo_id": "Qwen/Qwen3-4B",
+    "revision": "1cfa9a7208912126459214e8b04321603b3df60c"
+  },
+  "report": {
+    "path": "experiments/weibo-eclass/stage-5-batch-equivalence-v2/runs/exp-046-batch-equivalence-v2/REPORT.md",
+    "sha256": "ba9b3d94698179d44f533731aacf011700edce2f9c18cfd73cabd9589ac23ba0"
+  },
+  "result": {
+    "decision": {
+      "gate_status": "Passed",
+      "recommended_execution_protocol": "singleton",
+      "requirements": [
+        "batch_size=completion_batch_size=prefill_batch_size=1",
+        "repeat the train-only replay after each adapter is trained and before dev access"
+      ],
+      "rules_applied": {
+        "batch_composition_label_agreement_min": 1.0,
+        "batch_replay_label_agreement_min": 1.0,
+        "fallback_if_no_stable_reasoning_on_mode": "block_reasoning_on_primary_pending_reasoning_off_replay",
+        "singleton_replay_label_agreement_min": 1.0
+      }
+    },
+    "formal_generations": 80,
+    "performance_metrics_computed": false
+  },
+  "rq_ids": [
+    "RQ-F1",
+    "RQ-F2"
+  ],
+  "stage": "stage-5-reasoning-on-batch-equivalence-v2",
+  "stages": {
+    "aggregate": {
+      "artifact": {
+        "bytes": 2219,
+        "path": "experiments/weibo-eclass/stage-5-batch-equivalence-v2/runs/exp-046-batch-equivalence-v2/aggregate.json",
+        "sha256": "f2763568a93ab40d16150cd0de58b0be24db9534fd49b7c16e1f870aabaf0f27"
+      },
+      "completed_at_utc": "2026-08-09T06:45:47.012462+00:00",
+      "duration_seconds": 0.0035846669925376773,
+      "status": "Passed"
+    },
+    "infer_batch8-length-stress": {
+      "artifact": {
+        "bytes": 954,
+        "path": "experiments/weibo-eclass/stage-5-batch-equivalence-v2/runs/exp-046-batch-equivalence-v2/mode-batch8-length-stress.json",
+        "sha256": "f5a85b0862c7992464c424b9306f408fa027c6c000b8714f1bd2ba56e8d2ca86"
+      },
+      "completed_at_utc": "2026-08-09T06:45:29.954124+00:00",
+      "duration_seconds": 218.2338526250096,
+      "status": "Passed"
+    },
+    "infer_batch8-r1": {
+      "artifact": {
+        "bytes": 983,
+        "path": "experiments/weibo-eclass/stage-5-batch-equivalence-v2/runs/exp-046-batch-equivalence-v2/mode-batch8-r1.json",
+        "sha256": "23fb4d7c2a376dfdd584abbf10dd5ca7cacf1c6cacca99632350ecca30fd4831"
+      },
+      "completed_at_utc": "2026-08-09T06:35:24.980045+00:00",
+      "duration_seconds": 331.39228366699535,
+      "status": "Passed"
+    },
+    "infer_batch8-r2": {
+      "artifact": {
+        "bytes": 983,
+        "path": "experiments/weibo-eclass/stage-5-batch-equivalence-v2/runs/exp-046-batch-equivalence-v2/mode-batch8-r2.json",
+        "sha256": "601f3c8c7f1d7bb0d48030ec18620810f805d4a6a5823fc06b5f298d2c7dcff4"
+      },
+      "completed_at_utc": "2026-08-09T06:41:25.060272+00:00",
+      "duration_seconds": 340.20495983294677,
+      "status": "Passed"
+    },
+    "infer_singleton-r1": {
+      "artifact": {
+        "bytes": 997,
+        "path": "experiments/weibo-eclass/stage-5-batch-equivalence-v2/runs/exp-046-batch-equivalence-v2/mode-singleton-r1.json",
+        "sha256": "c55e197b3d859d4866196956e384c13ca70d0e8bd74a7829f23889ccb8b0e350"
+      },
+      "completed_at_utc": "2026-08-09T06:16:21.966078+00:00",
+      "duration_seconds": 788.5531047499971,
+      "status": "Passed"
+    },
+    "infer_singleton-r2": {
+      "artifact": {
+        "bytes": 997,
+        "path": "experiments/weibo-eclass/stage-5-batch-equivalence-v2/runs/exp-046-batch-equivalence-v2/mode-singleton-r2.json",
+        "sha256": "88698208fad0149689c15b2c3ef2afe564a27d5b4915ac0ba73d78ad88ac68a3"
+      },
+      "completed_at_utc": "2026-08-09T06:29:21.749415+00:00",
+      "duration_seconds": 751.4674435830675,
+      "status": "Passed"
+    },
+    "initialize": {
+      "artifact": {
+        "bytes": 983,
+        "path": "experiments/weibo-eclass/stage-5-batch-equivalence-v2/runs/exp-046-batch-equivalence-v2/sample_summary.json",
+        "sha256": "960f9622db25480c0f46aeca71dcaeb5f04cfb31473a0c5f1a4c805cdafaf131"
+      },
+      "completed_at_utc": "2026-08-09T06:02:51.583502+00:00",
+      "duration_seconds": 2.2325306250713766,
+      "status": "Passed"
+    }
+  },
+  "started_at_utc": "2026-08-09T06:02:49.350575+00:00",
+  "status": "Verified",
+  "test_split_accessed": false,
+  "tier": "Minor",
+  "validation_split_accessed": false,
+  "verification": {
+    "path": "experiments/weibo-eclass/stage-5-batch-equivalence-v2/runs/exp-046-batch-equivalence-v2/verification.json",
+    "sha256": "9946af90c84319b985f3ba3af90fc2c30df9e7eca5aa45b6a65194e827daf1f5"
+  },
+  "verified_at_utc": "2026-08-09T06:46:09.679899+00:00",
+  "warnings": [
+    "This Minor run measures generation reproducibility and does not compute classification performance.",
+    "Gold labels are used only for train-sample stratification."
+  ]
+}

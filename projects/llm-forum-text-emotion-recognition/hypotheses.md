@@ -12,8 +12,8 @@ sources:
 
 ## H1. Zero-shot 或 few-shot LLM 不一定优于领域微调编码器
 
-- Status: draft
-- Confidence: low
+- Status: supported on current closed-label tasks
+- Confidence: medium
 - Claim type: assistant synthesis
 
 ### Hypothesis
@@ -22,12 +22,16 @@ sources:
 
 ### Supporting Evidence
 
-- TweetEval 已验证传统分类器与 RoBERTa 的实验流程；GoEmotions 将提供
-  LLM 对照所需的同数据集简单基线与编码器基线。
+- TweetEval 已验证传统分类器与 RoBERTa 的实验流程；GoEmotions 已完成同数据集的
+  简单基线、BERT、冻结 Qwen、LoRA 和正式 test 对照。
 - LLM 输出还会引入格式解析、版本漂移、成本和延迟问题。
+- EXP-043 的最佳冻结 Qwen 条件 Macro-F1 为 `0.333818`，比 EXP-042 M2
+  target-only 低 `0.261107`。reasoning on 虽提高 Macro-F1，却降低 Accuracy、
+  Weighted-F1 和格式有效率，并显著增加生成时间与 token 数。
 
-TweetEval 与 GoEmotions 的任务定义不同，前者的分数不是后者 LLM 实验的比较
-证据。当前证据只支持在 GoEmotions 内建立比较，不支持预判最终胜者。
+不同数据集的绝对分数不能直接互比。当前支持来自各任务内部的冻结比较：GoEmotions
+上的 1.7B LLM 条件低于 BERT，Weibo 上的 frozen Qwen3-4B 条件低于中文 RoBERTa；
+这不能外推为所有 LLM、参数规模或开放式情绪理解任务都劣于 encoder。
 
 ### What Would Change the Conclusion
 
@@ -44,7 +48,7 @@ TweetEval 与 GoEmotions 的任务定义不同，前者的分数不是后者 LLM
 
 ## H2. 回复上下文的收益集中在上下文依赖样本，而非所有样本
 
-- Status: draft
+- Status: initial evidence
 - Confidence: low
 - Claim type: literature-informed assistant synthesis
 
@@ -56,6 +60,11 @@ TweetEval 与 GoEmotions 的任务定义不同，前者的分数不是后者 LLM
 
 - ERC 综述和 DialogueGCN 强调说话者依赖、情绪转移与会话关系。
 - 论坛是异步、多分支结构，不能直接等同于线性对话。
+- EXP-042 的 M2 `previous_context - target_only` full-dev Macro-F1 为
+  `-0.000706 +/- 0.024737`，`context_available` 切片为
+  `-0.011201 +/- 0.021815`；固定相邻前文没有形成稳定总体或可用上下文切片收益。
+- 该输入只是 `PrevCL` 局部话语前文，不保证是父回复，也未按反讽、指代或情绪转移做
+  人工确认，因此当前结果不能反证 parent/thread context 对真正依赖样本的潜在价值。
 
 ### What Would Change the Conclusion
 
@@ -63,10 +72,15 @@ TweetEval 与 GoEmotions 的任务定义不同，前者的分数不是后者 LLM
 
 ### Test
 
-- 无上下文。
-- 仅父回复。
-- 回复路径或完整线程。
-- 总体指标与上下文依赖子集指标分别报告。
+- 已完成：`target_only` 对固定相邻 `previous_context`，并分别报告总体、
+  `context_available` 和 `first_clause` 切片。
+- 已完成 EXP-043：观测到的平均 context contrast 为 `-0.021512`，95% CI
+  `[-0.037515,-0.006905]`；reasoning off 时 B-A 也为稳定负值。该结果仅适用于
+  `PrevCL` 固定局部前文，不外推到真实 parent/thread context。reasoning-on 的相同
+  first-clause prompts 在两次批处理中只有 273/332 个最终标签一致，因此 D-C 不能视为
+  纯语义上下文效应。
+- 条件性后续：只有出现 context gain 时才做 correct-vs-shuffled control；父回复、回复路径
+  或完整线程需另有结构可靠的数据，不能由 `PrevCL` 代替。
 
 ## H3. 细粒度多标签任务的上限首先受标注一致性限制
 

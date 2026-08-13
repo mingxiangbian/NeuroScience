@@ -5,9 +5,9 @@
     "directoryLabel": "情感与智能体",
     "title": "论坛文本情感识别",
     "englishTitle": "Forum Text Emotion Recognition",
-    "stage": "GoEmotions EXP-038 一次性正式 test 已验证并消费；公开行为复现阶段关闭，下一步冻结论坛数据与线程上下文协议。",
-    "curatedAt": "2026-08-04",
-    "evidenceThrough": "2026-08-04",
+    "stage": "Weibo EXP-049 一次性正式 test 已验证并消费：LoRA 明确优于 matched Qwen，和中文 encoder 的 Macro-F1 均值差为 -0.013009，但 95% CI 跨 0。",
+    "curatedAt": "2026-08-13",
+    "evidenceThrough": "2026-08-13",
     "staleAfterDays": 45,
     "scope": "静态研究进度与证据展示；不运行模型，不接收文本输入。"
   },
@@ -51,53 +51,67 @@
       "title": "LLM 适配阶段",
       "question": "Prompt、decoder、post-training 与 LoRA 分别改变了什么？",
       "status": "active"
+    },
+    {
+      "id": "RQ-F1",
+      "anchor": "rq-f1",
+      "title": "Weibo 同任务模型比较",
+      "question": "传统分类器、中文 encoder 与本地 Qwen 的性能、稳定性和成本有何差异？",
+      "status": "completed"
+    },
+    {
+      "id": "RQ-F2",
+      "anchor": "rq-f2",
+      "title": "上下文与推理模式",
+      "question": "固定局部前文和 reasoning mode 是否分别改善 Qwen，二者是否存在交互？",
+      "status": "completed"
     }
   ],
   "activeEvidenceSpine": {
-    "title": "RQ-G1 · G2 · GoEmotions 正式测试证据链",
-    "summary": "EXP-038 已在 5,427 条 official test 上一次性评估 9 个冻结单元；BERT Macro-F1 为 0.488328 +/- 0.008771，target-aligned Qwen LoRA 为 0.444675。",
+    "title": "RQ-F1 · Weibo frozen formal test gate",
+    "summary": "EXP-049 已按 TEST-READY 合同一次性评估 9 个冻结单元：encoder/LoRA/reference Macro-F1 为 0.649621/0.636612/0.316921；LoRA-reference 明确改善，LoRA-encoder 的 -0.013009 差值区间跨 0。test 已消费。",
     "nodes": [
       {
         "kind": "research-question",
         "label": "Research question",
-        "ref": "RQ-G1 · RQ-G2",
-        "title": "监督编码器与本地 LLM 谁真正泛化？",
-        "detail": "在同一 28 标签、同一 official test 和同一评估器下比较简单基线、BERT、prompting 与 LoRA。",
+        "ref": "RQ-F1",
+        "title": "任务适配收益能否泛化，LoRA 与 encoder 的差距是否稳定？",
+        "detail": "在同一冻结任务、split、指标与三 seed 汇总下，一次性比较传统基线、中文 encoder、matched Qwen 和 generative LoRA。",
         "status": "completed"
       },
       {
         "kind": "experiment",
         "label": "Experiment",
-        "ref": "EXP-038",
-        "title": "Frozen formal test gate",
-        "detail": "test 获取前冻结 9 个单元、哈希、dev 重放门、指标和资源上限；每个单元只运行一次，无 test 后选择。",
+        "ref": "EXP-049",
+        "title": "Frozen formal test gate Major",
+        "detail": "九个冻结单元各完成 1,273 条预测后才一次性打开标签；不选择最佳 seed，不根据 test 修改任何模型、prompt、parser 或指标。",
         "status": "verified"
       },
       {
         "kind": "evidence",
         "label": "Evidence",
-        "ref": "EVID-026",
-        "title": "GoEmotions 正式测试已验证",
-        "detail": "BERT 为 primary metric 最强条件；历史 LoRA 为 0.450652 +/- 0.032175，target-aligned seed 42 为 0.444675，均未超过 BERT。",
+        "ref": "EVID-044",
+        "title": "EXP-049 frozen test evidence",
+        "detail": "Encoder/LoRA/reference Macro-F1=0.649621/0.636612/0.316921；LoRA-reference delta=+0.319691，LoRA-encoder delta=-0.013009；11,457 条预测独立复算 mismatch=0。",
         "status": "verified",
-        "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md#exp-038-goemotions-frozen-formal-test-gate"
+        "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/evidence-log.md"
       },
       {
         "kind": "claim",
         "label": "Current claim",
-        "ref": "Frozen test claim",
-        "title": "1.7B 生成式分类器未超过监督 BERT",
-        "detail": "LoRA 提高了 frozen prompting，但在 Macro-F1 上仍落后 BERT；较高 exact match 伴随较低预测标签基数，不能替代类别平衡指标。",
+        "ref": "EXP-049 test claim boundary",
+        "title": "LoRA 收益泛化，但未建立相对 encoder 的确定优势",
+        "detail": "LoRA-reference 的 95% CI 完全高于 0；LoRA-encoder 的 95% CI=[-0.045671,+0.024011] 跨 0。冻结规则记录点估计退化，不等于统计上确认 encoder 更强，也不支持内部机制结论。",
         "status": "verified"
       },
       {
         "kind": "next",
         "label": "Next dependency",
-        "ref": "Forum context protocol",
-        "title": "冻结论坛数据与线程上下文",
-        "detail": "GoEmotions test 已消费。下一主线先确认论坛、授权、匿名化、标签和 thread-level holdout，再开发上下文模型；表征支线继续保持独立。",
+        "ref": "Stage 9 post-test read-only work",
+        "title": "只读错误分析、系统演示与论文归档",
+        "detail": "test 已消费。后续只能使用冻结预测做预登记的只读分析，并将冻结 LoRA 接入演示与论文表格；禁止 test 驱动的调参、选 seed 或候选重跑。",
         "status": "active",
-        "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/README.md"
+        "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/REPORT.md"
       }
     ]
   },
@@ -175,10 +189,52 @@
       "rq": "RQ-G1 · RQ-G2"
     },
     {
-      "label": "论坛数据与上下文协议",
-      "detail": "冻结 forum data、thread context、授权、匿名化、标注与 holdout；表征线需新实验编号和现实资源门",
-      "status": "active",
-      "rq": "RQ-G2"
+      "label": "DATA-WEIBO-TASK-V1 数据与 split",
+      "detail": "8,540 条七分类 paired-view 样本按 leakage component 划分为 train 5,995、validation 1,272、sealed test 1,273；独立 verifier 33/33 通过",
+      "status": "verified",
+      "rq": "RQ-F1 · RQ-F2"
+    },
+    {
+      "label": "EXP-041 Stage 2 模型栈预检",
+      "detail": "线性模型、Chinese RoBERTa、Qwen3-4B BF16 prompt/parser 和精确 16-block LoRA 路径通过；validation/test 未访问",
+      "status": "verified",
+      "rq": "RQ-F1 · RQ-F2"
+    },
+    {
+      "label": "EXP-042 Stage 3 M0/M1/M2",
+      "detail": "M2 target/context Macro-F1 0.594925 +/- 0.012919 与 0.594219 +/- 0.012046；8/8 独立检查通过，test 未读取",
+      "status": "verified",
+      "rq": "RQ-F1"
+    },
+    {
+      "label": "EXP-043 Stage 4 frozen Qwen 2x2",
+      "detail": "C 的 Macro-F1 0.333818；context 平均效应为负，reasoning 平均效应为正但整体指标、格式和成本存在权衡；10/10 独立检查通过",
+      "status": "verified",
+      "rq": "RQ-F1 · RQ-F2"
+    },
+    {
+      "label": "EXP-044/046 Stage 5 资源与运行时门",
+      "detail": "本机 2 epochs x 3 seeds 训练投影 21.72 h；共同批次重排仅 14/16 标签一致，冻结 singleton；两个独立 verifier 均通过",
+      "status": "verified",
+      "rq": "RQ-F1 · RQ-F2"
+    },
+    {
+      "label": "EXP-047 Stage 5 generative LoRA Major",
+      "detail": "train-only、adapter load-forward、双次 singleton replay 与 matched validation 均已验证；LoRA Macro-F1 0.562471 +/- 0.021408，matched delta +0.228873，test 未读取",
+      "status": "verified",
+      "rq": "RQ-F1"
+    },
+    {
+      "label": "EXP-048 frozen dev error analysis",
+      "detail": "7 份冻结预测、1,272 行与 48 条目的性案例已验证；LoRA 收益不只来自格式修复，但少数类、ontology 边界与 seed 稳定性仍弱于 encoder",
+      "status": "verified",
+      "rq": "RQ-F1"
+    },
+    {
+      "label": "EXP-049 frozen formal test gate",
+      "detail": "9 个冻结单元一次性评估并独立复算；encoder/LoRA Macro-F1 0.649621 +/- 0.007365 与 0.636612 +/- 0.021429，test 已消费",
+      "status": "verified",
+      "rq": "RQ-F1"
     }
   ],
   "verifiedEvidence": {
@@ -623,9 +679,9 @@
   "actionDock": {
     "nextAction": {
       "status": "active",
-      "title": "冻结论坛数据与线程上下文协议",
-      "detail": "EXP-038 已关闭 GoEmotions 公开行为复现且 test 已消费；下一步确认论坛、语言、授权、匿名化、标签与 thread-level holdout，再建立上下文基线。",
-      "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/README.md"
+      "title": "进行只读 test 分析并整理系统与论文证据",
+      "detail": "EXP-049 已验证且 test 已消费。下一步只分析冻结预测、生成论文主表并规划演示接入；不得据 test 结果调参、选择最佳 seed 或重跑候选。",
+      "sourceHref": "https://github.com/mingxiangbian/NeuroScience/blob/main/projects/llm-forum-text-emotion-recognition/research-roadmap.md"
     },
     "blockers": [
       {
@@ -634,9 +690,9 @@
         "detail": "EXP-028 超过冻结资源门并保持 Failed；恢复 Base/Instruct 表征比较必须登记新实验编号，不能用诊断值补写结论。"
       },
       {
-        "status": "blocked",
-        "title": "论坛数据主线待确认",
-        "detail": "需要与导师确认主要数据是否可采用 GoEmotions，还是必须另采论坛数据并保留线程上下文；目标论坛、语言、授权、再分发、标签与线程结构尚未冻结。"
+        "status": "preserved",
+        "title": "Weibo test 已消费",
+        "detail": "EXP-049 已一次性完成。只允许对冻结预测做只读分析，不再根据该 split 修改模型、prompt、parser、threshold、checkpoint 或 seed。"
       }
     ],
     "testGates": [
@@ -651,13 +707,69 @@
         "detail": "Frozen · Verified · Consumed"
       },
       {
-        "label": "Forum holdout",
-        "status": "planned",
-        "detail": "Undefined · split protocol pending"
+        "label": "Weibo EClass",
+        "status": "verified",
+        "detail": "Frozen · Verified · Consumed"
       }
     ]
   },
   "recentChanges": [
+    {
+      "date": "2026-08-13",
+      "title": "EXP-049 Weibo TEST-READY 冻结合同、一次性正式 test 与独立复算完成；LoRA 明确优于 matched Qwen，与 encoder 的小幅差距 CI 跨 0；test 已消费"
+    },
+    {
+      "date": "2026-08-12",
+      "title": "EXP-048 冻结 dev 错误分析完成并独立验证；主要收益不只是格式修复，LoRA 仍在少数类、标签边界和 seed 稳定性上弱于 encoder，test 未读取"
+    },
+    {
+      "date": "2026-08-12",
+      "title": "EXP-047 matched singleton validation 完成并独立验证；LoRA mean Macro-F1 0.562471，matched delta +0.228873，test 未读取"
+    },
+    {
+      "date": "2026-08-11",
+      "title": "EXP-047 seed 44 正式 train-only、adapter load-forward 与双次 singleton replay 完成并独立验证；三 seed 训练/回放门全部通过"
+    },
+    {
+      "date": "2026-08-10",
+      "title": "EXP-047 seed 43 attempt 2 正式 train-only、adapter load-forward 与双次 singleton replay 完成并独立验证；首次受限 Metal 启动失败保留"
+    },
+    {
+      "date": "2026-08-10",
+      "title": "EXP-047 seed 42 正式 train-only、adapter load-forward 与双次 singleton replay 完成并通过 V2 独立验证"
+    },
+    {
+      "date": "2026-08-09",
+      "title": "EXP-047 full-train no-model dry-run 完成；独立 verifier 11/11 通过"
+    },
+    {
+      "date": "2026-08-09",
+      "title": "EXP-047 Stage 5 generative LoRA Major 已登记；执行保持未授权"
+    },
+    {
+      "date": "2026-08-09",
+      "title": "EXP-045 初始化失败被保留；修正版 EXP-046 运行时等价性门完成并冻结 singleton"
+    },
+    {
+      "date": "2026-08-09",
+      "title": "EXP-044 本机 Qwen3-4B LoRA 成本预检完成并独立验证"
+    },
+    {
+      "date": "2026-08-09",
+      "title": "EXP-043 Weibo Stage 4 frozen Qwen 2x2 完成并独立验证"
+    },
+    {
+      "date": "2026-08-08",
+      "title": "EXP-042 Weibo Stage 3 M0/M1/M2 train/dev 基线完成并独立验证"
+    },
+    {
+      "date": "2026-08-08",
+      "title": "EXP-041 Weibo Stage 2 模型栈预检完成并通过独立 amendment"
+    },
+    {
+      "date": "2026-08-08",
+      "title": "DATA-WEIBO-TASK-V1 数据、split 与 sealed test 协议完成并独立验证"
+    },
     {
       "date": "2026-08-04",
       "title": "EXP-038 GoEmotions 一次性正式 test gate 完成并独立验证"
@@ -707,14 +819,14 @@
     {
       "status": "verified",
       "label": "DONE",
-      "title": "GoEmotions frozen test gate",
-      "detail": "EXP-038 已完成并验证；BERT Macro-F1 0.488328 +/- 0.008771，target-aligned LoRA 0.444675；test 已消费。"
+      "title": "Stage 5 资源与 reasoning-on 运行时门",
+      "detail": "EXP-044/046 已完成并验证；本机 LoRA 可运行，正式 reasoning-on 评估冻结 singleton，并要求每个 adapter 在 dev 前做 train-only replay。"
     },
     {
-      "status": "planned",
-      "label": "NEXT",
-      "title": "Forum data and thread context protocol",
-      "detail": "确认数据平台、授权、匿名化、标签和 thread-level holdout，再在新的 validation/holdout 上开发上下文模型。"
+      "status": "verified",
+      "label": "DONE",
+      "title": "Stage 5 generative LoRA matched validation",
+      "detail": "EXP-047 已独立验证；LoRA 相对 matched Qwen 明确改善，但均值仍低于 EXP-042 中文 encoder，sealed test 未读取。"
     },
     {
       "status": "planned",
@@ -723,16 +835,22 @@
       "detail": "若继续表征支线，登记新的 Major、现实资源门和恢复政策；EXP-028 保持 Failed。"
     },
     {
-      "status": "blocked",
-      "label": "SCOPE GATE",
-      "title": "论坛数据与上下文",
-      "detail": "先冻结授权、标注和 thread-level split，再做上下文与鲁棒性实验。"
+      "status": "verified",
+      "label": "DONE",
+      "title": "Frozen dev error analysis",
+      "detail": "EXP-048 已验证格式归因、逐类差距、跨 seed 稳定性和 48 条目的性案例；没有触发继续调参或迁移。"
     },
     {
-      "status": "planned",
-      "label": "LATER",
-      "title": "系统、论文与归档",
-      "detail": "只在证据闭环后接入演示层；第一版页面不运行模型。"
+      "status": "verified",
+      "label": "DONE",
+      "title": "TEST-READY freeze and one-time test gate",
+      "detail": "EXP-049 已按冻结合同完成并独立验证；九个单元均完整报告，test 已消费。"
+    },
+    {
+      "status": "active",
+      "label": "NEXT",
+      "title": "只读错误分析、系统与论文归档",
+      "detail": "使用冻结 test 预测完成有界错误分析和论文主表，再接入演示层；不从 test 开启新的模型开发循环。"
     }
   ],
   "privacy": {

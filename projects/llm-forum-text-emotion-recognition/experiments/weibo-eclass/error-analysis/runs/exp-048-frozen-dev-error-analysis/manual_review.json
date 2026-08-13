@@ -1,0 +1,44 @@
+{
+  "completed_at_utc": "2026-08-12T03:38:37.380153+00:00",
+  "experiment_id": "EXP-048",
+  "qualitative_summary": {
+    "annotation_count": 48,
+    "evidence_flag_counts": {
+      "annotation_ambiguity": 20,
+      "implicit_emotion": 20,
+      "lexical_cue_conflict": 4,
+      "long_tail_class": 23,
+      "mixed_emotion": 3,
+      "negation": 3,
+      "none_observed": 1,
+      "possible_context_dependency": 11,
+      "sarcasm_irony": 1,
+      "sentiment_emotion_overlap": 24,
+      "slang_noise": 11,
+      "weak_emotion_no_emotion_boundary": 21
+    },
+    "primary_possible_source_counts": {
+      "annotation_data_uncertainty": 21,
+      "missing_local_context": 2,
+      "model_representation_limitation": 9,
+      "output_parser_or_policy": 1,
+      "overlapping_label_ontology": 13,
+      "surface_form_noise": 2
+    },
+    "reviewer_confidence_counts": {
+      "high": 36,
+      "medium": 12
+    },
+    "role_counts": {
+      "encoder_over_lora": 8,
+      "format_recoveries": 8,
+      "lora_over_encoder": 8,
+      "seed_unstable_lora": 8,
+      "shared_stable_errors": 8,
+      "valid_reference_recoveries": 8
+    }
+  },
+  "reviewer_count": 1,
+  "sampling_boundary": "stratified purposive sample; not a prevalence estimate",
+  "status": "Completed"
+}

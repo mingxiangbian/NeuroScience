@@ -1,0 +1,91 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "command_history": [
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python experiments/weibo-eclass/stage-5-batch-equivalence/run_batch_equivalence.py initialize"
+  ],
+  "data": {
+    "labels": [
+      "anger",
+      "joy",
+      "negative",
+      "neutral",
+      "no_emotion",
+      "positive",
+      "sadness"
+    ],
+    "protocol_id": "DATA-WEIBO-TASK-V1",
+    "sample_rows": 16,
+    "split": "train",
+    "train_rows": 5995,
+    "train_sha256": "b1fd309acf45dfa4ad0c907ee3f373ea95fce751d51b637d402e289aa79d19e0"
+  },
+  "completed_at_utc": "2026-08-09T05:58:02Z",
+  "environment": {
+    "mlx": "0.32.0",
+    "mlx-lm": "0.31.3",
+    "numpy": "2.4.6",
+    "python": "3.11.15",
+    "safetensors": "0.8.0",
+    "tokenizers": "0.22.2",
+    "transformers": "5.14.1"
+  },
+  "experiment_id": "EXP-045",
+  "git": {
+    "commit": "54b8a38548ecaa8667b8e0fc1fb9616263c0676e",
+    "dirty": true,
+    "dirty_path_count": 39
+  },
+  "implementation": {
+    "config_sha256": "b16213e693f1d792ab59fbafc1a20788bbabf566edb729eb23d3d6b4f77f9ec1",
+    "runner_sha256": "4259f70ece812b2575e691d4e5cc88f30facb41573fc28b61d472fb1b73fd81c",
+    "test_sha256": "9fc396ae747e717c498d80e85b09d85669d66b6e2c747607ecabbf3f34b3220f",
+    "verifier_sha256": "b619f97e5cce0e4b08cda58cff968db973e3c6f0b53a3644106158a62cc7d5e7"
+  },
+  "model": {
+    "local_path": "models/qwen3-4b/mlx-bf16",
+    "manifest_path": "models/qwen3-4b/manifest.json",
+    "manifest_sha256": "da447350d9e43213dacc1202da03b50d7e7114b0a4fe2904ff353240b404a641",
+    "precision": "bfloat16",
+    "quantized": false,
+    "repo_id": "Qwen/Qwen3-4B",
+    "revision": "1cfa9a7208912126459214e8b04321603b3df60c"
+  },
+  "rq_ids": [
+    "RQ-F1",
+    "RQ-F2"
+  ],
+  "stage": "stage-5-reasoning-on-batch-equivalence",
+  "stages": {
+    "initialize": {
+      "artifact": {
+        "bytes": 968,
+        "path": "experiments/weibo-eclass/stage-5-batch-equivalence/runs/exp-045-batch-equivalence/sample_summary.json",
+        "sha256": "5e9dbae61b7c8a26263f35c3b75d92e7240daced26bbc2792f4b5b28e793c7db"
+      },
+      "completed_at_utc": "2026-08-09T05:57:13.055157+00:00",
+      "duration_seconds": 2.0980715409386903,
+      "status": "Passed"
+    },
+    "initialization_audit": {
+      "artifact": {
+        "bytes": 661,
+        "path": "experiments/weibo-eclass/stage-5-batch-equivalence/runs/exp-045-batch-equivalence/failure.json",
+        "sha256": "6203958e1d634d096c61bd93fe1ac5c3f67c0a185b18f69c1fa4eed67d036c45"
+      },
+      "completed_at_utc": "2026-08-09T05:58:02Z",
+      "status": "Failed"
+    }
+  },
+  "started_at_utc": "2026-08-09T05:57:10.955904+00:00",
+  "status": "Failed",
+  "test_split_accessed": false,
+  "tier": "Minor",
+  "validation_split_accessed": false,
+  "warnings": [
+    "This Minor run measures generation reproducibility and does not compute classification performance.",
+    "Gold labels are used only for train-sample stratification.",
+    "Initialization converted a Transformers BatchEncoding to a list of field names, so prompt lengths and hashes were invalid. No model inference was run."
+  ]
+}

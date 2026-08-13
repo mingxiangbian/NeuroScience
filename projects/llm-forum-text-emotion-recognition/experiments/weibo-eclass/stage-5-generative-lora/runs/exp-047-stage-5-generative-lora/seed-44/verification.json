@@ -1,0 +1,99 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "completed_at_utc": "2026-08-10T16:38:03.586126+00:00",
+  "contract": {
+    "bytes": 9495,
+    "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-formal-seed-44-contract-v1.json",
+    "sha256": "848e289d6d2c57aeb90bd9344100fa5c2e9f7fc303e2e81c59d6e867cdea3d6d"
+  },
+  "experiment_id": "EXP-047",
+  "formal_training_verified": true,
+  "implementation": {
+    "imports_runner": false,
+    "verifier": {
+      "bytes": 20496,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/verify_formal_seed44_training.py",
+      "sha256": "6006f0c2d716d248eefb0205d17f5f975dd6d63cac47202f35e2648a80a8b75d"
+    }
+  },
+  "next_required_step": "Run the frozen two-pass singleton replay for seed 44; validation/test remain closed.",
+  "recalculated": {
+    "adapter": {
+      "checkpoints": [
+        {
+          "bytes": 29384266,
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/adapters/seed-44/0005995_adapters.safetensors",
+          "sha256": "ae9eb06cd4cd11edb7fc80c3ce7ea83c0982981660f6cc97b9b2e301da49d722"
+        },
+        {
+          "bytes": 29384266,
+          "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/adapters/seed-44/0011990_adapters.safetensors",
+          "sha256": "673850b3931ee62f3fd57ef0eb276661fbbea423df96bc5aab63284a898f6fcc"
+        }
+      ],
+      "config": {
+        "bytes": 1705,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/adapters/seed-44/adapter_config.json",
+        "sha256": "48b4777e97391de88c4f40ff68d0db641cd4c07c857db8fc278759f58e843c28"
+      },
+      "lora_b_nonzero_tensors": 112,
+      "lora_b_tensor_count": 112,
+      "tensor_count": 224,
+      "trainable_parameter_count": 7340032,
+      "weights": {
+        "bytes": 29384266,
+        "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-047-stage-5-generative-lora/adapters/seed-44/adapters.safetensors",
+        "sha256": "673850b3931ee62f3fd57ef0eb276661fbbea423df96bc5aab63284a898f6fcc"
+      }
+    },
+    "authorization": {
+      "bytes": 1246,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-formal-seed-44-authorization-v1.json",
+      "sha256": "52c7e1f3e34d7ad8e1a50d02c216f45ace081c755db44aa9d8ea24ea4d2c1c3f"
+    },
+    "gate_check": {
+      "return_code": 0,
+      "stdout": "{\"path\": \"experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-formal-seed-44-gate-verification-v1.json\", \"status\": \"Passed\"}"
+    },
+    "history": {
+      "duration_seconds": 20415.95326579106,
+      "final_loss_window": 0.0252,
+      "initial_loss_window": 0.3018,
+      "median_iterations_per_second": 0.574,
+      "micro_iterations": 11990,
+      "peak_mlx_memory_gb": 8.805,
+      "reporting_rows": 1199,
+      "trained_tokens": 160736
+    },
+    "loadability": {
+      "finite_logits": true,
+      "input_tokens": 8,
+      "logit_shape": [
+        1,
+        8,
+        151936
+      ],
+      "model_and_adapter_loaded": true,
+      "peak_mlx_memory_gb": 8.103567552
+    },
+    "run": {
+      "bytes": 3469,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/seed-44/run.json",
+      "sha256": "1a39e9bf6ddde5739fac199bdfeed2243797d3bae6f27ae62e7bd656366203bc"
+    },
+    "runtime_config": {
+      "bytes": 1393,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-runtime-seed-44.json",
+      "sha256": "6c279e54b34885b26c6633a2c9c78593b409680639c4a29aeef86f4d84b77d29"
+    }
+  },
+  "remaining_training_seeds_authorized": false,
+  "seed": 44,
+  "status": "Passed",
+  "test_split_accessed": false,
+  "validation_evaluation_authorized": false,
+  "validation_split_accessed": false,
+  "verification_id": "EXP-047-FORMAL-SEED-44-TRAIN-VERIFY-V1"
+}

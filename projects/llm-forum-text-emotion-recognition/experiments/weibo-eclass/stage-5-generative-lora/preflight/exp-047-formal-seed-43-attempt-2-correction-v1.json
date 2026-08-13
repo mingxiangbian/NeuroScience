@@ -1,0 +1,55 @@
+{
+  "amendment_id": "EXP-047-FORMAL-SEED-43-ATTEMPT-2-CORRECTION-V1",
+  "bindings": {
+    "attempt_1_authorization": {
+      "bytes": 1241,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-formal-seed-43-authorization-v1.json",
+      "sha256": "2221fea23030c6ca541ccf195c6f7f8246b488512f4662013dda036514b649f8"
+    },
+    "attempt_1_contract": {
+      "bytes": 8922,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-formal-seed-43-contract-v1.json",
+      "sha256": "e8530e27d44665e9673651ac9ef6117ede34d5acc7c6d4fe3fbfdd43c536ee6a"
+    },
+    "attempt_1_failure": {
+      "bytes": 1672,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/seed-43/run.json",
+      "sha256": "7193ae556d2658fe08f43301824449d74e8b563d45244a50422caf4816d54f05"
+    },
+    "attempt_1_gate": {
+      "bytes": 5230,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-formal-seed-43-gate-verification-v1.json",
+      "sha256": "a0c8ae3b5a2b9c52d63b41ac7f941e42c057e657cd5790c4607124fd2ebefb24"
+    },
+    "attempt_1_stdout": {
+      "bytes": 234,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/seed-43/stdout.log",
+      "sha256": "03c18a71832064e164ee43402b66b4b33230e9349273073f2459ed0bc169f851"
+    },
+    "attempt_2_runtime": {
+      "bytes": 1403,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-runtime-seed-43-attempt-2.json",
+      "sha256": "21e28d82ed2f9864779acf89a5323baf9fb79b03648642e672a0fd06e5a1fd50"
+    }
+  },
+  "correction": {
+    "adapter_output": "new append-only seed-43-attempt-2 directory",
+    "execution_boundary": "run outside the restricted session with verified Metal GPU access",
+    "first_training_iteration_reached": false,
+    "resume_attempt_1": false,
+    "training_hyperparameters_changed": false
+  },
+  "created_at_utc": "2026-08-10T03:38:33Z",
+  "experiment_id": "EXP-047",
+  "reason": "Attempt 1 stopped before the first training iteration because the restricted execution session exposed no Metal device.",
+  "scope": {
+    "seeds": [
+      43
+    ],
+    "test_split": false,
+    "train": true,
+    "validation_split": false
+  },
+  "seed": 43,
+  "status": "Registered"
+}

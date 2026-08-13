@@ -1,0 +1,64 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "experiment_id": "EXP-044",
+  "method": "proportional_label_then_within_label_length_quantiles",
+  "population_label_counts": {
+    "anger": 198,
+    "joy": 286,
+    "negative": 516,
+    "neutral": 281,
+    "no_emotion": 4166,
+    "positive": 452,
+    "sadness": 96
+  },
+  "population_token_lengths": {
+    "count": 5995,
+    "max": 289,
+    "mean": 212.69124270225188,
+    "min": 206,
+    "p50": 212.0,
+    "p95": 220.0,
+    "p99": 230.0
+  },
+  "raw_ids_stored_publicly": false,
+  "raw_text_stored_publicly": false,
+  "sample_label_counts": {
+    "anger": 7,
+    "joy": 10,
+    "negative": 17,
+    "neutral": 9,
+    "no_emotion": 139,
+    "positive": 15,
+    "sadness": 3
+  },
+  "sample_rows": 200,
+  "sample_token_lengths": {
+    "count": 200,
+    "max": 233,
+    "mean": 212.505,
+    "min": 207,
+    "p50": 212.0,
+    "p95": 219.04999999999998,
+    "p99": 224.01999999999998
+  },
+  "selection_digest_sha256": "79d3a56b3c1825143529b824cd3eebbb073062511d36be3faebd08c8d0cb0d10",
+  "supervised_token_lengths": {
+    "count": 200,
+    "max": 13,
+    "mean": 12.405,
+    "min": 11,
+    "p50": 13.0,
+    "p95": 13.0,
+    "p99": 13.0
+  },
+  "template_contract": {
+    "assistant_target": "strict JSON single label",
+    "empty_think_wrapper_inserted_by_chat_template": true,
+    "mask_prompt": true,
+    "rationale_gold": false
+  },
+  "test_split_accessed": false,
+  "validation_split_accessed": false
+}

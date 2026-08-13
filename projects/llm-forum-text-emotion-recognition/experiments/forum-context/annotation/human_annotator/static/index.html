@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>Forum Emotion Annotation</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#case-content">跳到标注内容</a>
+
+    <header class="app-bar">
+      <div class="app-identity" aria-label="Forum Context Emotion Annotation">
+        <span class="app-mark" aria-hidden="true">F</span>
+        <div>
+          <strong>Forum Emotion Annotation</strong>
+          <span id="dataset-mode" class="dataset-mode">Private pilot</span>
+        </div>
+      </div>
+
+      <div class="run-status" aria-label="标注进度">
+        <div class="status-line">
+          <span id="stage-chip" class="stage-chip">Loading</span>
+          <span id="case-progress">0 / 120</span>
+        </div>
+        <progress id="progress-bar" max="120" value="0">0 / 120</progress>
+      </div>
+
+      <div class="session-status">
+        <span id="session-count">本轮 0 / 40</span>
+        <button id="end-session" class="button button-quiet" type="button">
+          结束本轮
+        </button>
+      </div>
+    </header>
+
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+
+    <div class="workspace">
+      <aside class="label-reference" aria-labelledby="label-reference-title">
+        <div class="reference-heading">
+          <h2 id="label-reference-title">标签参考</h2>
+          <span>Primary emotion</span>
+        </div>
+        <dl id="label-glossary" class="label-glossary">
+          <div><dt>anger</dt><dd>愤怒、谴责、敌意或激烈对抗</dd></div>
+          <div><dt>frustration</dt><dd>目标受阻、反复失败或沟通无效带来的挫败</dd></div>
+          <div><dt>disappointment</dt><dd>期待、承诺或结果落空</dd></div>
+          <div><dt>sadness</dt><dd>损失、痛苦或不幸带来的悲伤低落</dd></div>
+          <div><dt>fear</dt><dd>对威胁、危险或可能伤害的害怕</dd></div>
+          <div><dt>joy</dt><dd>明确的愉悦、开心或享受</dd></div>
+          <div><dt>surprise</dt><dd>对意外或违背预期事件的惊讶</dd></div>
+          <div><dt>confusion</dt><dd>明确表示无法理解、理清或解释</dd></div>
+          <div><dt>disgust</dt><dd>生理、道德或社会意义上的厌恶和排斥</dd></div>
+          <div><dt>cynicism</dt><dd>对他人诚意、动机或结果的嘲讽性不信任</dd></div>
+          <div><dt>neutral</dt><dd>没有清楚表达候选情绪；不等于难以判断</dd></div>
+          <div><dt>other_emotion</dt><dd>情绪明确但不在候选表中，填写英文原子名称</dd></div>
+        </dl>
+        <div class="boundary-note">
+          <strong>判定对象</strong>
+          <p>只标 target 发帖者在当前回复中传达的情绪，不继承引用者或 parent 的情绪。</p>
+        </div>
+      </aside>
+
+      <main id="case-content" class="case-content" tabindex="-1">
+        <section id="loading-state" class="state-view loading-state" aria-label="正在载入">
+          <div class="skeleton skeleton-label"></div>
+          <div class="skeleton skeleton-title"></div>
+          <div class="skeleton skeleton-line"></div>
+          <div class="skeleton skeleton-line short"></div>
+        </section>
+
+        <section id="case-view" class="case-view" hidden>
+          <details class="mobile-reference">
+            <summary>查看标签边界</summary>
+            <div id="mobile-glossary"></div>
+          </details>
+
+          <div class="case-heading">
+            <div>
+              <p id="stage-kicker" class="stage-kicker">Stage A</p>
+              <h1 id="stage-title">Target only</h1>
+            </div>
+            <span id="case-number" class="case-number">Case 0001</span>
+          </div>
+
+          <section id="stage-a-view" class="reading-section" aria-labelledby="target-only-heading">
+            <div class="section-label">
+              <h2 id="target-only-heading">目标回复</h2>
+              <span>Only target text is visible</span>
+            </div>
+            <article id="target-only-text" class="forum-text target-text"></article>
+          </section>
+
+          <div id="stage-b-view" hidden>
+            <div class="locked-banner">
+              <span class="lock-dot" aria-hidden="true"></span>
+              Stage A 已锁定
+            </div>
+
+            <section class="reading-section context-section" aria-labelledby="discussion-title-heading">
+              <div class="section-label">
+                <h2 id="discussion-title-heading">讨论标题</h2>
+                <span>Discussion title</span>
+              </div>
+              <p id="discussion-title" class="discussion-title"></p>
+            </section>
+
+            <section class="reading-section context-section" aria-labelledby="parent-heading">
+              <div class="section-label">
+                <h2 id="parent-heading">直接上文</h2>
+                <span>Direct parent</span>
+              </div>
+              <article id="parent-text" class="forum-text context-text"></article>
+            </section>
+
+            <section id="quotes-section" class="reading-section context-section" aria-labelledby="quotes-heading">
+              <div class="section-label">
+                <h2 id="quotes-heading">目标回复中的引用</h2>
+                <span id="quote-count">0 quotes</span>
+              </div>
+              <div id="quote-list" class="quote-list"></div>
+            </section>
+
+            <section class="reading-section target-full-section" aria-labelledby="target-full-heading">
+              <div class="section-label">
+                <h2 id="target-full-heading">目标回复</h2>
+                <span>With quotations in place</span>
+              </div>
+              <article id="target-full-text" class="forum-text target-text"></article>
+            </section>
+          </div>
+        </section>
+
+        <section id="session-break-state" class="state-view terminal-state" hidden>
+          <p class="state-code">SESSION CLOSED</p>
+          <h1>本轮标注已结束</h1>
+          <p>当前记录已安全落盘。开始新一轮会重置连续标注计数，不会解锁已提交决定。</p>
+          <button id="start-session" class="button button-primary" type="button">开始新一轮</button>
+        </section>
+
+        <section id="complete-state" class="state-view terminal-state" hidden>
+          <p class="state-code">PASS 1 COMPLETE</p>
+          <h1>120 个案例已完成</h1>
+          <p>Stage A 与 Stage B 记录均已锁定。不要在 blind-repeat 前查看模型输出或逐样本首标记录。</p>
+        </section>
+
+        <section id="quality-stop-state" class="state-view terminal-state quality-stop" hidden>
+          <p class="state-code">QUALITY GATE</p>
+          <h1>标注已暂停</h1>
+          <p>contextual unusable 已超过 6 条。按冻结协议，应先审查视图导出和清洗规则。</p>
+        </section>
+      </main>
+
+      <aside id="decision-panel" class="decision-panel" aria-labelledby="decision-title">
+        <form id="annotation-form" novalidate>
+          <div class="panel-heading">
+            <div>
+              <p id="decision-stage" class="stage-kicker">Stage A</p>
+              <h2 id="decision-title">标注决定</h2>
+            </div>
+            <span id="lock-state" class="lock-state">未锁定</span>
+          </div>
+
+          <fieldset class="form-group">
+            <legend>状态</legend>
+            <div class="segmented segmented-three">
+              <label><input type="radio" name="status" value="labeled" required><span>可标注</span></label>
+              <label><input type="radio" name="status" value="unclear"><span>不明确</span></label>
+              <label><input type="radio" name="status" value="unusable"><span>不可用</span></label>
+            </div>
+          </fieldset>
+
+          <div id="emotion-fields" class="form-group" hidden>
+            <label class="field-label" for="primary-emotion">主情绪</label>
+            <select id="primary-emotion" name="primary_emotion">
+              <option value="">请选择</option>
+              <option value="anger">anger</option>
+              <option value="frustration">frustration</option>
+              <option value="disappointment">disappointment</option>
+              <option value="sadness">sadness</option>
+              <option value="fear">fear</option>
+              <option value="joy">joy</option>
+              <option value="surprise">surprise</option>
+              <option value="confusion">confusion</option>
+              <option value="disgust">disgust</option>
+              <option value="cynicism">cynicism</option>
+              <option value="neutral">neutral</option>
+              <option value="other_emotion">other_emotion</option>
+            </select>
+            <div id="other-emotion-field" class="sub-field" hidden>
+              <label class="field-label" for="other-emotion">英文原子名称</label>
+              <input id="other-emotion" name="other_emotion_text" type="text" maxlength="64" autocomplete="off" spellcheck="false">
+            </div>
+          </div>
+
+          <fieldset class="form-group">
+            <legend>判断信心</legend>
+            <div class="segmented segmented-three">
+              <label><input type="radio" name="confidence" value="low" required><span>Low</span></label>
+              <label><input type="radio" name="confidence" value="medium"><span>Medium</span></label>
+              <label><input type="radio" name="confidence" value="high"><span>High</span></label>
+            </div>
+          </fieldset>
+
+          <div id="context-fields" hidden>
+            <fieldset class="form-group">
+              <legend>反讽 / Sarcasm</legend>
+              <div class="segmented segmented-three">
+                <label><input type="radio" name="sarcasm" value="present"><span>有</span></label>
+                <label><input type="radio" name="sarcasm" value="absent"><span>无</span></label>
+                <label><input type="radio" name="sarcasm" value="uncertain"><span>不确定</span></label>
+              </div>
+            </fieldset>
+
+            <div class="form-group mixed-field">
+              <label class="checkbox-row" for="mixed-emotion">
+                <input id="mixed-emotion" name="mixed_emotion" type="checkbox">
+                <span>
+                  <strong>混合情绪</strong>
+                  <small>存在多个情绪，但当前标签仍有明确主导项</small>
+                </span>
+              </label>
+            </div>
+
+            <fieldset class="form-group">
+              <legend>上下文充分性</legend>
+              <div class="segmented segmented-three">
+                <label><input type="radio" name="context_sufficiency" value="sufficient"><span>充分</span></label>
+                <label><input type="radio" name="context_sufficiency" value="insufficient"><span>不足</span></label>
+                <label><input type="radio" name="context_sufficiency" value="uncertain"><span>不确定</span></label>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="form-group note-field">
+            <label class="field-label" for="annotation-note">简短备注 <span id="note-requirement">可选</span></label>
+            <textarea id="annotation-note" name="note" rows="3" maxlength="1000"></textarea>
+          </div>
+
+          <p id="form-error" class="form-error" role="alert" hidden></p>
+          <button id="submit-decision" class="button button-primary submit-button" type="submit">
+            锁定 Stage A 并显示上下文
+          </button>
+        </form>
+      </aside>
+    </div>
+  </body>
+</html>

@@ -2,7 +2,7 @@
 
 ---
 date: 2026-07-23
-last_updated: 2026-08-08
+last_updated: 2026-08-13
 status: draft
 tags: [emotion-recognition, forum-text, llm, roadmap]
 ---
@@ -39,22 +39,27 @@ IAC 2.0 forum-data pilot（closed as exploratory diagnosis）
 清洗/去重 -> 标注试验 -> stance-emotion 与 ontology mismatch
     |
     v
-Weibo task protocol and preflight（next gate）
+Weibo task protocol and split（completed; verified）
 EClass rows -> single-label ontology -> group-disjoint split -> leakage/dedup audit
     |
     v
-Same-dataset direct baselines
-majority/TF-IDF -> Chinese encoder -> frozen Qwen Instruct -> matched Qwen LoRA
+Environment/model/parser/LoRA preflight（completed; verified）
     |
     v
-Context x reasoning 2x2 on dev
+M0/M1/M2 same-dataset baselines（completed; verified）
+majority/TF-IDF -> Chinese encoder
+    |
+    v
+Frozen Qwen context x reasoning 2x2 on dev（completed; verified）
 CurCL / PrevCL+CurCL x reasoning off/on
     |
-    +--> conditional transfer or same-corpus auxiliary training
+    v
+Generative LoRA + frozen dev error analysis（completed; verified）
     |
     v
-TEST-READY -> one-time held-out test -> error analysis -> system
+TEST-READY -> one-time held-out test（completed; verified; consumed）
     |
+    +--> read-only post-test analysis -> system/thesis archive
     +--> optional matched representation analysis -> optional SAE/intervention
 ```
 
@@ -71,8 +76,8 @@ TweetEval 的 RoBERTa 分数作为 GoEmotions LLM 的性能对照。
 | RQ-B3 | 在相同数据、预处理和冻结微调协议下，Twitter 域预训练的 RoBERTa-base 是否比通用 RoBERTa-base 获得更高的 Macro-F1，并泛化到冻结 test？ | 将“域预训练收益”与超参数调优分离，检验论坛/社交媒体语言分布匹配是否改善情绪分类，尤其是 optimism 等困难类别 | EXP-015（与 EXP-014 配对比较）、EXP-016 test gate、EXP-017 error analysis | 结果章节的预训练域消融与逐类别比较表；讨论章节的共享错误、域恢复/回退与 optimism 弱项，编号待定 | 阶段性解决：EXP-015 test Macro-F1=0.809973 +/- 0.007038，较 EXP-014 +0.017328，3/3 seed 提高；EXP-017 观察到 21 个稳定恢复与 11 个稳定回退，但 optimism 无完整 0/3-to-3/3 翻转，仍是稳定错误率最高的类别 |
 | RQ-G1 | 在固定 GoEmotions 28 标签多标签任务上，BERT-base/RoBERTa 监督微调相对简单多标签基线增加了多少有效性能？ | 建立后续 LLM 比较所需的同数据集监督下界与强编码器基线，并记录类别不平衡、多标签阈值和细粒度标签的困难 | EXP-018 simple baseline；EXP-019 BERT smoke；EXP-020 BERT-base-cased Major；EXP-030 cross-model error analysis；EXP-038 frozen test gate | 结果章节的 GoEmotions 监督基线、多标签错误结构与正式测试表 | 阶段性解决：EXP-020 test Macro-F1=`0.488328 +/- 0.008771`，较 EXP-018 高 `0.292132`，较论文 test 参照 `0.46` 高 `0.028328`；EXP-030 的 dev 错误结构保留。GoEmotions test 已消费，RoBERTa alternative 不作为当前阶段关闭条件 |
 | RQ-G2 | 在相同 GoEmotions 数据、标签和评估协议上，本地 post-trained LLM 相对冻结 BERT 增加了什么；Base、post-trained 与 task-LoRA 三个适配阶段又如何改变情绪标签的行为表现和线性可解码性？ | 一条实用性能证据链比较 zero/few-shot、LoRA、性能、格式、成本与延迟；一条配对控制证据链分离 decoder、训练目标与标注聚合影响，再使用同规模 Base/Instruct 的相同 frozen probe 隔离后训练影响，不把提示遵循或聚合标签复现误写为情绪机制 | EXP-021 Minor 环境与来源 smoke；EXP-022/023 parser failures；EXP-024 constrained-decoding gate；EXP-025 full-dev constrained zero/few-shot Major；EXP-026 matched unconstrained decoder Major；EXP-027 matched hidden-state smoke；EXP-028 matched frozen probe（资源门失败）；EXP-029 Instruct LoRA 三 seed Major；EXP-030 cross-model error analysis；EXP-031 neutral ontology inference ablation；EXP-032 acceleration preflight Minor；EXP-033 target-aligned LoRA Major；EXP-034 train neutral-cooccurrence diagnostic Minor；EXP-035 neutral co-occurrence annotation audit Major；EXP-036 dev rater-aware diagnostic Major；EXP-037 full-dev rater-aware diagnostic Major；EXP-038 frozen test gate | 结果章节的同数据集 LLM 2x2、LoRA、编码器与错误结构比较；Table-G2-4 至 Table-G2-10 的 ontology、标注与正式测试证据；讨论章节的表征、ontology 和 aggregated supervision 边界 | 行为线阶段性解决：EXP-038 test 上，历史 EXP-029 Macro-F1=`0.450652 +/- 0.032175`，target-aligned EXP-033 seed 42=`0.444675`，均低于 BERT `0.488328 +/- 0.008771`；EXP-029 仍标记 ontology-misaligned，EXP-033 是主要 aligned LLM 结果。此前 EXP-030 至 EXP-037 的近单标签偏向、聚合标注和 rater-aware 结论保持不变。test 已消费，EXP-033 seeds 43/44 不补跑；表征线仍开放，EXP-028 为 Failed，正式 probe 待新编号 |
-| RQ-F1 | 在冻结的 Weibo EClass 单标签任务上，传统文本分类器、中文 encoder 与本地 Qwen 的性能、稳定性和成本有何差异？ | 在同一任务、split 和评估脚本上建立论坛式中文社交文本的直接证据链；若 Qwen 不优于 encoder，负结果仍能界定其系统成本与适用边界 | Weibo data/task protocol；简单基线 Major；中文 encoder Major；Qwen direct/LoRA Major；最终 test gate，EXP 编号待登记 | 方法章节的数据与任务定义；结果章节的同任务模型主表 | 已确认研究问题；数据采用仍需通过 Weibo task protocol，未授权训练或 test |
-| RQ-F2 | 对同一 target，固定局部前文和 reasoning-mode inference 是否分别改善 Qwen 的最终单标签预测，两者是否存在交互？ | 用 `CurCL`/`PrevCL+CurCL` x reasoning off/on 的配对 2x2 分离上下文、推理模式及其交互；若无稳定收益，也能排除“增加上下文或生成推理必然更好” | Frozen-Instruct dev preflight；Qwen 2x2 Major；必要时 correct-vs-shuffled-context control，EXP 编号待登记 | 结果章节的 2x2 主表与交互图；讨论章节的 context/reasoning 边界 | 已确认实验结构；prompt、模型 revision、解码与 parser 待 protocol 冻结 |
+| RQ-F1 | 在冻结的 Weibo EClass 单标签任务上，传统文本分类器、中文 encoder 与本地 Qwen 的性能、稳定性和成本有何差异？ | 在同一任务、split 和评估脚本上建立论坛式中文社交文本的直接证据链；若 Qwen 不优于 encoder，负结果仍能界定其系统成本与适用边界 | DATA-WEIBO-TASK-V1；EXP-041 model-stack preflight；EXP-042 M0/M1/M2 Major；EXP-043 frozen Qwen 2x2；EXP-044 LoRA cost preflight；EXP-046 runtime-equivalence gate；EXP-047 generative LoRA Major；EXP-048 frozen dev error analysis；EXP-049 frozen test gate | 方法章节的数据与任务定义；结果章节的同任务模型主表与错误结构表 | 阶段性解决：EXP-049 test 上 encoder/LoRA/matched Qwen reference Macro-F1=`0.649621 +/- 0.007365`/`0.636612 +/- 0.021429`/`0.316921`。LoRA-reference delta=`+0.319691`，95% CI `[+0.274779,+0.362068]`；LoRA-encoder delta=`-0.013009`，CI `[-0.045671,+0.024011]`，点估计触发冻结退化规则但区间跨 0，不支持确定的 encoder 优势。test 已消费，不再用于调参或模型选择 |
+| RQ-F2 | 对同一 target，固定局部前文和 reasoning-mode inference 是否分别改善 Qwen 的最终单标签预测，两者是否存在交互？ | 用 `CurCL`/`PrevCL+CurCL` x reasoning off/on 的配对 2x2 分离上下文、推理模式及其交互；若无稳定收益，也能排除“增加上下文或生成推理必然更好” | EXP-041 train-only preflight；EXP-043 Qwen 2x2 Major；EXP-046 runtime-equivalence gate；必要时 correct-vs-shuffled-context control | 结果章节的 2x2 主表与交互图；讨论章节的 context/reasoning 与 runtime 边界 | 阶段性解决：观测 context contrast=`-0.021512`、CI 排除 0；平均 reasoning contrast=`+0.030825`、CI 排除 0；interaction CI 跨 0。EXP-046 显示固定 batch 可重放但共同批次重排仅 `14/16` 标签一致，因此后续 reasoning-on 正式评估冻结 singleton；context 未通过 shuffled-control 门 |
 | RQ-F3 | 在 Weibo 直接基线冻结后，同语料辅助任务或外部中文 ERC 迁移是否比 Weibo-only 训练增加可复现收益？ | 区分目标任务监督与迁移监督的增量价值；负结果可说明语言、领域或 ontology mismatch 抵消了迁移收益 | Conditional same-corpus ECause auxiliary；可选 T / S-U->T / S-C->T / S-R->T transfer Major，EXP 编号待登记 | 可选结果/消融章节；不作为最低毕设闭环 | 条件性扩展；只有 RQ-F1/RQ-F2 的 dev 证据完成后才决定是否启动 |
 | RQ-F4 | 行为上已验证的 Qwen 中，情绪标签和上下文条件是否在不同层呈现稳定的线性可解码信息，post-training/LoRA 是否改变这种结构？ | 将性能结果连接到受控的表征相关性证据；无稳定 probe 结果时如实形成负结果，不阻塞系统论文 | Matched layer-wise probes；label-shuffle/control tasks；可选 SAE、patching/ablation，EXP 编号待登记 | 可选表征分析章节 | 后置扩展；必须在行为模型与分析层/池化规则冻结后启动 |
 
@@ -140,7 +145,7 @@ Status: completed for public behavioral reproduction; GoEmotions EXP-038 test ve
 
 ## Phase 2: Forum Data Protocol and Dataset Selection
 
-Status: IAC 2.0 exploratory branch closed after diagnosing stance-emotion and ontology mismatch; Weibo EClass is the provisional next task, conditional on a new task/split protocol
+Status: IAC 2.0 exploratory branch closed after diagnosing stance-emotion and ontology mismatch; Weibo EClass task/split protocol completed and verified
 
 目标：
 
@@ -296,9 +301,21 @@ target_only_decision, contextual_decision
 - KOTE 保留为低优先级 C0 多标签控制，IAC2 只保留 challenge/数据失败案例，Hotter and
   Colder 已排除；三者都不阻塞 Weibo task protocol。
 
+2026-08-08 `DATA-WEIBO-TASK-V1` execution：
+
+- 从 11,075 条 EClass 逻辑记录中按冻结规则保留 8,540 条七分类样本；结构损坏 group、
+  `fear` 和 composite/unknown labels 按协议排除。
+- 同 target-label 折叠 2,422 条；117 个多标签 target 的 295 条记录保留，但绑定在同一
+  leakage component。冻结词法近重复审计命中 0 对，不据此声称语义等价。
+- group/target/duplicate-disjoint split 为 train 5,995、validation 1,272、sealed test
+  1,273；6,138 条有 `PrevCL`，2,402 条无前文。两个输入视图逐条配对。
+- 独立 verifier 通过 33/33 项检查；标签最大分配误差 0.005882，context/ambiguity 切片
+  最大分配误差 0.022315。test labels 已密封且 Git ignored。
+- 该证据只验证数据构建与采用，不产生模型结果，也不授权训练代码读取 test labels。
+
 ## Phase 3: Reproducible Supervised Baselines
 
-Status: TweetEval and GoEmotions frozen test gates completed and verified; Weibo same-task baselines not started
+Status: TweetEval and GoEmotions frozen test gates completed and verified; Weibo Stage 3 same-task baselines completed and verified
 
 目标：
 
@@ -498,8 +515,8 @@ Status: partial; TweetEval and GoEmotions error/annotation analysis completed, f
 
 ## Next-Stage Experimental Plan: Weibo Single-Label Context and Reasoning
 
-Status: roadmap-level design updated on 2026-08-08; no Weibo task protocol, EXP ID,
-training run or test access is authorized by this section
+Status: `DATA-WEIBO-TASK-V1` and train-only Stage 2 preflight verified on
+2026-08-08; no dev Major or test access is authorized by this section
 
 本节取代 2026-08-04 的 GoEmotions parent-recovery 方案，作为后续实验的当前设计稿。
 它不改写 TweetEval、GoEmotions 或 IAC2 的历史证据，也不把尚未登记的实验写成已完成。
@@ -511,7 +528,7 @@ training run or test access is authorized by this section
 - 中文：基于大模型的论坛文本情感识别。
 - 英文：Research and Implementation of Emotion Recognition System of Forum Text Based on LLM。
 
-下一阶段的核心经验任务暂定为 Weibo EClass 单标签分类。Weibo 是中文微博多用户讨论
+下一阶段的核心经验任务冻结为 Weibo EClass 单标签分类。Weibo 是中文微博多用户讨论
 语料，可作为 forum-like social discussion 的可执行代理，但不是一般论坛的完整代表。
 除非后续增加跨域验证，论文结论必须限定在该语料、该标签体系和 fixed local context，
 不能声称已经证明所有论坛或完整回复树上的泛化能力。
@@ -539,7 +556,8 @@ training run or test access is authorized by this section
   同一作者发言。系统和论文必须使用“固定局部前文”或 local discourse context 的表述。
 - `SufCL` 含 target 之后的信息，不进入主训练、主评估或最终系统；若以后使用，只能作为
   明确标记为 offline/non-deployable 的未来信息消融。
-- 对 3,386 个首 clause，`PrevCL` 为空。完整 split 用于系统总体表现；context-available
+- 在最终 8,540 条任务记录中，2,402 条 `PrevCL` 为空，6,138 条可提供局部前文。完整
+  split 用于系统总体表现；context-available
   paired slice 用于估计上下文本身的效应，首 clause slice 单独报告。
 
 本阶段使用上游已有人工标签，不重新人工标注 11,075 条数据，也不让 BERT 或外部 LLM
@@ -549,12 +567,11 @@ training run or test access is authorized by this section
 
 Weibo 原始标签混合细粒度情绪、粗粒度 sentiment、`neutral`、`No_emotion`、极少数
 `fear` 和 45 条 composite labels。它不是可以直接送入训练器的干净 ontology。正式数据
-协议必须在读取模型结果前冻结以下主方案：
+协议已在读取模型结果前冻结以下主方案：
 
-- Primary provisional paper-comparable set：`joy`、`sad`、`anger`、`positive`、
+- Frozen paper-comparable set：`joy`、`sadness`、`anger`、`positive`、
   `negative`、`neutral` 和 `No_emotion`。
-- `fear`：因样本极少，不并入主比较；保留计数并作为 rare-class diagnostic。若原论文
-  复核显示不同处理，以有来源的规则修正 protocol，不根据 dev 分数决定。
+- `fear`：因样本极少且原论文主实验忽略该类，不并入主比较；保留聚合计数。
 - 45 条 composite rows：不拆分、不把组合字符串当作新单类，不用于主训练；保留在公开
   聚合统计和私有诊断清单中。
 - `positive`/`negative` 虽比 `joy`/`anger` 粗，仍为上游有效标签；主复现中不得按直觉合并。
@@ -567,7 +584,7 @@ resampling 或 focal loss 都是后续受控消融，不能在第一个 encoder/
 
 ### Data Construction and Split Gate
 
-下一步先登记 Weibo task protocol，不直接训练。protocol 至少固定：
+`DATA-WEIBO-TASK-V1` 已完成以下数据构建要求，且未启动模型训练：
 
 1. 用 TSV parser 处理 quoted embedded newlines，过滤 12,052 条 `Y/N` cause scaffold，
    只保留满足 EClass schema 的 emotion-clause rows。
@@ -590,6 +607,9 @@ group-disjoint held-out 结果不得与论文数值直接作百分点差值，�
 
 ### Data Adoption Pass Signal
 
+Status: `Passed`. Construction and independent verification evidence is recorded
+under `EVID-033`; model training and test access remain separate later gates.
+
 只有以下条件同时满足，Weibo 才从 provisional candidate 变为 adopted task：
 
 - 主标签规则、排除规则和 raw-to-task 映射可由 verifier 重放。
@@ -597,6 +617,20 @@ group-disjoint held-out 结果不得与论文数值直接作百分点差值，�
 - 两个输入视图逐条配对，且 `SufCL`、gold 字段和未来信息不进入主输入。
 - train/dev/test 的类分布和 context-available coverage 可接受，少数类没有被划分算法清空。
 - 数据许可、存储与公开边界已在数据卡中明确。
+
+### Stage 2 Model-Stack Pass Signal
+
+Status: `Passed` under `EXP-041` and `EVID-034`.
+
+- M1 word/character TF-IDF + LinearSVC 与 M2 Chinese RoBERTa 的 train-only
+  fit/update 路径通过；未报告分类性能。
+- Qwen3-4B BF16 的 paired prompt、thinking on/off 和严格 JSON parser 完成 42 次
+  smoke，37/42 可解析；5 个失败均为 thinking 输出达到 1024-token 上限。
+- 精确 LoRA 方案在 blocks 20-35 的 112 个目标模块上完成两步更新、保存和重载，峰值
+  内存 8.65 GB；本机资源门通过。
+- `AUDIT-EXP-041-V1` 独立复算 16/16 项、0 mismatch。EXP-039、EXP-040 和原 verifier
+  failure 均保留，不被成功重跑覆盖。
+- 全程只读 train；validation/test 未访问。解析率是格式可用性，不是情绪识别准确率。
 
 ### Baseline and Model Matrix
 
@@ -608,7 +642,7 @@ group-disjoint held-out 结果不得与论文数值直接作百分点差值，�
 | M1 | Word + character TF-IDF + Linear SVM 或 Logistic Regression | `CurCL`; `PrevCL + CurCL` | 可复现的传统文本下界与简单 context 对照 | 必须，分类器在 protocol 前二选一 |
 | M2 | Chinese BERT/RoBERTa + softmax + CrossEntropy | 两个配对输入视图 | 同任务强 encoder baseline | 必须，精确 checkpoint 待冻结 |
 | M3 | Qwen post-trained/Instruct direct generation | 2x2 四条件 | 开箱即用 LLM 的标签、格式、成本和 reasoning/context 效应 | 必须 |
-| M4 | 同一 Qwen Instruct + generative LoRA | 由 dev 冻结的主输入/推理条件；必要时做 post-LoRA diagnostic | 主要 LLM system，检验任务适配收益 | 推荐；资源 preflight 通过后执行 |
+| M4 | 同一 Qwen Instruct + generative LoRA | 由 dev 冻结的主输入/推理条件；必要时做 post-LoRA diagnostic | 主要 LLM system，检验任务适配收益 | EXP-047/048 dev 链已验证；EXP-049 正式 test 已验证并消费 |
 | M5 | Matched Qwen Base/Instruct/LoRA hidden states + probe | 冻结行为样本和输入 | 表征相关性分析 | 可选后置 |
 
 主 LLM 路线是**生成式单标签任务**，不是 BERT 辅助，也不是“LLM hidden state 后接一个
@@ -773,26 +807,35 @@ S-R -> T = source shuffled-context training, then Weibo target training
 Stage 0  TweetEval + GoEmotions reproduction/test（completed）
          IAC2 cleaning/annotation diagnosis（closed; no more labeling）
     |
-Stage 1  Register Weibo task/data protocol
+Stage 1  Register and verify Weibo task/data protocol（completed）
          ontology -> parser -> dedup -> group split -> paired views -> verifier
     |
-Stage 2  Environment/model/parser/LoRA preflight（train/dev only）
+Stage 2  Environment/model/parser/LoRA preflight（completed; train only）
     |
-Stage 3  M0 majority + M1 TF-IDF + M2 Chinese encoder on dev
+Stage 3  M0 majority + M1 TF-IDF + M2 Chinese encoder on dev（completed; EXP-042 Verified）
     |
-Stage 4  M3 frozen Qwen context x reasoning 2x2 on dev
-         -> shuffled-context control only if context gain appears
+Stage 4  M3 frozen Qwen context x reasoning 2x2 on dev（completed; EXP-043 Verified）
+         -> context gain did not appear; shuffled-context control not triggered
     |
-Stage 5  M4 generative LoRA, 3 seeds, dev selection
+Stage 4.5  M4 local LoRA cost preflight（completed; EXP-044 Verified; train only）
+           -> technically feasible; 2 epochs x 3 seeds ~=21.72 h with safety
+    |
+Stage 4.6  reasoning-on runtime-equivalence gate（completed; EXP-046 Verified; train only）
+           -> freeze singleton; repeat after each adapter before dev access
+    |
+Stage 5  M4 generative LoRA, 3 seeds, matched singleton dev comparison
+         (completed; EXP-047 matched validation Verified)
     |
 Stage 6  Frozen dev error analysis and bounded ablations
-         -> conditional transfer go/no-go; skip is valid
+         (completed; EXP-048 Verified; no new tuning or transfer triggered)
     |
 Stage 7  Freeze model/prompt/parser/metrics/slices -> TEST-READY -> user approval
+         (completed; frozen contract verified before test access)
     |
 Stage 8  One-time held-out test for all frozen main-table configurations
+         (completed; EXP-049 Verified; test consumed)
     |
-Stage 9  Post-test read-only error analysis -> demo -> thesis evidence archive
+Stage 9  Post-test read-only error analysis -> demo -> thesis evidence archive（next）
     |
 Optional  Matched probes -> controlled intervention -> SAE
 ```
@@ -820,18 +863,45 @@ reasoning mode、解析状态和推理延迟。若展示生成 explanation，必
 3. `No_emotion` 占多数，且 emotion/sentiment/neutral ontology 混合，容易出现 Accuracy
    虚高和类别定义重叠。
 4. 没有官方 split，当前 held-out group split 与原论文交叉验证数值不能直接比较。
-5. reasoning on/off 可能同时改变模板、输出长度和随机性；若等价性 preflight 失败，2x2
-   不能按单因素实验解释。
-6. LoRA 可能只改善格式或多数类，未必超过中文 encoder；这仍是有效负结果，不触发盲目
-   扩大参数规模。
-7. hidden-state、probe 或 SAE 只能形成表征层证据，不能回答人类情绪产生机制。
+5. EXP-043 的 332 条 first-clause prompt 哈希完全一致，但 reasoning-on 两次批处理只有
+   273 个最终标签一致。EXP-046 已确认固定顺序 batch 8 可重放，而改变共同批次后最终标签
+   仅 `14/16` 一致；D-C 不能全部解释为语义 context effect。Stage 5 reasoning-on 正式评估
+   冻结 singleton，并要求每个 adapter 训练后、读取 dev 前重复同一 train-only replay。
+6. EXP-047 已选择当前唯一通过等价性门的本机 MLX BF16 路线；seeds 42/43/44 的 2-epoch
+   正式 train-only 运行分别耗时 `20,577.547 s`/`20,548.721 s`/`20,415.953 s`，峰值分别为
+   `8.804 GB`/`8.804 GB`/`8.805 GB`，adapter load-forward 与两次 singleton replay 均已
+   独立验证。seed 43 首次受限启动在第一个训练
+   iteration 前因 Metal 不可用停止，失败记录保留，attempt 2 使用新目录完整重跑。原 2 epochs
+   x 3 seeds 训练安全投影为 `21.72 h`，三次成功训练实际合计约 `17.095 h`；
+   matched validation 实际四条件命令耗时 `87,122.823 s`，其中无 adapter reference 占
+   `79,098.411 s`；峰值内存 `8.498 GB`。LoRA 三 seed Macro-F1 为
+   `0.552028`/`0.548289`/`0.587096`，均值 `0.562471 +/- 0.021408`，相对 matched reference
+   提高 `+0.228873`，但仍比 EXP-042 M2 target-only 低 `0.032454`。租 GPU 会更换训练/推理
+   后端，若未来迁移仍必须追加 correction、获得私有数据传输批准并通过新的 train-only
+   backend-equivalence Minor。
+7. LoRA 同时把 parser-valid 从 reference 的 `90.8805%` 提高到三个 seed 的 `100%`，并把
+   平均生成长度从 `525.37` tokens 降到约 `10.45` tokens。EXP-048 的 Accuracy 加性分解显示，
+   116 条 reference output-failure slice 贡献 `+0.070755`，另外 1,156 条 reference 有效输出
+   贡献 `+0.486111`；因此收益不只是格式恢复。LoRA 与 encoder 的 Accuracy 仅差
+   `-0.013103`，但 Macro-F1 仍差 `-0.032454`，主要弱项为 sadness、neutral、anger、positive
+   及 no_emotion/极性/具体情绪边界；LoRA seed 一致率也较低。以上仍只支持行为解释，不能
+   解释为忠实推理或内部机制。
+8. hidden-state、probe 或 SAE 只能形成表征层证据，不能回答人类情绪产生机制。
 
-正式 protocol 前仍待冻结：原论文 EClass label inclusion rule、精确 split 比例/seed、M1
-分类器、M2 checkpoint、Qwen 精确模型/revision/precision、prompt 与 final-label schema、
-reasoning decode、最大长度、LoRA 预算和是否启动迁移。除这些明确 gate 外，不再恢复
+数据协议、Stage 2 模型栈、Stage 3 M0/M1/M2、Stage 4 frozen Qwen 2x2、EXP-044
+本地成本门和 EXP-046 runtime-equivalence gate 已经冻结并验证。EXP-047 Stage 5
+generative LoRA Major 冻结 label-only target、target-only + reasoning-on、三 seed、固定
+epoch-2 checkpoint、matched singleton reference、post-adapter replay、本机 MLX 和 116 小时
+资源上限。seeds 42/43/44 的 train-only、adapter load-forward、双次 singleton replay、
+matched validation 与 EXP-048 dev 错误分析均已完成并通过独立 verifier。EXP-049 随后按
+TEST-READY 合同一次性评估 9 个冻结单元：encoder/LoRA/matched reference test Macro-F1
+分别为 `0.649621 +/- 0.007365`、`0.636612 +/- 0.021429` 和 `0.316921`。LoRA 明确改善
+matched Qwen，但相对 encoder 的 `-0.013009` 差值区间跨 0。test 已消费，后续不得调参、
+挑选最佳 test seed 或重跑候选；下一步仅做只读错误分析、系统演示与论文证据归档。除这些
+明确 gate 外，不再恢复
 GoEmotions parents、不继续 IAC2 正式标注、不执行 Hotter hydration，也不把 KOTE 加入主线。
 
-### Review Questions Before Protocol Freeze
+### Review Questions Before Model Protocol Freeze
 
 交给外部模型或导师审查时，优先要求其回答：
 

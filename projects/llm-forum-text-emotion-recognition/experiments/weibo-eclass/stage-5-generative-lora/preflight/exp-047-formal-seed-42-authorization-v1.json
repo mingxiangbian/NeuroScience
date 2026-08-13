@@ -1,0 +1,24 @@
+{
+  "authorized": true,
+  "authorized_at_utc": "2026-08-09T11:37:43.819008+00:00",
+  "authorized_by": "user",
+  "contract_id": "EXP-047-FORMAL-SEED-42-V1",
+  "contract_path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-formal-seed-42-contract-v1.json",
+  "contract_sha256": "783d91ab9ec1240a7b52e8726d1dc8adfe8e7bbc712083700465b0182f6df2ff",
+  "experiment_id": "EXP-047",
+  "gate_verification_id": "EXP-047-FORMAL-SEED-42-GATE-VERIFY-V1",
+  "gate_verification_path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-formal-seed-42-gate-verification-v1.json",
+  "gate_verification_sha256": "946da7a0ad5426b26408c983ded5b8b97d84fc79972274c23d61815b5cbdb3bc",
+  "runtime_config_path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-runtime-seed-42.json",
+  "runtime_config_sha256": "8c6de5cf912d5d0837b56e9d81ecce562554670d372de6c5976552b22708dbca",
+  "scope": {
+    "seeds": [
+      42
+    ],
+    "test_split": false,
+    "train": true,
+    "validation_split": false
+  },
+  "stage": "formal-seed-42-train-only",
+  "user_authorization_context": "User replied '启动' after the seed-42-only execution boundary was stated; seeds 43/44 and validation/test remain closed."
+}

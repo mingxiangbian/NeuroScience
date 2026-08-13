@@ -1,0 +1,569 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.neuroscience.invalid/schemas/annotation-record-v1.schema.json",
+  "title": "IAC 2.0 Forum Emotion Annotation Record V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "protocol_id",
+    "sample_uid",
+    "view_sha256",
+    "annotator",
+    "annotation_round",
+    "target_only",
+    "contextual",
+    "started_at",
+    "completed_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "annotation-record-v1"
+    },
+    "protocol_id": {
+      "const": "DATA-FCTX-LABEL-V1"
+    },
+    "sample_uid": {
+      "type": "string",
+      "pattern": "^smp_[0-9a-f]{64}$"
+    },
+    "view_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "annotator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "annotator_uid",
+        "role",
+        "annotation_mode"
+      ],
+      "properties": {
+        "annotator_uid": {
+          "type": "string",
+          "pattern": "^ann_[a-z0-9_]{3,48}$"
+        },
+        "role": {
+          "enum": [
+            "human",
+            "local_model",
+            "adjudicator"
+          ]
+        },
+        "annotation_mode": {
+          "enum": [
+            "blind",
+            "model_assisted",
+            "adjudication"
+          ]
+        }
+      }
+    },
+    "annotation_round": {
+      "enum": [
+        "calibration",
+        "blind_repeat",
+        "adjudication"
+      ]
+    },
+    "target_only": {
+      "$ref": "#/$defs/decision"
+    },
+    "contextual": {
+      "$ref": "#/$defs/contextualDecision"
+    },
+    "started_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    }
+  },
+  "$defs": {
+    "emotionLabel": {
+      "enum": [
+        "anger",
+        "frustration",
+        "disappointment",
+        "sadness",
+        "fear",
+        "joy",
+        "surprise",
+        "confusion",
+        "disgust",
+        "cynicism",
+        "neutral",
+        "other_emotion"
+      ]
+    },
+    "nullableEmotionLabel": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/emotionLabel"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullableConfidence": {
+      "anyOf": [
+        {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "primary_emotion",
+        "other_emotion_text",
+        "confidence",
+        "note"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "unlabeled",
+            "labeled",
+            "unclear",
+            "unusable"
+          ]
+        },
+        "primary_emotion": {
+          "$ref": "#/$defs/nullableEmotionLabel"
+        },
+        "other_emotion_text": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "confidence": {
+          "$ref": "#/$defs/nullableConfidence"
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 1000
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "labeled"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "primary_emotion": {
+                "$ref": "#/$defs/emotionLabel"
+              },
+              "confidence": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "primary_emotion": {
+                "const": "other_emotion"
+              }
+            },
+            "required": [
+              "primary_emotion"
+            ]
+          },
+          "then": {
+            "properties": {
+              "other_emotion_text": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 64
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "other_emotion_text": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "unlabeled",
+                  "unclear",
+                  "unusable"
+                ]
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "primary_emotion": {
+                "type": "null"
+              },
+              "other_emotion_text": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unlabeled"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "confidence": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "confidence": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unusable"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "note": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              }
+            }
+          }
+        }
+      ]
+    },
+    "contextualDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "primary_emotion",
+        "other_emotion_text",
+        "confidence",
+        "sarcasm",
+        "mixed_emotion",
+        "context_sufficiency",
+        "note"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "unlabeled",
+            "labeled",
+            "unclear",
+            "unusable"
+          ]
+        },
+        "primary_emotion": {
+          "$ref": "#/$defs/nullableEmotionLabel"
+        },
+        "other_emotion_text": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "confidence": {
+          "$ref": "#/$defs/nullableConfidence"
+        },
+        "sarcasm": {
+          "anyOf": [
+            {
+              "enum": [
+                "present",
+                "absent",
+                "uncertain"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mixed_emotion": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "context_sufficiency": {
+          "anyOf": [
+            {
+              "enum": [
+                "sufficient",
+                "insufficient",
+                "uncertain"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 1000
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "labeled"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "primary_emotion": {
+                "$ref": "#/$defs/emotionLabel"
+              },
+              "confidence": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "primary_emotion": {
+                "const": "other_emotion"
+              }
+            },
+            "required": [
+              "primary_emotion"
+            ]
+          },
+          "then": {
+            "properties": {
+              "other_emotion_text": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 64
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "other_emotion_text": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "unlabeled",
+                  "unclear",
+                  "unusable"
+                ]
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "primary_emotion": {
+                "type": "null"
+              },
+              "other_emotion_text": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "unlabeled",
+                  "unusable"
+                ]
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "sarcasm": {
+                "type": "null"
+              },
+              "mixed_emotion": {
+                "type": "null"
+              },
+              "context_sufficiency": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "sarcasm": {
+                "enum": [
+                  "present",
+                  "absent",
+                  "uncertain"
+                ]
+              },
+              "mixed_emotion": {
+                "type": "boolean"
+              },
+              "context_sufficiency": {
+                "enum": [
+                  "sufficient",
+                  "insufficient",
+                  "uncertain"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unlabeled"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "confidence": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "confidence": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unusable"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "note": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

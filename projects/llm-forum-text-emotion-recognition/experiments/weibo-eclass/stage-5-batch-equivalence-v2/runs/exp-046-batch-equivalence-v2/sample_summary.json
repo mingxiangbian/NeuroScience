@@ -1,0 +1,42 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "experiment_id": "EXP-046",
+  "native_and_stress_batch_partitions_differ": true,
+  "population_label_counts": {
+    "anger": 198,
+    "joy": 286,
+    "negative": 516,
+    "neutral": 281,
+    "no_emotion": 4166,
+    "positive": 452,
+    "sadness": 96
+  },
+  "raw_ids_stored_publicly": false,
+  "raw_text_stored_publicly": false,
+  "sample_label_counts": {
+    "anger": 1,
+    "joy": 1,
+    "negative": 1,
+    "neutral": 1,
+    "no_emotion": 10,
+    "positive": 1,
+    "sadness": 1
+  },
+  "sample_prompt_tokens": {
+    "count": 16,
+    "max": 207,
+    "mean": 199.6875,
+    "min": 196,
+    "p50": 199.0,
+    "p95": 204.0,
+    "p99": 206.4
+  },
+  "sample_rows": 16,
+  "selection_digest_sha256": "99f851612df7f5bc67792c9892655e126ded52a1618fca9113c3d3b9bbe0cebd",
+  "selection_method": "proportional_label_then_within_label_prompt_length_quantiles",
+  "status": "Passed",
+  "test_split_accessed": false,
+  "validation_split_accessed": false
+}

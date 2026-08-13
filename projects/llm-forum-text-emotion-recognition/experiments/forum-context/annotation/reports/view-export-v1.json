@@ -1,0 +1,87 @@
+{
+  "schema_version": "1",
+  "protocol_id": "DATA-FCTX-LABEL-V1",
+  "sampling_protocol_id": "DATA-FCTX-SAMPLE-V1",
+  "generated_at_utc": "2026-08-06T03:46:21.407463+00:00",
+  "status": "passed",
+  "inputs": {
+    "cleaning_database": {
+      "filename": "cleaning-v2.sqlite",
+      "sha256": "b1f3022320980c96c5353be16401764a78e0bc40ebb21d71399fe4efcb05fcc7"
+    },
+    "dedup_database": {
+      "filename": "dedup-v2.sqlite",
+      "sha256": "13a5266a12f9574f073c3c7ce72e785e7d019573961507e1b0631f0a50bd7d4f"
+    },
+    "sampling_manifest": {
+      "filename": "sampling-manifest.jsonl",
+      "sha256": "54d15a5ce4e9e7ab7915c8058f15fbd3b4e989cb9776084d7b0ea428c8262d28",
+      "rows": 120
+    },
+    "sampling_report": {
+      "filename": "sampling-preflight-v1.json",
+      "sha256": "0d8383ee3ac190331ee9a0dd6a7c42d0ba9e2f8af96468ef23670c77b61a07ff"
+    },
+    "sampling_verification": {
+      "filename": "sampling-verification-v1.json",
+      "sha256": "43a7921910f982d678870dc74b628bb1144954d6d4f9d431ebb412e21ef9ffa5"
+    },
+    "label_protocol": {
+      "filename": "data-label-calibration-view-v1.md",
+      "sha256": "0de4bf6243f223ea1a72b3fa48867b59abf6cd19ff95104ff53d00856b0d376a"
+    },
+    "view_schema": {
+      "filename": "annotation-view-v1.schema.json",
+      "sha256": "9441981a27f2869d877641809742134de32712392d535355e2b4425ef59e4202"
+    }
+  },
+  "implementation": {
+    "script": "export_annotation_views_v1.py",
+    "script_sha256": "eaefe1738ddb89383af6a8975c86e261cd250a4ed69119fdbba2268474eac531"
+  },
+  "aggregate": {
+    "view_rows": 120,
+    "annotation_order_min": 1,
+    "annotation_order_max": 120,
+    "samples_with_target_quotes": 89,
+    "target_quote_blocks": 164,
+    "quote_source_relations": {
+      "direct_parent": 123,
+      "external_or_unknown": 12,
+      "same_thread_other": 29
+    },
+    "truncated_quote_blocks": 89,
+    "altered_quote_blocks": 13,
+    "target_body_chars_nearest_rank": {
+      "p50": 268,
+      "p90": 1274,
+      "p95": 1858
+    },
+    "parent_body_chars_nearest_rank": {
+      "p50": 402,
+      "p90": 1254,
+      "p95": 2285
+    }
+  },
+  "private_artifact": {
+    "directory_name": "views",
+    "files": 120,
+    "combined_sha256": "21e0d2a5294075bb6ef68c5f65f894fea58ae5650b104344e1169e310b4d84ee",
+    "directory_mode": "0o700",
+    "all_file_modes_0600": true,
+    "gitignored": true
+  },
+  "annotation_state": {
+    "human_labels_created": false,
+    "record_files_created": false,
+    "blind_repeats_created": false
+  },
+  "privacy": {
+    "forum_text_emitted_in_public_report": false,
+    "source_ids_emitted": false,
+    "hmac_ids_emitted_in_public_report": false,
+    "sampling_lanes_emitted_to_views": false,
+    "weak_labels_emitted_to_views": false,
+    "external_services_used": false
+  }
+}

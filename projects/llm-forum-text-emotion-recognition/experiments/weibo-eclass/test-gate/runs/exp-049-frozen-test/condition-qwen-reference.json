@@ -1,0 +1,79 @@
+{
+  "completed_at_utc": "2026-08-13T02:02:38.600386+00:00",
+  "condition": "qwen-reference",
+  "experiment_id": "EXP-049",
+  "generation": {
+    "active_generation_seconds": 75186.91278584639,
+    "api_cost_usd": 0,
+    "batch_size": 1,
+    "command_elapsed_seconds": 75200.51769241702,
+    "final_tokens": {
+      "count": 1273,
+      "max": 8,
+      "mean": 5.683424980361351,
+      "median": 6,
+      "min": 0,
+      "p95": 8.0,
+      "sum": 7235
+    },
+    "generated_tokens": {
+      "count": 1273,
+      "max": 1032,
+      "mean": 522.776119402985,
+      "median": 444,
+      "min": 135,
+      "p95": 1024.0,
+      "sum": 665494
+    },
+    "generation_seconds": {
+      "count": 1273,
+      "max": 126.0983501248993,
+      "mean": 59.06277516562953,
+      "median": 50.42067354195751,
+      "min": 16.635336291976273,
+      "p95": 120.18411955884656,
+      "sum": 75186.91278584639
+    },
+    "peak_memory_gb": 8.266377532,
+    "prompt_tokens": {
+      "count": 1273,
+      "max": 275,
+      "mean": 200.83503534956796,
+      "median": 200,
+      "min": 195,
+      "p95": 209.0,
+      "sum": 255663
+    },
+    "thinking_tokens": {
+      "count": 1273,
+      "max": 1032,
+      "mean": 516.1775333857031,
+      "median": 437,
+      "min": 128,
+      "p95": 1024.0,
+      "sum": 657094
+    }
+  },
+  "parser": {
+    "error_counts": {
+      "invalid_json": 1,
+      "missing_thinking_boundary": 108
+    },
+    "likely_truncated_count": 110,
+    "valid_count": 1164,
+    "valid_rate": 0.9143754909662215
+  },
+  "performance_metrics_computed": false,
+  "private_predictions": {
+    "bytes": 4392529,
+    "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-049-frozen-test/condition-qwen-reference-predictions.jsonl",
+    "sha256": "b6fc78d9149ba94e11d4012e785e67df6fab558775182acd03704b32c3136d44"
+  },
+  "raw_outputs_stored_publicly": false,
+  "reasoning": true,
+  "rows": 1273,
+  "status": "Completed; labels sealed",
+  "test_inputs_accessed": true,
+  "test_labels_accessed": false,
+  "view": "target_only"
+}

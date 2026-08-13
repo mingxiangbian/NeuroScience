@@ -1,0 +1,223 @@
+{
+  "schema_version": "1",
+  "protocol_id": "DATA-FCTX-LABEL-V1",
+  "sampling_protocol_id": "DATA-FCTX-SAMPLE-V1",
+  "verified_at_utc": "2026-08-06T03:46:37.240114+00:00",
+  "status": "passed",
+  "inputs": {
+    "cleaning_database_filename": "cleaning-v2.sqlite",
+    "cleaning_database_sha256": "b1f3022320980c96c5353be16401764a78e0bc40ebb21d71399fe4efcb05fcc7",
+    "dedup_database_filename": "dedup-v2.sqlite",
+    "dedup_database_sha256": "13a5266a12f9574f073c3c7ce72e785e7d019573961507e1b0631f0a50bd7d4f",
+    "sampling_manifest_filename": "sampling-manifest.jsonl",
+    "sampling_manifest_sha256": "54d15a5ce4e9e7ab7915c8058f15fbd3b4e989cb9776084d7b0ea428c8262d28",
+    "sampling_report_filename": "sampling-preflight-v1.json",
+    "sampling_report_sha256": "0d8383ee3ac190331ee9a0dd6a7c42d0ba9e2f8af96468ef23670c77b61a07ff",
+    "sampling_verification_filename": "sampling-verification-v1.json",
+    "sampling_verification_sha256": "43a7921910f982d678870dc74b628bb1144954d6d4f9d431ebb412e21ef9ffa5",
+    "label_protocol_filename": "data-label-calibration-view-v1.md",
+    "label_protocol_sha256": "0de4bf6243f223ea1a72b3fa48867b59abf6cd19ff95104ff53d00856b0d376a",
+    "view_schema_filename": "annotation-view-v1.schema.json",
+    "view_schema_sha256": "9441981a27f2869d877641809742134de32712392d535355e2b4425ef59e4202",
+    "export_report_filename": "view-export-v1.json",
+    "export_report_sha256": "afcca5ab66bf2c0e57f17e5e2e4c853e8db2b9a60d134a65cc923c9471360bbb",
+    "verification_script_sha256": "f86dc6f6defb397790c27ac048188f899e4c1e77373345638c7d83cb233ad393"
+  },
+  "aggregate": {
+    "view_rows": 120,
+    "target_quote_blocks": 164,
+    "quote_source_relations": {
+      "direct_parent": 123,
+      "external_or_unknown": 12,
+      "same_thread_other": 29
+    }
+  },
+  "checks": [
+    {
+      "name": "frozen hash cleaning_database",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "frozen hash dedup_database",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "frozen hash label_protocol",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "frozen hash view_schema",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "sampling report status",
+      "status": "passed",
+      "detail": "passed"
+    },
+    {
+      "name": "sampling verification status",
+      "status": "passed",
+      "detail": "passed with zero mismatches"
+    },
+    {
+      "name": "export report status",
+      "status": "passed",
+      "detail": "passed"
+    },
+    {
+      "name": "manifest hash against sampling report",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "manifest hash against sampling verification",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "export report input hashes",
+      "status": "passed",
+      "detail": "all input hashes"
+    },
+    {
+      "name": "manifest rows",
+      "status": "passed",
+      "detail": "rows=120"
+    },
+    {
+      "name": "manifest annotation order",
+      "status": "passed",
+      "detail": "1..120"
+    },
+    {
+      "name": "manifest unique samples",
+      "status": "passed",
+      "detail": "unique=120"
+    },
+    {
+      "name": "manifest unique threads",
+      "status": "passed",
+      "detail": "unique=120"
+    },
+    {
+      "name": "view filenames",
+      "status": "passed",
+      "detail": "files=120"
+    },
+    {
+      "name": "expected view rows",
+      "status": "passed",
+      "detail": "rows=120"
+    },
+    {
+      "name": "exact database reconstruction",
+      "status": "passed",
+      "detail": "ordered view objects"
+    },
+    {
+      "name": "view schema contract",
+      "status": "passed",
+      "detail": "problems=0"
+    },
+    {
+      "name": "hidden sampling and source metadata",
+      "status": "passed",
+      "detail": "violations=0"
+    },
+    {
+      "name": "view sample order",
+      "status": "passed",
+      "detail": "manifest order"
+    },
+    {
+      "name": "view thread order",
+      "status": "passed",
+      "detail": "manifest order"
+    },
+    {
+      "name": "views directory mode",
+      "status": "passed",
+      "detail": "0o700"
+    },
+    {
+      "name": "view file modes",
+      "status": "passed",
+      "detail": "all 0600"
+    },
+    {
+      "name": "views gitignored",
+      "status": "passed",
+      "detail": "git check-ignore"
+    },
+    {
+      "name": "all view files gitignored",
+      "status": "passed",
+      "detail": "120 files"
+    },
+    {
+      "name": "combined private view hash",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "export aggregate row count",
+      "status": "passed",
+      "detail": "rows=120"
+    },
+    {
+      "name": "export aggregate quote count",
+      "status": "passed",
+      "detail": "blocks=164"
+    },
+    {
+      "name": "export aggregate quote relations",
+      "status": "passed",
+      "detail": "relation counts"
+    },
+    {
+      "name": "export public report privacy",
+      "status": "passed",
+      "detail": "violations=0"
+    },
+    {
+      "name": "export privacy claims",
+      "status": "passed",
+      "detail": "all false"
+    },
+    {
+      "name": "no human records",
+      "status": "passed",
+      "detail": "records directory absent"
+    },
+    {
+      "name": "no blind repeats",
+      "status": "passed",
+      "detail": "repeat manifest absent"
+    },
+    {
+      "name": "annotation state remains empty",
+      "status": "passed",
+      "detail": "all false"
+    }
+  ],
+  "mismatch_count": 0,
+  "mismatches": [],
+  "schema_problem_count": 0,
+  "forbidden_view_key_count": 0,
+  "public_payload_violations": [],
+  "annotation_state": {
+    "human_labels_created": false,
+    "record_files_created": false,
+    "blind_repeats_created": false
+  },
+  "privacy": {
+    "forum_text_emitted": false,
+    "source_or_hmac_ids_emitted": false,
+    "per_sample_records_emitted": false,
+    "external_services_used": false
+  }
+}

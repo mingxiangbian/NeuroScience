@@ -1,0 +1,67 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "completed_at_utc": "2026-08-09T17:33:40.333709+00:00",
+  "contract": {
+    "bytes": 5225,
+    "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-seed-42-replay-contract-v1.json",
+    "sha256": "cbf1c09f55854bd07b9dee9517ef41595199546987d960870181fe8d83dc11d7"
+  },
+  "experiment_id": "EXP-047",
+  "formal_dev_authorized": false,
+  "implementation": {
+    "imports_runner": false,
+    "verifier": {
+      "bytes": 17062,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/verify_seed42_replay.py",
+      "sha256": "8dede1c9599ef9d296d1fd1dbffa2c28caf4e81d1c1544bb3f7df11f380a9abb"
+    }
+  },
+  "next_required_step": "Decide whether to authorize seed 43; validation/test remain closed until all registered adapter gates pass.",
+  "recalculated": {
+    "aggregate": {
+      "bytes": 479,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/seed-42-replay/aggregate.json",
+      "sha256": "06736303fe528fdb8c5d1f498c9a530a5a8e7a0b26f63ddd46e52ccdff153d7e"
+    },
+    "comparison": {
+      "final_label_equal_count": 16,
+      "parser_state_equal_count": 16,
+      "raw_output_equal_count": 16,
+      "rows": 16
+    },
+    "passes": {
+      "r1": {
+        "bytes": 663,
+        "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/seed-42-replay/pass-r1.json",
+        "sha256": "95bdb45aade84296b2dfc8a07824a0ed0ea14df8c37535d7e88650a1055ea283"
+      },
+      "r2": {
+        "bytes": 664,
+        "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/seed-42-replay/pass-r2.json",
+        "sha256": "a9854f937c5413a30531237177c7e66295cf586cdfce4ae1217106d54939b9fc"
+      }
+    },
+    "privacy": {
+      "public_json_files_scanned": 4,
+      "raw_output_leaks": 0
+    },
+    "run": {
+      "bytes": 1882,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/seed-42-replay/run.json",
+      "sha256": "7bca1dcc8feb5e921f2ed76b7570aa0c970d0ca3a45c68ec9b518f9389213a70"
+    },
+    "training_verification": {
+      "bytes": 5823,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/runs/exp-047-stage-5-generative-lora/seed-42/verification.json",
+      "sha256": "da48232e6f80e978cd3c5935774569ab92dbcd25c2ce78ccc4ba38976f83c4e7"
+    }
+  },
+  "remaining_training_seeds_authorized": false,
+  "seed": 42,
+  "status": "Passed",
+  "test_split_accessed": false,
+  "validation_split_accessed": false,
+  "verification_id": "EXP-047-SEED-42-REPLAY-VERIFY-V1"
+}

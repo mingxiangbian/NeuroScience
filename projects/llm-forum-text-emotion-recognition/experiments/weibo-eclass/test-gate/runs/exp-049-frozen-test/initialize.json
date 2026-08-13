@@ -1,0 +1,35 @@
+{
+  "authorization": {
+    "bytes": 869,
+    "path": "experiments/weibo-eclass/test-gate/preflight/exp-049-authorization-v1.json",
+    "sha256": "8d77d4fe3c1885af4982ac97a960e7dfe97dd20c79e205eb28b3decc02a93d1c"
+  },
+  "completed_at_utc": "2026-08-12T05:04:12.883585+00:00",
+  "condition_order": [
+    "m0-majority",
+    "m1-target-only",
+    "encoder-seed-42",
+    "encoder-seed-43",
+    "encoder-seed-44",
+    "qwen-reference",
+    "qwen-lora-seed-42",
+    "qwen-lora-seed-43",
+    "qwen-lora-seed-44"
+  ],
+  "contract": {
+    "bytes": 19158,
+    "path": "experiments/weibo-eclass/test-gate/configs/exp-049-test-ready.json",
+    "sha256": "d31577b2def7c8cedbcd0da44e71a0a271fa2fcf171fad85cbb1c062fe2d716e"
+  },
+  "experiment_id": "EXP-049",
+  "model_artifacts_verified": true,
+  "performance_metrics_computed": false,
+  "status": "Passed",
+  "test_inputs_accessed": false,
+  "test_labels_accessed": false,
+  "test_ready_verification": {
+    "bytes": 3731,
+    "path": "experiments/weibo-eclass/test-gate/preflight/exp-049-test-ready-verification-v1.json",
+    "sha256": "d58d9d758d2d216dbc5652bef2680d245faea7798fcefef0dd4d386e54ae5560"
+  }
+}

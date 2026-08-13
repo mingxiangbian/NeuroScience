@@ -1,0 +1,35 @@
+{
+  "aggregate_unchanged": {
+    "bytes": 279125,
+    "path": "experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/aggregate-metrics.json",
+    "sha256": "428797d4c7a17a35614bf383208d0e7c1346f52883a074301347785389010a98"
+  },
+  "detected_at_utc": "2026-08-13T04:31:10.740056+00:00",
+  "experiment_id": "EXP-049",
+  "failure": {
+    "exception": "AttributeError",
+    "message": "Report renderer called .get() on a null parser field for a non-generative unit.",
+    "scope": "REPORT.md rendering after metrics had been persisted"
+  },
+  "labels_already_opened": true,
+  "model_calls_after_open": 0,
+  "recovery_action": "Rendered REPORT.md from the persisted aggregate and completed the opening-to-consumed state transition.",
+  "recovery_id": "EXP-049-FINALIZE-REPORT-RECOVERY-V1",
+  "report": {
+    "bytes": 2008,
+    "path": "experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/REPORT.md",
+    "sha256": "5ab0e6bdc15b9afb9727fb2c80586cbc9e7b8120bba48aa2164d62fdb3cacce3"
+  },
+  "scored_predictions_unchanged": {
+    "bytes": 556738,
+    "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-049-frozen-test/scored-predictions.jsonl",
+    "sha256": "f2961afd0a24bdf8232ec322a98b8b993db6a2dc209fc9015e5b73881f307123"
+  },
+  "status": "Recovered; pending independent verification",
+  "test_labels_reopened": false,
+  "unit_results_unchanged": {
+    "bytes": 1488,
+    "path": "experiments/weibo-eclass/test-gate/runs/exp-049-frozen-test/unit-results.csv",
+    "sha256": "76a118553a473e1b236413935aae49533e31430f28d0589d76390446dfc01643"
+  }
+}

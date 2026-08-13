@@ -1,0 +1,109 @@
+{
+  "data": {
+    "labels": [
+      "anger",
+      "joy",
+      "negative",
+      "neutral",
+      "no_emotion",
+      "positive",
+      "sadness"
+    ],
+    "protocol_id": "DATA-WEIBO-TASK-V1",
+    "selection_per_label_context_stratum": 4,
+    "selection_rows": 56,
+    "selection_seed": "EXP-039-stage2-selection-v1",
+    "test_access": false,
+    "train_path": "data/weibo-emotion-corpus/derived-private/eclass-v1/train.jsonl",
+    "train_rows": 5995,
+    "train_sha256": "b1fd309acf45dfa4ad0c907ee3f373ea95fce751d51b637d402e289aa79d19e0",
+    "validation_access": false
+  },
+  "encoder": {
+    "batch_size": 14,
+    "license": "apache-2.0",
+    "learning_rate": 2e-05,
+    "local_path": "models/chinese-roberta-wwm-ext/snapshot",
+    "max_sequence_length": 256,
+    "optimizer_steps": 2,
+    "repo_id": "hfl/chinese-roberta-wwm-ext",
+    "revision": "5c58d0b8ec1d9014354d691c538661bf00bfdb44",
+    "source_weight_bytes": 411578458
+  },
+  "experiment_id": "EXP-041",
+  "implementation": {
+    "parser_path": "experiments/weibo-eclass/stage-2-preflight/label_parser.py",
+    "parser_sha256": "7fb43b548a9d8643961d846239d7134b0f39945ce14a22042eb6a6b9ca880470",
+    "prompt_path": "experiments/weibo-eclass/stage-2-preflight/prompt-v1.json",
+    "prompt_sha256": "d9a92aab3a531b769c3b4794572cf0842536c7c38dcdd6a1cd4ac25885e6631b",
+    "runner_path": "experiments/weibo-eclass/stage-2-preflight/run_preflight.py",
+    "runner_sha256": "2e2468ab96df2ddfde791faf85dd867511ecf753fe2429d4b1323371dc714333",
+    "verifier_path": "experiments/weibo-eclass/stage-2-preflight/verify_preflight.py",
+    "verifier_sha256": "709b0d832e1ac1ee9bbbd514118a514fcfc0d7710a4658282d0c40f33915a887"
+  },
+  "m1": {
+    "char_ngram_range": [3, 5],
+    "class_weight": "balanced",
+    "classifier": "LinearSVC",
+    "c": 1.0,
+    "min_df": 2,
+    "random_state": 42,
+    "sublinear_tf": true,
+    "word_ngram_range": [1, 2]
+  },
+  "private_root": "data/weibo-emotion-corpus/derived-private/eclass-v1/preflight/exp-041",
+  "qwen": {
+    "inference": {
+      "context_available_rows_per_label": 1,
+      "context_missing_rows_per_label": 1,
+      "generation_seed_namespace": "EXP-040",
+      "max_new_tokens": 1024,
+      "min_p": 0.0,
+      "minimum_overall_parser_valid_rate": 0.8,
+      "temperature": 0.6,
+      "top_k": 20,
+      "top_p": 0.95
+    },
+    "license": "apache-2.0",
+    "local_path": "models/qwen3-4b/mlx-bf16",
+    "lora": {
+      "adapted_block_indices": [20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
+      "batch_size": 1,
+      "dropout": 0.0,
+      "grad_checkpoint": true,
+      "iterations": 2,
+      "learning_rate": 1e-05,
+      "mask_prompt": true,
+      "max_sequence_length": 512,
+      "num_layers": 16,
+      "optimizer": "adamw",
+      "rank": 8,
+      "scale": 20.0,
+      "target_modules": [
+        "self_attn.q_proj",
+        "self_attn.k_proj",
+        "self_attn.v_proj",
+        "self_attn.o_proj",
+        "mlp.gate_proj",
+        "mlp.up_proj",
+        "mlp.down_proj"
+      ]
+    },
+    "precision": "bfloat16",
+    "quantized": false,
+    "repo_id": "Qwen/Qwen3-4B",
+    "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "num_hidden_layers": 36,
+    "source_safetensors_bytes": 8044982000
+  },
+  "resource_budget": {
+    "api_cost_usd_max": 0,
+    "download_attempts_per_model_max": 2,
+    "local_wall_time_minutes_max": 120,
+    "qwen_source_plus_conversion_bytes_max": 21474836480
+  },
+  "rq_ids": ["RQ-F1", "RQ-F2"],
+  "run_dir": "experiments/weibo-eclass/stage-2-preflight/runs/exp-041-model-stack-preflight",
+  "status": "Registered",
+  "tier": "Minor"
+}

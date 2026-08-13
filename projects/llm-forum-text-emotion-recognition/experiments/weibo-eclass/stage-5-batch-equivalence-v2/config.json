@@ -1,0 +1,87 @@
+{
+  "data": {
+    "labels": [
+      "anger",
+      "joy",
+      "negative",
+      "neutral",
+      "no_emotion",
+      "positive",
+      "sadness"
+    ],
+    "protocol_id": "DATA-WEIBO-TASK-V1",
+    "split": "train",
+    "test_access": false,
+    "train_path": "data/weibo-emotion-corpus/derived-private/eclass-v1/train.jsonl",
+    "train_rows": 5995,
+    "train_sha256": "b1fd309acf45dfa4ad0c907ee3f373ea95fce751d51b637d402e289aa79d19e0",
+    "validation_access": false
+  },
+  "decision": {
+    "batch_composition_label_agreement_min": 1.0,
+    "batch_replay_label_agreement_min": 1.0,
+    "fallback_if_no_stable_reasoning_on_mode": "block_reasoning_on_primary_pending_reasoning_off_replay",
+    "singleton_replay_label_agreement_min": 1.0
+  },
+  "experiment_id": "EXP-046",
+  "generation": {
+    "backend": "mlx_lm.batch_generate",
+    "batch_size": 8,
+    "deterministic": true,
+    "max_new_tokens": 1024,
+    "modes": [
+      "singleton-r1",
+      "singleton-r2",
+      "batch8-r1",
+      "batch8-r2",
+      "batch8-length-stress"
+    ],
+    "prefill_step_size": 2048,
+    "reasoning": true,
+    "temperature": 0.0
+  },
+  "implementation": {
+    "parser_path": "experiments/weibo-eclass/stage-4-qwen-2x2/label_parser.py",
+    "parser_sha256": "429c8708da864086c11859449ebf427b8a681c20eec58900d97574d508067a21",
+    "prompt_path": "experiments/weibo-eclass/stage-4-qwen-2x2/prompt-v1.json",
+    "prompt_sha256": "d9a92aab3a531b769c3b4794572cf0842536c7c38dcdd6a1cd4ac25885e6631b",
+    "requirements_path": "experiments/weibo-eclass/stage-4-qwen-2x2/requirements-lock.txt",
+    "requirements_sha256": "69072303ed0d899983f402fe81131f79c57c1154d45ae8550cff518f48bd70bc"
+  },
+  "model": {
+    "local_path": "models/qwen3-4b/mlx-bf16",
+    "manifest_path": "models/qwen3-4b/manifest.json",
+    "manifest_sha256": "da447350d9e43213dacc1202da03b50d7e7114b0a4fe2904ff353240b404a641",
+    "precision": "bfloat16",
+    "quantized": false,
+    "repo_id": "Qwen/Qwen3-4B",
+    "revision": "1cfa9a7208912126459214e8b04321603b3df60c"
+  },
+  "parent_experiments": [
+    "EXP-043",
+    "EXP-044",
+    "EXP-045"
+  ],
+  "private_root": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-046-batch-equivalence-v2",
+  "resource_budget": {
+    "api_cost_usd_max": 0,
+    "formal_generations": 80,
+    "local_wall_time_minutes_max": 75,
+    "peak_memory_gb_max": 13.0
+  },
+  "rq_ids": [
+    "RQ-F1",
+    "RQ-F2"
+  ],
+  "run_dir": "experiments/weibo-eclass/stage-5-batch-equivalence-v2/runs/exp-046-batch-equivalence-v2",
+  "sampling": {
+    "native_order": "selection_hash",
+    "rows": 16,
+    "seed_namespace": "EXP-046-batch-equivalence-sample-v2",
+    "selection": "proportional_label_then_within_label_prompt_length_quantiles",
+    "stress_order": "prompt_length_ascending"
+  },
+  "stage": "stage-5-reasoning-on-batch-equivalence-v2",
+  "status": "Registered",
+  "tier": "Minor"
+}

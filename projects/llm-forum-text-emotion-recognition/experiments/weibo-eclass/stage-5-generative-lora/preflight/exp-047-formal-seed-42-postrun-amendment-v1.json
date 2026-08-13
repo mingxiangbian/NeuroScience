@@ -1,0 +1,65 @@
+{
+  "amendment_id": "EXP-047-FORMAL-SEED-42-POSTRUN-AMENDMENT-V1",
+  "bindings": {
+    "authorization": {
+      "bytes": 1233,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-formal-seed-42-authorization-v1.json",
+      "sha256": "7a6d7e1e3adfd6be26b733da912a72fc7e0241660e752b1cea6bf3ceb1391de5"
+    },
+    "base_training_verifier": {
+      "bytes": 20507,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/verify_formal_seed42_training.py",
+      "sha256": "c4043c32f89a6e54ef3ddbb259d249bd3e917209459667f8c2479c61fbf1ed0f"
+    },
+    "contract": {
+      "bytes": 8362,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-formal-seed-42-contract-v1.json",
+      "sha256": "783d91ab9ec1240a7b52e8726d1dc8adfe8e7bbc712083700465b0182f6df2ff"
+    },
+    "dry_run_verifier": {
+      "bytes": 28390,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/verify_dry_run.py",
+      "sha256": "64b309b12d2811bc42151a7803af62b754b0a73a27b0e030bff0057fd2ecd508"
+    },
+    "formal_gate": {
+      "bytes": 5001,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/preflight/exp-047-formal-seed-42-gate-verification-v1.json",
+      "sha256": "946da7a0ad5426b26408c983ded5b8b97d84fc79972274c23d61815b5cbdb3bc"
+    },
+    "postrun_verifier": {
+      "bytes": 10330,
+      "path": "experiments/weibo-eclass/stage-5-generative-lora/verify_formal_seed42_training_postrun.py",
+      "sha256": "1ac2b89806c1d4694efc3b32eee952aa355a87e9ab1491177ef447ccc92897c2"
+    }
+  },
+  "created_at_utc": "2026-08-09T17:26:53Z",
+  "experiment_id": "EXP-047",
+  "observed_failure": {
+    "failed_check": "private-prepared-train-is-exact-and-isolated",
+    "immutable_checks_reproduced": 10,
+    "reason": "The pre-training dry-run verifier permanently required the private experiment root to contain only lora-data/train.jsonl. Formal training necessarily added the four adapter artifacts declared by the frozen contract, so a literal post-run replay of that absence condition must fail."
+  },
+  "permitted_delta": {
+    "check": "private-prepared-train-is-exact-and-isolated",
+    "files": [
+      "adapters/seed-42/0005995_adapters.safetensors",
+      "adapters/seed-42/0011990_adapters.safetensors",
+      "adapters/seed-42/adapter_config.json",
+      "adapters/seed-42/adapters.safetensors",
+      "lora-data/train.jsonl"
+    ]
+  },
+  "scope": {
+    "changes_training_configuration": false,
+    "permits_additional_private_files": false,
+    "permits_model_rerun": false,
+    "permits_seed_43_or_44": false,
+    "permits_test_access": false,
+    "permits_validation_access": false,
+    "purpose": "Replace only the logically stale post-run absence assertion while preserving every immutable gate and training check."
+  },
+  "seed": 42,
+  "status": "Registered",
+  "test_split_accessed": false,
+  "validation_split_accessed": false
+}

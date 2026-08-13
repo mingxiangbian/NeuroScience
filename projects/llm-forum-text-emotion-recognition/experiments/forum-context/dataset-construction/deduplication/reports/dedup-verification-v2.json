@@ -1,0 +1,395 @@
+{
+  "schema_version": "1",
+  "pipeline_id": "DATA-FCTX-DEDUP-V2",
+  "verified_at": "2026-08-05T13:32:02.383236+00:00",
+  "status": "passed",
+  "inputs": {
+    "input_database_filename": "cleaning-v2.sqlite",
+    "input_database_sha256": "b1f3022320980c96c5353be16401764a78e0bc40ebb21d71399fe4efcb05fcc7",
+    "dedup_database_filename": "dedup-v2.sqlite",
+    "dedup_database_sha256": "13a5266a12f9574f073c3c7ce72e785e7d019573961507e1b0631f0a50bd7d4f",
+    "embeddings_filename": "dedup-v2-post-embeddings.f32",
+    "embeddings_sha256": "e047e922e1b92e8c855582688fa8db32af03a611315fb704c13803091be3f594",
+    "index_filename": "dedup-v2-pair-hnsw.faiss",
+    "index_sha256": "98ee93ef4d0dee8926e2dc5e72c998ee6a281b780b44d007547ae969280907b2",
+    "aggregate_report_filename": "dedup-preflight-v2.json",
+    "aggregate_report_sha256": "593dbc8a9bcab250e5677e03cadae001f9ecaa38ebc5c191144c8d2640ecb3bf",
+    "verification_script_sha256": "2c9059988f80ccace1d15a77f947f1c371e4ba346d5bf5c891fc385400e51f7b",
+    "embedding_worker_sha256": "2e10372e09cdfc55793178d9129d7a2210fba3f0dee0f95332dee3c73eea5981",
+    "embedding_replay_worker_sha256": "1e406670ce0fe172907365c9b55fe7354211e4a99ff7265360998da1759178f8",
+    "reuse_manifest_filename": "dedup-v1.json",
+    "reuse_manifest_sha256": "943a4fb9d97deb61a00311b1007993782669a242bcdabf95354fd0a7a8e97739",
+    "reuse_report_filename": "dedup-preflight-v1.json",
+    "reuse_report_sha256": "e32e5d3df272b9e5b148ed9c406be47993318b3e12c49253af78aeaac9063491",
+    "reuse_embeddings_sha256": "e047e922e1b92e8c855582688fa8db32af03a611315fb704c13803091be3f594",
+    "reuse_index_sha256": "0ea00b8ba104f393c0252063022e7fbb814b4898ddf8af66ebc8012493c83b3a"
+  },
+  "aggregate": {
+    "candidate_rows": 403336,
+    "kept_rows": 403183,
+    "auto_dropped_rows": 153,
+    "exact_duplicate_clusters": 116,
+    "exact_duplicate_members": 262,
+    "edge_type_counts": {
+      "exact": 139,
+      "format_only": 15,
+      "lexical_review": 53,
+      "lexical_semantic_review": 7167,
+      "semantic_review": 61332
+    },
+    "mean_recall_at_64": 0.9925537109375,
+    "min_recall_at_64": 0.828125,
+    "adaptive_queries": 655,
+    "saturated_queries_at_max_k": 0
+  },
+  "checks": [
+    {
+      "name": "pipeline status",
+      "status": "passed",
+      "detail": "V2 pre-verification run completed"
+    },
+    {
+      "name": "manifest status",
+      "status": "passed",
+      "detail": "V2 artifact awaits this verification"
+    },
+    {
+      "name": "input hash in report",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "input hash in manifest",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "database hash in report",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "database hash in manifest",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "embedding hash in report",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "embedding hash in manifest",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "index hash in report",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "index hash in manifest",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "script hash",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "embedding worker hash",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "protocol hash",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "protocol hash in manifest",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "report hash in manifest",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "model identity",
+      "status": "passed",
+      "detail": "frozen model and revision"
+    },
+    {
+      "name": "model file hash",
+      "status": "passed",
+      "detail": "selected model files"
+    },
+    {
+      "name": "reuse provenance present",
+      "status": "passed",
+      "detail": "V1 artifacts reused under hash control"
+    },
+    {
+      "name": "reuse provenance fields",
+      "status": "passed",
+      "detail": "hashes and component boundary"
+    },
+    {
+      "name": "reuse provenance in manifest",
+      "status": "passed",
+      "detail": "report and manifest agree"
+    },
+    {
+      "name": "reuse source failed status",
+      "status": "passed",
+      "detail": "V1 remains failed evidence"
+    },
+    {
+      "name": "reuse report-manifest hash",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "reuse embedding hash",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "reuse index hash",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "reused embedding unchanged",
+      "status": "passed",
+      "detail": "byte-identical frozen vectors"
+    },
+    {
+      "name": "V2 index serialization updated",
+      "status": "passed",
+      "detail": "efSearch metadata changed from V1"
+    },
+    {
+      "name": "reuse source input and model",
+      "status": "passed",
+      "detail": "same data and embedding model"
+    },
+    {
+      "name": "no failed-run decisions or edges reused",
+      "status": "passed",
+      "detail": "V2 decisions regenerated"
+    },
+    {
+      "name": "public payload privacy",
+      "status": "passed",
+      "detail": "violations=0"
+    },
+    {
+      "name": "private artifact modes",
+      "status": "passed",
+      "detail": "owner-only permissions"
+    },
+    {
+      "name": "private artifacts are gitignored",
+      "status": "passed",
+      "detail": "database, embeddings and index"
+    },
+    {
+      "name": "SQLite integrity",
+      "status": "passed",
+      "detail": "ok"
+    },
+    {
+      "name": "required tables",
+      "status": "passed",
+      "detail": "present=5"
+    },
+    {
+      "name": "database pipeline ID",
+      "status": "passed",
+      "detail": "DATA-FCTX-DEDUP-V2"
+    },
+    {
+      "name": "database input hash",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "database script hash",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "database protocol hash",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "database model hash",
+      "status": "passed",
+      "detail": "SHA-256"
+    },
+    {
+      "name": "embedding row continuity",
+      "status": "passed",
+      "detail": "zero-based contiguous rows"
+    },
+    {
+      "name": "truncation flags",
+      "status": "passed",
+      "detail": "token-count gate"
+    },
+    {
+      "name": "embedding file size",
+      "status": "passed",
+      "detail": "rows=414421, dimension=384"
+    },
+    {
+      "name": "embedding report shape",
+      "status": "passed",
+      "detail": "aggregate shape"
+    },
+    {
+      "name": "embedding values finite",
+      "status": "passed",
+      "detail": "all rows"
+    },
+    {
+      "name": "embedding L2 normalization",
+      "status": "passed",
+      "detail": "unit norm"
+    },
+    {
+      "name": "candidate count",
+      "status": "passed",
+      "detail": "rows=403336"
+    },
+    {
+      "name": "candidate index alignment",
+      "status": "passed",
+      "detail": "input and output stable order"
+    },
+    {
+      "name": "decision invariants",
+      "status": "passed",
+      "detail": "mismatches=0"
+    },
+    {
+      "name": "decision report counts",
+      "status": "passed",
+      "detail": "categories=3"
+    },
+    {
+      "name": "eligible-after-dedup accounting",
+      "status": "passed",
+      "detail": "kept rows"
+    },
+    {
+      "name": "exact duplicate accounting",
+      "status": "passed",
+      "detail": "clusters=116"
+    },
+    {
+      "name": "exact group final resolution",
+      "status": "passed",
+      "detail": "mismatches=0"
+    },
+    {
+      "name": "direct evidence for every auto-drop",
+      "status": "passed",
+      "detail": "missing=0"
+    },
+    {
+      "name": "format-only drop rules",
+      "status": "passed",
+      "detail": "mismatches=0"
+    },
+    {
+      "name": "edge cosine recomputation",
+      "status": "passed",
+      "detail": "mismatches=0"
+    },
+    {
+      "name": "edge threshold rules",
+      "status": "passed",
+      "detail": "mismatches=0"
+    },
+    {
+      "name": "lexical edge text recomputation",
+      "status": "passed",
+      "detail": "mismatches=0"
+    },
+    {
+      "name": "no semantic-only auto-drop",
+      "status": "passed",
+      "detail": "violations=0"
+    },
+    {
+      "name": "review cluster report",
+      "status": "passed",
+      "detail": "clusters=249"
+    },
+    {
+      "name": "embedding model replay",
+      "status": "passed",
+      "detail": "sampled_rows=32"
+    },
+    {
+      "name": "token count replay",
+      "status": "passed",
+      "detail": "mismatches=0"
+    },
+    {
+      "name": "HNSW report configuration",
+      "status": "passed",
+      "detail": "M=32, efConstruction=200, efSearch=768"
+    },
+    {
+      "name": "HNSW persisted configuration",
+      "status": "passed",
+      "detail": "index parameters"
+    },
+    {
+      "name": "HNSW dimensions",
+      "status": "passed",
+      "detail": "rows=403190, dimension=768"
+    },
+    {
+      "name": "HNSW report rows",
+      "status": "passed",
+      "detail": "exact representatives"
+    },
+    {
+      "name": "HNSW exact recall gate",
+      "status": "passed",
+      "detail": "queries=128, k=64"
+    },
+    {
+      "name": "HNSW recall report",
+      "status": "passed",
+      "detail": "independent FlatIP audit"
+    },
+    {
+      "name": "adaptive retrieval report",
+      "status": "passed",
+      "detail": "queries=655"
+    },
+    {
+      "name": "retrieval saturation gate",
+      "status": "passed",
+      "detail": "saturated=0"
+    },
+    {
+      "name": "retrieval saturation report",
+      "status": "passed",
+      "detail": "independent HNSW search"
+    }
+  ],
+  "mismatch_count": 0,
+  "mismatches": [],
+  "public_payload_violations": []
+}

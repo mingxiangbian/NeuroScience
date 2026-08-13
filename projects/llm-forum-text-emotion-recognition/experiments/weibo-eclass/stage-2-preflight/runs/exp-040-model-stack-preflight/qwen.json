@@ -1,0 +1,258 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "completed_at_utc": "2026-08-08T05:27:15.119040+00:00",
+  "conditions": {
+    "available__previous_context__thinking_false": {
+      "finish_reasons": {
+        "stop": 7
+      },
+      "generated_tokens": {
+        "count": 7,
+        "max": 6,
+        "mean": 6.0,
+        "min": 6,
+        "p50": 6.0,
+        "p95": 6.0,
+        "p99": 6.0
+      },
+      "generation_seconds": {
+        "count": 7,
+        "max": 1.5646748329745606,
+        "mean": 1.5163061427052267,
+        "min": 1.5007885419763625,
+        "p50": 1.5107942080358043,
+        "p95": 1.5497839957941324,
+        "p99": 1.561696665538475
+      },
+      "parser_errors": {},
+      "parser_valid_count": 7,
+      "parser_valid_rate": 1.0,
+      "peak_memory_gb_max": 8.221130728,
+      "prompt_tokens": {
+        "count": 7,
+        "max": 221,
+        "mean": 214.85714285714286,
+        "min": 211,
+        "p50": 216.0,
+        "p95": 219.8,
+        "p99": 220.76
+      },
+      "rows": 7
+    },
+    "available__previous_context__thinking_true": {
+      "finish_reasons": {
+        "length": 5,
+        "stop": 2
+      },
+      "generated_tokens": {
+        "count": 7,
+        "max": 384,
+        "mean": 358.0,
+        "min": 290,
+        "p50": 384.0,
+        "p95": 384.0,
+        "p99": 384.0
+      },
+      "generation_seconds": {
+        "count": 7,
+        "max": 41.63245241600089,
+        "mean": 38.686292231731514,
+        "min": 31.40871645801235,
+        "p50": 41.391274791094474,
+        "p95": 41.60993132871808,
+        "p99": 41.627948198544324
+      },
+      "parser_errors": {
+        "missing_thinking_boundary": 5
+      },
+      "parser_valid_count": 2,
+      "parser_valid_rate": 0.2857142857142857,
+      "peak_memory_gb_max": 8.221130728,
+      "prompt_tokens": {
+        "count": 7,
+        "max": 217,
+        "mean": 210.85714285714286,
+        "min": 207,
+        "p50": 212.0,
+        "p95": 215.8,
+        "p99": 216.76
+      },
+      "rows": 7
+    },
+    "available__target_only__thinking_false": {
+      "finish_reasons": {
+        "stop": 7
+      },
+      "generated_tokens": {
+        "count": 7,
+        "max": 6,
+        "mean": 6.0,
+        "min": 6,
+        "p50": 6.0,
+        "p95": 6.0,
+        "p99": 6.0
+      },
+      "generation_seconds": {
+        "count": 7,
+        "max": 3.2937532500363886,
+        "mean": 1.7579653334105387,
+        "min": 1.4962395839393139,
+        "p50": 1.499085291987285,
+        "p95": 2.761587487533687,
+        "p99": 3.1873200975358476
+      },
+      "parser_errors": {},
+      "parser_valid_count": 7,
+      "parser_valid_rate": 1.0,
+      "peak_memory_gb_max": 8.221130728,
+      "prompt_tokens": {
+        "count": 7,
+        "max": 213,
+        "mean": 205.0,
+        "min": 201,
+        "p50": 204.0,
+        "p95": 211.2,
+        "p99": 212.64
+      },
+      "rows": 7
+    },
+    "available__target_only__thinking_true": {
+      "finish_reasons": {
+        "length": 5,
+        "stop": 2
+      },
+      "generated_tokens": {
+        "count": 7,
+        "max": 384,
+        "mean": 361.14285714285717,
+        "min": 235,
+        "p50": 384.0,
+        "p95": 384.0,
+        "p99": 384.0
+      },
+      "generation_seconds": {
+        "count": 7,
+        "max": 41.754993250011466,
+        "mean": 39.04835889872629,
+        "min": 25.655362750054337,
+        "p50": 41.41816083295271,
+        "p95": 41.68366090003401,
+        "p99": 41.740726780015976
+      },
+      "parser_errors": {
+        "missing_thinking_boundary": 5
+      },
+      "parser_valid_count": 2,
+      "parser_valid_rate": 0.2857142857142857,
+      "peak_memory_gb_max": 8.221130728,
+      "prompt_tokens": {
+        "count": 7,
+        "max": 209,
+        "mean": 201.0,
+        "min": 197,
+        "p50": 200.0,
+        "p95": 207.2,
+        "p99": 208.64
+      },
+      "rows": 7
+    },
+    "missing__target_only__thinking_false": {
+      "finish_reasons": {
+        "stop": 7
+      },
+      "generated_tokens": {
+        "count": 7,
+        "max": 8,
+        "mean": 6.428571428571429,
+        "min": 6,
+        "p50": 6.0,
+        "p95": 7.699999999999999,
+        "p99": 7.9399999999999995
+      },
+      "generation_seconds": {
+        "count": 7,
+        "max": 1.7404327080585063,
+        "mean": 1.5547604582638346,
+        "min": 1.4877302079694346,
+        "p50": 1.5155587919289246,
+        "p95": 1.699969407939352,
+        "p99": 1.7323400480346753
+      },
+      "parser_errors": {},
+      "parser_valid_count": 7,
+      "parser_valid_rate": 1.0,
+      "peak_memory_gb_max": 8.221130728,
+      "prompt_tokens": {
+        "count": 7,
+        "max": 212,
+        "mean": 203.28571428571428,
+        "min": 200,
+        "p50": 202.0,
+        "p95": 210.2,
+        "p99": 211.64
+      },
+      "rows": 7
+    },
+    "missing__target_only__thinking_true": {
+      "finish_reasons": {
+        "length": 4,
+        "stop": 3
+      },
+      "generated_tokens": {
+        "count": 7,
+        "max": 384,
+        "mean": 337.0,
+        "min": 188,
+        "p50": 384.0,
+        "p95": 384.0,
+        "p99": 384.0
+      },
+      "generation_seconds": {
+        "count": 7,
+        "max": 41.53250945894979,
+        "mean": 36.3647563336916,
+        "min": 20.67039062490221,
+        "p50": 41.196126125054434,
+        "p95": 41.46240669644904,
+        "p99": 41.51848890644964
+      },
+      "parser_errors": {
+        "missing_thinking_boundary": 4
+      },
+      "parser_valid_count": 3,
+      "parser_valid_rate": 0.42857142857142855,
+      "peak_memory_gb_max": 8.221130728,
+      "prompt_tokens": {
+        "count": 7,
+        "max": 208,
+        "mean": 199.28571428571428,
+        "min": 196,
+        "p50": 198.0,
+        "p95": 206.2,
+        "p99": 207.64
+      },
+      "rows": 7
+    }
+  },
+  "experiment_id": "EXP-040",
+  "generation_rows": 42,
+  "gold_labels_used_for_performance": false,
+  "overall_parser_valid_count": 28,
+  "overall_parser_valid_rate": 0.6666666666666666,
+  "performance_metrics_computed": false,
+  "predictions_stored_publicly": false,
+  "private_output_sha256": "3170ae4bdebb3878794d6af634ef7747e8e915c6d18f9939316455eb1b8d7ca6",
+  "raw_output_stored_publicly": false,
+  "sampler": {
+    "max_new_tokens": 384,
+    "min_p": 0.0,
+    "temperature": 0.6,
+    "top_k": 20,
+    "top_p": 0.95
+  },
+  "status": "Failed",
+  "test_split_accessed": false,
+  "validation_split_accessed": false
+}

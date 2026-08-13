@@ -1,0 +1,76 @@
+{
+  "completed_at_utc": "2026-08-13T04:26:08.561329+00:00",
+  "condition": "qwen-lora-seed-44",
+  "experiment_id": "EXP-049",
+  "generation": {
+    "active_generation_seconds": 2614.229252598714,
+    "api_cost_usd": 0,
+    "batch_size": 1,
+    "command_elapsed_seconds": 2617.7325510419905,
+    "final_tokens": {
+      "count": 1273,
+      "max": 8,
+      "mean": 7.469756480754124,
+      "median": 8,
+      "min": 6,
+      "p95": 8.0,
+      "sum": 9509
+    },
+    "generated_tokens": {
+      "count": 1273,
+      "max": 11,
+      "mean": 10.469756480754125,
+      "median": 11,
+      "min": 9,
+      "p95": 11.0,
+      "sum": 13328
+    },
+    "generation_seconds": {
+      "count": 1273,
+      "max": 4.2761763331945986,
+      "mean": 2.053597213353271,
+      "median": 2.0487403329461813,
+      "min": 1.794031708035618,
+      "p95": 2.3676371085923162,
+      "sum": 2614.229252598714
+    },
+    "peak_memory_gb": 8.565630536,
+    "prompt_tokens": {
+      "count": 1273,
+      "max": 275,
+      "mean": 200.83503534956796,
+      "median": 200,
+      "min": 195,
+      "p95": 209.0,
+      "sum": 255663
+    },
+    "thinking_tokens": {
+      "count": 1273,
+      "max": 2,
+      "mean": 2.0,
+      "median": 2,
+      "min": 2,
+      "p95": 2.0,
+      "sum": 2546
+    }
+  },
+  "parser": {
+    "error_counts": {},
+    "likely_truncated_count": 0,
+    "valid_count": 1273,
+    "valid_rate": 1.0
+  },
+  "performance_metrics_computed": false,
+  "private_predictions": {
+    "bytes": 1169809,
+    "path": "data/weibo-emotion-corpus/derived-private/eclass-v1/experiments/exp-049-frozen-test/condition-qwen-lora-seed-44-predictions.jsonl",
+    "sha256": "051376dafecb25c87e27510583406bdd0f1512800613a3f7f0077d90c4b75114"
+  },
+  "raw_outputs_stored_publicly": false,
+  "reasoning": true,
+  "rows": 1273,
+  "status": "Completed; labels sealed",
+  "test_inputs_accessed": true,
+  "test_labels_accessed": false,
+  "view": "target_only"
+}
