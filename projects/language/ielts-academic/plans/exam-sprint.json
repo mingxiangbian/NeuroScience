@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "2026-08-09-20-day-paper-sprint",
   "status": "active",
-  "lastUpdated": "2026-08-10",
+  "lastUpdated": "2026-08-14",
   "exam": {
     "date": "2026-08-29",
     "writtenMode": "paper",
@@ -20,10 +20,10 @@
   },
   "speakingContingency": {
     "status": "provisional-until-admission-ticket",
-    "readinessDeadline": "2026-08-20",
+    "readinessDeadline": "2026-08-21",
     "replanTrigger": "准考证给出具体口试日期和时间后，当天更新 speakingDate，并重排口试前后 48 小时任务。",
     "rules": [
-      "口试前 48 小时内不安排完整 LRW 模考；若与 CP4 冲突，将 CP4 移到 8 月 25–26 日中不冲突的一天，仍无安全间隔则取消 CP4。",
+      "口试前 48 小时内不安排完整 LRW 模考；若与 CP3 冲突，将 CP3 移到 8 月 25–26 日中不冲突的一天，仍无安全间隔则取消 CP3。",
       "口试前一天最多训练 180 分钟：一套熟悉强度的口语、轻量听读和证件路线确认，不做高强度重复录制。",
       "口试当天只参加考试并记录考后即时回忆，不要求补足 9 小时，也不在当天做完整笔试模拟。",
       "若口试在笔试之后，8 月 30 日起每日保留 45 分钟口语首遍录音；D-2 做最后一次完整口试，D-1 降为 30 分钟热身。"
@@ -46,18 +46,55 @@
       "writing": 6.5,
       "speaking": 6.5
     },
-    "decisionBoundary": "7.5 是激进目标，不作结果承诺。若第 12 天仍没有一份可比模考达到 Overall 7.0 且写作、口语均不低于 6.0，余下阶段以守住单项并最大化 Overall 为主，不再用大量时间追逐低概率的新技巧。"
+    "decisionBoundary": "7.5 是激进目标，不作结果承诺。若 CP2 后仍没有一份可比模考达到 Overall 7.0 且写作、口语均不低于 6.0，余下阶段以守住单项并最大化 Overall 为主，不再用大量时间追逐低概率的新技巧。"
+  },
+  "prioritySystem": {
+    "effectiveFrom": "2026-08-15",
+    "carryPolicy": "每天只承诺 P0 和一个 P1。未完成的 P1 顺延为下一次主项，不与原计划叠加；P2、P3 可直接舍弃。提前完成时只拉取同一滚动窗口的下一项，不提前消耗模考、检查点或考前减量日。",
+    "levels": [
+      {
+        "id": "P0",
+        "label": "口语就绪",
+        "reason": "口试日期尚未公布且可能早于笔试；当前只有 Part 1 短样本，缺少完整无提示 Part 2、Part 3 和整套口试证据。",
+        "rule": "口试前每天 45–75 分钟，至少保留一份无提示首遍输出；可以放在 LRW 后，但不能因主项超时而取消。漏做后次日恢复正常量，不双倍补做。"
+      },
+      {
+        "id": "P1",
+        "label": "写作与听力主项",
+        "reason": "Writing 仍主要依赖冷启动 5.5 建议分；Listening 的分段样本约 23/40，E002、E020、E021 仍活跃。",
+        "rule": "每天只选 Writing 或 Listening 其中一项完成首遍证据和必要复盘；当前队列顺序为完整 Writing、Listening Part 3/4 迁移、Writing 定点修复、完整纸笔模考。"
+      },
+      {
+        "id": "P2",
+        "label": "阅读维护",
+        "reason": "最新完整 Reading 为 33/40，时间崩盘已有一份改善样本，但证据边界 E005 仍活跃。",
+        "rule": "每个三日窗口完成一篇限时 Passage 或一组证据边界题即可；Reading 不再占每日核心，也不能连续两个窗口完全缺席。"
+      },
+      {
+        "id": "P3",
+        "label": "可选扩展",
+        "reason": "素材卡、词汇整理和额外题组只有在 P0、P1 已完成且不会挤压恢复时才产生收益。",
+        "rule": "只作为条件加练；当天未做即取消，不形成补课债务。"
+      }
+    ]
   },
   "dailyBudget": {
-    "standardMinutes": 540,
-    "maximumMinutes": 570,
-    "finalDayMinutes": 300,
+    "standardMinutes": 225,
+    "maximumMinutes": 420,
+    "finalDayMinutes": 240,
     "templateMinutes": {
       "halfDay": 270,
-      "standard": 540,
-      "mock": 540,
-      "oralBuffer": 360,
-      "taper": 300
+      "standard": 225,
+      "mock": 270,
+      "mockSpeaking": 315,
+      "review": 480,
+      "oralBuffer": 330,
+      "rollingStandard": 225,
+      "rollingReview": 225,
+      "rollingMock": 250,
+      "oralPriority": 195,
+      "taper": 240,
+      "exam": 60
     },
     "templates": {
       "halfDay": [
@@ -104,52 +141,36 @@
       ],
       "standard": [
         {
-          "id": "listening",
-          "label": "听力",
-          "minutes": 90,
-          "materialType": "未见 Cambridge 题组；已见材料只用于定点修复",
-          "expectedArtifact": "冻结的首次答案、不确定标记、原始分数和错题答案窗口",
-          "reviewMethod": "错误和犹豫题逐一核对题干限定、完整答案窗口、干扰信息与最终证据"
-        },
-        {
-          "id": "reading",
-          "label": "阅读",
-          "minutes": 90,
-          "materialType": "限时文章或已定位的复杂句修复样本",
-          "expectedArtifact": "各题组用时、首次答案、证据位置和止损记录",
-          "reviewMethod": "区分规则、定位、词义、句法保持、证据判断与时间分配错误"
-        },
-        {
-          "id": "writing",
-          "label": "写作",
+          "id": "core",
+          "label": "核心证据",
           "minutes": 120,
-          "materialType": "手写 Task 1、Task 2 或对应的定点修订",
-          "expectedArtifact": "构思纸、未经修改的手写稿照片和一版针对性修订",
-          "reviewMethod": "按官方四项标准检查，并只追踪最影响分数的三类重复错误"
+          "materialType": "最近检查点决定的一项完整训练或主修复，包含首次输出和必要复盘",
+          "expectedArtifact": "一个未经提示的核心产物、直接证据、修订差异和下一验证条件",
+          "reviewMethod": "当天只追一个高影响机制；达到时间边界后停止，不同时展开第二个深度复盘"
         },
         {
-          "id": "speaking",
-          "label": "口语",
+          "id": "secondary",
+          "label": "次要维护",
           "minutes": 60,
-          "materialType": "Part 1、Part 2、Part 3 题目与个人经历素材卡",
-          "expectedArtifact": "一遍无提示录音、转写和简短自评",
-          "reviewMethod": "转写评估流利连贯、词汇和语法；只有取得音频时才评价发音"
+          "materialType": "一个尚未在核心任务中覆盖的技能短样本",
+          "expectedArtifact": "一份限时首遍样本和最多一个需要继续追踪的问题",
+          "reviewMethod": "只做最小复盘；若暴露新问题，记录候选但不在当天另开完整修复"
         },
         {
-          "id": "adaptive",
-          "label": "主修复",
-          "minutes": 120,
-          "materialType": "最近检查点中信息增益最高的一个错误机制",
-          "expectedArtifact": "原错误、修订版、差异说明和下一次独立验证条件",
-          "reviewMethod": "按活动单元的结算判据决定继续、改善、修复或换题"
+          "id": "evidenceLog",
+          "label": "证据记录",
+          "minutes": 30,
+          "materialType": "当天核心与维护样本",
+          "expectedArtifact": "首次答案、分数、用时、错误编号和未验证维度",
+          "reviewMethod": "只写会改变后续安排的证据；提示后修订不计 clean sample"
         },
         {
           "id": "close",
           "label": "收口",
-          "minutes": 60,
-          "materialType": "当天所有原始产物",
-          "expectedArtifact": "分数、用时、错误编号、证据照片和明日第一步",
-          "reviewMethod": "只记录会改变下一步的证据，不把做题数量当成进步"
+          "minutes": 15,
+          "materialType": "当天证据和剩余体力",
+          "expectedArtifact": "当天结论和下一日第一步",
+          "reviewMethod": "未完成部分不自动叠加；只有决策必需的复盘才能替换下一日核心任务"
         }
       ],
       "mock": [
@@ -164,84 +185,120 @@
         {
           "id": "scoring",
           "label": "冻结成绩",
-          "minutes": 40,
+          "minutes": 50,
           "materialType": "原始答卷、答案键和作文照片",
-          "expectedArtifact": "L/R 原始分、四项暂定分和答题时间记录",
+          "expectedArtifact": "L/R 原始分、三篇阅读结束时间、两篇作文用时和未检查题数",
           "reviewMethod": "公布答案前先拍照，猜对题和改后答案不计入首次成绩"
         },
         {
-          "id": "evidenceReview",
-          "label": "证据复盘",
-          "minutes": 180,
-          "materialType": "本次所有错误与不确定题",
-          "expectedArtifact": "按机制归类的高影响错误及其直接证据",
-          "reviewMethod": "先定位失分链，再决定是否修改错误优先级；不逐题抄解析"
+          "id": "archive",
+          "label": "原始归档",
+          "minutes": 30,
+          "materialType": "答卷、作文、构思纸和时间记录",
+          "expectedArtifact": "检查前照片和可供次日复盘的材料索引",
+          "reviewMethod": "只确认材料完整，不在模考日逐题分析"
         },
         {
-          "id": "speakingMock",
-          "label": "口语整场",
+          "id": "close",
+          "label": "停止线",
+          "minutes": 30,
+          "materialType": "冻结成绩与原始材料",
+          "expectedArtifact": "次日复盘入口和当前体力记录",
+          "reviewMethod": "模考日到此结束；不追加完整口语、错题深挖或定点修复"
+        }
+      ],
+      "mockSpeaking": [
+        {
+          "id": "paperMock",
+          "label": "纸笔整场",
+          "minutes": 160,
+          "materialType": "一套完全未见的 Academic Listening、Reading、Writing",
+          "expectedArtifact": "按正式顺序完成的原始答卷与手写作文",
+          "reviewMethod": "Listening 单次播放并使用 10 分钟誊写；Reading 和 Writing 不延时"
+        },
+        {
+          "id": "scoring",
+          "label": "冻结成绩",
+          "minutes": 50,
+          "materialType": "原始答卷、答案键和作文照片",
+          "expectedArtifact": "L/R 原始分、三篇阅读结束时间、两篇作文用时和未检查题数",
+          "reviewMethod": "公布答案前先拍照，猜对题和改后答案不计入首次成绩"
+        },
+        {
+          "id": "speaking",
+          "label": "口语独立验证",
           "minutes": 45,
-          "materialType": "一套未练过的 Part 1、Part 2、Part 3 题目",
-          "expectedArtifact": "连续、无提示、不中途纠错的完整录音",
-          "reviewMethod": "按四项标准评分并标记真实停顿、重启和问题理解失败"
+          "materialType": "两个未见话题下的 8 道 IELTS Speaking Part 1 题",
+          "expectedArtifact": "一遍连续无提示录音，以及听错、无内容和充分点后强迫扩展的题号",
+          "reviewMethod": "不设置统一回答时长，不在录制中接受反馈；今天不逐句修订或录第二遍"
+        },
+        {
+          "id": "archive",
+          "label": "原始归档",
+          "minutes": 30,
+          "materialType": "答卷、作文、构思纸、时间记录和口语首遍录音",
+          "expectedArtifact": "检查前照片、口语录音和可供次日复盘的材料索引",
+          "reviewMethod": "只确认材料完整，不在模考日逐题分析"
+        },
+        {
+          "id": "close",
+          "label": "停止线",
+          "minutes": 30,
+          "materialType": "冻结成绩、原始材料与口语首遍记录",
+          "expectedArtifact": "次日复盘入口和当前体力记录",
+          "reviewMethod": "模考日到此结束；不追加完整口试、错题深挖或定点修复"
+        }
+      ],
+      "review": [
+        {
+          "id": "evidenceReview",
+          "label": "失分链复盘",
+          "minutes": 240,
+          "materialType": "前一日模考的错误、不确定题、时间点和原始作文",
+          "expectedArtifact": "最多三条高影响失分链及其直接证据",
+          "reviewMethod": "按分数影响和可恢复性排序，不逐题抄解析，不扩展到第四个问题"
         },
         {
           "id": "targetedRepair",
-          "label": "当日修复",
-          "minutes": 75,
-          "materialType": "本次模考最可恢复的一项损失",
-          "expectedArtifact": "一份小范围修订或重做样本",
-          "reviewMethod": "只修一个机制并写清下次验证条件"
+          "label": "唯一主修复",
+          "minutes": 180,
+          "materialType": "本次最可能在下一场回收分数的一个机制",
+          "expectedArtifact": "一份定点修订和一份下一次独立验证条件",
+          "reviewMethod": "修订只证明可学，不计迁移；下一场未见样本才决定状态"
         },
         {
           "id": "close",
           "label": "检查点决策",
-          "minutes": 40,
-          "materialType": "本次成绩与错误证据",
-          "expectedArtifact": "下一阶段时间重分配和唯一主修复单元",
-          "reviewMethod": "按对应检查点规则决策，不凭主观体感改计划"
+          "minutes": 60,
+          "materialType": "模考分数与三条失分链",
+          "expectedArtifact": "唯一主修复、次要维护技能和下一场比较指标",
+          "reviewMethod": "当天不再追加新题组；未完成的低影响复盘直接舍弃"
         }
       ],
       "oralBuffer": [
         {
-          "id": "listening",
-          "label": "听力维护",
-          "minutes": 60,
-          "materialType": "一个未见 Section 或已掌握的短题组",
-          "expectedArtifact": "首次答案和题号跟踪记录",
-          "reviewMethod": "只检查漏题止损、答案窗口和拼写"
-        },
-        {
-          "id": "reading",
-          "label": "阅读维护",
-          "minutes": 60,
-          "materialType": "一篇限时文章",
-          "expectedArtifact": "用时、首次答案和跳题记录",
-          "reviewMethod": "确认直接证据和时间边界，不攻超难新题"
-        },
-        {
-          "id": "writing",
-          "label": "写作维护",
-          "minutes": 90,
-          "materialType": "Task 1 或 Task 2 的限时输出与小范围修订",
-          "expectedArtifact": "一份手写原稿和一版定点修订",
-          "reviewMethod": "只修最频繁的论证或准确性问题"
-        },
-        {
           "id": "speaking",
           "label": "口语就绪",
-          "minutes": 75,
-          "materialType": "完整口试或熟悉强度的三部分练习",
-          "expectedArtifact": "无提示首遍录音和一页考场动作",
-          "reviewMethod": "不追新词，确认听懂问题、持续作答和卡词降级表达"
+          "minutes": 120,
+          "materialType": "一套完整口试或一个最需要验证的口语部分",
+          "expectedArtifact": "无提示首遍录音、题目清单和简短自评",
+          "reviewMethod": "不设置 Part 1 统一时长；只检查听懂问题、答案充分点、持续作答和卡词降级"
         },
         {
-          "id": "adaptive",
-          "label": "短修复",
-          "minutes": 45,
-          "materialType": "最近检查点中一个已知高影响错误",
-          "expectedArtifact": "一份小范围重做样本",
-          "reviewMethod": "不新开大型主题，只确认修复是否迁移"
+          "id": "secondary",
+          "label": "次要维护",
+          "minutes": 90,
+          "materialType": "听力、阅读或写作中一个短样本",
+          "expectedArtifact": "一份限时首遍样本",
+          "reviewMethod": "只维护已知流程，不在口试保护日开启新的修复系统"
+        },
+        {
+          "id": "review",
+          "label": "定点复盘",
+          "minutes": 90,
+          "materialType": "当天口语和维护样本",
+          "expectedArtifact": "最多一个口语问题和一个维护问题",
+          "reviewMethod": "发音只有在可直接听辨时评价；提示后修复不计 clean sample"
         },
         {
           "id": "close",
@@ -252,22 +309,158 @@
           "reviewMethod": "若日期已公布，立即按口试前后 48 小时规则重排"
         }
       ],
-      "taper": [
+      "rollingStandard": [
         {
-          "id": "listening",
-          "label": "听力热身",
-          "minutes": 45,
-          "materialType": "已做过且已掌握的短题组",
-          "expectedArtifact": "一次稳定跟题与誊写",
-          "reviewMethod": "只确认流程，不追求新分数"
+          "id": "speaking",
+          "label": "P0 口语",
+          "minutes": 60,
+          "materialType": "未见 IELTS Speaking 题目和可保存的音频或完整转写",
+          "expectedArtifact": "一份无提示首遍输出、题目清单和最早充分点",
+          "reviewMethod": "只检查是否听懂问题、主线是否持续、卡词是否降级和答案是否在充分点停止；不逐句改写"
         },
         {
-          "id": "reading",
-          "label": "阅读热身",
+          "id": "priorityCore",
+          "label": "P1 主项",
+          "minutes": 120,
+          "materialType": "当前滚动窗口中尚未完成的 Writing 或 Listening 首项",
+          "expectedArtifact": "一份限时首遍产物、原始分或原稿、用时和最多三个关键问题",
+          "reviewMethod": "只处理一个科目；未完成时原样顺延，不在当天切换到第二个深度任务"
+        },
+        {
+          "id": "evidenceLog",
+          "label": "证据冻结",
+          "minutes": 30,
+          "materialType": "当天 P0 与 P1 的首次输出",
+          "expectedArtifact": "首次答案或录音、用时、分数和下一验证条件",
+          "reviewMethod": "记录事实，不把提示后答案覆盖首遍证据；详细复盘不得在这里展开"
+        },
+        {
+          "id": "close",
+          "label": "滚动收口",
+          "minutes": 15,
+          "materialType": "本窗口剩余交付物和实际精力",
+          "expectedArtifact": "下一次唯一 P1 和可删除的 P2、P3",
+          "reviewMethod": "P1 未完成则顺延；P2、P3 未做直接删除，不计算欠账"
+        }
+      ],
+      "rollingReview": [
+        {
+          "id": "speaking",
+          "label": "P0 口语",
+          "minutes": 60,
+          "materialType": "未见口语题和前一份录音暴露的一个高影响问题",
+          "expectedArtifact": "一份新题首遍录音和该问题是否复发的判断",
+          "reviewMethod": "必须换题验证；提示后重录不计独立改善证据"
+        },
+        {
+          "id": "evidenceReview",
+          "label": "前三条失分链",
+          "minutes": 90,
+          "materialType": "最近一份 Writing、Listening 或整套模考的原始证据",
+          "expectedArtifact": "按分数影响排序的最多三条失分链",
+          "reviewMethod": "只追会改变后续训练的前三条；不得逐题无限复盘"
+        },
+        {
+          "id": "targetedRepair",
+          "label": "单点修复",
+          "minutes": 60,
+          "materialType": "前三条失分链中最可恢复的一个机制",
+          "expectedArtifact": "一份定点修订和下一份未见材料的通过条件",
+          "reviewMethod": "修订证明理解，不计迁移；到时即停，不扩展第二个机制"
+        },
+        {
+          "id": "close",
+          "label": "滚动收口",
+          "minutes": 15,
+          "materialType": "复盘结论和窗口队列",
+          "expectedArtifact": "下一次唯一 P1",
+          "reviewMethod": "低影响错题直接归档；不生成补课清单"
+        }
+      ],
+      "rollingMock": [
+        {
+          "id": "paperMock",
+          "label": "纸笔 LRW",
+          "minutes": 160,
+          "materialType": "一套完全未见的 Academic Listening、Reading 和 Writing",
+          "expectedArtifact": "正式顺序完成的原始答卷、作文和时间点",
+          "reviewMethod": "Listening 单次播放后外加 10 分钟誊写；Reading、Writing 不延时"
+        },
+        {
+          "id": "scoring",
+          "label": "冻结成绩",
+          "minutes": 30,
+          "materialType": "原始答卷、答案键和作文照片",
+          "expectedArtifact": "L/R 原始分、三篇阅读时间、两篇作文用时和未检查题数",
+          "reviewMethod": "查看答案前拍照；只冻结，不在模考日逐题解释"
+        },
+        {
+          "id": "speaking",
+          "label": "P0 口语",
+          "minutes": 30,
+          "materialType": "6 道未见 Part 1 或一个未见 Part 2，安排在 LRW 后",
+          "expectedArtifact": "一份短无提示首遍录音",
+          "reviewMethod": "只记录听错、完全无内容和强迫扩展；不做第二遍"
+        },
+        {
+          "id": "archive",
+          "label": "原始归档",
+          "minutes": 15,
+          "materialType": "答卷、作文、构思纸、录音和时间记录",
+          "expectedArtifact": "次日可直接复盘的完整材料索引",
+          "reviewMethod": "只确认材料可读，不开始评分或修订"
+        },
+        {
+          "id": "close",
+          "label": "停止线",
+          "minutes": 15,
+          "materialType": "冻结成绩和体力状态",
+          "expectedArtifact": "下一日复盘入口",
+          "reviewMethod": "当日到此结束；不追加错题复盘、完整口试或补量"
+        }
+      ],
+      "oralPriority": [
+        {
+          "id": "speaking",
+          "label": "P0 完整口试",
+          "minutes": 90,
+          "materialType": "未练话题的一套连续 IELTS Speaking Part 1–3",
+          "expectedArtifact": "无提示首遍录音、逐题清单和简短自评",
+          "reviewMethod": "中途不接受提示；Part 1 不设统一时长，Part 2 保留一分钟准备，Part 3 追踪观点、理由和例证"
+        },
+        {
+          "id": "evidenceReview",
+          "label": "口语双点复盘",
+          "minutes": 60,
+          "materialType": "完整口试首遍录音或转写",
+          "expectedArtifact": "一个流利连贯问题和一个高频语法问题",
+          "reviewMethod": "只选两个会改变下一次表现的问题；发音无法直接听辨时继续标记未验证"
+        },
+        {
+          "id": "ticket",
+          "label": "口试排程",
+          "minutes": 30,
+          "materialType": "准考证状态、口试日期、路线与证件",
+          "expectedArtifact": "确定日期或继续待定，以及前后 48 小时安排",
+          "reviewMethod": "一旦日期公布，立即覆盖原日历，不等待下一个检查点"
+        },
+        {
+          "id": "close",
+          "label": "停止线",
+          "minutes": 15,
+          "materialType": "口语证据和口试状态",
+          "expectedArtifact": "下一次唯一口语验证目标",
+          "reviewMethod": "不因一次录音不理想而在当天连续重录整套"
+        }
+      ],
+      "taper": [
+        {
+          "id": "objectiveWarmup",
+          "label": "听读热身",
           "minutes": 45,
-          "materialType": "一篇难度可控的旧文章",
-          "expectedArtifact": "一次按时止损的短练习",
-          "reviewMethod": "确认 17/20/23 分钟分配与跳题动作"
+          "materialType": "已掌握的短听力和阅读片段",
+          "expectedArtifact": "一次题号跟踪、誊写、时间点和跳题动作",
+          "reviewMethod": "只确认流程，不追求新分数，不复盘低影响错题"
         },
         {
           "id": "writing",
@@ -280,7 +473,7 @@
         {
           "id": "speaking",
           "label": "口语热身",
-          "minutes": 45,
+          "minutes": 30,
           "materialType": "熟悉的 Part 1 与素材卡",
           "expectedArtifact": "短答热身和一个 Part 2 关键词提纲",
           "reviewMethod": "保持自然语速，不做高强度重复录制"
@@ -288,7 +481,7 @@
         {
           "id": "finalReview",
           "label": "最终复查",
-          "minutes": 60,
+          "minutes": 45,
           "materialType": "错误优先图与四科考试动作",
           "expectedArtifact": "一页考场执行清单",
           "reviewMethod": "只保留已验证策略和最高频错误提醒"
@@ -296,22 +489,45 @@
         {
           "id": "logistics",
           "label": "考试准备",
-          "minutes": 45,
+          "minutes": 60,
           "materialType": "准考证、身份证件、文具、路线和作息",
           "expectedArtifact": "物品与出发安排确认",
           "reviewMethod": "当天不再增加净学习时间，按计划休息"
+        }
+      ],
+      "exam": [
+        {
+          "id": "warmup",
+          "label": "自然热身",
+          "minutes": 20,
+          "materialType": "熟悉词汇、一个简单 Overview 和三道短听力",
+          "expectedArtifact": "进入英语状态，不产生新的训练记录",
+          "reviewMethod": "不看新题、不查新策略、不根据热身正确率改变考场计划"
+        },
+        {
+          "id": "logistics",
+          "label": "赴考检查",
+          "minutes": 40,
+          "materialType": "准考证、身份证件、文具、路线和到场时间",
+          "expectedArtifact": "按预定时间出发并完成考试",
+          "reviewMethod": "考试优先；当天不安排补量或考前深度复盘"
         }
       ]
     }
   },
   "operatingRules": [
-    "第 1 天只有 270 分钟净学习，不补足 9 小时；从第 2 天起普通日才使用 540 分钟模板。",
-    "每天四科都有最低维护量，但同时只有一个自适应主修复单元；当前先结算 L2。",
+    "2026-08-10 至 2026-08-14 的执行表明，原模板把训练、逐题复盘和记录同时塞进一天，实际会跨日；从 8 月 15 日起改用基础 225 分钟加条件加练。",
+    "口试前 P0 口语每天保留 45–75 分钟无提示首遍输出，可以放在 LRW 后，但不得因 P1 超时而取消；口试结束后该时段改为最弱客观科维护。",
+    "每天只承担一个 P1：Writing 与 Listening 按当前队列轮换。Reading 最新完整样本为 33/40，只做每个三日窗口一次的 P2 维护。",
+    "P1 未完成时顺延并替换下一次 P1，不与原计划叠加；P2、P3 未完成直接取消。提前完成时可拉取同一窗口下一项，但不能提前消耗模考、检查点或考前减量日。",
+    "普通日基础 225 分钟；条件加练后通常不超过 300 分钟，420 分钟是绝对上限而不是目标。额外时间优先完成同一窗口交付物或休息。",
+    "完整模考日只完成 LRW、冻结成绩、短口语首遍和归档；详细复盘移到下一块，并限制为最多三条失分链。",
     "未见材料用于计分和迁移验证，已见材料只用于修复，不把记忆答案计为进步。",
     "错题必须保留首次答案，再记录直接证据、错误机制和下一次验证条件。",
     "听力漏题后两秒内留下占位并跟随当前题号；阅读单题首轮超过两分钟必须标记并跳过。",
     "写作使用 Task 1 20 分钟、Task 2 40 分钟边界；Task 2 构思最多 5 分钟并保留至少 3 分钟检查。",
-    "9 小时是完整日标准上限，不靠熬夜补量；除完整模考复盘外，每天最多追加 30 分钟。",
+    "Part 1 不设置统一目标时长：事实题直接回答，偏好题回答并给一个理由，例子只在自然需要时加入；信息充分后停止。",
+    "任何跨日未完成项都不形成补课债务；判断进度只看滚动窗口交付物和首次证据，不看名义日数。",
     "口语日期公布后，以实际口试为独立终点重排考前 48 小时；口试当天和前一天的减量不形成补课债务。"
   ],
   "paperEvidenceProtocol": [
@@ -323,88 +539,78 @@
   "phases": [
     {
       "id": "P1",
-      "label": "止血与纸笔校准",
+      "label": "已有训练记录",
       "startDay": 1,
-      "endDay": 4,
-      "purpose": "完成当前 L2，建立听力漏题止损、阅读跳题、写作时间边界和口语独立作答流程，并得到第一份纸笔可比成绩。"
+      "endDay": 5,
+      "purpose": "保留 8 月 9–14 日已经取得的听力分段、阅读整套、写作短样本和 Part 1 证据；未完成的旧日历任务不转成欠账。"
     },
     {
       "id": "P2",
-      "label": "高影响机制修复",
-      "startDay": 5,
-      "endDay": 9,
-      "purpose": "根据第一次纸笔模考选择可恢复分最多的错误，保持四科最低训练，并在第二次模考验证迁移。"
+      "label": "窗口 A · 口语前置与缺口收口",
+      "startDay": 6,
+      "endDay": 8,
+      "purpose": "8 月 15–17 日在任意顺序内完成完整 Writing、Listening Part 3/4 迁移和一套完整无提示口语；Reading 只做可选维护。"
     },
     {
       "id": "P3",
-      "label": "分数抬升与口语就绪",
-      "startDay": 10,
-      "endDay": 13,
-      "purpose": "把听力和阅读推向承载 Overall 的区间，在最早可能口试日前完成口语就绪检查，并根据准考证重排后续任务。"
+      "label": "窗口 B · 可比模考与口语就绪",
+      "startDay": 9,
+      "endDay": 12,
+      "purpose": "8 月 18–21 日完成一套可比纸笔 LRW、限量复盘和第二份完整口语，并在准考证预计发布日重排口试前后任务。"
     },
     {
       "id": "P4",
-      "label": "口试适配与整场执行",
-      "startDay": 14,
-      "endDay": 18,
-      "purpose": "围绕实际口试时间保护前后 48 小时，其余日期强化纸笔节奏、誊写、检查和连续作答，并在安全窗口完成最后一次全真检查。"
+      "label": "窗口 C/D · 口试适配与最终彩排",
+      "startDay": 13,
+      "endDay": 17,
+      "purpose": "8 月 22–26 日由实际口试日期覆盖普通安排；安全日继续每日口语和一个写听主项，并在 25–26 日选择一天完成最终纸笔彩排。"
     },
     {
       "id": "P5",
       "label": "收口与恢复",
-      "startDay": 19,
+      "startDay": 18,
       "endDay": 20,
-      "purpose": "只处理已知高频错误和考场流程，最后一天主动降负荷，避免把疲劳带入考试。"
+      "purpose": "只处理最终彩排中仍会改变考场动作的问题，8 月 28 日主动降负荷，8 月 29 日按既定流程赴考。"
     }
   ],
   "checkpoints": [
     {
       "id": "CP1",
-      "day": 4,
-      "date": "2026-08-12",
-      "label": "纸笔基线",
-      "requiredEvidence": "一套完整未见 LRW、一次完整口语录音、原始分数、三篇阅读用时和未检查题数。",
+      "day": 8,
+      "date": "2026-08-17",
+      "label": "窗口 A 收口",
+      "requiredEvidence": "Part 2 Knowledge Bank 的事实与覆盖状态、一份新题 Part 2 首遍、一套完整限时 Writing、一套完整无提示口语，以及已有 Reading 33/40 的证据边界。Listening Part 3/4 明确作为 8 月 18 日唯一下一 P1。",
       "decisionRules": [
-        "本次不设淘汰分数，先判断电脑基线迁移到纸笔后增加或减少了哪些失分。",
-        "若答题卡誊写、书写速度或阅读跳题失败，随后两天从主修复时间中固定 30 分钟修流程。",
-        "其余主修复时间给本次最可恢复的一个错误，而不是机械选择最低分技能。"
+        "若 Knowledge Bank 仍有未确认事实，只保留会改变题目适用性的缺口；不继续增加句型、完整答案或低复用细节。",
+        "若完整口语或 Writing 仍有一项未完成，8 月 18 日只顺延其中影响更高的一项；Listening 随后执行，不形成双重欠账。",
+        "Writing 只保留首次证据中最可恢复的前三条失分链，不逐句扩张复盘。",
+        "Reading 保持 P2；只有再次出现时间崩盘或低于 30/40 才恢复为 P1。"
       ]
     },
     {
       "id": "CP2",
-      "day": 9,
-      "date": "2026-08-17",
-      "label": "7.5 轨迹检查",
-      "requiredEvidence": "第二套可比纸笔模考，以及写作、口语按评分维度记录的建议分。",
+      "day": 12,
+      "date": "2026-08-21",
+      "label": "口语就绪与 7.5 轨迹检查",
+      "requiredEvidence": "一套可比纸笔 LRW、至少两份包含 Part 2/3 的无提示口语、一份完整 Writing 证据和准考证状态。",
       "decisionRules": [
         "工作门槛为 Listening 与 Reading 合计至少 60/80，且两科均完整作答。",
-        "Writing 与 Speaking 应至少出现可辩护的 6.0 证据；否则各自的最低维护量不得削减。",
-        "未达到门槛时，7.5 继续保留为冲刺目标，但 120 分钟主修复优先投向一周内最可能回收的客观分。"
+        "Writing 与 Speaking 应至少出现可辩护的 6.0 证据；否则口语继续 P0，写作保持至少隔日一次 P1 或短迁移。",
+        "未达到门槛时，7.5 继续保留为冲刺目标，但每天仍只处理一个 P1，不通过增加总任务数追赶。",
+        "准考证一旦给出口试日期，前后 48 小时安排立即覆盖窗口 C 和最终彩排。"
       ]
     },
     {
       "id": "CP3",
-      "day": 12,
-      "date": "2026-08-20",
-      "label": "目标可行性与口语就绪",
-      "requiredEvidence": "第三套可比模考、与 CP2 的净变化、一套完整无提示口试，以及仍在复发的高影响错误。",
-      "decisionRules": [
-        "工作门槛为 Listening 与 Reading 合计至少 65/80，Writing 与 Speaking 均不低于 6.0，且至少一项达到 6.5。",
-        "若没有任何一份可比模考达到 Overall 7.0，余下阶段改为单项保护与稳定发挥，不增加新模板或大规模素材。",
-        "无论准考证是否已发布，口语都必须在本检查点形成可直接赴考的流程；日期公布后只做保持和定点修复。"
-      ]
-    },
-    {
-      "id": "CP4",
-      "day": 17,
+      "day": 16,
       "date": "2026-08-25",
-      "label": "最终彩排窗口（8月25–26日）",
-      "requiredEvidence": "最后一套全真纸笔模考、完整口语录音和考场流程清单。",
+      "label": "最终纸笔彩排窗口（8月25–26日）",
+      "requiredEvidence": "最终一套可比纸笔模考、与 8 月 19 日样本的净变化、此前完成的完整无提示口试，以及最终考场流程。",
       "decisionRules": [
-        "8 月 25 日是暂排日期；若落入口试前后 48 小时，则与第 18 天互换，仍冲突时取消整套彩排并改做低负荷定点复查。",
+        "8 月 25 日是暂排日期；若落入口试前后 48 小时，则与第 17 天互换，仍冲突时取消整套彩排并改做低负荷定点复查。",
         "若四项分数和达到 29.0 且各项至少 6.5，最后两天只做保分和恢复。",
-        "若仍有差距，只处理一到两个已知错误机制；不再尝试新题型策略。",
-        "无论结果如何，第 20 天最多学习 300 分钟。"
+        "若没有任何可比模考达到 Overall 7.0，余下阶段改为单项保护与稳定发挥；不再增加新模板、题型策略或大规模素材。",
+        "无论结果如何，8 月 28 日最多学习 240 分钟，8 月 29 日只热身和赴考。"
       ]
     }
   ],
@@ -427,316 +633,310 @@
     {
       "day": 2,
       "date": "2026-08-10",
+      "dateEnd": "2026-08-11",
       "phase": "P1",
       "template": "standard",
-      "focus": "建立漏题止损、答案窗口关系保持、复杂句保持和准确表达底线。",
+      "focus": "两日实际结算：完成 L3 和四科维护，并据此重估每日容量。",
       "tasks": {
-        "listening": "做两组未见短题组；一旦漏题，两秒内写占位符并立即跟随当前题号，结束后检查后续两题是否仍受影响。",
-        "reading": "完成 8 个复杂句的一遍读取与复述，再做一篇 20 分钟文章；区分词义缺口、句法解析和读后保持失败。",
-        "writing": "练 3 个 Task 1 Overview，再用 20 分钟手写一篇；允许重复标准统计表达，不为变化强行替换核心名词。",
-        "speaking": "连续回答 12 个 Part 1 问题，每题 20–30 秒；只使用稳定短句，重点检查主谓一致、词形和介词。",
-        "adaptive": "执行建议单元 L3：针对 L2 中复发的 E002，练习锁定评价主体，并把直接评价与后续解释保持在同一答案窗口；保留首次答案、决定性关系和修订差异。",
-        "close": "记录每项首次表现和修订差异，选出第 3 天唯一主修复机制。"
+        "core": "跨两日完成 L3 和一组未见 Part 4 十题填空。Part 4 首次 9/10；Q36 漏听 fungus 后立即进入 Q37，没有连续失位。",
+        "secondary": "完成复杂句拆解；C21 Test 1 Reading Passage 2 用时 18 分钟、首次 13/13；完成 3 个 Task 1 Overview、一篇 20 分钟纸笔 Task 1，以及两段共 12 道 Part 1 首遍录音。",
+        "evidenceLog": "L3 中 E002 在独立样本复发；Reading 18 分钟完成 Questions 14–26，首次 13/13、完整读完且无跳题，E008 更新为 improving 并累计 1 个 clean sample；Task 1 独立检查遗漏数字与语义主语错误；Speaking 的 E015、E016、E019 仍为 active。提示后修订不计 clean sample。",
+        "close": "Day 2 跨 2026-08-10 至 2026-08-11 完成。任务量已结算，不补时；原标准模板因低估复盘开销而停止使用。"
       },
-      "gate": "漏题后不再出现连续两题失位；至少 6/8 个复杂句能保留主命题；Task 1 在 20 分钟内完成并检查实体名称。"
+      "gate": "完成但部分未过门槛：听力漏题恢复得到一份正向样本；Reading 18 分钟首次 13/13，并计入一份独立正向样本；Task 1 在 20 分钟内完成但独立检查失败；Speaking 完成 12 题但 E015、E016、E019 仍 active。"
     },
     {
       "day": 3,
-      "date": "2026-08-11",
+      "date": "2026-08-12",
       "phase": "P1",
-      "template": "standard",
-      "focus": "在第一次纸笔模考前固定四科考场动作。",
+      "template": "mockSpeaking",
+      "focus": "完成第一次纸笔 LRW 可比模考，并在之后取得一份短口语独立证据。",
       "tasks": {
-        "listening": "完成一组地图题和一组 Section 4 填空；地图题逐题写参照物、方向和限定，填空核对词性与拼写。",
-        "reading": "做一组段落信息匹配，先确认字母能否重复；使用 17/20/23 分钟框架练习单题两分钟止损。",
-        "writing": "对 6 道 Task 2 题各做不超过 5 分钟的两点提纲，从中选一题 40 分钟完成并预留 3 分钟检查。",
-        "speaking": "承接第 1 天未完成项，但不增加本日总时长：建立 2 张真实经历素材卡，每张只写人物、场景、冲突、动作、结果和反思；选一张严格用 1 分钟写关键词，再完成一遍 2 分钟无提示回答并标记停顿和重启。",
-        "adaptive": "修复 E007 的时间止损：用一篇文章演练标记、跳过、回收，不追求首次全对。",
-        "close": "写下一页纸笔模考流程：Listening 漏题动作、Reading 时间点、Writing 分配和 Speaking 不求完美规则。"
+        "paperMock": "选择一套完全未见的 Cambridge Academic Test，按 Listening、Reading、Writing 正式顺序用纸连续完成；不暂停、不接受提示。",
+        "scoring": "检查前拍照；记录 L/R 原始分、三篇阅读结束时间、两篇作文用时、未检查题数和任何誊写问题。",
+        "speaking": "LRW 成绩冻结后至少休息 20 分钟，再用 8 道未见 Part 1 题连续录一遍。事实题直接回答，偏好题回答并给一个理由；信息充分后停止，不设置统一时长，不接受中途反馈。录完只标记听错、完全没内容和充分点后仍强迫扩展的题号。",
+        "archive": "保存答卷、构思纸、作文照片和口语首遍录音，只建立次日复盘索引，不逐题解释。",
+        "close": "发送 LRW 原始分、时间数据和 Part 1 首遍录音后结束当天学习；完整复盘留到 8 月 13 日。"
       },
-      "gate": "四科考场动作已写成一页清单；Task 2 在 40 分钟内完成；阅读没有因单题阻塞整篇；口语留下一份 2 分钟无提示首遍录音。"
+      "gate": "完整 LRW 原始答卷、检查前照片、L/R 原始分和所有时间点均已保存；Part 1 八题连续完成且录制中没有反馈或示范；没有用改后答案替代首次成绩。"
     },
     {
       "day": 4,
-      "date": "2026-08-12",
+      "date": "2026-08-13",
       "phase": "P1",
-      "template": "mock",
-      "focus": "取得第一份纸笔可比基线并执行 CP1。",
+      "template": "review",
+      "focus": "单独复盘 CP1，只保留前三条失分链并选出唯一主修复。",
       "tasks": {
-        "paperMock": "选择一套完全未见的 Cambridge Academic Test，按 Listening、Reading、Writing 正式顺序用纸完成。",
-        "scoring": "检查前拍照；记录 Listening、Reading 原始分、三篇阅读结束时间、两篇作文用时和未检查题数。",
-        "evidenceReview": "只深挖所有错误中的前三个失分链，判断是知识、执行、注意力还是时间问题。",
-        "speakingMock": "使用未练过的话题完成一整套 Part 1–3 录音，中途不接受提示或纠错。",
-        "targetedRepair": "选择本次最容易在一周内回收的一个失分机制，完成一份小范围修订。",
-        "close": "执行 CP1 决策并确定第 5 天主修复；记录电脑模拟与纸笔表现的差异。"
+        "evidenceReview": "按分数影响和可恢复性，从 CP1 中只深挖前三条失分链；区分知识、执行、注意力、时间和纸笔流程。",
+        "targetedRepair": "对排名第一的失分机制完成一份小范围修订，并写出下一份未见材料的验证条件。",
+        "close": "执行 CP1 决策：确定第 5–8 天唯一主修复、一个次要维护技能和 CP2 的三个可比指标。"
       },
-      "gate": "完整原始答卷、四项证据和 CP1 决策均已保存；没有用改后答案替代首次成绩。"
+      "gate": "前三条失分链均有直接证据；主修复唯一；没有为低影响错题继续延长复盘。"
     },
     {
       "day": 5,
-      "date": "2026-08-13",
-      "phase": "P2",
+      "date": "2026-08-14",
+      "phase": "P1",
       "template": "standard",
-      "focus": "修复 CP1 中最可恢复的失分，不扩大问题面。",
+      "focus": "执行 CP1 唯一主修复，并补上尚未完成的 Part 2 独立证据。",
       "tasks": {
-        "listening": "重建 CP1 中最关键的 8 个答案窗口，再用一个未见 Section 验证同类信号。",
-        "reading": "对 CP1 最耗时的题组重做一次，写出证据位置和触发跳题的时间点。",
-        "writing": "修订 CP1 较弱的一篇作文，保留原文并逐段说明内容、组织和语言的变化。",
-        "speaking": "重听 CP1 口语，只选一个流利连贯问题和一个语法问题；同题重录一遍。",
-        "adaptive": "把 120 分钟全部给 CP1 选出的唯一主修复单元，并定义一份未见材料的结算样本。",
-        "close": "确认修订是否真正消除了目标错误；若没有，继续同一单元而不是换题。"
+        "core": "把核心时间全部给 CP1 选出的唯一主修复：保留原错误、完成定点修订，再做一份小型未见迁移样本。",
+        "secondary": "建立 1 张真实经历素材卡，只写人物、场景、冲突、动作、结果和反思；用 1 分钟列关键词后录一遍 2 分钟 Part 2。",
+        "evidenceLog": "记录核心样本与 Part 2 的首次产物、用时、错误编号和未验证维度；提示后修订不计 clean sample。",
+        "close": "分别记录主修复的迁移结果和 Part 2 的停顿、重启与主线缺口；不做第二张素材卡。"
       },
-      "gate": "CP1 的主错误已有原样本、修订版、差异说明和独立验证条件。"
+      "gate": "CP1 主错误有独立迁移结果；Part 2 留下一份无提示首遍录音。"
     },
     {
       "day": 6,
-      "date": "2026-08-14",
+      "date": "2026-08-15",
       "phase": "P2",
-      "template": "standard",
-      "focus": "强化语义证据，减少听到关键词就选和阅读自行推断。",
+      "template": "rollingStandard",
+      "focus": "窗口 A 建议起点：先补完整 Writing 证据，口语完成第一份 Part 2/3 首遍。",
       "tasks": {
-        "listening": "完成一组未见 Section 3 选择或配对题；每个不确定项写出被提到的信息与真正回答题干的信息。",
-        "reading": "完成一组 TFNG；把题干拆成主体、关系、限定，并标记原文明示、矛盾或未陈述。",
-        "writing": "40 分钟完成一篇 Task 2：构思最多 5 分钟，每个主体段必须包含具体例子，最后至少检查 3 分钟。",
-        "speaking": "回答 6 个 Part 3 问题，固定使用‘观点—原因—例子—影响’四步，但不背完整句子。",
-        "adaptive": "继续 CP1 主修复；只有独立样本通过结算判据后才更换。",
-        "close": "比较听力、阅读中的‘关键词命中’与‘命题证据’，记录是否仍用常识补全。"
+        "speaking": "使用一个未练但有真实经历可说的话题：1 分钟列关键词，连续完成 2 分钟 Part 2，再回答 3 道相关 Part 3；中途不接受提示，保留首遍录音。可安排在 Writing 之后。",
+        "priorityCore": "当前第一 P1 为 Cambridge 21 Test 3 Writing：按正式 60 分钟一次完成 Task 1 和 Task 2，保留构思纸、原稿、两题用时和检查时间；今天只冻结，不逐句修改。",
+        "evidenceLog": "保存 Writing 照片与口语录音；只记录是否完成、实际用时、最明显的三个不确定点和完全无内容的口语题。",
+        "close": "Writing 未完成则原样顺延为下一次 P1；已完成则下一 P1 为 Listening Part 3/4。今天不因结果不满意重写作文或重录整套。"
       },
-      "gate": "听力和阅读所有错题都有命题级证据；Task 2 两个主体段均有可识别例子。"
+      "gate": "至少留下完整限时 Writing 和一份无提示 Part 2/3 录音；若其中一项未完成，只顺延该项，不追加阅读。",
+      "conditionalReserve": {
+        "minutes": 75,
+        "condition": "仅当 P0、P1 和证据冻结全部完成且仍有稳定精力时启用。",
+        "task": "提前拉取窗口 A 的 Listening：先把一组未见 Part 3 长选项压缩成短关系标签，再单次播放并冻结首次答案；未完成不形成欠账。"
+      }
     },
     {
       "day": 7,
-      "date": "2026-08-15",
+      "date": "2026-08-16",
       "phase": "P2",
-      "template": "standard",
-      "focus": "攻克高密度输入，并稳定 Task 1 与 Part 2。",
+      "template": "rollingReview",
+      "focus": "Speaking Part 2 素材库收口：关闭事实占位，补齐高覆盖素材，并用一题首遍输出验证可调用性。",
       "tasks": {
-        "listening": "单次完成一个未见 Section 4；对 8 个关键句做短听写，核对信号词、名词词组和拼写。",
-        "reading": "限时完成一组 Matching Headings；每段只写一句功能摘要，不在首遍逐句翻译。",
-        "writing": "20 分钟完成 Task 1，并额外对 3 幅不同图表各写一个 Overview；核对对象、最高最低和主要趋势。",
-        "speaking": "再建立 2 张真实经历素材卡，并用其中一张完成 Part 2；结束后用两道 Part 3 追问扩展。",
-        "adaptive": "从仍在 active 的高影响错误中选择一项，但必须说明为什么它比其他项更可能回收分数。",
-        "close": "对 Section 4、Heading、Overview 和 Part 2 各记录一个可复用动作。"
+        "speaking": "逐条处理现有 7 条 Core Story 的 Details to confirm later。每项只允许三种结果：补入真实事实、标记不适用、删除对应覆盖路线；不假设填空。",
+        "evidenceReview": "补生日或聚会、城市或出行、真实朋友、职业榜样、植物或环保人物等高覆盖缺口。事实不一致时拆成微型卡，不为提高覆盖率合并。",
+        "targetedRepair": "为 PE04、PE11、EV07、EV15、EV19、OB04、OB05、OB06、OB12、PL03、PL07、PL09 等剩余题确定真实对象，并只记录人物、场景、动作、结果和感受。",
+        "close": "随机抽取一条新补素材，1 分钟写关键词后连续说 2 分钟；不提示、不重录，只记录主线断裂、无内容、卡词重启和高频语法。原定完整 Writing 保留为下一唯一 P1。"
       },
-      "gate": "四项训练均按时完成；Task 1 Overview 覆盖关键趋势，Part 2 不按四个提示点机械分段。"
+      "gate": "7 条现有故事的事实占位均已处理，55 题各有真实素材锚点或明确独立卡，Phrase Bank 不再扩张，并留下一份新题 Part 2 无提示首遍录音。",
+      "conditionalReserve": {
+        "minutes": 60,
+        "condition": "仅当 Knowledge Bank 收口门槛和 Part 2 首遍全部完成且仍有稳定精力时启用。",
+        "task": "完成 Cambridge 21 Test 3 Writing 的 60 分钟首次证据；若不启用，Writing 原样保留为 8 月 17 日唯一 P1。"
+      }
     },
     {
       "day": 8,
-      "date": "2026-08-16",
+      "date": "2026-08-17",
       "phase": "P2",
-      "template": "standard",
-      "focus": "在 CP2 前做短模拟和错误回归检查。",
+      "template": "rollingStandard",
+      "focus": "窗口 A 收口：完成顺延的完整 Writing，并使用已收口素材完成第一套完整无提示口语。",
       "tasks": {
-        "listening": "连续完成未见 Sections 2–4，不暂停；只在整组结束后复盘，检查漏题是否仍造成后续失位。",
-        "reading": "连续完成两篇文章并执行 20/23 分钟硬边界；记录没来得及读到直接证据的题。",
-        "writing": "从过去两篇作文提取 12 个重复语言错误，逐一写准确短句，再完成一个主体段限时写作。",
-        "speaking": "完成一套 Part 1–3 录音，重点验证词汇提取和句子重启是否下降。",
-        "adaptive": "对已 improving 的错误做一份独立回归样本；复发则清零连续无错计数。",
-        "close": "准备 CP2：列出相较 CP1 预期改善的三个可测指标。"
+        "speaking": "从已收口素材中随机选择未练问法，连续完成一套 Part 1–3；由 examiner 一次只问一题，中途不提示、不纠错、不示范，保留完整首遍录音和题目清单。",
+        "priorityCore": "完成 Cambridge 21 Test 3 Writing：按正式 60 分钟一次完成 Task 1 和 Task 2，保留构思纸、原稿、两题用时和检查时间；只冻结，不逐句修改。",
+        "evidenceLog": "保存 Writing 照片和完整口语录音。Writing 只记录用时与三个最高影响不确定点；口语只记录听错、无内容、主线断裂和高频语法，不给稳定 Band。",
+        "close": "执行 CP1：确认 Knowledge Bank、Part 2 首遍、完整 Writing 和完整口语是否齐全；Listening Part 3/4 作为 8 月 18 日唯一下一 P1，不追加 Reading。"
       },
-      "gate": "至少一个 improving 错误得到独立样本；两篇阅读均在硬边界内结束。"
+      "gate": "Knowledge Bank 已收口，完整 Writing 和完整口语均已冻结；若其中一项未完成，只明确唯一顺延项，不同时背负两项任务。",
+      "conditionalReserve": {
+        "minutes": 60,
+        "condition": "仅当 Knowledge Bank、Writing 和完整口语全部完成且仍有稳定精力时启用。",
+        "task": "完成未见 Listening Part 3 的选项压缩和单次播放；未启用时按计划留到 8 月 18 日。"
+      }
     },
     {
       "day": 9,
-      "date": "2026-08-17",
-      "phase": "P2",
-      "template": "mock",
-      "focus": "完成第二次纸笔模考并执行 CP2。",
+      "date": "2026-08-18",
+      "phase": "P3",
+      "template": "rollingStandard",
+      "focus": "窗口 B 缓冲：先清唯一顺延项，否则验证写作或听力中最可恢复的问题。",
       "tasks": {
-        "paperMock": "使用第二套完全未见 Academic Test，严格按纸笔考试流程连续完成 LRW。",
-        "scoring": "冻结首次答卷并记录 L/R 原始分、Writing 建议分、阅读时间点和检查完成度。",
-        "evidenceReview": "与 CP1 对比，只分析新增、复发或明显改善的高影响错误。",
-        "speakingMock": "完成第二套完整口语录音，使用未练题，不在录制中请求释义或提示。",
-        "targetedRepair": "针对本次最大可恢复损失完成一份定点修订。",
-        "close": "执行 CP2：判断 L/R 是否达到 60/80，W/S 是否出现 6.0 证据，并重分配第 10–13 天主修复时间。"
+        "speaking": "根据窗口 A 完整口语，只验证一个最高影响问题：使用新题完成一个 Part 2 加 3 道 Part 3，检查主线、理由和例证是否比首遍稳定。",
+        "priorityCore": "若窗口 A 有唯一顺延项，先完成它；否则在 Writing 与 Listening 中选择首次证据损失更大的一个，用未见短样本做迁移。今天不同时训练两科。",
+        "evidenceLog": "冻结新题首遍结果，并写出次日纸笔模考要比较的三个指标：L/R 原始分、Writing 完成与检查时间、最高影响错误是否复发。",
+        "close": "确认纸笔模考安排在 8 月 19 日；若需在 18–20 日内前后移动，只交换模考与复盘块，不复制任务。"
       },
-      "gate": "CP2 三项判断均有数字或样本支持；下一主修复单元唯一且可验证。"
+      "gate": "窗口 A 没有超过一个顺延项；模考材料、纸张、外部 10 分钟听力誊写计时和比较指标已准备。",
+      "conditionalReserve": {
+        "minutes": 60,
+        "condition": "仅当 P0、P1 完成且过去三天尚未做 Reading 维护时启用。",
+        "task": "完成一篇限时 Reading Passage；只检查时间、直接证据和 E005，不做全文精读。"
+      }
     },
     {
       "day": 10,
-      "date": "2026-08-18",
+      "date": "2026-08-19",
       "phase": "P3",
-      "template": "standard",
-      "focus": "把 CP2 结论转成最小修复循环。",
+      "template": "rollingMock",
+      "focus": "窗口 B 建议模考日：完整纸笔 LRW，口语只保留短首遍。",
       "tasks": {
-        "listening": "复盘 CP2 中最集中的一种听力错误，再做一个未见同题型 Section 验证。",
-        "reading": "复盘 CP2 中最集中的一种阅读错误，再做一个未见同题型题组验证。",
-        "writing": "重写 CP2 较弱作文的提纲、Overview 或两个主体段，不整篇抄写范文。",
-        "speaking": "从 CP2 录音中选择最影响理解的三个片段，先改成稳定短句，再重录同题。",
-        "adaptive": "执行 CP2 选定的唯一主修复，完成原样本、修订版和下一验证条件。",
-        "close": "判断修订收益是否足以继续；没有证据时不得因为‘感觉腻了’换任务。"
+        "paperMock": "使用一套完全未见的 Cambridge Academic Test，按 Listening、Reading、Writing 正式顺序用纸连续完成；Listening 播放结束后另计 10 分钟誊写。可与 8 月 18 日或 20 日整块交换。",
+        "scoring": "查看答案前拍照；只记录 L/R 原始分、三篇阅读结束时间、Task 1/2 用时、检查时间和未完成题数。",
+        "speaking": "LRW 后至少休息 20 分钟，再回答 6 道未见 Part 1 或完成一个未见 Part 2；信息充分后停止，不复盘。",
+        "archive": "保存答卷、作文、构思纸、时间点和口语录音，建立下一日复盘索引。",
+        "close": "冻结证据后停止。今天不逐题讲错题、不评改整篇作文、不重录口语。"
       },
-      "gate": "CP2 的最高价值错误已进入可验证修复，而不是只阅读解析。"
+      "gate": "完整 LRW 和短口语首遍均已冻结；如果模考整块前后移动，复盘整块同步移动，其他任务不叠加。"
     },
     {
       "day": 11,
-      "date": "2026-08-19",
+      "date": "2026-08-20",
       "phase": "P3",
-      "template": "standard",
-      "focus": "提高完整题组稳定性与抽象表达。",
+      "template": "rollingReview",
+      "focus": "窗口 B 限量复盘：口语保持，模考只处理前三条失分链。",
       "tasks": {
-        "listening": "完整完成一套未见 Listening，使用纸上作答和 10 分钟誊写；复盘只保留高影响错误。",
-        "reading": "限时完成一篇 Passage 3；每题证据未找到前不以词汇共现作答，超过两分钟先跳过。",
-        "writing": "40 分钟完成一篇 Discussion 或 Opinion Task 2；两个主体段均使用具体、可解释例子。",
-        "speaking": "完成 8 个 Part 3 抽象问题，练习从个人例子上升到群体或社会影响。",
-        "adaptive": "继续 CP2 主修复或验证其迁移；只有满足结算判据才转向下一项。",
-        "close": "记录完整 Listening 的原始分和 Passage 3 的完成率，检查是否接近目标轨迹。"
+        "speaking": "使用新题完成一个 Part 2 和 3 道 Part 3，只验证模考日前口语样本的一个问题；不把改后表达背成逐字答案。",
+        "evidenceReview": "从纸笔模考中按可回收分排序，只选三条：优先 Listening、Writing，再看 Reading 是否复发时间或证据边界问题。",
+        "targetedRepair": "对第一失分链做一个 60 分钟修订；若模考尚未完成，本块取消并将整天与模考日交换。",
+        "close": "冻结 CP2 所需数据；低影响错题归档。下一日不继续模考逐题复盘，而转入口语就绪检查。"
       },
-      "gate": "完整 Listening 无连续失位；Passage 3 全部题至少读到直接证据；Task 2 留出检查时间。"
+      "gate": "纸笔模考最多三条失分链和一个修订已经形成；口语有新题首遍；没有把全部错题复盘带入 8 月 21 日。"
     },
     {
       "day": 12,
-      "date": "2026-08-20",
+      "date": "2026-08-21",
       "phase": "P3",
-      "template": "mock",
-      "focus": "完成第三次纸笔模考、CP3 和口语最早场就绪检查。",
+      "template": "oralPriority",
+      "focus": "CP2：完成第二套完整口语并按准考证重排，纸笔只做条件维护。",
       "tasks": {
-        "paperMock": "使用第三套完全未见 Academic Test，连续完成正式纸笔 LRW。",
-        "scoring": "冻结成绩并记录 L/R 原始分、W 建议分、时间边界和检查完成度。",
-        "evidenceReview": "与 CP1、CP2 做可比分析，忽略已见题修订分，只看首次独立输出。",
-        "speakingMock": "完成一套未准备的完整口语录音，验证无需新增素材也能持续作答。",
-        "targetedRepair": "只修本次仍在整场压力下复发的最高影响错误。",
-        "close": "执行 CP3：判断 Overall 轨迹，并确认即使 8 月 22 日口试也已有可执行流程。"
+        "speaking": "使用全新话题连续完成 Part 1–3，中途不接受提示、解释或纠错；保存音频、题目和一分钟 Part 2 提纲。",
+        "evidenceReview": "只选择一个流利连贯问题和一个高频语法问题，并与窗口 A 完整口语比较；不逐句生成更高级答案。",
+        "ticket": "检查准考证和具体口试时间；若公布，立即写入口试日期、路线和到场要求，并覆盖 8 月 22 日后的普通安排。",
+        "close": "执行 CP2：判断 7.5 路径和单项保护线，选出 8 月 22–24 日唯一 P1；当天不再做整套纸笔。"
       },
-      "gate": "明确选择继续冲击 7.5 或转为单项保护；口语已有完整首遍录音、考场动作和不依赖逐字背诵的素材调用方式。"
+      "gate": "第二套完整无提示口语和准考证状态均已保存；后续 48 小时安排明确。",
+      "conditionalReserve": {
+        "minutes": 60,
+        "condition": "仅当口试不在未来 48 小时且完整口语、复盘和排程均已完成时启用。",
+        "task": "完成一个短 Listening 或 Writing 维护样本，二选一；不做 Reading，因为该窗口已有完整模考。"
+      }
     },
     {
       "day": 13,
-      "date": "2026-08-21",
-      "phase": "P3",
-      "template": "oralBuffer",
-      "focus": "检查准考证并为最早可能口试保留恢复余量。",
+      "date": "2026-08-22",
+      "phase": "P4",
+      "template": "oralPriority",
+      "focus": "窗口 C：真实口试优先；未到保护窗口时完成一次熟悉强度口语。",
       "tasks": {
-        "listening": "完成一个未见 Section，保持题号跟踪和答案窗口，不再做整套。",
-        "reading": "完成一篇限时文章，执行跳题和直接证据规则，达到流程稳定即停止。",
-        "writing": "完成一项限时写作并定点修订最频繁的论证或准确性问题。",
-        "speaking": "做一套熟悉强度的完整口语；不用新背表达，确认问题理解、持续作答和卡词降级。",
-        "adaptive": "只验证 CP3 的一个高影响错误，不新开素材库大类或语言系统。",
-        "close": "检查准考证状态；若已公布，写入具体口试日期并重排未来 48 小时。"
+        "speaking": "若今天口试，只做 15 分钟自然热身并赴考；若不是，使用熟悉强度的新题完成一套或完成最弱的一个口语部分，不连续重录。",
+        "evidenceReview": "若未口试，只检查一个主线问题和一个语法问题；若已口试，改为记录考后题目、卡点和即时体感。",
+        "ticket": "确认下一次准考证或口试状态、路线、证件和到场时间；已有确定日期则只核对，不反复搜索。",
+        "close": "口试安排覆盖全部训练。没有口试且不在未来 48 小时时，下一 P1 从 Writing、Listening 中选择距离保护线更远的一项。"
       },
-      "gate": "基础训练不超过 360 分钟；准考证状态已核对；若口试在未来 48 小时内，剩余时间用于休息而不是补量。",
+      "gate": "真实口试或一份口语首遍已经完成；口试状态明确；被取消的 LRW 不形成补课债务。",
       "conditionalReserve": {
-        "minutes": 180,
-        "condition": "仅当准考证确认口试不在未来 48 小时内且状态正常时启用。",
-        "task": "增加 60 分钟听力、60 分钟阅读和 60 分钟写作定点训练；不增加第二个活动修复单元。"
+        "minutes": 60,
+        "condition": "仅当今天不是口试日、未来 48 小时也没有口试且 P0 已完成时启用。",
+        "task": "完成 CP2 指定的一个 Listening 或 Writing 短样本；只冻结首次证据。"
       }
     },
     {
       "day": 14,
-      "date": "2026-08-22",
+      "date": "2026-08-23",
       "phase": "P4",
-      "template": "oralBuffer",
-      "focus": "口试常规窗口开始：优先执行真实口试安排，没有口试再做低风险维护。",
+      "template": "rollingStandard",
+      "focus": "窗口 C：口语保持，P1 只给 CP2 后更弱的 Writing 或 Listening。",
       "tasks": {
-        "listening": "若今天不是口试日，完成一个未见 Section；若是口试日则取消本项。",
-        "reading": "若今天不是口试日，完成一篇限时文章；若是口试日则取消本项。",
-        "writing": "若今天不是口试日，完成一项限时写作和小范围修订；若是口试日则取消本项。",
-        "speaking": "若今天口试，只做 15 分钟自然热身并赴考；若不是，完成一套熟悉强度练习。",
-        "adaptive": "只在今天没有口试且不在考前 24 小时时执行一个 45 分钟短修复。",
-        "close": "口试后立即记录题目、卡点和体感；没有口试则确认下一日排程。"
+        "speaking": "若尚未口试，用未见题完成一个 Part 2 加 3 道 Part 3；若口试已结束，将本块改为 45–60 分钟最弱客观科维护。",
+        "priorityCore": "按 CP2 选择唯一 P1：Writing 做完整 60 分钟或一个未见任务迁移；Listening 做一套或两个相关 Section。不得因 Reading 33/40 而把两科都挤掉。",
+        "evidenceLog": "保存 P0、P1 首遍结果、用时和一个复发错误；提示后修订另列。",
+        "close": "P1 未完成顺延到次日；已完成则次日切换 Writing/Listening 的另一科。"
       },
-      "gate": "口试安排优先于计划时长；口试当天不补足训练量。没有口试时基础训练不超过 360 分钟。",
+      "gate": "口语或替代维护完成，且只产生一个 Writing/Listening P1；若进入口试保护窗口，本日自动降为 oralPriority。",
       "conditionalReserve": {
-        "minutes": 180,
-        "condition": "仅当今天不是口试日、未来 48 小时也没有口试且状态正常时启用。",
-        "task": "增加一组听力、一篇阅读和一个写作定点修复，共 180 分钟。"
+        "minutes": 60,
+        "condition": "仅当 P0、P1 完成且本窗口尚无 Reading 维护时启用。",
+        "task": "完成一篇 Reading Passage，执行两分钟止损和 E005 逐项核验；不做第二篇。"
       }
     },
     {
       "day": 15,
-      "date": "2026-08-23",
+      "date": "2026-08-24",
       "phase": "P4",
-      "template": "standard",
-      "focus": "修复 CP3 暴露的压力复发，不引入新系统。",
+      "template": "rollingStandard",
+      "focus": "窗口 C 收口：口语保持，完成尚未覆盖的 Writing 或 Listening。",
       "tasks": {
-        "listening": "复盘 CP3 最关键的听力失分链，并用一个未见同题型 Section 做迁移验证。",
-        "reading": "复盘 CP3 最关键的阅读失分链，并用一个未见题组验证止损或证据判断。",
-        "writing": "修订 CP3 较弱任务，只保留能在考场稳定执行的结构和表达。",
-        "speaking": "重录 CP3 中最弱的一部分，减少句子重启并用简单替代表达避免卡词。",
-        "adaptive": "120 分钟全部用于 CP3 最高影响复发错误；不新增素材库大类。",
-        "close": "把有效修复压缩成一条考场动作，加入最终执行清单。"
+        "speaking": "若尚未口试，完成 8 道 Part 1 加一个 Part 2 关键词提纲；若口试已结束，改为最弱客观科短样本。",
+        "priorityCore": "完成窗口 C 中尚未覆盖的 Writing 或 Listening。若两科都已完成，只对 CP2 第一失分链做一份未见迁移，不新开题型。",
+        "evidenceLog": "记录窗口 C 的 Writing、Listening、Reading 维护和口语覆盖情况；只保留会进入最终考场提醒的错误。",
+        "close": "确认 8 月 25–26 日是否处于口试保护窗口，并决定哪一天可做最终纸笔彩排；若两天均不安全，明确取消。"
       },
-      "gate": "CP3 主错误已有独立迁移结果；新增策略不超过一条。"
+      "gate": "窗口 C 至少覆盖一次 Writing、一次 Listening 和持续口语；最终彩排日期或取消原因明确。",
+      "conditionalReserve": {
+        "minutes": 60,
+        "condition": "仅当窗口 C 必需交付物完成且不在口试保护窗口时启用。",
+        "task": "拉取最终彩排前最弱的一项短修复；不提前做整套模考。"
+      }
     },
     {
       "day": 16,
-      "date": "2026-08-24",
+      "date": "2026-08-25",
       "phase": "P4",
-      "template": "standard",
-      "focus": "验证听读承载分，并保持写说单项线。",
+      "template": "rollingMock",
+      "focus": "在口试安全窗口内完成最后一次纸笔 LRW 彩排并冻结 CP3 证据。",
       "tasks": {
-        "listening": "完整完成一套未见 Listening 和 10 分钟誊写，目标是题号始终同步且无拼写漏检。",
-        "reading": "完整完成一套未见 Reading，严格执行 17/20/23 分钟和单题两分钟止损。",
-        "writing": "重写两个过去最薄弱的主体段和一个 Task 1 Overview，优先准确而非复杂。",
-        "speaking": "完成一套口语，优先自然连续表达；卡词时立即改用简单解释，不等待高级词。",
-        "adaptive": "根据当天 L/R 原始分选择一个可恢复错误做小修复，不重开大型学习主题。",
-        "close": "判断 L/R 是否接近 35/40 工作目标，并记录距离来自知识还是执行。"
+        "paperMock": "若不在口试前后 48 小时，使用保留的完全未见 Academic Test 按纸笔顺序完成 LRW；冲突则与 8 月 26 日整块互换，仍冲突时取消。",
+        "scoring": "查看答案前拍照，只冻结 L/R 原始分、三篇阅读时间、写作用时、检查完成度和纸笔流程问题。",
+        "speaking": "仅在尚未口试且不处于口试前 24 小时时，LRW 后完成 6 道轻量 Part 1；否则取消，不补做。",
+        "archive": "保存答卷、作文、构思纸、时间点和口语状态，与 8 月 19 日数据并列。",
+        "close": "冻结 CP3 证据后停止；不在彩排日逐题复盘。"
       },
-      "gate": "两项完整客观测试均在时限内结束；写作和口语最低维护量没有被高分科目挤掉。"
+      "gate": "最终彩排只在口试安全窗口执行；若第 16、17 天都冲突则取消整套并记录原因。"
     },
     {
       "day": 17,
-      "date": "2026-08-25",
+      "date": "2026-08-26",
       "phase": "P4",
-      "template": "mock",
-      "focus": "在口试安全窗口内完成最终纸笔彩排并执行 CP4。",
+      "template": "rollingReview",
+      "focus": "复盘最终彩排并冻结考场流程；若前一日因口试冲突，本日改为执行彩排。",
       "tasks": {
-        "paperMock": "若不在口试前后 48 小时，使用最后一套保留的完全未见 Academic Test，按正式顺序完成 LRW；冲突则与第 18 天互换。",
-        "scoring": "冻结原始答卷，记录 L/R 原始分、W 建议分、所有时间点和检查完成度。",
-        "evidenceReview": "只分析会在笔试前改变考场动作的错误，其他问题进入考后档案。",
-        "speakingMock": "若口试尚未进行且不在考前 24 小时，完成一套口语；否则改为 15 分钟轻量保持。",
-        "targetedRepair": "对最终彩排最影响分数的一处已知错误做短修复。",
-        "close": "执行 CP4，确定最后阶段只保留的一到两个提醒和每科稳定流程。"
+        "speaking": "若尚未口试，使用熟悉强度新题完成一个口语部分；若已经口试，改为 45–60 分钟最弱客观科流程维护。",
+        "evidenceReview": "若彩排已完成，只分析会改变考场动作的前三条问题；若本日与彩排日互换，本块取消。",
+        "targetedRepair": "只修第一条高影响问题；若本日执行彩排或处于口试保护窗口，则取消。",
+        "close": "执行 CP3，冻结每科不超过三条提醒；若本日才完成彩排，把限量复盘顺延至 8 月 27 日并替换原任务。"
       },
-      "gate": "最终彩排只在不冲突的日期执行；若第 17、18 天都落入口试保护窗口，则取消整套彩排并记录原因。"
+      "gate": "最终彩排已完成或因口试保护被明确取消；最终考场流程不再加入新策略。"
     },
     {
       "day": 18,
-      "date": "2026-08-26",
-      "phase": "P4",
-      "template": "standard",
-      "focus": "作为 CP4 备用日期，或完成最后一次高强度写说输出与错误回归。",
+      "date": "2026-08-27",
+      "phase": "P5",
+      "template": "rollingReview",
+      "focus": "完成必要的最终彩排复盘，或只回归一到两个已知高频错误。",
       "tasks": {
-        "listening": "若 CP4 已完成，做一个未见 Section 4；若第 17 天因口试冲突未完成 CP4，则本日执行整套模考并替代以下任务。",
-        "reading": "若 CP4 已完成，连续完成 Passage 2–3，重点验证长句保持和最后一篇完整作答。",
-        "writing": "若 CP4 已完成，60 分钟完成完整 Writing，只检查论点承诺、例子、Overview 和高频语法。",
-        "speaking": "若口试尚未进行且不在考前 24 小时，完成两次 Part 2 和一组 Part 3；否则只做轻量保持。",
-        "adaptive": "对一个 improving 错误做独立 clean sample 候选；若本日执行 CP4，则改为彩排证据复盘。",
-        "close": "确认 CP4 已完成或因口试保护被明确取消，并冻结最终考场流程。"
+        "speaking": "若口试尚未进行，只做一份熟悉强度短首遍；若口试已结束，改为一个短听读流程，不新增诊断。",
+        "evidenceReview": "若 8 月 26 日才完成彩排，今天只复盘前三条；否则只核对 CP3 已冻结的问题是否仍需要进入考场清单。",
+        "targetedRepair": "只处理 CP3 第一问题，使用一个短样本；不增加新模板、题型或素材库。",
+        "close": "把四科提醒压缩到每科三条以内，并确认 8 月 28 日主动减量。"
       },
-      "gate": "CP4 状态明确；最终分数路径、单项风险和考场清单已冻结；不再启动新学习主题。"
+      "gate": "没有新增错误分类或策略；最终提醒和物流清单已经冻结。"
     },
     {
       "day": 19,
-      "date": "2026-08-27",
-      "phase": "P5",
-      "template": "standard",
-      "focus": "回归已知错误，停止扩张训练面。",
-      "tasks": {
-        "listening": "从过去模考选两组曾错题的同类旧材料，先遮答案重做，再核对漏题止损和答案窗口。",
-        "reading": "完成一篇难度可控的文章，重点执行时间和证据流程；不再用超难文章测试上限。",
-        "writing": "完成一套 60 分钟 Writing 或在疲劳明显时改为 Task 1 + Task 2 提纲与两个主体段，保持手写节奏。",
-        "speaking": "完成一套熟悉强度的口语，复习素材卡之间的迁移，不背逐字答案。",
-        "adaptive": "只处理 CP4 指定的一到两个高频错误；剩余时间复查考试动作和证件安排。",
-        "close": "把每科提醒压缩到三条以内；确认第 20 天降负荷，不因焦虑增加整套模考。"
-      },
-      "gate": "没有新增错误分类或策略；四科最终提醒均不超过三条。"
-    },
-    {
-      "day": 20,
       "date": "2026-08-28",
       "phase": "P5",
       "template": "taper",
       "focus": "轻量热身、确认流程和恢复状态。",
       "tasks": {
-        "listening": "用已掌握短题组完成一次跟题和 10 分钟誊写流程，不追分。",
-        "reading": "做一篇旧文章，执行时间点、标记和跳题动作，达到稳定即停止。",
-        "writing": "写一个 Task 1 Overview、两个 Task 2 五分钟提纲，并复写最稳定的准确句型。",
-        "speaking": "回答 3 个熟悉 Part 1 问题，只做一个 Part 2 关键词提纲；若口试已结束则改为听力轻复习。",
+        "objectiveWarmup": "使用已掌握材料完成短听读流程，只确认题号跟踪、誊写、时间点和跳题动作，不追分。",
+        "writing": "写一个 Task 1 Overview 和两个 Task 2 五分钟提纲，复写最稳定的准确句型；不写整套。",
+        "speaking": "若口试尚未进行，回答 3 个熟悉 Part 1 并列一个 Part 2 关键词提纲；否则取消。",
         "finalReview": "查看一页考场清单和最高频错误，不看新范文、新预测或新技巧。",
-        "logistics": "确认准考证、身份证件、文具、路线、起床与出发时间；完成后停止学习并保证睡眠。"
+        "logistics": "确认准考证、身份证件、文具、路线、起床和出发时间；完成后停止学习。"
       },
-      "gate": "总学习不超过 300 分钟；物品和路线已确认；睡前不再做整套题或修改写作体系。"
+      "gate": "总学习不超过 240 分钟；物品、路线和睡眠安排已确认；不再做整套题。"
+    },
+    {
+      "day": 20,
+      "date": "2026-08-29",
+      "phase": "P5",
+      "template": "exam",
+      "focus": "笔试日：自然热身并按既定流程赴考，不进行补量。",
+      "tasks": {
+        "warmup": "最多 20 分钟：看熟悉词汇、一个简单 Overview 和三道旧听力，只为进入英语状态。",
+        "logistics": "按前一日确认的证件、文具、路线和时间赴考；不根据热身表现修改策略。"
+      },
+      "gate": "考试优先；当天没有额外训练、深度复盘或补课任务。"
     }
   ]
 }

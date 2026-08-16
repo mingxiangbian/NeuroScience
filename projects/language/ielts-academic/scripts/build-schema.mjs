@@ -93,7 +93,7 @@ function validateSprintPlan(sprintPlan, fatalIssues) {
     fatalIssues.push(issue("fatal", "invalid_type", "sprintPlan", "sprintPlan must be an object"));
     return;
   }
-  for (const field of ["schemaVersion", "id", "status", "lastUpdated", "exam", "speakingContingency", "objective", "dailyBudget", "operatingRules", "paperEvidenceProtocol", "phases", "checkpoints", "days"]) {
+  for (const field of ["schemaVersion", "id", "status", "lastUpdated", "exam", "speakingContingency", "objective", "prioritySystem", "dailyBudget", "operatingRules", "paperEvidenceProtocol", "phases", "checkpoints", "days"]) {
     requireField(sprintPlan[field], `sprintPlan.${field}`, fatalIssues);
   }
   if (sprintPlan.schemaVersion !== 1) {
@@ -122,6 +122,30 @@ function validateSprintPlan(sprintPlan, fatalIssues) {
     requireField(sprintPlan.speakingContingency?.[field], `sprintPlan.speakingContingency.${field}`, fatalIssues);
   }
   normalizeArrayField(sprintPlan.speakingContingency?.rules, "sprintPlan.speakingContingency.rules", fatalIssues);
+
+  const prioritySystem = sprintPlan.prioritySystem;
+  if (!hasObject(prioritySystem)) {
+    fatalIssues.push(issue("fatal", "invalid_type", "sprintPlan.prioritySystem", "sprintPlan.prioritySystem must be an object"));
+  } else {
+    for (const field of ["effectiveFrom", "carryPolicy", "levels"]) {
+      requireField(prioritySystem[field], `sprintPlan.prioritySystem.${field}`, fatalIssues);
+    }
+    const levels = normalizeArrayField(prioritySystem.levels, "sprintPlan.prioritySystem.levels", fatalIssues);
+    if (levels.length === 0) {
+      fatalIssues.push(issue("fatal", "missing_priority_levels", "sprintPlan.prioritySystem.levels", "at least one priority level is required"));
+    }
+    const levelIds = [];
+    levels.forEach((level, index) => {
+      const path = `sprintPlan.prioritySystem.levels[${index}]`;
+      for (const field of ["id", "label", "reason", "rule"]) {
+        requireField(level?.[field], `${path}.${field}`, fatalIssues);
+      }
+      levelIds.push(level?.id);
+    });
+    if (new Set(levelIds).size !== levelIds.length) {
+      fatalIssues.push(issue("fatal", "duplicate_id", "sprintPlan.prioritySystem.levels", "priority level ids must be unique"));
+    }
+  }
 
   const targetProfile = sprintPlan.objective?.targetProfile;
   const targetBands = ["listening", "reading", "writing", "speaking"].map((skill) => Number(targetProfile?.[skill]));

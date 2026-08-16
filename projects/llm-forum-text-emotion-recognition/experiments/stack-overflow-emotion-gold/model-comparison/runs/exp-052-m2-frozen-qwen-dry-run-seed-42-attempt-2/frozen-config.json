@@ -1,0 +1,75 @@
+{
+  "schema_version": "exp-052-m2-run-contract-v1",
+  "experiment_id": "EXP-052",
+  "rq_id": "RQ-S1",
+  "tier": "Major",
+  "stage": "train-only-dry-run",
+  "registered_at": "2026-08-14",
+  "authorization": {
+    "authorized_at": "2026-08-14",
+    "basis": "User explicitly authorized the next EXP-052 seed-42 integrity-gate step.",
+    "seeds": [42],
+    "splits": ["train"],
+    "test_access": false,
+    "seeds_43_44_authorized": false,
+    "exp_053_054_authorized": false
+  },
+  "implementation": {
+    "protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-052-m2-frozen-qwen-linear-head.md",
+      "sha256": "cbdfefb7f648296590a17da4e585b25dc0ab0dc9099fbdef62dee054f1096f52"
+    },
+    "authorization": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-052-seed-42-authorization.md",
+      "sha256": "503eb1f82ecdca2d48c698d9d9e44eec8519a3acfb7a9e91cef9ad728d0d0d88"
+    },
+    "runner": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/run_exp052_m2.py",
+      "sha256": "bb04f94366cb325bf119dcba05f78ef16b0ef617af466f2011bb24bc53c1f14e"
+    },
+    "verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/verify_exp052_m2.py",
+      "sha256": "f893ba7ab51841d27b4bf36d3556c3fc76174fca0245f2eecfaa3765ae676674"
+    },
+    "tests": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/tests/test_exp052_m2.py",
+      "sha256": "2a97c0ede014124cfd4c825fd69b1c51a1d86bc83ec233ffae8b0728730e390c"
+    },
+    "prompt": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/prompt-v1.json",
+      "sha256": "0722ff947ba030cdf5b42358c7ba45a4d0d6372ccf0e2be28d131a0c24bdb90d"
+    }
+  },
+  "prerequisite": {
+    "shared_config_path": "experiments/stack-overflow-emotion-gold/model-comparison/config.json",
+    "shared_config_sha256": "d97b7c837b5de4ef014a553fa255ebea4ecdffa848d19715d084bf7ed46177d6",
+    "exp050_run_path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-050-shared-model-preflight/run.json",
+    "exp050_run_sha256": "e739fae522c87a1855731c6ad7b13c25e85e290ac6f689638c97540ed5777811",
+    "exp050_verification_path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-050-shared-model-preflight/verification.json",
+    "exp050_verification_sha256": "d3dc51c02e07f0dd45dcac0c535ddcee682b1e3dd48374c020f92f4d8be75d00",
+    "exp050_m2_path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-050-shared-model-preflight/m2.json",
+    "exp050_m2_sha256": "7308c36654a8dff21ae71f0deffa64d39ee145cab9d4091116c0c93c7b63a2c1"
+  },
+  "execution": {
+    "required_architecture": "arm64",
+    "offline_only": true,
+    "expected_head_initial_sha256": "7308f5ca8300aa7343645f7783c7893e1120d79344052d531e9cd018d8afd819",
+    "batch_order_rng": "numpy.random.Generator(PCG64(seed)); continuous permutation stream across epochs",
+    "maximum_feature_extraction_minutes": 240,
+    "maximum_head_training_minutes": 20,
+    "maximum_total_wall_minutes": 300,
+    "maximum_peak_memory_gb": 13.0,
+    "feature_log_every_rows": 100,
+    "head_log_every_steps": 250,
+    "public_run_dir": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen-dry-run-seed-42",
+    "private_run_dir": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-052-m2-frozen-qwen-dry-run/seed-42"
+  },
+  "dry_run": {
+    "sample_rows": 24,
+    "selection_namespace": "EXP-052-seed-42-train-only-cost-v1",
+    "projection_safety_factor": 1.5,
+    "maximum_wall_minutes": 30,
+    "log_every_rows": 8,
+    "validation_performance_allowed": false
+  }
+}

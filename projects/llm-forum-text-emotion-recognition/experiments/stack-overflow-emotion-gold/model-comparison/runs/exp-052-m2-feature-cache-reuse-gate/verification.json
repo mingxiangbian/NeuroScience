@@ -1,0 +1,388 @@
+{
+  "check_count": 74,
+  "checks": [
+    {
+      "detail": null,
+      "name": "run completed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "experiment identity",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stage identity",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test sealed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train validation only",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "no training",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "no performance metrics",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "no Qwen forward",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "consumer seeds not authorized",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M3 and M4 sealed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "config matches frozen config",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "implementation hash: protocol",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen implementation: protocol",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "implementation hash: runner",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen implementation: runner",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "implementation hash: verifier",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen implementation: verifier",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "implementation hash: tests",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen implementation: tests",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "runner source audit: explicit_train_validation_allowlist",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "runner source audit: no_test_path_lookup",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "runner source audit: no_recursive_data_access",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "runner source audit: no_training_entrypoint",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "runner source audit: read_only_memmap",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "verifier source audit: explicit_train_validation_allowlist",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "verifier source audit: no_test_path_lookup",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "verifier source audit: no_recursive_data_access",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "verifier source audit: no_training_entrypoint",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "verifier source audit: read_only_memmap",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "shared split allowlist",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "shared test status",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source seed-42 identity",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source seed-42 completed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source seed-42 test sealed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source verification passed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source verification count",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source verifier test sealed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source manifest provenance",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train source artifact identity",
+      "passed": true
+    },
+    {
+      "detail": [
+        3360,
+        2560
+      ],
+      "name": "train shape",
+      "passed": true
+    },
+    {
+      "detail": "float32",
+      "name": "train dtype",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train finite",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train read-only mmap",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train Git ignored",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train sample order",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train token stream",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train gate artifact",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train gate shape and dtype",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train gate no labels",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation source artifact identity",
+      "passed": true
+    },
+    {
+      "detail": [
+        720,
+        2560
+      ],
+      "name": "validation shape",
+      "passed": true
+    },
+    {
+      "detail": "float32",
+      "name": "validation dtype",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation finite",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation read-only mmap",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation Git ignored",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation sample order",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation token stream",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation gate artifact",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation gate shape and dtype",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation gate no labels",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "model revision frozen",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "model manifest frozen",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "prompt frozen",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "thinking disabled",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "pooling frozen",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "consumer list",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "consumer training still sealed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M3 M4 reuse forbidden",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "report artifact",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "public artifacts contain no substantive raw text",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "public artifacts contain no row identifiers",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "finite wall time",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "zero API cost",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test remains sealed after verification",
+      "passed": true
+    }
+  ],
+  "experiment_id": "EXP-052",
+  "failed_checks": [],
+  "schema_version": "exp-052-feature-cache-reuse-verification-v1",
+  "stage": "feature-cache-reuse-integrity-gate",
+  "status": "Passed",
+  "test_split_accessed": false,
+  "verified_at_utc": "2026-08-14T05:24:39.975082+00:00"
+}

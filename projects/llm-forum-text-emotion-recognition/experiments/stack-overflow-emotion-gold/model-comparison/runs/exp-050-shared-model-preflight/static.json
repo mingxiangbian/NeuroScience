@@ -1,0 +1,56 @@
+{
+  "accessed_row_level_files": [
+    "data/stack-overflow-emotion-gold/derived-private/task-v1/train.jsonl"
+  ],
+  "accessed_splits": [
+    "train"
+  ],
+  "config_sha256": "d97b7c837b5de4ef014a553fa255ebea4ecdffa848d19715d084bf7ed46177d6",
+  "experiment_id": "EXP-050",
+  "label_order": [
+    "love",
+    "joy",
+    "surprise",
+    "anger",
+    "sadness",
+    "fear"
+  ],
+  "performance_metrics_computed": false,
+  "prompt_sha256": "0722ff947ba030cdf5b42358c7ba45a4d0d6372ccf0e2be28d131a0c24bdb90d",
+  "qwen_prompt_suffix_token_sha256": "ad097acba504d9602b8776e16170c137c0e929f07226eb1addaaf5ace19645d5",
+  "qwen_prompt_token_lengths": {
+    "max": 341,
+    "min": 124,
+    "p50": 149,
+    "p95": 228,
+    "p99": 268
+  },
+  "raw_text_stored_publicly": false,
+  "roberta_token_lengths": {
+    "max": 222,
+    "min": 4,
+    "p50": 29,
+    "p95": 109,
+    "p99": 153
+  },
+  "row_level_labels_stored_publicly": false,
+  "selection": {
+    "cardinality_2_rows": 4,
+    "identities_public": false,
+    "neutral_rows": 5,
+    "order_digest_sha256": "4a6d3573c771490e2c719ea31620716b069fe437b7db9133485329ee8aaa9a86",
+    "positive_counts": {
+      "anger": 3,
+      "fear": 2,
+      "joy": 6,
+      "love": 8,
+      "sadness": 2,
+      "surprise": 2
+    },
+    "rows": 24,
+    "selection_digest_sha256": "3381a862220ed0a447d26672ff9f252be4ad29c6e997bff4535135f544c71aef"
+  },
+  "status": "Passed",
+  "test_split_accessed": false,
+  "validation_split_accessed": false
+}

@@ -1,0 +1,382 @@
+{
+  "check_count": 70,
+  "checks": [
+    {
+      "detail": null,
+      "name": "run completed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "experiment identity",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stage identity",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "single seed authorization",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test sealed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "seeds 43 and 44 sealed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M3 and M4 sealed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "labels frozen",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "Qwen frozen",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "linear head size",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "pooling frozen",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "feature dtype frozen",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run config matches frozen config",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "shared config matches source",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "implementation hash: protocol",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "implementation hash: authorization",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "implementation hash: runner",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "implementation hash: verifier",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "implementation hash: tests",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "implementation hash: prompt",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "model file count",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "EXP-050 check count",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source access audit: explicit_train_validation_allowlist",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source access audit: all_split_calls_static_and_allowlisted",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source access audit: no_test_path_lookup",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source access audit: no_recursive_data_access",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source access audit: qwen_freeze_present",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source access audit: qwen_eval_present",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source access audit: optimizer_updates_head_only",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "head initialization independently reproduced",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "head initialization matches EXP-050",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "formal split access",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "formal performance metrics computed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "dry-run prerequisite recorded",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train validation component disjoint",
+      "passed": true
+    },
+    {
+      "detail": [
+        3360,
+        2560
+      ],
+      "name": "train feature shape",
+      "passed": true
+    },
+    {
+      "detail": [
+        720,
+        2560
+      ],
+      "name": "validation feature shape",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "feature dtypes",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "features finite",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train feature order",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation feature order",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train token digest",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation token digest",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "formal no truncation",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "matched batch orders",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "two epochs and 6720 updates",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "epoch 1 order digest",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "epoch 2 order digest",
+      "passed": true
+    },
+    {
+      "detail": [
+        2,
+        720,
+        6
+      ],
+      "name": "probability shape",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "probabilities finite",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "private gold",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "private sample order",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "private component order",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "two history rows",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "epoch 1 identity",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "epoch 1 fixed Macro-F1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "epoch 1 finite losses",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "epoch 2 identity",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "epoch 2 fixed Macro-F1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "epoch 2 finite losses",
+      "passed": true
+    },
+    {
+      "detail": {
+        "eligible_epochs": [
+          2
+        ],
+        "maximum_fixed_macro_f1": 0.18339128663377569,
+        "practical_tie_delta": 0.005,
+        "selected_epoch": 2,
+        "selected_fixed_macro_f1": 0.18339128663377569,
+        "selection_deficit_from_maximum": 0.0
+      },
+      "name": "checkpoint selection",
+      "passed": true
+    },
+    {
+      "detail": 0.0,
+      "name": "selected head replay",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "shared threshold selection",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "threshold grid length",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "public artifacts contain no substantive raw text",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "public artifacts contain no row identifiers",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "private manifest ignored",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "private feature cache ignored",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "memory budget",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test remains sealed after verification",
+      "passed": true
+    }
+  ],
+  "experiment_id": "EXP-052",
+  "failed_checks": [],
+  "schema_version": "exp-052-m2-verification-v1",
+  "seed": 42,
+  "stage": "seed-42-train-validation-integrity-gate",
+  "status": "Passed",
+  "test_split_accessed": false,
+  "verified_at_utc": "2026-08-14T04:35:12.441288+00:00"
+}

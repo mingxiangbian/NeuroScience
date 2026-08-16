@@ -1,0 +1,142 @@
+{
+  "schema_version": "exp-053-m3-seed-contract-v1",
+  "experiment_id": "EXP-053",
+  "rq_id": "RQ-S1",
+  "tier": "Major",
+  "stage": "seed-44-train-validation",
+  "registered_at": "2026-08-15",
+  "authorization": {
+    "authorized_at": "2026-08-15",
+    "basis": "User explicitly authorized EXP-053 seed 44 after reviewing the independently verified seeds 42 and 43 results.",
+    "seeds": [44],
+    "splits": ["train", "validation"],
+    "validation_access": true,
+    "test_access": false,
+    "formal_training": true,
+    "seed_44_authorized": true,
+    "exp_054_authorized": false
+  },
+  "implementation": {
+    "protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-053-m3-qwen-classification-lora.md",
+      "bytes": 2274,
+      "sha256": "32591d0d2238558853f010c1d62c8e0f2e78c9b5a67b35f5fea070ec572ee865"
+    },
+    "authorization": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-053-seed-44-formal-authorization.md",
+      "bytes": 3263,
+      "sha256": "96f36d5ca25f624618d1a4bfccd74a30ed8625adccce5d970910427225f6b4cf"
+    },
+    "runner": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/run_exp053_m3_seed44.py",
+      "bytes": 53221,
+      "sha256": "ba57576d2a7865d14fbcefd36bf4a10438fc183d4a6173fada601399ed0a6bc5"
+    },
+    "verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/verify_exp053_m3_seed44.py",
+      "bytes": 38293,
+      "sha256": "010a082ebc6c30f27e3ce6e3410388cbddd952af3f9a457a0166f3616668180c"
+    },
+    "tests": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/tests/test_exp053_m3_seed44.py",
+      "bytes": 8621,
+      "sha256": "b1e4cabe31509d6f9d3b583e47e084085d7fa0b6297890797558b70df3b884e7"
+    },
+    "primitives": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/run_preflight.py",
+      "bytes": 37104,
+      "sha256": "1a8aaf063be3db0f55e0cb95ae35c9395467cd7c7c0c1596813606ba53956edd"
+    },
+    "resource_runner_reference": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/run_exp053_m3_preflight.py",
+      "bytes": 37469,
+      "sha256": "756a3e4a487554148409dffeebaa600ca5857398f6230e82e15bc294f39b44a4"
+    },
+    "prompt": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/prompt-v1.json",
+      "bytes": 722,
+      "sha256": "0722ff947ba030cdf5b42358c7ba45a4d0d6372ccf0e2be28d131a0c24bdb90d"
+    }
+  },
+  "prerequisites": {
+    "shared_config": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/config.json",
+      "bytes": 6720,
+      "sha256": "d97b7c837b5de4ef014a553fa255ebea4ecdffa848d19715d084bf7ed46177d6"
+    },
+    "resource_preflight": {
+      "run": {
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora-resource-preflight-seed-42-attempt-2/run.json",
+        "bytes": 15236,
+        "sha256": "e8eb3bf26e43f9dd4f1faa074a78d1ec34ade31a4e424ec7844923f0c5da91f3"
+      },
+      "verification": {
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora-resource-preflight-seed-42-attempt-2/verification.json",
+        "bytes": 10285,
+        "sha256": "ccf8a4d25a1dc402dab02973d6abc375c6424fd8c60b98b440858db06d1cba79"
+      }
+    },
+    "prior_m3_seed_42": {
+      "run": {
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora/seed-42/run.json",
+        "bytes": 33115,
+        "sha256": "c1c93044b7978dde134d41e1aac815a729f3237d38ffbf026c41474d27c24ca5"
+      },
+      "verification": {
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora/seed-42/verification-attempt-2.json",
+        "bytes": 15114,
+        "sha256": "d17b5777b2a8550120c5ffb34c83c1fe45d00b4140a5501dc09539afb4422c77"
+      }
+    },
+    "prior_m3_seed_43": {
+      "run": {
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora/seed-43/run.json",
+        "bytes": 33415,
+        "sha256": "158bc62d54fdd34ac1c0acbca0e4dc9815177f5a9fe2c1b0f2109dc3241dff23"
+      },
+      "verification": {
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora/seed-43/verification.json",
+        "bytes": 14158,
+        "sha256": "9907b5d9f028981999770746d9d2ffcb7bb3292dc625912959745782b0d809d2"
+      }
+    },
+    "m2_seed_44": {
+      "run": {
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen/seed-44/run.json",
+        "bytes": 26083,
+        "sha256": "29ded2090e0c74a5b3a122f1e95bf959b03d118dc28942416a999ac242ceaaeb"
+      },
+      "verification": {
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen/seed-44/verification.json",
+        "bytes": 10605,
+        "sha256": "4e4db774486804a45d5658273b922a07764f0ff4c180b3f56c7fd75d37b54431"
+      }
+    },
+    "m2_aggregate": {
+      "aggregate": {
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen-three-seed-validation/aggregate.json",
+        "bytes": 46118,
+        "sha256": "59071f76246b9f7ee0099a82ed1ff10b944b1b7f5612a6563b470b7a89519356"
+      },
+      "verification": {
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen-three-seed-validation/verification.json",
+        "bytes": 9559,
+        "sha256": "8cbb654182eccc9f4cdc442fe0975c6c7bfdce45e74639c1bdd2c27acbc342ed"
+      }
+    }
+  },
+  "execution": {
+    "required_architecture": "arm64",
+    "offline_only": true,
+    "expected_head_initial_sha256": "e7edad8565112d37829fee405684637afc91c9a004a6cb95c572ce2c513b17bf",
+    "batch_order_rng": "numpy.random.Generator(PCG64(seed)); continuous permutation stream across epochs",
+    "maximum_replay_probability_difference": 0.00001,
+    "maximum_peak_memory_gb": 13.0,
+    "maximum_total_wall_hours": 8.0,
+    "log_every_steps": 100,
+    "validation_log_every_rows": 100,
+    "public_run_dir": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora/seed-44",
+    "private_run_dir": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-053-m3-classification-lora/seed-44"
+  },
+  "formal_execution_authorized": true
+}

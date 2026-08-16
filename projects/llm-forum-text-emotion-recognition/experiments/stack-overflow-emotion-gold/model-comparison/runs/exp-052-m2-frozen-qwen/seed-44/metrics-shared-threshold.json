@@ -1,0 +1,95 @@
+{
+  "accuracy_definition": "strict subset/exact-match accuracy",
+  "five_label_macro_f1_without_surprise": 0.33377447631177926,
+  "hamming_loss": 0.11782407407407407,
+  "macro": {
+    "f1": 0.2781453969264827,
+    "precision": 0.2548727854105177,
+    "recall": 0.3332231427096422
+  },
+  "micro_f1": 0.4945382323733863,
+  "per_label": {
+    "anger": {
+      "f1": 0.536,
+      "fn": 65,
+      "fp": 51,
+      "label_id": 3,
+      "precision": 0.5677966101694916,
+      "predicted_support": 118,
+      "recall": 0.5075757575757576,
+      "support": 132,
+      "tn": 537,
+      "tp": 67
+    },
+    "fear": {
+      "f1": 0.14285714285714285,
+      "fn": 14,
+      "fp": 10,
+      "label_id": 5,
+      "precision": 0.16666666666666666,
+      "predicted_support": 12,
+      "recall": 0.125,
+      "support": 16,
+      "tn": 694,
+      "tp": 2
+    },
+    "joy": {
+      "f1": 0.0,
+      "fn": 74,
+      "fp": 0,
+      "label_id": 1,
+      "precision": 0.0,
+      "predicted_support": 0,
+      "recall": 0.0,
+      "support": 74,
+      "tn": 646,
+      "tp": 0
+    },
+    "love": {
+      "f1": 0.574430823117338,
+      "fn": 19,
+      "fp": 224,
+      "label_id": 0,
+      "precision": 0.422680412371134,
+      "predicted_support": 388,
+      "recall": 0.8961748633879781,
+      "support": 183,
+      "tn": 313,
+      "tp": 164
+    },
+    "sadness": {
+      "f1": 0.4155844155844156,
+      "fn": 18,
+      "fp": 27,
+      "label_id": 4,
+      "precision": 0.37209302325581395,
+      "predicted_support": 43,
+      "recall": 0.47058823529411764,
+      "support": 34,
+      "tn": 659,
+      "tp": 16
+    },
+    "surprise": {
+      "f1": 0.0,
+      "fn": 7,
+      "fp": 0,
+      "label_id": 2,
+      "precision": 0.0,
+      "predicted_support": 0,
+      "recall": 0.0,
+      "support": 7,
+      "tn": 713,
+      "tp": 0
+    }
+  },
+  "prediction_diagnostics": {
+    "empty_prediction_rows": 276,
+    "predicted_label_cardinality_mean": 0.7791666666666667
+  },
+  "primary": {
+    "name": "six_label_macro_f1",
+    "value": 0.2781453969264827
+  },
+  "subset_accuracy": 0.5236111111111111,
+  "weighted_f1": 0.43113996647098046
+}

@@ -1,0 +1,95 @@
+{
+  "accuracy_definition": "strict subset/exact-match accuracy",
+  "five_label_macro_f1_without_surprise": 0.16033148165012295,
+  "hamming_loss": 0.08657407407407407,
+  "macro": {
+    "f1": 0.13360956804176913,
+    "precision": 0.2586369770580297,
+    "recall": 0.0950281503560192
+  },
+  "micro_f1": 0.3415492957746479,
+  "per_label": {
+    "anger": {
+      "f1": 0.24050632911392406,
+      "fn": 113,
+      "fp": 7,
+      "label_id": 3,
+      "precision": 0.7307692307692307,
+      "predicted_support": 26,
+      "recall": 0.14393939393939395,
+      "support": 132,
+      "tn": 581,
+      "tp": 19
+    },
+    "fear": {
+      "f1": 0.0,
+      "fn": 16,
+      "fp": 0,
+      "label_id": 5,
+      "precision": 0.0,
+      "predicted_support": 0,
+      "recall": 0.0,
+      "support": 16,
+      "tn": 704,
+      "tp": 0
+    },
+    "joy": {
+      "f1": 0.0,
+      "fn": 74,
+      "fp": 0,
+      "label_id": 1,
+      "precision": 0.0,
+      "predicted_support": 0,
+      "recall": 0.0,
+      "support": 74,
+      "tn": 646,
+      "tp": 0
+    },
+    "love": {
+      "f1": 0.5611510791366906,
+      "fn": 105,
+      "fp": 17,
+      "label_id": 0,
+      "precision": 0.8210526315789474,
+      "predicted_support": 95,
+      "recall": 0.4262295081967213,
+      "support": 183,
+      "tn": 520,
+      "tp": 78
+    },
+    "sadness": {
+      "f1": 0.0,
+      "fn": 34,
+      "fp": 1,
+      "label_id": 4,
+      "precision": 0.0,
+      "predicted_support": 1,
+      "recall": 0.0,
+      "support": 34,
+      "tn": 685,
+      "tp": 0
+    },
+    "surprise": {
+      "f1": 0.0,
+      "fn": 7,
+      "fp": 0,
+      "label_id": 2,
+      "precision": 0.0,
+      "predicted_support": 0,
+      "recall": 0.0,
+      "support": 7,
+      "tn": 713,
+      "tp": 0
+    }
+  },
+  "prediction_diagnostics": {
+    "empty_prediction_rows": 598,
+    "predicted_label_cardinality_mean": 0.16944444444444445
+  },
+  "primary": {
+    "name": "six_label_macro_f1",
+    "value": 0.13360956804176913
+  },
+  "subset_accuracy": 0.5263888888888889,
+  "weighted_f1": 0.30142933391267346
+}

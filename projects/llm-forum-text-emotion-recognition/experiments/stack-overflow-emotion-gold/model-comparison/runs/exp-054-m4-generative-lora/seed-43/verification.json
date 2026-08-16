@@ -1,0 +1,475 @@
+{
+  "checks": [
+    {
+      "detail": "",
+      "name": "formal run readable",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "experiment identity",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "seed stage identity",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "run completed",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "train and validation only",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "test sealed",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "formal training authorized",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "exact optimizer steps",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "two epochs",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "assistant-only objective",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "prompt masked",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "greedy no retry",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "max new tokens 48",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "LoRA insertion count",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "LoRA parameter count",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "all LoRA B tensors updated",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "base sentinel unchanged",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "M3-M4 initial LoRA matched",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "training budget",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "validation inference budget",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "wall budget",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "memory budget",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "API cost zero",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "artifact batch_orders_private",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "artifact bootstrap",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "artifact confusion",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "artifact epoch_checkpoints_private epoch-1",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "artifact epoch_checkpoints_private epoch-2",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "artifact history",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "artifact metrics",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "artifact paired_m4_minus_m3",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "artifact parser_and_generation",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "artifact per_label",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "artifact private_manifest",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "artifact selected_adapter_private",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "artifact selected_predictions_private",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "artifact selected_raw_generations_private",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "artifact selection",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "artifact stdout_log",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "private predictions mode",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "private raw mode",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "private predictions ignored",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "private raw ignored",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "prediction shape",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "prediction binary",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "gold independently matches",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "validation order independently matches",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "component order independently matches",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "raw generation row count",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "raw generation row order",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "strict parser independently matches saved rows",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "strict parser independently matches predictions",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "strict parser independently matches validity",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "invalid output retained as all zero",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "metrics independently recomputed",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "parser valid count recomputed",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "parser valid rate recomputed",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "checkpoint selection independently recomputed",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "selected metrics match selected history",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "bootstrap independently recomputed",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "paired bootstrap independently recomputed",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "paired macro delta arithmetic",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "selected adapter tensor count",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "selected adapter parameter count",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "selected adapter private mode",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "selected adapter ignored",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay pass 1 readable",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay pass 1 completed",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay pass 1 validation only",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay pass 1 no retry",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay pass 1 selection unchanged",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay pass 1 private mode",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay pass 1 ignored",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay pass 1 row count",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay pass 1 parser recomputed",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay pass 1 formal raw agreement",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay pass 2 readable",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay pass 2 completed",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay pass 2 validation only",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay pass 2 no retry",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay pass 2 selection unchanged",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay pass 2 private mode",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay pass 2 ignored",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay pass 2 row count",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay pass 2 parser recomputed",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay pass 2 formal raw agreement",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay sample order stable",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay raw output stable",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay parsed vector stable",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay subset independently selected",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "replay subset digest frozen",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "public run omits raw output",
+      "passed": true
+    }
+  ],
+  "checks_passed": 92,
+  "checks_total": 92,
+  "experiment_id": "EXP-054",
+  "failed_checks": [],
+  "performance_metrics_recomputed": true,
+  "schema_version": "exp-054-m4-verification-v1",
+  "stage": "seed-43-train-validation",
+  "status": "Passed",
+  "test_split_accessed": false,
+  "validation_split_accessed": true,
+  "verified_at_utc": "2026-08-15T11:05:02.646322+00:00"
+}

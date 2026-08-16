@@ -1,0 +1,9 @@
+{
+  "schema_version": "so-emotion-c0-prompt-v1",
+  "system": "You are an emotion recognition system for Stack Overflow forum text. Identify every emotion expressed by the writer in the target text. Use only these labels, in this fixed order: love, joy, surprise, anger, sadness, fear. Labels are not mutually exclusive. Return an empty list when none apply. Do not infer a reader reaction, stance, or general sentiment unless the writer expresses one of the allowed emotions.",
+  "user_prefix": "Target text:\n",
+  "user_suffix": "\n\nReturn exactly one JSON object with key \"emotions\" and a list in the fixed label order.",
+  "assistant_key": "emotions",
+  "assistant_empty": "{\"emotions\":[]}",
+  "thinking": false
+}

@@ -1,0 +1,274 @@
+{
+  "accessed_splits": [
+    "train",
+    "validation"
+  ],
+  "artifacts": {
+    "frozen_sources": {
+      "authorization": {
+        "bytes": 2316,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-cached-head-preflight-attempt-2/seed-43/frozen-authorization.md",
+        "sha256": "2d66d2ba5fd3e023f39d208d4096eb4e72a5319be7cee4023ac5a652477f07f6"
+      },
+      "cache-protocol": {
+        "bytes": 3359,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-cached-head-preflight-attempt-2/seed-43/frozen-cache-protocol.md",
+        "sha256": "428ca2a0060d4f6305ca6d8acd203d43ebdf0674946eaa891c7920711baeed88"
+      },
+      "config": {
+        "bytes": 5115,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-cached-head-preflight-attempt-2/seed-43/frozen-config.json",
+        "sha256": "b4d96c0c7107be132f5d74721ea6b8a92326aa9d3a97ca6c1bcb214c1f565b79"
+      },
+      "experiment-protocol": {
+        "bytes": 2370,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-cached-head-preflight-attempt-2/seed-43/frozen-experiment-protocol.md",
+        "sha256": "cbdfefb7f648296590a17da4e585b25dc0ab0dc9099fbdef62dee054f1096f52"
+      },
+      "head-primitives": {
+        "bytes": 65667,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-cached-head-preflight-attempt-2/seed-43/frozen-head-primitives.py",
+        "sha256": "9a1991461cee6754fd0407b894e6e2aaf583dc82a048764eebf881c4939a5fb7"
+      },
+      "runner": {
+        "bytes": 40254,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-cached-head-preflight-attempt-2/seed-43/frozen-runner.py",
+        "sha256": "caf0440bf46520058697972c83e4250a10ccfaa4a13b76b87c641ea74b4c7f65"
+      },
+      "tests": {
+        "bytes": 4618,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-cached-head-preflight-attempt-2/seed-43/frozen-tests.py",
+        "sha256": "f3b31d6b270fd068bb3b5eb28a781e97ea953760f602f98216a73551f0b5690c"
+      },
+      "verifier": {
+        "bytes": 21246,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-cached-head-preflight-attempt-2/seed-43/frozen-verifier.py",
+        "sha256": "24c4e96d8760d1d981beeeb7bd45be18f92c9947784316340ed74cbe9e459b14"
+      }
+    },
+    "report": {
+      "bytes": 270,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-cached-head-preflight-attempt-2/seed-43/REPORT.md",
+      "sha256": "4c00d37ae000af73e6b95d9911ce8a68f8b48082195ee70f927a21ed3748dcbd"
+    },
+    "stdout_log": {
+      "bytes": 76,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-cached-head-preflight-attempt-2/seed-43/stdout.log",
+      "sha256": "9a4a143e65ac517d614e7f192417466bf57726229d8861e9644c2e7a33b9141d"
+    }
+  },
+  "authorization": {
+    "authorized_at": "2026-08-14",
+    "basis": "User authorized the next EXP-052 step; attempt 1 failed before training because it read the gate's flattened cache artifact as nested.",
+    "exp_053_054_authorized": false,
+    "performance_metrics_authorized": false,
+    "seed_44_authorized": false,
+    "seeds": [
+      43
+    ],
+    "splits": [
+      "train",
+      "validation"
+    ],
+    "test_access": false,
+    "training_authorized": false
+  },
+  "batch_order": {
+    "epoch_sha256": [
+      "e97d2ed264298ce651b8aa98c45cebbcb789216aaecd0c2fae912d8372e91267",
+      "44b24022a4d27862e050a4b0e8ad7e82a62ec962a18cca621501890e1434d3b0"
+    ],
+    "rng": "numpy.random.Generator(PCG64(seed)); continuous permutation stream across epochs"
+  },
+  "cache_reuse_gate": {
+    "run": {
+      "bytes": 6706,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-feature-cache-reuse-gate/run.json",
+      "sha256": "bf8d5d49f2e8be3aa920c02848ec246f7a33e9a651892014fc234611b056910f"
+    },
+    "test_split_accessed": false,
+    "verification": {
+      "bytes": 7751,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-feature-cache-reuse-gate/verification.json",
+      "sha256": "880b39260655d038ba5c6e03e5777a7c3d3929b2d3cc8bf057db192c3b6f261c"
+    },
+    "verification_check_count": 74
+  },
+  "completed_at_utc": "2026-08-14T05:57:47.305554+00:00",
+  "data": {
+    "cross_split_component_overlap": 0,
+    "cross_split_sample_overlap": 0,
+    "labels": [
+      "love",
+      "joy",
+      "surprise",
+      "anger",
+      "sadness",
+      "fear"
+    ],
+    "protocol_id": "DATA-SO-TASK-V1",
+    "test": {
+      "rows": 720,
+      "status": "sealed_not_accessed"
+    },
+    "train": {
+      "sha256": "fc2f853b5b8afb78253ca3a96b5093d2fd12ea7063801f57bf138c9d5cf528fc",
+      "summary": {
+        "components": 3277,
+        "label_cardinality": {
+          "0": 1372,
+          "1": 1895,
+          "2": 93
+        },
+        "neutral_rows": 1372,
+        "positive_counts": {
+          "anger": 618,
+          "fear": 74,
+          "joy": 343,
+          "love": 854,
+          "sadness": 161,
+          "surprise": 31
+        },
+        "rows": 3360
+      }
+    },
+    "validation": {
+      "sha256": "e83ea51f32c7a1a067f8ed63d499c5540a46542efefdb3afdc7de9937921e4f7",
+      "summary": {
+        "components": 702,
+        "label_cardinality": {
+          "0": 294,
+          "1": 406,
+          "2": 20
+        },
+        "neutral_rows": 294,
+        "positive_counts": {
+          "anger": 132,
+          "fear": 16,
+          "joy": 74,
+          "love": 183,
+          "sadness": 34,
+          "surprise": 7
+        },
+        "rows": 720
+      }
+    }
+  },
+  "environment": {
+    "architecture": "arm64",
+    "backend": "MLX_Apple_Metal_head_only",
+    "environment_prefix": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx",
+    "executable": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+    "freeze": {
+      "bytes": 563,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-cached-head-preflight-attempt-2/seed-43/environment-freeze.txt",
+      "sha256": "982efc879bb3ab3668685abfdd1ff1961934a4050e3d9bd23349bdde110ac1e5"
+    },
+    "package_paths": {
+      "mlx": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx/core.cpython-311-darwin.so",
+      "numpy": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/numpy/__init__.py"
+    },
+    "packages": {
+      "mlx": "0.32.0",
+      "numpy": "2.4.6",
+      "safetensors": "0.8.0"
+    },
+    "pip_check": "No broken requirements found.",
+    "python": "3.11.15",
+    "python_no_user_site": true
+  },
+  "experiment_id": "EXP-052",
+  "feature_cache": {
+    "train": {
+      "all_finite": true,
+      "artifact": {
+        "bytes": 34406528,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-052-m2-frozen-qwen/seed-42/feature-cache/train/features.npy",
+        "sha256": "e7b69a80e594960c609d1737eb09bbae03e090e0e7af3f22f6ded426ca9f5588"
+      },
+      "dtype": "float32",
+      "mmap_mode": "r",
+      "provenance": "verified_seed_42_reuse",
+      "sample_order_sha256": "c9e4bd1eb2bdbb33c833234754c493b8818aa6c610acaf88659ae74fa94848a3",
+      "sha256_after_use": "e7b69a80e594960c609d1737eb09bbae03e090e0e7af3f22f6ded426ca9f5588",
+      "sha256_before_use": "e7b69a80e594960c609d1737eb09bbae03e090e0e7af3f22f6ded426ca9f5588",
+      "shape": [
+        3360,
+        2560
+      ],
+      "source_seed": 42,
+      "token_id_stream_sha256": "fe61b661cfb1d2499388c922e36d0cd1445838aacd2b6d2e33261f967c90ece9",
+      "writeable": false
+    },
+    "validation": {
+      "all_finite": true,
+      "artifact": {
+        "bytes": 7372928,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-052-m2-frozen-qwen/seed-42/feature-cache/validation/features.npy",
+        "sha256": "e8d8e86b3bfba44f9821656a9a4e97cbaa832223d5c569db4071f783df63e6f9"
+      },
+      "dtype": "float32",
+      "mmap_mode": "r",
+      "provenance": "verified_seed_42_reuse",
+      "sample_order_sha256": "9207339b47abaf1eff66648f1e03f2db1d478848568c2ce34767fdfedcab15a0",
+      "sha256_after_use": "e8d8e86b3bfba44f9821656a9a4e97cbaa832223d5c569db4071f783df63e6f9",
+      "sha256_before_use": "e8d8e86b3bfba44f9821656a9a4e97cbaa832223d5c569db4071f783df63e6f9",
+      "shape": [
+        720,
+        2560
+      ],
+      "source_seed": 42,
+      "token_id_stream_sha256": "2046e0442427db55cf8fc916fa10c6f748b55d8e170ebfbcf13b1c3ef048ae99",
+      "writeable": false
+    }
+  },
+  "feature_extraction_performed": false,
+  "git": {
+    "branch": "main",
+    "commit": "d892fcdf52e3fac04a7aa9f9595a16e50ee40f5c",
+    "dirty": true,
+    "dirty_path_count": 37
+  },
+  "model": {
+    "backbone_execution": "not_executed_verified_seed_42_cache_reused",
+    "repo_id": "Qwen/Qwen3-4B",
+    "revision": "1cfa9a7208912126459214e8b04321603b3df60c"
+  },
+  "model_runtime": {
+    "feature_dtype": "float32",
+    "head_initial_sha256": "079d853fc8644442262d7ff23d99a2822e5b5b9c3fa24e09c55a4ae8ddb802bc",
+    "head_trainable_parameter_count": 15366,
+    "pooling": "final_layer_last_non_padding_input_token_after_empty_think_wrapper",
+    "qwen_parameters_frozen": true,
+    "qwen_trainable_parameter_count": 0
+  },
+  "performance_metrics_computed": false,
+  "privacy": {
+    "public_raw_text": false,
+    "public_row_identifiers": false,
+    "reused_features_and_new_row_level_predictions": "private_gitignored"
+  },
+  "qwen_forward_executed": false,
+  "qwen_model_loaded": false,
+  "resource_usage": {
+    "api_cost_usd": 0,
+    "cache_validation_seconds": 0.09476220910437405,
+    "feature_extraction_seconds": 0,
+    "model_load_seconds": 0,
+    "qwen_forward_seconds": 0,
+    "wall_seconds": 0.5262875000480562
+  },
+  "rq_id": "RQ-S1",
+  "schema_version": "exp-052-m2-cached-head-run-v1",
+  "seed": 43,
+  "stage": "seed-43-cache-reuse-preflight",
+  "status": "Completed",
+  "test_split_accessed": false,
+  "tier": "Major",
+  "training_performed": false,
+  "validation_split_accessed": true,
+  "warnings": [
+    "This preflight authorizes no training or performance conclusion.",
+    "Linear decodability does not establish an internal emotion mechanism."
+  ]
+}

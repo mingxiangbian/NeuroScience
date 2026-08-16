@@ -32,8 +32,20 @@ assert.equal(data.scoreProfile.schemaVersion, 2);
 assert.equal(Array.isArray(data.scoreProfile.skills), true);
 assert.equal(Array.isArray(data.scoreHistory.entries), true);
 assert.equal(data.scoreHistory.entries.some((entry) => entry.id === "2026-07-23-c19-test-1-baseline"), true);
+assert.equal(
+  data.scoreHistory.entries.some(
+    (entry) => entry.id === "2026-08-11-c21-test-1-reading-passage-2" && /13\/13/.test(entry.notes),
+  ),
+  true,
+);
 assert.equal(Array.isArray(data.errorLog.errors), true);
 assert.equal(data.errorLog.errors.some((error) => error.id === "E015" && error.skill === "speaking"), true);
+assert.equal(
+  data.errorLog.errors.some(
+    (error) => error.id === "E008" && error.status === "improving" && error.consecutiveCleanSamples === 1,
+  ),
+  true,
+);
 assert.equal(data.scoreHistory.entries.some((entry) => entry.id === "2026-08-09-planning-baseline"), true);
 
 assert.equal(data.sprintPlan.schemaVersion, 1);
@@ -45,12 +57,21 @@ assert.deepEqual(data.sprintPlan.exam.usualSpeakingWindow, {
   source: "2026-08-09 NEEA registration email",
   boundary: "邮件说明口试通常安排在笔试前后 7 天，特殊情况下可能超出该区间；具体时间以准考证为准。",
 });
-assert.equal(data.sprintPlan.speakingContingency.readinessDeadline, "2026-08-20");
+assert.equal(data.sprintPlan.speakingContingency.readinessDeadline, "2026-08-21");
+assert.equal(data.sprintPlan.prioritySystem.effectiveFrom, "2026-08-15");
+assert.deepEqual(data.sprintPlan.prioritySystem.levels.map((level) => level.id), ["P0", "P1", "P2", "P3"]);
+assert.equal(data.sprintPlan.dailyBudget.standardMinutes, 225);
 assert.equal(data.sprintPlan.days.length, 20);
 assert.equal(data.sprintPlan.days[0].template, "halfDay");
 assert.equal(data.sprintPlan.dailyBudget.templateMinutes.halfDay, 270);
-assert.equal(data.sprintPlan.days.find((day) => day.day === 12).template, "mock");
-assert.equal(data.sprintPlan.checkpoints.find((checkpoint) => checkpoint.id === "CP4").label.includes("8月25–26日"), true);
+assert.equal(data.sprintPlan.days.find((day) => day.day === 2).dateEnd, "2026-08-11");
+assert.equal(data.sprintPlan.dailyBudget.templateMinutes.mockSpeaking, 315);
+assert.equal(data.sprintPlan.days.find((day) => day.day === 3).template, "mockSpeaking");
+assert.match(data.sprintPlan.days.find((day) => day.day === 3).tasks.speaking, /8 道未见 Part 1/);
+assert.equal(data.sprintPlan.days.find((day) => day.day === 4).template, "review");
+assert.equal(data.sprintPlan.days.find((day) => day.day === 6).template, "rollingStandard");
+assert.equal(data.sprintPlan.days.find((day) => day.day === 12).template, "oralPriority");
+assert.equal(data.sprintPlan.checkpoints.find((checkpoint) => checkpoint.id === "CP3").label.includes("8月25–26日"), true);
 
 assert.equal(data.unitLedger.schemaVersion, 2);
 assert.equal(data.unitLedger.activeUnit === null || data.unitLedger.activeUnit.status === "active", true);

@@ -1,0 +1,23 @@
+{
+  "schema_version": "exp-055-verification-attempt-2-authorization-v1",
+  "experiment_id": "EXP-055",
+  "verification_attempt": 2,
+  "permitted_correction": "report_whitespace_normalization_only",
+  "scientific_artifact_changes_authorized": false,
+  "base_config": {
+    "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/error-analysis/configs/exp-055-m1-m3-validation-error-analysis.json",
+    "bytes": 7655,
+    "sha256": "2c026c4e59a2f7595aad679eb8bc7debaf3ba05cf2b2035d8f66f9a5515ff430"
+  },
+  "verifier": {
+    "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/error-analysis/verify_exp055_attempt2.py",
+    "bytes": 35451,
+    "sha256": "d66ef422d59aa5190c0d46bd704c95aa7394d6d75646671c8f6e94e251fba94f"
+  },
+  "amendment": {
+    "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/protocols/exp-055-verification-attempt-2-amendment.md",
+    "bytes": 1834,
+    "sha256": "2af6f884479cba248eb330d36deb9a02d6e08755f42bab9cd3a0267c05e2c621"
+  },
+  "expected_output": "verification-attempt-2.json"
+}

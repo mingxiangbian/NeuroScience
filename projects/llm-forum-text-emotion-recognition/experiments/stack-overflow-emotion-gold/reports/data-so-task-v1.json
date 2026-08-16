@@ -1,0 +1,254 @@
+{
+  "claim_boundary": "This is a data-construction result only; no model was trained, evaluated or selected.",
+  "construction": {
+    "cardinality_counts": {
+      "0": 1959,
+      "1": 2708,
+      "2": 133
+    },
+    "emotion_present_rows": 2841,
+    "gold_rule": "at_least_two_of_three_rater_marks",
+    "label_counts": {
+      "anger": 882,
+      "fear": 106,
+      "joy": 491,
+      "love": 1220,
+      "sadness": 230,
+      "surprise": 45
+    },
+    "label_order": [
+      "love",
+      "joy",
+      "surprise",
+      "anger",
+      "sadness",
+      "fear"
+    ],
+    "majority_gold_mismatches": 0,
+    "neutral_rows": 1959,
+    "paper_release_conflict": "The paper text reports 1,959 emotion and 2,841 neutral instances; the pinned workbook reconstructs the reverse, consistent with per-label supports and 133 two-label rows.",
+    "sheet_alignment_mismatches": 0,
+    "text_length_codepoints": {
+      "max": 1052,
+      "mean": 173.177083,
+      "median": 117.0,
+      "min": 6,
+      "p95": 479
+    }
+  },
+  "duplicates": {
+    "conflicting_connected_component_rows": 52,
+    "conflicting_connected_components": 26,
+    "connected_components": 4681,
+    "exact": {
+      "conflicting_components": 26,
+      "conflicting_rows": 52,
+      "duplicate_components": 99,
+      "duplicate_rows": 212,
+      "extra_duplicate_rows": 113,
+      "maximum_component_size": 7,
+      "unique_keys": 4687
+    },
+    "normalized": {
+      "conflicting_components": 26,
+      "conflicting_rows": 52,
+      "duplicate_components": 99,
+      "duplicate_rows": 218,
+      "extra_duplicate_rows": 119,
+      "maximum_component_size": 10,
+      "unique_keys": 4681
+    }
+  },
+  "frozen_date": "2026-08-13",
+  "independent_verification": {
+    "checks_passed": 53,
+    "checks_total": 53,
+    "report": "experiments/stack-overflow-emotion-gold/reports/data-so-task-v1-verification.json",
+    "status": "verified"
+  },
+  "limitations": [
+    "The release coordinates are not verified Stack Overflow post or thread IDs.",
+    "The split is duplicate-component-disjoint, not thread-disjoint.",
+    "Twenty-six duplicate components contain conflicting label vectors.",
+    "Surprise has only 45 positive rows across 43 duplicate components.",
+    "The repository has a citation request but no standard data license file.",
+    "The workbook and paper text disagree on emotion-present versus neutral counts."
+  ],
+  "low_support": {
+    "controls": [
+      "retain in six-label Macro-F1",
+      "no label-specific threshold selection",
+      "report per-class metrics, component bootstrap and three-seed variation",
+      "report five-label sensitivity without using it for model selection"
+    ],
+    "label": "surprise",
+    "positive_components": 43,
+    "positive_rows": 45
+  },
+  "protocol_id": "DATA-SO-TASK-V1",
+  "public_privacy": {
+    "row_labels_published": false,
+    "row_text_published": false,
+    "split_index_fields": [
+      "schema_version",
+      "protocol_id",
+      "sample_id",
+      "component_id",
+      "split"
+    ],
+    "upstream_coordinates_published": false
+  },
+  "reproducibility": {
+    "builder": {
+      "bytes": 39319,
+      "path": "experiments/stack-overflow-emotion-gold/prepare_data_so_task_v1.py",
+      "sha256": "781467d081865919e601d772dc88d9ad78045cd4fd581ef65f7ffd3a8bd83196"
+    },
+    "git": {
+      "commit": "d892fcdf52e3fac04a7aa9f9595a16e50ee40f5c",
+      "worktree_dirty": true
+    }
+  },
+  "schema_version": "so-emotion-c0-construction-report-v1",
+  "source": {
+    "license_status": "no_standard_license_file; upstream README requests citation",
+    "repository": "https://github.com/collab-uniba/EmotionDatasetMSR18",
+    "revision": "d6a679f39a198fdb0657a6116d35dd7b92496898",
+    "rows": 4800,
+    "sheets": [
+      "Love_all",
+      "Joy_all",
+      "Surprise_all",
+      "Anger_all",
+      "Sadness_all",
+      "Fear_all"
+    ],
+    "workbook": {
+      "bytes": 1537409,
+      "path": "data/stack-overflow-emotion-gold/official/Emotions_GoldSandard_andAnnotation.xlsx",
+      "sha256": "29f667701227fc3f1ffc005c5d5364c30f24476005baac23fff8338dbd2f0179"
+    }
+  },
+  "split": {
+    "maximum_balance_slice_allocation_error": 0.007692,
+    "maximum_label_allocation_error": 0.011111,
+    "maximum_row_fraction_error": 0.0,
+    "seed": 20260813,
+    "stratified_dimensions": [
+      "love",
+      "joy",
+      "surprise",
+      "anger",
+      "sadness",
+      "fear",
+      "neutral",
+      "cardinality_1",
+      "cardinality_2",
+      "component_count",
+      "duplicate_rows",
+      "duplicate_components",
+      "conflicting_duplicate_rows",
+      "conflicting_duplicate_components"
+    ],
+    "summary": {
+      "test": {
+        "cardinality_1": 407,
+        "cardinality_2": 20,
+        "components": 702,
+        "conflicting_components": 4,
+        "conflicting_duplicate_rows": 8,
+        "duplicate_components": 15,
+        "duplicate_rows": 33,
+        "label_component_counts": {
+          "anger": 130,
+          "fear": 16,
+          "joy": 74,
+          "love": 170,
+          "sadness": 35,
+          "surprise": 7
+        },
+        "label_counts": {
+          "anger": 132,
+          "fear": 16,
+          "joy": 74,
+          "love": 183,
+          "sadness": 35,
+          "surprise": 7
+        },
+        "neutral": 293,
+        "row_fraction": 0.15,
+        "rows": 720
+      },
+      "train": {
+        "cardinality_1": 1895,
+        "cardinality_2": 93,
+        "components": 3277,
+        "conflicting_components": 18,
+        "conflicting_duplicate_rows": 36,
+        "duplicate_components": 69,
+        "duplicate_rows": 152,
+        "label_component_counts": {
+          "anger": 606,
+          "fear": 71,
+          "joy": 340,
+          "love": 832,
+          "sadness": 158,
+          "surprise": 29
+        },
+        "label_counts": {
+          "anger": 618,
+          "fear": 74,
+          "joy": 343,
+          "love": 854,
+          "sadness": 161,
+          "surprise": 31
+        },
+        "neutral": 1372,
+        "row_fraction": 0.7,
+        "rows": 3360
+      },
+      "validation": {
+        "cardinality_1": 406,
+        "cardinality_2": 20,
+        "components": 702,
+        "conflicting_components": 4,
+        "conflicting_duplicate_rows": 8,
+        "duplicate_components": 15,
+        "duplicate_rows": 33,
+        "label_component_counts": {
+          "anger": 131,
+          "fear": 16,
+          "joy": 74,
+          "love": 174,
+          "sadness": 34,
+          "surprise": 7
+        },
+        "label_counts": {
+          "anger": 132,
+          "fear": 16,
+          "joy": 74,
+          "love": 183,
+          "sadness": 34,
+          "surprise": 7
+        },
+        "neutral": 294,
+        "row_fraction": 0.15,
+        "rows": 720
+      }
+    },
+    "target_fractions": {
+      "test": 0.15,
+      "train": 0.7,
+      "validation": 0.15
+    },
+    "unit": "exact_and_nfkc_casefold_whitespace_duplicate_component"
+  },
+  "status": "verified",
+  "test_gate": {
+    "inputs_contain_gold_fields": false,
+    "labels_gitignored": true,
+    "status": "sealed_not_authorized_for_model_access",
+    "test_inputs_sha256": "9a246320f3ca8e878c62dedb46cad639ccf38ebfdacf6d7d58b1d3969101eda3",
+    "test_labels_sha256": "e420d53bcf25d6c55ccd118ed3b7421262ec34760278b18ce3ddd197a603281a"
+  }
+}

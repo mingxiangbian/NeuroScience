@@ -104,14 +104,16 @@ const manifest = JSON.parse(read("../projects/manifest.json"));
 assert.match(languageReadme, /IELTS Academic/);
 assert.match(projectReadme, /Overall 7\.5/);
 assert.match(projectReadme, /2026-08-22 to 2026-09-05/);
-assert.match(projectReadme, /270 focused minutes/);
+assert.match(projectReadme, /base day is 225 focused minutes/);
 assert.match(projectReadme, /event-driven-study-system\.md/);
 assert.doesNotMatch(projectReadme, /adaptive 8-week plan|daily flexible training|checkpoint-status\.json/i);
 
 assert.match(eventSystem, /同时最多一个活动单元/);
 assert.match(eventSystem, /连续 3 个独立新样本/);
 assert.match(eventSystem, /当前学习状态只以 `unit-ledger\.json` 为准/);
-assert.match(eventSystem, /第 1 天只有半天，固定为 270 分钟/);
+assert.match(eventSystem, /普通日基础量为 225 分钟/);
+assert.match(eventSystem, /每天先完成 P0 口语/);
+assert.match(eventSystem, /Reading 作为 P2/);
 assert.match(eventSystem, /口试前后 48 小时/);
 assert.equal(unitLedger.schemaVersion, 2);
 assert.equal(unitLedger.activeUnit === null || unitLedger.activeUnit.status === "active", true);
@@ -141,12 +143,35 @@ assert.equal(scoreProfile.target.perSkillFloor, 6.5);
 assert.equal(Object.hasOwn(scoreProfile.target, "timelineWeeks"), false);
 assert.equal(Array.isArray(scoreHistory.entries), true);
 assert.equal(scoreHistory.entries.some((entry) => entry.id === "2026-07-23-c19-test-1-baseline"), true);
+assert.equal(
+  scoreHistory.entries.some(
+    (entry) => entry.id === "2026-08-11-c21-test-1-reading-passage-2" && /13\/13/.test(entry.notes),
+  ),
+  true,
+);
 assert.equal(Array.isArray(errorLog.errors), true);
+assert.equal(
+  errorLog.errors.some(
+    (error) => error.id === "E008" && error.status === "improving" && error.consecutiveCleanSamples === 1,
+  ),
+  true,
+);
 assert.equal(sprintPlan.exam.speakingDate, null);
 assert.equal(sprintPlan.exam.dayOneAvailableMinutes, 270);
-assert.equal(sprintPlan.speakingContingency.readinessDeadline, "2026-08-20");
+assert.equal(sprintPlan.speakingContingency.readinessDeadline, "2026-08-21");
+assert.equal(sprintPlan.prioritySystem.effectiveFrom, "2026-08-15");
+assert.deepEqual(sprintPlan.prioritySystem.levels.map((level) => level.id), ["P0", "P1", "P2", "P3"]);
+assert.match(sprintPlan.prioritySystem.carryPolicy, /不与原计划叠加/);
+assert.equal(sprintPlan.dailyBudget.standardMinutes, 225);
 assert.equal(sprintPlan.days.length, 20);
 assert.equal(sprintPlan.days[0].template, "halfDay");
+assert.equal(sprintPlan.dailyBudget.templateMinutes.mockSpeaking, 315);
+assert.equal(sprintPlan.days.find((day) => day.day === 3).template, "mockSpeaking");
+assert.match(sprintPlan.days.find((day) => day.day === 3).tasks.speaking, /8 道未见 Part 1/);
+assert.equal(sprintPlan.days.find((day) => day.day === 6).date, "2026-08-15");
+assert.equal(sprintPlan.days.find((day) => day.day === 6).template, "rollingStandard");
+assert.match(sprintPlan.days.find((day) => day.day === 6).tasks.speaking, /Part 2/);
+assert.equal(sprintPlan.days.find((day) => day.day === 12).template, "oralPriority");
 
 assert.match(orchestrator, /Do not invent a personal weakness profile/);
 assert.match(orchestrator, /Keep at most one active learning unit/);

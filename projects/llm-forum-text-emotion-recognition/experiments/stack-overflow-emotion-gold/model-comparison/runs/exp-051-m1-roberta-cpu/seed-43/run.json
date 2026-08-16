@@ -1,0 +1,814 @@
+{
+  "accessed_splits": [
+    "train",
+    "validation"
+  ],
+  "artifacts": {
+    "bootstrap": {
+      "bytes": 2712,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/bootstrap.json",
+      "sha256": "57591657949d83d4247058a0688bf21cf0066bf21fa1c5247b9bf12fd80961a6"
+    },
+    "frozen_sources": {
+      "authorization-amendment": {
+        "bytes": 1142,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/frozen-authorization-amendment.md",
+        "sha256": "bd177349fe358703b1728cf4dede30cb9e60adec9ea77373f0dea78e462b4c3d"
+      },
+      "config": {
+        "bytes": 3130,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/frozen-config.json",
+        "sha256": "0cdb295d030e8c6c644754ee19d0442aa25a2df4dee1db1aa38c5a486551e986"
+      },
+      "protocol": {
+        "bytes": 4608,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/frozen-protocol.md",
+        "sha256": "be57bddf2d5a8146a7f75efa3580f38937f2dca965d804d62f2ba1713cf6f976"
+      },
+      "runner": {
+        "bytes": 56760,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/frozen-runner.py",
+        "sha256": "2d2c65b72a569d2d08a2fe4c3e544af756306bee1cb98cc15dd2052b09bf3ba2"
+      },
+      "shared-config": {
+        "bytes": 6720,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/frozen-shared-config.json",
+        "sha256": "d97b7c837b5de4ef014a553fa255ebea4ecdffa848d19715d084bf7ed46177d6"
+      },
+      "tests": {
+        "bytes": 8608,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/frozen-tests.py",
+        "sha256": "aa1801030fb14ce76ac989f84cb6ccd2d5fdadff20b4562742020e923998b5a4"
+      },
+      "verifier": {
+        "bytes": 25443,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/frozen-verifier.py",
+        "sha256": "588e4978894196c02c97964e0ea253f13e0f2851fb0d19ad57a18e63c699fe26"
+      }
+    },
+    "history": {
+      "bytes": 1841,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/history.csv",
+      "sha256": "8c571529b2f410e45d3f18c27b9394817c0b53a3feb36d7d248603de2ebbd4fb"
+    },
+    "metrics_fixed": {
+      "bytes": 1782,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/metrics-fixed-0.5.json",
+      "sha256": "3297c0a3e37c186f129f41eee86632bf7f85a4a639d4acbf32b0ff439279426a"
+    },
+    "metrics_shared_threshold": {
+      "bytes": 1749,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/metrics-shared-threshold.json",
+      "sha256": "794406e1ed7837296d60beefd5b4e963549e74a2263369fa388b9efa311a6f74"
+    },
+    "private_manifest": {
+      "bytes": 1367,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-051-m1-roberta-cpu/seed-43/private-manifest.json",
+      "sha256": "75ccd416c2a5bb0d478dcf83604d584ea78d45e6a481ddacf3e92670313c12a1"
+    },
+    "report": {
+      "bytes": 520,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/REPORT.md",
+      "sha256": "53e27518d0cd1c36d308482f7d0c6bc99331e0335e79996c299a55efd306ca9c"
+    },
+    "selected_checkpoint_private": {
+      "file_count": 4,
+      "files": [
+        {
+          "bytes": 983,
+          "path": "config.json",
+          "sha256": "118208a428ffedff96b6a5ace5d906cd89c31b4613e8609398cbb305bb34673e"
+        },
+        {
+          "bytes": 498625128,
+          "path": "model.safetensors",
+          "sha256": "08d013fa8a93588790944cb67a7fdeedddbba91620950bb0b3fc8b6716c2ee9a"
+        },
+        {
+          "bytes": 3558740,
+          "path": "tokenizer.json",
+          "sha256": "9f49930af8b12d2fcad4e8cf500516c4251d46b2917f78bd9b49dbcc586261af"
+        },
+        {
+          "bytes": 386,
+          "path": "tokenizer_config.json",
+          "sha256": "8f69b71acf96da33322870515bb6b4608854aad2d34afaa07cd1213659948ca5"
+        }
+      ],
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-051-m1-roberta-cpu/seed-43/selected-checkpoint",
+      "sha256": "708f729262f0d3e9345c1b4be14f25687b7a248ea0f786432674eb945051f186"
+    },
+    "selection": {
+      "bytes": 230,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/selection.json",
+      "sha256": "8f0947bb34d714ca9db3f67d6a998c5d57a021694d33d6520fefdc233655fa3d"
+    },
+    "stdout_log": {
+      "bytes": 3471,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/stdout.log",
+      "sha256": "0b34615a3118a1f0b74464c7e5222fcdc63f7d1ba0791c936492367bab3e2233"
+    },
+    "tables": {
+      "fixed-0.5": {
+        "confusion": {
+          "bytes": 157,
+          "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/multilabel-confusion-fixed-0.5.csv",
+          "sha256": "f52caee76afe18836d5c75d5c994e628cb15fa5355c8e3f4c7fb91933c20d2f9"
+        },
+        "per_label": {
+          "bytes": 440,
+          "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/per-label-fixed-0.5.csv",
+          "sha256": "deedf1493b1c1b04528f285d499f9012f6503d10a6163af5b4b3e5d7bc2ee750"
+        }
+      },
+      "shared-threshold": {
+        "confusion": {
+          "bytes": 157,
+          "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/multilabel-confusion-shared-threshold.csv",
+          "sha256": "324d19ca16fd915f899dcdba477af476210e563437c0e41ba6a1ad32203a0516"
+        },
+        "per_label": {
+          "bytes": 406,
+          "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/per-label-shared-threshold.csv",
+          "sha256": "0f73594c988a1763cfc765f78cef43cd90c3d4e420e5935ffa45d04ef7060fbb"
+        }
+      }
+    },
+    "threshold_grid": {
+      "bytes": 487,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/threshold-grid.csv",
+      "sha256": "10dba50004e52ed3abee5f516770988bb735bde44cb077257b529686cabdd676"
+    },
+    "validation_predictions_private": {
+      "bytes": 108075,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-051-m1-roberta-cpu/seed-43/validation-predictions.npz",
+      "sha256": "fb366b99a1ade7aabdfd45ece92f5643cd91c4436fb0a51f884324a03f046e99"
+    }
+  },
+  "authorization": {
+    "authorized_at": "2026-08-13",
+    "basis": "User authorized the next EXP-051 step after the independently verified seed-42 integrity gate.",
+    "seed_44_authorized": false,
+    "seeds": [
+      43
+    ],
+    "splits": [
+      "train",
+      "validation"
+    ],
+    "test_access": false
+  },
+  "bootstrap": {
+    "fixed_0.5": {
+      "component_count": 702,
+      "five_label_macro_f1_without_surprise": {
+        "lower": 0.6555624815823877,
+        "point": 0.7215947045657836,
+        "upper": 0.7748348108389355
+      },
+      "interval": "percentile_2.5_97.5",
+      "macro_f1": {
+        "lower": 0.5463020679853232,
+        "point": 0.6013289204714863,
+        "upper": 0.6456956756991128
+      },
+      "per_label_f1": {
+        "anger": {
+          "lower": 0.714858674240689,
+          "point": 0.7732342007434945,
+          "upper": 0.8255063412070983
+        },
+        "fear": {
+          "lower": 0.4,
+          "point": 0.6666666666666666,
+          "upper": 0.8571428571428571
+        },
+        "joy": {
+          "lower": 0.5454545454545454,
+          "point": 0.6388888888888888,
+          "upper": 0.7225806451612903
+        },
+        "love": {
+          "lower": 0.8112244897959183,
+          "point": 0.8527131782945736,
+          "upper": 0.8900027472527472
+        },
+        "sadness": {
+          "lower": 0.52170935080405,
+          "point": 0.6764705882352942,
+          "upper": 0.7906976744186046
+        },
+        "surprise": {
+          "lower": 0.0,
+          "point": 0.0,
+          "upper": 0.0
+        }
+      },
+      "replicates": 2000,
+      "row_count": 720,
+      "seed": 1128629898,
+      "seed_material": "SO-C0-component-bootstrap-v1|EXP-051|seed-43|fixed-0.5",
+      "unit": "duplicate_component_id"
+    },
+    "shared_threshold": {
+      "component_count": 702,
+      "five_label_macro_f1_without_surprise": {
+        "lower": 0.6965254220902651,
+        "point": 0.7504087374407581,
+        "upper": 0.7938875690616968
+      },
+      "interval": "percentile_2.5_97.5",
+      "macro_f1": {
+        "lower": 0.5804378517418877,
+        "point": 0.6253406145339651,
+        "upper": 0.6615729742180807
+      },
+      "per_label_f1": {
+        "anger": {
+          "lower": 0.7472506738544474,
+          "point": 0.7985611510791367,
+          "upper": 0.8450726942298955
+        },
+        "fear": {
+          "lower": 0.5714285714285714,
+          "point": 0.7741935483870968,
+          "upper": 0.9143452380952377
+        },
+        "joy": {
+          "lower": 0.5714285714285714,
+          "point": 0.6585365853658537,
+          "upper": 0.7349397590361446
+        },
+        "love": {
+          "lower": 0.7919799498746867,
+          "point": 0.835820895522388,
+          "upper": 0.87204147810284
+        },
+        "sadness": {
+          "lower": 0.5454545454545454,
+          "point": 0.684931506849315,
+          "upper": 0.7945205479452054
+        },
+        "surprise": {
+          "lower": 0.0,
+          "point": 0.0,
+          "upper": 0.0
+        }
+      },
+      "replicates": 2000,
+      "row_count": 720,
+      "seed": 1696606188,
+      "seed_material": "SO-C0-component-bootstrap-v1|EXP-051|seed-43|shared-0.30",
+      "unit": "duplicate_component_id"
+    }
+  },
+  "completed_at_utc": "2026-08-13T15:42:02.328419+00:00",
+  "data": {
+    "cross_split_component_overlap": 0,
+    "labels": [
+      "love",
+      "joy",
+      "surprise",
+      "anger",
+      "sadness",
+      "fear"
+    ],
+    "protocol_id": "DATA-SO-TASK-V1",
+    "test": {
+      "rows": 720,
+      "status": "sealed_not_accessed"
+    },
+    "train": {
+      "path": "data/stack-overflow-emotion-gold/derived-private/task-v1/train.jsonl",
+      "sha256": "fc2f853b5b8afb78253ca3a96b5093d2fd12ea7063801f57bf138c9d5cf528fc",
+      "summary": {
+        "components": 3277,
+        "label_cardinality": {
+          "0": 1372,
+          "1": 1895,
+          "2": 93
+        },
+        "neutral_rows": 1372,
+        "positive_counts": {
+          "anger": 618,
+          "fear": 74,
+          "joy": 343,
+          "love": 854,
+          "sadness": 161,
+          "surprise": 31
+        },
+        "rows": 3360
+      },
+      "token_lengths": {
+        "encoded_maximum": 222,
+        "maximum": 222,
+        "mean": 41.26309523809524,
+        "minimum": 4,
+        "p95": 109.0,
+        "truncated_rows": 0
+      }
+    },
+    "validation": {
+      "path": "data/stack-overflow-emotion-gold/derived-private/task-v1/validation.jsonl",
+      "sha256": "e83ea51f32c7a1a067f8ed63d499c5540a46542efefdb3afdc7de9937921e4f7",
+      "summary": {
+        "components": 702,
+        "label_cardinality": {
+          "0": 294,
+          "1": 406,
+          "2": 20
+        },
+        "neutral_rows": 294,
+        "positive_counts": {
+          "anger": 132,
+          "fear": 16,
+          "joy": 74,
+          "love": 183,
+          "sadness": 34,
+          "surprise": 7
+        },
+        "rows": 720
+      },
+      "token_lengths": {
+        "encoded_maximum": 252,
+        "maximum": 252,
+        "mean": 43.69027777777778,
+        "minimum": 4,
+        "p95": 109.0,
+        "truncated_rows": 0
+      }
+    }
+  },
+  "environment": {
+    "architecture": "arm64",
+    "device": "cpu",
+    "environment_prefix": "/Users/phoenix/miniconda3/envs/emotion-roberta",
+    "executable": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python",
+    "freeze": {
+      "bytes": 1179,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/environment-freeze.txt",
+      "sha256": "123e455840fb9e5e9230cd3eb7feda625a8819c4cd3dbf82b91068a7d60797fd"
+    },
+    "mps_available": true,
+    "mps_built": true,
+    "package_paths": {
+      "numpy": "/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/numpy/__init__.py",
+      "scikit-learn": "/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/sklearn/__init__.py",
+      "torch": "/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/torch/__init__.py",
+      "transformers": "/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/transformers/__init__.py"
+    },
+    "packages": {
+      "numpy": "2.2.6",
+      "safetensors": "0.8.0",
+      "scikit-learn": "1.7.2",
+      "torch": "2.9.1",
+      "transformers": "5.8.0"
+    },
+    "pip_check": "No broken requirements found.",
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.10.20",
+    "python_no_user_site": true
+  },
+  "experiment_id": "EXP-051",
+  "git": {
+    "branch": "main",
+    "commit": "d892fcdf52e3fac04a7aa9f9595a16e50ee40f5c",
+    "dirty": true,
+    "dirty_path_count": 32
+  },
+  "invocation": [
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python",
+    "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/run_exp051_m1.py",
+    "--config",
+    "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/configs/exp-051-m1-roberta-seed-43-cpu.json",
+    "--seed",
+    "43"
+  ],
+  "metrics": {
+    "fixed_0.5": {
+      "accuracy_definition": "strict subset/exact-match accuracy",
+      "five_label_macro_f1_without_surprise": 0.7215947045657836,
+      "hamming_loss": 0.04814814814814815,
+      "macro": {
+        "f1": 0.6013289204714863,
+        "precision": 0.619957146760496,
+        "recall": 0.5916850569996664
+      },
+      "micro_f1": 0.7694013303769401,
+      "per_label": {
+        "anger": {
+          "f1": 0.7732342007434945,
+          "label_id": 3,
+          "precision": 0.7591240875912408,
+          "predicted_support": 137,
+          "recall": 0.7878787878787878,
+          "support": 132
+        },
+        "fear": {
+          "f1": 0.6666666666666666,
+          "label_id": 5,
+          "precision": 0.8181818181818182,
+          "predicted_support": 11,
+          "recall": 0.5625,
+          "support": 16
+        },
+        "joy": {
+          "f1": 0.6388888888888888,
+          "label_id": 1,
+          "precision": 0.6571428571428571,
+          "predicted_support": 70,
+          "recall": 0.6216216216216216,
+          "support": 74
+        },
+        "love": {
+          "f1": 0.8527131782945736,
+          "label_id": 0,
+          "precision": 0.8088235294117647,
+          "predicted_support": 204,
+          "recall": 0.9016393442622951,
+          "support": 183
+        },
+        "sadness": {
+          "f1": 0.6764705882352942,
+          "label_id": 4,
+          "precision": 0.6764705882352942,
+          "predicted_support": 34,
+          "recall": 0.6764705882352942,
+          "support": 34
+        },
+        "surprise": {
+          "f1": 0.0,
+          "label_id": 2,
+          "precision": 0.0,
+          "predicted_support": 0,
+          "recall": 0.0,
+          "support": 7
+        }
+      },
+      "prediction_diagnostics": {
+        "empty_prediction_rows": 276,
+        "predicted_label_cardinality_mean": 0.6333333333333333
+      },
+      "primary": {
+        "name": "six_label_macro_f1",
+        "value": 0.6013289204714863
+      },
+      "subset_accuracy": 0.7763888888888889,
+      "weighted_f1": 0.760219440741015
+    },
+    "shared_threshold": {
+      "accuracy_definition": "strict subset/exact-match accuracy",
+      "five_label_macro_f1_without_surprise": 0.7504087374407581,
+      "hamming_loss": 0.04976851851851852,
+      "macro": {
+        "f1": 0.6253406145339651,
+        "precision": 0.5947371502166022,
+        "recall": 0.6623276208618543
+      },
+      "micro_f1": 0.774869109947644,
+      "per_label": {
+        "anger": {
+          "f1": 0.7985611510791367,
+          "label_id": 3,
+          "precision": 0.7602739726027398,
+          "predicted_support": 146,
+          "recall": 0.8409090909090909,
+          "support": 132
+        },
+        "fear": {
+          "f1": 0.7741935483870968,
+          "label_id": 5,
+          "precision": 0.8,
+          "predicted_support": 15,
+          "recall": 0.75,
+          "support": 16
+        },
+        "joy": {
+          "f1": 0.6585365853658537,
+          "label_id": 1,
+          "precision": 0.6,
+          "predicted_support": 90,
+          "recall": 0.7297297297297297,
+          "support": 74
+        },
+        "love": {
+          "f1": 0.835820895522388,
+          "label_id": 0,
+          "precision": 0.7671232876712328,
+          "predicted_support": 219,
+          "recall": 0.9180327868852459,
+          "support": 183
+        },
+        "sadness": {
+          "f1": 0.684931506849315,
+          "label_id": 4,
+          "precision": 0.6410256410256411,
+          "predicted_support": 39,
+          "recall": 0.7352941176470589,
+          "support": 34
+        },
+        "surprise": {
+          "f1": 0.0,
+          "label_id": 2,
+          "precision": 0.0,
+          "predicted_support": 0,
+          "recall": 0.0,
+          "support": 7
+        }
+      },
+      "prediction_diagnostics": {
+        "empty_prediction_rows": 248,
+        "predicted_label_cardinality_mean": 0.7069444444444445
+      },
+      "primary": {
+        "name": "six_label_macro_f1",
+        "value": 0.6253406145339651
+      },
+      "subset_accuracy": 0.7583333333333333,
+      "weighted_f1": 0.7685465720788934
+    }
+  },
+  "model": {
+    "classifier_final_in_memory_sha256": "86fbeb951ba010bb6baf86f056f291e931f1b65b16382c61156088f65b1041e6",
+    "classifier_initial_sha256": "37bb6f0222f147d0828387868b070a8fcf9c866dc5439cff9b7b133347c29fc6",
+    "files": [
+      {
+        "bytes": 9079,
+        "path": "README.md",
+        "sha256": "139c5c5c8d734a8841928308cf7f083018aa5cc49f903c5199e3f1563b3ded51"
+      },
+      {
+        "bytes": 481,
+        "path": "config.json",
+        "sha256": "ef0185e2aae6e06c5f105a285006952c340e20c7dbf43c86ec82601b13fc45e9"
+      },
+      {
+        "bytes": 456318,
+        "path": "merges.txt",
+        "sha256": "1ce1664773c50f3e0cc8842619a93edc4624525b728b188a9e0be33b7726adc5"
+      },
+      {
+        "bytes": 498818054,
+        "path": "model.safetensors",
+        "sha256": "5bde1d28afb363d0103324efeb5afc8b2b397fe5e04beabb9b1ef355255ade81"
+      },
+      {
+        "bytes": 1355863,
+        "path": "tokenizer.json",
+        "sha256": "847bbeab6174d66a88898f729d52fa8d355fafe1bea101cf960dd404581df70e"
+      },
+      {
+        "bytes": 25,
+        "path": "tokenizer_config.json",
+        "sha256": "994f46754c5bf4014f1aa92d34b1374319c3a6b3f702105cd5b742beaecd18ce"
+      },
+      {
+        "bytes": 898823,
+        "path": "vocab.json",
+        "sha256": "9e7f63c2d15d666b52e21d250d2e513b87c9b713cfa6987a82ed89e5e6e50655"
+      }
+    ],
+    "head": "RobertaClassificationHead_with_six_independent_logits",
+    "manifest": {
+      "bytes": 1541,
+      "path": "models/roberta-base/manifest.json",
+      "sha256": "b6e508ca9783b9e79e3cfc445f3abc7d2792ac5cfa6f44a9b3cf5d5607cd30b6"
+    },
+    "parameter_count": 124650246,
+    "repo_id": "FacebookAI/roberta-base",
+    "revision": "e2da8e2f811d1448a5b465c236feacd80ffbac7b",
+    "snapshot": "models/roberta-base/snapshot",
+    "trainable_parameter_count": 124650246
+  },
+  "prerequisite": {
+    "experiment_id": "EXP-050",
+    "run": {
+      "bytes": 1724,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-050-shared-model-preflight/run.json",
+      "sha256": "e739fae522c87a1855731c6ad7b13c25e85e290ac6f689638c97540ed5777811"
+    },
+    "verification": {
+      "bytes": 8287,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-050-shared-model-preflight/verification.json",
+      "sha256": "d3dc51c02e07f0dd45dcac0c535ddcee682b1e3dd48374c020f92f4d8be75d00"
+    },
+    "verification_check_count": 77
+  },
+  "prior_seed_gate": {
+    "run": {
+      "bytes": 28706,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu-recovery/seed-42/run.json",
+      "sha256": "3fafbe27b5ab0549235414b908000d2e2ed0d5e36176fb26e7748965a4107655"
+    },
+    "seed": 42,
+    "status": "Passed",
+    "test_split_accessed": false,
+    "verification": {
+      "bytes": 7318,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu-recovery/seed-42/verification.json",
+      "sha256": "e0d7c0f5e21e8869089cc8ed8f78ca04132a3df938a7cfed1bb182b31130d013"
+    },
+    "verification_check_count": 67
+  },
+  "privacy": {
+    "public_raw_text": false,
+    "public_row_identifiers": false,
+    "row_level_validation_artifacts": "private_gitignored"
+  },
+  "recovery_preflight": null,
+  "resource_usage": {
+    "api_cost_usd": 0,
+    "device": "cpu",
+    "peak_memory_budget_gb": 8.0,
+    "peak_mps_allocated_gb": 0.0,
+    "peak_mps_driver_gb": 0.0,
+    "peak_process_rss_gb": 5.238407168,
+    "peak_rss_bytes": 5238407168,
+    "wall_budget_minutes": 180,
+    "wall_seconds": 1933.4452669168822
+  },
+  "rq_id": "RQ-S1",
+  "seed": 43,
+  "selection": {
+    "eligible_epochs": [
+      4
+    ],
+    "maximum_fixed_macro_f1": 0.6013289204714863,
+    "practical_tie_delta": 0.005,
+    "selected_epoch": 4,
+    "selected_fixed_macro_f1": 0.6013289204714863,
+    "selection_deficit_from_maximum": 0.0
+  },
+  "stage": "seed-43-train-validation-cpu",
+  "started_at_utc": "2026-08-13T15:09:49.125339+00:00",
+  "status": "Completed",
+  "test_split_accessed": false,
+  "threshold_selection": {
+    "grid": [
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.35,
+      0.4,
+      0.45,
+      0.5,
+      0.55,
+      0.6,
+      0.65,
+      0.7,
+      0.75,
+      0.8,
+      0.85,
+      0.9,
+      0.95
+    ],
+    "rule": "choose one threshold across all six labels on the already-selected checkpoint; highest validation Macro-F1, then closest to 0.5, then lower threshold",
+    "selected_threshold": 0.3
+  },
+  "tier": "Major",
+  "training": {
+    "adam_beta1": 0.9,
+    "adam_beta2": 0.999,
+    "adam_epsilon": 1e-08,
+    "backend": "PyTorch_MPS_or_CPU_same_software_stack",
+    "batch_size": 16,
+    "drop_last": false,
+    "epochs": 5,
+    "evaluation_batch_size": 32,
+    "experiment_id": "EXP-051",
+    "gradient_accumulation_steps": 1,
+    "head": "RobertaClassificationHead_with_six_independent_logits",
+    "history": [
+      {
+        "batch_order_sha256": "fe1186328175a34201a1cf70044fe14ee9292b1ebf60618c58b7a88b142c9b52",
+        "epoch": 1,
+        "epoch_seconds": 382.04107225011103,
+        "fixed_five_label_macro_f1_without_surprise": 0.3127665175046065,
+        "fixed_hamming_loss": 0.06342592592592593,
+        "fixed_macro_f1": 0.26063876458717206,
+        "fixed_macro_precision": 0.24171187462326701,
+        "fixed_macro_recall": 0.2828489816194734,
+        "fixed_micro_f1": 0.6633906633906634,
+        "fixed_subset_accuracy": 0.6930555555555555,
+        "fixed_threshold": 0.5,
+        "fixed_weighted_f1": 0.5588572399864491,
+        "learning_rate_end": 1.7777777777777777e-05,
+        "optimizer_steps": 210,
+        "seed": 43,
+        "train_loss": 0.32971449409212383,
+        "validation_loss": 0.1713876916302575
+      },
+      {
+        "batch_order_sha256": "f8c66caba539a359944ba4fa34247e66eac33ff6d5fe1846e63386b269553c94",
+        "epoch": 2,
+        "epoch_seconds": 385.7888174999971,
+        "fixed_five_label_macro_f1_without_surprise": 0.5695509570461434,
+        "fixed_hamming_loss": 0.05115740740740741,
+        "fixed_macro_f1": 0.47462579753845285,
+        "fixed_macro_precision": 0.4897449867491914,
+        "fixed_macro_recall": 0.47068060652920823,
+        "fixed_micro_f1": 0.7456846950517837,
+        "fixed_subset_accuracy": 0.7583333333333333,
+        "fixed_threshold": 0.5,
+        "fixed_weighted_f1": 0.7175827069583657,
+        "learning_rate_end": 1.3333333333333333e-05,
+        "optimizer_steps": 420,
+        "seed": 43,
+        "train_loss": 0.14482205249369146,
+        "validation_loss": 0.14691120121214124
+      },
+      {
+        "batch_order_sha256": "6931b80c25d5cdb0d38a4958696d3b523daed4108323cb3ee61ab0cb8a902505",
+        "epoch": 3,
+        "epoch_seconds": 388.6390779169742,
+        "fixed_five_label_macro_f1_without_surprise": 0.6913877326705978,
+        "fixed_hamming_loss": 0.04976851851851852,
+        "fixed_macro_f1": 0.5761564438921648,
+        "fixed_macro_precision": 0.6425816481048913,
+        "fixed_macro_recall": 0.5400122688876304,
+        "fixed_micro_f1": 0.7554038680318543,
+        "fixed_subset_accuracy": 0.7583333333333333,
+        "fixed_threshold": 0.5,
+        "fixed_weighted_f1": 0.7444897494136754,
+        "learning_rate_end": 8.888888888888888e-06,
+        "optimizer_steps": 630,
+        "seed": 43,
+        "train_loss": 0.10631115496868179,
+        "validation_loss": 0.13883418109681872
+      },
+      {
+        "batch_order_sha256": "4dac7818c260e4fe6b1c6eabed8e2f973d594bd85080eaa4958b1453ebbcd20e",
+        "epoch": 4,
+        "epoch_seconds": 385.68199654086493,
+        "fixed_five_label_macro_f1_without_surprise": 0.7215947045657836,
+        "fixed_hamming_loss": 0.04814814814814815,
+        "fixed_macro_f1": 0.6013289204714863,
+        "fixed_macro_precision": 0.619957146760496,
+        "fixed_macro_recall": 0.5916850569996664,
+        "fixed_micro_f1": 0.7694013303769401,
+        "fixed_subset_accuracy": 0.7763888888888889,
+        "fixed_threshold": 0.5,
+        "fixed_weighted_f1": 0.760219440741015,
+        "learning_rate_end": 4.444444444444444e-06,
+        "optimizer_steps": 840,
+        "seed": 43,
+        "train_loss": 0.08283197926800875,
+        "validation_loss": 0.14033489657772913
+      },
+      {
+        "batch_order_sha256": "fe8f6e112deff9fd00a437d41dd42e0417226cb076bd33fbc3536213d475adbd",
+        "epoch": 5,
+        "epoch_seconds": 388.27750837500207,
+        "fixed_five_label_macro_f1_without_surprise": 0.7130620700994765,
+        "fixed_hamming_loss": 0.04884259259259259,
+        "fixed_macro_f1": 0.5942183917495638,
+        "fixed_macro_precision": 0.6318780440609258,
+        "fixed_macro_recall": 0.578303165091979,
+        "fixed_micro_f1": 0.7683863885839737,
+        "fixed_subset_accuracy": 0.7763888888888889,
+        "fixed_threshold": 0.5,
+        "fixed_weighted_f1": 0.756505525719039,
+        "learning_rate_end": 0.0,
+        "optimizer_steps": 1050,
+        "seed": 43,
+        "train_loss": 0.0690231847000264,
+        "validation_loss": 0.14497977561420863
+      }
+    ],
+    "learning_rate": 2e-05,
+    "local_path": "models/roberta-base/snapshot",
+    "loss": "unweighted_BCEWithLogitsLoss",
+    "manifest_path": "models/roberta-base/manifest.json",
+    "manifest_sha256": "b6e508ca9783b9e79e3cfc445f3abc7d2792ac5cfa6f44a9b3cf5d5607cd30b6",
+    "max_grad_norm": 1.0,
+    "max_sequence_length": 256,
+    "num_workers": 0,
+    "optimizer": "AdamW",
+    "padding": "dynamic_per_batch",
+    "precision": "float32",
+    "repo_id": "FacebookAI/roberta-base",
+    "revision": "e2da8e2f811d1448a5b465c236feacd80ffbac7b",
+    "scheduler": "linear_decay",
+    "shuffle": true,
+    "steps_per_epoch": 210,
+    "total_optimizer_steps": 1050,
+    "truncation": "right",
+    "warmup_ratio": 0.1,
+    "warmup_steps": 105,
+    "weight_decay": 0.01,
+    "weight_decay_exclusions": [
+      "bias",
+      "LayerNorm.weight"
+    ]
+  },
+  "validation_split_accessed": true,
+  "warnings": [
+    "One seed alone cannot form the frozen three-seed M1 conclusion.",
+    "Deterministic algorithms are requested with warn_only; bitwise repeatability is not claimed.",
+    "The shared threshold is selected on validation and cannot be tuned on test."
+  ],
+  "working_directory": "/Users/phoenix/Assistant/NeuroScience"
+}

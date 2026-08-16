@@ -1,0 +1,72 @@
+{
+  "claim_boundary": "Selected-case hypotheses only; not revised ground truth, prevalence, causality, model reasoning, or inter-rater evidence.",
+  "experiment_id": "EXP-055",
+  "flag_counts": {
+    "annotation_ambiguity": 9,
+    "emotion_ontology_overlap": 24,
+    "implicit_emotion": 20,
+    "lexical_cue_conflict": 14,
+    "low_support_surprise": 7,
+    "mixed_emotion": 12,
+    "multilabel_underprediction": 9,
+    "negation": 2,
+    "possible_missing_context": 5,
+    "sarcasm_or_irony": 5,
+    "surface_noise": 10,
+    "weak_emotion_neutral_boundary": 21
+  },
+  "gold_plausibility_counts": {
+    "debatable": 11,
+    "implausible": 1,
+    "plausible": 33
+  },
+  "primary_source_by_role": {
+    "m1_seed_unstable": {
+      "annotation_or_data_uncertainty": 2,
+      "model_or_representation_limitation": 2,
+      "overlapping_label_ontology": 2
+    },
+    "m1_stable_exact_recovery": {
+      "model_or_representation_limitation": 3,
+      "overlapping_label_ontology": 3
+    },
+    "m3_seed_unstable": {
+      "missing_forum_context": 1,
+      "model_or_representation_limitation": 2,
+      "overlapping_label_ontology": 2,
+      "surface_form_noise": 1
+    },
+    "m3_stable_exact_recovery": {
+      "annotation_or_data_uncertainty": 1,
+      "model_or_representation_limitation": 3,
+      "overlapping_label_ontology": 3,
+      "surface_form_noise": 1
+    },
+    "shared_stable_exact_error": {
+      "annotation_or_data_uncertainty": 2,
+      "model_or_representation_limitation": 2,
+      "overlapping_label_ontology": 4
+    },
+    "surprise_gold": {
+      "annotation_or_data_uncertainty": 4,
+      "low_support_label_uncertainty": 1,
+      "overlapping_label_ontology": 2
+    },
+    "two_label_disagreement": {
+      "model_or_representation_limitation": 1,
+      "overlapping_label_ontology": 3
+    }
+  },
+  "primary_source_counts": {
+    "annotation_or_data_uncertainty": 9,
+    "low_support_label_uncertainty": 1,
+    "missing_forum_context": 1,
+    "model_or_representation_limitation": 13,
+    "overlapping_label_ontology": 19,
+    "surface_form_noise": 2
+  },
+  "reviewer": "assistant_single_reviewer",
+  "reviewer_count": 1,
+  "rows": 45,
+  "schema_version": "exp-055-qualitative-summary-v1"
+}

@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mock A · 面板浓丝印</title>
+<style>
+  :root {
+    --paper: #f4efe3; --paper-soft: #fbf8ef; --paper-warm: #e8dcc8;
+    --ink: #1f2724; --ink-muted: rgba(31, 39, 36, 0.62);
+    --cinnabar: #a64338; --seal-red: #b24338; --gold: #9b7430;
+    --dai-blue: #183c49; --flower-blue: #2e6f77;
+    --board: #1b332b; --board-edge: #12241e; --silk: #e9eee6;
+    --copper: #c9a35a; --line: rgba(31, 39, 36, 0.14);
+    --serif: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
+    --sans: "PingFang SC", "Inter", "Noto Sans SC", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", "Menlo", "SFMono-Regular", monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: var(--sans); font-size: 15px; line-height: 1.78;
+    padding: 40px 24px 80px;
+  }
+  .page { max-width: 880px; margin: 0 auto; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
+    color: var(--ink-muted); text-transform: uppercase;
+  }
+  h1 { font-family: var(--serif); font-size: 40px; line-height: 1.1; margin: 6px 0 4px; }
+  .sub { color: var(--ink-muted); font-size: 13.5px; margin-bottom: 36px; }
+  section { margin-bottom: 40px; }
+  .sec-label {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em;
+    color: var(--ink-muted); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;
+  }
+  .sec-label::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  /* ---------- 工作台 ---------- */
+  .workbench {
+    display: flex; gap: 24px; align-items: stretch;
+    background: var(--paper-soft); border: 1px solid var(--line);
+    border-radius: 12px; padding: 24px 26px;
+    box-shadow: 0 2px 14px rgba(28, 45, 34, 0.08);
+  }
+  .wb-main { flex: 1; }
+  .wb-tags { display: flex; gap: 8px; margin-bottom: 10px; }
+  .chip {
+    font-family: var(--mono); font-size: 11px; padding: 2px 10px;
+    border-radius: 999px; border: 1px solid var(--line); color: var(--ink-muted);
+  }
+  .chip.type { border-color: rgba(46, 111, 119, 0.4); color: var(--flower-blue); }
+  .wb-title { font-family: var(--serif); font-size: 26px; margin-bottom: 8px; }
+  .wb-start { font-size: 14px; color: var(--ink); }
+  .wb-start strong { color: var(--cinnabar); font-weight: 600; }
+  .wb-actions { margin-top: 16px; display: flex; gap: 10px; }
+  .btn {
+    font-family: var(--sans); font-size: 13px; padding: 7px 16px;
+    border-radius: 8px; border: 1px solid var(--ink); background: transparent;
+    color: var(--ink); cursor: pointer;
+  }
+  .btn.ghost { border-color: var(--line); color: var(--ink-muted); }
+  .wb-seal-slot {
+    width: 110px; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 8px; border-left: 1px dashed var(--line); padding-left: 24px;
+  }
+  .seal-pending {
+    width: 68px; height: 68px; border: 2px dashed rgba(166, 67, 56, 0.45);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-weight: 700; font-size: 20px;
+    color: rgba(166, 67, 56, 0.4); transform: rotate(-2deg);
+  }
+  .seal-slot-note { font-size: 11px; color: var(--ink-muted); text-align: center; }
+
+  /* ---------- 台账带 ---------- */
+  .ledger-strip {
+    background: var(--paper-soft); border: 1px solid var(--line); border-radius: 12px;
+    padding: 20px 22px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  }
+  .seal {
+    width: 62px; height: 62px; background:
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,0.14), transparent 60%),
+      var(--seal-red);
+    border-radius: 7px; transform: rotate(-2.5deg);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: var(--paper); font-family: var(--serif); font-weight: 700;
+    box-shadow: inset 0 0 0 2px rgba(244, 239, 227, 0.35), 0 1px 4px rgba(28,45,34,0.18);
+  }
+  .seal .no { font-size: 21px; line-height: 1; }
+  .seal .zh { font-size: 10px; letter-spacing: 0.2em; margin-top: 3px; opacity: 0.9; }
+  .slot-active {
+    width: 62px; height: 62px; border: 2px dashed rgba(166,67,56,0.5); border-radius: 7px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: rgba(166,67,56,0.55); font-family: var(--serif); font-weight: 700;
+  }
+  .slot-active .no { font-size: 18px; } .slot-active .zh { font-size: 10px; }
+  .slot-ghost {
+    width: 54px; height: 54px; border: 1px dashed var(--line); border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(31,39,36,0.28); font-family: var(--mono); font-size: 12px;
+  }
+  .strip-meta { margin-left: auto; text-align: right; }
+  .strip-count { font-family: var(--serif); font-size: 22px; }
+  .strip-count small { font-size: 12px; color: var(--ink-muted); font-family: var(--sans); }
+  .ticket {
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 6px;
+    border: 1px dashed rgba(155, 116, 48, 0.55); color: var(--gold);
+    font-size: 12px; padding: 4px 12px; border-radius: 4px;
+    background:
+      radial-gradient(circle at left center, var(--paper-soft) 5px, transparent 5.5px),
+      radial-gradient(circle at right center, var(--paper-soft) 5px, transparent 5.5px);
+  }
+
+  /* ---------- 主板图 ---------- */
+  .board-wrap {
+    background: var(--paper-soft); border: 1px solid var(--line); border-radius: 12px;
+    padding: 22px;
+  }
+  svg text { user-select: none; }
+  .board-note { font-size: 12.5px; color: var(--ink-muted); margin-top: 12px; }
+
+  /* ---------- 朱批 ---------- */
+  .note-card {
+    background: var(--paper-soft); border: 1px solid var(--line); border-radius: 12px;
+    padding: 20px 22px; display: flex; gap: 20px;
+  }
+  .note-body { flex: 1; font-size: 14.5px; }
+  .zhupi {
+    width: 200px; border-left: 2px solid var(--cinnabar); padding-left: 14px;
+    color: var(--cinnabar); font-size: 13px; line-height: 1.7;
+  }
+  .zhupi .zp-label {
+    font-family: var(--serif); font-weight: 700; font-size: 12px;
+    display: inline-block; border: 1px solid var(--cinnabar); border-radius: 3px;
+    padding: 0 5px; margin-bottom: 6px;
+  }
+
+  /* ---------- 冻结队列 ---------- */
+  .frozen { display: flex; flex-direction: column; gap: 10px; }
+  .fz-card {
+    background: rgba(244, 239, 227, 0.5); border: 1px solid rgba(24, 60, 73, 0.14);
+    border-radius: 10px; padding: 12px 18px; color: rgba(31, 39, 36, 0.55);
+    display: flex; align-items: baseline; gap: 12px; font-size: 14px;
+    position: relative;
+  }
+  .fz-card .fz-no { font-family: var(--serif); font-weight: 700; color: rgba(24,60,73,0.55); }
+  .fz-stamp {
+    position: absolute; right: 14px; top: 50%; transform: translateY(-50%) rotate(3deg);
+    width: 26px; height: 26px; border: 1.5px solid rgba(24, 60, 73, 0.35); border-radius: 4px;
+    color: rgba(24, 60, 73, 0.45); font-family: var(--serif); font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pencil { color: rgba(31,39,36,0.4); font-size: 13px; margin-top: 10px; font-style: italic; }
+
+  /* ---------- 四阶段轨道 ---------- */
+  .rail { background: var(--paper-soft); border: 1px solid var(--line); border-radius: 12px; padding: 26px 30px 20px; }
+  .rail-line { position: relative; height: 2px; background: linear-gradient(90deg, var(--copper), rgba(201,163,90,0.35)); margin: 18px 8px 14px; }
+  .via { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; border-radius: 50%; background: var(--paper-soft); border: 2.5px solid var(--copper); }
+  .via.current { border-color: var(--cinnabar); box-shadow: 0 0 0 4px rgba(166,67,56,0.15); }
+  .rail-labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-muted); }
+  .rail-labels b { display: block; color: var(--ink); font-family: var(--serif); font-size: 13.5px; }
+  .rail-labels .cur b { color: var(--cinnabar); }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="eyebrow">基石 · CAREER ROADMAP · 结算制</div>
+  <h1>贾维斯 0.x 装配台</h1>
+  <div class="sub">单线程 · 台账只涨不跌 · 空窗不记债</div>
+
+  <section>
+    <div class="sec-label">活动单元 · 单线程，只有这一件活</div>
+    <div class="workbench">
+      <div class="wb-main">
+        <div class="wb-tags"><span class="chip type">实验单元</span><span class="chip">1–2 session</span></div>
+        <div class="wb-title">U2 揭穿作弊</div>
+        <div class="wb-start">下一步：给作弊模型跑 held-out teacher-forced loss，<strong>预期它照样拿假低分</strong>——答案就在右边一格。</div>
+        <div class="wb-actions"><button class="btn">记断点</button><button class="btn ghost">撞墙了</button></div>
+      </div>
+      <div class="wb-seal-slot">
+        <div class="seal-pending">U2</div>
+        <div class="seal-slot-note">结算后落印于台账</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-label">台账 · 只涨不跌</div>
+    <div class="ledger-strip">
+      <div class="seal"><span class="no">U1</span><span class="zh">修掩码</span></div>
+      <div class="slot-active"><span class="no">U2</span><span class="zh">进行中</span></div>
+      <div class="slot-ghost">U3</div>
+      <div class="slot-ghost">U4</div>
+      <div class="slot-ghost">U5</div>
+      <div class="slot-ghost">U6</div>
+      <div class="slot-ghost">U7</div>
+      <div class="strip-meta">
+        <div class="strip-count">1 <small>已结算</small></div>
+        <div class="ticket">玩耍券 ×0 · 再结算 1 张解锁</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-label">贾维斯 0.x · 主板图</div>
+    <div class="board-wrap">
+      <svg viewBox="0 0 816 400" width="100%" role="img" aria-label="贾维斯 0.x 主板图">
+        <!-- board -->
+        <rect x="8" y="8" width="800" height="384" rx="14" fill="var(--board)" stroke="var(--board-edge)" stroke-width="3"/>
+        <!-- drill holes -->
+        <g fill="var(--paper-soft)" stroke="#0d1b16" stroke-width="2">
+          <circle cx="30" cy="30" r="7"/><circle cx="786" cy="30" r="7"/>
+          <circle cx="30" cy="370" r="7"/><circle cx="786" cy="370" r="7"/>
+        </g>
+        <!-- title silk -->
+        <text x="56" y="42" fill="var(--silk)" font-family="var(--mono)" font-size="15" letter-spacing="2">JARVIS 0.x — MAINBOARD REV 0.1</text>
+        <text x="56" y="60" fill="rgba(233,238,230,0.55)" font-family="var(--mono)" font-size="10" letter-spacing="1">PROJECT 贾维斯 · SINGLE-THREAD ASSEMBLY · EST. 2026</text>
+
+        <!-- edge connector U-QUEUE -->
+        <text x="20" y="120" fill="rgba(233,238,230,0.7)" font-family="var(--mono)" font-size="10" transform="rotate(-90 20 120)">U-QUEUE</text>
+        <g font-family="var(--mono)" font-size="9">
+          <rect x="26" y="96" width="26" height="16" fill="var(--copper)"/><text x="31" y="108" fill="#1b332b">U1</text>
+          <rect x="26" y="120" width="26" height="16" fill="none" stroke="var(--copper)" stroke-dasharray="3 2"/><text x="31" y="132" fill="var(--copper)">U2</text>
+          <rect x="26" y="144" width="26" height="16" fill="none" stroke="rgba(201,163,90,0.35)"/><text x="31" y="156" fill="rgba(201,163,90,0.5)">U3</text>
+          <rect x="26" y="168" width="26" height="16" fill="none" stroke="rgba(201,163,90,0.35)"/><text x="31" y="180" fill="rgba(201,163,90,0.5)">U4</text>
+          <rect x="26" y="192" width="26" height="16" fill="none" stroke="rgba(201,163,90,0.35)"/><text x="31" y="204" fill="rgba(201,163,90,0.5)">U5</text>
+          <rect x="26" y="216" width="26" height="16" fill="none" stroke="rgba(201,163,90,0.35)"/><text x="31" y="228" fill="rgba(201,163,90,0.5)">U6</text>
+          <rect x="26" y="240" width="26" height="16" fill="none" stroke="rgba(201,163,90,0.35)"/><text x="31" y="252" fill="rgba(201,163,90,0.5)">U7</text>
+        </g>
+        <!-- traces to ② -->
+        <path d="M52 104 H150 Q170 104 170 124 V170 Q170 190 190 190 H300" fill="none" stroke="var(--copper)" stroke-width="3"/>
+        <path d="M52 128 H140 Q160 128 160 148 V196 Q160 216 180 216 H300" fill="none" stroke="var(--copper)" stroke-width="2" stroke-dasharray="6 4" opacity="0.8"/>
+
+        <!-- ② persona socket (center, hero) -->
+        <rect x="300" y="140" width="180" height="120" rx="8" fill="#142822" stroke="var(--silk)" stroke-width="2"/>
+        <g fill="var(--copper)"><rect x="292" y="152" width="8" height="6"/><rect x="292" y="168" width="8" height="6"/><rect x="292" y="184" width="8" height="6"/><rect x="292" y="200" width="8" height="6"/><rect x="292" y="216" width="8" height="6"/><rect x="292" y="232" width="8" height="6"/>
+        <rect x="480" y="152" width="8" height="6"/><rect x="480" y="168" width="8" height="6"/><rect x="480" y="184" width="8" height="6"/><rect x="480" y="200" width="8" height="6"/><rect x="480" y="216" width="8" height="6"/><rect x="480" y="232" width="8" height="6"/></g>
+        <text x="316" y="176" fill="var(--silk)" font-family="var(--mono)" font-size="13" letter-spacing="1.5">② PERSONA</text>
+        <text x="316" y="194" fill="var(--silk)" font-family="var(--serif)" font-size="15">人格与情感</text>
+        <text x="316" y="214" fill="rgba(233,238,230,0.6)" font-family="var(--mono)" font-size="9.5">SFT / DPO / RLHF · 当前试驾中</text>
+        <!-- depth ladder pads for ② -->
+        <g>
+          <circle cx="322" cy="240" r="6" fill="var(--copper)"/>
+          <circle cx="344" cy="240" r="6" fill="none" stroke="var(--copper)" stroke-width="2" stroke-dasharray="2 2"/>
+          <circle cx="366" cy="240" r="6" fill="none" stroke="rgba(201,163,90,0.4)" stroke-width="1.5"/>
+          <circle cx="388" cy="240" r="6" fill="none" stroke="rgba(201,163,90,0.4)" stroke-width="1.5"/>
+          <circle cx="410" cy="240" r="6" fill="none" stroke="rgba(201,163,90,0.4)" stroke-width="1.5"/>
+          <text x="430" y="244" fill="rgba(233,238,230,0.55)" font-family="var(--mono)" font-size="9">理·实·验·诊·综</text>
+        </g>
+
+        <!-- ① base model, supplied -->
+        <rect x="560" y="90" width="200" height="86" rx="8" fill="none" stroke="rgba(233,238,230,0.75)" stroke-width="2" stroke-dasharray="8 5"/>
+        <text x="576" y="120" fill="var(--silk)" font-family="var(--mono)" font-size="12" letter-spacing="1.5">① BASE MODEL</text>
+        <text x="576" y="138" fill="var(--silk)" font-family="var(--serif)" font-size="14">基座模型 · 外部供货</text>
+        <text x="576" y="158" fill="rgba(233,238,230,0.55)" font-family="var(--mono)" font-size="9.5">SUPPLIED — 懂原理即可</text>
+
+        <!-- ③ memory -->
+        <rect x="90" y="290" width="170" height="76" rx="8" fill="#142822" stroke="rgba(233,238,230,0.65)" stroke-width="1.5"/>
+        <text x="104" y="316" fill="var(--silk)" font-family="var(--mono)" font-size="11" letter-spacing="1.5">③ MEMORY</text>
+        <text x="104" y="334" fill="var(--silk)" font-family="var(--serif)" font-size="13">终身记忆</text>
+        <g><circle cx="112" cy="350" r="5" fill="var(--copper)"/><circle cx="130" cy="350" r="5" fill="none" stroke="rgba(201,163,90,0.4)" stroke-width="1.5"/><circle cx="148" cy="350" r="5" fill="none" stroke="rgba(201,163,90,0.4)" stroke-width="1.5"/><circle cx="166" cy="350" r="5" fill="none" stroke="rgba(201,163,90,0.4)" stroke-width="1.5"/><circle cx="184" cy="350" r="5" fill="none" stroke="rgba(201,163,90,0.4)" stroke-width="1.5"/></g>
+
+        <!-- ④ voice -->
+        <rect x="300" y="290" width="170" height="76" rx="8" fill="#142822" stroke="rgba(233,238,230,0.65)" stroke-width="1.5"/>
+        <text x="314" y="316" fill="var(--silk)" font-family="var(--mono)" font-size="11" letter-spacing="1.5">④ VOICE / MULTIMODAL</text>
+        <text x="314" y="334" fill="var(--silk)" font-family="var(--serif)" font-size="13">实时多模态交互</text>
+        <g><circle cx="322" cy="350" r="5" fill="none" stroke="rgba(201,163,90,0.4)" stroke-width="1.5"/><circle cx="340" cy="350" r="5" fill="none" stroke="rgba(201,163,90,0.4)" stroke-width="1.5"/><circle cx="358" cy="350" r="5" fill="none" stroke="rgba(201,163,90,0.4)" stroke-width="1.5"/><circle cx="376" cy="350" r="5" fill="none" stroke="rgba(201,163,90,0.4)" stroke-width="1.5"/><circle cx="394" cy="350" r="5" fill="none" stroke="rgba(201,163,90,0.4)" stroke-width="1.5"/></g>
+
+        <!-- ⑤ agent exec: cyrene 0.0 archived + 0.1 socket -->
+        <rect x="560" y="210" width="92" height="60" rx="6" fill="#0f1f1a" stroke="rgba(233,238,230,0.4)" stroke-width="1.5"/>
+        <text x="572" y="234" fill="rgba(233,238,230,0.55)" font-family="var(--mono)" font-size="10">CYRENE 0.0</text>
+        <text x="572" y="250" fill="rgba(233,238,230,0.4)" font-family="var(--mono)" font-size="9">ARCHIVED · TS</text>
+        <rect x="668" y="210" width="92" height="60" rx="6" fill="none" stroke="var(--cinnabar)" stroke-width="2" stroke-dasharray="6 4"/>
+        <text x="680" y="234" fill="#d98a7f" font-family="var(--mono)" font-size="10">0.1 SOCKET</text>
+        <text x="680" y="250" fill="#d98a7f" font-family="var(--serif)" font-size="11">U7 点火位</text>
+        <text x="560" y="200" fill="var(--silk)" font-family="var(--mono)" font-size="11" letter-spacing="1.5">⑤ AGENT EXEC</text>
+
+        <!-- ⑥ system layer ground plane -->
+        <g>
+          <rect x="560" y="300" width="200" height="66" rx="8" fill="none" stroke="rgba(233,238,230,0.5)" stroke-width="1.5"/>
+          <path d="M566 306 l50 54 M596 306 l50 54 M626 306 l50 54 M656 306 l50 54 M686 306 l50 54 M716 306 l40 44" stroke="rgba(233,238,230,0.16)" stroke-width="4"/>
+          <text x="576" y="326" fill="var(--silk)" font-family="var(--mono)" font-size="11" letter-spacing="1.5">⑥ SYSTEM LAYER</text>
+          <text x="576" y="344" fill="rgba(233,238,230,0.6)" font-family="var(--serif)" font-size="12">系统层 · 军火库供电</text>
+        </g>
+
+        <!-- corner silk seal -->
+        <rect x="726" y="52" width="34" height="34" rx="4" fill="none" stroke="var(--cinnabar)" stroke-width="2"/>
+        <text x="734" y="76" fill="var(--cinnabar)" font-family="var(--serif)" font-size="16" font-weight="700">0.x</text>
+      </svg>
+      <div class="board-note">候选专长 ②③④ 各带五个焊盘 = 深度阶梯（理解 → 实现 → 验证 → 诊断 → 综合）；实心焊盘 = 已站上的层。U 队列走线正在向 ② 号插槽布线，U7 点火位等待 0.1 落座。</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-label">朱批 · 顿悟点样式</div>
+    <div class="note-card">
+      <div class="note-body">
+        <b>U2 揭穿作弊</b>（实验单元）：两个指标对照——teacher-forced 的 held-out loss vs 自回归生成质量。作弊模型在前者照样拿低分：答案就在右边一格，见没见过的数据无所谓；只有让它自己一个字一个字往外生成，作弊才会立刻现形。产物：eval 脚本 + 对比数据。
+      </div>
+      <div class="zhupi">
+        <span class="zp-label">朱批</span><br/>
+        假指标与真指标的反差，就是本单元要带走的顿悟。
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-label">冻结队列 · 封存待取，不是欠债</div>
+    <div class="frozen">
+      <div class="fz-card"><span class="fz-no">U3</span> 第一篇笔记《我的 decoder 没有 mask》 <span class="fz-stamp">冻</span></div>
+      <div class="fz-card"><span class="fz-no">U4</span> SFT 试驾 · Qwen 小尺寸 + LoRA <span class="fz-stamp">冻</span></div>
+      <div class="pencil">远期：记忆系统 · 语音 pipeline · vLLM 源码笔记 · 整合单元（人格×记忆…）——到队头再定义</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-label">四阶段 · 轨道</div>
+    <div class="rail">
+      <div class="rail-line">
+        <span class="via current" style="left:6%"></span>
+        <span class="via" style="left:37%"></span>
+        <span class="via" style="left:68%"></span>
+        <span class="via" style="left:96%"></span>
+      </div>
+      <div class="rail-labels">
+        <span class="cur"><b>阶段一 · 出国前</b>U1–U7 + 军火库</span>
+        <span><b>阶段二 · 硕士</b>定专长</span>
+        <span><b>阶段三 · 职业早期</b>进房间</span>
+        <span><b>阶段四</b>主导或创业</span>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>

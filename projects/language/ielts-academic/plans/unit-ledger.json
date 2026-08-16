@@ -3,32 +3,38 @@
   "mode": "event-driven-settlement",
   "state": "idle",
   "activeUnit": null,
-  "suggestedUnit": {
-    "id": "L3",
-    "type": "repair",
-    "title": "Listening 评价窗口与关系保持",
-    "status": "suggested",
-    "reason": "L2 独立样本得到 7/10，但 Questions 23–24 和 30 再次出现显眼词先行、评价主体漂移和解释关系未整合，E002 已确认复发。",
-    "nextAction": "准备开始时，选一组未见的 Cambridge Listening Section 3 选择或配对题；播放前标出每组题要匹配的评价维度，单次播放中把直接评价和后续解释保持在同一答案窗口。",
-    "durationMinutes": 120,
-    "materialType": "L2 错误窗口的短复盘，加一组未见 Cambridge Listening Section 3 选择题或配对题",
-    "expectedArtifact": "未经修改的首次答案、评价主体、直接评价、后续解释、最终选项和漏题后的止损记录",
-    "reviewMethod": "逐题检查答案是否由完整评价关系支持；听到显眼名词或选项近义词只能形成候选，必须确认其修饰对象、语义角色和后续转折后才能提交。",
-    "evidenceRefs": [
-      "journal/entries/2026-07-24-l2-listening-answer-window-transfer.md#l2-结论"
-    ],
-    "errorRefs": [
-      "E002"
-    ],
-    "settlementCriteria": [
-      "能重建 L2 的 Questions 23–24 和 30，并说明显眼词、评价主体、直接评价与后续解释各自的作用",
-      "使用一组未见 Section 3 完成单次播放，并保留未经修改的首次答案",
-      "没有任何答案只凭显眼词作出；若没有听清，能够标记不确定并继续当前题号",
-      "依据独立样本更新 E002 的状态和 consecutiveCleanSamples"
-    ]
-  },
+  "suggestedUnit": null,
   "queue": [],
   "settled": [
+    {
+      "id": "L3",
+      "type": "repair",
+      "title": "Listening 评价窗口与关系保持",
+      "status": "settled",
+      "reason": "L2 独立样本得到 7/10，但 Questions 23–24 和 30 再次出现显眼词先行、评价主体漂移和解释关系未整合，E002 已确认复发。",
+      "nextAction": "L3 已结算；继续第 2 天其余维护任务，并在整日收口时依据全部证据选择第 3 天唯一主修复。下一次独立 Listening 样本必须验证显眼词候选规则和新对象出现时的两秒占位关窗动作。",
+      "durationMinutes": 120,
+      "materialType": "雅思哥 C21 Test 2 Part 3 Questions 21–30；L2 错误窗口短复盘、未见材料单次播放和已知材料定点修复",
+      "expectedArtifact": "未经修改的首次答案、评价主体、直接评价、后续解释、最终选项和漏题后的止损记录",
+      "reviewMethod": "逐题检查答案是否由完整评价关系支持；听到显眼名词或选项近义词只能形成候选，必须确认其修饰对象、语义角色和后续转折后才能提交。",
+      "evidenceRefs": [
+        "journal/entries/2026-07-24-l2-listening-answer-window-transfer.md#l2-结论",
+        "journal/entries/2026-08-10-l3-listening-evaluation-window-repair.md#l3-结论"
+      ],
+      "errorRefs": [
+        "E001",
+        "E002"
+      ],
+      "settlementCriteria": [
+        "能重建 L2 的 Questions 23–24 和 30，并说明显眼词、评价主体、直接评价与后续解释各自的作用",
+        "使用一组未见 Section 3 完成单次播放，并保留未经修改的首次答案",
+        "没有任何答案只凭显眼词作出；若没有听清，能够标记不确定并继续当前题号",
+        "依据独立样本更新 E002 的状态和 consecutiveCleanSamples"
+      ],
+      "openedAt": "2026-08-10",
+      "settledAt": "2026-08-10",
+      "decision": "C21 Test 2 Part 3 首次作答 4/10。Questions 21–22 虽答对但只凭选项内容；Questions 23–24 和 25–26 丢失 impressed、new information、双方推荐及否定评价关系；Q28 未完成后没有识别答案窗口已经切换，导致 F、A 连续提前一题填写。已知材料定点重听后能够按阶段重建 C、D、F、A，并形成候选词和新对象关窗规则，但该提示后修复不计 clean sample。E001 保持 active，E002 保持 regressed，连续独立 clean sample 为 0。"
+    },
     {
       "id": "L2",
       "type": "diagnostic",

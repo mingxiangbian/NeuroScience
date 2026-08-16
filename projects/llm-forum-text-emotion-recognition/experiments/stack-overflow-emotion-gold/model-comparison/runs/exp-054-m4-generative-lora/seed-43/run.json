@@ -1,0 +1,728 @@
+{
+  "accessed_splits": [
+    "train",
+    "validation"
+  ],
+  "artifacts": {
+    "batch_orders_private": {
+      "bytes": 27008,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-054-m4-generative-lora/seed-43/batch-orders.npy",
+      "sha256": "54915b13cc87b4803080335b12d468946a79624afc03bf50dae81051b0203946"
+    },
+    "bootstrap": {
+      "bytes": 1240,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/bootstrap.json",
+      "sha256": "4e99f3ec0268a32358c15173d74a1a9d0c2f8a33b64f8d9403894e5a9b14ff67"
+    },
+    "confusion": {
+      "bytes": 328,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/multilabel-confusion.csv",
+      "sha256": "b7f72c7448f4fc21c1b6ac0f82762dbe7b583d0d01cae9e264c5a74ef137d9f0"
+    },
+    "epoch_checkpoints_private": {
+      "epoch-1": {
+        "bytes": 29384266,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-054-m4-generative-lora/seed-43/checkpoints/epoch-1/adapters.safetensors",
+        "sha256": "68a6baf1e0e3ca3a23eae9efe878aeececbc16bf09db5a00ac1f6b29847997c9"
+      },
+      "epoch-2": {
+        "bytes": 29384266,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-054-m4-generative-lora/seed-43/checkpoints/epoch-2/adapters.safetensors",
+        "sha256": "24ae23f4c70fea4934a19a630363b901e9284661b9ab44ae8d30848aae737730"
+      }
+    },
+    "history": {
+      "bytes": 947,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/history.csv",
+      "sha256": "56574e8ead5105bb0f6b67d7edb1a46cca2c170a0787b5883d5d2ad0be6d7f78"
+    },
+    "metrics": {
+      "bytes": 2267,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/metrics.json",
+      "sha256": "3f75836503ecef51697364518569f78c200c90210e58514dd5053371c5703229"
+    },
+    "paired_m4_minus_m3": {
+      "bytes": 1668,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/paired-m4-minus-m3.json",
+      "sha256": "c7351ab12a2c7c6f7d24f061ae63c3aa201428938390e36cc637140f7df2f3c3"
+    },
+    "parser_and_generation": {
+      "bytes": 661,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/parser-and-generation.json",
+      "sha256": "bbd96124a1f6a50b7f24297c7c39c37ebfbad3ced1a6e595aa48a369c38d32e5"
+    },
+    "per_label": {
+      "bytes": 453,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/per-label.csv",
+      "sha256": "65bf5b20e18d76ad27be4f63d7bc6fc4c2a59b0acafdc69437d0574b77decbbe"
+    },
+    "private_manifest": {
+      "bytes": 3066,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-054-m4-generative-lora/seed-43/private-manifest.json",
+      "sha256": "eae07f29adc075569d9752d1ce357ad5840cb51fc6c36a36ac1dc8282cae145d"
+    },
+    "selected_adapter_private": {
+      "bytes": 29384266,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-054-m4-generative-lora/seed-43/selected-checkpoint/adapters.safetensors",
+      "sha256": "24ae23f4c70fea4934a19a630363b901e9284661b9ab44ae8d30848aae737730"
+    },
+    "selected_predictions_private": {
+      "bytes": 35426,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-054-m4-generative-lora/seed-43/selected-validation-predictions.npz",
+      "sha256": "3244102b41b68390d6dfc9253bf3b49cdcab9d8a256ec9ad4992c94fff9e0ae2"
+    },
+    "selected_raw_generations_private": {
+      "bytes": 260762,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-054-m4-generative-lora/seed-43/selected-validation-generations.jsonl",
+      "sha256": "1161e0c23c3b9f780aed00abd538de067bdb9ba64d1ad1ce2743aa3a96ecf084"
+    },
+    "selection": {
+      "bytes": 319,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/selection.json",
+      "sha256": "9131a39230eba7973c311dd9df7809b63068e7b5d0b04340ac8cf638ead47b06"
+    },
+    "stdout_log": {
+      "bytes": 8687,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/stdout.log",
+      "sha256": "d82ad8a98a850ec5b311a6fceeb0805e8400f0ca4031a3b2db4db17beafe7af9"
+    }
+  },
+  "authorization": {
+    "authorized_at": "2026-08-15",
+    "basis": "User explicitly instructed: \u884c\uff0c\u6267\u884cEXP-054",
+    "formal_training": true,
+    "fresh_process_replay_passes": 2,
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "splits": [
+      "train",
+      "validation"
+    ],
+    "test_access": false,
+    "validation_access": true
+  },
+  "bootstrap": {
+    "component_count": 702,
+    "five_label_macro_f1_without_surprise": {
+      "lower": 0.6611837827263681,
+      "point": 0.7234190987381918,
+      "upper": 0.7726043673475559
+    },
+    "interval": "percentile_2.5_97.5",
+    "macro_f1": {
+      "lower": 0.5773678981211785,
+      "point": 0.6584048045040487,
+      "upper": 0.7222638919938943
+    },
+    "per_label_f1": {
+      "anger": {
+        "lower": 0.7272533022533023,
+        "point": 0.7843137254901961,
+        "upper": 0.8365098557042175
+      },
+      "fear": {
+        "lower": 0.48,
+        "point": 0.7142857142857143,
+        "upper": 0.8888888888888888
+      },
+      "joy": {
+        "lower": 0.5373134328358209,
+        "point": 0.64,
+        "upper": 0.7229043834914124
+      },
+      "love": {
+        "lower": 0.797923094836118,
+        "point": 0.8435754189944135,
+        "upper": 0.8820231921636417
+      },
+      "sadness": {
+        "lower": 0.47267379679144383,
+        "point": 0.6349206349206349,
+        "upper": 0.7666666666666667
+      },
+      "surprise": {
+        "lower": 0.0,
+        "point": 0.3333333333333333,
+        "upper": 0.6666666666666666
+      }
+    },
+    "replicates": 2000,
+    "row_count": 720,
+    "seed": 1202221401,
+    "seed_material": "SO-C0-component-bootstrap-v1|EXP-054|seed-43|M4",
+    "unit": "duplicate_component_id"
+  },
+  "completed_at_utc": "2026-08-15T11:00:47.750615+00:00",
+  "data": {
+    "cross_split_component_overlap": 0,
+    "cross_split_sample_overlap": 0,
+    "labels": [
+      "love",
+      "joy",
+      "surprise",
+      "anger",
+      "sadness",
+      "fear"
+    ],
+    "protocol_id": "DATA-SO-TASK-V1",
+    "test": {
+      "rows": 720,
+      "status": "sealed_not_accessed"
+    },
+    "train": {
+      "sha256": "fc2f853b5b8afb78253ca3a96b5093d2fd12ea7063801f57bf138c9d5cf528fc",
+      "summary": {
+        "components": 3277,
+        "label_cardinality": {
+          "0": 1372,
+          "1": 1895,
+          "2": 93
+        },
+        "neutral_rows": 1372,
+        "positive_counts": {
+          "anger": 618,
+          "fear": 74,
+          "joy": 343,
+          "love": 854,
+          "sadness": 161,
+          "surprise": 31
+        },
+        "rows": 3360
+      },
+      "tokenization": {
+        "all_targets_canonical": true,
+        "full_tokens": {
+          "maximum": 348.0,
+          "mean": 168.41041666666666,
+          "median": 157.0,
+          "minimum": 132.0,
+          "p95": 235.0,
+          "total": 565859.0
+        },
+        "prompt_tokens": {
+          "maximum": 341.0,
+          "mean": 160.68422619047618,
+          "median": 149.0,
+          "minimum": 124.0,
+          "p95": 228.0,
+          "total": 539899.0
+        },
+        "rows": 3360,
+        "supervised_tokens": {
+          "maximum": 12.0,
+          "mean": 7.726190476190476,
+          "median": 8.0,
+          "minimum": 7.0,
+          "p95": 9.0,
+          "total": 25960.0
+        },
+        "token_id_and_mask_stream_sha256": "7af53e210e3fb3883d931ff87d47694c640f9ffc9649042d70a7d724efd10774",
+        "total_supervised_tokens_per_epoch": 25960,
+        "truncated_rows": 0
+      }
+    },
+    "validation": {
+      "sha256": "e83ea51f32c7a1a067f8ed63d499c5540a46542efefdb3afdc7de9937921e4f7",
+      "summary": {
+        "components": 702,
+        "label_cardinality": {
+          "0": 294,
+          "1": 406,
+          "2": 20
+        },
+        "neutral_rows": 294,
+        "positive_counts": {
+          "anger": 132,
+          "fear": 16,
+          "joy": 74,
+          "love": 183,
+          "sadness": 34,
+          "surprise": 7
+        },
+        "rows": 720
+      },
+      "tokenization": {
+        "raw_tokens": {
+          "maximum": 351.0,
+          "mean": 162.97083333333333,
+          "median": 153.0,
+          "minimum": 125.0,
+          "p95": 227.04999999999995,
+          "total": 117339.0
+        },
+        "rows": 720,
+        "token_id_stream_sha256": "2046e0442427db55cf8fc916fa10c6f748b55d8e170ebfbcf13b1c3ef048ae99",
+        "tokens": {
+          "maximum": 351.0,
+          "mean": 162.97083333333333,
+          "median": 153.0,
+          "minimum": 125.0,
+          "p95": 227.04999999999995,
+          "total": 117339.0
+        },
+        "truncated_rows": 0
+      }
+    }
+  },
+  "environment": {
+    "executable": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+    "machine": "arm64",
+    "packages": {
+      "mlx": "0.32.0",
+      "mlx-lm": "0.31.3",
+      "numpy": "2.4.6",
+      "python": "3.11.15",
+      "safetensors": "0.8.0",
+      "transformers": "5.14.1"
+    },
+    "platform": "macOS-26.5.2-arm64-arm-64bit"
+  },
+  "experiment_id": "EXP-054",
+  "formal_training_authorized": true,
+  "frozen_sources": {
+    "aggregate": {
+      "bytes": 13238,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/frozen-aggregate.py",
+      "sha256": "9ad1344da5e902384c80e775c84f980e6a8ed80988c6c1ddc4913786e4cad93f"
+    },
+    "aggregate_tests": {
+      "bytes": 1053,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/frozen-aggregate_tests.py",
+      "sha256": "16d858b347deed82fa5817bba3aac67c70bba4bbba989b0e931a4ac8cf3f23da"
+    },
+    "aggregate_verifier": {
+      "bytes": 10618,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/frozen-aggregate_verifier.py",
+      "sha256": "7cfef0e266a6bace5ea11263882afe06b080dc936aa059e7645758134f4f5e7d"
+    },
+    "authorization": {
+      "bytes": 1854,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/frozen-authorization.md",
+      "sha256": "f827e56800a882082d64b05ef4946d7f9677e20b6739f32afaf9d015f9912c09"
+    },
+    "config": {
+      "bytes": 7668,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/frozen-config.json",
+      "sha256": "7cd8b2cfab58ca9627009afd7bbc0be57b34dc425a2ea068609875a82369f928"
+    },
+    "parser": {
+      "bytes": 2263,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/frozen-parser.py",
+      "sha256": "e263c2dbd7ae5cdc38417e9ee0dcff681e262b28425af0b2d7e8b6c78ee16722"
+    },
+    "primitives": {
+      "bytes": 37104,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/frozen-primitives.py",
+      "sha256": "1a8aaf063be3db0f55e0cb95ae35c9395467cd7c7c0c1596813606ba53956edd"
+    },
+    "protocol": {
+      "bytes": 4823,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/frozen-protocol.md",
+      "sha256": "b1a4247789e7c43429d0129a41456ac0ceac863ebfaba41cfe7c0d581ddb20fb"
+    },
+    "runner": {
+      "bytes": 74325,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/frozen-runner.py",
+      "sha256": "15a98a9eaf138c8c1bd719ba36d959f5be42ac6287c20e58755653f935617a13"
+    },
+    "runner_tests": {
+      "bytes": 3637,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/frozen-runner_tests.py",
+      "sha256": "40ddc0a434572f43e2f4c2128ffdb3dcb7b85a26f872a2941e6e626b51ef0efe"
+    },
+    "sentinel_helpers": {
+      "bytes": 37469,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/frozen-sentinel_helpers.py",
+      "sha256": "756a3e4a487554148409dffeebaa600ca5857398f6230e82e15bc294f39b44a4"
+    },
+    "shared_config": {
+      "bytes": 6720,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/frozen-shared_config.json",
+      "sha256": "d97b7c837b5de4ef014a553fa255ebea4ecdffa848d19715d084bf7ed46177d6"
+    },
+    "verifier": {
+      "bytes": 27052,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/frozen-verifier.py",
+      "sha256": "f0b4c38ab39f5e1af80f1df3cfd5c1e702f8718fd2aeb4b187a23f3dd7772e5b"
+    }
+  },
+  "git": {
+    "branch": "main",
+    "commit": "d892fcdf52e3fac04a7aa9f9595a16e50ee40f5c",
+    "dirty": true,
+    "dirty_path_count": 44
+  },
+  "invocation": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/run_exp054_m4.py --config projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/configs/exp-054-m4-three-seed.json --mode train --seed 43",
+  "metrics": {
+    "accuracy_definition": "strict subset/exact-match accuracy",
+    "five_label_macro_f1_without_surprise": 0.7234190987381918,
+    "hamming_loss": 0.04722222222222222,
+    "macro": {
+      "f1": 0.6584048045040487,
+      "precision": 0.7050721210089984,
+      "recall": 0.6217184330130329
+    },
+    "micro_f1": 0.7644341801385681,
+    "per_label": {
+      "anger": {
+        "f1": 0.7843137254901961,
+        "fn": 32,
+        "fp": 23,
+        "label_id": 3,
+        "precision": 0.8130081300813008,
+        "predicted_support": 123,
+        "recall": 0.7575757575757576,
+        "support": 132,
+        "tn": 565,
+        "tp": 100
+      },
+      "fear": {
+        "f1": 0.7142857142857143,
+        "fn": 6,
+        "fp": 2,
+        "label_id": 5,
+        "precision": 0.8333333333333334,
+        "predicted_support": 12,
+        "recall": 0.625,
+        "support": 16,
+        "tn": 702,
+        "tp": 10
+      },
+      "joy": {
+        "f1": 0.64,
+        "fn": 26,
+        "fp": 28,
+        "label_id": 1,
+        "precision": 0.631578947368421,
+        "predicted_support": 76,
+        "recall": 0.6486486486486487,
+        "support": 74,
+        "tn": 618,
+        "tp": 48
+      },
+      "love": {
+        "f1": 0.8435754189944135,
+        "fn": 32,
+        "fp": 24,
+        "label_id": 0,
+        "precision": 0.8628571428571429,
+        "predicted_support": 175,
+        "recall": 0.825136612021858,
+        "support": 183,
+        "tn": 513,
+        "tp": 151
+      },
+      "sadness": {
+        "f1": 0.6349206349206349,
+        "fn": 14,
+        "fp": 9,
+        "label_id": 4,
+        "precision": 0.6896551724137931,
+        "predicted_support": 29,
+        "recall": 0.5882352941176471,
+        "support": 34,
+        "tn": 677,
+        "tp": 20
+      },
+      "surprise": {
+        "f1": 0.3333333333333333,
+        "fn": 5,
+        "fp": 3,
+        "label_id": 2,
+        "precision": 0.4,
+        "predicted_support": 5,
+        "recall": 0.2857142857142857,
+        "support": 7,
+        "tn": 710,
+        "tp": 2
+      }
+    },
+    "prediction_diagnostics": {
+      "empty_prediction_rate": 0.4166666666666667,
+      "empty_prediction_rows": 300,
+      "predicted_label_cardinality_mean": 0.5833333333333334,
+      "predicted_label_cardinality_median": 1.0
+    },
+    "primary": {
+      "name": "six_label_macro_f1",
+      "value": 0.6584048045040487
+    },
+    "subset_accuracy": 0.7875,
+    "weighted_f1": 0.7637060981836097
+  },
+  "model": {
+    "base_parameter_sentinel_after": {
+      "sha256": "7b1e9b2d60fc008377315477fd9cafa3664135220f042fcf98b395787744a800",
+      "tensor_count": 16,
+      "tensor_names": [
+        "model.embed_tokens.weight",
+        "model.layers.10.mlp.up_proj.weight",
+        "model.layers.12.self_attn.q_norm.weight",
+        "model.layers.15.mlp.down_proj.weight",
+        "model.layers.17.self_attn.k_proj.weight",
+        "model.layers.19.self_attn.v_proj.weight",
+        "model.layers.21.post_attention_layernorm.weight",
+        "model.layers.23.self_attn.q_norm.weight",
+        "model.layers.26.mlp.gate_proj.linear.weight",
+        "model.layers.28.self_attn.k_proj.linear.weight",
+        "model.layers.30.input_layernorm.weight",
+        "model.layers.32.post_attention_layernorm.weight",
+        "model.layers.34.self_attn.q_proj.linear.weight",
+        "model.layers.5.mlp.gate_proj.weight",
+        "model.layers.7.self_attn.o_proj.weight",
+        "model.norm.weight"
+      ]
+    },
+    "base_parameter_sentinel_before": {
+      "sha256": "7b1e9b2d60fc008377315477fd9cafa3664135220f042fcf98b395787744a800",
+      "tensor_count": 16,
+      "tensor_names": [
+        "model.embed_tokens.weight",
+        "model.layers.10.mlp.up_proj.weight",
+        "model.layers.12.self_attn.q_norm.weight",
+        "model.layers.15.mlp.down_proj.weight",
+        "model.layers.17.self_attn.k_proj.weight",
+        "model.layers.19.self_attn.v_proj.weight",
+        "model.layers.21.post_attention_layernorm.weight",
+        "model.layers.23.self_attn.q_norm.weight",
+        "model.layers.26.mlp.gate_proj.linear.weight",
+        "model.layers.28.self_attn.k_proj.linear.weight",
+        "model.layers.30.input_layernorm.weight",
+        "model.layers.32.post_attention_layernorm.weight",
+        "model.layers.34.self_attn.q_proj.linear.weight",
+        "model.layers.5.mlp.gate_proj.weight",
+        "model.layers.7.self_attn.o_proj.weight",
+        "model.norm.weight"
+      ]
+    },
+    "enable_thinking": false,
+    "formulation": "generative_label_only_json",
+    "insertion_count": 112,
+    "lora_final_sha256": "4020f6a5210253305c70b378fb05d2a1cf991a675ea42498088e029a0731ce11",
+    "lora_initial_sha256": "b6b8c3792e452694354a574c6e88bce63ff7acbd1991ba30ceae4df38708f2c7",
+    "nonzero_lora_b_tensors": 112,
+    "precision": "BF16_unquantized",
+    "repo_id": "Qwen/Qwen3-4B",
+    "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "trainable_parameter_count": 7340032
+  },
+  "paired_m4_minus_m3": {
+    "comparison": "EXP-054_M4_seed43_minus_EXP-053_M3_seed43_shared_threshold",
+    "component_count": 702,
+    "five_label_macro_f1_delta_without_surprise": {
+      "lower": -0.026237655262677857,
+      "point": 0.016089697495010814,
+      "upper": 0.05981213690521669
+    },
+    "interval": "percentile_2.5_97.5",
+    "macro_f1_delta": {
+      "lower": -0.05196591651115823,
+      "point": -0.005110437272676173,
+      "upper": 0.038029618246699926
+    },
+    "metric_deltas": {
+      "five_label_macro_f1_without_surprise": 0.01608969749501088,
+      "macro_f1": -0.005110437272676127,
+      "micro_f1": 0.007737751567139517,
+      "subset_accuracy": 0.033333333333333326,
+      "weighted_f1": 0.005174509749492517
+    },
+    "per_label_f1_delta": {
+      "anger": {
+        "lower": -0.05117833125148013,
+        "point": -0.00933706816059754,
+        "upper": 0.030724323861995903
+      },
+      "fear": {
+        "lower": -0.08829185520361993,
+        "point": 0.08270676691729328,
+        "upper": 0.2456687643020594
+      },
+      "joy": {
+        "lower": -0.06186122638678468,
+        "point": 0.012093023255813962,
+        "upper": 0.08645747125280362
+      },
+      "love": {
+        "lower": -0.008775007782251393,
+        "point": 0.015237544335012898,
+        "upper": 0.04040142477251307
+      },
+      "sadness": {
+        "lower": -0.10841226644047036,
+        "point": -0.02025177887246854,
+        "upper": 0.07447461270289656
+      },
+      "surprise": {
+        "lower": -0.3,
+        "point": -0.1111111111111111,
+        "upper": 0.0
+      }
+    },
+    "replicates": 2000,
+    "row_count": 720,
+    "seed": 3745861701,
+    "seed_material": "SO-C0-component-bootstrap-v1|EXP-054|seed-43|M4-minus-M3-shared-threshold",
+    "unit": "duplicate_component_id"
+  },
+  "parser_and_generation": {
+    "generated_tokens": {
+      "maximum": 7.0,
+      "mean": 5.647222222222222,
+      "median": 6.0,
+      "minimum": 5.0,
+      "p95": 7.0,
+      "total": 4066.0
+    },
+    "generation_seconds": 1231.122675041901,
+    "latency_seconds": {
+      "maximum": 5.934872166952118,
+      "mean": 1.709460551930695,
+      "median": 1.7093789795180783,
+      "minimum": 1.4111239579506218,
+      "p95": 1.93447021425236,
+      "total": 1230.8115973901004
+    },
+    "max_new_tokens": 48,
+    "parser_outcome_counts": {
+      "valid": 720
+    },
+    "parser_valid_count": 720,
+    "parser_valid_rate": 1.0,
+    "retries": 0,
+    "rows": 720,
+    "temperature": 0.0,
+    "throughput_rows_per_second": 0.5848320517494286
+  },
+  "performance_metrics_computed": true,
+  "prerequisite_gates": {
+    "exp_054_preflight": {
+      "run": {
+        "bytes": 9396,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora-preflight-attempt-2/run.json",
+        "sha256": "f7874f054e1b004c3648243640c71abdcac53651dbb88c0df1b6e2ea94e2221b"
+      },
+      "verification": {
+        "bytes": 2899,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora-preflight-attempt-2/verification.json",
+        "sha256": "9a0c64b5af53fd7df63efac9d91064f48f10e38f287971c2d18bfd91ba7aa81b"
+      }
+    },
+    "matched_m3_run": {
+      "bytes": 33415,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora/seed-43/run.json",
+      "sha256": "158bc62d54fdd34ac1c0acbca0e4dc9815177f5a9fe2c1b0f2109dc3241dff23"
+    },
+    "matched_m3_verification": {
+      "bytes": 14158,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora/seed-43/verification.json",
+      "sha256": "9907b5d9f028981999770746d9d2ffcb7bb3292dc625912959745782b0d809d2"
+    },
+    "prior_seed_verification": {
+      "bytes": 9403,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-42/verification.json",
+      "sha256": "a020a8840e3d281410f0dc099e34b26f16004638ac5c55fccb57fc178c027e25"
+    }
+  },
+  "privacy": {
+    "private_artifacts_gitignored": true,
+    "public_raw_text": false,
+    "public_row_identifiers": false
+  },
+  "resources": {
+    "api_cost_usd": 0,
+    "model_load_seconds": 3.1892750000115484,
+    "peak_mlx_memory_gb": 9.278141202,
+    "peak_process_rss_gb": 4.717019136,
+    "tokenization_seconds": 2.1369330000597984,
+    "training_seconds": 10281.943966250168,
+    "validation_generation_seconds": 2460.8233269578777,
+    "wall_seconds": 12750.261169292033
+  },
+  "rq_id": "RQ-S1",
+  "schema_version": "exp-054-m4-seed-run-v1",
+  "selection": {
+    "eligible_epochs": [
+      2
+    ],
+    "maximum_macro_f1": 0.6584048045040487,
+    "practical_tie_delta": 0.005,
+    "rule": "highest strict-parser validation six-label Macro-F1; within 0.005 choose earliest epoch",
+    "selected_epoch": 2,
+    "selected_macro_f1": 0.6584048045040487,
+    "selection_deficit_from_maximum": 0.0
+  },
+  "stage": "seed-43-train-validation",
+  "started_at_utc": "2026-08-15T07:28:17.134222+00:00",
+  "status": "Completed",
+  "test_split_accessed": false,
+  "tier": "Major",
+  "training": {
+    "batch_order_rng": "numpy.random.Generator(PCG64(seed)); continuous permutation stream across epochs",
+    "batch_size": 1,
+    "epochs": 2,
+    "gradient_accumulation_steps": 1,
+    "gradient_checkpointing": true,
+    "history": [
+      {
+        "batch_order_sha256": "e97d2ed264298ce651b8aa98c45cebbcb789216aaecd0c2fae912d8372e91267",
+        "empty_prediction_rate": 0.32222222222222224,
+        "epoch": 1,
+        "five_label_macro_f1_without_surprise": 0.6826299166873003,
+        "hamming_loss": 0.062037037037037036,
+        "macro_f1": 0.5688582639060836,
+        "macro_precision": 0.567765176792566,
+        "macro_recall": 0.5871989230836868,
+        "micro_f1": 0.7130620985010707,
+        "optimizer_steps": 3360,
+        "parser_valid_rate": 1.0,
+        "predicted_label_cardinality_mean": 0.6777777777777778,
+        "seed": 43,
+        "subset_accuracy": 0.7333333333333333,
+        "train_loss": 0.10696477229075754,
+        "training_seconds": 4979.7029115001205,
+        "validation_generation_seconds": 1229.7006519159768,
+        "weighted_f1": 0.716408482511346
+      },
+      {
+        "batch_order_sha256": "44b24022a4d27862e050a4b0e8ad7e82a62ec962a18cca621501890e1434d3b0",
+        "empty_prediction_rate": 0.4166666666666667,
+        "epoch": 2,
+        "five_label_macro_f1_without_surprise": 0.7234190987381918,
+        "hamming_loss": 0.04722222222222222,
+        "macro_f1": 0.6584048045040487,
+        "macro_precision": 0.7050721210089984,
+        "macro_recall": 0.6217184330130329,
+        "micro_f1": 0.7644341801385681,
+        "optimizer_steps": 6720,
+        "parser_valid_rate": 1.0,
+        "predicted_label_cardinality_mean": 0.5833333333333334,
+        "seed": 43,
+        "subset_accuracy": 0.7875,
+        "train_loss": 0.07687087726514966,
+        "training_seconds": 5302.241054750048,
+        "validation_generation_seconds": 1231.122675041901,
+        "weighted_f1": 0.7637060981836097
+      }
+    ],
+    "loss": "assistant_only_next_token_cross_entropy",
+    "optimizer": {
+      "learning_rate": 1e-05,
+      "name": "AdamW",
+      "weight_decay": 0.01
+    },
+    "prompt_loss_masked": true,
+    "seed": 43,
+    "total_optimizer_steps": 6720
+  },
+  "validation_split_accessed": true,
+  "warnings": [
+    "M3-M4 jointly differ in head, loss, supervision tokens, and decoding.",
+    "Validation selected the checkpoint; replay cannot alter the selection.",
+    "Test remains sealed and no mechanism claim follows from classification performance."
+  ],
+  "working_directory": "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition"
+}

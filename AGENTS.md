@@ -284,6 +284,10 @@ Do not force engineering projects into the Foundations reader. 只有当 locatio
 
 Ask only when the location, privacy, runtime, conflict, or overwrite risk is unclear.
 
+## 子目录协议（Scoped Protocols）
+
+- `projects/foundations/AGENTS.md`：Phoenix 的结算制学习系统协议（口令、结算判据、铁律、元工作收费）。在该目录工作，或用户提及学习计划、台账、结算、单元（U1–U7）时必读。
+
 ## 语言规范（Language Policy）
 
 默认使用中文回答和记录。

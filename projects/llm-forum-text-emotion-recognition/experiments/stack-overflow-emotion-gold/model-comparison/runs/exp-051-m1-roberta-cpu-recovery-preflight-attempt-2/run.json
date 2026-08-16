@@ -1,0 +1,221 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "authorization": {
+    "authorized_at": "2026-08-13",
+    "basis": "User authorized the next frozen EXP-051 step; CPU is an already registered backend fallback after the MPS attempt failed before any validation metric.",
+    "seeds": [
+      42
+    ],
+    "seeds_43_44_authorized": false,
+    "splits": [
+      "train",
+      "validation"
+    ],
+    "test_access": false
+  },
+  "completed_at_utc": "2026-08-13T14:06:32.469821+00:00",
+  "data": {
+    "protocol_id": "DATA-SO-TASK-V1",
+    "selected_rows": 160,
+    "selection_digest_sha256": "e82981972f6bc1e762912bbe7beb1f28f47f85b52a7e7b998685b579a79b6ffd",
+    "token_lengths": {
+      "encoded_maximum": 222,
+      "maximum": 222,
+      "mean": 41.26309523809524,
+      "minimum": 4,
+      "p95": 109.0,
+      "truncated_rows": 0
+    },
+    "train_rows": 3360,
+    "train_sha256": "fc2f853b5b8afb78253ca3a96b5093d2fd12ea7063801f57bf138c9d5cf528fc"
+  },
+  "environment": {
+    "architecture": "arm64",
+    "device": "cpu",
+    "environment_prefix": "/Users/phoenix/miniconda3/envs/emotion-roberta",
+    "executable": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python",
+    "freeze": {
+      "bytes": 1179,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu-recovery-preflight-attempt-2/environment-freeze.txt",
+      "sha256": "123e455840fb9e5e9230cd3eb7feda625a8819c4cd3dbf82b91068a7d60797fd"
+    },
+    "mps_available": true,
+    "mps_built": true,
+    "package_paths": {
+      "numpy": "/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/numpy/__init__.py",
+      "scikit-learn": "/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/sklearn/__init__.py",
+      "torch": "/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/torch/__init__.py",
+      "transformers": "/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/transformers/__init__.py"
+    },
+    "packages": {
+      "numpy": "2.2.6",
+      "safetensors": "0.8.0",
+      "scikit-learn": "1.7.2",
+      "torch": "2.9.1",
+      "transformers": "5.8.0"
+    },
+    "pip_check": "No broken requirements found.",
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.10.20",
+    "python_no_user_site": true
+  },
+  "experiment_id": "EXP-051",
+  "frozen_sources": {
+    "config": {
+      "bytes": 3358,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/configs/exp-051-m1-roberta-seed-42-cpu-recovery.json",
+      "sha256": "0c2ddbebd66bbd5ee627ecb1d4d3060e387d4f1d4fbcd70860d23ad278bf052d"
+    },
+    "preflight": {
+      "bytes": 11476,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/preflight_exp051_cpu.py",
+      "sha256": "160a3a46abc653e4bc4819315fce14dea10ac8637a5504de2f5d7869d8919811"
+    },
+    "runner": {
+      "bytes": 54371,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/run_exp051_m1.py",
+      "sha256": "013d91c6409a1e0c7f8337555a5200818f26f651cd117898b3c99359a9cec2e9"
+    }
+  },
+  "incident": {
+    "failed_log": {
+      "bytes": 2351,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta/seed-42/stdout.log",
+      "sha256": "c0d4940ee00b29f479b8287d443d453495f57d6b7c82e5789887cb5c34272b93"
+    },
+    "failed_run": {
+      "bytes": 2845,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta/seed-42/run.json",
+      "sha256": "7733d28711e06ff1db2cd90934711e3c23fe6955fa35f2cf6b62626052e50964"
+    },
+    "validation_metric_before_failure": false
+  },
+  "model": {
+    "files": [
+      {
+        "bytes": 9079,
+        "path": "README.md",
+        "sha256": "139c5c5c8d734a8841928308cf7f083018aa5cc49f903c5199e3f1563b3ded51"
+      },
+      {
+        "bytes": 481,
+        "path": "config.json",
+        "sha256": "ef0185e2aae6e06c5f105a285006952c340e20c7dbf43c86ec82601b13fc45e9"
+      },
+      {
+        "bytes": 456318,
+        "path": "merges.txt",
+        "sha256": "1ce1664773c50f3e0cc8842619a93edc4624525b728b188a9e0be33b7726adc5"
+      },
+      {
+        "bytes": 498818054,
+        "path": "model.safetensors",
+        "sha256": "5bde1d28afb363d0103324efeb5afc8b2b397fe5e04beabb9b1ef355255ade81"
+      },
+      {
+        "bytes": 1355863,
+        "path": "tokenizer.json",
+        "sha256": "847bbeab6174d66a88898f729d52fa8d355fafe1bea101cf960dd404581df70e"
+      },
+      {
+        "bytes": 25,
+        "path": "tokenizer_config.json",
+        "sha256": "994f46754c5bf4014f1aa92d34b1374319c3a6b3f702105cd5b742beaecd18ce"
+      },
+      {
+        "bytes": 898823,
+        "path": "vocab.json",
+        "sha256": "9e7f63c2d15d666b52e21d250d2e513b87c9b713cfa6987a82ed89e5e6e50655"
+      }
+    ],
+    "manifest": {
+      "bytes": 1541,
+      "path": "models/roberta-base/manifest.json",
+      "sha256": "b6e508ca9783b9e79e3cfc445f3abc7d2792ac5cfa6f44a9b3cf5d5607cd30b6"
+    },
+    "repo_id": "FacebookAI/roberta-base",
+    "revision": "e2da8e2f811d1448a5b465c236feacd80ffbac7b",
+    "snapshot": "models/roberta-base/snapshot"
+  },
+  "performance_metrics_computed": false,
+  "preflight": {
+    "batch_size": 16,
+    "classifier_final_sha256": "de228f7bf4cf15c13bc6d38dfcf1f1b024049f91513f9e7aaef5b775dc731dd2",
+    "classifier_initial_sha256": "f7a1468bf00113380ec0ee54230d7fb230711704de2d58110ea0d035a0c0a165",
+    "finite_losses": [
+      0.7424461245536804,
+      0.7417726516723633,
+      0.7436627745628357,
+      0.7477933764457703,
+      0.7356757521629333,
+      0.7371785044670105,
+      0.7436205744743347,
+      0.7373301386833191,
+      0.7318735122680664,
+      0.7353835701942444
+    ],
+    "logit_shapes": [
+      [
+        16,
+        6
+      ],
+      [
+        16,
+        6
+      ],
+      [
+        16,
+        6
+      ],
+      [
+        16,
+        6
+      ],
+      [
+        16,
+        6
+      ],
+      [
+        16,
+        6
+      ],
+      [
+        16,
+        6
+      ],
+      [
+        16,
+        6
+      ],
+      [
+        16,
+        6
+      ],
+      [
+        16,
+        6
+      ]
+    ],
+    "peak_process_rss_gb": 4.266524672,
+    "projected_total_minutes_note": "Training projection excludes five validation passes and artifact finalization.",
+    "projected_training_minutes": 24.317746031214483,
+    "seconds_per_step": 1.3895854874979705,
+    "steps": 10,
+    "total_formal_optimizer_steps": 1050,
+    "training_seconds": 13.895854874979705,
+    "warmup_steps": 105
+  },
+  "resource_usage": {
+    "api_cost_usd": 0,
+    "wall_seconds": 15.349862625123933
+  },
+  "schema_version": "exp-051-cpu-recovery-preflight-v1",
+  "stage": "cpu-recovery-train-only-preflight",
+  "started_at_utc": "2026-08-13T14:06:17.120157+00:00",
+  "status": "Passed",
+  "test_split_accessed": false,
+  "tier": "Minor",
+  "validation_split_accessed": false
+}

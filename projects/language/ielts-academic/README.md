@@ -2,9 +2,9 @@
 
 Goal: use real evidence to move toward IELTS Academic Overall 7.5. The current 20-day paper-test sprint uses 6.5 as an operational safety floor; this is a training target, not a claim that every application has the same official minimum.
 
-Current exam boundary: the written paper is on 2026-08-29. The speaking time is not assigned yet; the registration email gives the usual 2026-08-22 to 2026-09-05 window and says the admission ticket is normally released no later than eight days before the written test. The sprint therefore makes speaking exam-ready by 2026-08-20 and replans the 48 hours around the actual appointment when it appears.
+Current exam boundary: the written paper is on 2026-08-29. The speaking time is not assigned yet; the registration email gives the usual 2026-08-22 to 2026-09-05 window and says the admission ticket is normally released no later than eight days before the written test. The sprint therefore makes speaking exam-ready by 2026-08-21 and replans the 48 hours around the actual appointment when it appears.
 
-Day 1 is a confirmed half day with 270 focused minutes. Full study days use 540 minutes as the standard ceiling; speaking-test taper and the final written-test taper deliberately use less and do not create make-up debt.
+Day 1 remains a historical half-day record with 270 focused minutes. From 2026-08-15, the base day is 225 focused minutes: daily speaking plus one Writing or Listening priority. Conditional work can raise a day to about 300 minutes, but the hard ceiling is 420 minutes. Unfinished priority work rolls forward without stacking, while maintenance and optional work can be dropped without make-up debt.
 
 This project has two layers:
 

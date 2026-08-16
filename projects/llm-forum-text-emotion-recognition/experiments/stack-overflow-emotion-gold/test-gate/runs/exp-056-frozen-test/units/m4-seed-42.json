@@ -1,0 +1,55 @@
+{
+  "completed_at_utc": "2026-08-15T16:52:11.663999+00:00",
+  "experiment_id": "EXP-056",
+  "family": "m4",
+  "labels_opened": false,
+  "prediction": {
+    "bytes": 31137,
+    "path": "data/stack-overflow-emotion-gold/derived-private/task-v1/experiments/exp-056-frozen-test/predictions/m4-seed-42.npz",
+    "sha256": "a731f6626ce62745b7312fbb4dd471da6f9144913f6314d3a28d3a8314668e38"
+  },
+  "raw_generations": {
+    "bytes": 241500,
+    "path": "data/stack-overflow-emotion-gold/derived-private/task-v1/experiments/exp-056-frozen-test/generations/m4-seed-42.jsonl",
+    "sha256": "f7dd009430382d6c67d4c1309e163c0241368adecca7401b83edf2ba737c9da9"
+  },
+  "resource": {
+    "backend": "MLX_Apple_Metal",
+    "generated_tokens_mean": 5.730555555555555,
+    "latency_seconds_mean": 1.651490729569923,
+    "parser_outcomes": {
+      "valid": 720
+    },
+    "parser_valid_count": 720,
+    "parser_valid_rate": 1.0,
+    "peak_memory_gb": 8.594648516,
+    "probability_semantics": "hard_label_indicator_not_confidence",
+    "throughput_rows_per_second": 0.6036211595954835,
+    "tokenization": {
+      "raw_tokens": {
+        "maximum": 341.0,
+        "mean": 163.27916666666667,
+        "median": 149.0,
+        "minimum": 125.0,
+        "p95": 237.0,
+        "total": 117561.0
+      },
+      "rows": 720,
+      "token_id_stream_sha256": "c8adcddcb50c1447d62cde652885c2be37d39aada54e39e3736920bf92f90a0a",
+      "tokens": {
+        "maximum": 341.0,
+        "mean": 163.27916666666667,
+        "median": 149.0,
+        "minimum": 125.0,
+        "p95": 237.0,
+        "total": 117561.0
+      },
+      "truncated_rows": 0
+    },
+    "wall_seconds": 1192.8011279169004
+  },
+  "rows": 720,
+  "schema_version": "exp-056-unit-prediction-record-v1",
+  "seed": 42,
+  "unit_id": "m4-seed-42"
+}

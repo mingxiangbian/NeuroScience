@@ -1,0 +1,113 @@
+{
+  "accessed_splits": [
+    "validation"
+  ],
+  "agreement_with_formal_selected_validation": {
+    "parsed_vector_matches": 60,
+    "raw_output_matches": 60,
+    "rows": 60
+  },
+  "agreement_with_pass_1": null,
+  "artifacts": {
+    "private_generations": {
+      "bytes": 21736,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-054-m4-generative-lora/seed-43/replay-pass-1.jsonl",
+      "sha256": "e2bc5e3fa2dfa7052a15c11ebc1d8bb7ecb558d04264ca00d460cb8fab698431"
+    },
+    "stdout_log": {
+      "bytes": 134,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/replay-pass-1.log",
+      "sha256": "84db4abe3dba3c4188a1e23cd1a3fc775a7d3773f92b7c70a615d8b081d6fd03"
+    }
+  },
+  "checkpoint_selection_changed": false,
+  "completed_at_utc": "2026-08-15T11:02:54.079149+00:00",
+  "experiment_id": "EXP-054",
+  "fresh_process_required": true,
+  "generation": {
+    "generated_tokens": {
+      "maximum": 7.0,
+      "mean": 5.716666666666667,
+      "median": 6.0,
+      "minimum": 5.0,
+      "p95": 7.0,
+      "total": 343.0
+    },
+    "generation_seconds": 102.4325502498541,
+    "latency_seconds": {
+      "maximum": 2.3548357079271227,
+      "mean": 1.7068367014522665,
+      "median": 1.7007350414060056,
+      "minimum": 1.398207375081256,
+      "p95": 1.925754678598605,
+      "total": 102.41020208713599
+    },
+    "max_new_tokens": 48,
+    "parser_outcome_counts": {
+      "valid": 60
+    },
+    "parser_valid_count": 60,
+    "parser_valid_rate": 1.0,
+    "retries": 0,
+    "rows": 60,
+    "temperature": 0.0,
+    "throughput_rows_per_second": 0.5857513051627401
+  },
+  "invocation": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/run_exp054_m4.py --config projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/configs/exp-054-m4-three-seed.json --mode replay --seed 43 --pass-index 1",
+  "model": {
+    "adapter_sha256": "24ae23f4c70fea4934a19a630363b901e9284661b9ab44ae8d30848aae737730",
+    "loaded_trainable_sha256": "4020f6a5210253305c70b378fb05d2a1cf991a675ea42498088e029a0731ce11",
+    "selected_epoch": 2
+  },
+  "pass_index": 1,
+  "prediction_digest_sha256": "c20ce53b56551bafcefe4f92b132a6887b6972099b498539662aa90cfece5d00",
+  "privacy": {
+    "private_artifacts_gitignored": true,
+    "public_raw_text": false,
+    "public_row_identifiers": false
+  },
+  "prompt_or_parser_changed": false,
+  "resources": {
+    "api_cost_usd": 0,
+    "model_load_seconds": 3.5113759580999613,
+    "peak_mlx_memory_gb": 8.498645148,
+    "wall_seconds": 107.48196204192936
+  },
+  "retries": 0,
+  "rq_id": "RQ-S1",
+  "schema_version": "exp-054-m4-replay-pass-v1",
+  "seed": 43,
+  "stage": "selected-validation-replay",
+  "started_at_utc": "2026-08-15T11:01:06.590202+00:00",
+  "status": "Completed",
+  "subset": {
+    "identities_public": false,
+    "namespace": "EXP-054-replay-subset-v1",
+    "rows": 60,
+    "selection_digest_sha256": "edd049b04e5842b90a0143e071a2c89c37c77dcf419fbef9412e90132abed3b6"
+  },
+  "test_split_accessed": false,
+  "tier": "Major",
+  "tokenization": {
+    "raw_tokens": {
+      "maximum": 250.0,
+      "mean": 163.8,
+      "median": 154.0,
+      "minimum": 125.0,
+      "p95": 236.29999999999998,
+      "total": 9828.0
+    },
+    "rows": 60,
+    "token_id_stream_sha256": "e0ce472641b0df2943b7755eb322afd21865249740c9f9cc52295b013a98bda0",
+    "tokens": {
+      "maximum": 250.0,
+      "mean": 163.8,
+      "median": 154.0,
+      "minimum": 125.0,
+      "p95": 236.29999999999998,
+      "total": 9828.0
+    },
+    "truncated_rows": 0
+  },
+  "validation_split_accessed": true
+}

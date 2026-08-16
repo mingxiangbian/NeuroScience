@@ -1,0 +1,1052 @@
+                                                                SelfMem: Self-Optimizing Memory for AI Agents
+
+                                                                   Shu Yang1 , Junchao Wu2 , Derek F. Wong2 , Di Wang1 †
+                                                           1
+                                                               PRADA Lab, King Abdullah University of Science and Technology
+                                                                          2
+                                                                            NLP2CT Lab, University of Macau
+
+
+
+
+                                                                  Abstract
+
+                                                While current AI agents support increasingly
+
+
+
+
+arXiv:2607.03726v1 [cs.CL] 4 Jul 2026
+                                                long context windows, tool use, and skill exe-
+                                                cution for long-horizon tasks, they still require
+                                                memory systems to effectively leverage histori-
+                                                cal experience. Existing memory frameworks
+                                                typically rely on fixed storage, retrieval, and
+                                                summarization mechanisms, which can be rigid
+                                                across different tasks and often require manual
+                                                tuning. To address this limitation, we propose
+                                                SelfMem, a self-optimizing memory frame-
+                                                work. Inspired by prior work on self-improving
+                                                AI, we follow the principle of “teaching an             Figure 1: “Teach agent to fish rather than give it a fish”:
+                                                agent to fish rather than giving it a fish.” In-        guiding agents to self-optimize memory by learning
+                                                stead of forcing the model to follow a prede-           principles and trade-offs, rather than relying on rigid,
+                                                fined memory strategy or format, SelfMem pro-           predefined memory strategies.
+                                                vides an environment with memory tools and
+                                                feedback signals that allow the agent to explore,
+                                                evaluate, and refine its own memory strategy.
+                                                Our results show that SelfMem consistently              demands on agents’ ability to remember user prefer-
+                                                outperforms retrieval, compression, and agent-          ences, project backgrounds, and important factual
+                                                memory baselines on BEAM across conversa-               details over extended interactions, making effec-
+                                                tion scales from 100K to 1M tokens. Compared            tive memory-system support necessary (Liu et al.,
+                                                with the strongest baseline, SelfMem improves
+                                                                                                        2024a; Packer et al., 2023; Zhong et al., 2024;
+                                                the official score by 48.7%, 40.8%, and 41.9%
+                                                at 100K, 500K, and 1M, respectively. Further            Tavakoli et al., 2025).
+                                                question-type analysis shows broad robustness              Existing agent-memory methods, such as Lo-
+                                                across diverse memory demands, and our opti-            CoMo, retrieval-augmented generation (RAG),
+                                                mization study shows that model-guided strat-           MemGPT, and MemoryBank, typically rely on
+                                                egy refinement further improves performance.
+                                                                                                        manually specified strategies to construct, update,
+                                                                                                        retrieve, and present historical knowledge to the
+                                        1       Introduction                                            model (Maharana et al., 2024; Packer et al., 2023;
+                                        With the growing ability to process longer con-                 Zhong et al., 2024). Although these methods im-
+                                        texts (Bai et al., 2024), perform multi-step plan-              prove agents’ ability to use past conversation his-
+                                        ning (Li et al., 2025), use external tools (Schick              tories, their memory structures and operations are
+                                        et al., 2023), and incorporate environmental feed-              still largely predefined and limit their ability in
+                                        back (Yao et al., 2023; Shinn et al., 2023;                     broader tasks. A-Mem (Xu et al., 2026) takes
+                                        Zhou et al., 2024), AI agents have demonstrated                 a more agentic step by allowing agents to write,
+                                        strong capabilities across increasingly diverse long-           index, retrieve, and link memories themselves, fol-
+                                        horizon tasks (Liu et al., 2024b; Merrill et al.,               lowing the Zettelkasten principle of maintaining an
+                                        2026). However, these advances also place greater               evolving knowledge network. However, the core
+                                                                                                        challenge remains: different tasks and conversation
+                                            †
+                                                Corresponding Author                                    histories require different memory behaviors, yet it
+
+                                                                                                    1
+     Memory Principles                       Transcript store
+                                                                1. Inspect transcript     conversation_manifest() : 272 turns;
+   Keep memory useful,                  272 turns               136 user + 136 assistant
+   accurate, cheap,and safe for         136 user / 136          2. Skim beginning SQL ASC LIMIT 5 : Darryl asks about comfy
+   future conversation                  assistant               sneakers
+     ● Source-backed                    Stored as SQLite:       3. Skim ending SQL DESC LIMIT 5 : Aug 20 / Aug 22 event topics
+     ● Latest-aware                        turns(               4. Count roles SQL GROUP BY role : confirms paired chat structure
+     ● Auditable                             turn_index,        5. Search candidate facts SQL LIKE keywords : sneaker, budget,
+     ● Flexible format                       turn_id,           festival, location rows
+     ● …                                     role,              6. Inspect memory memory_read("workspace") : checks current
+                                             time_anchor,       memory state
+     Memory Action Space                     content,           7. Write broad profile memory_change(...) : Darryl + preferences +
+    ●    Read the transcript                 rendered,          entities + dates
+    ●    Read current memory                 char_count         8. Review quality memory_review(...) : warns stale facts / broad
+    ●    Write or revise memory            )                    memory
+    ●    Check memory quality                                   9. Refine memory memory_change(...) : stable preferences only
+    ●    Self-test / improve                                    10. Audit source turns SQL turn_index IN (...) : verifies source rows
+         memory process
+    ●    Extend the memory                                                                Memory Trajectory
+         toolkit
+                                                   Agent
+
+
+   How many days passed between when I                                       SelfMem Memory Generated by Agent
+   got the size 11 Ultraboost and when I
+                                                                  ●       User: Darryl
+   reordered the size 11.5?
+                                                                  ●       Stable sneaker preferences: comfort, neutral colors, arch
+                                                                          support, breathable materials, grip
+     One day passed between when I got                            ●       Stable people:Kyle, Lauren, Maureen, Fred, Bradley,
+    the size 11 Ultraboost on April 30 and                                Christopher
+    when I reordered the size 11.5 on May          Agent          ●       Stable locations: East Janethaven, Foot Locker, Montserrat,
+    1.                                                                    SneakerLab, Finish Line
+                                                                  ●       …
+
+
+Figure 2: Overview of SelfMem. The raw transcript is kept as an immutable source of truth, while the agent is given
+a memory action space for inspecting the transcript, writing and revising memory, and reviewing memory quality.
+
+
+is still unclear how agents should adapt their mem-                   points. Beyond aggregate performance, question-
+ory strategies to task demands and environmental                      type analysis shows that SelfMem remains broadly
+feedback. As illustrated in Figure 1, this motivates                  robust across different memory demands, achieving
+our method, SelfMem: instead of giving agents a                       the best score on 9/10 question types at 100K, 8/10
+fixed memory mechanism, we teach them how to                          at 500K, and 7/10 at 1M. Our optimization and
+manage memory adaptively by exposing memory-                          generalization analysis further shows that model-
+management decisions to the agents themselves.                        guided strategy refinement can also improve mem-
+   As shown in Figure 2, SelfMem turns memory                         ory behavior, suggesting that SelfMem exposes a
+management into an agent-controlled optimization                      useful optimization surface for long-horizon mem-
+process. Rather than prescribing a fixed storage,                     ory management.
+update, or retrieval rule, SelfMem exposes memory
+tools together with feedback signals such as re-                      2     Related Work
+sponse performance, token counts, cost, and cache
+reuse. Using these signals, the agent decides what                    Agent Memory Recent work on agent memory
+to keep in memory, what to compress, what to up-                      equips LLM agents with external memory states
+date, and what to leave for transcript retrieval. Em-                 for long-running interaction and personalization.
+pirically, our method yields a stronger quality–cost                  Generative Agents introduced a memory-stream ar-
+trade-off than fixed memory pipelines.                                chitecture in which agents record observations, re-
+   Our results show that SelfMem delivers robust                      trieve relevant experiences, and synthesize higher-
+memory performance on BEAM across long con-                           level reflections for future planning (Park et al.,
+versation histories, diverse question types, and all                  2023). MemoryBank extends this direction to long-
+evaluated token scales. SelfMem achieves the high-                    term dialogue by maintaining persistent memories
+est official score and Pass0.5 at 100K, 500K, and                     and user portraits that can be recalled, updated, and
+1M tokens. Compared with the strongest non-                           reinforced over repeated interactions (Zhong et al.,
+SelfMem baseline, it improves the official score                      2024). MemGPT formulates long-context interac-
+by 0.165, 0.141, and 0.134, respectively, and in-                     tion as virtual context management, where an agent
+creases Pass0.5 by 17.0, 14.9, and 14.3 percentage                    moves information between core/working memory
+
+                                                                 2
+and archival memory through tool-mediated mem-             when to retrieve, generate, and critique evidence
+ory operations (Packer et al., 2023). ReadAgent            through self-reflection (Asai et al., 2024). Beyond
+studies agentic reading over very long inputs by           improving a single output or action trajectory, re-
+constructing gist memories and selectively look-           cent work on natural-language optimization sug-
+ing up original passages when detailed evidence            gests that models can also search over strategies
+is needed (Lee et al., 2024). A parallel line of           themselves. OPRO treats an LLM as a black-box
+study examines how to evaluate and structure long-         optimizer that proposes new candidate instructions
+term conversational memory. LoCoMo introduces              from previous solutions and their scores (Yang
+very long-term multi-session dialogues and evalu-          et al., 2024). Pryzant et al. (2023) uses natural-
+ates agents on question answering, event summa-            language gradients, beam search, and bandit selec-
+rization, and multimodal dialogue generation over          tion to automatically improve prompts. Prompt-
+extended histories (Maharana et al., 2024). Long-          breeder evolves both task prompts and mutation
+MemEval further decomposes long-term memory                prompts through fitness feedback, showing that
+evaluation into abilities such as information ex-          hand-crafted prompt strategies can be improved
+traction, multi-session reasoning, temporal reason-        through iterative self-referential search (Fernando
+ing, knowledge updates, and abstention (Wu et al.,         et al., 2024). These studies motivate our hypothe-
+2025). More recent memory systems move to-                 sis that memory behavior can also be optimized in
+ward structured and production-oriented memory             language: given appropriate feedback signals and
+construction. Mem0 extracts, consolidates, and             an action space, the agent may discover memory
+retrieves salient conversational facts, with an en-        strategies that are better adapted to the current task
+hanced graph-based variant for relational memory           than manually specified rules.
+(Chhikara et al., 2025). A-Mem takes a more agen-
+tic step by dynamically writing, indexing, link-
+ing, and evolving memories following Zettelkasten-         3     SelfMem: A Self-Optimizing Memory
+style organization (Xu et al., 2026). As summa-                  Framework
+rized in Appendix A, Table 2, these methods differ
+in their memory units, retrieval mechanisms, and
+update behaviors, but they still largely instantiate       3.1    Overview
+a predefined memory architecture or a fixed set of
+memory operations.                                         As shown in Figure 2, SelfMem turns memory man-
+                                                           agement into a model-controlled optimization pro-
+Self-improving Agent A complementary line of               cess. The framework keeps the original logged
+work shows that language models and agents can             conversation history (raw transcript) as an im-
+improve their behavior through feedback, reflec-           mutable source of truth, while exposing a mem-
+tion, and search, often without updating the un-           ory workspace and a set of memory-management
+derlying model parameters. Self-Refine uses the            tools to the agent. Instead of asking the agent to
+same model to generate feedback and iteratively            fill a fixed profile schema or follow a predefined
+refine its own outputs (Madaan et al., 2023). Re-          summarization rule, SelfMem allows the agent to
+flexion converts task feedback into verbal reflec-         inspect transcript evidence, decide what memory is
+tions stored in episodic memory, allowing agents           worth writing, organize memory in a task-sensitive
+to improve across future trials through language           format, review its own memory quality, and revise
+rather than weight updates (Shinn et al., 2023).           memory when diagnostics indicate risk. The key
+Voyager demonstrates that an embodied agent can            design goal is to separate framework constraints
+use environmental feedback, execution errors, and          from memory strategy. The framework provides
+self-verification to build an expanding library of         human-designed procedural principles, the avail-
+reusable skills (Wang et al., 2023). LATS fur-             able memory tools, feedback channels, and audit
+ther combines reasoning, acting, planning, and             constraints. The agent then determines the con-
+environmental feedback through tree search, en-            crete memory behavior: which transcript turns or
+abling agents to explore and evaluate alternative          retrieved snippets to inspect, what information to
+action trajectories before committing to a deci-           store, what to compress or update, what to preserve
+sion (Zhou et al., 2024). Self-RAG extends this            exactly, and what to leave recoverable from the
+idea to retrieval-augmented generation by learning         original transcript.
+
+                                                       3
+3.2    Problem Definition                                      The memory agent can inspect this transcript
+We consider memory management for agents that                only through read-only tools:
+operate over a fixed interaction history. Let
+                                                                               oH
+                                                                                i = ReadH (ai ),
+
+                H = (t1 , t2 , . . . , tT )                  where ai is a model-selected read action and oH i is
+                                                             the returned transcript observation. The transcript
+denote the chronological record of previous user–            interface includes conversation_manifest,
+agent turns, where each turn contains the speaker            which reports schema and transcript statistics,
+role, time anchor, content, and rendering metadata.          and conversation_sql_query, which allows the
+Given a future query q, the agent must produce an            agent to issue read-only SQL queries over the turns
+answer y by using information from H. A simple               table. This design lets the agent decide which parts
+solution is to place the entire history into the model       of the history are worth inspecting, rather than
+context. However, this becomes expensive or in-              forcing a fixed chunking or summarization policy
+feasible when the interaction exceeds the context            over the entire conversation.
+window. Another common solution is to construct
+a fixed summary or memory schema, but such rep-              3.4     Memory Workspace and Action Space
+resentations may omit task-critical details, preserve        We provide a model-managed memory workspace
+stale facts, or fail to match the needs of different         Mi . The workspace can contain any structure the
+tasks. We therefore formulate memory manage-                 agent judges useful, such as a user profile, prefer-
+ment as the construction of a compact memory                 ence list, project-state note, timeline, or even com-
+workspace M ⋆ from the original interaction his-             pact policy. The agent interacts with the workspace
+tory, while keeping the transcript available for exact       through a model-selectable action space:
+factual grounding:
+                                                                    A = Aread ∪ Awrite ∪ Areview ∪ Aprobe .
+            M ⋆ = Πagent (H; A, F ),
+             Eq = Retrieve(q, M ⋆ , H),                      At each step, the agent selects both a tool and its
+               y = LLM(q, M , Eq ).⋆                         arguments:
+
+Here, A is the memory action space available to                    ai = SelectLLM (Pmem , I, Mi−1 , o<i , d<i ),
+the agent, F is the feedback returned by the en-
+                                                             where Pmem is the memory-management prompt,
+vironment, and Eq denotes the transcript snippets
+                                                             I denotes the procedural memory principles, Mi−1
+or turns retrieved to support the query. Existing
+                                                             is the current workspace, o<i are previous tool ob-
+memory systems usually instantiate Π with hand-
+                                                             servations, and d<i are previous diagnostic signals.
+designed storage formats, retrieval rules, summa-
+                                                                The main tool families are:
+rization policies, or update operations. In contrast,
+                                                                Transcript-read tools. These tools inspect the
+SelfMem exposes this memory-management pro-
+                                                             immutable transcript. The agent can obtain the tran-
+cedure to the agent itself: the agent decides which
+                                                             script manifest, run read-only SQL queries, search
+parts of the transcript to inspect, what information
+                                                             for entities or events, check recent turns, and au-
+to store, how to organize it, and when to revise it
+                                                             dit source turns before or after writing memory.
+based on tool feedback and task demands.
+                                                             Memory-read tools. The agent can inspect the cur-
+3.3    Transcript Store                                      rent workspace using them. This allows it to avoid
+                                                             duplicate writes, detect stale memory, and decide
+The transcript store is the source of truth in Self-         whether a new update should add, replace, merge,
+Mem. Rather than exposing hidden summaries or                demote, or delete existing content. Memory-write
+pre-extracted facts, SelfMem stores the logged in-           tools. The agent modifies memory through these
+teraction history as a read-only database. In our            tools. Each change contains an operation type, tar-
+implementation, each transcript is represented as a          get, content, rationale, and metadata. Supported
+SQLite table:                                                operation styles include adding memory, replac-
+      turns(                                                 ing memory, merging duplicates, refining broad
+        turn_index, turn_id, role, time_anchor,              summaries, archiving stale information, recording
+        content, rendered, char_count
+      )                                                      exact facts, creating timelines, and adding retrieval
+
+                                                         4
+hints. Memory-review tools. The agent can call                 Each write operation records its target, content,
+the tools to diagnose an existing or proposed mem-          rationale, and metadata, making the memory pro-
+ory without mutating it. Review feedback can flag           cess auditable. Since memory writing is not treated
+missing source support, stale exact facts, contradic-       as one-shot summarization, the agent can review a
+tions, overly broad summaries, and retrievability           draft or existing memory:
+risk. Self-test tools. Optionally, the agent can cre-
+ate internal memory probes from the observed tran-                        di = Review(Mi , fi ),
+script and workspace. These probes test whether
+the memory organization supports plausible fu-              where fi specifies the review focus, such as source
+ture questions, without using hidden benchmark              support, exact facts, stale values, contradictions,
+answers, rubrics, or per-question judge labels.             or retrievability. The agent can then revise the
+                                                            workspace through another memory update. This
+3.5   Feedback Signals                                      creates an inspect–write–review–revise loop in
+The feedback F returned by SelfMem is tool and              which the agent improves the memory organization
+environment feedback rather than a hidden super-            itself, rather than simply producing a final answer.
+vision signal. At memory-construction time, the
+                                                            3.7    Memory-Conditioned Answering
+agent does not receive gold answers, benchmark
+rubrics, held-out labels, or per-question judge de-         After construction, the final workspace M ⋆ is used
+cisions. Instead, feedback comes from observable            as a compact guide for future answering. Given a
+interactions with the transcript, memory workspace,         query q, SelfMem retrieves relevant transcript turns
+and diagnostics:                                            or snippets Eq and provides them together with the
+                                                            memory workspace to the answer model:
+        Fi = {oH    M write review
+               i , oi , di , di    , ui },
+                                                                       Eq = Retrieve(q, M ⋆ , H),
+where oH i is transcript-read feedback, oi
+                                               M is
+                                                                         y = LLM(q, M ⋆ , Eq ).
+memory-read feedback, dwritei     is write-time diag-
+nostic feedback, dreview
+                    i      is review  feedback, and            In SelfMem, the memory workspace is not pop-
+ui denotes optional operational signals such as to-         ulated by a hand-written rule that specifies what
+ken usage, latency, cache reuse, request count, and         must be saved. Instead, the agent decides what in-
+estimated cost. These signals are deliberately not          formation is worth storing based on the transcript,
+collapsed into a single scalar reward. Memory man-          available memory tools, and feedback signals. It
+agement involves trade-offs, such as storing more           may keep durable information such as user prefer-
+information can improve recall but increase context         ences, recurring entities, and project context, while
+cost; compressing memory can reduce latency but             leaving exact or frequently changing details, such
+lose exact details. SelfMem lets the agent reason           as dates, counts, prices, and updated decisions, to
+about these trade-offs in language and revise its           be retrieved from relevant transcript turns when
+memory behavior accordingly.                                needed.
+                                                               Overall, SelfMem shifts memory from a fixed
+3.6   Memory Construction and Review                        storage pipeline to a model-guided process: the
+Memory construction proceeds as a model-                    framework provides the transcript store, tools, feed-
+controlled tool-use loop. The workspace is ini-             back channels, and constraints, while the agent
+tialized as                                                 decides the concrete memory actions and organiza-
+                    M0 = ∅.                                 tion.
+
+At step i, the agent observes the current workspace         4     Experiments
+and previous tool outputs, then selects an action
+ai . Read and review actions return observations or         4.1    Experimental Setup
+diagnostics, while write actions produce an update          Benchmark and evaluation protocol. We eval-
+∆Mi that is applied to the workspace:                       uate on the original BEAM benchmark (Tavakoli
+          (                                                 et al., 2025), which provides long conversation
+             Apply(Mi−1 , ∆Mi ), ai ∈ Awrite ,              histories at 100K, 500K, and 1M token scales, to-
+    Mi =
+             Mi−1 ,                  otherwise.             gether with 100 conversations and 2,000 probing
+
+                                                        5
+questions that test memory over extended inter-              Embed Req. count LLM and embedding requests,
+actions, covering information extraction, tempo-             respectively.
+ral reasoning, multi-session reasoning, and event
+ordering. Questions are asked sequentially, with             4.2   Results
+previous model-generated question–answer turns               SelfMem consistently achieves the best memory
+appended to later prompts. This simulates a multi-           performance. Table 1 reports the main BEAM
+turn probing session, enables prompt-cache reuse,            results across 100K, 500K, and 1M token scales.
+and is applied consistently to all compared meth-            SelfMem achieves the best Score and Pass0.5 at all
+ods.                                                         scales, indicating that its advantage is not limited to
+Baselines. Following the methods reviewed in Sec-            a particular context length. Compared with fixed re-
+tion 2, we compare SelfMem with representative               trieval, compression, and structured memory base-
+memory and context-management baselines. These               lines, SelfMem maintains stronger performance as
+include RAG, which chunks, embeds, and retrieves             the conversation history grows longer. This sug-
+conversation history (Lewis et al., 2020); full con-         gests that agent-controlled memory construction is
+text, which directly places the raw conversation             better suited to long-horizon settings, where rele-
+in the prompt when feasible; and compression,                vant information is sparse, distributed across many
+which compacts history when it approaches the                turns, and often mixed with outdated or less useful
+context limit. We also include LoCoMo, Memory-               details. The strongest baseline is consistently RAG,
+Bank, ReadAgent, MemGPT, A-Mem, and Mem0,                    which shows that simple retrieval remains a com-
+covering persistent conversational memory, agen-             petitive strategy for long conversations. However,
+tic reading, hierarchical memory, linked note-style          RAG only retrieves chunks at query time and does
+memory, and production-oriented memory extrac-               not build an adaptive memory representation. In
+tion (Maharana et al., 2024; Zhong et al., 2024; Lee         contrast, SelfMem allows the agent to decide what
+et al., 2024; Packer et al., 2023; Xu et al., 2026;          should be stored, revised, compressed, or left for
+Chhikara et al., 2025). All baselines use the same           later transcript lookup. This leads to large and sta-
+conversations, questions, answer model, and offi-            ble gains over the best non-SelfMem baseline, with
+cial judge; they differ only in how the conversation         Score improvements of 0.165, 0.141, and 0.134 at
+history is transformed into the context given to the         100K, 500K, and 1M, respectively. The persistence
+answer model. Appendix A provides implementa-                of these gains at 1M tokens shows that SelfMem
+tion details.                                                scales more robustly than manually designed mem-
+Model and decoding configuration. All LLM-                   ory pipelines.
+generation calls in memory construction, and an-             Better accuracy does not require expensive
+swer generation use GPT-5.4-nano, and for BEAM               memory pipelines. Table 1 also shows that higher
+score we use GPT-5.4-mini as the judge model. We             accuracy is not simply the result of using heav-
+use deterministic decoding with temperature 0 for            ier memory infrastructure. Several baselines intro-
+answer generation and LLM-based judging. Full-               duce substantial additional cost through repeated
+context baseline prompting is evaluated only when            LLM calls, embedding-based ingestion, or complex
+the raw conversation fits within the model and API           memory updates, yet still underperform SelfMem.
+limits; it is marked unsupported at larger scales            For example, at 1M tokens, Mem0 costs $18.830
+when the original history exceeds those limits.              and uses 25,779 embedding requests, but reaches
+Evaluation metrics. Following the BEAM eval-                 only 0.292 Score; MemGPT and A-Mem also incur
+uation protocol, Score is the mean official ques-            much higher costs than SelfMem while achieving
+tion score across all evaluated probing questions:           lower accuracy. In contrast, SelfMem obtains the
+nugget-based questions use the official LLM judge            best 1M Score of 0.454 with a cost of only $2.004
+score, while event-ordering questions use normal-            and zero embedding requests. Although RAG re-
+ized Kendall correlation, τnorm = (τb + 1)/2.                mains the cheapest method, its lower scores across
+Pass0.5 , is a thresholded pass rate: the percent-           all scales indicate that inexpensive retrieval alone is
+age of questions whose official score is at least 0.5.       insufficient for robust long-horizon memory. These
+Cost is token-computed API cost, calculated from             results suggest that SelfMem improves the quality–
+recorded request-level token usage and the model             cost trade-off by letting the agent selectively con-
+pricing table. Cache hit is the ratio of cached in-          struct and revise useful memory, rather than relying
+put tokens to total input tokens. LLM Req. and               on exhaustive retrieval, ingestion, or fixed memory
+
+                                                         6
+ Scale       Method              Pass0.5 , ↑     Score ↑           Cost ↓   Cache    LLM Req.       Embed Req.
+
+ 100K        RAG                     42.00         0.339           $0.551    1.7%       1,548           5,656
+             Full context            25.80         0.205           $2.427   87.7%       1,559             0
+             Compression             22.50         0.170           $2.830   85.0%       1,726             0
+             LoCoMo                  36.50         0.306           $2.904    1.1%       1,587            580
+             ReadAgent               37.00         0.314           $2.940    1.0%       1,600            490
+             MemoryBank              34.50         0.284           $0.609    2.1%       1,602           6,212
+             MemGPT                  36.20         0.291           $6.434    1.0%       1,582            450
+             A-Mem                   35.20         0.302           $3.116    0.7%       1,606            580
+             Mem0                    35.80         0.282           $1.697   34.1%       2,160           2,912
+             SelfMem (Ours)          59.00         0.504           $0.984   36.2%       1,932             0
+
+ 500K        RAG                     42.10         0.346         $1.258      0.6%       2,821           37,011
+             Full context              –             –             –           –          –                –
+             Compression             25.30         0.195        $8.144      71.4%       4,066              0
+             LoCoMo                  36.90         0.302        $8.156      0.6%        2,812            1,400
+             ReadAgent               35.90         0.286        $7.926      0.8%        2,799            1,050
+             MemoryBank              33.90         0.276        $1.335       0.5%       2,799           39,897
+             MemGPT                  30.70         0.249        $11.917      1.2%       2,799             980
+             A-Mem                   34.90         0.281        $6.500       0.6%       2,812            1,400
+             Mem0                    36.40         0.303        $9.366      36.4%       6,846           13,898
+             SelfMem (Ours)          57.00         0.487         $1.828     33.8%       3,559              0
+
+  1M         RAG                     38.30         0.320         $1.843      0.4%       3,468           74,153
+             Full context              –             –             –           –          –                –
+             Compression             25.70         0.210        $15.033     57.3%       6,376              0
+             LoCoMo                  29.30         0.261        $12.275      0.9%       3,662            1,421
+             ReadAgent               30.70         0.268        $12.232      0.6%       3,618            1,061
+             MemoryBank              31.40         0.266        $1.934       0.4%       3,499           76,903
+             MemGPT                  25.70         0.221        $12.264      0.8%       3,609             989
+             A-Mem                   31.10         0.265         $8.480      0.7%       3,588            1,421
+             Mem0                    34.90         0.292        $18.830     35.9%      11,356           25,779
+             SelfMem (Ours)          52.57         0.454         $2.004     31.1%       4,040              0
+
+Table 1: Main BEAM results across all conversations. Bold and underlined values mark the best and second-best
+results within each scale for Pass0.5 , Score, and Cost. Cache hit and request counts are reported for efficiency but
+not highlighted. Cost includes answer-generation and judge calls; token-count requests are excluded.
+
+
+pipelines.                                                     5    Optimization and Generalization
+                                                                    Analysis
+SelfMem is more robust across question types.
+Figure 3 provides a finer-grained breakdown by                 We next evaluate whether SelfMem can further im-
+BEAM question type. SelfMem performs well                      prove its memory behavior through iterative strat-
+across diverse memory demands rather than im-                  egy refinement. Starting from the default setting,
+proving only one favorable category. It achieves               the agent repeatedly proposes revised memory-
+the best score on most question types at every scale,          strategy notes using only aggregate feedback from
+including 9/10 types at 100K, 8/10 at 500K, and                training conversations, including training scores
+7/10 at 1M. The strongest gains appear in informa-             and memory/tool diagnostics. Candidate strategies
+tion extraction, knowledge update, multi-session               are generated from the training split conversation
+reasoning, preference following, summarization,                0-8 and evaluated on a separate held-out test split
+and temporal reasoning, where answers require                  conversation 9-19 in BEAM (Tavakoli et al., 2025)
+selecting and organizing sparse information from               dataset. Iteration 0 corresponds to the default Self-
+long conversation histories. This pattern supports             Mem setting without refinement, while later itera-
+the core design of SelfMem: allowing the agent                 tions use model-produced strategy notes. Held-out
+to construct and revise memory helps it adapt to               test scores are used only for final analysis and are
+different needs.                                               never provided to the agent during strategy gener-
+
+                                                           7
+                                                                                                                             BEAM Score by Question Type
+                                                                          100K                                                                         500K                                                              1M
+                                                                                                                                                                                                                                                        1.0
+   SelfMem 0.82 0.42* 0.55* 0.61* 0.49* 0.26* 0.47* 0.82* 0.23* 0.36*                                               0.83 0.43* 0.49 0.57* 0.51* 0.40* 0.38* 0.71* 0.31* 0.25*             0.83 0.38* 0.46 0.47* 0.38 0.49* 0.43* 0.69* 0.21* 0.19*
+
+                                    RAG 0.95 0.17 0.50 0.26 0.41 0.17 0.11 0.62 0.11 0.10                           0.97 0.15 0.50* 0.28 0.33 0.20 0.12 0.68 0.15 0.07                    0.93 0.13 0.52 0.17 0.41* 0.10 0.20 0.60 0.09 0.05
+
+                                   FullCtx 1.00* 0.09 0.51 0.07 0.10 0.04 0.03 0.16 0.05 0.00                           --   --        --     --       --     --    --    --   --   --     --   --    --     --     --        --   --   --   --   --
+
+                                   Comp. 0.97 0.04 0.50 0.01 0.07 0.00 0.00 0.09 0.02 0.00                          0.96 0.09 0.50* 0.12 0.08 0.03 0.03 0.10 0.04 0.01                    0.97 0.14 0.55 0.16 0.09 0.03 0.01 0.13 0.02 0.00
+
+                        LoCoMo 1.00* 0.19 0.53 0.32 0.30 0.05 0.14 0.46 0.08 0.00                                   0.97 0.12 0.50 0.24 0.28 0.07 0.10 0.57 0.13 0.03                     0.97 0.09 0.53 0.21 0.19 0.00 0.13 0.40 0.08 0.01
+                                                                                                                                                                                                                                                          Score
+                                                                                                                                                                                                                                                        0.5
+                    ReadAg. 0.97 0.16 0.49 0.19 0.34 0.15 0.13 0.55 0.09 0.06                                      0.99* 0.18 0.50* 0.15 0.23 0.06 0.05 0.48 0.19 0.03                    0.97 0.10 0.53 0.25 0.18 0.04 0.10 0.40 0.11 0.02
+
+ MemBank 0.94 0.14 0.52 0.15 0.25 0.09 0.16 0.50 0.09 0.01                                                         0.99* 0.07 0.50* 0.03 0.30 0.06 0.04 0.63 0.11 0.03                    0.99* 0.06 0.58* 0.04 0.27 0.00 0.06 0.58 0.08 0.01
+
+             MemGPT 1.00* 0.21 0.51 0.28 0.24 0.04 0.10 0.40 0.14 0.00                                             0.99* 0.02 0.50* 0.05 0.22 0.00 0.03 0.48 0.17 0.03                    0.97 0.06 0.54 0.07 0.15 0.01 0.02 0.36 0.04 0.00
+
+                                   A-Mem 0.97 0.17 0.46 0.28 0.32 0.07 0.11 0.50 0.05 0.09                          0.96 0.12 0.50 0.19 0.23 0.06 0.07 0.49 0.15 0.04                     0.96 0.09 0.56 0.23 0.20 0.01 0.09 0.40 0.08 0.01
+                                                                                                                                                                                                                                                        0.0
+                                   Mem0 0.95 0.09 0.50 0.18 0.23 0.17 0.09 0.46 0.02 0.14                          0.99* 0.04 0.50* 0.25 0.15 0.27 0.13 0.53 0.06 0.11                    0.97 0.02 0.53 0.19 0.16 0.29 0.16 0.46 0.03 0.11
+                                           Abs   Con        Evt   Info   Inst   Upd Multi Pref        Sum Temp      Abs      Con       Evt   Info     Inst    Upd Multi Pref   Sum Temp   Abs   Con   Evt   Info   Inst   Upd Multi Pref     Sum Temp
+
+
+Figure 3: Question-type analysis on BEAM. Each cell reports the official BEAM score averaged over evaluated
+conversations for a method, context scale, and question type. Asterisks mark the best method within each scale and
+question type.
+
+
+                                          SelfMem strategy optimization across iterations and training set sizes
+                                                                                                                                                                   feedback leads to better held-out performance. In
+                                          A Score across optimization iterations
+                                   0.52                                                  best observed                                                             both panels, the gray band indicates the observed
+
+
+
+
+Official BEAM score on conv9--19
+                                                                                         I3: 0.510
+                                   0.51
+
+                                   0.50   final agent 0.497
+                                                                                                                                                                   performance range, the average line shows the
+                                                                                                                                                    best
+                                   0.49                                                                                                                            typical strategy quality, and the best-strategy line
+                                   0.48                                                                                                             average
+
+                                   0.47
+                                          Iter0 0.472                                                                                                              highlights the strongest memory policy discovered
+                                   0.46                                                                                                                            during the search. This layout separates average
+                                   0.45
+
+                                   0.44
+                                                                                                                                                                   stability from peak improvement, making it clear
+                                           0            1            2          3             4          5          6              7           8                   that refinement can discover better strategies even
+                                                                                       Optimizer iteration
+                                                                                                                                                                   when the average trend is not strictly increasing.
+                                          B Score across training set sizes                                                                                        Starting from the default no-refinement strategy,
+                                   0.52                                                                      best observed
+
+                                   0.51
+                                                                                                             S6: 0.510
+                                                                                                                                                                   which achieves a held-out score of 0.472, the fi-
+                                   0.50   final agent 0.497
+                                                                                                                                                                   nal agent-synthesized strategy improves to 0.497,
+                                   0.49
+
+                                   0.48                                                                                                             best
+                                                                                                                                                                   and the best strategy discovered during refinement
+                                          Iter0 0.472
+                                   0.47                                                                                                             average
+                                                                                                                                                                   reaches 0.510. The strongest result appears at an
+                                   0.46
+
+                                   0.45
+                                                                                                                                                                   intermediate refinement stage and with an interme-
+                                   0.44                                                                                                                            diate amount of training feedback, rather than at
+                                           1            2            3          4             5          6          7              8           9
+
+                                                            observed range
+                                                                                 Training conversations used
+                                                                                    best observed        final agent strategy
+                                                                                                                                                                   the largest iteration or largest training set. This
+                                                            average                 Iter0 reference      best observed strategy
+                                                                                                                                                                   suggests that the gain does not come from simply
+Figure 4: SelfMem strategy optimization across refine-
+                                                                                                                                                                   running more refinement rounds or adding more ex-
+ment iterations and training set sizes. The upper panel                                                                                                            amples. Instead, SelfMem benefits when the agent
+reports held-out BEAM scores across optimizer itera-                                                                                                               discovers a more robust procedural strategy for de-
+tions, while the lower panel groups refinement outcomes                                                                                                            ciding what to store, revise, compress, and retrieve.
+by the number of training conversations used.                                                                                                                      Overall, Figure 4 shows that SelfMem exposes a
+                                                                                                                                                                   useful refinement space for memory management,
+                                                                                                                                                                   where better memory behavior can be learned from
+ation. Further details about the split construction,                                                                                                               aggregate feedback and memory-tool diagnostics.
+refinement procedure, and prompts are provided in
+Appendix B and Appendix C.                                                                                                                                         6       Conclusion
+Results. Figure 4 shows how to read the refine-                                                                                                                    We introduced SelfMem, a self-optimizing mem-
+ment process from two complementary views. The                                                                                                                     ory framework for AI agents. Rather than placing
+upper panel groups results by refinement round,                                                                                                                    the agent inside a fixed retrieval, compression, or
+showing whether repeated strategy revision im-                                                                                                                     memory-update pipeline, SelfMem exposes mem-
+proves memory behavior over time. The lower                                                                                                                        ory tools and feedback signals that allow the agent
+panel groups results by the number of training con-                                                                                                                to decide what to store, revise, compress, and re-
+versations, showing whether using more training                                                                                                                    trieve. SelfMem achieves the best performance in
+
+                                                                                                                                                              8
+BEAM at 100K, 500K, and 1M token scales, im-              Limitations
+proving over the strongest non-SelfMem baseline
+                                                          This work focuses on evaluating the core hypothe-
+by 0.165, 0.141, and 0.134 Score points, respec-
+                                                          sis of SelfMem: providing agents with an environ-
+tively. These gains are achieved with substantially
+                                                          ment to explore and refine memory strategies can
+lower cost than heavier memory frameworks such
+                                                          be more effective than prescribing a fixed mem-
+as MemGPT, A-Mem, and Mem0. Also, our strat-
+                                                          ory pattern. Our experiments are conducted on
+egy refinement analysis further shows that memory
+                                                          BEAM with a fixed answer and judging protocol,
+behavior can be improved through iterative strategy
+                                                          so future work should validate the approach on ad-
+updates. Together, these results indicate that pro-
+                                                          ditional long-horizon benchmarks, model families,
+viding the model with an environment for learning
+                                                          and deployment settings. The iterative strategy-
+and exploring memory strategies is more effective
+                                                          refinement study is currently performed at the 100K
+than directly prescribing a fixed memory pattern.
+                                                          scale; extending the same refinement procedure
+                                                          to 500K and 1M histories would further test its
+                                                          scalability. In addition, our baselines are imple-
+                                                          mented in a shared harness to ensure fair compari-
+                                                          son, but highly specialized production implementa-
+                                                          tions may show different efficiency profiles. These
+                                                          limitations mainly concern evaluation breadth and
+                                                          engineering scope. They do not change the main
+                                                          finding: under the same benchmark, model, and
+                                                          judging protocol, SelfMem consistently improves
+                                                          long-horizon memory performance while avoiding
+                                                          heavier fixed memory pipelines.
+
+
+                                                          References
+                                                          Akari Asai, Zeqiu Wu, Yizhong Wang, Avirup Sil, and
+                                                            Hannaneh Hajishirzi. 2024. Self-RAG: Learning to
+                                                            retrieve, generate, and critique through self-reflection.
+                                                            In International Conference on Learning Representa-
+                                                            tions.
+                                                          Yushi Bai, Xin Lv, Jiajie Zhang, Hongchang Lyu,
+                                                            Jiankai Tang, Zhidian Huang, Zhengxiao Du, Xiao
+                                                            Liu, Aohan Zeng, Lei Hou, Yuxiao Dong, Jie Tang,
+                                                            and Juanzi Li. 2024. LongBench: A bilingual, multi-
+                                                            task benchmark for long context understanding. In
+                                                            Proceedings of the 62nd Annual Meeting of the As-
+                                                            sociation for Computational Linguistics (Volume 1:
+                                                            Long Papers), pages 3119–3137, Bangkok, Thailand.
+                                                            Association for Computational Linguistics.
+                                                          Prateek Chhikara, Dev Khant, Saket Aryan, Taranjeet
+                                                            Singh, and Deshraj Yadav. 2025. Mem0: Building
+                                                            production-ready ai agents with scalable long-term
+                                                            memory. arXiv preprint arXiv:2504.19413.
+                                                          Chrisantha Fernando, Dylan Sunil Banarse, Henryk
+                                                            Michalewski, Simon Osindero, and Tim Rock-
+                                                            täschel. 2024. Promptbreeder: Self-referential self-
+                                                            improvement via prompt evolution. In Proceedings
+                                                            of the 41st International Conference on Machine
+                                                            Learning, volume 235 of Proceedings of Machine
+                                                            Learning Research, pages 13481–13544. PMLR.
+                                                          Kuang-Huei Lee, Xinyun Chen, Hiroki Furuta, John
+                                                            Canny, and Ian Fischer. 2024. A human-inspired
+                                                            reading agent with gist memory of very long contexts.
+
+
+                                                      9
+  In International Conference on Machine Learning,             Joon Sung Park, Joseph O’Brien, Carrie Jun Cai, Mered-
+  pages 26396–26415. PMLR.                                       ith Ringel Morris, Percy Liang, and Michael S Bern-
+                                                                 stein. 2023. Generative agents: Interactive simulacra
+Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio             of human behavior. In Proceedings of the 36th an-
+  Petroni, Vladimir Karpukhin, Naman Goyal, Hein-                nual acm symposium on user interface software and
+  rich Küttler, Mike Lewis, Wen-tau Yih, Tim Rock-               technology, pages 1–22.
+  täschel, and 1 others. 2020. Retrieval-augmented gen-
+  eration for knowledge-intensive nlp tasks. Advances          Reid Pryzant, Dan Iter, Jerry Li, Yin Lee, Chenguang
+  in neural information processing systems, 33:9459–             Zhu, and Michael Zeng. 2023. Automatic prompt op-
+  9474.                                                          timization with “gradient descent” and beam search.
+                                                                 In Proceedings of the 2023 Conference on Empiri-
+Ao Li, Yuexiang Xie, Songze Li, Fugee Tsung, Bolin               cal Methods in Natural Language Processing, pages
+  Ding, and Yaliang Li. 2025. Agent-oriented planning            7957–7968, Singapore. Association for Computa-
+  in multi-agent systems. In The Thirteenth Interna-             tional Linguistics.
+  tional Conference on Learning Representations.
+                                                               Timo Schick, Jane Dwivedi-Yu, Roberto Dessì, Roberta
+                                                                 Raileanu, Maria Lomeli, Eric Hambro, Luke Zettle-
+Nelson F Liu, Kevin Lin, John Hewitt, Ashwin Paran-              moyer, Nicola Cancedda, and Thomas Scialom. 2023.
+  jape, Michele Bevilacqua, Fabio Petroni, and Percy             Toolformer: Language models can teach themselves
+  Liang. 2024a. Lost in the middle: How language                 to use tools. Advances in neural information process-
+  models use long contexts. Transactions of the associ-          ing systems, 36:68539–68551.
+  ation for computational linguistics, 12:157–173.
+                                                               Noah Shinn, Federico Cassano, Ashwin Gopinath,
+Xiao Liu, Hao Yu, Hanchen Zhang, Yifan Xu, Xuanyu                Karthik Narasimhan, and Shunyu Yao. 2023. Re-
+  Lei, Hanyu Lai, Yu Gu, Hangliang Ding, Kaiwen                  flexion: Language agents with verbal reinforcement
+  Men, Kejuan Yang, Shudan Zhang, Xiang Deng, Ao-                learning. In Advances in Neural Information Pro-
+  han Zeng, Zhengxiao Du, Chenhui Zhang, Sheng                   cessing Systems, volume 36.
+  Shen, Tianjun Zhang, Yu Su, Huan Sun, and 3 others.
+  2024b. Agentbench: Evaluating LLMs as agents. In             Mohammad Tavakoli, Alireza Salemi, Carrie Ye, Mo-
+  The Twelfth International Conference on Learning              hamed Abdalla, Hamed Zamani, and J Ross Mitchell.
+  Representations.                                              2025. Beyond a million tokens: Benchmarking and
+                                                                enhancing long-term memory in llms. arXiv preprint
+Aman Madaan, Niket Tandon, Prakhar Gupta, Skyler                arXiv:2510.27246.
+ Hallinan, Luyu Gao, Sarah Wiegreffe, Uri Alon,
+ Nouha Dziri, Shrimai Prabhumoye, Yiming Yang,                 Guanzhi Wang, Yuqi Xie, Yunfan Jiang, Ajay Man-
+ Shashank Gupta, Bodhisattwa Prasad Majumder,                    dlekar, Chaowei Xiao, Yuke Zhu, Linxi Fan, and
+ Katherine Hermann, Sean Welleck, Amir Yazdan-                   Anima Anandkumar. 2023. Voyager: An open-ended
+ bakhsh, and Peter Clark. 2023. Self-refine: Iterative           embodied agent with large language models. arXiv
+ refinement with self-feedback. In Advances in Neu-              preprint arXiv:2305.16291.
+ ral Information Processing Systems, volume 36.
+                                                               Di Wu, Hongwei Wang, Wenhao Yu, Yuwei Zhang, Kai-
+Adyasha Maharana, Dong-Ho Lee, Sergey Tulyakov,                  Wei Chang, and Dong Yu. 2025. LongMemEval:
+  Mohit Bansal, Francesco Barbieri, and Yuwei Fang.              Benchmarking chat assistants on long-term interac-
+  2024. Evaluating very long-term conversational                 tive memory. In The Thirteenth International Con-
+  memory of LLM agents. In Proceedings of the 62nd               ference on Learning Representations.
+  Annual Meeting of the Association for Computational
+  Linguistics (Volume 1: Long Papers), pages 13851–            Wujiang Xu, Zujie Liang, Kai Mei, Hang Gao, Juntao
+  13870, Bangkok, Thailand. Association for Compu-              Tan, and Yongfeng Zhang. 2026. A-mem: Agentic
+  tational Linguistics.                                         memory for llm agents. Advances in Neural Informa-
+                                                                tion Processing Systems, 38:17577–17604.
+Mike A Merrill, Alexander Glenn Shaw, Nicholas Car-            Chengrun Yang, Xuezhi Wang, Yifeng Lu, Hanxiao
+  lini, Boxuan Li, Harsh Raj, Ivan Bercovich, Lin                Liu, Quoc V. Le, Denny Zhou, and Xinyun Chen.
+  Shi, Jeong Yeon Shin, Thomas Walshe, E. Kelly                  2024. Large language models as optimizers. In
+  Buchanan, Junhong Shen, Guanghao Ye, Haowei                    The Twelfth International Conference on Learning
+  Lin, Jason Poulos, Maoyu Wang, Marianna Nezhu-                 Representations.
+  rina, Di Lu, Orfeas Menis Mastromichalakis, Zhiwei
+  Xu, and 65 others. 2026. Terminal-bench: Bench-              Shunyu Yao, Jeffrey Zhao, Dian Yu, Nan Du, Izhak
+  marking agents on hard, realistic tasks in command             Shafran, Karthik Narasimhan, and Yuan Cao. 2023.
+  line interfaces. In The Fourteenth International Con-          ReAct: Synergizing reasoning and acting in language
+  ference on Learning Representations.                           models. In International Conference on Learning
+                                                                 Representations.
+Charles Packer, Vivian Fang, Shishir_G Patil, Kevin
+  Lin, Sarah Wooders, and Joseph_E Gonzalez. 2023.             Wanjun Zhong, Lianghong Guo, Qiqi Gao, He Ye, and
+  Memgpt: towards llms as operating systems.                    Yanlin Wang. 2024. Memorybank: Enhancing large
+
+
+                                                          10
+  language models with long-term memory. In Pro-                A    Baseline implementation details
+  ceedings of the AAAI conference on artificial intelli-
+  gence, volume 38, pages 19724–19731.                          This section describes how we instantiate each
+                                                                memory and context-management baseline in our
+Andy Zhou, Kai Yan, Michal Shlapentokh-Rothman,
+  Haohan Wang, and Yu-Xiong Wang. 2024. Lan-
+                                                                shared evaluation harness. All methods receive the
+  guage agent tree search unifies reasoning, acting, and        same BEAM conversations and probing questions,
+  planning in language models. In Proceedings of the            and differ only in how they transform the conversa-
+  41st International Conference on Machine Learning,            tion history into the context provided to the answer
+  pages 62138–62160.                                            model.
+                                                                Shared evaluation protocol. All baselines are
+                                                                evaluated in the same harness using identical con-
+                                                                versations, probing questions, answer model, and
+                                                                judge. For each scale–method pair, the harness
+                                                                records model outputs, intermediate checkpoints,
+                                                                and request-level usage traces. All model calls are
+                                                                routed through the same official endpoint of Ope-
+                                                                nAI, ensuring that API usage, prompt caching are
+                                                                measured consistently across methods.
+                                                                Full context and RAG. The full-context base-
+                                                                line sends the entire rendered conversation his-
+                                                                tory to the answer model, followed by the target
+                                                                question. We report this baseline only when the
+                                                                raw history fits the model and API input limits;
+                                                                larger settings are marked unsupported rather than
+                                                                truncated, so that the baseline reflects true full-
+                                                                context access. The RAG baseline follows the
+                                                                standard retrieval-augmented generation abstrac-
+                                                                tion (Lewis et al., 2020). We first flatten the conver-
+                                                                sation into retrieval chunks. In the default setting,
+                                                                each chunk corresponds to one rendered conver-
+                                                                sational turn, formatted as speaker: utterance;
+                                                                the chunk metadata stores the original turn index
+                                                                and speaker. We do not merge distant turns or main-
+                                                                tain a learned memory state. We embed all chunks
+                                                                using text-embedding-3-small for embeddings,
+                                                                and build an in-memory FAISS vector index. At
+                                                                query time, we embed the question with the same
+                                                                model and retrieve the top-k = 5 chunks by cosine
+                                                                similarity. Since all embeddings are normalized,
+                                                                FAISS nearest-neighbor search is equivalent to co-
+                                                                sine ranking. The retrieved chunks are concate-
+                                                                nated in ranked order and prepended to the answer
+                                                                prompt as non-parametric context.
+                                                                LoCoMo-style memory. The LoCoMo baseline
+                                                                is inspired by the benchmark’s dual-memory view
+                                                                of long conversational history (Maharana et al.,
+                                                                2024). We convert each session into multiple mem-
+                                                                ory records: a session summary, speaker observa-
+                                                                tions when available, event records, and a fallback
+                                                                session-text memory. At retrieval time, the ques-
+                                                                tion embedding ranks all records, but the final con-
+
+                                                           11
+Method         Memory unit             Memory control               Retrieval / use               Update behavior             Relation to SelfMem
+
+Full context   Raw conversation his- No explicit    memory Directly places the history No memory update; lim-                 A strong baseline when the full
+               tory                  mechanism               in context                ited by context length and             history fits, but it does not learn what
+                                                                                       cost                                   should be remembered or compressed.
+RAG            Text chunks or docu- Designer-defined chunk- Retrieves external pas- Usually static after index-               Provides useful non-parametric access,
+               ment passages        ing, indexing, and top-k sages and prepends them ing; updates require re-                 but memory behavior is fixed by the
+                                    retrieval                to the prompt             indexing                               retrieval pipeline.
+ReadAgent      Gist memories and Prompted reading policy Uses gist memories first, Constructs           task-time             Shows the value of action-based
+               original passages    decides when to summa- then revisits original text gists; no learned long-                reading and lookup, but does not
+                                    rize and look up details when needed               term memory strategy                   optimize memory policy from
+                                                                                                                              feedback.
+MemoryBank     Long-term memories Framework-defined                 Retrieves relevant memo-      Updates and strengthens     Supports persistent personalization,
+               and user profiles       storage, retrieval, and      ries using similarity and     memories over repeated      but its memory operations are largely
+                                       memory-strength rules        memory strength               interactions                predefined.
+MemGPT         Core, recall, and Agent operates within an           Page information between      Edits core memory and       More adaptive than simple RAG, but
+               archival memory         OS-inspired fixed mem-       active context and archival   searches archival mem-      still commits to a predefined memory
+                                       ory hierarchy                memory                        ory through tool calls      architecture.
+Mem0           Extracted and consoli- Production        memory      Searches stored memories      Continuously consoli-       A strong engineered memory layer,
+               dated facts, optionally pipeline controls extrac-    for personalized context      dates and updates salient   but extraction and consolidation
+               graph-structured        tion, consolidation, and                                   facts                       remain framework choices rather than
+                                       retrieval                                                                              learned strategy choices.
+A-Mem          Structured notes with Agentic       note     con-    Retrieves notes together Creates, links, and              Closest to SelfMem in spirit; however,
+               tags, links, and con- struction        following     with linked neighboring evolves memory notes              it optimizes within a note-graph
+               textual attributes      Zettelkasten-style organi-   memories                 over time                        design, while SelfMem lets the agent
+                                       zation                                                                                 revise the memory strategy itself.
+Compression    Compressed         sum- Fixed summarization or       Carries compressed state Recompresses windows             Improves efficiency but can lose
+               maries or compacted compaction policy                forward across long histo- or states as history grows     task-critical details; SelfMem treats
+               state                                                ries                                                      compression as one memory trade-off
+                                                                                                                              to be decided.
+SelfMem        Agent-written mem- Agent-controlled mem- Conditionally      writes,                Revises, merges, deletes,   Turns storage, retrieval, update,
+               ory workspace plus ory strategy          retrieves, revises, com-                  pins, and reorganizes       and compression into editable
+               raw feedback signals                     presses, or skips memory                  memory based on feed-       memory behavior optimized from
+                                                        actions                                   back                        quality, cost, latency, token, and
+                                                                                                                              cache signals.
+
+
+Table 2: Positioning SelfMem against representative long-context and agent-memory methods. Existing approaches
+usually instantiate a fixed memory mechanism, such as retrieval, profile memory, hierarchical paging, note graphs,
+fact extraction, or compression. SelfMem instead exposes these memory behaviors as agent-editable decisions and
+guides the agent to optimize them using task feedback and efficiency signals.
+
+
+text is structured rather than a flat nearest-neighbor                             maries, raw turn memories, and speaker-specific
+list: it contains the latest session summary, relevant                             observation memories. Each item has a strength
+session summaries, relevant observations grouped                                   value and a temporal distance from the most recent
+by speaker, and relevant events. This implemen-                                    session. Retrieval combines semantic similarity
+tation preserves the idea that long-term conversa-                                 with a retention factor that decays with distance
+tional memory should separate episodic summaries,                                  and is moderated by strength. Retrieved memories
+speaker-specific facts, and event-level memories.                                  receive a small strength update. The answer con-
+                                                                                   text also includes an overall history summary and
+ReadAgent. ReadAgent treats long input as a                                        personality/profile summary, reflecting Memory-
+document that should be paginated, gisted, and                                     Bank’s emphasis on persistent user-level memory.
+selectively revisited (Lee et al., 2024). We approxi-
+mate this in the conversational setting by treating
+each natural session as a page. For each page, we                                  MemGPT. MemGPT frames context manage-
+store a short gist and the original page text. The                                 ment as virtual memory, with a small active con-
+question retrieves relevant gists, then the answer                                 text and a larger archival store (Packer et al., 2023).
+prompt receives both a pagination summary and                                      Our realization follows this hierarchy. The most
+the selected full pages as an “interactive lookup”                                 recent sessions are placed into working memory
+context. This realization emphasizes ReadAgent’s                                   together with a compact core-memory block sum-
+two-stage behavior: lightweight memory first, then                                 marizing user/persona information. Older sessions
+targeted access to the underlying page.                                            are converted into archival memory records con-
+                                                                                   taining a session summary and the session text.
+MemoryBank. MemoryBank models long-term                                            At question time, archival memories are retrieved
+memory with profile information and a forgetting-                                  by semantic similarity and paged into the answer
+curve-style retrieval mechanism (Zhong et al.,                                     context beside the working memory. Thus, the
+2024). We instantiate this by storing session sum-                                 model sees a MemGPT-style split between always-
+
+                                                                              12
+present core/working memory and selectively re-              across its probing questions.
+trieved archival memory.
+                                                             Native compression. The compression base-
+A-Mem. A-Mem represents memory as linked                     line uses OpenAI Responses native compaction.
+agentic notes rather than independent chunks (Xu             For histories that exceed the safe active win-
+et al., 2026). We create notes from session sum-             dow, the harness rolls over 200K-token windows
+maries and speaker observations; when such struc-            and carries the compacted state forward with
+ture is unavailable, the full session text becomes a         previous_response_id. Compression is per-
+note. Each note stores content, local context, ex-           formed once per conversation, and the compacted
+tracted keywords, tags, and links to semantically            state is reused across sequential questions. We
+similar previous notes. Retrieval first selects pri-         record OpenAI-reported cached input tokens from
+mary notes by semantic similarity to the question,           each response.
+then expands to linked neighbors. The prompt
+therefore includes both primary notes and related            B     SelfMem Strategy Iteration Details
+notes.
+                                                             This appendix records the SelfMem strategy-search
+Mem0. The Mem0 baseline uses the public                      protocol in a reproducible, prompt-level form. The
+Mem0 memory SDK as an off-the-shelf long-term                strategy optimizer used only training-side sum-
+memory system. For each source conversation,                 maries: aggregate official scores, Pass0.5 counts,
+we create an isolated memory instance backed by              token-computed costs, LLM/tool request counts,
+a local Qdrant vector store, with a separate direc-          cache statistics, and memory-operation diagnostics.
+tory and collection namespace for that conversation.         It did not receive held-out questions, held-out an-
+This prevents memories from different conversa-              swers, rubrics, failed nuggets, source identifiers, or
+tions from leaking into one another. Conversation            per-question pass/fail labels.
+turns are ingested in chronological order in small
+batches. Each ingested message is rendered with              Optimization protocol. SelfMem treats mem-
+its speaker name and turn index, so that Mem0 can            ory behavior as a strategy that can be revised by
+extract memories from the local conversational con-          the model itself. At each optimization iteration,
+text rather than from isolated utterances. We use the        the model receives the current procedural strat-
+SDK’s standard pipeline: an LLM-based memory                 egy together with aggregate training feedback from
+extraction step converts raw dialogue into memory            prior runs. The optimizer is asked to revise only
+candidates, an embedding model encodes the ex-               the memory procedure: what to write, what to ig-
+tracted memories, and Qdrant stores the resulting            nore, how to merge duplicates, when to replace
+vectors. At evaluation time, each probing question           old memory, and how to keep the memory com-
+is submitted as a Mem0 search query against the              pact enough to be useful under a fixed retrieval
+corresponding conversation-specific memory store.            budget. The optimizer is explicitly prohibited
+We retrieve the top-ranked memories returned by              from writing benchmark facts, answer templates,
+Mem0 and render them as bullet-point context for             or conversation-specific content into the strategy.
+the answer model. The answer model does not                  Thus, the search process optimizes the memory-
+see the full conversation history unless that content        management policy rather than memorizing evalu-
+has been selected by Mem0’s memory extraction                ation answers.
+and retrieval pipeline. This makes the baseline              Iteration mechanics. Iteration 0 is the first
+stronger than simple dense retrieval in that it can          model-generated strategy under the same optimizer
+store compressed, LLM-extracted facts, but also              constraints, before any subsequent feedback refine-
+introduces additional failure modes: relevant infor-         ment. Later iterations receive only aggregate train-
+mation may be omitted during memory extraction,              ing summaries from earlier iterations and are asked
+merged incorrectly, or not retrieved at query time.          to produce a revised strategy note. Each candi-
+Because Mem0 performs LLM-based extraction,                  date strategy is then held fixed while SelfMem pro-
+embedding, and vector-store writes during inges-             cesses the training conversations. After the run,
+tion, it has substantially higher setup overhead than        only aggregate outcomes are returned to the opti-
+lightweight RAG; we therefore treat ingestion as             mizer. This creates a closed-loop procedure:
+part of the memory-construction cost and keep each
+conversation’s memory store isolated and reusable                1. propose a procedural memory strategy;
+
+                                                        13
+  2. run SelfMem with that fixed strategy on train-          a new candidate overlaps with an existing mem-
+     ing conversations;                                      ory, SelfMem replaces or merges the older item
+                                                             instead of appending another copy. This prevents
+  3. summarize the run using aggregate score, cost,          memory growth from diluting the small amount of
+     and memory/tool diagnostics;                            information that is actually retrieved later.
+  4. revise the strategy without seeing per-question         Read-time implication. Because answer-time re-
+     supervision;                                            trieval is fixed, the strategy focuses on making the
+                                                             stored memory compact and structurally useful.
+  5. repeat for the next optimization iteration.
+                                                             The memory should contain reusable decision pro-
+The held-out conversations are never used to                 cedures, such as how to resolve conflicts or priori-
+choose an iteration or training-set size. They are           tize constraints, rather than long factual summaries.
+used only for final evaluation.                              This makes the retrieved memory more likely to
+                                                             influence the model’s behavior when only a small
+Selected strategy. The selected strategy is proce-           memory context is available.
+dural rather than factual: it changes how the model
+writes and maintains memory, not what facts it               C       Prompt Templates
+should answer with. The optimizer converged to-
+                                                             This appendix provides the prompt-level specifica-
+ward a compact-memory policy. The main observa-
+                                                             tion of SelfMem. Run-specific values, long JSON
+tion was that larger or more verbose memory was
+                                                             payloads, and conversation-specific fields are re-
+not reliably better; duplicated preference blocks,
+                                                             placed with placeholders in braces, and line breaks
+long project-style summaries, and transient imple-
+                                                             are lightly normalized for readability. We include
+mentation details often consumed context without
+                                                             these prompts because SelfMem optimizes mem-
+improving transfer. The selected policy therefore
+                                                             ory behavior through prompt-mediated strategy re-
+emphasizes precision, stability, and low churn:
+                                                             vision rather than through parameter updates. Ta-
+  1. store only stable, high-signal user constraints,        ble 3 gives the core memory-construction instruc-
+     preferences, and reusable procedures;                   tion, and Table 4 gives the SQLite transcript-mode
+                                                             addendum used when the source conversation is
+  2. reject domain-specific facts, names, quantities,        exposed as a read-only chronological table. Ta-
+     and scenario-local details;                             ble 5 reports the fixed-evidence answering prompt.
+                                                             Tables 6 and 7 present the local and global strategy-
+  3. keep one compact canonical memory object                optimization prompts, respectively. Finally, Ta-
+     whenever possible;                                      ble 8 summarizes the internal action space available
+  4. use short procedure signatures to identify du-          during strategy construction and memory mainte-
+     plicate or near-duplicate memories;                     nance.
+
+  5. prefer replacement and merging over append-             D       The Use of Large Language Models
+     ing;                                                    For this paper, we leveraged GPT-5.4† and Codex†
+                                                             to support grammar refinement, LaTeX formatting,
+  6. keep at most one or two retained memory
+                                                             and the preparation of figure generation code. All
+     items unless there are clearly distinct reusable
+                                                             technical ideas, experimental designs, analyses,
+     categories;
+                                                             conclusions, and writing were developed and car-
+  7. treat cost as a secondary efficiency signal,            ried out entirely by the authors. The authors have
+     never as a reason to drop necessary evidence.           full responsibility for the final text.
+
+Write and update policy. The final strategy uses
+a strict write gate. A memory is written only when
+the transcript contains multiple structural signals,
+such as explicit constraints, precedence rules, re-
+quired output formats, conflict-resolution behav-
+ior, or verification instructions. Weak, transient,              †
+                                                                     https://openai.com/
+                                                                 †
+or mostly factual candidates are ignored. When                       https://openai.com/codex/
+
+
+                                                        14
+   Prompt 1: Memory-construction instruction.
+   Maintain a model-managed memory workspace for a long-running daily chat. Available tools include memory_read,
+   rag_search, meta_log_read, memory_change, memory_review, and model-created declarative memory tools. Goal:
+   keep memory useful, accurate, source-backed, and cheap for future conversation. Use tools when useful. Always check
+   latest or contradictory exact facts before relying on or saving dates, counts, versions, deadlines, current status, changed
+   values, or user preferences. Prefer atomic exact facts with source turn references when the chat contains dates, counts,
+   versions, deadlines, changed/latest values, or user preferences. Keep broad project profiles separate from exact fact
+   memory. Do not invent facts that are not supported by the chat or tool results.
+
+
+Table 3: Prompt template for SelfMem memory construction. The prompt defines the model-managed memory
+workspace, the available memory tools, and the source-grounding rules used to write accurate, compact, and
+low-cost future-facing memory.
+
+
+   Prompt 2: SQLite transcript-mode addendum.
+   The transcript is materialized as one chronological SQLite turns table. Use conversation_manifest and read-only
+   conversation_sql_query to decide how to inspect it. The harness does not split the transcript into pages and does not
+   secretly scan the transcript to build missing-fact lists. Keep memory changes auditable by citing inspected turn ranges.
+   Do not claim coverage for rows you have not actually inspected.
+
+
+Table 4: SQLite transcript-mode addendum. The addendum specifies how the model should inspect a chronological
+transcript table and requires memory edits to remain auditable through cited turn ranges.
+
+
+   Prompt 3: Answering with fixed evidence.
+   Answer the benchmark question using the memory workspace and retrieved evidence. The memory workspace is a
+   hint/index; retrieved evidence is the authority. Prefer retrieved evidence when it conflicts with memory, and use latest
+   exact values from retrieved evidence for dates, counts, versions, deadlines, and changed facts. For exact-fact questions,
+   compare older and later values in the retrieved evidence; do not stop at the first matching number/date/version. For
+   current/latest/how many/average wording, look for the last matching mention by turn order and prefer the latest confirmed
+   value over older or planned values. Pay attention to wording: if the user asks for first/original values, answer the original
+   value and mention later updates only if useful. If the answer is not supported, say that the available memory/evidence
+   is insufficient. Be concise but include exact dates, versions, names, and constraints when relevant. Inputs: Memory
+   workspace: {JSON memory view}; Previous Q/A in this evaluation session: {last five Q/A pairs}; Retrieved evidence:
+   {top retrieved chunks}; Question: {question}.
+
+
+Table 5: Fixed-evidence answering prompt. The prompt treats retrieved evidence as authoritative over memory
+and instructs the model to resolve exact facts, updates, changed values, and insufficient-evidence cases using the
+retrieved conversation evidence.
+
+
+   Prompt 4: Local repair.
+   Repair the memory and retrieval strategy for training conversation {conversation}, attempt {attempt}. Target train
+   accuracy: {target}%. The next run will rerun the same training conversation from scratch with your repaired strategy.
+   Learn only from the final official score below; no per-question labels or rubric items are provided. Leakage guardrail:
+   do not request, infer, or mention held-out conversation {heldout}, its questions, answers, rubrics, or hidden evaluation
+   signals. Training references may guide strategy repair only; do not store them as future held-out facts. Previous strategy:
+   {previous strategy}. Training score feedback: {aggregate official score JSON}. Observed memory/tool artifact from the
+   scored attempt: {artifact summary JSON}. Write a concise repaired strategy for the next rerun. Improve the general
+   memory and retrieval process based on the score and artifact summary only. Official score/accuracy is the primary
+   objective; money_cost_usd and token counts are secondary efficiency signals and tie-breakers. Do not learn a blanket
+   no-retrieval policy just to reduce cost: learn when evidence is needed and prefer targeted RAG/SQL/semantic search over
+   broad dumps. You may reason about when the model should use memory, RAG, SQL, semantic search, or no retrieval,
+   but do not prescribe a fixed tool sequence or hard-code database queries. Keep under 4,000 characters. Return only the
+   repaired strategy note.
+
+
+Table 6: Local strategy-repair prompt. The prompt revises the memory and retrieval strategy for a training
+conversation using only aggregate official score feedback and memory/tool artifact summaries, while enforcing
+held-out leakage constraints.
+
+
+                                                               15
+   Prompt 5: Global refinement.
+   Refine SelfMem’s general memory and retrieval strategy from TRAIN score feedback only. Iteration just evaluated:
+   {iteration}. Train conversations: {train conversations}. Held-out conversation: {heldout conversation}. Held-out
+   question count: {heldout question count}. Leakage rules: you may inspect train score summaries and train memory/tool
+   diagnostics below; do not request, infer, or mention held-out questions, held-out answers, rubrics, or hidden evaluation
+   signals; do not copy train answers/references as facts to remember for held-out conversations; convert the final scores
+   into a transferable process for unseen conversations. Previous strategy: {previous strategy}. Train score feedback:
+   {score-only feedback JSON}. Train memory/retrieval/tool diagnostics: {artifact summaries JSON}. Write the next
+   candidate strategy as a concise memory-and-retrieval process note. Hard limit: keep it under 4,500 characters. Improve
+   general memory construction and model-chosen retrieval behavior based on the final scores and artifact summaries only.
+   Official score/accuracy is the primary objective; money_cost_usd and token counts are secondary efficiency signals and
+   tie-breakers. Do not learn a blanket no-retrieval policy just to reduce cost: learn when evidence is needed and prefer
+   targeted RAG/SQL/semantic search over broad dumps. You may reason about when the model should use memory, RAG,
+   SQL, semantic search, or no retrieval, but do not prescribe a fixed tool sequence, hard-code database queries, or include
+   benchmark answer keys.
+
+
+Table 7: Global strategy-refinement prompt. The prompt updates the general SelfMem strategy from training-side
+aggregate score and diagnostic feedback, without access to held-out questions, answers, rubrics, failed nuggets, or
+benchmark answer keys.
+
+
+Tool type            Tool                             Description
+Workspace            memory_read                      Reads the current model-managed memory workspace, or a specified
+inspection           (target)                         memory target, before the model decides whether to merge, replace, or
+                                                      leave memory unchanged.
+Raw-chat retrieval   rag_search                       Searches the raw conversation log for supporting context during memory
+                     (query, top_k)                   construction. It is used to verify what should be written or checked, and
+                                                      does not expose benchmark answers, rubrics, or held-out labels.
+Run diagnostics      meta_log_read                    Reads aggregate operational metadata, including token counts, cost,
+                     (scope)                          latency, cache statistics, and tool-call counts. These signals help diagnose
+                                                      inefficient memory behavior, while quality remains the primary objective.
+Memory mutation     memory_change                     Applies a memory operation such as writing, merging, replacing,
+                    (operation, target,               compacting, indexing, or deleting memory. Each change includes a
+                    content, rationale,               rationale and optional metadata for auditability.
+                    metadata)
+Model-created tool memory_tool_create                 Defines a reusable declarative memory-management tool when primitive
+definition          (name, description,               operations are insufficient. This supports strategy-level abstraction
+                    parameters, procedure,            without hard-coding a fixed memory policy.
+                    rationale, metadata)
+Model-created tool memory_tool_use                    Applies a previously defined memory-management tool and optionally
+use                 (name, arguments,                 writes its result into the workspace. This enables the reuse of procedures
+                    target, result_content,           such as deduplication, compaction, and conflict checking.
+                    rationale, metadata)
+Self-test creation  memory_probe_create               Creates an internal, non-benchmark self-test question to check whether
+                    (question, rationale,             the current memory would support future conversations. The probe is
+                    expected_memory_targets,          synthetic and does not use held-out evaluation questions or answers.
+                    metadata)
+Self-test execution memory_probe_run                  Runs a self-test against the memory workspace and raw-chat retrieval.
+                    (probe_id, question,              The returned evidence is used only to diagnose memory coverage or
+                    query, top_k,                     redundancy, not to tune on benchmark labels.
+                    rationale, metadata)
+System              memory_system_optimize            Records a general memory-system improvement or no-op diagnosis
+optimization        (goal, diagnosis,                 based on observed self-test and training-run evidence. This is the main
+record              change, validation,               mechanism by which the model revises its memory strategy across
+                    rationale, metadata)              iterations.
+
+
+Table 8: SelfMem internal tools for strategy construction and memory maintenance. The tools allow the model
+to inspect memory state, retrieve raw-chat evidence, read aggregate diagnostics, mutate memory, define reusable
+memory procedures, run synthetic self-tests, and record strategy-level optimizations. They do not expose held-out
+questions, answers, rubrics, failed nuggets, or per-question labels.
+
+
+
+                                                             16
+

@@ -1,5 +1,9 @@
 import assert from "node:assert/strict";
 import { readFileSync, statSync } from "node:fs";
+import {
+  computeHomepageViewport,
+  fitCameraZToBounds,
+} from "../assets/homepage-layout.js";
 
 const html = readFileSync(new URL("../index.html", import.meta.url), "utf8");
 const body = html.match(/<body[^>]*>([\s\S]*)<\/body>/i)?.[1] ?? "";
@@ -17,6 +21,20 @@ const modelUrl = new URL("../assets/brain-human.glb", import.meta.url);
 const modelHeader = readFileSync(modelUrl).subarray(0, 4).toString("utf8");
 const modelStats = statSync(modelUrl);
 const attribution = readFileSync(new URL("../assets/brain-human-attribution.md", import.meta.url), "utf8");
+const desktopDisplayBounds = [{
+  min: { x: -4.45, y: -2.15, z: -1.48 },
+  max: { x: 4.45, y: 1.95, z: -1.19 },
+}];
+const narrowDesktopInsets = { left: 22.4, right: 22.4, top: 22.4, bottom: 22.4 };
+const narrowDesktopCameraZ = fitCameraZToBounds({
+  bounds: desktopDisplayBounds,
+  viewportWidth: 896,
+  viewportHeight: 688,
+  fovDegrees: 38,
+  cameraY: 0.2,
+  baseCameraZ: 6.7,
+  safeInsets: narrowDesktopInsets,
+});
 
 assert.match(html, /<html lang="en">/, "homepage should remain English-only");
 assert.match(html, /data-visual-style="cyber-ink-paper"/, "homepage should expose the Cyber Ink rice-paper visual style for local review");
@@ -117,7 +135,7 @@ assert.match(html, /\.ink-interface-frame\s*\{[\s\S]*?pointer-events:\s*none/, "
 assert.match(html, /\.ink-frame-line--top/, "interface frame should include a top ink line");
 assert.match(html, /\.ink-frame-line--bottom/, "interface frame should include a bottom ink line");
 assert.match(html, /\.ink-corner-mark/, "interface frame should include ink corner marks instead of generic HUD boxes");
-assert.match(html, /\.module-label::after/, "module labels should gain ink-paper frame detail");
+assert.match(html, /\.module-label::before[\s\S]*?transform:\s*translateY\(-50%\) scaleY\(1\)[\s\S]*?transition:\s*transform 180ms ease/, "module labels should keep their accent marker without animating layout dimensions");
 assert.match(body, /paintInkDisplayFrame/, "display screens should draw a deeper ink frame instead of relying on a seal stamp");
 assert.match(body, /DISPLAY_FONT_STACK/, "display screens should use a dedicated brush-friendly font stack");
 assert.match(body, /transmission/, "glass brain material should include transmissive glass parameters");
@@ -151,7 +169,7 @@ assert.doesNotMatch(body, /gpu-chip-background-circuit-field/, "GPU background s
 assert.doesNotMatch(body, /gpu-chip-background-trace/, "GPU background should not keep unconnected edge-to-center circuit traces");
 assert.match(body, /gpu-chip-substrate/, "GPU pedestal should include a substrate");
 assert.match(body, /const boardMaterial = createChipMaterial\(THREE, 0x5a5244, 0\.42, 0\.006\)/, "bottom pedestal should use translucent ink-gray material instead of a hard black slab");
-assert.match(body, /setChipMaterialState\(boardMaterial, 0\.36 \+ eased \* 0\.12, 0\.006 \+ eased \* 0\.018\)/, "bottom pedestal should stay visually light as it activates");
+assert.match(body, /setChipMaterialState\(boardMaterial, 0\.14 \+ eased \* 0\.06, 0\.006 \+ eased \* 0\.018\)/, "bottom pedestal should stay visually light as it activates");
 assert.match(body, /compute-pedestal-core/, "GPU pedestal should include a central compute core");
 assert.doesNotMatch(body, /createPassiveComponentField/, "GPU pedestal should remove the ambiguous passive component field");
 assert.doesNotMatch(body, /central-passive-component-field|chip-passive-|passive-power-rail|passive-inline-trace|passive-terminal-pad/, "GPU pedestal should not keep resistor, diode, or capacitor fragments");
@@ -160,8 +178,12 @@ assert.match(body, /id="fallback-display-modules"/, "fallback mode should repres
 assert.match(body, /const initialCoreY = CHIP_CORE_Y_BY_LAYOUT\.desktop[\s\S]*?board\.position\.y = initialCoreY/, "central chip pedestal should initialize from the desktop core position instead of duplicating a raw coordinate");
 assert.match(body, /CHIP_CORE_Y_BY_LAYOUT = \{[\s\S]*?desktop: -1\.56,[\s\S]*?portrait: -1\.18,[\s\S]*?compact: -1\.06/, "control pedestal should move upward in portrait and phone layouts");
 assert.match(body, /getViewportLayout/, "homepage should classify viewport shape for responsive 3D composition");
-assert.match(body, /const isPortrait = height > width \* 1\.08/, "portrait detection should be based on aspect ratio, not only width");
-assert.match(body, /group\.position\.set\(0,\s*isMobile \? -0\.04 : isPortrait \? -0\.02 : -0\.08,\s*-1\.48\)/, "GPU layer should shift less aggressively in portrait viewports");
+assert.match(body, /computeHomepageViewport\(width, height\)/, "CSS and 3D composition should share the same portrait boundary through one viewport helper");
+assert.equal(computeHomepageViewport(768, 800).mode, "portrait", "near-square portrait windows should not keep the desktop 3D layout");
+assert.equal(computeHomepageViewport(800, 768).mode, "desktop", "near-square landscape windows should keep the desktop rail layout");
+assert.equal(computeHomepageViewport(390, 844).mode, "compact", "narrow portrait phones should use the compact screen arrangement");
+assert.equal(computeHomepageViewport(667, 375).mode, "desktop", "landscape phones should use side columns rather than the portrait top-bottom arrangement");
+assert.match(body, /group\.position\.set\(0, preset\.pedestalY, -1\.48\)/, "GPU layer placement should come from the shared responsive preset");
 assert.match(body, /getChipLayoutMode/, "GPU display modules should switch between desktop, portrait, and compact placements");
 assert.match(body, /portraitPosition: \[-2\.32, 3, 0\.12\]/, "portrait display modules should widen the top row outside the label rail");
 assert.match(body, /portraitPosition: \[0, 3, 0\.12\]/, "portrait display modules should include a centered top display");
@@ -170,13 +192,28 @@ assert.match(body, /compactPosition: \[-1\.68, 3\.02, 0\.12\]/, "phone display m
 assert.match(body, /compactPosition: \[0, -2\.72, 0\.12\]/, "phone display modules should place the bottom row outside the label rail");
 assert.match(body, /portraitRoute/, "portrait display positions should keep matching PCB routes");
 assert.match(body, /compactRoute/, "compact display positions should keep matching PCB routes");
-assert.match(body, /group\.scale\.setScalar\(isMobile \? 0\.64 : isPortrait \? 0\.76 : 1\.02\)/, "GPU display modules should move back into frame on portrait viewports");
+assert.match(body, /group\.scale\.setScalar\(preset\.pedestalScale\)/, "GPU display modules should consume the shared responsive preset instead of fixed resize ternaries");
 assert.match(body, /entry\.component\.position\.set\(\.\.\.position\)/, "display modules should update their 3D positions on resize");
 assert.doesNotMatch(body, /route\.group\.visible = routeMode === mode/, "SVG ink routing should not keep hidden 3D route groups");
 assert.match(body, /board\.position\.y = coreY[\s\S]*?inductionField\.position\.y = coreY/, "control pedestal parts should follow the active responsive core position");
-assert.match(body, /view\.camera\.position\.z = isMobile \? 8\.9 : isPortrait \? 8\.45 : 6\.7/, "portrait viewports should pull the camera back instead of cropping the brain");
-assert.match(body, /view\.brain\.scale\.setScalar\(isMobile \? 0\.7 : isPortrait \? 0\.82 : 1\.16\)/, "portrait viewports should reduce the brain scale to reveal project displays");
-assert.match(body, /baseScale = isMobile \? 0\.7 : isPortrait \? 0\.82 : 1\.16/, "expanded brain scale should also respect portrait composition");
+assert.match(body, /fitCameraZToBounds\(\{[\s\S]*?getCompositionBounds\(compositionObjects\)[\s\S]*?getViewportSafeInsets\(width, height, mode\)/, "expanded composition should fit its live 3D bounds and protect portrait overlays");
+assert.match(body, /gpuPedestal\.getDisplayTargets\(\),\s*\);/, "camera fitting should follow the six displays instead of the animated exploded brain bounds");
+assert.match(body, /targetCameraZ = clamp\(targetCameraZ \+ event\.deltaY \* 0\.004, minCameraZ, maxCameraZ\)/, "wheel zoom should not move closer than the fitted expanded composition");
+assert.match(body, /view\.brain\.scale\.setScalar\(preset\.brainScale\)/, "brain scale should consume the shared responsive preset");
+assert.match(body, /baseScale = preset\.brainScale/, "expanded brain scale should use the same responsive preset");
+assert.ok(narrowDesktopCameraZ > 8.8 && narrowDesktopCameraZ < 9.7, "896x688 should smoothly pull the expanded camera back enough to reveal both display columns");
+assert.equal(fitCameraZToBounds({
+  bounds: desktopDisplayBounds,
+  viewportWidth: 1920,
+  viewportHeight: 1080,
+  fovDegrees: 38,
+  cameraY: 0.2,
+  baseCameraZ: 6.7,
+}), 6.7, "wide screens without overlay pressure should preserve the original hero camera distance");
+assert.match(body, /gpuPedestal\.resize\(\);\s*controls\.resize\(\);/, "display positions should update before camera bounds are measured");
+assert.match(body, /window\.visualViewport\?\.addEventListener\("resize", resizeScene/, "visual viewport changes should update the fitted composition");
+assert.match(body, /preserveAspectRatio="xMidYMid meet"/, "fallback mode should fit rather than crop its outer displays");
+assert.match(html, /@media \(orientation: portrait\) and \(max-width: 520px\)[\s\S]*?data-module="association"[\s\S]*?top:\s*38%[\s\S]*?data-module="parietal"[\s\S]*?top:\s*46%[\s\S]*?data-module="temporal"[\s\S]*?top:\s*54%/, "compact portrait labels should stay between the top and bottom display rows");
 assert.doesNotMatch(body, /id="circuit-route-layer"/, "project routes should not be a detached SVG overlay that only connects panel frames");
 assert.doesNotMatch(body, /class="circuit-trace-path"/, "project routes should not use detached SVG trace paths");
 assert.match(body, /createCircuitRouteChannel/, "project routes should be built as 3D circuit channels in the GPU pedestal");
@@ -205,8 +242,8 @@ assert.doesNotMatch(body, /\[routeEnd\.clone\(\),\s*busPoint\.clone\(\)\],\s*\[b
 assert.match(body, /circuit-flow-particle/, "selected routes should use moving particles instead of flashing the whole wire");
 assert.match(body, /sampleCircuitRoutePath/, "particle flow should sample positions along the route path");
 assert.match(body, /currentFlowPaths/, "route particles should use per-pin outward paths instead of one stitched branch path");
-assert.match(body, /const traceOpacity = expanded \? selected \? 0\.15 : 0\.13 : 0/, "active routes should receive a small additive lift without reducing the baseline connector visibility");
-assert.match(body, /const particleOpacity = expanded \? selected \? 0\.36 : 0\.28 : 0/, "active route particles should strengthen without hiding the other outward paths");
+assert.match(body, /const traceOpacity = expanded \? selected \? 0\.68 : 0\.26 : 0/, "active routes should keep the rebuilt PCB signal contrast");
+assert.match(body, /const particleOpacity = expanded \? selected \? 0\.92 : 0\.38 : 0/, "active route particles should keep the rebuilt PCB signal contrast");
 assert.doesNotMatch(body, /selectedFocus = !selected \|\| selected === entry\.module\.id \? 1 : 0\.22/, "focusing one display should not globally dim the other displays");
 assert.match(body, /const flowCycleLength = 1\.35/, "route particles should pause and restart at the center instead of visually flowing backward");
 assert.match(body, /progress > 1/, "route particles should disappear after reaching the endpoint before restarting at the core");

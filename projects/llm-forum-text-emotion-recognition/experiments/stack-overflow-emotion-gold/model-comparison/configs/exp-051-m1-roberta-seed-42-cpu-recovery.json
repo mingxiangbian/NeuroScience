@@ -1,0 +1,63 @@
+{
+  "schema_version": "exp-051-m1-roberta-run-contract-v1",
+  "experiment_id": "EXP-051",
+  "rq_id": "RQ-S1",
+  "tier": "Major",
+  "stage": "seed-42-train-validation-integrity-gate-cpu-recovery",
+  "registered_at": "2026-08-13",
+  "authorization": {
+    "authorized_at": "2026-08-13",
+    "basis": "User authorized the next frozen EXP-051 step; CPU is an already registered backend fallback after the MPS attempt failed before any validation metric.",
+    "seeds": [42],
+    "splits": ["train", "validation"],
+    "test_access": false,
+    "seeds_43_44_authorized": false
+  },
+  "prerequisite": {
+    "experiment_id": "EXP-050",
+    "status": "Passed",
+    "check_count": 77,
+    "shared_config_path": "experiments/stack-overflow-emotion-gold/model-comparison/config.json",
+    "shared_config_sha256": "d97b7c837b5de4ef014a553fa255ebea4ecdffa848d19715d084bf7ed46177d6",
+    "run_path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-050-shared-model-preflight/run.json",
+    "run_sha256": "e739fae522c87a1855731c6ad7b13c25e85e290ac6f689638c97540ed5777811",
+    "verification_path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-050-shared-model-preflight/verification.json",
+    "verification_sha256": "d3dc51c02e07f0dd45dcac0c535ddcee682b1e3dd48374c020f92f4d8be75d00"
+  },
+  "recovery": {
+    "reason": "MPS unified-memory OOM before the first epoch and before any validation metric was computed.",
+    "failed_run_path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta/seed-42/run.json",
+    "failed_run_sha256": "7733d28711e06ff1db2cd90934711e3c23fe6955fa35f2cf6b62626052e50964",
+    "failed_log_path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta/seed-42/stdout.log",
+    "failed_log_sha256": "c0d4940ee00b29f479b8287d443d453495f57d6b7c82e5789887cb5c34272b93",
+    "scientific_condition_changed": false,
+    "only_execution_device_changed": true,
+    "mps_high_watermark_override_forbidden": true,
+    "cpu_train_only_preflight_steps": 10,
+    "cpu_preflight_output": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu-recovery-preflight-attempt-2"
+  },
+  "protocol_path": "experiments/stack-overflow-emotion-gold/protocols/exp-051-m1-roberta.md",
+  "execution": {
+    "required_device": "cpu",
+    "offline_only": true,
+    "padding": "dynamic_per_batch",
+    "evaluation_batch_size": 32,
+    "shuffle": true,
+    "drop_last": false,
+    "num_workers": 0,
+    "max_grad_norm": 1.0,
+    "adam_beta1": 0.9,
+    "adam_beta2": 0.999,
+    "adam_epsilon": 1e-8,
+    "weight_decay_exclusions": ["bias", "LayerNorm.weight"],
+    "warmup_steps_rule": "exact_total_steps_times_ratio",
+    "checkpoint_tie_rule": "choose the earliest epoch whose fixed-threshold Macro-F1 is strictly less than 0.005 below the maximum",
+    "threshold_tie_rule": "highest Macro-F1, then closest to 0.5, then lower threshold",
+    "bootstrap_interval": "percentile_2.5_97.5",
+    "bootstrap_quantile_method": "linear",
+    "maximum_wall_minutes": 180,
+    "maximum_peak_memory_gb": 8.0,
+    "public_run_root": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu-recovery",
+    "private_run_root": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-051-m1-roberta-cpu-recovery"
+  }
+}

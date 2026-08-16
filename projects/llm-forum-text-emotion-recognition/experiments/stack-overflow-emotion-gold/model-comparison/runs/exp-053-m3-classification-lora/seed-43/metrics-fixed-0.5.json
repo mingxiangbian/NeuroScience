@@ -1,0 +1,95 @@
+{
+  "accuracy_definition": "strict subset/exact-match accuracy",
+  "five_label_macro_f1_without_surprise": 0.702292161136945,
+  "hamming_loss": 0.050694444444444445,
+  "macro": {
+    "f1": 0.6593175416881949,
+    "precision": 0.7988677875886099,
+    "recall": 0.6031729248942365
+  },
+  "micro_f1": 0.7364620938628159,
+  "per_label": {
+    "anger": {
+      "f1": 0.7634854771784232,
+      "fn": 40,
+      "fp": 17,
+      "label_id": 3,
+      "precision": 0.8440366972477065,
+      "predicted_support": 109,
+      "recall": 0.696969696969697,
+      "support": 132,
+      "tn": 571,
+      "tp": 92
+    },
+    "fear": {
+      "f1": 0.7058823529411765,
+      "fn": 4,
+      "fp": 6,
+      "label_id": 5,
+      "precision": 0.6666666666666666,
+      "predicted_support": 18,
+      "recall": 0.75,
+      "support": 16,
+      "tn": 698,
+      "tp": 12
+    },
+    "joy": {
+      "f1": 0.6274509803921569,
+      "fn": 26,
+      "fp": 31,
+      "label_id": 1,
+      "precision": 0.6075949367088608,
+      "predicted_support": 79,
+      "recall": 0.6486486486486487,
+      "support": 74,
+      "tn": 615,
+      "tp": 48
+    },
+    "love": {
+      "f1": 0.7964601769911505,
+      "fn": 48,
+      "fp": 21,
+      "label_id": 0,
+      "precision": 0.8653846153846154,
+      "predicted_support": 156,
+      "recall": 0.7377049180327869,
+      "support": 183,
+      "tn": 516,
+      "tp": 135
+    },
+    "sadness": {
+      "f1": 0.6181818181818182,
+      "fn": 17,
+      "fp": 4,
+      "label_id": 4,
+      "precision": 0.8095238095238095,
+      "predicted_support": 21,
+      "recall": 0.5,
+      "support": 34,
+      "tn": 682,
+      "tp": 17
+    },
+    "surprise": {
+      "f1": 0.4444444444444444,
+      "fn": 5,
+      "fp": 0,
+      "label_id": 2,
+      "precision": 1.0,
+      "predicted_support": 2,
+      "recall": 0.2857142857142857,
+      "support": 7,
+      "tn": 713,
+      "tp": 2
+    }
+  },
+  "prediction_diagnostics": {
+    "empty_prediction_rows": 345,
+    "predicted_label_cardinality_mean": 0.5347222222222222
+  },
+  "primary": {
+    "name": "six_label_macro_f1",
+    "value": 0.6593175416881949
+  },
+  "subset_accuracy": 0.7513888888888889,
+  "weighted_f1": 0.7362938979872282
+}

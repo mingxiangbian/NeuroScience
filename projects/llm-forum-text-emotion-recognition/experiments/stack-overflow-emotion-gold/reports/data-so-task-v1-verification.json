@@ -1,0 +1,95 @@
+{
+  "aggregate": {
+    "cardinality_counts": {
+      "0": 1959,
+      "1": 2708,
+      "2": 133
+    },
+    "components": 4681,
+    "duplicate_audit": {
+      "conflicting_connected_component_rows": 52,
+      "conflicting_connected_components": 26,
+      "connected_components": 4681,
+      "exact": {
+        "conflicting_components": 26,
+        "conflicting_rows": 52,
+        "duplicate_components": 99,
+        "duplicate_rows": 212,
+        "extra_duplicate_rows": 113,
+        "maximum_component_size": 7,
+        "unique_keys": 4687
+      },
+      "normalized": {
+        "conflicting_components": 26,
+        "conflicting_rows": 52,
+        "duplicate_components": 99,
+        "duplicate_rows": 218,
+        "extra_duplicate_rows": 119,
+        "maximum_component_size": 10,
+        "unique_keys": 4681
+      }
+    },
+    "frozen_bucket_quotas": {
+      "duplicate-conflict-size-2": {
+        "test": 4,
+        "train": 18,
+        "validation": 4
+      },
+      "duplicate-size-10": {
+        "test": 0,
+        "train": 1,
+        "validation": 0
+      },
+      "duplicate-size-2": {
+        "test": 9,
+        "train": 47,
+        "validation": 9
+      },
+      "duplicate-size-3": {
+        "test": 1,
+        "train": 2,
+        "validation": 1
+      },
+      "duplicate-size-4": {
+        "test": 1,
+        "train": 0,
+        "validation": 1
+      },
+      "duplicate-size-6": {
+        "test": 0,
+        "train": 1,
+        "validation": 0
+      },
+      "singleton": {
+        "test": 687,
+        "train": 3208,
+        "validation": 687
+      }
+    },
+    "label_counts": {
+      "anger": 882,
+      "fear": 106,
+      "joy": 491,
+      "love": 1220,
+      "sadness": 230,
+      "surprise": 45
+    },
+    "maximum_label_allocation_error": 0.011111,
+    "maximum_neutral_or_cardinality_error": 0.000752,
+    "rows": 4800,
+    "split_rows": {
+      "test": 720,
+      "train": 3360,
+      "validation": 720
+    }
+  },
+  "checks_failed": 0,
+  "checks_passed": 53,
+  "checks_total": 53,
+  "claim_boundary": "This verifies data construction, leakage controls, privacy boundaries and test sealing only; no model result was produced or inspected.",
+  "failures": [],
+  "protocol_id": "DATA-SO-TASK-V1",
+  "schema_version": "so-emotion-c0-verification-report-v1",
+  "status": "verified",
+  "test_gate": "sealed_not_authorized_for_model_access"
+}

@@ -1,0 +1,119 @@
+{
+  "accessed_splits": [
+    "validation"
+  ],
+  "agreement_with_formal_selected_validation": {
+    "parsed_vector_matches": 60,
+    "raw_output_matches": 60,
+    "rows": 60
+  },
+  "agreement_with_pass_1": {
+    "parsed_vector_matches": 60,
+    "parser_validity_matches": 60,
+    "raw_output_matches": 60,
+    "rows": 60,
+    "sample_order_matches": true
+  },
+  "artifacts": {
+    "private_generations": {
+      "bytes": 21806,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-054-m4-generative-lora/seed-44/replay-pass-2.jsonl",
+      "sha256": "546cca64b177565e851feaec340a309fa11359e72d82dc542bc2745760372728"
+    },
+    "stdout_log": {
+      "bytes": 134,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-44/replay-pass-2.log",
+      "sha256": "6c8dc5d3d7af251c02e4db1743b5924d31d16b11f781c70af232751cc0d4f671"
+    }
+  },
+  "checkpoint_selection_changed": false,
+  "completed_at_utc": "2026-08-15T14:42:03.624486+00:00",
+  "experiment_id": "EXP-054",
+  "fresh_process_required": true,
+  "generation": {
+    "generated_tokens": {
+      "maximum": 7.0,
+      "mean": 5.766666666666667,
+      "median": 6.0,
+      "minimum": 5.0,
+      "p95": 6.0,
+      "total": 346.0
+    },
+    "generation_seconds": 99.04688816703856,
+    "latency_seconds": {
+      "maximum": 2.585743541829288,
+      "mean": 1.6504060611128808,
+      "median": 1.6312321875011548,
+      "minimum": 1.345254790969193,
+      "p95": 1.8501141686574556,
+      "total": 99.02436366677284
+    },
+    "max_new_tokens": 48,
+    "parser_outcome_counts": {
+      "valid": 60
+    },
+    "parser_valid_count": 60,
+    "parser_valid_rate": 1.0,
+    "retries": 0,
+    "rows": 60,
+    "temperature": 0.0,
+    "throughput_rows_per_second": 0.6057737008235173
+  },
+  "invocation": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/run_exp054_m4.py --config projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/configs/exp-054-m4-three-seed.json --mode replay --seed 44 --pass-index 2",
+  "model": {
+    "adapter_sha256": "03f98381e6f3c6e8b3a77e918db4cd0ffcd965fb7ecdbb8cc25f594ee57f4529",
+    "loaded_trainable_sha256": "2d006e2f93bfc3aeadf28afc5729162f17a162231a26ab697fdff792a4a48782",
+    "selected_epoch": 2
+  },
+  "pass_index": 2,
+  "prediction_digest_sha256": "415dd66ac57d67b7113f58a09a01eb62f151286721bd47645b3f7081bd21f72a",
+  "privacy": {
+    "private_artifacts_gitignored": true,
+    "public_raw_text": false,
+    "public_row_identifiers": false
+  },
+  "prompt_or_parser_changed": false,
+  "resources": {
+    "api_cost_usd": 0,
+    "model_load_seconds": 3.0575287078972906,
+    "peak_mlx_memory_gb": 8.498649244,
+    "wall_seconds": 103.40994379203767
+  },
+  "retries": 0,
+  "rq_id": "RQ-S1",
+  "schema_version": "exp-054-m4-replay-pass-v1",
+  "seed": 44,
+  "stage": "selected-validation-replay",
+  "started_at_utc": "2026-08-15T14:40:20.212972+00:00",
+  "status": "Completed",
+  "subset": {
+    "identities_public": false,
+    "namespace": "EXP-054-replay-subset-v1",
+    "rows": 60,
+    "selection_digest_sha256": "edd049b04e5842b90a0143e071a2c89c37c77dcf419fbef9412e90132abed3b6"
+  },
+  "test_split_accessed": false,
+  "tier": "Major",
+  "tokenization": {
+    "raw_tokens": {
+      "maximum": 250.0,
+      "mean": 163.8,
+      "median": 154.0,
+      "minimum": 125.0,
+      "p95": 236.29999999999998,
+      "total": 9828.0
+    },
+    "rows": 60,
+    "token_id_stream_sha256": "e0ce472641b0df2943b7755eb322afd21865249740c9f9cc52295b013a98bda0",
+    "tokens": {
+      "maximum": 250.0,
+      "mean": 163.8,
+      "median": 154.0,
+      "minimum": 125.0,
+      "p95": 236.29999999999998,
+      "total": 9828.0
+    },
+    "truncated_rows": 0
+  },
+  "validation_split_accessed": true
+}

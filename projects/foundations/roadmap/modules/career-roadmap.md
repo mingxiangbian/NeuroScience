@@ -2,8 +2,8 @@
 id: career-roadmap
 title: Career Roadmap
 status: in-progress
-learning_progress: 14
-last_updated: 2026-08-07
+learning_progress: 29
+last_updated: 2026-08-14
 priority: high
 plan_scope: long-term
 navigation_group: north-star
@@ -43,8 +43,8 @@ subsystems: 1,2,3,4,5,6
 
 ### 运行状态
 
-- **活动单元**：U2 揭穿作弊（启动动作见 [ledger.md](ledger.md) 断点区）。
-- **已结算**：1 个 ｜ **玩耍券**：0 张 ｜ 台账与断点见 [ledger.md](ledger.md)。
+- **活动单元**：玩耍单元「DeepSeek-V4 从 Preview 到 GA」；主线 U3 原位暂存（断点见 [ledger.md](ledger.md)）。
+- **已结算**：2 个 ｜ **玩耍券**：0 张（累计获得 1 张，已用于本次版本审读）｜ 台账与断点见 [ledger.md](ledger.md)。
 
 ### 已有的牌（2026-07）
 
@@ -138,22 +138,23 @@ subsystems: 1,2,3,4,5,6
 ### 已结算单元（台账只涨不跌）
 
 1. **U1 修掩码**（1–2 sessions，实验单元）：已结算（2026-08-07）。在同 seed、数据与超参数下只改变 `is_causal`：causal loss 每轮略高，最大差 `0.0809`、最终差 `0.0015`；简单递增规律让 causal 很快追上，两组都接近随机末位造成的 `0.6908` 理论下限。产物：epoch-average 对比曲线 + U1 结算笔记；限制：训练脚本未自动保存逐 step 原始 loss。**顿悟点：低 teacher-forced training loss 不能证明自回归生成正确，信息边界与评估条件必须和推理一致。**
+2. **U2 揭穿作弊**（1–2 sessions，实验单元）：已结算（2026-08-14）。在 IID 随机 token、同一初始化、相同训练 batch 与超参数下，只改变 causal mask；causal 的 teacher-forced 与 prefix-only NLL 都约为 `4.1636`，未来扰动不改变输出；non-causal 的 teacher-forced NLL 为 `0.00111`、accuracy 为 `100%`，移除未来输入后 accuracy 回到随机水平而 NLL 恶化至 `11.1041`，未来 token 扰动使预测翻转并跟随新 token。产物：可重跑实验脚本、结果 JSON、对比图与两份 checkpoint；限制：单 seed toy 实验只证明本实现中的机制，不代表所有 non-causal 模型或 BERT。**顿悟点：held-out teacher-forced 评估仍可能保留样本内部的答案泄漏，评估必须复现真实生成时的信息边界。**
 
 ### 活动单元（一次只有一个）
 
-1. **U2 揭穿作弊**（1–2 sessions，实验单元）：两个指标对照——teacher-forced 的 held-out loss（作弊模型照样拿假低分：答案就在右边一格，没见过的数据也一样）vs 自回归生成质量（作弊立刻现形）。"假指标 vs 真指标"的反差就是本单元的顿悟点。产物：eval 脚本 + 对比数据。
+1. **U3 第一篇笔记**（1 session，理论单元）：先不看已有笔记，用自己的话列出六行故事骨架：bug / 原假设 / U1 结果 / U2 结果 / prefix-only NLL 为何更高 / 结论边界；再整理成《我的 decoder 没有 mask》，把 U1+U2 的完整证据链和失败分析写清楚。
 
 ### 近期队列（冻结，按序解冻）
 
-1. **U3 第一篇笔记**（1 session，理论单元）：《我的 decoder 没有 mask》——U1+U2 的完整故事，含失败分析。
-2. **U4 SFT 试驾**（2–4 sessions，实现单元）：Qwen 小尺寸 + LoRA SFT，改掉模型的一个具体行为。解冻前先定两件事：算力路径（Mac 走 MLX / 免费 Colab 走 QLoRA）与 SFT 数据来源（现成人设对话集或自造小集）。产物：before/after 对话样例 + 训练脚本。
-3. **U5 DPO 试驾**（2–4 sessions，实验单元）：构造小偏好集，跑通 DPO。注意：小规模偏好集下行为差异可能很微弱——"看不出变化"本身也是合法结果，写清楚为什么即可结算。产物：前后行为对比。
-4. **U6 人格笔记**（1 session，理论单元）：《模型的性格是怎么被塑造的》。
-5. **U7 贾维斯 0.1 点火**（2–3 sessions，整合单元）：新建独立 Python 项目，把 U4/U5 的人格模型包进一个最小对话循环（CLI 即可）——新载体的第一块骨头，旧 TS Cyrene 就此归档为 0.0。产物：能连续对话的 0.1 + 接口与冲突记录。
+1. **U4 SFT 试驾**（2–4 sessions，实现单元）：Qwen 小尺寸 + LoRA SFT，改掉模型的一个具体行为。解冻前先定两件事：算力路径（Mac 走 MLX / 免费 Colab 走 QLoRA）与 SFT 数据来源（现成人设对话集或自造小集）。产物：before/after 对话样例 + 训练脚本。
+2. **U5 DPO 试驾**（2–4 sessions，实验单元）：构造小偏好集，跑通 DPO。注意：小规模偏好集下行为差异可能很微弱——"看不出变化"本身也是合法结果，写清楚为什么即可结算。产物：前后行为对比。
+3. **U6 人格笔记**（1 session，理论单元）：《模型的性格是怎么被塑造的》。
+4. **U7 贾维斯 0.1 点火**（2–3 sessions，整合单元）：新建独立 Python 项目，把 U4/U5 的人格模型包进一个最小对话循环（CLI 即可）——新载体的第一块骨头，旧 TS Cyrene 就此归档为 0.0。产物：能连续对话的 0.1 + 接口与冲突记录。
+   - **生产架构对照（非前置、尚未执行）**：0.1 跑通后，以 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 为案例；当前参考快照固定为 [`47f9438`](https://github.com/deepseek-ai/deepseek-harness/commit/47f943859bef60e4160492346772ded9b24f765a)，U7 启动时重新核查稳定版本。只读 Architecture、Agent Lifecycle、Agent Loop README 与 `agent.ts` 纵向切片，在原有接口与冲突记录中补充“采纳 1 项 / 暂缓 1 项 / 各自理由”；不复刻 TypeScript/Cordis 技术栈，也不把 tool、sandbox、subagent 等平台层扩进 U7。它目前只是未来候选，不消耗玩耍券。
 
 ### 玩耍券
 
-每结算 2 个主线单元得 1 张，不过期可累积。玩耍单元 = 拿最新模型/工具随便造，无需产物即可结算。当前：0 张。
+每结算 2 个主线单元得 1 张，不过期可累积。玩耍单元 = 拿最新模型/工具随便造，无需产物即可结算。当前：0 张；累计获得 1 张，已用于进行中的“DeepSeek-V4 从 Preview 到 GA”版本审读。U3 原位暂存，讨论结算后恢复。
 
 ### 远期队列（故意不细化，到队头再定义）
 

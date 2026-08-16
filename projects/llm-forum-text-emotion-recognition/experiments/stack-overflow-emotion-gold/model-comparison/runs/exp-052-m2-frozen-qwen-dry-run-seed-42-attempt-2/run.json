@@ -1,0 +1,35 @@
+{
+  "accessed_splits": [],
+  "experiment_id": "EXP-052",
+  "failed_at_utc": "2026-08-14T03:34:09.888811+00:00",
+  "failure": {
+    "message": "expected str, bytes or os.PathLike object, not NoneType",
+    "traceback": "Traceback (most recent call last):\n  File \"/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/run_exp052_m2.py\", line 1467, in run\n    environment = environment_gate(run_dir, config)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/run_exp052_m2.py\", line 304, in environment_gate\n    \"mlx\": Path(mlx.__file__).resolve(),\n           ^^^^^^^^^^^^^^^^^^\n  File \"/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/pathlib.py\", line 871, in __new__\n    self = cls._from_parts(args)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/pathlib.py\", line 509, in _from_parts\n    drv, root, parts = self._parse_args(args)\n                       ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/pathlib.py\", line 493, in _parse_args\n    a = os.fspath(a)\n        ^^^^^^^^^^^^\nTypeError: expected str, bytes or os.PathLike object, not NoneType\n",
+    "type": "TypeError"
+  },
+  "invocation": [
+    "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+    "experiments/stack-overflow-emotion-gold/model-comparison/run_exp052_m2.py",
+    "--config",
+    "experiments/stack-overflow-emotion-gold/model-comparison/configs/exp-052-m2-seed-42-dry-run.json",
+    "--seed",
+    "42",
+    "--run-dir",
+    "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen-dry-run-seed-42-attempt-2",
+    "--private-dir",
+    "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-052-m2-frozen-qwen-dry-run/seed-42-attempt-2"
+  ],
+  "resource_usage": {
+    "wall_seconds": 1.0544759589247406
+  },
+  "rq_id": "RQ-S1",
+  "schema_version": "exp-052-m2-run-v1",
+  "seed": 42,
+  "stage": "train-only-dry-run",
+  "started_at_utc": "2026-08-14T03:34:08.834498+00:00",
+  "status": "Failed",
+  "test_split_accessed": false,
+  "tier": "Major",
+  "validation_split_accessed": false,
+  "working_directory": "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition"
+}

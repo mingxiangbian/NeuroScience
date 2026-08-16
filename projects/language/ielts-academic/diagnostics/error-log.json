@@ -5,17 +5,21 @@
       "id": "E001",
       "skill": "listening",
       "impact": "high",
-      "status": "active",
+      "status": "improving",
       "description": "漏听一题后，在后续录音继续播放时仍回想旧题，导致后续题目的定位和完整语义处理受损。",
       "evidence": [
-        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-01"
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-01",
+        "journal/entries/2026-08-10-l3-listening-evaluation-window-repair.md#对错误状态的判断",
+        "journal/entries/2026-08-10-listening-recovery-maintenance.md#漏题后的恢复"
       ],
       "reviewMethod": "在独立 Listening 题组中记录每次漏听后的切换动作，并检查后续两题是否仍能保持题号定位和完整语义处理。",
       "openedAt": "2026-07-23",
-      "lastSeenAt": "2026-07-23",
+      "lastSeenAt": "2026-08-10",
       "repairUnitId": null,
-      "consecutiveCleanSamples": 0,
-      "fixedEvidence": []
+      "consecutiveCleanSamples": 1,
+      "fixedEvidence": [
+        "journal/entries/2026-08-10-listening-recovery-maintenance.md#漏题后的恢复"
+      ]
     },
     {
       "id": "E002",
@@ -31,11 +35,14 @@
         "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-07",
         "journal/entries/2026-07-23-c19-test-1-baseline-review.md#l-08",
         "journal/entries/2026-07-24-l1-listening-answer-window-repair.md#结果与答案窗口核对",
-        "journal/entries/2026-07-24-l2-listening-answer-window-transfer.md#l2-结论"
+        "journal/entries/2026-07-24-l2-listening-answer-window-transfer.md#l2-结论",
+        "journal/entries/2026-08-10-l3-listening-evaluation-window-repair.md#对错误状态的判断",
+        "journal/entries/2026-08-10-listening-recovery-maintenance.md#错误状态判断",
+        "journal/entries/2026-08-12-c21-test3-segmented-listening.md#e002完整语义与极性"
       ],
       "reviewMethod": "复盘独立 Listening 题组时标记题干限定、评价主体、完整答案窗口、显眼干扰词、决定性关系和最终答案；检查直接评价与后续解释是否属于同一窗口，并同时满足原文证据、题干语法与完整语义。",
       "openedAt": "2026-07-23",
-      "lastSeenAt": "2026-08-09",
+      "lastSeenAt": "2026-08-12",
       "repairUnitId": "L3",
       "consecutiveCleanSamples": 0,
       "fixedEvidence": []
@@ -77,15 +84,16 @@
       "skill": "reading",
       "impact": "high",
       "status": "active",
-      "description": "阅读判断中把关键词共现或合理场景推测当成原文命题证据，没有核验题目中的主体、关系和限定是否被文本明确支持。",
+      "description": "阅读判断和选择中会因局部关键词或部分成分相符而提交答案，没有逐项核验主体、谓词、限定范围、属性归属和推论对象；也会把更宽的原文目标误判为与其子命题矛盾，或把未陈述当作相反证据。",
       "evidence": [
         "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-01",
         "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-02",
-        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-03"
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-03",
+        "journal/entries/2026-08-14-c21-test3-reading.md#e005证据边界核验"
       ],
-      "reviewMethod": "对判断题和多选题的每个候选项拆分主体、关系与限定，分别标记为原文明示、直接矛盾或未陈述；不得用常识或场景合理性补足缺失关系。",
+      "reviewMethod": "把判断题和选择题候选项拆成主体、谓词、限定、属性归属和推论对象，逐项标记为原文明示、直接矛盾或未陈述；局部成分相符不能覆盖另一成分的矛盾，也不得自行补入 only 或把附近评价转移到其他对象。",
       "openedAt": "2026-07-23",
-      "lastSeenAt": "2026-07-23",
+      "lastSeenAt": "2026-08-14",
       "repairUnitId": null,
       "consecutiveCleanSamples": 0,
       "fixedEvidence": []
@@ -112,24 +120,27 @@
       "id": "E007",
       "skill": "reading",
       "impact": "high",
-      "status": "active",
+      "status": "improving",
       "description": "Reading Part 2 第 14–19 题整个段落匹配题组首遍阅读未形成任何答案后仍持续重读，缺少策略切换和止损边界；进入 Part 3 时仅剩约 11 分钟，导致第 31–36 题未读原文作答、第 37–40 题只能粗略阅读。",
       "evidence": [
         "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-02",
-        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-03"
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-03",
+        "journal/entries/2026-08-14-c21-test3-reading.md#e007时间分配"
       ],
       "reviewMethod": "在下一次完整阅读模拟中记录每篇开始与结束时间、触发止损的题号，以及 Part 3 各题是否阅读到直接证据；猜对题不计为稳定掌握。",
       "openedAt": "2026-07-23",
-      "lastSeenAt": "2026-07-23",
+      "lastSeenAt": "2026-08-14",
       "repairUnitId": null,
-      "consecutiveCleanSamples": 0,
-      "fixedEvidence": []
+      "consecutiveCleanSamples": 1,
+      "fixedEvidence": [
+        "journal/entries/2026-08-14-c21-test3-reading.md#e007时间分配"
+      ]
     },
     {
       "id": "E008",
       "skill": "reading",
       "impact": "high",
-      "status": "active",
+      "status": "improving",
       "description": "复杂句一遍读取时通常能保留主题和部分动作，但在核心谓语陌生、动作/目的/结果嵌套，或形式主语、指代、让步与双重否定出现时，会错误压缩语义角色并改变完整命题；不能再简单归因为读到句尾后一概忘记前半句。",
       "evidence": [
         "journal/entries/2026-07-23-c19-test-1-baseline-review.md#r-02",
@@ -137,10 +148,12 @@
       ],
       "reviewMethod": "从同篇文章抽取复杂句，只读一遍后依次口述主语与有限谓语、连接词、语义角色和整句结论；分别标记词义缺口、句法与指代解析、行动/目的/结果混合，以及真正的读后保持失败。",
       "openedAt": "2026-07-24",
-      "lastSeenAt": "2026-08-09",
+      "lastSeenAt": "2026-08-11",
       "repairUnitId": null,
-      "consecutiveCleanSamples": 0,
-      "fixedEvidence": []
+      "consecutiveCleanSamples": 1,
+      "fixedEvidence": [
+        "journal/entries/2026-08-11-day2-settlement-and-capacity-recalibration.md#reading"
+      ]
     },
     {
       "id": "E009",
@@ -183,11 +196,12 @@
       "status": "active",
       "description": "Task 1 为避免重复 `number(s)` 和 `participants` 而主动替换核心统计名词；本次冷启动样本中，这种变化引入了多处不自然的 `numbers of`，准确性收益低于替换成本。",
       "evidence": [
-        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-01"
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-01",
+        "journal/entries/2026-08-11-task1-overview-and-timed-writing.md#三组-overview"
       ],
       "reviewMethod": "在后续多个 Task 1 样本中标记核心统计名词的重复、主动替换、搭配和主谓一致错误；比较保留标准结构与强行换词时的准确率和用时。",
       "openedAt": "2026-07-24",
-      "lastSeenAt": "2026-07-24",
+      "lastSeenAt": "2026-08-11",
       "repairUnitId": null,
       "consecutiveCleanSamples": 0,
       "fixedEvidence": []
@@ -197,13 +211,14 @@
       "skill": "writing",
       "impact": "medium",
       "status": "active",
-      "description": "Task 1 结尾把最低活动误写为 table tennis，尽管实际知道应为 amateur dramatics；错误与前文趋势描述矛盾，并因没有最终检查而保留。",
+      "description": "Task 1 缺少稳定的数据与实体核对：冷启动样本把最低活动误写为 table tennis，尽管实际知道应为 amateur dramatics；2026-08-11 又把 2000 年纽约总人口 8,009,185 抄成 8,001,185，并在未系统检查时保留。",
       "evidence": [
-        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-01"
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-01",
+        "journal/entries/2026-08-11-task1-overview-and-timed-writing.md#独立初稿14-分钟"
       ],
       "reviewMethod": "在后续 Task 1 样本中逐项核对 overview 与正文里的对象名称、最高最低和趋势方向，记录实体标签写错是否再次出现以及检查能否捕获。",
       "openedAt": "2026-07-24",
-      "lastSeenAt": "2026-07-24",
+      "lastSeenAt": "2026-08-11",
       "repairUnitId": null,
       "consecutiveCleanSamples": 0,
       "fixedEvidence": []
@@ -213,13 +228,14 @@
       "skill": "writing",
       "impact": "medium",
       "status": "active",
-      "description": "Task 1 知道需要 Overview，但为追求一到两句话的简洁，只选择最高和最低，未同时概括图中最显著的升降趋势；问题是主特征筛选不足，不是篇幅过短。",
+      "description": "Task 1 冷启动样本的 Overview 为追求一到两句话的简洁，只选择最高和最低，未同时概括最显著的升降趋势。2026-08-11 三组定向练习已能筛选主要趋势与关键比较，但完整写作复用了刚练过的材料，尚无未见材料 clean sample。",
       "evidence": [
-        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-01"
+        "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-01",
+        "journal/entries/2026-08-11-task1-overview-and-timed-writing.md#三组-overview"
       ],
       "reviewMethod": "在后续 Task 1 样本中先列出候选主特征，再核对 Overview 是否在一到两句话内覆盖最显著趋势与关键比较，而不是只报告终点最高最低。",
       "openedAt": "2026-07-24",
-      "lastSeenAt": "2026-07-24",
+      "lastSeenAt": "2026-08-11",
       "repairUnitId": null,
       "consecutiveCleanSamples": 0,
       "fixedEvidence": []
@@ -229,16 +245,17 @@
       "skill": "writing",
       "impact": "high",
       "status": "active",
-      "description": "实时英文组织会停顿，主要阻塞在合适词汇与搭配的检索，次要阻塞在句子结构和语法选择。2026-08-09 在观点和例证已锁定后，主体段十分钟完成且只报告一次搭配长停顿，但仍频繁出现语义主语、自然句型、词形搭配和主谓一致错误；十三分钟自查主要捕获局部动词形式，未稳定发现整句语义与搭配问题。",
+      "description": "实时英文组织会停顿，主要阻塞在合适词汇与搭配的检索，次要阻塞在句子结构和语法选择。2026-08-09 在观点和例证已锁定后，主体段十分钟完成且只报告一次搭配长停顿，但仍频繁出现语义主语、自然句型、词形搭配和主谓一致错误。2026-08-11 Task 1 在结构已练习后 14 分钟成文且无明显长停顿，但未系统检查；6 分钟提示修订后仍残留数字、倍数表达和语义主语错误。",
       "evidence": [
         "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-01",
         "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-02",
         "journal/entries/2026-07-23-c19-test-1-baseline-review.md#w-03",
-        "journal/entries/2026-08-09-task2-idea-commitment-check.md#e014英文输出与自查"
+        "journal/entries/2026-08-09-task2-idea-commitment-check.md#e014英文输出与自查",
+        "journal/entries/2026-08-11-task1-overview-and-timed-writing.md#二十分钟纸笔样本"
       ],
       "reviewMethod": "在后续多个限时写作样本中标记句前停顿，并区分内容、词汇搭配、句法和语法来源；检查时先核对语义主语和谓语关系，再核对主谓一致与搭配，并比较主观不确定项是否覆盖实际高影响错误。",
       "openedAt": "2026-07-24",
-      "lastSeenAt": "2026-08-09",
+      "lastSeenAt": "2026-08-11",
       "repairUnitId": null,
       "consecutiveCleanSamples": 0,
       "fixedEvidence": []
@@ -250,11 +267,12 @@
       "status": "active",
       "description": "实时口语中主动词汇提取速度不足，频繁出现填充停顿、重复开头、半句重启和寻找词汇；随后依赖 help、thing、think、maybe 等泛化词维持表达，影响流利度和精确性。",
       "evidence": [
-        "journal/entries/2026-08-09-speaking-transcript-diagnostic.md#e015主动词汇提取与重启"
+        "journal/entries/2026-08-09-speaking-transcript-diagnostic.md#e015主动词汇提取与重启",
+        "journal/entries/2026-08-11-speaking-part1-answer-sufficiency.md#e015主动提取与实时组织"
       ],
       "reviewMethod": "每次保留无提示首遍录音，转写后统计因找词引发的长停顿、重复和重启；同题第二遍只能使用已掌握的简单替代表达，检查是否减少重启而不牺牲内容。",
       "openedAt": "2026-08-09",
-      "lastSeenAt": "2026-08-09",
+      "lastSeenAt": "2026-08-11",
       "repairUnitId": null,
       "consecutiveCleanSamples": 0,
       "fixedEvidence": []
@@ -266,11 +284,12 @@
       "status": "active",
       "description": "自发口语中高频语法、词形与搭配不稳定，主谓一致、介词、可数性、动词形式和形容词/名词选择在不同话题中重复出错，部分句子需要听者重新解析。",
       "evidence": [
-        "journal/entries/2026-08-09-speaking-transcript-diagnostic.md#e016高频语法与词形不稳定"
+        "journal/entries/2026-08-09-speaking-transcript-diagnostic.md#e016高频语法与词形不稳定",
+        "journal/entries/2026-08-11-speaking-part1-answer-sufficiency.md#e016高频语法与搭配"
       ],
       "reviewMethod": "从首遍录音中每次只提取三类最高频错误，先用稳定短句重写，再在不同题目中复用；连续三份独立录音未再出现同类错误才增加 clean sample。",
       "openedAt": "2026-08-09",
-      "lastSeenAt": "2026-08-09",
+      "lastSeenAt": "2026-08-11",
       "repairUnitId": null,
       "consecutiveCleanSamples": 0,
       "fixedEvidence": []
@@ -303,6 +322,54 @@
       "reviewMethod": "用一张只含六类关键词的真实经历卡完成两分钟首遍录音；检查是否形成单一叙述主线、是否覆盖具体细节，以及是否在不重复同一观点的情况下达到 90–120 秒。",
       "openedAt": "2026-08-09",
       "lastSeenAt": "2026-08-09",
+      "repairUnitId": null,
+      "consecutiveCleanSamples": 0,
+      "fixedEvidence": []
+    },
+    {
+      "id": "E019",
+      "skill": "speaking",
+      "impact": "high",
+      "status": "active",
+      "description": "Part 1 对答案充分性的判断不稳定：把已经回答完整的简单题误认为太短，在核心答案后继续强迫扩展；被追问时即使没有额外观点也继续搜索，导致长停顿、内容偏移和句法失控。",
+      "evidence": [
+        "journal/entries/2026-08-11-speaking-part1-answer-sufficiency.md#e019答案充分性与停止控制"
+      ],
+      "reviewMethod": "使用未见 Part 1 题且不设置统一目标时长；转写后标记每题最早充分点，并检查其后分句是否增加必要、相关的信息。只有不再因长度焦虑或追问压力强迫扩展的独立录音才计 clean sample。",
+      "openedAt": "2026-08-11",
+      "lastSeenAt": "2026-08-11",
+      "repairUnitId": null,
+      "consecutiveCleanSamples": 0,
+      "fixedEvidence": []
+    },
+    {
+      "id": "E020",
+      "skill": "listening",
+      "impact": "high",
+      "status": "active",
+      "description": "Listening 多选或配对题的选项较长、数量较多且语义相近时，无法稳定把选项预先压缩成可识别关系；播放中同时处理指代、主体、极性和同义改写会造成工作记忆超载，随后使用局部词或错误指代完成映射。Cambridge 21 Test 3 Part 3 的 Questions 25–30 只有 Q28 正确。",
+      "evidence": [
+        "journal/entries/2026-08-12-c21-test3-segmented-listening.md#e020复杂选项映射"
+      ],
+      "reviewMethod": "在未见 Part 3 播放前把每个长选项压缩为短关系标签；播放时只标记候选，并等待主体、评价方向和决定性关系完整出现。复盘时把每个错误分为未听到、听到但未映射、指代错误或主体/极性错误，检查是否仍出现连续错配。",
+      "openedAt": "2026-08-12",
+      "lastSeenAt": "2026-08-12",
+      "repairUnitId": null,
+      "consecutiveCleanSamples": 0,
+      "fixedEvidence": []
+    },
+    {
+      "id": "E021",
+      "skill": "listening",
+      "impact": "high",
+      "status": "active",
+      "description": "Listening 填空在已经听到或语义定位基本正确后，仍会因拼写、合写、单复数、语感怀疑或纸面到系统的转写失分。Cambridge 21 Test 3 Part 4 的 disease、ecosystem、holidays、virus、behavior 和 photograph 均受这一输出链影响。",
+      "evidence": [
+        "journal/entries/2026-08-12-c21-test3-segmented-listening.md#e021答案形式与转写"
+      ],
+      "reviewMethod": "在未见十题填空中保留首次纸面答案，并把听辨、拼写、词形和转写分别标记；每个 Section 结束时只检查题干语法、单复数和合写形式，纸笔整套完成后另留十分钟逐项誊抄核对。",
+      "openedAt": "2026-08-12",
+      "lastSeenAt": "2026-08-12",
       "repairUnitId": null,
       "consecutiveCleanSamples": 0,
       "fixedEvidence": []

@@ -1,0 +1,691 @@
+{
+  "accessed_splits": [
+    "public per-seed run records only"
+  ],
+  "artifacts": {
+    "seed_results": {
+      "bytes": 626,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora-three-seed-validation/seed-results.csv",
+      "sha256": "5618c3345c5dba7bd74d5907c34e61d2bd86f334996ec0f6d73981270af80153"
+    }
+  },
+  "claim_boundary": {
+    "not_supported": "An isolated causal effect of generation, a test result, or an internal emotion mechanism.",
+    "supported": "Three-seed validation performance, format reliability, cost, and end-to-end M4-versus-M3 formulation differences."
+  },
+  "completed_at_utc": "2026-08-15T14:42:17.966029+00:00",
+  "experiment_id": "EXP-054",
+  "frozen_sources": {
+    "aggregate": {
+      "bytes": 13238,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora-three-seed-validation/frozen-aggregate.py",
+      "sha256": "9ad1344da5e902384c80e775c84f980e6a8ed80988c6c1ddc4913786e4cad93f"
+    },
+    "aggregate_tests": {
+      "bytes": 1053,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora-three-seed-validation/frozen-aggregate_tests.py",
+      "sha256": "16d858b347deed82fa5817bba3aac67c70bba4bbba989b0e931a4ac8cf3f23da"
+    },
+    "aggregate_verifier": {
+      "bytes": 10618,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora-three-seed-validation/frozen-aggregate_verifier.py",
+      "sha256": "7cfef0e266a6bace5ea11263882afe06b080dc936aa059e7645758134f4f5e7d"
+    },
+    "authorization": {
+      "bytes": 1854,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora-three-seed-validation/frozen-authorization.md",
+      "sha256": "f827e56800a882082d64b05ef4946d7f9677e20b6739f32afaf9d015f9912c09"
+    },
+    "config": {
+      "bytes": 7668,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora-three-seed-validation/frozen-config.json",
+      "sha256": "7cd8b2cfab58ca9627009afd7bbc0be57b34dc425a2ea068609875a82369f928"
+    },
+    "protocol": {
+      "bytes": 4823,
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora-three-seed-validation/frozen-protocol.md",
+      "sha256": "b1a4247789e7c43429d0129a41456ac0ceac863ebfaba41cfe7c0d581ddb20fb"
+    }
+  },
+  "generation": {
+    "empty_prediction_rate": {
+      "maximum": 0.4166666666666667,
+      "mean": 0.37453703703703706,
+      "minimum": 0.33055555555555555,
+      "sample_std": 0.04308541378074995,
+      "values_by_seed": {
+        "42": 0.33055555555555555,
+        "43": 0.4166666666666667,
+        "44": 0.3763888888888889
+      }
+    },
+    "generated_tokens_mean": {
+      "maximum": 5.730555555555555,
+      "mean": 5.684722222222223,
+      "minimum": 5.647222222222222,
+      "sample_std": 0.04228704818788408,
+      "values_by_seed": {
+        "42": 5.730555555555555,
+        "43": 5.647222222222222,
+        "44": 5.676388888888889
+      }
+    },
+    "latency_median_seconds": {
+      "maximum": 1.7093789795180783,
+      "mean": 1.6120177848497406,
+      "minimum": 1.4736068334896117,
+      "sample_std": 0.1231297612442198,
+      "values_by_seed": {
+        "42": 1.4736068334896117,
+        "43": 1.7093789795180783,
+        "44": 1.6530675415415317
+      }
+    },
+    "latency_p95_seconds": {
+      "maximum": 1.93447021425236,
+      "mean": 1.821407208160963,
+      "minimum": 1.6663377274060622,
+      "sample_std": 0.13891423815015033,
+      "values_by_seed": {
+        "42": 1.6663377274060622,
+        "43": 1.93447021425236,
+        "44": 1.8634136828244663
+      }
+    },
+    "parser_valid_rate": {
+      "maximum": 1.0,
+      "mean": 1.0,
+      "minimum": 1.0,
+      "sample_std": 0.0,
+      "values_by_seed": {
+        "42": 1.0,
+        "43": 1.0,
+        "44": 1.0
+      }
+    },
+    "predicted_label_cardinality_mean": {
+      "maximum": 0.6694444444444444,
+      "mean": 0.625462962962963,
+      "minimum": 0.5833333333333334,
+      "sample_std": 0.04308541378074989,
+      "values_by_seed": {
+        "42": 0.6694444444444444,
+        "43": 0.5833333333333334,
+        "44": 0.6236111111111111
+      }
+    },
+    "throughput_rows_per_second": {
+      "maximum": 0.6659152790806502,
+      "mean": 0.6182001133976569,
+      "minimum": 0.5848320517494286,
+      "sample_std": 0.04240285349183371,
+      "values_by_seed": {
+        "42": 0.6659152790806502,
+        "43": 0.5848320517494286,
+        "44": 0.603853009362892
+      }
+    }
+  },
+  "inputs": {
+    "42": {
+      "run": {
+        "bytes": 26008,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-42/run.json",
+        "sha256": "706ceae7ab2a7f2525805d1c0e2daa73f7d9a9216c18cfe143caba677ae459b0"
+      },
+      "verification": {
+        "bytes": 9403,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-42/verification.json",
+        "sha256": "a020a8840e3d281410f0dc099e34b26f16004638ac5c55fccb57fc178c027e25"
+      }
+    },
+    "43": {
+      "run": {
+        "bytes": 26283,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/run.json",
+        "sha256": "a5e75a242ab654a4b6706ba92aa33bddc647cef8ab01483ffc5cc02d084a31bf"
+      },
+      "verification": {
+        "bytes": 9403,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-43/verification.json",
+        "sha256": "868c6c07bc943b8dff04394bbc75f53acb862b93173d9db0c79f9b6ffe04562c"
+      }
+    },
+    "44": {
+      "run": {
+        "bytes": 26356,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-44/run.json",
+        "sha256": "051ff63952b4becb19dff7f552e49eb055ea9b3c642ebc8c3670673fffac3b83"
+      },
+      "verification": {
+        "bytes": 9403,
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora/seed-44/verification.json",
+        "sha256": "c1fa07d365585f772cbdacb5d863ce9736beb980c9a0284a341dbcb6c6731ce1"
+      }
+    }
+  },
+  "metrics": {
+    "five_label_macro_f1_without_surprise": {
+      "maximum": 0.7234190987381918,
+      "mean": 0.7011816616897772,
+      "minimum": 0.6724867372426763,
+      "sample_std": 0.026072988311768446,
+      "values_by_seed": {
+        "42": 0.7076391490884638,
+        "43": 0.7234190987381918,
+        "44": 0.6724867372426763
+      }
+    },
+    "hamming_loss": {
+      "maximum": 0.05462962962962963,
+      "mean": 0.050848765432098764,
+      "minimum": 0.04722222222222222,
+      "sample_std": 0.0037061141847292696,
+      "values_by_seed": {
+        "42": 0.05462962962962963,
+        "43": 0.04722222222222222,
+        "44": 0.050694444444444445
+      }
+    },
+    "macro_f1": {
+      "maximum": 0.6584048045040487,
+      "mean": 0.6151822489390119,
+      "minimum": 0.5896992909070532,
+      "sample_std": 0.037631527874023754,
+      "values_by_seed": {
+        "42": 0.5896992909070532,
+        "43": 0.6584048045040487,
+        "44": 0.5974426514059338
+      }
+    },
+    "macro_precision": {
+      "maximum": 0.7050721210089984,
+      "mean": 0.6624429298780524,
+      "minimum": 0.5815627438395127,
+      "sample_std": 0.07007849542309066,
+      "values_by_seed": {
+        "42": 0.5815627438395127,
+        "43": 0.7050721210089984,
+        "44": 0.7006939247856461
+      }
+    },
+    "macro_recall": {
+      "maximum": 0.6217184330130329,
+      "mean": 0.5958038849191212,
+      "minimum": 0.56311972853077,
+      "sample_std": 0.02988013954276324,
+      "values_by_seed": {
+        "42": 0.6025734932135608,
+        "43": 0.6217184330130329,
+        "44": 0.56311972853077
+      }
+    },
+    "micro_f1": {
+      "maximum": 0.7644341801385681,
+      "mean": 0.7551436992936047,
+      "minimum": 0.7456896551724138,
+      "sample_std": 0.009373332852336637,
+      "values_by_seed": {
+        "42": 0.7456896551724138,
+        "43": 0.7644341801385681,
+        "44": 0.7553072625698324
+      }
+    },
+    "subset_accuracy": {
+      "maximum": 0.7875,
+      "mean": 0.7763888888888889,
+      "minimum": 0.7611111111111111,
+      "sample_std": 0.01367896916916127,
+      "values_by_seed": {
+        "42": 0.7611111111111111,
+        "43": 0.7875,
+        "44": 0.7805555555555556
+      }
+    },
+    "weighted_f1": {
+      "maximum": 0.7637060981836097,
+      "mean": 0.7452775123545394,
+      "minimum": 0.733673120703237,
+      "sample_std": 0.0161376006183092,
+      "values_by_seed": {
+        "42": 0.7384533181767716,
+        "43": 0.7637060981836097,
+        "44": 0.733673120703237
+      }
+    }
+  },
+  "paired_m4_minus_m3": {
+    "component_bootstrap_macro_f1_delta": {
+      "maximum": -0.005110437272676173,
+      "mean": -0.038849771488317406,
+      "minimum": -0.06335250868833306,
+      "sample_std": 0.030199681521804442,
+      "values_by_seed": {
+        "42": -0.04808636850394299,
+        "43": -0.005110437272676173,
+        "44": -0.06335250868833306
+      }
+    },
+    "five_label_macro_f1_without_surprise": {
+      "maximum": 0.01608969749501088,
+      "mean": -0.005542284708539828,
+      "minimum": -0.04774018214317144,
+      "sample_std": 0.036548338342874284,
+      "values_by_seed": {
+        "42": 0.015023630522541076,
+        "43": 0.01608969749501088,
+        "44": -0.04774018214317144
+      }
+    },
+    "macro_f1": {
+      "maximum": -0.005110437272676127,
+      "mean": -0.03884977148831744,
+      "minimum": -0.0633525086883332,
+      "sample_std": 0.030199681521804526,
+      "values_by_seed": {
+        "42": -0.04808636850394299,
+        "43": -0.005110437272676127,
+        "44": -0.0633525086883332
+      }
+    },
+    "micro_f1": {
+      "maximum": 0.007737751567139517,
+      "mean": -0.00443108891174071,
+      "minimum": -0.01262520070341766,
+      "sample_std": 0.010747618684895039,
+      "values_by_seed": {
+        "42": -0.01262520070341766,
+        "43": 0.007737751567139517,
+        "44": -0.008405817598943988
+      }
+    },
+    "subset_accuracy": {
+      "maximum": 0.03888888888888886,
+      "mean": 0.025925925925925908,
+      "minimum": 0.005555555555555536,
+      "sample_std": 0.017858612520357323,
+      "values_by_seed": {
+        "42": 0.005555555555555536,
+        "43": 0.033333333333333326,
+        "44": 0.03888888888888886
+      }
+    },
+    "weighted_f1": {
+      "maximum": 0.005174509749492517,
+      "mean": -0.010426654504026392,
+      "minimum": -0.023078574623626058,
+      "sample_std": 0.014355581662535729,
+      "values_by_seed": {
+        "42": -0.013375898637945638,
+        "43": 0.005174509749492517,
+        "44": -0.023078574623626058
+      }
+    }
+  },
+  "per_label": {
+    "anger": {
+      "f1": {
+        "maximum": 0.7916666666666666,
+        "mean": 0.7835427598269354,
+        "minimum": 0.7746478873239436,
+        "sample_std": 0.008535543545640133,
+        "values_by_seed": {
+          "42": 0.7746478873239436,
+          "43": 0.7843137254901961,
+          "44": 0.7916666666666666
+        }
+      },
+      "precision": {
+        "maximum": 0.8130081300813008,
+        "mean": 0.7558205237922824,
+        "minimum": 0.7236842105263158,
+        "sample_std": 0.04965245324011148,
+        "values_by_seed": {
+          "42": 0.7236842105263158,
+          "43": 0.8130081300813008,
+          "44": 0.7307692307692307
+        }
+      },
+      "predicted_support": {
+        "maximum": 156.0,
+        "mean": 143.66666666666666,
+        "minimum": 123.0,
+        "sample_std": 18.0092568789868,
+        "values_by_seed": {
+          "42": 152.0,
+          "43": 123.0,
+          "44": 156.0
+        }
+      },
+      "recall": {
+        "maximum": 0.8636363636363636,
+        "mean": 0.8181818181818182,
+        "minimum": 0.7575757575757576,
+        "sample_std": 0.054629564779757424,
+        "values_by_seed": {
+          "42": 0.8333333333333334,
+          "43": 0.7575757575757576,
+          "44": 0.8636363636363636
+        }
+      }
+    },
+    "fear": {
+      "f1": {
+        "maximum": 0.7142857142857143,
+        "mean": 0.6741584564860427,
+        "minimum": 0.6206896551724138,
+        "sample_std": 0.04820324841632794,
+        "values_by_seed": {
+          "42": 0.6875,
+          "43": 0.7142857142857143,
+          "44": 0.6206896551724138
+        }
+      },
+      "precision": {
+        "maximum": 0.8333333333333334,
+        "mean": 0.7377136752136751,
+        "minimum": 0.6875,
+        "sample_std": 0.08284393605160001,
+        "values_by_seed": {
+          "42": 0.6875,
+          "43": 0.8333333333333334,
+          "44": 0.6923076923076923
+        }
+      },
+      "predicted_support": {
+        "maximum": 16.0,
+        "mean": 13.666666666666666,
+        "minimum": 12.0,
+        "sample_std": 2.0816659994661326,
+        "values_by_seed": {
+          "42": 16.0,
+          "43": 12.0,
+          "44": 13.0
+        }
+      },
+      "recall": {
+        "maximum": 0.6875,
+        "mean": 0.625,
+        "minimum": 0.5625,
+        "sample_std": 0.0625,
+        "values_by_seed": {
+          "42": 0.6875,
+          "43": 0.625,
+          "44": 0.5625
+        }
+      }
+    },
+    "joy": {
+      "f1": {
+        "maximum": 0.64,
+        "mean": 0.5632167832167833,
+        "minimum": 0.4727272727272727,
+        "sample_std": 0.08447448246474458,
+        "values_by_seed": {
+          "42": 0.5769230769230769,
+          "43": 0.64,
+          "44": 0.4727272727272727
+        }
+      },
+      "precision": {
+        "maximum": 0.7222222222222222,
+        "mean": 0.6341938857985071,
+        "minimum": 0.5487804878048781,
+        "sample_std": 0.08675043075782961,
+        "values_by_seed": {
+          "42": 0.5487804878048781,
+          "43": 0.631578947368421,
+          "44": 0.7222222222222222
+        }
+      },
+      "predicted_support": {
+        "maximum": 82.0,
+        "mean": 64.66666666666667,
+        "minimum": 36.0,
+        "sample_std": 25.006665778014735,
+        "values_by_seed": {
+          "42": 82.0,
+          "43": 76.0,
+          "44": 36.0
+        }
+      },
+      "recall": {
+        "maximum": 0.6486486486486487,
+        "mean": 0.536036036036036,
+        "minimum": 0.35135135135135137,
+        "sample_std": 0.16122099250606559,
+        "values_by_seed": {
+          "42": 0.6081081081081081,
+          "43": 0.6486486486486487,
+          "44": 0.35135135135135137
+        }
+      }
+    },
+    "love": {
+      "f1": {
+        "maximum": 0.845771144278607,
+        "mean": 0.8370173298765365,
+        "minimum": 0.8217054263565892,
+        "sample_std": 0.013305866917793984,
+        "values_by_seed": {
+          "42": 0.8217054263565892,
+          "43": 0.8435754189944135,
+          "44": 0.845771144278607
+        }
+      },
+      "precision": {
+        "maximum": 0.8628571428571429,
+        "mean": 0.8061748717751941,
+        "minimum": 0.776255707762557,
+        "sample_std": 0.0491136443884286,
+        "values_by_seed": {
+          "42": 0.7794117647058824,
+          "43": 0.8628571428571429,
+          "44": 0.776255707762557
+        }
+      },
+      "predicted_support": {
+        "maximum": 219.0,
+        "mean": 199.33333333333334,
+        "minimum": 175.0,
+        "sample_std": 22.368132093076824,
+        "values_by_seed": {
+          "42": 204.0,
+          "43": 175.0,
+          "44": 219.0
+        }
+      },
+      "recall": {
+        "maximum": 0.9289617486338798,
+        "mean": 0.8743169398907105,
+        "minimum": 0.825136612021858,
+        "sample_std": 0.05212782521404075,
+        "values_by_seed": {
+          "42": 0.8688524590163934,
+          "43": 0.825136612021858,
+          "44": 0.9289617486338798
+        }
+      }
+    },
+    "sadness": {
+      "f1": {
+        "maximum": 0.6774193548387096,
+        "mean": 0.6479729790425885,
+        "minimum": 0.631578947368421,
+        "sample_std": 0.025555987646126026,
+        "values_by_seed": {
+          "42": 0.6774193548387096,
+          "43": 0.6349206349206349,
+          "44": 0.631578947368421
+        }
+      },
+      "precision": {
+        "maximum": 0.782608695652174,
+        "mean": 0.7407546226886557,
+        "minimum": 0.6896551724137931,
+        "sample_std": 0.04716139440081145,
+        "values_by_seed": {
+          "42": 0.75,
+          "43": 0.6896551724137931,
+          "44": 0.782608695652174
+        }
+      },
+      "predicted_support": {
+        "maximum": 29.0,
+        "mean": 26.666666666666668,
+        "minimum": 23.0,
+        "sample_std": 3.2145502536643185,
+        "values_by_seed": {
+          "42": 28.0,
+          "43": 29.0,
+          "44": 23.0
+        }
+      },
+      "recall": {
+        "maximum": 0.6176470588235294,
+        "mean": 0.5784313725490197,
+        "minimum": 0.5294117647058824,
+        "sample_std": 0.0449272126956455,
+        "values_by_seed": {
+          "42": 0.6176470588235294,
+          "43": 0.5882352941176471,
+          "44": 0.5294117647058824
+        }
+      }
+    },
+    "surprise": {
+      "f1": {
+        "maximum": 0.3333333333333333,
+        "mean": 0.1851851851851852,
+        "minimum": 0.0,
+        "sample_std": 0.16972502573910517,
+        "values_by_seed": {
+          "42": 0.0,
+          "43": 0.3333333333333333,
+          "44": 0.2222222222222222
+        }
+      },
+      "precision": {
+        "maximum": 0.5,
+        "mean": 0.3,
+        "minimum": 0.0,
+        "sample_std": 0.2645751311064591,
+        "values_by_seed": {
+          "42": 0.0,
+          "43": 0.4,
+          "44": 0.5
+        }
+      },
+      "predicted_support": {
+        "maximum": 5.0,
+        "mean": 2.3333333333333335,
+        "minimum": 0.0,
+        "sample_std": 2.516611478423583,
+        "values_by_seed": {
+          "42": 0.0,
+          "43": 5.0,
+          "44": 2.0
+        }
+      },
+      "recall": {
+        "maximum": 0.2857142857142857,
+        "mean": 0.14285714285714285,
+        "minimum": 0.0,
+        "sample_std": 0.14285714285714285,
+        "values_by_seed": {
+          "42": 0.0,
+          "43": 0.2857142857142857,
+          "44": 0.14285714285714285
+        }
+      }
+    }
+  },
+  "replay_stability": {
+    "all_passes_fresh_process": true,
+    "formal_raw_matches_per_pass": {
+      "42": {
+        "pass_1": 60,
+        "pass_2": 60
+      },
+      "43": {
+        "pass_1": 60,
+        "pass_2": 60
+      },
+      "44": {
+        "pass_1": 60,
+        "pass_2": 60
+      }
+    },
+    "passes_per_seed": 2,
+    "raw_output_matches_between_passes": {
+      "42": 60,
+      "43": 60,
+      "44": 60
+    },
+    "rows_per_pass": 60
+  },
+  "resources": {
+    "api_cost_usd_total": 0,
+    "peak_mlx_memory_gb": {
+      "maximum": 9.300330778,
+      "mean": 9.28801873,
+      "minimum": 9.278141202,
+      "sample_std": 0.011293338146346785,
+      "values_by_seed": {
+        "42": 9.28558421,
+        "43": 9.278141202,
+        "44": 9.300330778
+      }
+    },
+    "training_seconds": {
+      "maximum": 10548.168631374836,
+      "mean": 10388.824224249614,
+      "minimum": 10281.943966250168,
+      "sample_std": 140.65297113038164,
+      "values_by_seed": {
+        "42": 10548.168631374836,
+        "43": 10281.943966250168,
+        "44": 10336.360075123841
+      }
+    },
+    "validation_generation_seconds": {
+      "maximum": 2460.8233269578777,
+      "mean": 2394.2459484302285,
+      "minimum": 2295.0637075828854,
+      "sample_std": 87.55781312367397,
+      "values_by_seed": {
+        "42": 2295.0637075828854,
+        "43": 2460.8233269578777,
+        "44": 2426.850810749922
+      }
+    },
+    "wall_seconds": {
+      "maximum": 12851.571348249912,
+      "mean": 12790.916614319276,
+      "minimum": 12750.261169292033,
+      "sample_std": 53.53425779442974,
+      "values_by_seed": {
+        "42": 12851.571348249912,
+        "43": 12750.261169292033,
+        "44": 12770.917325415881
+      }
+    }
+  },
+  "rq_id": "RQ-S1",
+  "schema_version": "exp-054-m4-three-seed-aggregate-v1",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "selection_epochs": {
+    "42": 2,
+    "43": 2,
+    "44": 2
+  },
+  "stage": "m4-three-seed-validation-aggregate",
+  "status": "Completed",
+  "test_split_accessed": false,
+  "tier": "Major",
+  "validation_row_level_predictions_accessed": false
+}

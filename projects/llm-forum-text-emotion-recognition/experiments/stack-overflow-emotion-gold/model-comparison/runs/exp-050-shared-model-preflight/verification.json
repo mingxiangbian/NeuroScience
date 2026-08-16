@@ -1,0 +1,400 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "checks": [
+    {
+      "detail": null,
+      "name": "experiment identity",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run reached Passed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "all required stages passed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "formal execution remains unauthorized",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run denies validation access",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run denies test access",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "model whitelist excludes test",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test remains sealed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen config.json matches source",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen prompt-v1.json matches source",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen run_preflight.py matches source",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen strict_multilabel_parser.py matches source",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen verify_preflight.py matches source",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen prompt hash matches contract",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train hash matches contract",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "task manifest hash matches contract",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "RoBERTa manifest hash matches contract",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "Qwen manifest hash matches contract",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "chat template hash matches contract",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "tokenizer asset hash matches contract",
+      "passed": true
+    },
+    {
+      "detail": 3360,
+      "name": "train row count",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "label order",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train vectors are binary six-vectors",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "neutral is derived from labels",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cardinality is derived from labels",
+      "passed": true
+    },
+    {
+      "detail": 24,
+      "name": "selection size",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "selection identity digest",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "selection order digest",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "selection label counts",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "selection covers both outcomes per label",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "selection neutral coverage",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "selection multilabel coverage",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "RoBERTa length summary independently matches",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "Qwen length summary independently matches",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "RoBERTa train has no truncation",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "Qwen train has no truncation",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "Qwen empty-think suffix is invariant",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "Qwen suffix digest",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source access audit: load_train_names_train_path",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source access audit: load_train_names_no_validation_or_test_path",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source access audit: no_recursive_or_glob_file_access",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "all reports are train-only",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "all reports deny validation",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "all reports deny test",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "no performance metric was computed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "public report schemas contain no row-level fields",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "public reports contain no sample identifiers",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "public reports contain no component identifiers",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M1 two-step finite BCE",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M1 six-logit shapes",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M1 classifier changed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M2 exact head size",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M2 pooling and logit shapes",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M2 two-step finite BCE",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M2 only head changed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M3 independent LoRA parameter count",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M3 insertion contract",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M3 exact blocks",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M3 exact target modules",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M2/M3 matched head initialization",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M2/M3 matched zero-step logits",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M3 exact zero initial LoRA delta",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M3 head and LoRA changed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M3 two-step finite BCE",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M3 optimizer separation",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M3/M4 matched LoRA initialization",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M4 insertion and parameter contract",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M4 two-step finite assistant loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M4 prompt is masked",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M4 LoRA changed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M4 generation has no retries",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M4 private generation hash",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M4 private row count",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M4 parser independently matches",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M4 valid count independently matches",
+      "passed": true
+    },
+    {
+      "detail": 44.176471332786605,
+      "name": "preflight wall-time budget",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M2-M4 peak memory budget",
+      "passed": true
+    }
+  ],
+  "checks_passed": 77,
+  "checks_total": 77,
+  "experiment_id": "EXP-050",
+  "failed_checks": [],
+  "performance_metrics_computed": false,
+  "status": "Passed",
+  "test_split_accessed": false,
+  "validation_split_accessed": false
+}

@@ -337,6 +337,76 @@ RoBERTa 比较。模型分数只能在相同数据集、任务定义、split 和
 
 ### 尚未完成
 
+- Stack Overflow C0 主线的数据阶段、EXP-050 共享预检与 EXP-051 M1 三 seed validation 已
+  完成并独立验证。M1 固定 0.5 Macro-F1 为 `0.607297 +/- 0.012628`，per-seed 共享阈值
+  Macro-F1 为 `0.617254 +/- 0.011084`；后者同时将 strict subset accuracy 从
+  `0.773611` 降至 `0.760648`，不是全面改善。三个 seed 的 `surprise` F1 均为 0，六标签
+  主指标与五标签敏感性结果都已保留。EXP-052 frozen Qwen + linear head 的 seeds 42/43/44
+  及其只读三 seed aggregate 均已独立验证。M2 固定 0.5 与 per-seed 共享阈值 Macro-F1
+  分别为 `0.151553 +/- 0.027647` 和 `0.318889 +/- 0.038085`；共享阈值同时把 strict
+  subset accuracy 从 `0.560185` 降至 `0.490741`、把 hamming loss 从 `0.087269` 提高至
+  `0.121142`，因此校准不是全面改善。匹配 M1 的固定/共享阈值 paired Macro-F1 delta
+  为 `-0.455744 +/- 0.035919`/`-0.298365 +/- 0.039425`，三个 seed 的 delta 均为负。
+  `surprise` 三 seed F1 均为 0；`joy` 的共享阈值 F1 为 `0.206770 +/- 0.187595`，并在
+  seed 44 降至 0，显示低频标签之外仍有明显不稳定性。Aggregate verifier 通过 `85/85`，
+  当前 EXP-052 回归测试通过 `36/36`；它没有读取或拼接逐行预测，也没有将 seed 42 的
+  完整特征提取耗时与 seeds 43/44 的 cache-only 耗时做误导性平均。该结果只支持当前
+  final-layer last-token pooling + linear head 的稳定弱表现，不能推出 Qwen 没有情绪信息或
+  Classification LoRA 不会改善。EXP-053 M3 的 train-only 资源门已独立验证：32/32 次更新
+  loss 有限，112/112 个 `lora_b` 均非零，checkpoint 重载误差为 0；训练/回放阶段峰值为
+  `8.674`/`8.376 GB`。随后 formal seed 42 完成 2 epochs、6,720 steps，选中 epoch 2：固定
+  0.5 Macro-F1=`0.602846`，共享阈值 `0.40` 下 Macro-F1=`0.637786`、Micro-F1=`0.758315`、
+  strict subset accuracy=`0.755556`、hamming loss=`0.050463`，component-bootstrap 95% CI
+  `[0.548975,0.709997]`。相对 matched M2 seed 42，共享阈值 Macro-F1 delta=`+0.312857`，
+  95% CI `[+0.223280,+0.388544]`；该增量只支持 classification interface 下 LoRA 适配收益。
+  正式运行耗时 `3.821 h`、峰值 `8.702 GB`。第一次 verifier 完整回放后因旧字段名仅通过
+  `135/136`，Failed 记录原样保留；schema-only amendment 后完整重放通过 `148/148`，概率
+  误差为 0。Formal seed 43 随后按独立授权完成相同的 2 epochs、6,720 steps，并同样选中
+  epoch 2：固定 0.5 Macro-F1=`0.659318`，共享阈值 `0.35` 下 Macro-F1=`0.663515`、
+  Micro-F1=`0.756696`、strict subset accuracy=`0.754167`、hamming loss=`0.050463`，
+  component-bootstrap 95% CI `[0.570351,0.732537]`。相对 matched M2 seed 43，共享阈值
+  Macro-F1 delta=`+0.309922`，95% CI `[+0.208105,+0.390880]`；独立 checkpoint replay
+  概率误差为 0，`143/143` 项检查通过。运行耗时 `3.544 h`、峰值 `8.699 GB`。Formal seed 44
+  也按独立授权完成相同训练并选中 epoch 2：固定 0.5 Macro-F1=`0.598812`，共享阈值 `0.25`
+  下 Macro-F1=`0.660795`、Micro-F1=`0.763713`、strict subset accuracy=`0.741667`、hamming
+  loss=`0.051852`，component-bootstrap 95% CI `[0.584731,0.727760]`。相对 matched M2
+  seed 44，共享阈值 Macro-F1 delta=`+0.382650`，95% CI `[+0.298126,+0.455866]`；完整
+  checkpoint replay 概率误差为 0，`148/148` 项检查通过。运行耗时 `3.352 h`、峰值
+  `8.702 GB`。随后只读 M3 三 seed aggregate 以 arithmetic mean + sample std
+  (`ddof=1`) 冻结并通过独立复算 `124/124`。固定 0.5 / 各 seed 共享阈值的 Macro-F1
+  分别为 `0.620325 +/- 0.033829` / `0.654032 +/- 0.014135`；共享阈值下相对 matched
+  M2 的 Macro-F1 delta 为 `+0.335143 +/- 0.041168`，三个 seed 均为正。相对 M1 的共享
+  Macro-F1 delta 为 `+0.036778 +/- 0.003154`，但五标签敏感性 delta 为
+  `-0.033981 +/- 0.008620`，Micro-F1 与 Weighted-F1 delta 也分别为
+  `-0.011564 +/- 0.006039` / `-0.008242 +/- 0.001563`；表面 Macro-F1 优势由只有 7 个
+  validation 正例的 `surprise` 驱动，不能写成 M3 全面优于 encoder。聚合没有读取或拼接
+  逐行预测，test 未访问。EXP-053 validation family 至此完成。随后 EXP-055 在冻结的六份
+  M1/M3 validation 预测上完成错误分析：M3 的六标签 Macro-F1 比 M1 高
+  `+0.036778`，但去除仅 7 个正例的 `surprise` 后低 `-0.033981`，Micro-F1、
+  Weighted-F1、subset accuracy 和 hamming loss 也均未超过 M1。三个 seed 中 M1-only
+  exact-correct 平均 `56.00` 条、M3-only 平均 `48.67` 条，whole-vector oracle 平均只需
+  选择 M3 `8.33%` 的样本即可相对 M1 获得 `+0.136394` 六标签 Macro-F1 上界，因此冻结的
+  router headroom gate 通过。45 条目的性案例复核主要指向标签 ontology 重叠、弱情绪与
+  neutral 边界、隐式情绪及模型/表征限制；该小样本不代表总体发生率。Attempt 2 在只修正
+  verifier 的 Markdown 空白归一化后通过 `220/220`。这只授权另行登记 train-OOF router
+  可行性实验，不证明可部署 router 有效。随后 EXP-054 M4 Qwen Generative LoRA 完成三 seed
+  validation：seeds 42/43/44 均选中 epoch 2，Macro-F1 为
+  `0.589699`/`0.658405`/`0.597443`，聚合为 `0.615182 +/- 0.037632`；Micro-F1、
+  Weighted-F1 与 strict subset accuracy 分别为 `0.755144 +/- 0.009373`、
+  `0.745278 +/- 0.016138` 与 `0.776389 +/- 0.013679`。全部 validation 输出均通过 strict
+  parser，每 seed 两次全新进程、每次 60 条 replay 都逐条一致；三个 seed verifier 各通过
+  `92/92`，aggregate verifier 通过 `33/33`。相对同 seed M3，M4 Macro-F1 delta 为
+  `-0.038850 +/- 0.030200` 且 3/3 seed 为负，但 subset accuracy delta 为
+  `+0.025926 +/- 0.017859`。该结果只比较端到端 formulation，不能把差异单独归因于
+  generation。首次 preflight 的 Metal OOM 与对象生命周期修正均已留档；修正后 preflight
+  通过 `26/26`。M1-M4 validation 主线至此完成。EXP-056 随后按统一 TEST-READY 合同完成
+  12 个冻结单元的一次性正式 test，并在全部预测 hash-sealed 后才打开标签。M1/M2/M3/M4
+  test Macro-F1 分别为 `0.567459 +/- 0.007814`、`0.295226 +/- 0.020587`、
+  `0.613804 +/- 0.025733` 和 `0.547823 +/- 0.015312`。M3-M2 的 95% component-bootstrap
+  CI 完全高于 0；M3-M1 六标签差为 `+0.046345`，但 CI `[-0.008674,+0.089730]` 跨 0，
+  去除仅 7 个 test 正例的 `surprise` 后点估计为 `-0.010735`。M4-M3 六标签差为
+  `-0.065981`，CI `[-0.107869,-0.011312]`。独立 verifier 通过 `29/29`，没有 test 后选择
+  或调参；Stack Overflow test 自此已消费。
 - Weibo 主任务从数据协议、dev 基线、Qwen 2x2、LoRA 三 seed、冻结错误分析到 EXP-049
   一次性正式 test 已形成完整行为证据链。后续只允许对既有 test 预测做预登记的只读分析，
   不再利用该 split 调参、选 seed 或补跑模型。尚需完成系统演示、论文表格与结果归档；
@@ -370,6 +440,36 @@ RoBERTa 比较。模型分数只能在相同数据集、任务定义、split 和
 - [`research-roadmap.md`](research-roadmap.md): 从开题到论文交付的阶段路线和通过条件。
 - [`hypotheses.md`](hypotheses.md): 当前待验证假设、反证条件和对应实验。
 - [`evidence-log.md`](evidence-log.md): 项目事实、实验产物和申请证据台账。
+- [`experiments/stack-overflow-emotion-gold/protocols/data-so-task-v1.md`](experiments/stack-overflow-emotion-gold/protocols/data-so-task-v1.md): 当前 Stack Overflow C0 主线的来源、六标签重建、重复组件划分、低支持标签和 test gate 冻结合同及执行结果。
+- [`experiments/stack-overflow-emotion-gold/reports/data-so-task-v1.json`](experiments/stack-overflow-emotion-gold/reports/data-so-task-v1.json): 4,800 行数据构建、标签、重复组件、split 与隐私边界的聚合结果。
+- [`experiments/stack-overflow-emotion-gold/reports/data-so-task-v1-verification.json`](experiments/stack-overflow-emotion-gold/reports/data-so-task-v1-verification.json): `DATA-SO-TASK-V1` 的 53 项独立复算结果与 test 封存状态。
+- [`data/stack-overflow-emotion-gold/task-v1.manifest.json`](data/stack-overflow-emotion-gold/task-v1.manifest.json): 当前任务的固定来源、公开/私有产物哈希与 sealed test manifest。
+- [`experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-050-shared-model-preflight/REPORT.md`](experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-050-shared-model-preflight/REPORT.md): M1-M4 共享 train-only 执行门、匹配初始化、LoRA 插入、严格 parser、资源和失败尝试记录。
+- [`experiments/stack-overflow-emotion-gold/protocols/exp-051-m1-roberta.md`](experiments/stack-overflow-emotion-gold/protocols/exp-051-m1-roberta.md): M1 RoBERTa 三 seed 合同、seed-42 CPU recovery 与结论边界。
+- [`experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu-recovery/seed-42/VERIFICATION-SUMMARY.md`](experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu-recovery/seed-42/VERIFICATION-SUMMARY.md): EXP-051 seed-42 validation 指标、独立复算和 MPS 失败留档。
+- [`experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/VERIFICATION-SUMMARY.md`](experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-43/VERIFICATION-SUMMARY.md): EXP-051 seed-43 validation 指标、独立 checkpoint 重放与两 seed 描述性边界。
+- [`experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-44/VERIFICATION-SUMMARY.md`](experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu/seed-44/VERIFICATION-SUMMARY.md): EXP-051 seed-44 validation 指标、独立 checkpoint 重放和三 seed 聚合入口。
+- [`experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-three-seed-validation/VERIFICATION-SUMMARY.md`](experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-three-seed-validation/VERIFICATION-SUMMARY.md): EXP-051 M1 三 seed validation 均值、样本标准差、阈值权衡、低支持标签失败与 test 边界。
+- [`experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen/seed-42/VERIFICATION-SUMMARY.md`](experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen/seed-42/VERIFICATION-SUMMARY.md): EXP-052 frozen Qwen + linear head seed-42 validation 指标、精确 head 回放、70 项独立检查与单 seed 结论边界。
+- [`experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-feature-cache-reuse-gate/VERIFICATION-SUMMARY.md`](experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-feature-cache-reuse-gate/VERIFICATION-SUMMARY.md): EXP-052 seed-42 hidden-state cache 的只读复用边界、74 项独立检查和后续 seed 授权限制。
+- [`experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen/seed-43/VERIFICATION-SUMMARY.md`](experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen/seed-43/VERIFICATION-SUMMARY.md): EXP-052 seed-43 只读 cache consumer、fresh linear head、validation 指标、99 项独立检查与两 seed 结论边界。
+- [`experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen/seed-44/VERIFICATION-SUMMARY.md`](experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen/seed-44/VERIFICATION-SUMMARY.md): EXP-052 seed-44 只读 cache consumer、fresh linear head、validation 指标、104 项独立检查与 aggregate 前结论边界。
+- [`experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen-three-seed-validation/VERIFICATION-SUMMARY.md`](experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen-three-seed-validation/VERIFICATION-SUMMARY.md): EXP-052 M2 三 seed validation 均值、样本标准差、匹配 M1 paired delta、资源边界与 85 项独立检查。
+- [`experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora-resource-preflight-seed-42-attempt-2/VERIFICATION-SUMMARY.md`](experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora-resource-preflight-seed-42-attempt-2/VERIFICATION-SUMMARY.md): EXP-053 M3 train-only 参数更新、checkpoint 回放、阶段内存、正式训练时间投影、公私边界与 102 项独立检查。
+- [`experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora/seed-42/VERIFICATION-SUMMARY-ATTEMPT-2.md`](experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora/seed-42/VERIFICATION-SUMMARY-ATTEMPT-2.md): EXP-053 M3 formal seed-42 validation、matched M3-M2 增量、完整 checkpoint 重放、验证修复留档与 148 项独立检查。
+- [`experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora/seed-43/VERIFICATION-SUMMARY.md`](experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora/seed-43/VERIFICATION-SUMMARY.md): EXP-053 M3 formal seed-43 validation、matched M3-M2 增量、完整 checkpoint 重放、两 seed 描述性边界与 143 项独立检查。
+- [`experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora/seed-44/VERIFICATION-SUMMARY.md`](experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora/seed-44/VERIFICATION-SUMMARY.md): EXP-053 M3 formal seed-44 validation、matched M3-M2 增量、完整 checkpoint 重放、aggregate 前边界与 148 项独立检查。
+- [`experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora-three-seed-validation/VERIFICATION-SUMMARY.md`](experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora-three-seed-validation/VERIFICATION-SUMMARY.md): EXP-053 M3 三 seed validation 均值、matched M2/M1 descriptive delta、低支持 `surprise` 敏感性、资源边界与 124 项独立检查。
+- [`experiments/stack-overflow-emotion-gold/error-analysis/runs/exp-055-m1-m3-validation-error-analysis/VERIFICATION-SUMMARY.md`](experiments/stack-overflow-emotion-gold/error-analysis/runs/exp-055-m1-m3-validation-error-analysis/VERIFICATION-SUMMARY.md): EXP-055 的 M1/M3 全量 validation 错误互补性、whole-vector oracle、45 条目的性复核、router headroom 门与 220 项独立检查。
+- [`experiments/stack-overflow-emotion-gold/protocols/exp-054-m4-qwen-generative-lora.md`](experiments/stack-overflow-emotion-gold/protocols/exp-054-m4-qwen-generative-lora.md): EXP-054 的生成式监督、严格 parser、checkpoint selection、replay、资源和 M4-M3 结论边界。
+- [`experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora-preflight-attempt-1/attempt-failure.json`](experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora-preflight-attempt-1/attempt-failure.json): 首次 preflight 的 Metal OOM、停止位置和只修正对象生命周期的恢复记录。
+- [`experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora-three-seed-validation/VERIFICATION-SUMMARY.md`](experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora-three-seed-validation/VERIFICATION-SUMMARY.md): EXP-054 M4 三 seed validation、M4-M3 配对差值、格式/重放稳定性、资源边界与 33 项 aggregate 检查。
+- [`experiments/stack-overflow-emotion-gold/test-gate/protocols/exp-056-unified-frozen-test-gate.md`](experiments/stack-overflow-emotion-gold/test-gate/protocols/exp-056-unified-frozen-test-gate.md): EXP-056 的 12 单元统一 TEST-READY 协议、访问顺序、指标、bootstrap、资源和结论边界。
+- [`experiments/stack-overflow-emotion-gold/test-gate/configs/exp-056-test-ready.json`](experiments/stack-overflow-emotion-gold/test-gate/configs/exp-056-test-ready.json): 冻结全部 checkpoint/adapter/head、阈值、实现与上游证据哈希的机器可读合同。
+- [`experiments/stack-overflow-emotion-gold/test-gate/preflight/exp-056-test-ready-verification-v1.json`](experiments/stack-overflow-emotion-gold/test-gate/preflight/exp-056-test-ready-verification-v1.json): TEST-READY 的 89 项独立检查、未授权状态和 test 未读取证明。
+- [`experiments/stack-overflow-emotion-gold/test-gate/runs/exp-056-frozen-test/REPORT.md`](experiments/stack-overflow-emotion-gold/test-gate/runs/exp-056-frozen-test/REPORT.md): EXP-056 一次性正式 test 的四 family 三 seed 结果、五组冻结比较、资源、执行恢复与结论边界。
+- [`experiments/stack-overflow-emotion-gold/test-gate/runs/exp-056-frozen-test/results.json`](experiments/stack-overflow-emotion-gold/test-gate/runs/exp-056-frozen-test/results.json): 12 个冻结单元的正式指标、逐标签结果、2,000 次 component-bootstrap 与封存记录。
+- [`experiments/stack-overflow-emotion-gold/test-gate/runs/exp-056-frozen-test/verification.json`](experiments/stack-overflow-emotion-gold/test-gate/runs/exp-056-frozen-test/verification.json): 对预测封存顺序、12 个单元、聚合指标、bootstrap、公私边界和无事后选择的 29 项独立检查。
 - [`experiments/tweeteval-emotion/test-gate/README.md`](experiments/tweeteval-emotion/test-gate/README.md): EXP-016 一次性正式 test 结果、受控比较、外部参照与复算入口。
 - [`experiments/tweeteval-emotion/error-analysis/runs/exp-017-frozen-error-analysis/REPORT.md`](experiments/tweeteval-emotion/error-analysis/runs/exp-017-frozen-error-analysis/REPORT.md): EXP-017 全量稳定性、共享错误、受控转移和匿名定性分析。
 - [`experiments/goemotions/protocols/data-protocol-v1.md`](experiments/goemotions/protocols/data-protocol-v1.md): GoEmotions 官方多标签数据来源、标签顺序、split 纪律和 test gate。
@@ -433,14 +533,19 @@ RoBERTa 比较。模型分数只能在相同数据集、任务定义、split 和
 
 ## Next Action
 
-1. 冻结 EXP-038 及其全部来源模型；GoEmotions test 已消费，不再用于调参、模型选择、
-   prompt/threshold 修改或补跑 seeds 43/44。
-2. 将 GoEmotions 公开数据行为复现阶段视为阶段性完成：BERT 是 primary metric 最强
-   条件，1.7B LoRA 未超过 BERT，但已形成 prompting、LoRA、ontology、标注聚合、
-   错误分析和正式 test 的完整负结果证据链。
-3. EXP-049 已完成 Weibo 一次性正式 test：LoRA 相对 matched no-adapter Qwen 明确改善
-   `+0.319691`，但相对 encoder 的均值差为 `-0.013009`，95% CI 跨 0。test 已消费；后续
-   只做不改变模型的只读错误分析、系统演示和论文证据归档，不选择最佳 test seed，也不再
-   根据该 split 修改 prompt、parser、threshold、checkpoint 或模型族。
-4. 保留 EXP-028 的 `Failed` 状态。内部表征或 SAE 只作为后续支线，必须使用新的
-   Major 编号、现实资源门和独立干预证据，不能从当前分类分数推出情绪机制。
+1. 保持 EXP-038 与 EXP-049 及其来源模型冻结；两个 test 均已消费，不再用于调参、
+   prompt/threshold 修改、checkpoint 选择或补跑候选。
+2. `DATA-SO-TASK-V1`、EXP-050 与 EXP-051 M1 三 seed validation 均已通过独立验证；保留
+   首次 MPS OOM 及 CPU recovery，并把阈值收益、subset accuracy 代价和 `surprise` 失败
+   一并作为 M1 主结果边界。
+3. EXP-052 M2、EXP-053 M3、EXP-054 M4、EXP-055 错误分析和 EXP-056 一次性正式 test
+   均已独立验证。正式 test 支持 M3 相对 M2 的稳定任务适配收益，但不支持 M3 全面超过
+   M1，也不支持 M4 超过 M3。Stack Overflow test 已消费；后续不得据此调参、选择 seed、
+   修改阈值或补跑候选，只能对既有冻结预测做另行预登记的只读分析。当前主线转入论文主表、
+   系统演示和证据归档，不再增加主模型分支。
+4. EXP-055 的不可部署 whole-vector oracle 已通过 router headroom 门，因此可另行登记只用
+   pre-Qwen features 的 train-OOF router 可行性协议；这仍是条件支线，未证明 learned router
+   能超过单模型。Stack Overflow ID/context 回连继续要求独立的数据恢复门与 matched
+   shuffled-context 对照，不与本次 router oracle 混用。
+5. 不再增加主数据集或主模型分支。保留 EXP-028 的 `Failed` 状态；representation/SAE
+   仍是后置可选支线，不能从当前分类分数推出情绪机制。

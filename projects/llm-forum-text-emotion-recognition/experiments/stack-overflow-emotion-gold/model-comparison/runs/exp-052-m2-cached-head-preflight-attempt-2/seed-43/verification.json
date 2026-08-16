@@ -1,0 +1,378 @@
+{
+  "check_count": 73,
+  "checks": [
+    {
+      "detail": null,
+      "name": "run completed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "experiment identity",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stage identity",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "seed identity",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "authorization frozen",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train validation only",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test sealed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "seed 44 sealed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "M3 and M4 sealed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "Qwen not loaded",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "Qwen forward not executed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "features not extracted",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "zero model-load time",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "zero Qwen-forward time",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "zero feature-extraction time",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen config",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "implementation hash: experiment-protocol",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen implementation: experiment-protocol",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "implementation hash: authorization",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen implementation: authorization",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "implementation hash: cache-protocol",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen implementation: cache-protocol",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "implementation hash: runner",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen implementation: runner",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "implementation hash: verifier",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen implementation: verifier",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "implementation hash: tests",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen implementation: tests",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "implementation hash: head-primitives",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen implementation: head-primitives",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "runner source audit: explicit_train_validation_allowlist",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "runner source audit: no_test_path_lookup",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "runner source audit: no_recursive_data_access",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "runner source audit: no_qwen_or_transformers_import",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "runner source audit: read_only_memmap",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cache gate completed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cache gate 74/74",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cache gate test sealed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train row count",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation row count",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "component disjoint",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "sample disjoint",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train gate artifact",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train shape",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train dtype",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train read-only mmap",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train finite",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train order",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train token stream",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train hash before and after",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "train cache Git ignored",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation gate artifact",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation shape",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation dtype",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation read-only mmap",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation finite",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation order",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation token stream",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation hash before and after",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation cache Git ignored",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "head initialization independently reproduced",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh head parameter count",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "batch-order digests",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "training flag matches stage",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "metric flag matches stage",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight authorization seals training",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight authorization seals metrics",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight has no metrics",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight has no private output",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "public artifacts contain no substantive raw text",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "public artifacts contain no row identifiers",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "zero API cost",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test remains sealed after verification",
+      "passed": true
+    }
+  ],
+  "experiment_id": "EXP-052",
+  "failed_checks": [],
+  "schema_version": "exp-052-m2-cached-head-verification-v1",
+  "seed": 43,
+  "stage": "seed-43-cache-reuse-preflight",
+  "status": "Passed",
+  "test_split_accessed": false,
+  "verified_at_utc": "2026-08-14T05:58:05.091984+00:00"
+}

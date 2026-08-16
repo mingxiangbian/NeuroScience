@@ -1,0 +1,87 @@
+{
+  "schema_version": "exp-052-feature-cache-reuse-contract-v1",
+  "experiment_id": "EXP-052",
+  "rq_id": "RQ-S1",
+  "tier": "Major infrastructure gate",
+  "stage": "feature-cache-reuse-integrity-gate",
+  "registered_at": "2026-08-14",
+  "authorization": {
+    "basis": "User authorized the next step after the verified EXP-052 seed-42 integrity gate.",
+    "source_seed": 42,
+    "candidate_consumers": [43, 44],
+    "consumer_seeds_authorized": false,
+    "training_authorized": false,
+    "performance_metrics_authorized": false,
+    "test_access": false,
+    "exp_053_054_authorized": false
+  },
+  "implementation": {
+    "protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-052-feature-cache-reuse-gate.md",
+      "sha256": "428ca2a0060d4f6305ca6d8acd203d43ebdf0674946eaa891c7920711baeed88"
+    },
+    "runner": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/run_exp052_cache_reuse_gate.py",
+      "sha256": "7f6c1ca5dee8f82a32fa1d6ea927b5d409165c4dac34ad6ff2548a996d2e3038"
+    },
+    "verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/verify_exp052_cache_reuse_gate.py",
+      "sha256": "5b921cd8af9a34add833882f4e64b9eb04de2cf82adf8e784395ba38890fcdf3"
+    },
+    "tests": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/tests/test_exp052_cache_reuse_gate.py",
+      "sha256": "63bd2e8a90162a7eaa2cc72688582a8ca5edca0a60d3e051795ed45c534577c0"
+    }
+  },
+  "shared_contract": {
+    "path": "experiments/stack-overflow-emotion-gold/model-comparison/config.json",
+    "bytes": 6720,
+    "sha256": "d97b7c837b5de4ef014a553fa255ebea4ecdffa848d19715d084bf7ed46177d6"
+  },
+  "source_seed_42": {
+    "run": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen/seed-42/run.json",
+      "bytes": 29718,
+      "sha256": "cdd5148f186d86b94b41df1baa79ea64059dc6de066e6f040b06dce0db9c8c62"
+    },
+    "verification": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen/seed-42/verification.json",
+      "bytes": 7641,
+      "sha256": "2c125c1c766cfa64761434eac9b29bf14d67b18395b75540e9b5a0afcb0e70e6"
+    },
+    "private_manifest": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-052-m2-frozen-qwen/seed-42/private-manifest.json",
+      "bytes": 1575,
+      "sha256": "6526d4a598f2afd2c482182530d179e86eb8ac4858166c50af7ec96450352fd7"
+    }
+  },
+  "feature_cache": {
+    "train": {
+      "artifact": {
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-052-m2-frozen-qwen/seed-42/feature-cache/train/features.npy",
+        "bytes": 34406528,
+        "sha256": "e7b69a80e594960c609d1737eb09bbae03e090e0e7af3f22f6ded426ca9f5588"
+      },
+      "shape": [3360, 2560],
+      "dtype": "float32",
+      "sample_order_sha256": "c9e4bd1eb2bdbb33c833234754c493b8818aa6c610acaf88659ae74fa94848a3",
+      "token_id_stream_sha256": "fe61b661cfb1d2499388c922e36d0cd1445838aacd2b6d2e33261f967c90ece9"
+    },
+    "validation": {
+      "artifact": {
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-052-m2-frozen-qwen/seed-42/feature-cache/validation/features.npy",
+        "bytes": 7372928,
+        "sha256": "e8d8e86b3bfba44f9821656a9a4e97cbaa832223d5c569db4071f783df63e6f9"
+      },
+      "shape": [720, 2560],
+      "dtype": "float32",
+      "sample_order_sha256": "9207339b47abaf1eff66648f1e03f2db1d478848568c2ce34767fdfedcab15a0",
+      "token_id_stream_sha256": "2046e0442427db55cf8fc916fa10c6f748b55d8e170ebfbcf13b1c3ef048ae99"
+    }
+  },
+  "execution": {
+    "public_run_dir": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-feature-cache-reuse-gate",
+    "consumer_cache_mode": "numpy mmap_mode=r",
+    "hash_before_and_after_consumer_use": true
+  }
+}

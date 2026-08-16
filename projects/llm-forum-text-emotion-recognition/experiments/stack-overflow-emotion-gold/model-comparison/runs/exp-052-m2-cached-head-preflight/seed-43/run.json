@@ -1,0 +1,20 @@
+{
+  "accessed_splits": [],
+  "experiment_id": "EXP-052",
+  "failed_at_utc": "2026-08-14T05:54:02.161163+00:00",
+  "failure": {
+    "message": "'artifact'",
+    "traceback": "Traceback (most recent call last):\n  File \"/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/run_exp052_m2_cached_head.py\", line 901, in run\n    completed = run_preflight(\n                ^^^^^^^^^^^^^^\n  File \"/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/run_exp052_m2_cached_head.py\", line 558, in run_preflight\n    validated = base_validation(config, shared, seed)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/run_exp052_m2_cached_head.py\", line 421, in base_validation\n    if expected[\"artifact\"] != gate_record[\"artifact\"]:\n                               ~~~~~~~~~~~^^^^^^^^^^^^\nKeyError: 'artifact'\n",
+    "type": "KeyError"
+  },
+  "performance_metrics_computed": false,
+  "qwen_forward_executed": false,
+  "qwen_model_loaded": false,
+  "schema_version": "exp-052-m2-cached-head-run-v1",
+  "seed": 43,
+  "stage": "seed-43-cache-reuse-preflight",
+  "started_at_utc": "2026-08-14T05:54:01.686162+00:00",
+  "status": "Failed",
+  "test_split_accessed": false,
+  "training_performed": false
+}

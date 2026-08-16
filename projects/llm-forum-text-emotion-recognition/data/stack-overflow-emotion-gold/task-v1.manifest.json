@@ -1,0 +1,74 @@
+{
+  "counts": {
+    "components": 4681,
+    "rows": 4800,
+    "split_rows": {
+      "test": 720,
+      "train": 3360,
+      "validation": 720
+    }
+  },
+  "private_artifacts": {
+    "duplicate_conflicts": {
+      "bytes": 7592,
+      "path": "data/stack-overflow-emotion-gold/derived-private/task-v1/duplicate-conflicts.jsonl",
+      "sha256": "41984b9b62218e4f46199bc524b12aedb86ddad0388e54bfe5c2e1f23d13e4d2"
+    },
+    "private_manifest": {
+      "bytes": 3600,
+      "path": "data/stack-overflow-emotion-gold/derived-private/task-v1/private-manifest.json",
+      "sha256": "e377c80ae32c1e7b3cd7b7f0679517c2de1a28479bd9df7a1df9b63c80697ebb"
+    },
+    "test_inputs": {
+      "bytes": 259437,
+      "path": "data/stack-overflow-emotion-gold/derived-private/task-v1/test.inputs.jsonl",
+      "sha256": "9a246320f3ca8e878c62dedb46cad639ccf38ebfdacf6d7d58b1d3969101eda3"
+    },
+    "test_labels": {
+      "bytes": 108000,
+      "path": "data/stack-overflow-emotion-gold/derived-private/task-v1/test.labels.sealed.jsonl",
+      "sha256": "e420d53bcf25d6c55ccd118ed3b7421262ec34760278b18ce3ddd197a603281a"
+    },
+    "train": {
+      "bytes": 1372562,
+      "path": "data/stack-overflow-emotion-gold/derived-private/task-v1/train.jsonl",
+      "sha256": "fc2f853b5b8afb78253ca3a96b5093d2fd12ea7063801f57bf138c9d5cf528fc"
+    },
+    "validation": {
+      "bytes": 302088,
+      "path": "data/stack-overflow-emotion-gold/derived-private/task-v1/validation.jsonl",
+      "sha256": "e83ea51f32c7a1a067f8ed63d499c5540a46542efefdb3afdc7de9937921e4f7"
+    }
+  },
+  "private_root": "data/stack-overflow-emotion-gold/derived-private/task-v1",
+  "protocol_id": "DATA-SO-TASK-V1",
+  "public_report": {
+    "bytes": 7281,
+    "path": "experiments/stack-overflow-emotion-gold/reports/data-so-task-v1.json",
+    "sha256": "e38e90b851925ae7eb9dabca45cbcbe17baaaf3dc017a60c06fe468d79b15124"
+  },
+  "public_split_index": {
+    "bytes": 943680,
+    "path": "data/stack-overflow-emotion-gold/task-v1.split-index.jsonl",
+    "sha256": "c7f5fe99780f1c130b93cf8b35a388b92f4bf69753589b58c4bdb7973ea8d55d"
+  },
+  "schema_version": "so-emotion-c0-task-manifest-v1",
+  "source": {
+    "license_status": "no_standard_license_file",
+    "revision": "d6a679f39a198fdb0657a6116d35dd7b92496898",
+    "sha256": "29f667701227fc3f1ffc005c5d5364c30f24476005baac23fff8338dbd2f0179"
+  },
+  "status": "verified",
+  "test_gate": {
+    "inputs_contain_gold_fields": false,
+    "labels_gitignored": true,
+    "status": "sealed_not_authorized_for_model_access",
+    "test_inputs_sha256": "9a246320f3ca8e878c62dedb46cad639ccf38ebfdacf6d7d58b1d3969101eda3",
+    "test_labels_sha256": "e420d53bcf25d6c55ccd118ed3b7421262ec34760278b18ce3ddd197a603281a"
+  },
+  "verification_report": {
+    "bytes": 2360,
+    "path": "experiments/stack-overflow-emotion-gold/reports/data-so-task-v1-verification.json",
+    "sha256": "5156bfd583c13816e6d97eda1de7ba1b9237409036506001c5fcdb717b273cf3"
+  }
+}

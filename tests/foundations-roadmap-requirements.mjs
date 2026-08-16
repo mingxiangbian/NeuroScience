@@ -542,8 +542,8 @@ assert.doesNotMatch(
 const careerUnits = byId["career-roadmap"].units;
 assert.deepEqual(careerUnits.map(({ id, title, type, sessions, status }) => ({ id, title, type, sessions, status })), [
   { id: "U1", title: "修掩码", type: "实验单元", sessions: { min: 1, max: 2 }, status: "settled" },
-  { id: "U2", title: "揭穿作弊", type: "实验单元", sessions: { min: 1, max: 2 }, status: "active" },
-  { id: "U3", title: "第一篇笔记", type: "理论单元", sessions: { min: 1, max: 1 }, status: "frozen" },
+  { id: "U2", title: "揭穿作弊", type: "实验单元", sessions: { min: 1, max: 2 }, status: "settled" },
+  { id: "U3", title: "第一篇笔记", type: "理论单元", sessions: { min: 1, max: 1 }, status: "active" },
   { id: "U4", title: "SFT 试驾", type: "实现单元", sessions: { min: 2, max: 4 }, status: "frozen" },
   { id: "U5", title: "DPO 试驾", type: "实验单元", sessions: { min: 2, max: 4 }, status: "frozen" },
   { id: "U6", title: "人格笔记", type: "理论单元", sessions: { min: 1, max: 1 }, status: "frozen" },
@@ -631,6 +631,7 @@ assert.deepEqual(byId["evals-debugging"].knowledgeNotes.map((note) => note.title
   "Eval Case 的六层结构",
   "Benchmark 与 Agent Behavior Eval",
   "Causal Mask：低 Loss 为什么可能是假象",
+  "Prefix-only 评估：怎样揭穿 Future-token Leakage",
 ]);
 for (const id of ["career-roadmap", "interview-sprint", "agent-design", "llm-systems", "rag-memory", "research-reading", "behavioral-strategy", "logs", "overview"]) {
   assert.equal(byId[id].knowledgeNotes.length, 0, `${id} should not expose shallow knowledge notes`);

@@ -57,6 +57,16 @@ function makeValidSprintPlan(overrides = {}) {
       overall: 7.5,
       targetProfile: { listening: 7.5, reading: 7.5, writing: 7.5, speaking: 7.5 },
     },
+    prioritySystem: {
+      effectiveFrom: "2026-08-15",
+      carryPolicy: "Complete the required priority before optional work.",
+      levels: [{
+        id: "P0",
+        label: "Speaking readiness",
+        reason: "The speaking appointment may precede the written test.",
+        rule: "Keep one unprompted speaking sample each day.",
+      }],
+    },
     dailyBudget: {
       standardMinutes: 60,
       maximumMinutes: 60,
@@ -170,6 +180,10 @@ const missingSprintTask = makeValidSprintPlan();
 missingSprintTask.days[0].tasks = {};
 const missingSprintTaskResult = validateSiteDataInputs(makeValidInputs({ sprintPlan: missingSprintTask }));
 assert.equal(missingSprintTaskResult.fatalIssues.some((issue) => issue.type === "missing_daily_task"), true);
+
+const missingSprintPriorities = makeValidSprintPlan({ prioritySystem: undefined });
+const missingSprintPrioritiesResult = validateSiteDataInputs(makeValidInputs({ sprintPlan: missingSprintPriorities }));
+assert.equal(missingSprintPrioritiesResult.fatalIssues.some((issue) => issue.path === "sprintPlan.prioritySystem"), true);
 
 const infeasibleSprint = makeValidSprintPlan({
   objective: {

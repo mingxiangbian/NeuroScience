@@ -1,0 +1,31 @@
+{
+  "completed_at_utc": "2026-08-15T16:12:16.518105+00:00",
+  "experiment_id": "EXP-056",
+  "family": "m3",
+  "labels_opened": false,
+  "prediction": {
+    "bytes": 46297,
+    "path": "data/stack-overflow-emotion-gold/derived-private/task-v1/experiments/exp-056-frozen-test/predictions/m3-seed-42.npz",
+    "sha256": "d255e2362c23b81de6eb7c756aa357b3a0dde5c19c7875ee0d9d674e09bb5517"
+  },
+  "raw_generations": null,
+  "resource": {
+    "backend": "MLX_Apple_Metal",
+    "peak_memory_gb": 8.592560776,
+    "tokenization": {
+      "maximum": 341,
+      "mean": 163.27916666666667,
+      "minimum": 125,
+      "p95": 237.0,
+      "raw_maximum": 341,
+      "rows": 720,
+      "token_id_stream_sha256": "c8adcddcb50c1447d62cde652885c2be37d39aada54e39e3736920bf92f90a0a",
+      "truncated_rows": 0
+    },
+    "wall_seconds": 650.4305760420393
+  },
+  "rows": 720,
+  "schema_version": "exp-056-unit-prediction-record-v1",
+  "seed": 42,
+  "unit_id": "m3-seed-42"
+}

@@ -1,0 +1,37 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "batch_size": 1,
+  "experiment_id": "EXP-050",
+  "finite_losses": [
+    1.174271583557129,
+    0.6021764278411865
+  ],
+  "head_final_sha256": "bb714c6def491071aea06d1e231faddd0ae33b6102654531674ab35d5f30ca44",
+  "head_initial_sha256": "9bc810fdabb657cda4d299ab00dda288de73fcd33f636e378d71006dbb3b0e78",
+  "initial_logits_sha256": "15d21402c2632d7dddff8a23903faad1cbbbcd2bc50788d00947b73de653cd42",
+  "logit_shape": [
+    1,
+    6
+  ],
+  "model_condition": "M2",
+  "optimizer_steps": 2,
+  "packages": {
+    "mlx": "0.32.0",
+    "mlx-lm": "0.31.3",
+    "transformers": "5.14.1"
+  },
+  "peak_memory_gb": 8.24748892,
+  "performance_metrics_computed": false,
+  "pooled_shape": [
+    1,
+    2560
+  ],
+  "qwen_parameters_frozen": true,
+  "raw_text_stored_publicly": false,
+  "status": "Passed",
+  "test_split_accessed": false,
+  "trainable_parameter_count": 15366,
+  "validation_split_accessed": false
+}

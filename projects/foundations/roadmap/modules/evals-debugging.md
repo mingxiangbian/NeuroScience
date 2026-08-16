@@ -3,7 +3,7 @@ id: evals-debugging
 title: Evals & Diagnostics
 status: learning
 learning_progress: 0
-last_updated: 2026-08-07
+last_updated: 2026-08-14
 priority: high
 plan_scope: long-term
 navigation_group: practice
@@ -18,7 +18,7 @@ subsystems: 1,2,3,4,5,6
 
 ## 当前状态
 
-U1 已完成 causal / non-causal 的训练 loss 对照，并记录了简单数据、随机末位与单 seed 带来的证据边界。当前活动单元 U2 将比较 teacher-forced held-out loss 与只给前缀的自回归生成，继续建立第一条完整证据链；U3 再把指标假象与失败原因写成完整分析。
+U1 与 U2 已完成 causal / non-causal 的单变量训练对照、prefix-only 评估和未来 token 扰动实验，建立了第一条从信息边界到行为证据的完整链条。当前活动单元 U3 将把指标假象、失败原因与结论边界整理成完整分析。
 
 已有 Cyrene eval case 审计和 benchmark 边界笔记可作为经验资产，但不会直接替代贾维斯 0.x 上的新验证结果。
 
@@ -92,7 +92,7 @@ Runtime 负责稳定发出事件；本模块负责用这些事件复核行为、
 
 ## 时间线
 
-- 当前：进行中；U1 已完成错误基线与修复对照，U2 正在比较两类指标，U3 将完成失败分析。
+- 当前：进行中；U1 已完成错误基线与修复对照，U2 已用 prefix-only 与未来扰动揭穿答案泄漏，U3 正在整理完整失败分析。
 - 每个实现或实验单元：未开始；在结算前补齐最小测试、证据和失败解释。
 - 跨子系统接入时：未开始；增加接口冲突、错误传播和恢复 case。
 - 已知行为稳定后：未开始；把关键 case 固化为可重放 regression suite，并保留版本与原始 evidence。
@@ -341,3 +341,50 @@ Causal loss 每轮稍高，方向上支持“切断泄漏会失去训练捷径�
 #### 一句话总结
 
 Causal mask 的价值不是让 loss 更漂亮，而是让训练与生成遵守同一信息边界；未来答案一旦泄漏，低 loss 可能只证明模型会利用捷径，而不证明它会生成。
+
+### Prefix-only 评估：怎样揭穿 Future-token Leakage
+
+> U2 在没有可学习规律的 IID 随机序列上，把“模型有权看到什么”和“指标看起来多好”拆开验证：non-causal 模型可以在 teacher forcing 中复制右侧答案，但一旦只给真实前缀，它的生成能力就回到随机水平。
+
+`prefix-only evaluation` · `future-token perturbation` · `NLL confidence` · `controlled experiment`
+
+#### 核心定义
+
+**Teacher-forced evaluation** 一次输入完整真实序列，并在各位置计算 next-token loss。对正确实现的 causal decoder，mask 会阻止位置 \(t\) 读取未来；但若错误关闭 causal mask，完整序列内部仍然放着 `target[t] = input[t+1]`，即使样本来自 held-out split，答案也没有消失。
+
+**Prefix-only evaluation** 在每个位置只输入真实前缀 \(x_{\le t}\)，读取最后位置对 \(x_{t+1}\) 的预测。它复现了自回归生成时真正可用的信息边界。
+
+**Future-token perturbation** 固定 \(x_{\le t}\)，只把未来的 `input[t+1]` 改成另一个 token，再比较位置 \(t\) 的输出分布。如果预测随未来 token 翻转，模型就实际利用了不该获得的信息。
+
+#### 核心机制
+
+1. 从 64 个 token 中独立均匀采样序列，使下一个 token 无法由前缀规律推出。合法 causal 模型的理论基线是 NLL \(\ln 64=4.1589\)、accuracy \(1/64=1.5625\%\)。
+2. 两组模型加载同一份初始化，使用相同的训练 batch、随机种子与超参数，`dropout=0`；唯一改变的变量是 causal mask。
+3. 在同一份新 eval set 上分别计算 teacher-forced、prefix-only 和 autoregressive rollout 指标。
+4. 再修改每个位置右侧的答案 token，检查输出分布距离、预测翻转率以及模型是否跟随新 token。
+
+#### 逐步示例
+
+| 模型 | Teacher-forced NLL / Acc | Prefix-only NLL / Acc | 未来扰动 |
+| --- | ---: | ---: | --- |
+| Causal | `4.1636` / `1.481%` | `4.1636` / `1.481%` | TV `0`，flip `0%` |
+| Non-causal | `0.00111` / `100%` | `11.1041` / `1.600%` | TV `0.99965`，flip/follow `100%` |
+
+Causal 模型面对 IID 随机任务没有可学规律，因此 teacher-forced 与 prefix-only 表现一致，并且不受未来 token 改动影响。Non-causal 模型则在完整序列上几乎完美复制右侧答案；拿掉未来输入后，accuracy 回到随机水平，自回归 rollout accuracy 也只有约 `1.646%`。
+
+Prefix-only accuracy 接近随机不代表 NLL 也应回到 `4.1589`。NLL 计算的是 \(-\log p(y)\)：只要模型给正确 token 的概率极低，即使 top-1 accuracy 同样很差，loss 也会显著高于均匀随机。`11.1041` 表明这个模型在泄漏答案缺席时仍然非常自信地猜错。
+
+本地产物位于 `/Users/phoenix/DL/transformer`：`u2_leakage_experiment.py`、`u2_artifacts/u2_results.json`、`u2_artifacts/u2_leakage_comparison.png`，以及 causal / non-causal 两份 checkpoint。
+
+#### 边界与常见错误
+
+- 这是单 seed 的 toy experiment，足以演示当前实现中的泄漏机制，但不能说明效应大小具有统计普遍性。
+- Non-causal 模型若没有学会复制未来 token，只能说明这次没有观察到它利用通道；不能证明泄漏通道不存在。
+- BERT 式 masked language modeling 会把待预测目标遮住或扰动，双向上下文本身是其合法输入，不能把所有 non-causal 模型统称为作弊。
+- Held-out split 防的是跨样本记忆，不会自动消除同一样本内部的 future-token leakage。
+- 训练曲线每 50 step 只记录一个 batch，不应当作平滑后的 held-out learning curve。
+- Future-token perturbation 能证明模型是否学会依赖未来信息；架构是否从根本上禁止访问，仍要结合 mask 实现检查。
+
+#### 一句话总结
+
+可信的自回归评估不只是换一份未见数据，而是必须让模型在评估时也只能看到生成时真正拥有的前缀；否则再漂亮的 held-out loss 也可能只是答案泄漏。

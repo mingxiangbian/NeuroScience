@@ -1,0 +1,138 @@
+{
+  "schema_version": "exp-052-m2-cached-head-contract-v1",
+  "experiment_id": "EXP-052",
+  "rq_id": "RQ-S1",
+  "tier": "Major",
+  "stage": "seed-44-cache-reuse-train-validation",
+  "registered_at": "2026-08-14",
+  "authorization": {
+    "authorized_at": "2026-08-14",
+    "basis": "User explicitly authorized execution of EXP-052 seed 44; its frozen cache preflight subsequently passed 78/78 independent checks.",
+    "seeds": [
+      44
+    ],
+    "splits": [
+      "train",
+      "validation"
+    ],
+    "training_authorized": true,
+    "performance_metrics_authorized": true,
+    "test_access": false,
+    "seed_44_authorized": true,
+    "exp_053_054_authorized": false,
+    "three_seed_aggregate_authorized": false
+  },
+  "shared_contract": {
+    "path": "experiments/stack-overflow-emotion-gold/model-comparison/config.json",
+    "bytes": 6720,
+    "sha256": "d97b7c837b5de4ef014a553fa255ebea4ecdffa848d19715d084bf7ed46177d6"
+  },
+  "cache_reuse_gate": {
+    "run": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-feature-cache-reuse-gate/run.json",
+      "bytes": 6706,
+      "sha256": "bf8d5d49f2e8be3aa920c02848ec246f7a33e9a651892014fc234611b056910f"
+    },
+    "verification": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-feature-cache-reuse-gate/verification.json",
+      "bytes": 7751,
+      "sha256": "880b39260655d038ba5c6e03e5777a7c3d3929b2d3cc8bf057db192c3b6f261c"
+    }
+  },
+  "prior_seed_gate": {
+    "run": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen/seed-43/run.json",
+      "bytes": 26154,
+      "sha256": "8f642cc303bafe0955988b18098c62d2ec6acc6a40d31ae10320b01402352457"
+    },
+    "verification": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen/seed-43/verification.json",
+      "bytes": 10080,
+      "sha256": "abd1c12ce2eb5c96b67904107dd19d28396f25d9d12ef1ff6ef810211eb016b4"
+    }
+  },
+  "consumer_preflight": {
+    "run": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-cached-head-preflight/seed-44/run.json",
+      "bytes": 10235,
+      "sha256": "8e78ca6ed0ace5ea9a0955e6fabe5153bcd045ca6623ef89ad19dd83f7b66dae"
+    },
+    "verification": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-cached-head-preflight/seed-44/verification.json",
+      "bytes": 8123,
+      "sha256": "b194375b061f9682e193ac4f03031109fa11741abf9f3a8696d16d1566ce5c1f"
+    }
+  },
+  "feature_cache": {
+    "train": {
+      "artifact": {
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-052-m2-frozen-qwen/seed-42/feature-cache/train/features.npy",
+        "bytes": 34406528,
+        "sha256": "e7b69a80e594960c609d1737eb09bbae03e090e0e7af3f22f6ded426ca9f5588"
+      },
+      "shape": [
+        3360,
+        2560
+      ],
+      "dtype": "float32",
+      "sample_order_sha256": "c9e4bd1eb2bdbb33c833234754c493b8818aa6c610acaf88659ae74fa94848a3",
+      "token_id_stream_sha256": "fe61b661cfb1d2499388c922e36d0cd1445838aacd2b6d2e33261f967c90ece9"
+    },
+    "validation": {
+      "artifact": {
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-052-m2-frozen-qwen/seed-42/feature-cache/validation/features.npy",
+        "bytes": 7372928,
+        "sha256": "e8d8e86b3bfba44f9821656a9a4e97cbaa832223d5c569db4071f783df63e6f9"
+      },
+      "shape": [
+        720,
+        2560
+      ],
+      "dtype": "float32",
+      "sample_order_sha256": "9207339b47abaf1eff66648f1e03f2db1d478848568c2ce34767fdfedcab15a0",
+      "token_id_stream_sha256": "2046e0442427db55cf8fc916fa10c6f748b55d8e170ebfbcf13b1c3ef048ae99"
+    }
+  },
+  "implementation": {
+    "experiment-protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-052-m2-frozen-qwen-linear-head.md",
+      "sha256": "cbdfefb7f648296590a17da4e585b25dc0ab0dc9099fbdef62dee054f1096f52"
+    },
+    "authorization": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-052-seed-44-cache-reuse-authorization.md",
+      "sha256": "59b03bed7acd29a0bf720dbdcf60701bf7e2c78ddcf65e3f9cc1d7ad01bdce21"
+    },
+    "cache-protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-052-feature-cache-reuse-gate.md",
+      "sha256": "428ca2a0060d4f6305ca6d8acd203d43ebdf0674946eaa891c7920711baeed88"
+    },
+    "runner": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/run_exp052_m2_cached_head.py",
+      "sha256": "b56d74815d548e90f23a4fc96b83dc29a6629dddf457e1af78c15334893283ff"
+    },
+    "verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/verify_exp052_m2_cached_head.py",
+      "sha256": "75af3853af49cc69855ffca1bb5b5992ecb93c12852c741044581fd7cf492326"
+    },
+    "tests": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/tests/test_exp052_m2_cached_head.py",
+      "sha256": "17817d7404e3e002bd277b73edf2037bb50d2513a40ca1f42f6293d1fb5220bd"
+    },
+    "head-primitives": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/run_exp052_m2.py",
+      "sha256": "9a1991461cee6754fd0407b894e6e2aaf583dc82a048764eebf881c4939a5fb7"
+    }
+  },
+  "execution": {
+    "required_architecture": "arm64",
+    "offline_only": true,
+    "expected_head_initial_sha256": "e7edad8565112d37829fee405684637afc91c9a004a6cb95c572ce2c513b17bf",
+    "batch_order_rng": "numpy.random.Generator(PCG64(seed)); continuous permutation stream across epochs",
+    "maximum_head_training_minutes": 20,
+    "maximum_total_wall_minutes": 30,
+    "maximum_peak_memory_gb": 2.0,
+    "head_log_every_steps": 250,
+    "public_run_dir": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen/seed-44",
+    "private_run_dir": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-052-m2-frozen-qwen/seed-44"
+  }
+}

@@ -2,8 +2,9 @@
 
 ---
 date: 2026-07-23
-last_updated: 2026-08-13
-status: draft
+last_updated: 2026-08-16
+status: active
+next_stage_status: frozen
 tags: [emotion-recognition, forum-text, llm, roadmap]
 ---
 
@@ -60,12 +61,430 @@ Generative LoRA + frozen dev error analysis（completed; verified）
 TEST-READY -> one-time held-out test（completed; verified; consumed）
     |
     +--> read-only post-test analysis -> system/thesis archive
+    |
+    v
+Stack Overflow C0 multi-label mainline（M1-M4 validation + EXP-055 error analysis verified）
+six-label rebuild -> duplicate-component-disjoint multi-label split
+    -> M1 Encoder -> M2 Frozen Qwen + linear head
+    -> M3 Qwen Classification LoRA -> M4 Qwen Generative LoRA
+    -> three seeds -> calibration -> rare-label/error analysis
+    -> EXP-056 one-time frozen test completed -> test consumed
+    |
+    +--> conditional context recovery -> three-view control -> optional OOF gate
+    +--> conditional model complementarity -> optional encoder-Qwen router
     +--> optional matched representation analysis -> optional SAE/intervention
 ```
 
 TweetEval emotion 的四分类单标签分数只回答 TweetEval 内部的模型比较问题。
 GoEmotions 的 28 标签多标签结果只在 GoEmotions 内比较。任何实验都不得用
 TweetEval 的 RoBERTa 分数作为 GoEmotions LLM 的性能对照。
+
+## Phase 6: Frozen Stack Overflow C0 Multi-label Mainline
+
+Status: **scope/data/model contract frozen; `DATA-SO-TASK-V1`, EXP-050 through EXP-055, and the EXP-056 one-time frozen test are verified through 2026-08-16; test is consumed and closed to further selection or tuning**
+
+本节取代“继续增加数据集或主模型分支”的开放探索。既有 TweetEval、GoEmotions、IAC2
+和 Weibo 结果保留为前置证据，不得改写；新的论文主实验只在 Stack Overflow Emotion
+Gold Standard 内进行公平比较。
+
+### Frozen Scope
+
+```text
+Stack Overflow C0 six-label multi-label gold
+-> duplicate-component-disjoint multi-label stratification
+-> M1 Encoder classifier
+-> M2 Frozen Qwen + linear head
+-> M3 Qwen Classification LoRA
+-> M4 Qwen Generative LoRA
+-> three seeds, calibration, low-support analysis, error analysis
+```
+
+主任务输出六个独立标签：`love`、`joy`、`surprise`、`anger`、`sadness`、`fear`。
+六个标签全为 0 时才派生 `neutral=true`；不得改成七类 softmax。主损失为逐标签
+`BCEWithLogitsLoss`，主模型选择指标为 validation Macro-F1。
+
+### Data and Split Contract
+
+1. 从固定 XLSX 逐行重建一个六维标签矩阵，保存源文件 SHA-256、仓库 revision、处理脚本
+   commit、标签计数与论文/发布文件统计冲突。
+2. 先以 exact duplicate 和 frozen normalized duplicate 边建立 connected components；组件是
+   不可拆分的最小划分单位。
+3. 在组件级执行 multi-label group stratification，同时约束六个标签、neutral、标签基数和
+   split 大小。不得先按行分层再把重复项事后移动。
+4. split 比例、优化目标、随机种子和可接受偏差写入 `DATA-SO-TASK-V1`，在任何模型结果产生
+   前冻结；独立 verifier 必须确认 duplicate component 不跨 split。
+5. 在原始 Stack Overflow ID 未恢复时，准确表述只能是
+   `duplicate-component-disjoint, multi-label-stratified split`。不得声称 thread-disjoint 或
+   完全排除 thread leakage；只有 ID 回连门通过后才能升级并重新冻结 thread-aware split。
+
+`surprise` 在当前发布文件中只有 45 个正例，属于预先已知的低支持标签。它仍保留在六标签
+任务和主 Macro-F1 中，但必须同时执行以下保护：
+
+- 划分报告每个 split 的正例数、duplicate-component 数和与目标比例的偏差；若某个正式
+  split 无正例，数据协议失败，不得靠修改指标掩盖。
+- 不为 `surprise` 单独选择逐标签阈值；它使用预先冻结的固定阈值或全标签共享阈值。
+- 正式结果报告该类 precision/recall/F1、group-bootstrap 区间和三 seed 波动。
+- 另报排除 `surprise` 的五标签 Macro-F1 作为敏感性分析，但不得用它选择模型或替代六标签
+  Macro-F1。
+
+### DATA-SO-TASK-V1 Result
+
+数据协议已按冻结合同执行并通过独立验证：4,800 行、4,681 个 exact/normalized duplicate
+connected components 被划分为 train/validation/test `3,360/720/720` 行和
+`3,277/702/702` 个组件。没有 duplicate component 跨 split；`surprise` 正例为
+`31/7/7`；重复组件为 `69/15/15`，其中冲突重复组件为 `18/4/4`。最大标签分配比例误差
+`0.011111`，最大 balance slice 分配比例误差 `0.007692`，均通过预登记阈值。
+
+独立 verifier 通过 `53/53` 项检查，synthetic unit tests 通过 `11/11`。逐行文本、标签、
+rater votes 和 sealed test 保持私有；test 未授权给模型访问，也没有在本阶段训练或评价模型。
+机器可读结果见
+[`experiments/stack-overflow-emotion-gold/reports/data-so-task-v1.json`](experiments/stack-overflow-emotion-gold/reports/data-so-task-v1.json)
+与
+[`experiments/stack-overflow-emotion-gold/reports/data-so-task-v1-verification.json`](experiments/stack-overflow-emotion-gold/reports/data-so-task-v1-verification.json)。
+
+### Model Contract and Valid Contrasts
+
+| ID | Frozen condition | Trainable parameters | Primary purpose |
+| --- | --- | --- | --- |
+| M1 | Encoder + six-label classification head | encoder and head | 强监督 encoder 基线 |
+| M2 | Frozen Qwen + linear head | linear head only | 检验冻结 Qwen 表征的线性可解码性 |
+| M3 | Qwen + LoRA + the same linear head | LoRA and linear head | 检验 classification interface 下的任务适配收益 |
+| M4 | The same Qwen + generative LoRA | LoRA | 比较端到端生成式多标签路线 |
+
+M2/M3 的表示与 head 冻结为：同一输入末尾添加同一固定任务后缀，取最后一个非 padding
+输入 token 的 final-layer hidden state；head 只含一个带 bias 的线性映射
+`Linear(hidden_size, 6)`，不加 MLP、dropout 或额外 pooling 参数。M2 冻结全部 Qwen 参数，
+只训练该 linear head。M3 使用相同 pooling、head 架构及按 seed 匹配的 head 初始化，并从
+同一 Qwen checkpoint 以零函数增量的 LoRA（random `lora_a` + zero `lora_b`）开始训练。
+
+M2-M4 必须共享：Qwen checkpoint/revision、tokenizer、输入序列化、最大长度、截断方向、
+数据版本、split、标签顺序、训练样本、seed 集、validation/test gate 和评估代码。M2/M3
+还必须共享 batch order、head initialization、优化步预算和 checkpoint-selection rule。
+M3/M4 使用相同 LoRA target modules、rank 和基础 checkpoint；由于损失、target tokens、
+head 和解码不同，只要求预先冻结可比的训练预算并完整报告 trainable parameters、更新步数、
+训练 token、wall time 和峰值内存，不能伪装成完全相同计算量。
+
+允许的结论边界：
+
+- `M3 - M2` 在上述匹配成立时，支持“classification interface 下 LoRA 任务适配的增量收益”。
+- `M1 vs M3` 比较强 encoder 与 classification-style LLM 的行为表现和成本。
+- `M3 vs M4` 只比较 classification formulation 与 generative formulation 的端到端结果。
+  两者同时改变 head、损失、监督序列和解码，不能写成“纯生成接口成本”，也不能据此单独
+  归因内部表征变化。
+
+M1-M4 的随机训练条件均报告三个 seed 的 mean +/- std 和逐 seed 结果。分类模型报告固定
+`0.5` 与 validation-only 冻结阈值；M4 若没有严格可比的标签概率，不伪造校准分数，改报
+格式有效率、预测标签基数、重复调用稳定性、延迟和成本。
+
+### EXP-050 Shared Model Preflight Result
+
+EXP-051 至 EXP-054 的 Major protocols、共享 `config.json`、prompt、pooling、head、LoRA、
+parser、checkpoint selection 和 threshold 顺序已在正式模型结果前冻结。随后 EXP-050 使用
+24 条确定性选择的 train 样本完成五阶段预检；validation/test 均未访问，也没有计算性能指标。
+
+- static：六标签、neutral 与双标签覆盖通过；全量 train 的 RoBERTa/Qwen 最大 token 长度
+  为 `222/341`，低于 `256/384`，没有实际截断。
+- M1/M2：六维 BCE 更新通过；M2 只暴露 `15,366` 个线性头参数，Qwen 主干冻结。
+- M3：M2/M3 第 0 步 head 和 logits hash 匹配；LoRA 初始函数增量为 0，最后 16 层的
+  `112` 个固定模块全部插入，两步后 `112/112` 个 `lora_b` 非零。
+- M4：M3/M4 的 LoRA 初始 hash 匹配；assistant-only loss mask、两步更新、greedy generation
+  和 strict invalid-as-zero parser 链通过。四条 smoke 输出 `0/4` canonical-valid 只反映两步
+  未训练充分的格式行为，不是准确率或正式 M4 有效率。
+- 独立 verifier 通过 `77/77` 项，model-preflight unit tests 通过 `7/7`；成功链五阶段合计
+  wall time `44.18 s`，Qwen 峰值 memory `8.91 GB`。
+
+首个尝试因 M2/M3 digest 使用不同参数名前缀而在 M3 第 0 步门停止，发生在 LoRA 插入和
+optimizer step 前。correction 只统一 head digest scope，旧失败目录原样保留，成功尝试从
+static 完整重跑。EXP-050 只支持“实现与合同可运行”，不支持模型性能或内部机制结论。
+
+### EXP-051 M1 Three-Seed Validation Result
+
+EXP-051 seed 42 已完成 train + validation，并通过独立 verifier `67/67` 项检查。首次 MPS
+运行在 epoch 1 内因统一内存耗尽停止，未形成完整 epoch 或 validation 性能结果；失败目录
+保留。随后 10-step train-only CPU recovery preflight 通过，正式 CPU recovery 保持 batch、
+优化器、scheduler、epoch、seed、batch order、选择和评价规则不变，在 `30.99 min` 内完成，
+峰值 process RSS 为 `6.42 GB`。
+
+epoch 4 按固定 0.5 Macro-F1 规则被选中：固定阈值 Macro-F1=`0.598759`、Micro-F1=
+`0.755507`、strict subset accuracy=`0.761111`。冻结共享阈值规则选择 `0.25` 后，Macro-F1=
+`0.604619`、Micro-F1=`0.764645`、strict subset accuracy=`0.740278`；component bootstrap
+Macro-F1 95% CI=`[0.559703,0.638948]`。`surprise` 只有 7 个 validation 正例且 F1=`0`，
+排除它的五标签敏感性 Macro-F1=`0.725543`。
+
+Seed 43 随后由独立授权修正启动，并要求上述 seed-42 `67/67` 证据保持原哈希。相同科学
+配置在 CPU 上完成 5 epochs，耗时 `32.22 min`、峰值 process RSS `5.24 GB`。epoch 4 被选中：
+固定阈值 Macro-F1=`0.601329`；共享阈值 `0.30` 下 Macro-F1=`0.625341`。独立 verifier
+`72/72` 通过且 checkpoint replay 最大绝对误差为 0。
+
+Seed 44 通过单独 amendment 授权，并以未变化的 seed-43 run/verification 哈希作为前置门。
+相同配置在 CPU 上完成 5 epochs，耗时 `30.94 min`、峰值 process RSS `5.36 GB`。epoch 5
+被选中；共享阈值保持 `0.50`，固定与共享 Macro-F1 均为 `0.621803`。独立 verifier
+`72/72` 通过且 checkpoint replay 最大绝对误差为 0。
+
+预登记的三 seed validation 聚合已冻结并通过独立复算 `53/53`：固定 0.5 的六标签
+Macro-F1/Micro-F1/strict subset accuracy 为 `0.607297 +/- 0.012628`、
+`0.766270 +/- 0.009590`、`0.773611 +/- 0.011369`；per-seed 共享阈值对应为
+`0.617254 +/- 0.011084`、`0.771139 +/- 0.005645`、`0.760648 +/- 0.021621`。因此阈值选择
+提高了描述性 Macro-F1，但降低 strict subset accuracy，不写成全面改善。三个 seed 的
+`surprise` support 都是 7、predicted support 都是 0、F1 都是 0；排除 surprise 的五标签
+Macro-F1 只作为低支持敏感性结果，不能替代六标签主指标。
+
+EXP-051 M1 validation family 至此完成。它不授权 test 或 TEST-READY。
+
+EXP-052 seed 42 已按独立授权完成 Frozen Qwen + linear head 完整性门。修正后的 24 条
+train-only dry-run 通过 `51/51` 独立检查，计入 tokenization、memmap 和 flush 后的正式
+特征提取安全投影为 `65.24 min`、峰值 MLX 内存 `8.18 GB`。正式运行用 `40.00 min` 完成
+3,360/720 条 train/validation 特征、两轮共 6,720 次 head 更新，峰值 MLX 内存
+`8.23 GB`；Qwen 参数全冻结，序列截断为 0。
+
+epoch 2 按固定 0.5 Macro-F1 规则选中。固定阈值下 Macro-F1/Micro-F1/subset accuracy 为
+`0.183391`/`0.458874`/`0.581944`；共享阈值 `0.25` 下为
+`0.324929`/`0.509700`/`0.477778`，Macro-F1 component-bootstrap 95% CI 为
+`[0.282747,0.370449]`。校准提高 Macro-F1，但同时降低 subset accuracy、提高 hamming
+loss。`surprise` F1 仍为 0；排除它的五标签 Macro-F1 也只有 `0.389915`，因此低分不只由
+该低支持标签造成。独立 verifier 通过 `70/70`，selected-head replay 最大误差为 0。
+
+同 seed、同 validation 的描述性对照中，M2 共享阈值 Macro-F1 比 M1 低 `0.279691`；这只
+支持“当前冻结表示 + 线性 head 的可解码性明显较弱”，不能由单 seed 宣称 M2 family 已完成，
+也不能推出 Qwen 没有情绪信息或 LoRA 不会改善。
+
+随后建立的 feature-cache reuse gate 将 seed 42 已验证的 train/validation hidden states
+绑定为只读私有输入，并通过 `74/74` 独立检查。它核对 source run/verification、数据、模型、
+prompt、pooling、cache hash/shape/dtype/finite、sample order、token stream、Git 隔离与 split
+access；没有加载 Qwen、训练 head 或计算性能。该 cache 只可供经单独授权的 EXP-052
+seeds 43/44 使用，且 consumer 必须在使用前后复核 hash；M3/M4、context、router 和 test
+均不可复用。
+
+Seed 43 已在独立授权下完成。首次 preflight 因 consumer 错把 gate 中的扁平 artifact 记录
+读取为嵌套结构而在训练前停止，没有产生 checkpoint、性能指标或 split 越界；修复后的全新
+attempt 通过 `73/73` 独立检查。正式运行只读映射已验证的 train/validation cache，初始化
+全新的 seed-43 `Linear(2560,6)` head，并用 2 epochs、6,720 steps 完成训练；总耗时
+`4.23 s`，Qwen load/forward/feature extraction 均为 0，cache hash 使用前后不变。
+
+Epoch 2 被选中。固定 0.5 Macro-F1=`0.133610`；共享阈值 `0.20` 下 Macro-F1=
+`0.353593`、Micro-F1=`0.537969`、strict subset accuracy=`0.470833`，component-bootstrap
+95% CI=`[0.315104,0.392166]`。`surprise` F1 仍为 0，五标签敏感性 Macro-F1=
+`0.424311`。独立 verifier 通过 `99/99`，selected-head replay 与全部指标复算一致。
+与 seed 42 相比，seed 43 的固定阈值 Macro-F1 低 `0.049782`，共享阈值 Macro-F1 高
+`0.028664`；相对同 seed M1 的共享阈值 Macro-F1 低 `0.271748`。这支持 frozen-linear
+弱表现与 seed/calibration 敏感性警告，不构成两 seed aggregate 或 M2 family
+结论。在该阶段，seed 44 仍需独立授权，test、EXP-053 和 EXP-054 继续密封。
+
+Seed 44 也已通过独立授权完成。Consumer preflight 先绑定 seed-43 已完成且 `99/99` verified
+的 run/verification 哈希，并通过 `78/78` 检查；随后正式运行只读映射相同 cache，初始化
+全新的 seed-44 `Linear(2560,6)` head，以 2 epochs、6,720 steps 完成训练。总耗时
+`4.79 s`、head training `3.74 s`，Qwen load/forward/feature extraction 均为 0，cache hash
+使用前后不变。
+
+Epoch 2 被选中。固定 0.5 Macro-F1=`0.137657`；共享阈值 `0.25` 下 Macro-F1=
+`0.278145`、Micro-F1=`0.494538`、strict subset accuracy=`0.523611`，component-bootstrap
+95% CI=`[0.240756,0.314903]`。共享阈值逐类 F1 中 `joy` 与 `surprise` 均为 0，排除
+`surprise` 的五标签 Macro-F1=`0.333774`，因此弱表现仍不能只归因于 surprise 的低支持。
+独立 verifier 通过 `104/104`，EXP-052 回归测试通过 `28/28`。
+
+Seed 44 的共享阈值 Macro-F1 比 seeds 42/43 分别低 `0.046783`/`0.075447`，比同 seed M1
+低 `0.343658`；固定阈值结果则略高于 seed 43，继续显示 seed 与 calibration 排序敏感。
+三个单 seed 随后进入单独登记的只读 family aggregate。独立 verifier 通过 `85/85`，完整
+EXP-052 回归测试通过 `36/36`。固定 0.5 的 Macro-F1/Micro-F1/strict subset accuracy 为
+`0.151553 +/- 0.027647`、`0.408950 +/- 0.060584`、`0.560185 +/- 0.029669`；per-seed 共享阈值
+对应为 `0.318889 +/- 0.038085`、`0.514069 +/- 0.022042`、
+`0.490741 +/- 0.028678`。校准把 Macro-F1 提高 `0.167336`，但 strict subset accuracy
+下降 `0.069444`，hamming loss 增加 `0.033873`，因此不能只报校准后的主指标。
+
+在相同 seed、split、标签和阈值制度下，M2-M1 的共享阈值 Macro-F1 配对差值为
+`-0.298365 +/- 0.039425`，三个 seed 均为负；固定 0.5 的配对差值为
+`-0.455744 +/- 0.035919`。共享阈值下 `surprise` 三 seed F1 均为 0，`joy` 为
+`0.206770 +/- 0.187595`，显示低频标签失败与明显 seed 不稳定。聚合不拼接逐行预测，不对
+`n=3` 做显著性检验，也不把 seed 42 的完整 Qwen 提取成本与 seeds 43/44 的 cache-only
+成本平均。该结果只支持当前 final-layer last-input-token pooling + `Linear(2560,6)` 的
+冻结线性读出显著弱于 M1；不支持“Qwen 没有情绪信息”、其他层/池化/非线性 head 同样无效，
+也不预判 LoRA 结果。EXP-052 validation family 至此完成；下一道门是单独登记 EXP-053 M3
+Classification LoRA，test 与 EXP-054 继续密封。
+
+EXP-053 M3 的 train-only 资源预检随后完成。它在全部 3,360 条 train 完成 tokenization 后，
+确定性抽取 32 条覆盖六标签、neutral、双标签和长短输入的样本；M3 使用与 M2 seed 42 完全
+一致的 head 初始化，zero-step LoRA logit delta 为 0。32/32 次更新 loss 有限，112/112 个
+`lora_b` 均非零，7,355,398 个总可训练参数通过白名单，冻结 base sentinel 不变，private
+adapter/head 重载 logits 最大误差为 0。
+
+Attempt 1 的训练 history 峰值仅 `8.674 GB`，但旧训练引用未释放便在同一进程重载第二份
+Qwen，使 process-wide peak 误触 13 GB 门。保留该失败后，attempt-2 amendment 只修正顺序
+阶段的引用释放与峰值计量，不改变模型、样本、optimizer 或资源阈值。修正后训练/回放阶段
+峰值为 `8.674`/`8.376 GB`；以 `1.5x` 安全系数投影每 seed `4.436 h`、三 seed 顺序执行
+`13.308 h`，均低于冻结的 `8 h/seed`、`24 h/three seeds` 门。专项 tests 通过 `12/12`，
+独立 verifier 通过 `102/102`。在该资源门完成时，它只验证本机执行与 checkpoint 恢复
+可行性；validation/test 未访问、无性能指标，formal seed 42 尚待单独授权，seeds 43/44 与
+EXP-054 继续密封。后续正式结果见下一段。
+
+Formal EXP-053 seed 42 随后按单独授权完成 2 epochs、6,720 个 optimizer steps，并选中
+epoch 2。固定 0.5 Macro-F1 为 `0.602846`，共享阈值 `0.40` 下 Macro-F1 为 `0.637786`
+（component-bootstrap 95% CI `[0.548975,0.709997]`），Micro-F1=`0.758315`、strict subset
+accuracy=`0.755556`、hamming loss=`0.050463`。相对 matched EXP-052 seed 42，共享阈值
+Macro-F1 delta 为 `+0.312857`，配对 component-bootstrap 95% CI
+`[+0.223280,+0.388544]`；固定 0.5 delta 为 `+0.419455`，CI
+`[+0.326063,+0.497920]`。这支持 classification interface 下的 LoRA 任务适配收益，不支持
+内部情绪机制结论，也不能用单 seed 代表 family。正式 wall time=`3.821 h`、峰值 MLX
+memory=`8.702 GB`。第一次 verifier 因资源验证记录字段名错误保留为 Failed (`135/136`)，
+schema-only amendment 后完整重放通过 `148/148`，概率最大误差为 0；test 未访问。
+
+Formal EXP-053 seed 43 随后按第二份独立授权完成相同的 2 epochs、6,720 个 optimizer steps，
+并选中 epoch 2。固定 0.5 Macro-F1 为 `0.659318`；共享阈值 `0.35` 下 Macro-F1 为
+`0.663515`（component-bootstrap 95% CI `[0.570351,0.732537]`），Micro-F1=`0.756696`、
+strict subset accuracy=`0.754167`、hamming loss=`0.050463`。相对 matched EXP-052 seed 43，
+共享阈值 Macro-F1 delta 为 `+0.309922`，配对 component-bootstrap 95% CI
+`[+0.208105,+0.390880]`；固定 0.5 delta 为 `+0.525708`，CI
+`[+0.432380,+0.598715]`。独立 verifier 完整重放选中 checkpoint，概率最大误差为 0，
+`143/143` 项检查通过；test 未访问。正式 wall time=`3.544 h`、峰值 MLX memory=`8.699 GB`。
+在该 gate 完成时，两 seed 共享阈值 Macro-F1 的描述性均值为 `0.650650 +/- 0.018194`，仍
+不能替代预登记的三 seed family；尤其 `surprise` 只有 7 个 validation 正例，seed 43
+F1=`0.444444`、95% CI `[0,0.8]`，不支持少数类稳定性结论。后续 seed 44 见下一段。
+
+Formal EXP-053 seed 44 按第三份独立授权完成相同的 2 epochs、6,720 个 optimizer steps，并
+选中 epoch 2。固定 0.5 Macro-F1 为 `0.598812`；共享阈值 `0.25` 下 Macro-F1 为 `0.660795`
+（component-bootstrap 95% CI `[0.584731,0.727760]`），Micro-F1=`0.763713`、strict subset
+accuracy=`0.741667`、hamming loss=`0.051852`。相对 matched EXP-052 seed 44，共享阈值
+Macro-F1 delta 为 `+0.382650`，配对 component-bootstrap 95% CI
+`[+0.298126,+0.455866]`；固定 0.5 delta 为 `+0.461155`，CI
+`[+0.374006,+0.536410]`。独立 verifier 完整重放选中 checkpoint，概率最大误差为 0，
+`148/148` 项检查通过；test 未访问。正式 wall time=`3.352 h`、峰值 MLX memory=`8.702 GB`。
+五标签敏感性 Macro-F1=`0.720227`；`surprise` 仍只有 7 个正例，F1=`0.363636`、95% CI
+`[0,0.705882]`。三个单 seed 至此均已验证；随后只读 aggregate 在独立授权下完成。
+
+EXP-053 M3 三 seed validation aggregate 使用 arithmetic mean 和 sample std
+(`ddof=1`)，不拼接逐行预测。固定 0.5 / 各 seed 共享阈值的 Macro-F1 为
+`0.620325 +/- 0.033829` / `0.654032 +/- 0.014135`；共享阈值 Micro-F1、
+Weighted-F1、strict subset accuracy 与 hamming loss 分别为 `0.759575 +/- 0.003674`、
+`0.755704 +/- 0.003472`、`0.750463 +/- 0.007649` 和
+`0.050926 +/- 0.000802`。相对 matched M2，共享阈值 Macro-F1 delta 为
+`+0.335143 +/- 0.041168`，3/3 seed 为正，支持 classification interface 下稳定的 LoRA
+任务适配收益。相对 M1，共享 Macro-F1 delta 为 `+0.036778 +/- 0.003154`，但五标签
+Macro-F1、Micro-F1、Weighted-F1 delta 分别为 `-0.033981 +/- 0.008620`、
+`-0.011564 +/- 0.006039`、`-0.008242 +/- 0.001563`。因此六标签 Macro-F1 优势由
+M1 三 seed 均为 0、M3 为 `0.390572 +/- 0.046655` 的低支持 `surprise` F1 驱动；
+仅 7 个正例不足以支持 M3 全面优于 encoder。独立 verifier 通过 `124/124`，test 未访问。
+
+### EXP-054 M4 Three-Seed Validation Result
+
+EXP-054 使用与 M3 相同的 Qwen3-4B BF16 revision、LoRA 插入位置、rank、seed、train/
+validation split 和两轮训练预算，但改为 assistant-only next-token CE、compact JSON 标签生成、
+greedy decoding 与 strict invalid-as-zero parser。首次 train-only preflight 在 adapter 重载时仍保留
+第一份模型引用，因而触发 Metal OOM；失败产物原样保留。只修正对象生命周期后，attempt 2
+完成 3,360 条 train 渲染、两步有限更新、adapter 重载与 4 条生成，并通过独立检查 `26/26`。
+
+Formal seeds 42/43/44 均完成 2 epochs、6,720 个 optimizer steps，并按预登记的 validation
+Macro-F1 与 `0.005` practical-tie 规则选中 epoch 2。逐 seed Macro-F1 为
+`0.589699`/`0.658405`/`0.597443`，三 seed aggregate 为 `0.615182 +/- 0.037632`；Micro-F1、
+Weighted-F1、strict subset accuracy 和 hamming loss 分别为 `0.755144 +/- 0.009373`、
+`0.745278 +/- 0.016138`、`0.776389 +/- 0.013679` 和 `0.050849 +/- 0.003706`。排除只有
+7 个 validation 正例的 `surprise` 后，五标签 Macro-F1 为 `0.701182 +/- 0.026073`；
+`surprise` F1 本身为 `0.185185 +/- 0.169725`，仍不能支持低频标签稳定性结论。
+
+全部 2,160 条 selected-validation 输出都通过 strict parser；空标签数组率为
+`0.374537 +/- 0.043085`，它表示模型预测六个情绪均为 0，而不是解析失败。每个 seed 又在两个
+全新进程中重载冻结 adapter，对相同 60 条 replay；六次 replay 均为 `60/60` raw output 与
+formal prediction 一致。三个 seed verifier 各通过 `92/92`，aggregate verifier 通过 `33/33`，
+专项 tests 通过 `10/10`。平均 wall time 为 `3.553 h/seed`，最大 MLX memory 为 `9.300 GB`，
+API cost 为 0。
+
+相对同 seed M3，M4 的 Macro-F1 delta 为 `-0.038850 +/- 0.030200`，3/3 seed 为负；
+Micro-F1、Weighted-F1 和五标签 Macro-F1 delta 分别为 `-0.004431 +/- 0.010748`、
+`-0.010427 +/- 0.014356` 和 `-0.005542 +/- 0.036548`，而 strict subset accuracy delta 为
+`+0.025926 +/- 0.017859`。因此 M4 没有在主指标上超过 M3，但在完整标签向量精确匹配上更高。
+由于两者同时改变 head、loss、监督 token 和 decoding，这只是一项端到端 formulation 比较，
+不能单独归因于“生成”本身，也不能据此主张内部情绪机制。M1-M4 validation 主线至此完成。
+EXP-056 随后按统一 TEST-READY 合同完成一次性正式 test；全部 12 份预测先完成 hash seal，
+再打开一次标签评分。正式 verifier 通过 `29/29`，没有 test 后选择或调参，test 已消费。
+
+### EXP-056 One-time Frozen Test Result
+
+720 条 test 分属 702 个 duplicate components。M1/M2/M3/M4 的三 seed Macro-F1 分别为
+`0.567459 +/- 0.007814`、`0.295226 +/- 0.020587`、`0.613804 +/- 0.025733` 和
+`0.547823 +/- 0.015312`；去除 `surprise` 后分别为 `0.680951 +/- 0.009377`、
+`0.354271 +/- 0.024704`、`0.670216 +/- 0.012032` 和 `0.657388 +/- 0.018374`。
+
+预登记比较显示，M3-M2 六标签 Macro-F1 delta 为 `+0.318578`，95% component-bootstrap
+CI `[+0.254425,+0.369327]`；这支持 LoRA 相对 frozen final-layer last-token + linear head 的
+任务适配收益。M3-M1 六标签 delta 为 `+0.046345`，但 CI `[-0.008674,+0.089730]` 跨 0；
+五标签 delta 为 `-0.010735`，CI `[-0.046061,+0.024305]`，因此 M3 只能写为与强 encoder
+竞争，不能写成全面超越。`surprise` 在 test 也只有 7 个正例，仍是高不确定性来源。
+
+M4-M3 六标签 delta 为 `-0.065981`，CI `[-0.107869,-0.011312]`，M4 没有超过 M3；
+五标签 delta 为 `-0.012828` 且 CI 跨 0。M4 的 strict subset accuracy 最高
+(`0.771296 +/- 0.006415`)，但这是次指标，不能推翻主指标结论，也不能把差异因果归于
+generation。M4 三 seed 共 2,160 条输出 parser-valid 率为 100%。本实验是行为性能证据，
+不支持内部情绪机制、可部署 router 或 LLM 普遍优越性主张。
+
+### EXP-055 M1/M3 Validation Error Analysis Result
+
+EXP-055 在读取逐行预测和原文前冻结为 validation-only、read-only 分析。它复算三组 M1/M3
+shared-threshold 预测的完整指标、exact-correct 转移、seed 稳定性、空预测、neutral false
+positive、逐标签错误和 whole-vector oracle，并确定性抽取最多 48 条案例；实际复核 45 条。
+没有训练、模型 forward、推理重跑或 test 访问。
+
+量化结果显示 M1/M3 不是单向支配。M1/M3 六标签 Macro-F1 分别为
+`0.617254 +/- 0.011084` / `0.654032 +/- 0.014135`；去除 `surprise` 后为
+`0.740705 +/- 0.013301` / `0.706724 +/- 0.013816`。M1 还在 Micro-F1、Weighted-F1、
+strict subset accuracy 和 hamming loss 上更强。按 seed 42/43/44，M1-only exact-correct
+为 `42/53/73`，M3-only 为 `53/50/43`；M1 的 3/3 稳定正确样本为 497，M3 为 468，M3
+有更多 seed-unstable 样本（139 对 95）。
+
+不可部署的 gold-based whole-vector oracle 平均只在 `8.33% +/- 0.77%` 的 validation 样本
+选择 M3，但相对 M1 的六标签 Macro-F1 上界为 `+0.136394 +/- 0.009058`，五标签上界为
+`+0.074784 +/- 0.010869`，三个 seed 的 component-bootstrap CI 均高于 0；预登记的五项
+router headroom gate 因而全部通过。它只允许另行登记 train-OOF learned-router feasibility，
+不证明调用前可识别这些样本，也不证明 router 可部署或有净收益。
+
+45 条目的性案例的 primary source 主要为 overlapping-label ontology（19）、
+model/representation limitation（13）和 annotation/data uncertainty（9）；常见 flags 包括
+ontology overlap（24）、weak-emotion/neutral boundary（21）、implicit emotion（20）及 lexical
+cue conflict（14）。该复核由单一 reviewer 完成，且是目的性样本，不能解释总体 prevalence、
+因果机制或模型内部 reasoning。独立 verifier 的第一次临时预检仅因 Markdown 换行未满足字面
+`access test` 断言而通过 208/209；科学产物未改变，attempt-2 只做空白归一化并通过
+`220/220`。EXP-054 随后已独立执行和验证；该错误分析本身没有访问 M4 或 test，router
+分支仍需独立协议。
+
+### Conditional Context Branch
+
+上下文恢复与主线并行，但不阻塞 M1-M4。只有历史 dump/SOTorrent 回连达到预登记的数据门，
+才允许启动正式 context 实验；恢复失败只形成带恢复率和失败原因的数据负结果。
+
+正式三视图固定为：target only、true question/host-post context、matched shuffled context。
+shuffled context 必须来自不同 thread，并尽量匹配 topic/tag、长度、年代和代码/文本比例。
+answer 与 comment 分开报告，不能把 host-post context 写成 comment-to-comment parent。
+
+先完成三视图配对评价，再计算 whole-vector oracle。Oracle 每条样本只能在两个分支的完整
+六维预测向量中选择一个，按预登记的 sample-level Hamming loss 决定，平局选择 target-only；
+选择后在全数据重新计算 Macro-F1。逐标签拼接只能另列为不可部署的宽松上界，不能充当
+context gate headroom。
+
+只有 whole-vector oracle 达到预先冻结的实际收益门，才训练 learned gate。Learned gate
+只能使用训练集 out-of-fold predictions 及 pre-context-decision 可见特征训练；dev 只用于
+gate/阈值选择，test 仍遵守一次性 gate。若无 oracle headroom，或恢复样本不足，分支停止。
+
+### Conditional Encoder-Qwen Router
+
+EXP-055 已报告错误重叠、M3 恢复的 encoder 错误、M3 破坏的 encoder 正确样本和
+whole-vector oracle，并通过预登记的 headroom 门。因此可以另行登记 train-OOF learned-router
+feasibility；这不是对路由训练的自动授权，也不是可部署收益结论。后续仍须报告 risk/coverage
+和调用率-性能曲线。
+
+可部署 router 的输入严格限于调用 Qwen 前可获得的信息，例如 encoder 概率、熵、margin、
+文本长度和非敏感元数据。不得使用 Qwen logits、hidden states、生成结果或事后 gold 决定
+是否调用 Qwen。Learned router 同样使用 train OOF predictions；oracle 只作上界。若真实
+路由在预登记的合理 Qwen 调用率下没有正收益，则部署单一最佳模型并关闭该分支。
+
+### License Boundary
+
+Stack Overflow Gold 仓库提供研究使用与引用说明，但没有标准化数据 `LICENSE`。Stack
+Overflow 原始文本及 SOTorrent 表还受相应 CC BY-SA 条款约束。因此现阶段只承诺私有研究
+训练、聚合结果、处理代码、hash 和不含原文的 split ID；不重新打包发布 gold + parent
+全文，不把公开可下载等同于无限制再分发，也不预先承诺公开衍生模型权重。
+
+### Change Control
+
+这条主线冻结后不再增加数据集、主模型家族或新的必做研究分支。任何改变标签空间、split
+原则、M1-M4 定义、主指标或 test gate 的提议，都必须先形成 correction/new protocol 并由
+用户明确确认；context、router 和 representation 只能按本节门槛成为条件扩展。
 
 ## Research Question Registry
 
@@ -80,6 +499,9 @@ TweetEval 的 RoBERTa 分数作为 GoEmotions LLM 的性能对照。
 | RQ-F2 | 对同一 target，固定局部前文和 reasoning-mode inference 是否分别改善 Qwen 的最终单标签预测，两者是否存在交互？ | 用 `CurCL`/`PrevCL+CurCL` x reasoning off/on 的配对 2x2 分离上下文、推理模式及其交互；若无稳定收益，也能排除“增加上下文或生成推理必然更好” | EXP-041 train-only preflight；EXP-043 Qwen 2x2 Major；EXP-046 runtime-equivalence gate；必要时 correct-vs-shuffled-context control | 结果章节的 2x2 主表与交互图；讨论章节的 context/reasoning 与 runtime 边界 | 阶段性解决：观测 context contrast=`-0.021512`、CI 排除 0；平均 reasoning contrast=`+0.030825`、CI 排除 0；interaction CI 跨 0。EXP-046 显示固定 batch 可重放但共同批次重排仅 `14/16` 标签一致，因此后续 reasoning-on 正式评估冻结 singleton；context 未通过 shuffled-control 门 |
 | RQ-F3 | 在 Weibo 直接基线冻结后，同语料辅助任务或外部中文 ERC 迁移是否比 Weibo-only 训练增加可复现收益？ | 区分目标任务监督与迁移监督的增量价值；负结果可说明语言、领域或 ontology mismatch 抵消了迁移收益 | Conditional same-corpus ECause auxiliary；可选 T / S-U->T / S-C->T / S-R->T transfer Major，EXP 编号待登记 | 可选结果/消融章节；不作为最低毕设闭环 | 条件性扩展；只有 RQ-F1/RQ-F2 的 dev 证据完成后才决定是否启动 |
 | RQ-F4 | 行为上已验证的 Qwen 中，情绪标签和上下文条件是否在不同层呈现稳定的线性可解码信息，post-training/LoRA 是否改变这种结构？ | 将性能结果连接到受控的表征相关性证据；无稳定 probe 结果时如实形成负结果，不阻塞系统论文 | Matched layer-wise probes；label-shuffle/control tasks；可选 SAE、patching/ablation，EXP 编号待登记 | 可选表征分析章节 | 后置扩展；必须在行为模型与分析层/池化规则冻结后启动 |
+| RQ-S1 | 在固定 Stack Overflow 六标签多标签任务上，Encoder、Frozen Qwen linear probe、Qwen Classification LoRA 与 Qwen Generative LoRA 的性能、稳定性和成本有何差异？ | 分离冻结 Qwen 表征可解码性与 classification-style LoRA 适配收益，并对分类式和生成式任务表述作端到端比较；负结果仍能界定 LLM 在真实论坛多标签任务上的边界 | `DATA-SO-TASK-V1`；EXP-050 shared preflight；EXP-051 M1；EXP-052 M2；EXP-053 M3；EXP-054 M4；EXP-055 M1/M3 error analysis；EXP-056 one-time frozen test | 数据与方法章节；四条件主结果表；低频标签和错误分析章节 | 阶段性解决：EXP-056 test 上 M1/M2/M3/M4 Macro-F1=`0.567459 +/- 0.007814`/`0.295226 +/- 0.020587`/`0.613804 +/- 0.025733`/`0.547823 +/- 0.015312`。M3-M2 delta=`+0.318578`，CI 完全高于 0；M3-M1 六标签 delta=`+0.046345` 但 CI 跨 0，五标签 delta=`-0.010735` 且 CI 跨 0，因此 M3 与 encoder 竞争但未证明全面更强。M4-M3 六标签 delta=`-0.065981` 且 CI 完全低于 0；M4 的 subset accuracy 最高，但不能替代主指标。test 已消费，不再用于调参或模型选择；该比较不支持内部机制或 generation 因果主张 |
+| RQ-S2 | 在可验证恢复的 Stack Overflow answer/comment 子集上，真实 question/host-post context 是否比 target-only 和 matched shuffled context 更有助于六标签预测？ | 用三视图配对控制区分真实响应关系与 topic、长度等伪上下文收益；恢复不足或 oracle 无 headroom 也是可封闭负结果 | `DATA-SO-CONTEXT-RECOVERY-V1`；三视图配对评价；conditional OOF context gate，EXP 编号待登记 | 条件性 context 结果与数据恢复附录 | 条件分支；仅在恢复率、有效样本量和 whole-vector oracle 门通过后启动 |
+| RQ-S3 | Encoder 与 Classification LoRA 的错误是否足够互补，使只依赖 pre-Qwen features 的选择性路由在受控调用率下优于单一最佳模型？ | 评价 LLM 作为昂贵二级模型的系统价值；若无实际收益则证明单模型部署更合理 | EXP-055 whole-vector oracle；train-OOF router；risk/coverage/call-rate/cost，后续 EXP 编号待登记 | 条件性系统实验 | EXP-055 oracle headroom gate 已通过；只允许另行登记 train-OOF feasibility，尚无 learned-router 或部署收益结论 |
 
 ## Phase 0: Scope and Opening
 
@@ -315,7 +737,7 @@ target_only_decision, contextual_decision
 
 ## Phase 3: Reproducible Supervised Baselines
 
-Status: TweetEval and GoEmotions frozen test gates completed and verified; Weibo Stage 3 same-task baselines completed and verified
+Status: TweetEval and GoEmotions frozen test gates completed and verified; Weibo Stage 3 and Stack Overflow EXP-051 M1 supervised baselines completed and verified
 
 目标：
 
@@ -513,7 +935,7 @@ Status: partial; TweetEval and GoEmotions error/annotation analysis completed, f
   后两者必须在新的 validation 或 forum holdout 上预登记，不能使用已消费的
   TweetEval 或 GoEmotions test 开发。
 
-## Next-Stage Experimental Plan: Weibo Single-Label Context and Reasoning
+## Completed Experimental Plan: Weibo Single-Label Context and Reasoning
 
 Status: `DATA-WEIBO-TASK-V1` and train-only Stage 2 preflight verified on
 2026-08-08; no dev Major or test access is authorized by this section
@@ -901,7 +1323,7 @@ matched Qwen，但相对 encoder 的 `-0.013009` 差值区间跨 0。test 已消
 明确 gate 外，不再恢复
 GoEmotions parents、不继续 IAC2 正式标注、不执行 Hotter hydration，也不把 KOTE 加入主线。
 
-### Review Questions Before Model Protocol Freeze
+### Historical Review Questions Before Weibo Model Protocol Freeze
 
 交给外部模型或导师审查时，优先要求其回答：
 
@@ -914,7 +1336,7 @@ GoEmotions parents、不继续 IAC2 正式标注、不执行 Hotter hydration，
 6. 在不增加额外数据集和模型家族的前提下，最低闭环是否足以支撑题目中的 LLM-based
    与 forum text 两个关键词？
 
-## Phase 6: System, Thesis, and Archive
+## Phase 7: System, Thesis, and Archive
 
 Status: not started
 

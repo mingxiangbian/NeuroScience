@@ -1,0 +1,31 @@
+{
+  "accessed_splits": [
+    "train",
+    "validation"
+  ],
+  "experiment_id": "EXP-051",
+  "failed_at_utc": "2026-08-13T13:55:53.990227+00:00",
+  "failure": {
+    "message": "MPS backend out of memory (MPS allocated: 8.02 GiB, other allocations: 11.98 GiB, max allowed: 20.13 GiB). Tried to allocate 147.26 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).",
+    "traceback": "Traceback (most recent call last):\n  File \"/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/run_exp051_m1.py\", line 882, in run\n    optimizer.step()\n  File \"/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/torch/optim/lr_scheduler.py\", line 133, in wrapper\n    return func.__get__(opt, opt.__class__)(*args, **kwargs)\n  File \"/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/torch/optim/optimizer.py\", line 517, in wrapper\n    out = func(*args, **kwargs)\n  File \"/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/torch/optim/optimizer.py\", line 82, in _use_grad\n    ret = func(*args, **kwargs)\n  File \"/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/torch/optim/adam.py\", line 247, in step\n    adam(\n  File \"/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/torch/optim/optimizer.py\", line 150, in maybe_fallback\n    return func(*args, **kwargs)\n  File \"/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/torch/optim/adam.py\", line 953, in adam\n    func(\n  File \"/Users/phoenix/miniconda3/envs/emotion-roberta/lib/python3.10/site-packages/torch/optim/adam.py\", line 535, in _single_tensor_adam\n    denom = (exp_avg_sq.sqrt() / bias_correction2_sqrt).add_(eps)\nRuntimeError: MPS backend out of memory (MPS allocated: 8.02 GiB, other allocations: 11.98 GiB, max allowed: 20.13 GiB). Tried to allocate 147.26 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).\n",
+    "type": "RuntimeError"
+  },
+  "invocation": [
+    "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python",
+    "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/run_exp051_m1.py",
+    "--seed",
+    "42"
+  ],
+  "resource_usage": {
+    "wall_seconds": 142.19835858303122
+  },
+  "rq_id": "RQ-S1",
+  "seed": 42,
+  "stage": "seed-42-train-validation-integrity-gate",
+  "started_at_utc": "2026-08-13T13:53:31.791296+00:00",
+  "status": "Failed",
+  "test_split_accessed": false,
+  "tier": "Major",
+  "validation_split_accessed": true,
+  "working_directory": "/Users/phoenix/Assistant/NeuroScience"
+}

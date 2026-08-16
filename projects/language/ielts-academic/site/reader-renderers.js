@@ -154,6 +154,11 @@ function formatSprintDate(value) {
   return `${Number(match[2])}月${Number(match[3])}日`;
 }
 
+function formatSprintDayDate(day) {
+  const start = formatSprintDate(day?.date);
+  return day?.dateEnd ? `${start}–${formatSprintDate(day.dateEnd)}` : start;
+}
+
 function getSprintTemplate(sprintPlan, templateId) {
   return toList(sprintPlan?.dailyBudget?.templates?.[templateId]);
 }
@@ -189,13 +194,14 @@ function renderConditionalReserve(day) {
 
 function renderSprintTaskRows(sprintPlan, day, compact = false) {
   const blocks = getSprintTemplate(sprintPlan, day?.template);
+  const durationLabel = day?.dateEnd ? "已跨日结算" : null;
   return `
     <div class="sprint-task-rows${compact ? " sprint-task-rows-compact" : ""}">
       ${blocks.map((block) => `
         <div class="sprint-task-row">
           <div class="sprint-task-label">
             <strong>${escapeHtml(block.label)}</strong>
-            <span>${escapeHtml(String(block.minutes))} 分钟</span>
+            <span>${durationLabel ? escapeHtml(durationLabel) : `${escapeHtml(String(block.minutes))} 分钟`}</span>
           </div>
           <p>${escapeHtml(day?.tasks?.[block.id] ?? "任务待定")}</p>
         </div>
@@ -212,10 +218,10 @@ function renderTodaySprint(sprintPlan) {
     <section class="sprint-today" data-sprint-day="${escapeHtml(String(day.day))}">
       <header class="sprint-today-header">
         <div>
-          <p class="card-kicker">20 天纸笔冲刺 · 第 ${escapeHtml(String(day.day))} 天 · ${escapeHtml(formatSprintDate(day.date))}</p>
+          <p class="card-kicker">20 天纸笔冲刺 · 第 ${escapeHtml(String(day.day))} 天 · ${escapeHtml(formatSprintDayDate(day))}</p>
           <h3>${escapeHtml(day.focus)}</h3>
         </div>
-        <strong>${escapeHtml(formatMinutesAsHours(getSprintMinutes(sprintPlan, day)))} 小时</strong>
+        <strong>${day.dateEnd ? "跨日结算" : `${escapeHtml(formatMinutesAsHours(getSprintMinutes(sprintPlan, day)))} 小时`}</strong>
       </header>
       <dl class="sprint-score-route" aria-label="目标分数组合">
         <div><dt>听力</dt><dd>${escapeHtml(formatBand(profile.listening))}</dd></div>
@@ -358,6 +364,26 @@ function renderSpeakingSchedule(sprintPlan) {
   `;
 }
 
+function renderSprintPriorities(sprintPlan) {
+  const prioritySystem = sprintPlan.prioritySystem;
+  const levels = toList(prioritySystem?.levels);
+  if (levels.length === 0) return "";
+  return `
+    <section class="sprint-phases sprint-priorities" data-priority-system="rolling">
+      <div class="ledger-heading"><h3>滚动优先级</h3><span>${escapeHtml(formatSprintDate(prioritySystem.effectiveFrom))} 起</span></div>
+      <p class="sprint-speaking-boundary">${escapeHtml(prioritySystem.carryPolicy)}</p>
+      <div class="sprint-phase-list">
+        ${levels.map((level, index) => `
+          <div class="sprint-phase-row">
+            <div><strong>${escapeHtml(level.id)} · ${escapeHtml(level.label)}</strong><span>优先顺序 ${escapeHtml(String(index + 1))}</span></div>
+            <p><strong>依据：</strong>${escapeHtml(level.reason)}<br><strong>执行：</strong>${escapeHtml(level.rule)}</p>
+          </div>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
 function renderSprintPhases(sprintPlan) {
   return `
     <section class="sprint-phases">
@@ -375,9 +401,10 @@ function renderSprintPhases(sprintPlan) {
 }
 
 function renderSprintCheckpoints(sprintPlan) {
+  const checkpointCount = toList(sprintPlan.checkpoints).length;
   return `
     <section class="sprint-checkpoints">
-      <div class="ledger-heading"><h3>四次检查点</h3><span>${toList(sprintPlan.checkpoints).length}</span></div>
+      <div class="ledger-heading"><h3>${escapeHtml(String(checkpointCount))} 次检查点</h3><span>${escapeHtml(String(checkpointCount))}</span></div>
       <div class="sprint-checkpoint-table" role="table" aria-label="冲刺检查点">
         ${toList(sprintPlan.checkpoints).map((checkpoint) => `
           <details class="sprint-checkpoint" id="sprint-${escapeHtml(checkpoint.id)}">
@@ -408,9 +435,9 @@ function renderSprintDays(sprintPlan) {
             ${phaseDays.map((day) => `
               <details class="sprint-day"${day.day === currentDay?.day ? " open" : ""} data-sprint-day="${escapeHtml(String(day.day))}">
                 <summary>
-                  <span>第 ${escapeHtml(String(day.day))} 天 · ${escapeHtml(formatSprintDate(day.date))}</span>
+                  <span>第 ${escapeHtml(String(day.day))} 天 · ${escapeHtml(formatSprintDayDate(day))}</span>
                   <strong>${escapeHtml(day.focus)}</strong>
-                  <span>${escapeHtml(formatMinutesAsHours(getSprintMinutes(sprintPlan, day)))} 小时${day.conditionalReserve ? "基础" : ""}</span>
+                  <span>${day.dateEnd ? "跨日结算" : `${escapeHtml(formatMinutesAsHours(getSprintMinutes(sprintPlan, day)))} 小时${day.conditionalReserve ? "基础" : ""}`}</span>
                 </summary>
                 ${renderSprintTaskRows(sprintPlan, day)}
                 ${renderConditionalReserve(day)}
@@ -431,6 +458,7 @@ export function renderSprintPlan(data) {
     <div class="sprint-plan-view">
       ${renderSprintObjective(sprintPlan)}
       ${renderSpeakingSchedule(sprintPlan)}
+      ${renderSprintPriorities(sprintPlan)}
       ${renderSprintPhases(sprintPlan)}
       ${renderSprintCheckpoints(sprintPlan)}
       ${renderSprintDays(sprintPlan)}

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content="Local 3D brain model base for NeuroScience x AI." />
     <title>NeuroScience × AI</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='20' fill='%23f4efe3'/%3E%3Cpath fill='%231f2724' d='M39 12C22 21 14 34 14 49c0 16 9 29 25 35-8-13-10-25-5-36-5-10-3-22 5-36Z'/%3E%3Cpath fill='%231f2724' d='M57 12c17 9 25 22 25 37 0 16-9 29-25 35 8-13 10-25 5-36 5-10 3-22-5-36Z'/%3E%3C/svg%3E" />
@@ -108,7 +108,7 @@
         margin: 0;
         white-space: nowrap;
         font-family: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
-        font-size: clamp(2.05rem, 6.15vw, 6.35rem);
+        font-size: clamp(2.05rem, min(6.15vw, 11vh), 6.35rem);
         font-weight: 760;
         line-height: 0.96;
         letter-spacing: 0;
@@ -170,7 +170,7 @@
 
       .title-rule {
         position: absolute;
-        top: calc(clamp(24px, 6vh, 58px) + clamp(2.8rem, 6.25vw, 6.7rem));
+        top: calc(clamp(24px, 6vh, 58px) + clamp(2.8rem, min(6.25vw, 11.4vh), 6.7rem));
         left: 50%;
         z-index: 3;
         width: min(54vw, 700px);
@@ -363,11 +363,12 @@
         width: 3px;
         height: 24px;
         content: "";
-        transform: translateY(-50%);
+        transform: translateY(-50%) scaleY(1);
+        transform-origin: center;
         border-radius: 999px;
         background: var(--module-color);
         box-shadow: 0 0 10px color-mix(in srgb, var(--module-color), transparent 40%);
-        transition: height 180ms ease;
+        transition: transform 180ms ease;
       }
 
       .module-label strong,
@@ -414,7 +415,7 @@
       .module-label:hover::before,
       .module-label:focus-visible::before,
       .module-label[aria-pressed="true"]::before {
-        height: 34px;
+        transform: translateY(-50%) scaleY(1.42);
       }
 
       .module-label:focus-visible::before {
@@ -426,7 +427,7 @@
       .search-trigger {
         position: absolute;
         left: 50%;
-        bottom: clamp(18px, 3.6vh, 36px);
+        bottom: max(clamp(18px, 3.6vh, 36px), env(safe-area-inset-bottom));
         z-index: 7;
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto;
@@ -796,7 +797,7 @@
         }
 
         h1 {
-          font-size: clamp(1.82rem, 8.7vw, 3.28rem);
+          font-size: clamp(1.82rem, min(8.7vw, 12vh), 3.28rem);
         }
 
         .title-rule {
@@ -818,7 +819,7 @@
         }
 
         .search-trigger {
-          bottom: 14px;
+          bottom: max(14px, env(safe-area-inset-bottom));
           width: min(286px, calc(100vw - 32px));
           min-height: 44px;
         }
@@ -894,6 +895,21 @@
 
         .module-label span {
           display: none;
+        }
+
+        .module-label[data-module="association"],
+        .module-label[data-module="cingulate"] {
+          top: 38%;
+        }
+
+        .module-label[data-module="parietal"],
+        .module-label[data-module="prefrontal"] {
+          top: 46%;
+        }
+
+        .module-label[data-module="temporal"],
+        .module-label[data-module="hippocampal"] {
+          top: 54%;
         }
       }
 
@@ -1033,7 +1049,7 @@
         <span>Search</span>
         <kbd class="search-trigger-shortcut">⌘K</kbd>
       </button>
-      <svg id="fallback-brain" aria-hidden="true" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid slice">
+      <svg id="fallback-brain" aria-hidden="true" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid meet">
         <defs>
           <radialGradient id="fallback-tissue" cx="43%" cy="36%" r="68%">
             <stop offset="0%" stop-color="#f1ecdf" stop-opacity="0.82" />
@@ -1195,6 +1211,10 @@
       import * as THREE from "three";
       import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
       import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
+      import {
+        computeHomepageViewport,
+        fitCameraZToBounds,
+      } from "./assets/homepage-layout.js";
 
       const MODEL_URL = "assets/brain-human.glb";
       const host = document.getElementById("brain-canvas-host");
@@ -1700,11 +1720,10 @@
       }
 
       function getViewportLayout() {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        const isMobile = width < 720;
-        const isPortrait = height > width * 1.08;
-        return { width, height, isMobile, isPortrait };
+        const stageBounds = stage.getBoundingClientRect();
+        const width = stageBounds.width || window.innerWidth;
+        const height = stageBounds.height || window.innerHeight;
+        return computeHomepageViewport(width, height);
       }
 
       function createFoldedGeometry(THREE, detail = 88, amount = 0.026) {
@@ -2092,9 +2111,9 @@
             const target = state.expanded ? 1 : 0;
             state.progress += (target - state.progress) * (prefersReducedMotion ? 1 : 0.08);
             const eased = state.progress * state.progress * (3 - 2 * state.progress);
-            const { isMobile, isPortrait } = getViewportLayout();
-            const baseScale = isMobile ? 0.7 : isPortrait ? 0.82 : 1.16;
-            const baseY = isMobile ? -0.08 : isPortrait ? -0.02 : -0.12;
+            const { preset } = getViewportLayout();
+            const baseScale = preset.brainScale;
+            const baseY = preset.brainY;
             inverseMatrix.copy(brainRoot.matrixWorld).invert();
 
             moduleEntries.forEach((entry) => {
@@ -2124,8 +2143,8 @@
             surfaceMaterials.forEach((material) => {
               material.uniforms.explodeProgress.value = eased;
             });
-            brainRoot.scale.setScalar(baseScale * (1 - eased * (isMobile ? 0.08 : isPortrait ? 0.14 : 0.24)));
-            brainRoot.position.y = baseY + eased * (isMobile ? 0.02 : isPortrait ? 0.015 : 0.02);
+            brainRoot.scale.setScalar(baseScale * (1 - eased * preset.expandedBrainScaleReduction));
+            brainRoot.position.y = baseY + eased * preset.expandedBrainYShift;
             setBrainMaterialOpacity(brainModel, 1 - eased * 0.62);
             activityFlow.visible = eased < 0.96;
           },
@@ -3409,10 +3428,8 @@
         return group;
       }
 
-      function getChipLayoutMode() {
-        const { isMobile, isPortrait } = getViewportLayout();
-        if (isMobile) return "compact";
-        return isPortrait ? "portrait" : "desktop";
+      function getChipLayoutMode(layout = getViewportLayout()) {
+        return layout.mode;
       }
 
       function getResponsiveConnectorSide(layout, mode) {
@@ -4157,12 +4174,12 @@
             return channels.map((entry) => entry.component);
           },
           resize() {
-            const { isMobile, isPortrait } = getViewportLayout();
-            const mode = getChipLayoutMode();
+            const layout = getViewportLayout();
+            const { mode, preset } = layout;
             const coreY = CHIP_CORE_Y_BY_LAYOUT[mode];
-            group.position.set(0, isMobile ? -0.04 : isPortrait ? -0.02 : -0.08, -1.48);
-            group.scale.setScalar(isMobile ? 0.64 : isPortrait ? 0.76 : 1.02);
-            group.rotation.x = isMobile ? -0.01 : isPortrait ? -0.012 : -0.018;
+            group.position.set(0, preset.pedestalY, -1.48);
+            group.scale.setScalar(preset.pedestalScale);
+            group.rotation.x = preset.pedestalRotationX;
             board.position.y = coreY;
             boardEdge.position.y = coreY;
             pcbArtwork.position.y = coreY;
@@ -4295,12 +4312,52 @@
         return null;
       }
 
+      const COMPOSITION_BOUNDS_PADDING = 0.14;
+      const CAMERA_ZOOM_RANGE = 2.7;
+
+      function getViewportSafeInsets(width, height, mode) {
+        const horizontalInset = clamp(width * 0.025, 18, 40);
+        if (mode === "desktop") {
+          return {
+            left: horizontalInset,
+            right: horizontalInset,
+            top: horizontalInset,
+            bottom: horizontalInset,
+          };
+        }
+
+        const titleBounds = stage.querySelector(".title-plane")?.getBoundingClientRect();
+        const titleRuleBounds = stage.querySelector(".title-rule")?.getBoundingClientRect();
+        const searchBounds = document.getElementById("global-search-trigger")?.getBoundingClientRect();
+        const titleBottom = Math.max(titleBounds?.bottom ?? 0, titleRuleBounds?.bottom ?? 0);
+        const searchTop = searchBounds?.top ?? height;
+
+        return {
+          left: horizontalInset,
+          right: horizontalInset,
+          top: clamp(titleBottom + 14, horizontalInset, height * 0.44),
+          bottom: clamp(height - searchTop + 22, horizontalInset, height * 0.4),
+        };
+      }
+
+      function getCompositionBounds(objects) {
+        return objects.flatMap((object) => {
+          if (!object) return [];
+          object.updateWorldMatrix(true, true);
+          const bounds = new THREE.Box3().setFromObject(object);
+          if (bounds.isEmpty()) return [];
+          bounds.expandByScalar(COMPOSITION_BOUNDS_PADDING);
+          return [bounds];
+        });
+      }
+
       function setupControls(
         view,
         onBrainTap,
         getInteractionState = () => ({ expanded: false }),
         displayTargets = [],
         onDisplayTap = null,
+        compositionObjects = [],
       ) {
         const rotation = {
           x: view.brain.rotation.x,
@@ -4310,6 +4367,11 @@
         };
         let cameraZ = view.camera.position.z;
         let targetCameraZ = cameraZ;
+        let viewportLayout = getViewportLayout();
+        let fittedExpandedCameraZ = viewportLayout.preset.cameraZ;
+        let minCameraZ = viewportLayout.preset.cameraZ;
+        let maxCameraZ = minCameraZ + CAMERA_ZOOM_RANGE;
+        let previousExpanded = Boolean(getInteractionState().expanded);
         let dragging = false;
         let previousX = 0;
         let previousY = 0;
@@ -4379,7 +4441,7 @@
           "wheel",
           (event) => {
             event.preventDefault();
-            targetCameraZ = clamp(targetCameraZ + event.deltaY * 0.004, 4.8, 9.4);
+            targetCameraZ = clamp(targetCameraZ + event.deltaY * 0.004, minCameraZ, maxCameraZ);
           },
           { passive: false },
         );
@@ -4388,14 +4450,22 @@
           if (event.key === "Escape" || event.key.toLowerCase() === "r") {
             rotation.targetX = INITIAL_ROTATION.x;
             rotation.targetY = INITIAL_ROTATION.y;
-            const { isMobile, isPortrait } = getViewportLayout();
-            targetCameraZ = isMobile ? 8.9 : isPortrait ? 8.45 : 6.7;
+            targetCameraZ = previousExpanded ? fittedExpandedCameraZ : viewportLayout.preset.cameraZ;
           }
         });
 
         return {
           update() {
-            if (!prefersReducedMotion && !dragging && !getInteractionState().expanded) {
+            const expanded = Boolean(getInteractionState().expanded);
+            if (expanded !== previousExpanded) {
+              previousExpanded = expanded;
+              minCameraZ = expanded ? fittedExpandedCameraZ : viewportLayout.preset.cameraZ;
+              maxCameraZ = minCameraZ + CAMERA_ZOOM_RANGE;
+              targetCameraZ = expanded
+                ? Math.max(targetCameraZ, fittedExpandedCameraZ)
+                : viewportLayout.preset.cameraZ;
+            }
+            if (!prefersReducedMotion && !dragging && !expanded) {
               rotation.targetY += 0.0012;
             }
             rotation.x += (rotation.targetX - rotation.x) * 0.09;
@@ -4406,21 +4476,34 @@
             view.camera.position.z = cameraZ;
           },
           resize() {
-            const { width, height, isMobile, isPortrait } = getViewportLayout();
+            viewportLayout = getViewportLayout();
+            const { width, height, mode, preset } = viewportLayout;
             view.camera.aspect = width / height;
-            view.camera.position.z = isMobile ? 8.9 : isPortrait ? 8.45 : 6.7;
-            targetCameraZ = view.camera.position.z;
-            cameraZ = view.camera.position.z;
-            view.camera.updateProjectionMatrix();
             view.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
             view.renderer.setSize(width, height);
-            view.brain.scale.setScalar(isMobile ? 0.7 : isPortrait ? 0.82 : 1.16);
-            view.brain.position.y = isMobile ? -0.08 : isPortrait ? -0.02 : -0.12;
-            view.shell.scale.set(
-              isMobile ? 0.98 : isPortrait ? 1.08 : 1.28,
-              isMobile ? 0.66 : isPortrait ? 0.7 : 0.82,
-              isMobile ? 0.7 : isPortrait ? 0.76 : 0.9,
-            );
+            view.brain.scale.setScalar(preset.brainScale);
+            view.brain.position.y = preset.brainY;
+            view.shell.scale.set(...preset.shellScale);
+
+            fittedExpandedCameraZ = fitCameraZToBounds({
+              bounds: getCompositionBounds(compositionObjects),
+              viewportWidth: width,
+              viewportHeight: height,
+              fovDegrees: view.camera.fov,
+              cameraX: view.camera.position.x,
+              cameraY: view.camera.position.y,
+              baseCameraZ: preset.cameraZ,
+              safeInsets: getViewportSafeInsets(width, height, mode),
+            });
+            previousExpanded = Boolean(getInteractionState().expanded);
+            minCameraZ = previousExpanded ? fittedExpandedCameraZ : preset.cameraZ;
+            maxCameraZ = minCameraZ + CAMERA_ZOOM_RANGE;
+            targetCameraZ = minCameraZ;
+            cameraZ = minCameraZ;
+            view.camera.position.z = minCameraZ;
+            view.camera.updateProjectionMatrix();
+            stage.dataset.layoutMode = mode;
+            stage.dataset.expandedCameraZ = fittedExpandedCameraZ.toFixed(3);
           },
         };
       }
@@ -4451,9 +4534,10 @@
             (moduleTarget) => {
               window.location.assign(moduleTarget.userData.moduleUrl);
             },
+            gpuPedestal.getDisplayTargets(),
           );
-          controls.resize();
           gpuPedestal.resize();
+          controls.resize();
           document.body.classList.add("webgl-ready");
           document.body.classList.remove("fallback-active");
 
@@ -4470,10 +4554,20 @@
             app = requestAnimationFrame(render);
           }
 
-          window.addEventListener("resize", () => {
-            controls.resize();
-            gpuPedestal.resize();
-          });
+          let pendingResizeFrame = null;
+          const resizeScene = () => {
+            if (pendingResizeFrame !== null) return;
+            pendingResizeFrame = requestAnimationFrame(() => {
+              pendingResizeFrame = null;
+              gpuPedestal.resize();
+              controls.resize();
+            });
+          };
+          window.addEventListener("resize", resizeScene, { passive: true });
+          window.visualViewport?.addEventListener("resize", resizeScene, { passive: true });
+          if ("ResizeObserver" in window) {
+            new ResizeObserver(resizeScene).observe(stage);
+          }
           render();
         } catch (error) {
           console.warn("3D brain model unavailable; fallback brain displayed.", error);

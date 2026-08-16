@@ -1,0 +1,49 @@
+{
+  "accessed_splits": [
+    "train"
+  ],
+  "command_contract": "run_preflight.py --stage {static,m1,m2,m3,m4}",
+  "created_at_utc": "2026-08-13T12:54:35.618790+00:00",
+  "cwd": "/Users/phoenix/Assistant/NeuroScience",
+  "experiment_id": "EXP-050",
+  "formal_training_authorized": false,
+  "git": {
+    "commit": "d892fcdf52e3fac04a7aa9f9595a16e50ee40f5c",
+    "dirty": true,
+    "dirty_path_count": 32
+  },
+  "platform": "macOS-26.5.2-arm64-arm-64bit",
+  "required_stages": [
+    "static",
+    "m1",
+    "m2",
+    "m3",
+    "m4"
+  ],
+  "rq_id": "RQ-S1",
+  "stages": {
+    "m1": {
+      "completed_at_utc": "2026-08-13T12:56:30.590265+00:00",
+      "started_at_utc": "2026-08-13T12:56:24.175035+00:00",
+      "status": "Passed",
+      "wall_seconds": 6.416303124977276
+    },
+    "m2": {
+      "completed_at_utc": "2026-08-13T12:57:33.407758+00:00",
+      "started_at_utc": "2026-08-13T12:57:21.901207+00:00",
+      "status": "Passed",
+      "wall_seconds": 11.505809291033074
+    },
+    "static": {
+      "completed_at_utc": "2026-08-13T12:54:35.746451+00:00",
+      "started_at_utc": "2026-08-13T12:54:30.420265+00:00",
+      "status": "Passed",
+      "wall_seconds": 5.325959499925375
+    }
+  },
+  "incident": "attempt-failure.json",
+  "status": "Failed",
+  "test_split_accessed": false,
+  "tier": "Minor",
+  "validation_split_accessed": false
+}

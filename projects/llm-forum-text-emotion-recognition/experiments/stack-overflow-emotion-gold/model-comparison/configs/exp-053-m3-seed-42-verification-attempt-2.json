@@ -1,0 +1,47 @@
+{
+  "schema_version": "exp-053-m3-verification-correction-v1",
+  "experiment_id": "EXP-053",
+  "stage": "seed-42-verification-attempt-2",
+  "verification_attempt": 2,
+  "scope": "verification-schema-only",
+  "registered_at": "2026-08-14",
+  "output_filename": "verification-attempt-2.json",
+  "summary_filename": "VERIFICATION-SUMMARY-ATTEMPT-2.md",
+  "records": {
+    "formal_config": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/configs/exp-053-m3-seed-42.json",
+      "bytes": 5241,
+      "sha256": "4490d19d24c58b15c857309bf15bd49fe4329b4e3702e6d4714f3432605755fe"
+    },
+    "formal_run": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora/seed-42/run.json",
+      "bytes": 33115,
+      "sha256": "c1c93044b7978dde134d41e1aac815a729f3237d38ffbf026c41474d27c24ca5"
+    },
+    "prior_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora/seed-42/verification.json",
+      "bytes": 13480,
+      "sha256": "453028b2dac8abb0e0475133cc34b73c964890ddbf2f5da3103c37e8e3056e7a"
+    },
+    "prior_summary": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora/seed-42/VERIFICATION-SUMMARY.md",
+      "bytes": 330,
+      "sha256": "eed84e07c8b05c2ae224054e3ecb033eec8ae3422a05990f98735b52952d6241"
+    },
+    "amendment": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-053-seed-42-verification-attempt-2-amendment.md",
+      "bytes": 1318,
+      "sha256": "f117921f60eef481054756b2c30d9099b7509c2f996610677c6a82ee6051d680"
+    },
+    "attempt_2_verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/verify_exp053_m3_attempt2.py",
+      "bytes": 38674,
+      "sha256": "19d92fe60af3f57956e77af6a9761ad78ec1a4bc78a2a808d6327172b409ab60"
+    },
+    "attempt_2_tests": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/tests/test_exp053_m3_verification_attempt2.py",
+      "bytes": 1983,
+      "sha256": "27113d157c424661386eecae5ce3d6a7655d9ba83d1c4a5f0ae4f728a8c5a44c"
+    }
+  }
+}

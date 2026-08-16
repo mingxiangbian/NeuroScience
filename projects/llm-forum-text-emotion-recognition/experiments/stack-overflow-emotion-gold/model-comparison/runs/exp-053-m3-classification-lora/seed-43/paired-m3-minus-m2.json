@@ -1,0 +1,113 @@
+{
+  "comparison": "EXP-053_M3_seed43_minus_EXP-052_M2_seed43",
+  "fixed_0.5": {
+    "component_count": 702,
+    "five_label_macro_f1_delta_without_surprise": {
+      "lower": 0.48333622156442435,
+      "point": 0.5419606794868221,
+      "upper": 0.5981280990265253
+    },
+    "interval": "percentile_2.5_97.5",
+    "macro_f1_delta": {
+      "lower": 0.43238040859889987,
+      "point": 0.5257079736464259,
+      "upper": 0.5987153114102715
+    },
+    "per_label_f1_delta": {
+      "anger": {
+        "lower": 0.4227034925559565,
+        "point": 0.5229791480644992,
+        "upper": 0.6240315226029726
+      },
+      "fear": {
+        "lower": 0.5,
+        "point": 0.7058823529411765,
+        "upper": 0.8573051948051938
+      },
+      "joy": {
+        "lower": 0.5269900374827382,
+        "point": 0.6274509803921569,
+        "upper": 0.7125218949044585
+      },
+      "love": {
+        "lower": 0.1700208288865123,
+        "point": 0.23530909785445986,
+        "upper": 0.3096067998632971
+      },
+      "sadness": {
+        "lower": 0.44066101694915255,
+        "point": 0.6181818181818182,
+        "upper": 0.75
+      },
+      "surprise": {
+        "lower": 0.0,
+        "point": 0.4444444444444444,
+        "upper": 0.8
+      }
+    },
+    "replicates": 2000,
+    "row_count": 720,
+    "seed": 3434566799,
+    "seed_material": "SO-C0-component-bootstrap-v1|EXP-053|seed-43|M3-minus-M2|fixed-0.5",
+    "unit": "duplicate_component_id"
+  },
+  "metric_deltas": {
+    "fixed_macro_f1": 0.5257079736464257,
+    "fixed_micro_f1": 0.39491279808816804,
+    "fixed_subset_accuracy": 0.22499999999999998,
+    "shared_macro_f1": 0.3099224609798397,
+    "shared_micro_f1": 0.21872753561625935,
+    "shared_subset_accuracy": 0.2833333333333333
+  },
+  "shared_threshold": {
+    "component_count": 702,
+    "five_label_macro_f1_delta_without_surprise": {
+      "lower": 0.21085954385411687,
+      "point": 0.2830180642869188,
+      "upper": 0.34071931859155885
+    },
+    "interval": "percentile_2.5_97.5",
+    "macro_f1_delta": {
+      "lower": 0.2081048163142694,
+      "point": 0.3099224609798397,
+      "upper": 0.39088005398365844
+    },
+    "per_label_f1_delta": {
+      "anger": {
+        "lower": 0.162888801239778,
+        "point": 0.23390236597783765,
+        "upper": 0.3064001348202832
+      },
+      "fear": {
+        "lower": 0.22056339427662958,
+        "point": 0.5204678362573099,
+        "upper": 0.7442088463292292
+      },
+      "joy": {
+        "lower": 0.17130976248183313,
+        "point": 0.2618355481727575,
+        "upper": 0.3579436401937104
+      },
+      "love": {
+        "lower": 0.10825437830634646,
+        "point": 0.16476478881253287,
+        "upper": 0.22231119087149223
+      },
+      "sadness": {
+        "lower": 0.09788922888616891,
+        "point": 0.23411978221415608,
+        "upper": 0.3662835429089964
+      },
+      "surprise": {
+        "lower": 0.0,
+        "point": 0.4444444444444444,
+        "upper": 0.8
+      }
+    },
+    "replicates": 2000,
+    "row_count": 720,
+    "seed": 1527831973,
+    "seed_material": "SO-C0-component-bootstrap-v1|EXP-053|seed-43|M3-minus-M2|M3-0.35_M2-0.20",
+    "unit": "duplicate_component_id"
+  }
+}

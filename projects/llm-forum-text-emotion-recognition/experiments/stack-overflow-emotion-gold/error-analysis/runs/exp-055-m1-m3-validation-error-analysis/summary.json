@@ -1,0 +1,175 @@
+{
+  "claim_boundary": {
+    "descriptive_only": true,
+    "mechanism_claim": false,
+    "oracle_not_deployable": true,
+    "qualitative_not_prevalence": true,
+    "validation_only": true
+  },
+  "exact_set_transitions": {
+    "both_wrong_mean": 123.66666666666667,
+    "m1_only_correct_mean": 56.0,
+    "m3_only_correct_mean": 48.666666666666664
+  },
+  "experiment_id": "EXP-055",
+  "primary_shared_threshold_summary": {
+    "m1": {
+      "five_label_macro_f1_without_surprise": {
+        "mean": 0.740705138898749,
+        "sample_std": 0.013301095848080995,
+        "values": [
+          0.7255431853000209,
+          0.7504087374407581,
+          0.7461634939554681
+        ]
+      },
+      "hamming_loss": {
+        "mean": 0.04976851851851852,
+        "sample_std": 0.0032407407407407385,
+        "values": [
+          0.053009259259259256,
+          0.04976851851851852,
+          0.04652777777777778
+        ]
+      },
+      "macro_f1": {
+        "mean": 0.6172542824156242,
+        "sample_std": 0.011084246540067542,
+        "values": [
+          0.6046193210833507,
+          0.6253406145339651,
+          0.6218029116295568
+        ]
+      },
+      "micro_f1": {
+        "mean": 0.7711392661852708,
+        "sample_std": 0.005644526619502707,
+        "values": [
+          0.7646454265159301,
+          0.7748691099476439,
+          0.7739032620922384
+        ]
+      },
+      "subset_accuracy": {
+        "mean": 0.7606481481481482,
+        "sample_std": 0.02162091560895483,
+        "values": [
+          0.7402777777777778,
+          0.7583333333333333,
+          0.7833333333333333
+        ]
+      },
+      "weighted_f1": {
+        "mean": 0.7639456842889976,
+        "sample_std": 0.004536633822175925,
+        "values": [
+          0.7594761576166754,
+          0.7685465720788933,
+          0.7638143231714241
+        ]
+      }
+    },
+    "m3": {
+      "five_label_macro_f1_without_surprise": {
+        "mean": 0.7067239463983171,
+        "sample_std": 0.01381565400140417,
+        "values": [
+          0.6926155185659227,
+          0.7073294012431809,
+          0.7202269193858477
+        ]
+      },
+      "hamming_loss": {
+        "mean": 0.05092592592592593,
+        "sample_std": 0.0008018753738744773,
+        "values": [
+          0.050462962962962966,
+          0.050462962962962966,
+          0.05185185185185185
+        ]
+      },
+      "macro_f1": {
+        "mean": 0.6540320204273294,
+        "sample_std": 0.014135342082686958,
+        "values": [
+          0.6377856594109963,
+          0.6635152417767248,
+          0.660795160094267
+        ]
+      },
+      "micro_f1": {
+        "mean": 0.7595747882053453,
+        "sample_std": 0.0036740879161850076,
+        "values": [
+          0.7583148558758314,
+          0.7566964285714285,
+          0.7637130801687763
+        ]
+      },
+      "subset_accuracy": {
+        "mean": 0.750462962962963,
+        "sample_std": 0.007649403537897337,
+        "values": [
+          0.7555555555555555,
+          0.7541666666666667,
+          0.7416666666666667
+        ]
+      },
+      "weighted_f1": {
+        "mean": 0.7557041668585658,
+        "sample_std": 0.0034718054741089952,
+        "values": [
+          0.7518292168147174,
+          0.758531588434117,
+          0.7567516953268628
+        ]
+      }
+    }
+  },
+  "qualitative": {
+    "flag_counts": {
+      "annotation_ambiguity": 9,
+      "emotion_ontology_overlap": 24,
+      "implicit_emotion": 20,
+      "lexical_cue_conflict": 14,
+      "low_support_surprise": 7,
+      "mixed_emotion": 12,
+      "multilabel_underprediction": 9,
+      "negation": 2,
+      "possible_missing_context": 5,
+      "sarcasm_or_irony": 5,
+      "surface_noise": 10,
+      "weak_emotion_neutral_boundary": 21
+    },
+    "gold_plausibility_counts": {
+      "debatable": 11,
+      "implausible": 1,
+      "plausible": 33
+    },
+    "primary_source_counts": {
+      "annotation_or_data_uncertainty": 9,
+      "low_support_label_uncertainty": 1,
+      "missing_forum_context": 1,
+      "model_or_representation_limitation": 13,
+      "overlapping_label_ontology": 19,
+      "surface_form_noise": 2
+    },
+    "reviewer_count": 1,
+    "rows": 45
+  },
+  "router_headroom_gate": {
+    "checks": {
+      "five_label_mean_at_least_0.010": true,
+      "five_label_positive_3_of_3": true,
+      "m3_selection_rate_at_least_0.05_3_of_3": true,
+      "six_label_mean_at_least_0.020": true,
+      "six_label_positive_3_of_3": true
+    },
+    "passed": true
+  },
+  "rows": 720,
+  "schema_version": "exp-055-m1-m3-error-analysis-summary-v1",
+  "source_split": "validation",
+  "status": "Completed; pending independent verification",
+  "test_split_accessed": false
+}
