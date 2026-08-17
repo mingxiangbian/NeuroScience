@@ -1,0 +1,618 @@
+{
+  "check_count": 114,
+  "checks": [
+    {
+      "detail": null,
+      "name": "identity.experiment",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "identity.stage",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run.status",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run.static_passed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run.m1_passed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run.m3_passed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "authorization.fold",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "authorization.seed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "authorization.no_validation",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "authorization.no_test",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "authorization.no_metrics",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "authorization.no_full_oof",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run.no_validation",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run.no_test_inputs",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run.no_test_labels",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run.no_performance_metrics",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run.no_full_oof",
+      "passed": true
+    },
+    {
+      "detail": [],
+      "name": "privacy.public_keys",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen.config.listed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen.config.content",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen.protocol.listed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen.protocol.content",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen.runner.listed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen.runner.content",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen.verifier.listed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen.verifier.content",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen.tests.listed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen.tests.content",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen.m1_runner_reference.listed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen.m1_runner_reference.content",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen.qwen_primitives.listed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen.qwen_primitives.content",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen.m3_preflight_reference.listed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen.m3_preflight_reference.content",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "data.train_rows",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "data.manifest_rows",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "data.manifest_unique",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "data.coverage",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "partition.training_rows",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "partition.heldout_rows",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "partition.sample_disjoint",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "partition.component_disjoint",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "partition.training_order",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "partition.heldout_order",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "partition.manifest_hash",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "privacy.partition_mode",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "private_partition.training_rows",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "private_partition.heldout_rows",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "private_partition.training_order",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "private_partition.heldout_order",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "privacy.m1_mode",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.fold",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.seed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.training_source_order",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.heldout_source_order",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.optimizer_steps",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.loss_count",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.finite_losses",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.label_order",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.heldout_logits",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.heldout_labels_unused",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.manifest_before",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.manifest_after",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.heldout_ids",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.heldout_components",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.training_membership",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.training_components",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.train_heldout_disjoint",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "privacy.m3_mode",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.fold",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.seed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.training_source_order",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.heldout_source_order",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.optimizer_steps",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.loss_count",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.finite_losses",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.label_order",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.heldout_logits",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.heldout_labels_unused",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.manifest_before",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.manifest_after",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.heldout_ids",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.heldout_components",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.training_membership",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.training_components",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.train_heldout_disjoint",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.batch_size",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.training_row_count",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.training_ids_digest",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.epoch_order_digest",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.scheduler",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.initial_classifier",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.classifier_updated",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.gradient_norms",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m1.learning_rates",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.batch_size",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.training_row_count",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.training_ids_digest",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.epoch_order_digest",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.head_initial",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.head_updated",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.lora_initial",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.lora_updated",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.zero_delta",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.insertions",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.lora_parameters",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.trainable_parameters",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.nonzero_lora_b",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.base_unchanged",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m3.base_expected",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_model.same_heldout",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_model.heldout_digest",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resources.m1_memory",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resources.m3_memory",
+      "passed": true
+    }
+  ],
+  "claim_boundary": "Passing verifies only the fold-0 two-step M1/M3 OOF consumer path. It does not authorize full OOF, calibration, selective prediction, routing, validation, or test.",
+  "experiment_id": "EXP-058",
+  "failed_count": 0,
+  "independence": {
+    "model_libraries_imported": false,
+    "model_runner_imported": false,
+    "test_inputs_opened": false,
+    "test_labels_opened": false,
+    "train_recomputed": true,
+    "validation_opened": false
+  },
+  "passed_count": 114,
+  "schema_version": "exp-058-oof-consumer-dry-run-verification-v1",
+  "stage": "fold-0-m1-m3-two-step-dry-run",
+  "status": "Passed",
+  "verified_artifacts": {
+    "config": {
+      "bytes": 8009,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/configs/exp-058-oof-consumer-dry-run-fold-0.json",
+      "sha256": "aee7f2355ddd4895a6cbb0f925ab61162b69d28b0b3d78d8dcd20eb19e9f0260"
+    },
+    "fold_manifest": {
+      "bytes": 739200,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/fold-manifest.public.jsonl",
+      "sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8"
+    },
+    "m1_private_evidence": {
+      "bytes": 5029,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-oof-consumer-dry-run-fold-0/m1-evidence.json",
+      "sha256": "1610f35852e43a02c14f9e5eb33276fcd1054ba2fbb7b4d64fe789e5bdec067d"
+    },
+    "m3_private_evidence": {
+      "bytes": 4249,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-oof-consumer-dry-run-fold-0/m3-evidence.json",
+      "sha256": "b202ac9ed1f3338a40245ee4a9e7320a38ebfcfb2244fe5b4af481b0901f8542"
+    },
+    "run": {
+      "bytes": 6759,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-oof-consumer-dry-run-fold-0/run.json",
+      "sha256": "ef7624c6075a51cda652bf3c34ca4663bb376e1006d1c71763ae5c52b65699f1"
+    }
+  },
+  "verified_at_utc": "2026-08-16T05:35:10.573569+00:00"
+}

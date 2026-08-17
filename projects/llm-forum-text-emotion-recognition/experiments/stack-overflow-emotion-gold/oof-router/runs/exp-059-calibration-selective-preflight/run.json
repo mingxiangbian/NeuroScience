@@ -1,0 +1,161 @@
+{
+  "array_values_loaded": false,
+  "completed_at_utc": "2026-08-17T03:01:55.934570+00:00",
+  "dependencies": {
+    "matplotlib": "3.10.7",
+    "numpy": "2.2.6",
+    "python": "3.10.20",
+    "scikit-learn": "1.7.2",
+    "scipy": "1.15.3"
+  },
+  "experiment_id": "EXP-059",
+  "formal_analysis_performed": false,
+  "frozen_sources": {
+    "config": {
+      "bytes": 5713,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-preflight/frozen-sources/config.json",
+      "sha256": "3a9854c8a5208471a7b87e3899a0def8da6e21ca6c68c7df8e0c43f2fc041b37"
+    },
+    "protocol": {
+      "bytes": 12216,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-preflight/frozen-sources/exp-059-calibration-selective-prediction.md",
+      "sha256": "a483b79d5b41f4ffb2f6b27db2dfdd215a525ed77d4dc207e56320dbff5eaddb"
+    },
+    "runner": {
+      "bytes": 55981,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-preflight/frozen-sources/run_exp059_calibration.py",
+      "sha256": "271b73837a0632d3c49095ff26974aa2e32d30a4dcc9d83a275fcfa8bee1f972"
+    },
+    "tests": {
+      "bytes": 4678,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-preflight/frozen-sources/test_exp059_calibration.py",
+      "sha256": "dd2122ee44526aedb7f0ed67839c375c4023f890bf6de9b012afcc339a1cee51"
+    },
+    "verifier": {
+      "bytes": 49381,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-preflight/frozen-sources/verify_exp059_calibration.py",
+      "sha256": "e13791bf47647ec954acac10bab723a8781bca4a03b12aee6ac715a6a4412a3e"
+    }
+  },
+  "git": {
+    "commit": "64fa05571b936516be0b3f9415464adedf6856cc",
+    "dirty": true,
+    "dirty_path_count": 14
+  },
+  "input": {
+    "bytes": 307755,
+    "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-paired-oof-production/paired-oof.npz",
+    "sha256": "e8d2efde7ca62b3f09519390a6305d09ba0f3ea1dfbecbe8a11dbe4ffd482bfc"
+  },
+  "input_schema": [
+    {
+      "array_name": "character_lengths",
+      "dtype": "int32",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "component_ids",
+      "dtype": "<U34",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "fold_ids",
+      "dtype": "int8",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "gold",
+      "dtype": "uint8",
+      "fortran_order": false,
+      "shape": [
+        3360,
+        6
+      ]
+    },
+    {
+      "array_name": "m1_fold_run_sha256",
+      "dtype": "<U64",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "m1_logits",
+      "dtype": "float32",
+      "fortran_order": false,
+      "shape": [
+        3360,
+        6
+      ]
+    },
+    {
+      "array_name": "m1_token_lengths",
+      "dtype": "int32",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "m3_fold_run_sha256",
+      "dtype": "<U64",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "m3_logits",
+      "dtype": "float32",
+      "fortran_order": false,
+      "shape": [
+        3360,
+        6
+      ]
+    },
+    {
+      "array_name": "m3_token_lengths",
+      "dtype": "int32",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "sample_ids",
+      "dtype": "<U31",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    }
+  ],
+  "performance_metrics_computed": false,
+  "rq_id": "RQ-S3",
+  "runtime": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python_executable": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python3.10"
+  },
+  "schema_version": "exp-059-preflight-run-v1",
+  "split_access": {
+    "accessed_splits": [
+      "train-oof-header"
+    ],
+    "test_inputs_accessed": false,
+    "test_labels_accessed": false,
+    "validation_accessed": false
+  },
+  "stage": "calibration-selective-preflight",
+  "status": "CompletedAwaitingVerification",
+  "tier": "Major"
+}

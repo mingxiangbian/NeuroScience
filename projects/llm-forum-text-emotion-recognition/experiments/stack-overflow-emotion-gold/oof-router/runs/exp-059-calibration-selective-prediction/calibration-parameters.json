@@ -1,0 +1,272 @@
+{
+  "families": {
+    "m1": {
+      "final_global_threshold": {
+        "hamming_loss": 0.05094246031746032,
+        "macro_f1": 0.6039952044386472,
+        "threshold": 0.31
+      },
+      "final_temperature": 1.0,
+      "fold_fits": [
+        {
+          "fold_id": 0,
+          "heldout_rows": 672,
+          "meta_train_rows": 2688,
+          "raw_threshold_selection": {
+            "hamming_loss": 0.05109126984126984,
+            "macro_f1": 0.6031308862236823,
+            "threshold": 0.31
+          },
+          "temperature_fit": {
+            "at_lower_bound": false,
+            "at_upper_bound": false,
+            "iterations": 36,
+            "objective_nll": 0.1440883728645572,
+            "success": true,
+            "temperature": 1.0084150593106482
+          },
+          "temperature_threshold_selection": {
+            "hamming_loss": 0.05109126984126984,
+            "macro_f1": 0.6031308862236823,
+            "threshold": 0.31
+          }
+        },
+        {
+          "fold_id": 1,
+          "heldout_rows": 672,
+          "meta_train_rows": 2688,
+          "raw_threshold_selection": {
+            "hamming_loss": 0.050595238095238096,
+            "macro_f1": 0.6037625691813165,
+            "threshold": 0.34
+          },
+          "temperature_fit": {
+            "at_lower_bound": false,
+            "at_upper_bound": false,
+            "iterations": 20,
+            "objective_nll": 0.144801555921498,
+            "success": true,
+            "temperature": 1.0118577244419236
+          },
+          "temperature_threshold_selection": {
+            "hamming_loss": 0.05084325396825397,
+            "macro_f1": 0.6052985996533587,
+            "threshold": 0.33
+          }
+        },
+        {
+          "fold_id": 2,
+          "heldout_rows": 672,
+          "meta_train_rows": 2688,
+          "raw_threshold_selection": {
+            "hamming_loss": 0.04892113095238095,
+            "macro_f1": 0.611487633947033,
+            "threshold": 0.31
+          },
+          "temperature_fit": {
+            "at_lower_bound": false,
+            "at_upper_bound": false,
+            "iterations": 37,
+            "objective_nll": 0.1399097084756545,
+            "success": true,
+            "temperature": 0.9970286292809614
+          },
+          "temperature_threshold_selection": {
+            "hamming_loss": 0.04898313492063492,
+            "macro_f1": 0.6110736089285441,
+            "threshold": 0.31
+          }
+        },
+        {
+          "fold_id": 3,
+          "heldout_rows": 672,
+          "meta_train_rows": 2688,
+          "raw_threshold_selection": {
+            "hamming_loss": 0.05146329365079365,
+            "macro_f1": 0.6012378865631521,
+            "threshold": 0.33
+          },
+          "temperature_fit": {
+            "at_lower_bound": false,
+            "at_upper_bound": false,
+            "iterations": 40,
+            "objective_nll": 0.14618723091148683,
+            "success": true,
+            "temperature": 1.0149035976424443
+          },
+          "temperature_threshold_selection": {
+            "hamming_loss": 0.051587301587301584,
+            "macro_f1": 0.6012348647138309,
+            "threshold": 0.33
+          }
+        },
+        {
+          "fold_id": 4,
+          "heldout_rows": 672,
+          "meta_train_rows": 2688,
+          "raw_threshold_selection": {
+            "hamming_loss": 0.05164930555555555,
+            "macro_f1": 0.6031872518594104,
+            "threshold": 0.31
+          },
+          "temperature_fit": {
+            "at_lower_bound": false,
+            "at_upper_bound": false,
+            "iterations": 37,
+            "objective_nll": 0.14500780983461986,
+            "success": true,
+            "temperature": 1.0094957234664628
+          },
+          "temperature_threshold_selection": {
+            "hamming_loss": 0.051773313492063495,
+            "macro_f1": 0.6029159905824332,
+            "threshold": 0.31
+          }
+        }
+      ],
+      "full_oof_temperature_fit": {
+        "at_lower_bound": false,
+        "at_upper_bound": false,
+        "iterations": 31,
+        "objective_nll": 0.14400425496843886,
+        "success": true,
+        "temperature": 1.0083827573769302
+      },
+      "selected_calibrator": "identity"
+    },
+    "m3": {
+      "final_global_threshold": {
+        "hamming_loss": 0.049652777777777775,
+        "macro_f1": 0.6434624324300761,
+        "threshold": 0.31
+      },
+      "final_temperature": 1.0,
+      "fold_fits": [
+        {
+          "fold_id": 0,
+          "heldout_rows": 672,
+          "meta_train_rows": 2688,
+          "raw_threshold_selection": {
+            "hamming_loss": 0.05102926587301587,
+            "macro_f1": 0.638190287693374,
+            "threshold": 0.32
+          },
+          "temperature_fit": {
+            "at_lower_bound": false,
+            "at_upper_bound": false,
+            "iterations": 29,
+            "objective_nll": 0.12964702966902775,
+            "success": true,
+            "temperature": 1.036511041359048
+          },
+          "temperature_threshold_selection": {
+            "hamming_loss": 0.05071924603174603,
+            "macro_f1": 0.6391687185327807,
+            "threshold": 0.33
+          }
+        },
+        {
+          "fold_id": 1,
+          "heldout_rows": 672,
+          "meta_train_rows": 2688,
+          "raw_threshold_selection": {
+            "hamming_loss": 0.04811507936507937,
+            "macro_f1": 0.6587653107125059,
+            "threshold": 0.32
+          },
+          "temperature_fit": {
+            "at_lower_bound": false,
+            "at_upper_bound": false,
+            "iterations": 27,
+            "objective_nll": 0.12539223097751231,
+            "success": true,
+            "temperature": 0.9777243645131671
+          },
+          "temperature_threshold_selection": {
+            "hamming_loss": 0.04799107142857143,
+            "macro_f1": 0.6593350958577779,
+            "threshold": 0.32
+          }
+        },
+        {
+          "fold_id": 2,
+          "heldout_rows": 672,
+          "meta_train_rows": 2688,
+          "raw_threshold_selection": {
+            "hamming_loss": 0.05115327380952381,
+            "macro_f1": 0.6453751181084487,
+            "threshold": 0.28
+          },
+          "temperature_fit": {
+            "at_lower_bound": false,
+            "at_upper_bound": false,
+            "iterations": 28,
+            "objective_nll": 0.12770145993265278,
+            "success": true,
+            "temperature": 1.030037116012555
+          },
+          "temperature_threshold_selection": {
+            "hamming_loss": 0.05140128968253968,
+            "macro_f1": 0.6444461921910424,
+            "threshold": 0.28
+          }
+        },
+        {
+          "fold_id": 3,
+          "heldout_rows": 672,
+          "meta_train_rows": 2688,
+          "raw_threshold_selection": {
+            "hamming_loss": 0.05022321428571429,
+            "macro_f1": 0.6312972180798699,
+            "threshold": 0.28
+          },
+          "temperature_fit": {
+            "at_lower_bound": false,
+            "at_upper_bound": false,
+            "iterations": 31,
+            "objective_nll": 0.12606980714946867,
+            "success": true,
+            "temperature": 0.9908754558893046
+          },
+          "temperature_threshold_selection": {
+            "hamming_loss": 0.050347222222222224,
+            "macro_f1": 0.6306638461576349,
+            "threshold": 0.28
+          }
+        },
+        {
+          "fold_id": 4,
+          "heldout_rows": 672,
+          "meta_train_rows": 2688,
+          "raw_threshold_selection": {
+            "hamming_loss": 0.049479166666666664,
+            "macro_f1": 0.6456080403891468,
+            "threshold": 0.32
+          },
+          "temperature_fit": {
+            "at_lower_bound": false,
+            "at_upper_bound": false,
+            "iterations": 38,
+            "objective_nll": 0.1272408221340447,
+            "success": true,
+            "temperature": 0.9993828447299994
+          },
+          "temperature_threshold_selection": {
+            "hamming_loss": 0.049479166666666664,
+            "macro_f1": 0.6456080403891468,
+            "threshold": 0.32
+          }
+        }
+      ],
+      "full_oof_temperature_fit": {
+        "at_lower_bound": false,
+        "at_upper_bound": false,
+        "iterations": 35,
+        "objective_nll": 0.12725828731458674,
+        "success": true,
+        "temperature": 1.0068183741968697
+      },
+      "selected_calibrator": "identity"
+    }
+  }
+}

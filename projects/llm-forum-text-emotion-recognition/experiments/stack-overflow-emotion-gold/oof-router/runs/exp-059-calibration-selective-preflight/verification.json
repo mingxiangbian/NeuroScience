@@ -1,0 +1,203 @@
+{
+  "checks": [
+    {
+      "detail": null,
+      "name": "preflight.identity",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.status",
+      "passed": true
+    },
+    {
+      "detail": {
+        "character_lengths": {
+          "dtype": "int32",
+          "fortran_order": false,
+          "shape": [
+            3360
+          ]
+        },
+        "component_ids": {
+          "dtype": "<U34",
+          "fortran_order": false,
+          "shape": [
+            3360
+          ]
+        },
+        "fold_ids": {
+          "dtype": "int8",
+          "fortran_order": false,
+          "shape": [
+            3360
+          ]
+        },
+        "gold": {
+          "dtype": "uint8",
+          "fortran_order": false,
+          "shape": [
+            3360,
+            6
+          ]
+        },
+        "m1_fold_run_sha256": {
+          "dtype": "<U64",
+          "fortran_order": false,
+          "shape": [
+            3360
+          ]
+        },
+        "m1_logits": {
+          "dtype": "float32",
+          "fortran_order": false,
+          "shape": [
+            3360,
+            6
+          ]
+        },
+        "m1_token_lengths": {
+          "dtype": "int32",
+          "fortran_order": false,
+          "shape": [
+            3360
+          ]
+        },
+        "m3_fold_run_sha256": {
+          "dtype": "<U64",
+          "fortran_order": false,
+          "shape": [
+            3360
+          ]
+        },
+        "m3_logits": {
+          "dtype": "float32",
+          "fortran_order": false,
+          "shape": [
+            3360,
+            6
+          ]
+        },
+        "m3_token_lengths": {
+          "dtype": "int32",
+          "fortran_order": false,
+          "shape": [
+            3360
+          ]
+        },
+        "sample_ids": {
+          "dtype": "<U31",
+          "fortran_order": false,
+          "shape": [
+            3360
+          ]
+        }
+      },
+      "name": "preflight.header_schema",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.public_schema",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.exp058_passed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.no_values",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.no_metrics",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.no_analysis",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.no_validation",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.no_test_inputs",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.no_test_labels",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.header_only_split",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.input_bound",
+      "passed": true
+    },
+    {
+      "detail": [],
+      "name": "preflight.privacy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.formal_public_absent",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.formal_private_absent",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.runtime",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.frozen_source.config",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.frozen_source.protocol",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.frozen_source.runner",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.frozen_source.tests",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.frozen_source.verifier",
+      "passed": true
+    }
+  ],
+  "experiment_id": "EXP-059",
+  "failed_count": 0,
+  "passed_count": 22,
+  "rq_id": "RQ-S3",
+  "schema_version": "exp-059-verification-v1",
+  "scope": "preflight",
+  "status": "Passed",
+  "verified_at_utc": "2026-08-17T03:02:03.589332+00:00"
+}

@@ -464,14 +464,53 @@ gate/阈值选择，test 仍遵守一次性 gate。若无 oracle headroom，或�
 ### Conditional Encoder-Qwen Router
 
 EXP-055 已报告错误重叠、M3 恢复的 encoder 错误、M3 破坏的 encoder 正确样本和
-whole-vector oracle，并通过预登记的 headroom 门。因此可以另行登记 train-OOF learned-router
-feasibility；这不是对路由训练的自动授权，也不是可部署收益结论。后续仍须报告 risk/coverage
-和调用率-性能曲线。
+whole-vector oracle，并通过预登记的 headroom 门。随后登记并完成的 EXP-058 至 EXP-060
+建立了 paired train OOF、calibration/selective prediction 与 pre-Qwen nested router
+证据链；正式 EXP-060 已通过独立验证，但其结论仍限于 train-OOF development evidence。
 
 可部署 router 的输入严格限于调用 Qwen 前可获得的信息，例如 encoder 概率、熵、margin、
 文本长度和非敏感元数据。不得使用 Qwen logits、hidden states、生成结果或事后 gold 决定
 是否调用 Qwen。Learned router 同样使用 train OOF predictions；oracle 只作上界。若真实
 路由在预登记的合理 Qwen 调用率下没有正收益，则部署单一最佳模型并关闭该分支。
+
+2026-08-16 已完成 EXP-058 的第一道 fold-manifest preflight。`DATA-SO-TASK-V1` train 的
+3,360 条样本和 3,277 个 duplicate components 被确定性分成五个 672-row folds，组件泄漏为
+0，`surprise` 支持为 `6/6/6/7/6`，最大标签分配误差为 `0.025806`。Attempt 1 因把冻结的
+六位 binary label vector 误读为标签名列表而在分配前失败；修正仅涉及 schema 解码，attempt 2
+通过合成测试 `6/6` 和独立验证 `131/131`。随后 fold-0 consumer dry-run 通过 `114/114`，
+正式 production 完成 M1/M3 各五个 folds 和 3,360-row paired raw-logit assembly。五个 M1
+folds 合计 `265/265`、五个 M3 folds 合计 `240/240`，final verifier `26,989/26,989`；paired
+artifact SHA-256 为 `e8d2efde7ca62b3f09519390a6305d09ba0f3ea1dfbecbe8a11dbe4ffd482bfc`。
+首次 final attempt 唯一问题是五个 private fold parent mode 为 `0755`，失败记录保留，权限
+收紧为 `0700` 后 paired hash 未变。EXP-058 全程只访问 train，未计算 metrics、calibration、
+oracle 或 router，也未访问 validation/test。
+
+2026-08-17 随后完成 EXP-059。第二层五折 cross-fitting 显示 scalar temperature 对 M1 的 NLL
+略微变差（`+0.000038`），对 M3 的 NLL/Brier 均变差（`+0.000426`/`+0.000041`），因此两者均
+冻结 identity calibration。M1/M3 的 selected OOF Macro-F1 为 `0.598919`/`0.637843`，去除
+低支持 `surprise` 后为 `0.718703`/`0.710509`。Abstention point gate 在 M1 约 90% coverage
+和 M3 约 80% coverage 通过；M1 Hamming-risk reduction=`20.01%`，但 component-bootstrap
+95% interval=`[16.80%,23.24%]`，属于边界通过，M3 reduction=`31.57%`，interval=
+`[27.79%,35.74%]`。非部署 whole-vector oracle 在 `313/3,360` 条选择 M3，相对 M1 的六标签/
+五标签 Macro-F1 上界为 `+0.109930`/`+0.087472`，两项 bootstrap interval 均高于 0，因此
+EXP-060 headroom gate 通过。预检 `22/22`、契约测试 `7/7`、修订后的独立终验
+`4,684/4,684`；attempt 1 仅因 verifier 将 `hamming_risk` 错映射为分类函数键而在比较前
+停止，正式产物未重跑或改写。
+
+EXP-060 随后冻结为 14 列 pre-Qwen feature whitelist、完整六维 router target、固定
+`StandardScaler + L2 LogisticRegression(C=1.0)`、`0/5/10/15/20/30/50/100%` 调用率和
+`<=20%` 停止门。为避免第二层泄漏，每个 outer fold 内部还必须重新按 3-fold/4-fold 选择
+M1/M3 阈值，不能直接把 EXP-059 的 `oracle_choose_m3` 或阈值衍生字段当正式训练输入。
+正式 nested OOF 结果为 `Verified Pass`：`logistic_router` 选中 nominal 15% 调用点，实际调用
+`501/3,360` 条（`14.9107%`），六标签 Macro-F1 从 `0.598919` 提高到 `0.639087`
+（`+0.040168`），五标签 Macro-F1 delta=`+0.006097`，Hamming-loss delta=`-0.004365`；相对
+同为 nominal 15% 的最佳 heuristic，Macro-F1 delta=`+0.013896`。2,000 次
+duplicate-component bootstrap 中六标签 gain CI 完全高于 0，但五标签 gain CI 跨 0；独立
+verifier 通过 `4,412/4,412`。正式 [`REPORT.md`](experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router/REPORT.md)
+与 [`VERIFICATION-SUMMARY.md`](experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router/VERIFICATION-SUMMARY.md)
+共同界定该结果：它只来自冻结 seed-42 模型对的 train OOF，不是独立 test、跨 seed 或普遍
+部署结论。EXP-060 到此冻结，不再调 feature/router/cutoff；下一步只做系统演示、论文归档，
+或另行登记新数据上的独立确认。
 
 ### License Boundary
 
@@ -501,7 +540,7 @@ Overflow 原始文本及 SOTorrent 表还受相应 CC BY-SA 条款约束。因�
 | RQ-F4 | 行为上已验证的 Qwen 中，情绪标签和上下文条件是否在不同层呈现稳定的线性可解码信息，post-training/LoRA 是否改变这种结构？ | 将性能结果连接到受控的表征相关性证据；无稳定 probe 结果时如实形成负结果，不阻塞系统论文 | Matched layer-wise probes；label-shuffle/control tasks；可选 SAE、patching/ablation，EXP 编号待登记 | 可选表征分析章节 | 后置扩展；必须在行为模型与分析层/池化规则冻结后启动 |
 | RQ-S1 | 在固定 Stack Overflow 六标签多标签任务上，Encoder、Frozen Qwen linear probe、Qwen Classification LoRA 与 Qwen Generative LoRA 的性能、稳定性和成本有何差异？ | 分离冻结 Qwen 表征可解码性与 classification-style LoRA 适配收益，并对分类式和生成式任务表述作端到端比较；负结果仍能界定 LLM 在真实论坛多标签任务上的边界 | `DATA-SO-TASK-V1`；EXP-050 shared preflight；EXP-051 M1；EXP-052 M2；EXP-053 M3；EXP-054 M4；EXP-055 M1/M3 error analysis；EXP-056 one-time frozen test | 数据与方法章节；四条件主结果表；低频标签和错误分析章节 | 阶段性解决：EXP-056 test 上 M1/M2/M3/M4 Macro-F1=`0.567459 +/- 0.007814`/`0.295226 +/- 0.020587`/`0.613804 +/- 0.025733`/`0.547823 +/- 0.015312`。M3-M2 delta=`+0.318578`，CI 完全高于 0；M3-M1 六标签 delta=`+0.046345` 但 CI 跨 0，五标签 delta=`-0.010735` 且 CI 跨 0，因此 M3 与 encoder 竞争但未证明全面更强。M4-M3 六标签 delta=`-0.065981` 且 CI 完全低于 0；M4 的 subset accuracy 最高，但不能替代主指标。test 已消费，不再用于调参或模型选择；该比较不支持内部机制或 generation 因果主张 |
 | RQ-S2 | 在可验证恢复的 Stack Overflow answer/comment 子集上，真实 question/host-post context 是否比 target-only 和 matched shuffled context 更有助于六标签预测？ | 用三视图配对控制区分真实响应关系与 topic、长度等伪上下文收益；恢复不足或 oracle 无 headroom 也是可封闭负结果 | `DATA-SO-CONTEXT-RECOVERY-V1`；三视图配对评价；conditional OOF context gate，EXP 编号待登记 | 条件性 context 结果与数据恢复附录 | 条件分支；仅在恢复率、有效样本量和 whole-vector oracle 门通过后启动 |
-| RQ-S3 | Encoder 与 Classification LoRA 的错误是否足够互补，使只依赖 pre-Qwen features 的选择性路由在受控调用率下优于单一最佳模型？ | 评价 LLM 作为昂贵二级模型的系统价值；若无实际收益则证明单模型部署更合理 | EXP-055 whole-vector oracle；train-OOF router；risk/coverage/call-rate/cost，后续 EXP 编号待登记 | 条件性系统实验 | EXP-055 oracle headroom gate 已通过；只允许另行登记 train-OOF feasibility，尚无 learned-router 或部署收益结论 |
+| RQ-S3 | Encoder 与 Classification LoRA 的错误是否足够互补，使只依赖 pre-Qwen features 的选择性路由在受控调用率下优于单一最佳模型？ | 评价 LLM 作为昂贵二级模型的系统价值；若无实际收益则证明单模型部署更合理 | EXP-055 whole-vector oracle；EXP-058 paired M1/M3 OOF；EXP-059 calibration/selective prediction；EXP-060 pre-Qwen router；risk/coverage/call-rate/cost | 条件性系统实验 | 阶段性解决（Verified Pass）：EXP-060 `logistic_router` 在 nominal 15% / actual `14.9107%`（501 rows）处将六标签 Macro-F1 从 `0.598919` 提高到 `0.639087`（`+0.040168`），五标签 delta=`+0.006097`、Hamming-loss delta=`-0.004365`，并比同 nominal rate 最佳 heuristic 高 `+0.013896` Macro-F1；verifier `4,412/4,412`。六标签 bootstrap gain CI 完全高于 0，但五标签 CI 跨 0。结论只适用于冻结 seed-42 pair 的 train OOF，不是独立 test、跨 seed 或普遍部署证据；EXP-060 不再调参，后续仅演示/论文归档或新数据独立确认 |
 
 ## Phase 0: Scope and Opening
 

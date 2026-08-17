@@ -1,0 +1,139 @@
+{
+  "experiment_id": "EXP-058",
+  "fold_count": 5,
+  "folds": {
+    "0": {
+      "cardinality_1": 379,
+      "cardinality_2": 18,
+      "components": 658,
+      "conflicting_duplicate_components": 3,
+      "conflicting_duplicate_rows": 6,
+      "duplicate_components": 14,
+      "duplicate_rows": 28,
+      "label_counts": {
+        "anger": 123,
+        "fear": 15,
+        "joy": 69,
+        "love": 170,
+        "sadness": 32,
+        "surprise": 6
+      },
+      "neutral": 275,
+      "rows": 672
+    },
+    "1": {
+      "cardinality_1": 379,
+      "cardinality_2": 19,
+      "components": 654,
+      "conflicting_duplicate_components": 4,
+      "conflicting_duplicate_rows": 8,
+      "duplicate_components": 14,
+      "duplicate_rows": 32,
+      "label_counts": {
+        "anger": 123,
+        "fear": 15,
+        "joy": 69,
+        "love": 171,
+        "sadness": 33,
+        "surprise": 6
+      },
+      "neutral": 274,
+      "rows": 672
+    },
+    "2": {
+      "cardinality_1": 379,
+      "cardinality_2": 18,
+      "components": 651,
+      "conflicting_duplicate_components": 3,
+      "conflicting_duplicate_rows": 6,
+      "duplicate_components": 13,
+      "duplicate_rows": 34,
+      "label_counts": {
+        "anger": 124,
+        "fear": 14,
+        "joy": 68,
+        "love": 171,
+        "sadness": 32,
+        "surprise": 6
+      },
+      "neutral": 275,
+      "rows": 672
+    },
+    "3": {
+      "cardinality_1": 379,
+      "cardinality_2": 19,
+      "components": 657,
+      "conflicting_duplicate_components": 4,
+      "conflicting_duplicate_rows": 8,
+      "duplicate_components": 14,
+      "duplicate_rows": 29,
+      "label_counts": {
+        "anger": 124,
+        "fear": 15,
+        "joy": 68,
+        "love": 171,
+        "sadness": 32,
+        "surprise": 7
+      },
+      "neutral": 274,
+      "rows": 672
+    },
+    "4": {
+      "cardinality_1": 379,
+      "cardinality_2": 19,
+      "components": 657,
+      "conflicting_duplicate_components": 4,
+      "conflicting_duplicate_rows": 8,
+      "duplicate_components": 14,
+      "duplicate_rows": 29,
+      "label_counts": {
+        "anger": 124,
+        "fear": 15,
+        "joy": 69,
+        "love": 171,
+        "sadness": 32,
+        "surprise": 6
+      },
+      "neutral": 274,
+      "rows": 672
+    }
+  },
+  "label_allocation_errors": {
+    "anger": 0.0009708737864077832,
+    "fear": 0.010810810810810811,
+    "joy": 0.0017492711370262481,
+    "love": 0.0009367681498829161,
+    "sadness": 0.004968944099378869,
+    "surprise": 0.02580645161290321
+  },
+  "label_order": [
+    "love",
+    "joy",
+    "surprise",
+    "anger",
+    "sadness",
+    "fear"
+  ],
+  "maximum_label_allocation_error": 0.02580645161290321,
+  "schema_version": "exp-058-fold-summary-v1",
+  "stage": "fold-manifest-preflight",
+  "totals": {
+    "cardinality_1": 1895,
+    "cardinality_2": 93,
+    "components": 3277,
+    "conflicting_duplicate_components": 18,
+    "conflicting_duplicate_rows": 36,
+    "duplicate_components": 69,
+    "duplicate_rows": 152,
+    "label_counts": {
+      "anger": 618,
+      "fear": 74,
+      "joy": 343,
+      "love": 854,
+      "sadness": 161,
+      "surprise": 31
+    },
+    "neutral": 1372,
+    "rows": 3360
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "schema_version": "exp-059-formal-config-v1",
+  "experiment_id": "EXP-059",
+  "rq_id": "RQ-S3",
+  "tier": "Major",
+  "stage": "cross-fitted-calibration-selective-prediction",
+  "registered_at": "2026-08-17",
+  "authorization": {
+    "basis": "The user requested the next registered experiment; the frozen no-result preflight subsequently passed 22/22 independent checks.",
+    "preflight": true,
+    "formal_analysis": true,
+    "validation_access": false,
+    "test_access": false,
+    "model_loading_or_forward": false,
+    "router_training": false
+  },
+  "implementation": {
+    "protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-059-calibration-selective-prediction.md",
+      "bytes": 12216,
+      "sha256": "a483b79d5b41f4ffb2f6b27db2dfdd215a525ed77d4dc207e56320dbff5eaddb"
+    },
+    "runner": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/run_exp059_calibration.py",
+      "bytes": 55981,
+      "sha256": "271b73837a0632d3c49095ff26974aa2e32d30a4dcc9d83a275fcfa8bee1f972"
+    },
+    "verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/verify_exp059_calibration.py",
+      "bytes": 49381,
+      "sha256": "e13791bf47647ec954acac10bab723a8781bca4a03b12aee6ac715a6a4412a3e"
+    },
+    "tests": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/tests/test_exp059_calibration.py",
+      "bytes": 4678,
+      "sha256": "dd2122ee44526aedb7f0ed67839c375c4023f890bf6de9b012afcc339a1cee51"
+    }
+  },
+  "prerequisites": {
+    "exp058_run": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/run.json",
+      "bytes": 12472,
+      "sha256": "4d8ab69cba9e032de0af4a52d0a015d7c71a8474b5fb76892b027ffcc824dee8"
+    },
+    "exp058_summary": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/paired-oof-summary.json",
+      "bytes": 1083,
+      "sha256": "fb6d89f45537b31febcf76afa329d3daadd36aa9ab694cd25b44c0701b6527ae"
+    },
+    "exp058_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/verification.json",
+      "bytes": 2528513,
+      "sha256": "e290a1ba6e873a50def48dcefb4b971601aa3f6e89386d4d920aea360fc2e3c7"
+    },
+    "preflight_run": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-preflight/run.json",
+      "bytes": 4290,
+      "sha256": "7f9b0eb3830e959d717050cf3296d1db2572bb5dbbea49a6c620d2d6de4345e2"
+    },
+    "preflight_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-preflight/verification.json",
+      "bytes": 4113,
+      "sha256": "ac61799a0e60420cd51d809a51dfd480e40337be88f130c62069c1d6277ac4c4"
+    }
+  },
+  "input": {
+    "paired_oof": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-paired-oof-production/paired-oof.npz",
+      "bytes": 307755,
+      "sha256": "e8d2efde7ca62b3f09519390a6305d09ba0f3ea1dfbecbe8a11dbe4ffd482bfc"
+    }
+  },
+  "data": {
+    "protocol_id": "DATA-SO-TASK-V1",
+    "split": "train-oof",
+    "rows": 3360,
+    "label_order": ["love", "joy", "surprise", "anger", "sadness", "fear"]
+  },
+  "cross_fitting": {
+    "fold_ids": [0, 1, 2, 3, 4],
+    "meta_train_folds": 4,
+    "heldout_folds": 1,
+    "reuse_exp058_duplicate_component_partition": true
+  },
+  "calibration": {
+    "method": "one_scalar_temperature_per_family",
+    "temperature_bounds": [0.05, 20.0],
+    "optimizer_parameter": "log_temperature",
+    "optimizer_tolerance": 1e-12,
+    "optimizer_max_iterations": 1000,
+    "ece_bins": 15,
+    "minimum_nll_improvement": 1e-6,
+    "maximum_brier_worsening": 1e-6
+  },
+  "thresholds": {
+    "scope": "one_global_threshold_per_family_pipeline_and_meta_fold",
+    "grid": [0.05, 0.06, 0.07, 0.08, 0.09, 0.1, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18, 0.19, 0.2, 0.21, 0.22, 0.23, 0.24, 0.25, 0.26, 0.27, 0.28, 0.29, 0.3, 0.31, 0.32, 0.33, 0.34, 0.35, 0.36, 0.37, 0.38, 0.39, 0.4, 0.41, 0.42, 0.43, 0.44, 0.45, 0.46, 0.47, 0.48, 0.49, 0.5, 0.51, 0.52, 0.53, 0.54, 0.55, 0.56, 0.57, 0.58, 0.59, 0.6, 0.61, 0.62, 0.63, 0.64, 0.65, 0.66, 0.67, 0.68, 0.69, 0.7, 0.71, 0.72, 0.73, 0.74, 0.75, 0.76, 0.77, 0.78, 0.79, 0.8, 0.81, 0.82, 0.83, 0.84, 0.85, 0.86, 0.87, 0.88, 0.89, 0.9, 0.91, 0.92, 0.93, 0.94, 0.95],
+    "tie_tolerance": 1e-12,
+    "selection_order": ["highest_macro_f1", "lowest_hamming_loss", "closest_to_0_5", "lower_threshold"]
+  },
+  "selective_prediction": {
+    "methods": ["mean_entropy", "max_entropy", "margin"],
+    "coverages": [1.0, 0.95, 0.9, 0.8, 0.7, 0.6],
+    "random_repetitions": 100,
+    "random_seed": 20260817,
+    "gate_minimum_coverage": 0.8,
+    "gate_hamming_relative_reduction": 0.2,
+    "gate_max_five_label_macro_drop": 0.01,
+    "gate_min_non_surprise_retention": 0.5
+  },
+  "oracle": {
+    "selection_unit": "whole_six_bit_vector",
+    "tie_policy": "m1",
+    "minimum_macro_gain": 0.01
+  },
+  "bootstrap": {
+    "unit": "duplicate_component",
+    "repetitions": 2000,
+    "seed": 20260817,
+    "interval": "percentile_95"
+  },
+  "resources": {
+    "formal_wall_seconds": 1800,
+    "verification_wall_seconds": 1800,
+    "peak_memory_gb": 4.0,
+    "api_cost_usd": 0
+  },
+  "outputs": {
+    "preflight_run_dir": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-preflight",
+    "public_run_dir": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction",
+    "private_run_dir": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-059-calibration-selective-prediction"
+  },
+  "commands": {
+    "run": "MPLCONFIGDIR=/private/tmp/exp059-matplotlib /Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/stack-overflow-emotion-gold/oof-router/run_exp059_calibration.py --config experiments/stack-overflow-emotion-gold/oof-router/configs/exp-059-calibration-selective-prediction.json --stage run",
+    "verify": "MPLCONFIGDIR=/private/tmp/exp059-matplotlib /Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/stack-overflow-emotion-gold/oof-router/verify_exp059_calibration.py --config experiments/stack-overflow-emotion-gold/oof-router/configs/exp-059-calibration-selective-prediction.json --scope final"
+  }
+}

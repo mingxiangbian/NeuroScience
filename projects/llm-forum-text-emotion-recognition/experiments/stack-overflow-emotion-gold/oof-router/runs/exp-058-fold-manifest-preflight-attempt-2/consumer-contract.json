@@ -1,0 +1,33 @@
+{
+  "consumers": {
+    "M1": {
+      "authorized": false,
+      "manifest_sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8"
+    },
+    "M3": {
+      "authorized": false,
+      "manifest_sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8"
+    }
+  },
+  "data_protocol": "DATA-SO-TASK-V1",
+  "experiment_id": "EXP-058",
+  "fold_assignment_seed": 20260816,
+  "fold_count": 5,
+  "fold_manifest_sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8",
+  "forbidden_splits": [
+    "validation",
+    "test"
+  ],
+  "label_order": [
+    "love",
+    "joy",
+    "surprise",
+    "anger",
+    "sadness",
+    "fear"
+  ],
+  "model_seed": 42,
+  "schema_version": "exp-058-oof-consumer-contract-v1",
+  "train_sha256": "fc2f853b5b8afb78253ca3a96b5093d2fd12ea7063801f57bf138c9d5cf528fc",
+  "training_authorized_by_contract": false
+}

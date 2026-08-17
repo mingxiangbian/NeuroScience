@@ -1,0 +1,219 @@
+{
+  "schema_version": "exp-060-router-preflight-config-v1",
+  "experiment_id": "EXP-060",
+  "rq_id": "RQ-S3",
+  "tier": "Major infrastructure preflight",
+  "stage": "no-result-preflight",
+  "registered_at": "2026-08-17",
+  "authorization": {
+    "basis": "The user requested the next step after verified EXP-059; this registration freezes and checks EXP-060 but does not authorize formal routing results.",
+    "protocol_freeze": true,
+    "no_result_preflight": true,
+    "formal_router_training": false,
+    "formal_result_computation": false,
+    "validation_access": false,
+    "test_access": false,
+    "model_loading_or_forward": false,
+    "raw_text_access": false
+  },
+  "implementation": {
+    "protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-060-pre-qwen-deployable-router.md",
+      "bytes": 12591,
+      "sha256": "f93ce3ae9a38e66b6a26de09423a47ea3f63e2da0ec2875cc989d736441061ad"
+    },
+    "runner": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/run_exp060_router_preflight.py",
+      "bytes": 18382,
+      "sha256": "521748ebe2acfe0e3176c2e2c9fe69d06f4f875cef626dd1b083b88249873898"
+    },
+    "verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/verify_exp060_router_preflight.py",
+      "bytes": 13230,
+      "sha256": "b4088faac11471e46e1b5e3e66a5ff54f95715f5790daa9df48759bd7a065046"
+    },
+    "tests": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/tests/test_exp060_router_preflight.py",
+      "bytes": 4556,
+      "sha256": "bc1b9605865a4583552f99146cda068a86b7df85106e927a0a97e4acbbb21856"
+    }
+  },
+  "prerequisites": {
+    "exp058_run": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/run.json",
+      "bytes": 12472,
+      "sha256": "4d8ab69cba9e032de0af4a52d0a015d7c71a8474b5fb76892b027ffcc824dee8"
+    },
+    "exp058_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/verification.json",
+      "bytes": 2528513,
+      "sha256": "e290a1ba6e873a50def48dcefb4b971601aa3f6e89386d4d920aea360fc2e3c7"
+    },
+    "exp059_run": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/run.json",
+      "bytes": 7123,
+      "sha256": "80b8f5aeeb98e26f5cb30f3d3d0ac04b013fe0b17d32044d37c9fb3cafbd2e9c"
+    },
+    "exp059_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/verification.json",
+      "bytes": 949448,
+      "sha256": "cb9f82a109664025a5f065a12f9416a1b79ae07f5dffe28c4bc03f7965109fac"
+    },
+    "exp059_calibration_parameters": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/calibration-parameters.json",
+      "bytes": 8479,
+      "sha256": "5739b0de0f8f5af717b19d9a52c5c435e6b7b357b9118b285d90547d7f02769a"
+    },
+    "exp059_oracle_summary": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/oracle-summary.json",
+      "bytes": 4743,
+      "sha256": "5f0b08793ccb203160fc7b77553b10c88cca786966fa72b2a003d01a6dbe9667"
+    }
+  },
+  "input": {
+    "paired_oof": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-paired-oof-production/paired-oof.npz",
+      "bytes": 307755,
+      "sha256": "e8d2efde7ca62b3f09519390a6305d09ba0f3ea1dfbecbe8a11dbe4ffd482bfc"
+    }
+  },
+  "data": {
+    "protocol_id": "DATA-SO-TASK-V1",
+    "split": "train-oof",
+    "rows": 3360,
+    "duplicate_components": 3277,
+    "label_order": [
+      "love",
+      "joy",
+      "surprise",
+      "anger",
+      "sadness",
+      "fear"
+    ]
+  },
+  "cross_fitting": {
+    "outer_fold_ids": [0, 1, 2, 3, 4],
+    "outer_router_train_folds": 4,
+    "outer_router_heldout_folds": 1,
+    "nested_threshold_recomputation": true,
+    "nested_router_train_threshold_folds": 3,
+    "outer_heldout_threshold_folds": 4,
+    "reuse_exp058_duplicate_component_partition": true,
+    "restore_exp058_source_order": true
+  },
+  "thresholds": {
+    "calibrator": "identity_for_m1_and_m3",
+    "grid_start": 0.05,
+    "grid_end": 0.95,
+    "grid_step": 0.01,
+    "selection_order": [
+      "highest_six_label_macro_f1",
+      "lowest_hamming_loss",
+      "closest_to_0_5",
+      "lower_threshold"
+    ],
+    "numeric_tolerance": 1e-12
+  },
+  "target_contract": {
+    "unit": "whole_six_bit_vector",
+    "positive": "m3_row_hamming_loss_strictly_lower_than_m1",
+    "tie_policy": "m1",
+    "gold_is_training_outcome_only": true,
+    "m3_is_training_outcome_only": true,
+    "exp059_oracle_array_used_as_formal_target": false
+  },
+  "feature_contract": {
+    "ordered_features": [
+      "m1_probability_love",
+      "m1_probability_joy",
+      "m1_probability_surprise",
+      "m1_probability_anger",
+      "m1_probability_sadness",
+      "m1_probability_fear",
+      "m1_mean_binary_entropy",
+      "m1_max_binary_entropy",
+      "m1_minimum_threshold_margin",
+      "m1_predicted_cardinality",
+      "m1_highest_probability",
+      "m1_lowest_probability",
+      "character_length",
+      "m1_token_length"
+    ],
+    "feature_count": 14,
+    "scaler": "StandardScaler_fit_inside_outer_router_train",
+    "forbidden_runtime_feature_classes": [
+      "all_m3_values",
+      "gold_or_correctness",
+      "oracle_or_model_disagreement",
+      "sample_component_or_fold_ids",
+      "raw_text",
+      "validation_or_test_statistics"
+    ],
+    "m1_raw_logits_included": false,
+    "m3_token_length_included": false
+  },
+  "router": {
+    "policies": [
+      "m1_only",
+      "m3_only",
+      "m1_max_entropy",
+      "m1_threshold_proximity",
+      "logistic_router"
+    ],
+    "logistic_regression": {
+      "penalty": "l2",
+      "C": 1.0,
+      "class_weight": "balanced",
+      "solver": "liblinear",
+      "max_iter": 1000,
+      "random_state": 42
+    },
+    "hyperparameter_search": false,
+    "random_routing_repetitions": 100,
+    "random_routing_seed": 20260817
+  },
+  "call_rates": [0.0, 0.05, 0.1, 0.15, 0.2, 0.3, 0.5, 1.0],
+  "gate": {
+    "maximum_actual_qwen_call_rate": 0.2,
+    "minimum_six_label_macro_f1_gain": 0.01,
+    "minimum_five_label_macro_f1_gain": -0.005,
+    "maximum_hamming_loss_increase": 1e-12,
+    "minimum_one_non_surprise_label_f1_gain": 0.005,
+    "candidate_tie_order": [
+      "highest_six_label_macro_f1",
+      "lowest_hamming_loss",
+      "lower_actual_call_rate",
+      "lower_target_call_rate"
+    ],
+    "deployable_policy_passes_if_any_of": [
+      "m1_max_entropy",
+      "m1_threshold_proximity",
+      "logistic_router"
+    ],
+    "point_estimate_determines_development_gate": true,
+    "bootstrap_interval_determines_stability_claim": true
+  },
+  "bootstrap": {
+    "unit": "duplicate_component",
+    "repetitions": 2000,
+    "seed": 20260817,
+    "interval": "percentile_95"
+  },
+  "resources": {
+    "preflight_wall_seconds": 300,
+    "verification_wall_seconds": 300,
+    "peak_memory_gb": 2.0,
+    "api_cost_usd": 0,
+    "model_forward_runs": 0
+  },
+  "outputs": {
+    "preflight_run_dir": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router-preflight",
+    "formal_run_dir": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router",
+    "formal_private_dir": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-060-pre-qwen-router"
+  },
+  "commands": {
+    "preflight": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/stack-overflow-emotion-gold/oof-router/run_exp060_router_preflight.py --config experiments/stack-overflow-emotion-gold/oof-router/configs/exp-060-router-preflight.json",
+    "verify": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/stack-overflow-emotion-gold/oof-router/verify_exp060_router_preflight.py --config experiments/stack-overflow-emotion-gold/oof-router/configs/exp-060-router-preflight.json"
+  },
+  "claim_boundary": "No-result preflight only; no scaler/router fit, route score, metric, bootstrap, validation/test access or deployment claim."
+}

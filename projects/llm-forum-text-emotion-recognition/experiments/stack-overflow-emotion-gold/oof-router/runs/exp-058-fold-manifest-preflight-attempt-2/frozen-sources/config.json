@@ -1,0 +1,101 @@
+{
+  "acceptance_gates": {
+    "expected_components": 3277,
+    "expected_conflicting_components": 18,
+    "expected_rows": 3360,
+    "maximum_label_allocation_error": 0.05,
+    "rows_per_fold": 672,
+    "surprise_max": 7,
+    "surprise_min": 5
+  },
+  "authorization": {
+    "basis": "User authorized the next step; attempt 2 changes only decoding of the frozen six-bit label vector after attempt 1 failed before allocation.",
+    "calibration": false,
+    "model_forward": false,
+    "model_training": false,
+    "oracle_analysis": false,
+    "router_training": false,
+    "test_access": false,
+    "validation_access": false
+  },
+  "command": "python3 projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/build_exp058_fold_manifest.py --config projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/configs/exp-058-fold-manifest-preflight-attempt-2.json",
+  "data": {
+    "expected_rows": 3360,
+    "forbidden_paths": [
+      "data/stack-overflow-emotion-gold/derived-private/task-v1/validation.jsonl",
+      "data/stack-overflow-emotion-gold/derived-private/task-v1/test.inputs.jsonl",
+      "data/stack-overflow-emotion-gold/derived-private/task-v1/test.labels.sealed.jsonl"
+    ],
+    "label_order": [
+      "love",
+      "joy",
+      "surprise",
+      "anger",
+      "sadness",
+      "fear"
+    ],
+    "protocol_id": "DATA-SO-TASK-V1",
+    "train": {
+      "bytes": 1372562,
+      "path": "data/stack-overflow-emotion-gold/derived-private/task-v1/train.jsonl",
+      "sha256": "fc2f853b5b8afb78253ca3a96b5093d2fd12ea7063801f57bf138c9d5cf528fc"
+    }
+  },
+  "experiment_id": "EXP-058",
+  "folds": {
+    "assignment_seed": 20260816,
+    "count": 5,
+    "model_seed": 42,
+    "unit": "exact_and_nfkc_casefold_whitespace_duplicate_component"
+  },
+  "frozen_sources": {
+    "builder": {
+      "bytes": 25897,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/build_exp058_fold_manifest.py",
+      "sha256": "49025d1cc3cfbb0156d7b4e714f166e0474ceb243b3e20aaa5c3df37187f034d"
+    },
+    "correction": {
+      "bytes": 1252,
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-058-attempt-2-label-vector-schema-correction.md",
+      "sha256": "0bb9fb96705b0e53722bba4f204ee52086565ff83deb4e07a59b4a16ed33ffdb"
+    },
+    "protocol": {
+      "bytes": 8177,
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-058-paired-m1-m3-oof.md",
+      "sha256": "ed1fd6928c458e23710a76985fe4b38960e27c121f56f97561fc8d3edf70d156"
+    },
+    "tests": {
+      "bytes": 4624,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/tests/test_exp058_fold_manifest.py",
+      "sha256": "778792da559b9c93dad15c908eed3801e06bb4b98e194e5758dff9dafd289e2e"
+    },
+    "verifier": {
+      "bytes": 23273,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/verify_exp058_fold_manifest.py",
+      "sha256": "bf2925d658bf0927ceacef41aba8fe307d2af3bfca1c95f337256a377d18c4ea"
+    }
+  },
+  "outputs": {
+    "private_dir": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-fold-manifest-preflight-attempt-2",
+    "public_run_dir": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2"
+  },
+  "resource_budget": {
+    "api_cost_usd": 0,
+    "full_oof_not_authorized": {
+      "combined_compute_hours": 26.5,
+      "m1_fold_runs": 5,
+      "m1_total_compute_hours": 4,
+      "m3_fold_runs": 5,
+      "m3_maximum_hours_per_fold": 4.5,
+      "m3_peak_memory_gb": 13,
+      "m3_total_compute_hours": 22.5
+    },
+    "preflight": {
+      "maximum_model_loads": 0,
+      "maximum_wall_seconds": 300,
+      "peak_memory_gb": 1
+    }
+  },
+  "schema_version": "exp-058-fold-manifest-preflight-config-v1",
+  "stage": "fold-manifest-preflight"
+}

@@ -1,0 +1,295 @@
+{
+  "artifacts": {
+    "paired_oof_private": {
+      "bytes": 307755,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-paired-oof-production/paired-oof.npz",
+      "sha256": "e8d2efde7ca62b3f09519390a6305d09ba0f3ea1dfbecbe8a11dbe4ffd482bfc"
+    },
+    "paired_oof_summary": {
+      "bytes": 1083,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/paired-oof-summary.json",
+      "sha256": "fb6d89f45537b31febcf76afa329d3daadd36aa9ab694cd25b44c0701b6527ae"
+    },
+    "partition_contract_private": {
+      "bytes": 723036,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-paired-oof-production/partition-contract.json",
+      "sha256": "e1d0240b1845fabb2122d424e08524aeb2fd66b8dbf508745152f3b3210301ae"
+    }
+  },
+  "authorization": {
+    "assembly": true,
+    "authorized_at": "2026-08-16",
+    "basis": "The user explicitly replied '\u6388\u6743' after the verified fold-0 consumer dry-run.",
+    "calibration": false,
+    "fold_ids": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "full_oof_training": true,
+    "heldout_forward": true,
+    "metrics": false,
+    "model_loading": true,
+    "model_seed": 42,
+    "oracle_analysis": false,
+    "router_training": false,
+    "test_access": false,
+    "validation_access": false
+  },
+  "claim_boundary": "Train-only OOF-logit production; no performance evidence.",
+  "completed_at_utc": "2026-08-16T19:51:55.995973+00:00",
+  "data": {
+    "duplicate_components": 3277,
+    "fold_count": 5,
+    "fold_manifest_sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8",
+    "label_order": [
+      "love",
+      "joy",
+      "surprise",
+      "anger",
+      "sadness",
+      "fear"
+    ],
+    "protocol_id": "DATA-SO-TASK-V1",
+    "rows_per_fold": 672,
+    "train_rows": 3360,
+    "train_sha256": "fc2f853b5b8afb78253ca3a96b5093d2fd12ea7063801f57bf138c9d5cf528fc",
+    "training_rows_per_fold": 2688
+  },
+  "experiment_id": "EXP-058",
+  "frozen_sources": {
+    "config": {
+      "bytes": 8972,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/frozen-sources/config.json",
+      "sha256": "909da4093e1c8a6bb84113e1e7d361c125159b54856a51988b4515eb267363da"
+    },
+    "m1_runner_reference": {
+      "bytes": 56760,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/frozen-sources/m1_runner_reference.py",
+      "sha256": "2d2c65b72a569d2d08a2fe4c3e544af756306bee1cb98cc15dd2052b09bf3ba2"
+    },
+    "m3_preflight_reference": {
+      "bytes": 37469,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/frozen-sources/m3_preflight_reference.py",
+      "sha256": "756a3e4a487554148409dffeebaa600ca5857398f6230e82e15bc294f39b44a4"
+    },
+    "protocol": {
+      "bytes": 9539,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/frozen-sources/protocol.md",
+      "sha256": "c3288342b9004a4cac12d5494becfb655f2db613bb26af02b094d01de0990c05"
+    },
+    "qwen_primitives": {
+      "bytes": 37104,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/frozen-sources/qwen_primitives.py",
+      "sha256": "1a8aaf063be3db0f55e0cb95ae35c9395467cd7c7c0c1596813606ba53956edd"
+    },
+    "runner": {
+      "bytes": 68721,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/frozen-sources/runner.py",
+      "sha256": "1a35758c2a5fb41940470d6ec0fb13d0534053ad5b35853549d9a72839b85ecd"
+    },
+    "tests": {
+      "bytes": 5031,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/frozen-sources/tests.py",
+      "sha256": "ac99549047fdfdc78d7a55fe41925ef5bfd3ed2440be38f8ad43d40659b2ade8"
+    },
+    "verifier": {
+      "bytes": 30665,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/frozen-sources/verifier.py",
+      "sha256": "a38e85b4725872f5f8dd70e54a170c04c70eecdd8bbec472c1c7550658c9b520"
+    }
+  },
+  "git": {
+    "commit": "64fa05571b936516be0b3f9415464adedf6856cc",
+    "dirty": true,
+    "dirty_path_count": 11
+  },
+  "model_execution": {
+    "calibration_performed": false,
+    "oracle_analysis_performed": false,
+    "performance_metrics_computed": false,
+    "router_training_performed": false
+  },
+  "resources": {
+    "api_cost_usd": 0,
+    "free_disk_gb_at_start": 131.852210176,
+    "m1_wall_seconds": 5865.660161625128,
+    "m3_wall_seconds": 41668.65290841716,
+    "minimum_free_disk_gb": 8.0
+  },
+  "rq_id": "RQ-S3",
+  "schema_version": "exp-058-oof-production-run-v1",
+  "split_access": {
+    "accessed_splits": [
+      "train"
+    ],
+    "test_inputs_accessed": false,
+    "test_labels_accessed": false,
+    "validation_accessed": false
+  },
+  "stage": "paired-m1-m3-oof-production",
+  "stages": {
+    "assembly": {
+      "completed_at_utc": "2026-08-16T19:51:55.995896+00:00",
+      "status": "Completed"
+    },
+    "initialize": {
+      "completed_at_utc": "2026-08-16T06:09:44.716959+00:00",
+      "status": "Passed"
+    },
+    "m1": {
+      "folds": {
+        "0": {
+          "completed_at_utc": "2026-08-16T06:29:47.242662+00:00",
+          "run": {
+            "bytes": 6339,
+            "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/fold-0/m1/run.json",
+            "sha256": "dcdee1d62577a64501db65bf4fc4b14610529177892dd73e446bd15c1840cab9"
+          },
+          "status": "Verified",
+          "verification": {
+            "bytes": 6951,
+            "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/fold-0/m1/verification.json",
+            "sha256": "5419f6708aca879d15a2d1a29e34b416006e2ccc04bfeaaee4ef8001bc86344d"
+          }
+        },
+        "1": {
+          "completed_at_utc": "2026-08-16T06:50:13.898904+00:00",
+          "run": {
+            "bytes": 6356,
+            "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/fold-1/m1/run.json",
+            "sha256": "dcf47b84dc6104f7251e6a328e680c3e7283adb03e3814d254c9cb9ff61916b7"
+          },
+          "status": "Verified",
+          "verification": {
+            "bytes": 6951,
+            "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/fold-1/m1/verification.json",
+            "sha256": "96439b22bbbb0c9c853f1c61d3ada86f7a46650e18e441458dd83a8622b143e5"
+          }
+        },
+        "2": {
+          "completed_at_utc": "2026-08-16T07:10:16.057694+00:00",
+          "run": {
+            "bytes": 6354,
+            "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/fold-2/m1/run.json",
+            "sha256": "e3d3fbdefb2448abe0dbf1161be96d2c687f0a47f4e798d893469f19f6194484"
+          },
+          "status": "Verified",
+          "verification": {
+            "bytes": 6951,
+            "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/fold-2/m1/verification.json",
+            "sha256": "7b80116113b1c0c2ca2a994dfd89bd4d9ee5e4c1f944a217f9e3b274adbfb986"
+          }
+        },
+        "3": {
+          "completed_at_utc": "2026-08-16T07:29:47.674760+00:00",
+          "run": {
+            "bytes": 6355,
+            "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/fold-3/m1/run.json",
+            "sha256": "ceec9c10423613088b709a4da92da55d836e805d2496847bbd979648a7eda77b"
+          },
+          "status": "Verified",
+          "verification": {
+            "bytes": 6951,
+            "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/fold-3/m1/verification.json",
+            "sha256": "b767e6df1d44043e589fc6044ff22fb73f8947e1febba0cb127d110523cc556f"
+          }
+        },
+        "4": {
+          "completed_at_utc": "2026-08-16T07:49:16.814427+00:00",
+          "run": {
+            "bytes": 6353,
+            "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/fold-4/m1/run.json",
+            "sha256": "8684ee339cf041d251ba9366d0a8be9609cd29657e5446d954f739b187be305f"
+          },
+          "status": "Verified",
+          "verification": {
+            "bytes": 6951,
+            "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/fold-4/m1/verification.json",
+            "sha256": "d010776fa85d3b2c5ec7b9c7e0453636005831b39514dfa7768e081148d25737"
+          }
+        }
+      }
+    },
+    "m3": {
+      "folds": {
+        "0": {
+          "completed_at_utc": "2026-08-16T10:18:19.409402+00:00",
+          "run": {
+            "bytes": 6064,
+            "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/fold-0/m3/run.json",
+            "sha256": "36f9247325af2e9762172ddcd446e9f238ccebe6f9faea810e2646eb104090ae"
+          },
+          "status": "Verified",
+          "verification": {
+            "bytes": 6391,
+            "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/fold-0/m3/verification.json",
+            "sha256": "a88e911b6207f0096ca5cfe0574a9575b3288a1408827eb97dc8525b9c6ab4d4"
+          }
+        },
+        "1": {
+          "completed_at_utc": "2026-08-16T12:45:23.434736+00:00",
+          "run": {
+            "bytes": 6080,
+            "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/fold-1/m3/run.json",
+            "sha256": "d5367caa21885d150169992626ca4a611822c5f2c7ea5f3fcc4d817125c07f3c"
+          },
+          "status": "Verified",
+          "verification": {
+            "bytes": 6391,
+            "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/fold-1/m3/verification.json",
+            "sha256": "dab5da7c883c3bf47d0ed73e1866779c9ec9d01c2ae7f5f7d25c2ef630cc30a4"
+          }
+        },
+        "2": {
+          "completed_at_utc": "2026-08-16T15:59:00.558815+00:00",
+          "run": {
+            "bytes": 6082,
+            "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/fold-2/m3/run.json",
+            "sha256": "8a11ca6f129ac7c6aa75298d4d3299dfb7477b48a3327e7bad1e5b7eea3d875a"
+          },
+          "status": "Verified",
+          "verification": {
+            "bytes": 6391,
+            "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/fold-2/m3/verification.json",
+            "sha256": "f6a48bc35fef43f9272f90bfb746bb3ba2061b8efb2a4f4493fd67f464a6ce27"
+          }
+        },
+        "3": {
+          "completed_at_utc": "2026-08-16T17:56:56.585348+00:00",
+          "run": {
+            "bytes": 6085,
+            "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/fold-3/m3/run.json",
+            "sha256": "aa954105f73051b36ae5ce2efdd05c50cca1f3412354fe8a334003a89c91a5bc"
+          },
+          "status": "Verified",
+          "verification": {
+            "bytes": 6391,
+            "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/fold-3/m3/verification.json",
+            "sha256": "8350dc9be3ec066a2ae4cf66fd5a4e941d50383e0fb7eb678343b1803d9c8895"
+          }
+        },
+        "4": {
+          "completed_at_utc": "2026-08-16T19:51:13.921303+00:00",
+          "run": {
+            "bytes": 6083,
+            "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/fold-4/m3/run.json",
+            "sha256": "614a6431590bba00258c4a2b8dbecae769a5a06a672b0b02b101063f70b07b75"
+          },
+          "status": "Verified",
+          "verification": {
+            "bytes": 6391,
+            "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/fold-4/m3/verification.json",
+            "sha256": "3f3b8203b00155546a232dc56682c52cfffbf2f97bb185da623fe6ca1f35802f"
+          }
+        }
+      }
+    }
+  },
+  "started_at_utc": "2026-08-16T06:09:44.716959+00:00",
+  "status": "CompletedAwaitingVerification",
+  "tier": "Major",
+  "working_directory": "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition"
+}

@@ -5,6 +5,8 @@ model-comparison protocols. The data track is defined by
 [`DATA-SO-TASK-V1`](protocols/data-so-task-v1.md); model performance experiments
 remain separate Major runs.
 
+Current execution handoff: [`HANDOFF.md`](HANDOFF.md).
+
 ## Commands
 
 Run from `projects/llm-forum-text-emotion-recognition/` with the bundled
@@ -246,8 +248,28 @@ ontology overlap, the weak-emotion/neutral boundary, implicit emotion and
 model/representation limitations. Those frequencies describe the selected sample,
 not validation prevalence or model reasoning. The whitespace-only verifier
 amendment passed 220/220 checks. This permits a separately registered train-OOF
-router feasibility study only; it does not establish a deployable router. EXP-054
-and test remain sealed.
+router feasibility study only; it does not establish a deployable router. At that
+EXP-055 stage, EXP-054 and test were still sealed.
+
+RQ-S3 then continued with paired M1/M3 train OOF (EXP-058), calibration/selective
+prediction (EXP-059), and the frozen pre-Qwen router contract (EXP-060). The preserved
+EXP-060 no-result preflight passed `7/7` synthetic tests, `25/25` runner checks and
+`66/66` independent checks. The formal contract suite passed `23/23`, and formal
+EXP-060 is `Verified Pass` after `4,412/4,412` independent verification checks. The
+selected logistic router calls M3 for `501/3,360` rows (`14.9107%`); relative to M1-only,
+six-label Macro-F1 changes by `+0.040168`, five-label Macro-F1 by `+0.006097`, and
+Hamming loss by `-0.004365`. Router target discrimination is PR-AUC=`0.318653` and
+ROC-AUC=`0.850804`.
+
+The 2,000-replicate duplicate-component bootstrap 95% intervals are
+`[13.6673%, 16.2172%]` for actual call rate, `[+0.009891, +0.071126]` for six-label
+Macro-F1 gain, `[-0.007688, +0.019733]` for five-label Macro-F1 gain, and
+`[-0.006332, -0.002515]` for Hamming-loss delta. The point estimate determines the
+frozen development gate; the intervals qualify stability, including a five-label
+interval that crosses zero. This result uses fully nested train OOF only. EXP-060 did
+not access validation or test, read raw text, or run M1/M3 model forward, so
+`Verified Pass` supports only development-stage routing feasibility for this frozen seed-42 pair,
+not an independent-test result or a general deployment-benefit claim.
 
 See
 [`model-comparison/runs/exp-050-shared-model-preflight/REPORT.md`](model-comparison/runs/exp-050-shared-model-preflight/REPORT.md)
@@ -282,4 +304,8 @@ for the verified formal seed-44 validation result and M3-M2 delta, and
 for the verified M3 family aggregate, M1/M2 comparison and claim boundary, and
 [`error-analysis/runs/exp-055-m1-m3-validation-error-analysis/VERIFICATION-SUMMARY.md`](error-analysis/runs/exp-055-m1-m3-validation-error-analysis/VERIFICATION-SUMMARY.md)
 for the verified M1/M3 error complementarity, qualitative coding boundary and
-router-headroom decision.
+router-headroom decision, and
+[`oof-router/runs/exp-060-pre-qwen-router/REPORT.md`](oof-router/runs/exp-060-pre-qwen-router/REPORT.md)
+and
+[`oof-router/runs/exp-060-pre-qwen-router/VERIFICATION-SUMMARY.md`](oof-router/runs/exp-060-pre-qwen-router/VERIFICATION-SUMMARY.md)
+for the formal EXP-060 result, claim boundary and independent verification.

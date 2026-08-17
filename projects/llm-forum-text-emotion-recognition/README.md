@@ -407,6 +407,20 @@ RoBERTa 比较。模型分数只能在相同数据集、任务定义、split 和
   去除仅 7 个 test 正例的 `surprise` 后点估计为 `-0.010735`。M4-M3 六标签差为
   `-0.065981`，CI `[-0.107869,-0.011312]`。独立 verifier 通过 `29/29`，没有 test 后选择
   或调参；Stack Overflow test 自此已消费。
+- RQ-S3 系统支线为 EXP-058 OOF -> EXP-059 calibration/selective prediction -> EXP-060
+  pre-Qwen router。EXP-058 的 3,360-row paired train OOF 已通过 `26,989/26,989` 终验；
+  EXP-059 也已完成。两 family 均保留 identity calibration；M1/M3 selected OOF Macro-F1
+  为 `0.598919`/`0.637843`，五标签结果为 `0.718703`/`0.710509`。Abstention gate 在 M1
+  约 90% coverage、M3 约 80% coverage 通过，但 M1 的风险下降 bootstrap interval 跨过
+  20% 门，M3 更稳。Whole-vector oracle 仅在 9.32% rows 选择 M3，却留下六标签/五标签
+  `+0.109930`/`+0.087472` Macro-F1 headroom；attempt-2 verifier `4,684/4,684`。EXP-060
+  正式 nested OOF 现已 `Verified Pass`：选中 `logistic_router` 的 nominal 15% 调用点，实际
+  调用 `501/3,360` 条（`14.9107%`），六标签 Macro-F1 从 M1-only 的 `0.598919` 提高到
+  `0.639087`（`+0.040168`），五标签 Macro-F1 delta=`+0.006097`，Hamming-loss
+  delta=`-0.004365`；相对同为 nominal 15% 的最佳 heuristic，Macro-F1 再高 `+0.013896`。
+  2,000 次 duplicate-component bootstrap 的六标签 Macro-F1 gain CI 完全高于 0，但五标签
+  gain CI 跨 0；独立 verifier 通过 `4,412/4,412`。该结果全程只使用 train OOF，是一个冻结
+  seed-42 模型对的开发证据，不是独立 test、跨 seed 或普遍部署收益结论。
 - Weibo 主任务从数据协议、dev 基线、Qwen 2x2、LoRA 三 seed、冻结错误分析到 EXP-049
   一次性正式 test 已形成完整行为证据链。后续只允许对既有 test 预测做预登记的只读分析，
   不再利用该 split 调参、选 seed 或补跑模型。尚需完成系统演示、论文表格与结果归档；
@@ -440,6 +454,7 @@ RoBERTa 比较。模型分数只能在相同数据集、任务定义、split 和
 - [`research-roadmap.md`](research-roadmap.md): 从开题到论文交付的阶段路线和通过条件。
 - [`hypotheses.md`](hypotheses.md): 当前待验证假设、反证条件和对应实验。
 - [`evidence-log.md`](evidence-log.md): 项目事实、实验产物和申请证据台账。
+- [`stack-overflow-c0-experiment-report-2026-08-16.md`](stack-overflow-c0-experiment-report-2026-08-16.md): Stack Overflow C0 六标签主实验的数据协议、M1-M4 validation/test、错误分析、资源、失败记录和结论边界。
 - [`experiments/stack-overflow-emotion-gold/protocols/data-so-task-v1.md`](experiments/stack-overflow-emotion-gold/protocols/data-so-task-v1.md): 当前 Stack Overflow C0 主线的来源、六标签重建、重复组件划分、低支持标签和 test gate 冻结合同及执行结果。
 - [`experiments/stack-overflow-emotion-gold/reports/data-so-task-v1.json`](experiments/stack-overflow-emotion-gold/reports/data-so-task-v1.json): 4,800 行数据构建、标签、重复组件、split 与隐私边界的聚合结果。
 - [`experiments/stack-overflow-emotion-gold/reports/data-so-task-v1-verification.json`](experiments/stack-overflow-emotion-gold/reports/data-so-task-v1-verification.json): `DATA-SO-TASK-V1` 的 53 项独立复算结果与 test 封存状态。
@@ -470,6 +485,13 @@ RoBERTa 比较。模型分数只能在相同数据集、任务定义、split 和
 - [`experiments/stack-overflow-emotion-gold/test-gate/runs/exp-056-frozen-test/REPORT.md`](experiments/stack-overflow-emotion-gold/test-gate/runs/exp-056-frozen-test/REPORT.md): EXP-056 一次性正式 test 的四 family 三 seed 结果、五组冻结比较、资源、执行恢复与结论边界。
 - [`experiments/stack-overflow-emotion-gold/test-gate/runs/exp-056-frozen-test/results.json`](experiments/stack-overflow-emotion-gold/test-gate/runs/exp-056-frozen-test/results.json): 12 个冻结单元的正式指标、逐标签结果、2,000 次 component-bootstrap 与封存记录。
 - [`experiments/stack-overflow-emotion-gold/test-gate/runs/exp-056-frozen-test/verification.json`](experiments/stack-overflow-emotion-gold/test-gate/runs/exp-056-frozen-test/verification.json): 对预测封存顺序、12 个单元、聚合指标、bootstrap、公私边界和无事后选择的 29 项独立检查。
+- [`experiments/stack-overflow-emotion-gold/post-test-analysis/runs/exp-057-read-only-result-synthesis-attempt-2/THESIS-TABLES.md`](experiments/stack-overflow-emotion-gold/post-test-analysis/runs/exp-057-read-only-result-synthesis-attempt-2/THESIS-TABLES.md): EXP-057 从 Verified 公开聚合产物生成的 validation、test、对比、逐标签与资源论文表格。
+- [`experiments/stack-overflow-emotion-gold/post-test-analysis/runs/exp-057-read-only-result-synthesis-attempt-2/VERIFICATION-SUMMARY.md`](experiments/stack-overflow-emotion-gold/post-test-analysis/runs/exp-057-read-only-result-synthesis-attempt-2/VERIFICATION-SUMMARY.md): EXP-057 的 748 项独立复算、私有预测未访问和 sealed test-label source 未重开证明。
+- [`experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/VERIFICATION-SUMMARY.md`](experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/VERIFICATION-SUMMARY.md): EXP-058 的五折共享 manifest、稀有标签平衡、零 component leakage、no-model/train-only 边界与 131 项独立检查。
+- [`experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/REPORT.md`](experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/REPORT.md): EXP-058 的十个 OOF fold runs、3,360-row 配对产物、资源、权限事故和结论边界。
+- [`experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/VERIFICATION-SUMMARY.md`](experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/VERIFICATION-SUMMARY.md): 对五折完整性、source order、logits、隐私、split access 和 paired assembly 的 `26,989/26,989` 终验。
+- [`experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router/REPORT.md`](experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router/REPORT.md): EXP-060 正式 train-OOF nested router 的冻结 operating point、通过结论、bootstrap 边界和适用范围。
+- [`experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router/VERIFICATION-SUMMARY.md`](experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router/VERIFICATION-SUMMARY.md): 对 nested thresholds、scaler/router、调用率曲线、公私边界和 train-OOF-only 声明的 `4,412/4,412` 独立复算。
 - [`experiments/tweeteval-emotion/test-gate/README.md`](experiments/tweeteval-emotion/test-gate/README.md): EXP-016 一次性正式 test 结果、受控比较、外部参照与复算入口。
 - [`experiments/tweeteval-emotion/error-analysis/runs/exp-017-frozen-error-analysis/REPORT.md`](experiments/tweeteval-emotion/error-analysis/runs/exp-017-frozen-error-analysis/REPORT.md): EXP-017 全量稳定性、共享错误、受控转移和匿名定性分析。
 - [`experiments/goemotions/protocols/data-protocol-v1.md`](experiments/goemotions/protocols/data-protocol-v1.md): GoEmotions 官方多标签数据来源、标签顺序、split 纪律和 test gate。
@@ -543,9 +565,11 @@ RoBERTa 比较。模型分数只能在相同数据集、任务定义、split 和
    M1，也不支持 M4 超过 M3。Stack Overflow test 已消费；后续不得据此调参、选择 seed、
    修改阈值或补跑候选，只能对既有冻结预测做另行预登记的只读分析。当前主线转入论文主表、
    系统演示和证据归档，不再增加主模型分支。
-4. EXP-055 的不可部署 whole-vector oracle 已通过 router headroom 门，因此可另行登记只用
-   pre-Qwen features 的 train-OOF router 可行性协议；这仍是条件支线，未证明 learned router
-   能超过单模型。Stack Overflow ID/context 回连继续要求独立的数据恢复门与 matched
-   shuffled-context 对照，不与本次 router oracle 混用。
+4. EXP-058、EXP-059 与 EXP-060 均已完成并独立验证。EXP-060 在 train OOF 上由
+   `logistic_router` 以 `14.9107%` 实际调用率通过冻结门，六标签 Macro-F1 gain 为
+   `+0.040168`；该证据不外推为独立 test、跨 seed 或普遍部署收益。EXP-060 到此冻结，不再
+   调整 feature、router、cutoff 或 operating point；下一步只做系统演示与论文证据归档，或
+   另行登记新数据上的独立确认。Stack Overflow ID/context 回连继续要求独立的数据恢复门与
+   matched shuffled-context 对照，不与本次 router 支线混用。
 5. 不再增加主数据集或主模型分支。保留 EXP-028 的 `Failed` 状态；representation/SAE
    仍是后置可选支线，不能从当前分类分数推出情绪机制。

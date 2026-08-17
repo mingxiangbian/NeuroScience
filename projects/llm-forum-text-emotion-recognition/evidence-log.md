@@ -131,6 +131,12 @@ project: llm-forum-text-emotion-recognition
 | EVID-061 | 2026-08-15 | EXP-054 M4 Qwen Generative LoRA 三 seed validation：seeds 42/43/44 均选中 epoch 2，Macro-F1=`0.589699`/`0.658405`/`0.597443`，聚合为 `0.615182 +/- 0.037632`；Micro-F1=`0.755144 +/- 0.009373`、weighted F1=`0.745278 +/- 0.016138`、strict subset accuracy=`0.776389 +/- 0.013679`、hamming loss=`0.050849 +/- 0.003706`，strict parser-valid rate=`1.000000 +/- 0.000000` | 使用冻结的 Qwen3-4B BF16 revision、同一 3,360/720 train/validation、seeds 42/43/44、rank-8 LoRA、assistant-only next-token CE、compact JSON、greedy decoding 和 invalid-as-zero parser；每 seed 2 epochs/6,720 optimizer steps。首次 train-only preflight 因 runner 在 adapter 重载时仍保留首个模型引用触发 Metal OOM，失败记录保留；仅修正对象生命周期后 attempt 2 完成全量 train 渲染、两步更新、adapter 重载和 4 条生成，并通过 `26/26` 独立检查 | `projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora-three-seed-validation/` | 三个 seed verifier 均通过 `92/92`，每 seed 两个全新进程 replay 各为 `60/60` raw-output 一致；aggregate verifier 通过 `33/33`，专项 unit tests `10/10`。M4-M3 Macro-F1 delta=`-0.038850 +/- 0.030200` 且 3/3 seed 为负；五标签 delta=`-0.005542 +/- 0.036548`，subset accuracy delta=`+0.025926 +/- 0.017859`。结果支持端到端 formulation 比较，不隔离 generation 的因果效应；平均 wall time=`3.553 h/seed`、峰值 MLX=`9.300 GB`、API cost 0。Test 未访问，仍需单独冻结统一 TEST-READY 合同 | Verified |
 | EVID-062 | 2026-08-15 | EXP-056 将 Stack Overflow C0 的 M1-M4 冻结为统一 TEST-READY：四个 family x seeds 42/43/44，共 12 个正式评估单元；固定各 seed 已选 checkpoint/adapter/head、M1-M3 validation 阈值、M4 strict parser、六标签主指标、五标签敏感性、五组 matched contrasts 与 2,000 次 duplicate-component bootstrap | 机器合同以 SHA-256 绑定全部上游 run/verification、模型产物、实现、prompt 和协议；runner 强制 `initialize -> predict-family -> seal-predictions -> score`，所有预测哈希封存前不能打开标签。EXP-055 oracle、未通过 train-OOF gate 的 router、ensemble、best-seed 和 test-time calibration 均排除 | `projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/test-gate/` | Final contract SHA-256=`bf0330aef1a98085674b7f744fa5c30d2e15f5886cd0d4fa24811f48a52e0966`；readiness verifier `89/89 Passed`，专项测试 `6/6`；冻结时 authorization 不存在、test inputs/labels opened 均为 `false`、正式公私输出目录均不存在。该条只证明 TEST-READY，不含任何 test 性能结果；test 仍 sealed、未授权、未消费 | Verified TEST-READY |
 | EVID-063 | 2026-08-16 | EXP-056 按冻结合同完成 Stack Overflow C0 一次性正式 test：M1/M2/M3/M4 三 seed Macro-F1=`0.567459 +/- 0.007814`/`0.295226 +/- 0.020587`/`0.613804 +/- 0.025733`/`0.547823 +/- 0.015312`；M3-M2 delta=`+0.318578`、95% component-bootstrap CI=`[+0.254425,+0.369327]`；M3-M1 delta=`+0.046345`、CI=`[-0.008674,+0.089730]`；M4-M3 delta=`-0.065981`、CI=`[-0.107869,-0.011312]` | 用户授权绑定最终合同 SHA；依次完成四个 family 共 12 个单元，在任何标签访问前 hash-seal 全部预测，再一次性打开 720 条 test 标签评分。没有 test 后 checkpoint、seed、阈值、prompt、parser 或模型选择；M4 2,160 条生成全部 strict-parser-valid | `projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/test-gate/runs/exp-056-frozen-test/` | Post-score verifier `29/29 Passed`，不重开 sealed label source；results SHA-256=`d7b966ead7105b819db946c970e3f90b6b25514eac8e8e0b71c4ab3a69928cdd`。M3 相对 M2 的适配收益成立，但相对 M1 的六标签与五标签 CI 均跨 0；`surprise` 只有 7 个 test 正例。M4 主指标低于 M3，虽 subset accuracy 最高也不能改写主结论。首次 M2 受限启动因无 Metal 在推理前停止，无产物且未开标签；相同冻结命令获批后从头完成。test 自此已消费 | Verified |
+| EVID-064 | 2026-08-16 | EXP-057 对 Stack Overflow C0 已验证公开聚合产物进行只读汇总，生成统一 validation/test、五组 frozen contrasts、test per-label、validation-to-test descriptive change 和资源表，并形成独立实验报告 | 先冻结允许读取的公开 aggregate allowlist、禁止项、转换和 claim boundary；attempt 1 因 M1-M3 `empty_prediction_rows` 与 M4 `empty_prediction_rate` schema 差异失败并保留，attempt 2 预登记 `rows / 720` 的确定性转换后从头汇总。没有训练、推理、阈值选择、私有预测访问或 test-label source 重开 | `projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/post-test-analysis/runs/exp-057-read-only-result-synthesis-attempt-2/`；`projects/llm-forum-text-emotion-recognition/stack-overflow-c0-experiment-report-2026-08-16.md` | 专项 unit tests `11/11`；独立 verifier `748/748 Passed`，`analyzer_imported=false`、`private_predictions_opened=false`、`sealed_test_label_source_reopened=false`。汇总不改变 EXP-056 test-consumed 状态，也不产生事后模型选择 | Verified |
+| EVID-065 | 2026-08-16 | EXP-058 train-only paired OOF fold-manifest preflight：3,360 条样本和 3,277 个 duplicate components 被确定性分入五折，每折 672 条；`surprise` 支持为 `6/6/6/7/6`，18 个冲突重复组件均保持完整，最大标签分配误差为 `0.025806` | 冻结 assignment seed `20260816`、canonical model seed `42`、component-disjoint + multi-label balance、M1/M3 共用 manifest hash `82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8`。Attempt 1 因误把六位 binary label vector 当作标签名列表而在 row 0 schema validation 停止；失败目录保留，attempt 2 只修正 schema 解码并重新冻结源码/配置哈希 | `projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/` | 合成测试 `6/6`；不导入 builder 或模型库的 verifier 独立复算并通过 `131/131`。只访问 train；模型加载、训练、forward、logits、阈值、oracle、calibration、router、validation 和 test 均未发生。该证据只证明共享 fold 可用，不授权 M1/M3 五折训练 | Verified preflight |
+| EVID-066 | 2026-08-17 | EXP-058 完成 paired M1/M3 train OOF production：M1 与 M3 各完成五个 `2,688 train -> 672 held-out` folds，为全部 3,360 条 train rows 生成按 source order 对齐的六维 raw logits；两边各 `20,160` 个有限 logit values | M1 使用冻结四 epoch stop、每 fold 672 optimizer steps；M3 使用两完整 epochs、每 fold 5,376 steps。共享 assignment/model seed、fold manifest、prompt/pooling/LoRA/head 与 train-only access contract；M1/M3 wall time 分别为 `1.629 h`/`11.575 h`，M3 peak MLX `8.732 GB`，API cost 0 | `projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/` | 五个 M1 verifier 各 `53/53`、五个 M3 verifier 各 `48/48`，fold-level 合计 `505/505`；paired artifact SHA-256=`e8d2efde7ca62b3f09519390a6305d09ba0f3ea1dfbecbe8a11dbe4ffd482bfc`，final verifier `26,989/26,989 Passed`。首次 final attempt 仅发现五个 private fold 父目录为 `0755`；失败证据原样保留，仅收紧目录为 `0700` 后通过，paired hash 未变。只访问 train，未计算 performance、calibration、oracle 或 router，validation/test 未访问 | Verified |
+| EVID-067 | 2026-08-17 | EXP-059 对 EXP-058 的 3,360-row M1/M3 paired train OOF logits 做第二层五折校准、共享阈值、选择性预测与 whole-vector oracle。两 family 均拒绝 scalar temperature 并保留 identity；M1/M3 selected OOF Macro-F1=`0.598919`/`0.637843`，五标签 Macro-F1=`0.718703`/`0.710509` | Abstention gate：M1 maximum entropy 在实际 coverage `0.9003` 时 Hamming risk 从 `0.051042` 降至 `0.040826`（`20.01%`）；M3 margin 在 coverage `0.8006` 时从 `0.050248` 降至 `0.034387`（`31.57%`）。2,000 次 duplicate-component bootstrap 的 reduction interval 分别为 `[16.80%,23.24%]` 与 `[27.79%,35.74%]`，因此 M1 为边界通过、M3 更稳 | `projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/` | 非部署 oracle 仅在 `313/3,360` rows 选择 M3，相对 M1 六标签/五标签 Macro-F1 headroom=`+0.109930`/`+0.087472`，95% interval=`[+0.077843,+0.142330]`/`[+0.075072,+0.100581]`，允许另行登记 EXP-060。No-result preflight `22/22`、tests `7/7`、attempt-2 final verifier `4,684/4,684 Passed`；attempt 1 为 verifier 字段映射 KeyError，未重跑或修改正式产物。只访问 train OOF，validation/test、模型 forward 与 router training 均未发生 | Verified |
+| EVID-068 | 2026-08-17 | EXP-060 pre-Qwen deployable router 的 Major protocol 与 no-result preflight 已冻结：14 列 feature 仅含 M1 identity probabilities、entropy、nested-threshold margin/cardinality、概率极值、character/M1-token length；完整六维 target 平局选 M1，固定 entropy/margin/logistic policies 与 `0-100%` 调用率曲线 | 为避免二层 OOF 泄漏，正式运行必须在每个 outer fold 内用其余 3 folds 构造 router-train threshold-derived target/features，再用全部 4 个 outer-train folds 构造 held-out target/features；禁止直接使用 EXP-059 `oracle_choose_m3`、M3/gold/disagreement/IDs/raw text 作为 runtime feature。Logistic 固定 `C=1.0`、不调参；`<=20%` 调用率的四项停止门已冻结 | `projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router-preflight/`；protocol `experiments/stack-overflow-emotion-gold/protocols/exp-060-pre-qwen-deployable-router.md` | 合成契约测试 `7/7`、preflight `25/25`、不导入 runner 的 verifier `66/66 Passed`。只检查输入 header/hash/mode、identity calibration、白名单、输出为空和环境；真实 feature/target、scaler/router、route score、metrics/bootstrap 均未计算，validation/test/raw text/model forward 均未访问。该证据不构成 learned-router 或部署收益结果；正式 EXP-060 仍需单独授权 | Verified preflight |
+| EVID-069 | 2026-08-17 | Formal EXP-060 在 fully nested train-OOF 上得到 `Verified Pass`：冻结选择 `logistic_router`，target/actual call rate=`15%`/`14.9107%`（`501/3360`）。相对 M1 baseline，六标签 Macro-F1 `0.598919 -> 0.639087`（`+0.040168`），五标签 Macro-F1 `0.718703 -> 0.724799`（`+0.006097`），Hamming loss `0.051042 -> 0.046677`（`-0.004365`）；router PR-AUC/ROC-AUC=`0.318653`/`0.850804` | 五个 outer folds 内独立重算 inner/outer thresholds、14 列 features、whole-vector targets、StandardScaler、固定 LogisticRegression、train-only cutoffs、component-aware random comparator、2,000 次 duplicate-component bootstrap 与 routed risk/retention。Macro-F1 gain 95% interval=`[0.009891,0.071126]`；五标签 gain interval 跨 0，为 `[-0.007688,0.019733]`；Hamming delta interval 全负，为 `[-0.006332,-0.002515]` | `projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router/` | 独立 verifier `4,412/4,412 Passed`，专项 tests `23/23`。只访问冻结的 train OOF；validation/test/raw text/model loading or forward 均为 `false`。该 Pass 只支持保留 router branch 与把 `logistic_router` 作为 seed-42 development candidate；不构成独立 test、跨 seed、一般论坛、部署泛化或情绪机制结论，且五标签 bootstrap 尚不稳定、简单 heuristic policies 也通过。EXP-060 自此冻结，不再调整 feature、router、cutoff 或 operating point；下一步仅做系统演示/论文归档，或另行预登记新数据独立确认，不得直接晋升为部署或 test 收益 | Verified Pass |
 
 ## Data Register
 
@@ -1301,6 +1307,110 @@ Decision consequence: Stack Overflow test 已消费；禁止利用该 split 调�
 Thesis destination: Stack Overflow 正式主结果表、模型比较、低支持标签敏感性、资源与可复现性、限制讨论
 ```
 
+### EXP-057: Read-only Result Synthesis and Experiment Report
+
+```text
+Experiment ID: EXP-057
+Tier / RQ: Major post-test read-only synthesis / RQ-S1
+Status: Verified；没有产生新的模型性能结果
+Scope: DATA-SO-TASK-V1、EXP-051/052/053/054 validation aggregates、EXP-055 validation error analysis、EXP-056 held-out test public aggregates
+Access boundary: 只允许读取冻结 allowlist 中的公开 JSON/CSV/Markdown 聚合；禁止训练、推理、阈值或模型选择、私有逐行预测访问和 sealed test-label source 重开
+Outputs: validation/test family tables、五组 test contrasts、test per-label、validation-to-test descriptive change、resource table、claim boundary 与完整 Stack Overflow C0 实验报告
+Attempt 1: analyzer 完成后，verifier 因 M1-M3 使用 empty_prediction_rows、M4 使用 empty_prediction_rate 而 KeyError；失败目录保留，未读取私有预测或标签
+Attempt 2: 预登记 M1-M3 empty rate = empty_prediction_rows / 720 的确定性 schema 转换；无科学合同或冻结数字变化
+Artifacts: experiments/stack-overflow-emotion-gold/post-test-analysis/runs/exp-057-read-only-result-synthesis-attempt-2/；stack-overflow-c0-experiment-report-2026-08-16.md
+Verification: unit tests 11/11；独立 verifier 748/748 Passed；analyzer_imported=false；private_predictions_opened=false；sealed_test_label_source_reopened=false
+Result: 将已验证证据整理为可直接用于论文的单一主实验报告，同时保留 M3-M1 未确定、surprise 低支持、M3/M4 bundled formulation、许可和资源路径边界
+Decision consequence: 不改变 Stack Overflow test consumed 状态；不得用汇总结果开启事后调参或替换冻结模型
+Thesis destination: 数据、方法、主结果表、逐标签敏感性、错误分析、资源、失败记录、讨论与限制章节
+```
+
+### EXP-058: Paired M1-M3 Train OOF Production
+
+```text
+Experiment ID: EXP-058
+Tier / RQ: Major infrastructure gate / RQ-S3
+Status: Verified；paired M1/M3 train OOF production complete
+Data: DATA-SO-TASK-V1 train only，3,360 rows / 3,277 duplicate components；validation/test forbidden
+Fold contract: 5 folds，672 rows each，assignment seed 20260816，canonical model seed 42，M1/M3 shared manifest
+Balance: surprise 6/6/6/7/6；maximum label allocation error 0.025806；18 conflicting duplicate components intact；component leakage 0
+Preflight history: attempt 1 因 binary label vector schema 误读而在 allocation 前停止；attempt 2 修正解码并通过 tests 6/6、verifier 131/131
+Consumer gate: fold-0 M1/M3 two-step/two-row dry-run 通过 114/114，随后才授权正式 production
+Production: M1/M3 各完成五个 2,688-row training + 672-row held-out forward；M1 每 fold 672 optimizer steps，M3 每 fold 5,376 steps
+Artifacts: experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/
+Paired result: 3,360 rows；M1/M3 各 20,160 finite logits；source-order SHA-256=c9e4bd1eb2bdbb33c833234754c493b8818aa6c610acaf88659ae74fa94848a3；private paired SHA-256=e8d2efde7ca62b3f09519390a6305d09ba0f3ea1dfbecbe8a11dbe4ffd482bfc
+Resources: M1 1.629 h；M3 11.575 h；combined 13.204 h；M3 peak MLX 8.732 GB；API cost $0
+Verification: M1 folds 265/265；M3 folds 240/240；final 26,989/26,989 Passed；EXP-058 tests 22/22
+Incident: first final verification 26,984/26,989，唯一失败为五个 private fold parent mode 0755；失败报告与 hash 保留，只改为 0700 后 paired artifact hash 不变并通过终验
+Access boundary: train only；performance metrics/calibration/oracle/router 均为 false；validation/test access 均为 false
+Result: 为每条 train row 形成未见该行训练的 aligned M1/M3 raw-logit pair；不构成模型性能或 router 收益结论
+Decision consequence: 下一步须另行登记 EXP-059 calibration/selective prediction；EXP-060 router 继续封存
+Thesis destination: RQ-S3 方法章节、OOF 数据流与可复现性附录
+```
+
+### EXP-059: Cross-Fitted Calibration And Selective Prediction
+
+```text
+Experiment ID: EXP-059
+Tier / RQ: Major system diagnostic / RQ-S3
+Status: Verified；calibration, selective prediction and oracle diagnostic complete
+Data: EXP-058 paired DATA-SO-TASK-V1 train OOF only，3,360 rows / 3,277 duplicate components；validation/test forbidden
+Meta protocol: reuse five component-disjoint folds；fit one scalar temperature and one global threshold on four folds，apply to the fifth
+Calibration: M1 temperature-minus-identity NLL/Brier=+0.000038/-0.000025；M3=+0.000426/+0.000041；both select identity
+Selected classification: M1/M3 six-label Macro-F1=0.598919/0.637843；five-label Macro-F1=0.718703/0.710509；Hamming=0.051042/0.050248
+Abstention: M1 max-entropy at 90.03% coverage，risk reduction=20.01%，bootstrap 95%=[16.80%,23.24%]；M3 margin at 80.06%，reduction=31.57%，95%=[27.79%,35.74%]
+Oracle: choose M3 for 313 rows (9.32%)；six/five-label Macro-F1 gain over M1=+0.109930/+0.087472；95%=[+0.077843,+0.142330]/[+0.075072,+0.100581]
+Artifacts: experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/
+Resources: analyzer 18.723 s；peak process RSS 0.144 GB；API cost $0
+Verification: no-result preflight 22/22；contract tests 7/7；attempt-2 independent final recomputation 4,684/4,684 Passed
+Incident: attempt 1 verifier crashed before comparison because public hamming_risk was mapped to a nonexistent classification key rather than hamming_loss；formal outputs were not rerun or changed
+Access boundary: train OOF only；validation/test access=false；model loading/forward=false；router training=false
+Result: calibration adds no accepted benefit；selective prediction has signal, strongest for M3；non-deployable complementarity headroom is materially positive
+Decision consequence: EXP-060 may be separately registered with pre-Qwen-only features and OOF evaluation；no learned-router or deployment-benefit claim yet
+Thesis destination: RQ-S3 calibration、risk-coverage、abstention and conditional-routing methods/results
+```
+
+### EXP-060: Pre-Qwen Deployable Router Preflight
+
+```text
+Experiment ID: EXP-060
+Tier / RQ: Major system experiment preflight / RQ-S3
+Status: Verified preflight；formal router execution not yet authorized
+Data contract: DATA-SO-TASK-V1 train OOF only，3,360 rows / 3,277 duplicate components；validation/test forbidden
+Feature contract: exactly 14 pre-Qwen columns from M1 probabilities/entropy/nested-threshold features and character/M1-token lengths；M3/gold/oracle/disagreement/IDs/raw text forbidden as runtime features
+Nested protocol: outer five-fold router OOF；router-train threshold-derived targets/features use inner 3-fold fits，outer-heldout targets/features use all 4 outer-train folds
+Router contract: max-entropy、threshold-proximity、StandardScaler + L2 LogisticRegression(C=1.0, balanced, liblinear)；no hyperparameter search
+Call-rate contract: 0/5/10/15/20/30/50/100%；cutoff fit on router-train scores only；actual held-out call rate reported
+Gate: at actual call rate <=20%，six-label Macro-F1 gain >=0.01，five-label gain >=-0.005，Hamming not worse，and at least one non-surprise label F1 gain >=0.005
+Artifacts: experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router-preflight/
+Verification: synthetic tests 7/7；preflight 25/25；independent verifier 66/66 Passed
+Access boundary: only NPZ header/hash/mode and public EXP-059 calibration decision checked；real features/targets/router/results=false；validation/test/raw text/model forward=false
+Result: scientific and implementation contract is executable and leakage-guarded；no learned-router evidence exists
+Decision consequence: next action requires separate authorization to implement/run the formal nested OOF router and return an explicit pass/stop result
+Thesis destination: RQ-S3 conditional system methods and reproducibility appendix；results section only after formal execution
+```
+
+### EXP-060: Formal Pre-Qwen Deployable Router
+
+```text
+Experiment ID: EXP-060
+Tier / RQ: Major system experiment / RQ-S3
+Status: Verified Pass
+Data contract: DATA-SO-TASK-V1 train OOF only，3,360 rows / 3,277 duplicate components；validation/test/raw text/model loading or forward=false
+Formal protocol: fully nested outer five-fold recomputation；inner 3-fold thresholds construct router-train features/whole-vector targets，all 4 outer-train folds construct held-out features/targets；StandardScaler + fixed L2 LogisticRegression fitted inside each outer fold
+Selected policy: logistic_router；target call rate=15%；actual call rate=14.9107% (501/3360)
+M1 baseline -> routed: six-label Macro-F1 0.598919 -> 0.639087 (+0.040168)；five-label Macro-F1 0.718703 -> 0.724799 (+0.006097)；Hamming loss 0.051042 -> 0.046677 (-0.004365)
+Router discrimination: PR-AUC=0.318653；ROC-AUC=0.850804
+Bootstrap: 2,000 duplicate-component replicates；six-label Macro-F1 gain 95%=[0.009891,0.071126]；five-label gain 95%=[-0.007688,0.019733] crosses 0；Hamming delta 95%=[-0.006332,-0.002515] is entirely negative
+Artifacts: experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router/
+Verification: independent full recomputation 4,412/4,412 Passed；contract tests 23/23
+Access boundary: frozen train OOF only；validation/test access=false；raw text access=false；model loading/forward=false
+Result: frozen four-part development gate passes and logistic_router is the selected seed-42 candidate；six-label gain and Hamming reduction remain positive under component bootstrap，while the five-label gain interval crosses 0；both heuristic policies also pass，so this is not evidence that a learned router is uniquely necessary
+Claim boundary: one frozen seed-42 M1/M3 pair and train-OOF development evidence only；not an independent-test deployment result，cross-seed result，general-forum result，deployment-generalization claim or emotion-mechanism claim
+Decision consequence: retain and freeze the router branch；do not further tune EXP-060 features/router/cutoff/operating point；next only system demonstration/paper archiving，or separately preregistered independent confirmation on new data before any deployment or new test claim
+Thesis destination: RQ-S3 conditional-routing results，with the train-OOF/single-seed/five-label uncertainty boundary stated explicitly
+```
+
 后续 LLM 实验继续使用以下登记模板：
 
 ```text
@@ -1461,3 +1571,9 @@ Measured gain or loss:
 | 2026-08-15 | 完成并独立验证 EXP-054 M4 Qwen Generative LoRA 三 seed validation family | EVID-061 为 `Verified`；Macro-F1=`0.615182 +/- 0.037632`，相对同 seed M3 为 `-0.038850 +/- 0.030200` 且 3/3 seed 为负；parser-valid 为 100%，六次 60 条新进程 replay 全部逐条一致。保留首次 preflight Metal OOM，修正后 preflight `26/26`、三个 seed 各 `92/92`、aggregate `33/33`、专项测试 `10/10`。Stack Overflow test 未访问，下一步为统一 TEST-READY 合同 |
 | 2026-08-15 | 冻结并独立验证 EXP-056 Stack Overflow M1-M4 统一 TEST-READY 合同 | EVID-062 为 `Verified TEST-READY`；final contract SHA-256=`bf0330aef1a98085674b7f744fa5c30d2e15f5886cd0d4fa24811f48a52e0966`，冻结四个 family x 三 seed 共 12 个单元及全部 checkpoint/adapter/head、阈值、评估和 bootstrap 合同，readiness verifier `89/89`、专项测试 `6/6`。Authorization 不存在、正式输出目录不存在、test inputs/labels 均未读取；本条不含 test 结果，下一步仍需独立一次性授权 |
 | 2026-08-16 | 按授权执行并独立验证 EXP-056 Stack Overflow M1-M4 一次性正式 test | EVID-063 为 `Verified`；12/12 冻结单元先预测并封存，再一次性开标签评分。M3 明确超过 M2，但相对 M1 的六标签与五标签 CI 均跨 0；M4 六标签 Macro-F1 明确低于 M3。Post-score verifier `29/29`，无 test 后选择；Stack Overflow test 自此已消费 |
+| 2026-08-16 | 完成并独立验证 EXP-057 Stack Overflow C0 只读结果汇总与实验报告 | EVID-064 为 `Verified`；attempt 1 的 schema failure 保留，attempt 2 通过 unit tests `11/11` 与 verifier `748/748`。汇总未访问私有预测或重开 sealed test labels，没有产生 test 后选择 |
+| 2026-08-16 | 完成并独立验证 EXP-058 paired OOF fold-manifest preflight | EVID-065 为 `Verified preflight`；attempt 1 的六位标签向量 schema failure 保留，attempt 2 生成五个 672-row component-disjoint folds，`surprise=6/6/6/7/6`，tests `6/6`、verifier `131/131`。只访问 train，M1/M3 OOF 训练仍未授权 |
+| 2026-08-17 | 完成并独立验证 EXP-058 paired M1/M3 train OOF production | EVID-066 为 `Verified`；十个 folds 全部通过 `505/505` fold checks，3,360-row paired artifact 终验 `26,989/26,989`。首次终验只发现五个 private parent 目录权限过宽，失败报告保留且未改模型/logits，收紧为 `0700` 后 paired hash 不变。Validation/test、metrics、calibration、oracle 与 router 均未访问或执行；下一步需单独登记 EXP-059 |
+| 2026-08-17 | 完成并独立验证 EXP-059 cross-fitted calibration、selective prediction 与 oracle diagnostic | EVID-067 为 `Verified`；两 family 均保留 identity calibration。M1/M3 abstention point gate 均通过，但 M1 reduction interval 跨 20% 门，M3 更稳；whole-vector oracle 的六标签/五标签 headroom 为 `+0.109930`/`+0.087472`。No-result preflight `22/22`、tests `7/7`、修订后 final verifier `4,684/4,684`；attempt 1 的字段映射 crash 保留且未重跑正式产物。只访问 train OOF，下一步可单独冻结 EXP-060 |
+| 2026-08-17 | 冻结并独立验证 EXP-060 pre-Qwen deployable router 的 no-result preflight | EVID-068 为 `Verified preflight`；冻结 14 列 M1-only/length feature、nested threshold recomputation、whole-vector target、三种 deployable policy、固定调用率与停止门。合成测试 `7/7`、preflight `25/25`、独立 verifier `66/66`；没有构造真实 feature/target、拟合 scaler/router、计算路由指标或访问 validation/test/raw text。下一步正式 nested OOF router 仍需单独授权 |
+| 2026-08-17 | 完成并独立验证 formal EXP-060 pre-Qwen deployable router | EVID-069 为 `Verified Pass`；`logistic_router` 在 target/actual `15%`/`14.9107%`（`501/3360`）调用率下，将 M1 六标签 Macro-F1 `0.598919 -> 0.639087`（`+0.040168`）、五标签 `0.718703 -> 0.724799`（`+0.006097`），并将 Hamming `0.051042 -> 0.046677`（`-0.004365`）。Macro gain bootstrap 95%=`[0.009891,0.071126]`，五标签 interval=`[-0.007688,0.019733]` 跨 0，Hamming delta=`[-0.006332,-0.002515]` 全负；router PR/ROC=`0.318653/0.850804`，verifier `4,412/4,412`、tests `23/23`。证据仅限 seed-42 train OOF；EXP-060 自此冻结且不再调 feature/router/cutoff/operating point，下一步仅做系统演示/论文归档，或另行预登记新数据独立确认；不构成 validation/test、部署泛化或机制结论 |

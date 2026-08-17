@@ -1,0 +1,136 @@
+{
+  "data_scope": "DATA-SO-TASK-V1 train OOF only",
+  "experiment_id": "EXP-060",
+  "feature_count": 14,
+  "formal_result_computation_authorized": false,
+  "formal_router_training_authorized": false,
+  "input_schema": [
+    {
+      "array_name": "character_lengths",
+      "dtype": "int32",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "component_ids",
+      "dtype": "<U34",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "fold_ids",
+      "dtype": "int8",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "gold",
+      "dtype": "uint8",
+      "fortran_order": false,
+      "shape": [
+        3360,
+        6
+      ]
+    },
+    {
+      "array_name": "m1_fold_run_sha256",
+      "dtype": "<U64",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "m1_logits",
+      "dtype": "float32",
+      "fortran_order": false,
+      "shape": [
+        3360,
+        6
+      ]
+    },
+    {
+      "array_name": "m1_token_lengths",
+      "dtype": "int32",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "m3_fold_run_sha256",
+      "dtype": "<U64",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "m3_logits",
+      "dtype": "float32",
+      "fortran_order": false,
+      "shape": [
+        3360,
+        6
+      ]
+    },
+    {
+      "array_name": "m3_token_lengths",
+      "dtype": "int32",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "sample_ids",
+      "dtype": "<U31",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    }
+  ],
+  "nested_cross_fitting_required": true,
+  "ordered_model_features": [
+    "m1_probability_love",
+    "m1_probability_joy",
+    "m1_probability_surprise",
+    "m1_probability_anger",
+    "m1_probability_sadness",
+    "m1_probability_fear",
+    "m1_mean_binary_entropy",
+    "m1_max_binary_entropy",
+    "m1_minimum_threshold_margin",
+    "m1_predicted_cardinality",
+    "m1_highest_probability",
+    "m1_lowest_probability",
+    "character_length",
+    "m1_token_length"
+  ],
+  "prohibited_runtime_feature_classes": [
+    "m3_",
+    "gold",
+    "oracle",
+    "sample_id",
+    "component_id",
+    "fold_id",
+    "raw_text",
+    "validation",
+    "test"
+  ],
+  "result_bearing": false,
+  "schema_version": "exp-060-preflight-contract-v1",
+  "selected_calibrators": {
+    "m1": "identity",
+    "m3": "identity"
+  },
+  "test_access": false,
+  "validation_access": false
+}

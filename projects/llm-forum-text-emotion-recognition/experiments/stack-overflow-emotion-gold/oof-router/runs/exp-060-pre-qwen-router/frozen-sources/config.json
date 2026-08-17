@@ -1,0 +1,352 @@
+{
+  "schema_version": "exp-060-formal-config-v1",
+  "experiment_id": "EXP-060",
+  "rq_id": "RQ-S3",
+  "tier": "Major system experiment",
+  "stage": "pre-qwen-deployable-router",
+  "registered_at": "2026-08-17",
+  "path_bases": {
+    "artifact_records": "projects/llm-forum-text-emotion-recognition",
+    "commands": "/Users/phoenix/Assistant/NeuroScience"
+  },
+  "authorization": {
+    "basis": "On 2026-08-17 the user asked the new conversation to continue the referenced thesis experiment; HANDOFF.md explicitly defines that instruction as authorization to implement and execute the formal EXP-060 result computation after the verified no-result preflight.",
+    "formal_router_training": true,
+    "formal_result_computation": true,
+    "validation_access": false,
+    "test_access": false,
+    "model_loading_or_forward": false,
+    "raw_text_access": false
+  },
+  "implementation": {
+    "protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-060-pre-qwen-deployable-router.md",
+      "bytes": 12591,
+      "sha256": "f93ce3ae9a38e66b6a26de09423a47ea3f63e2da0ec2875cc989d736441061ad"
+    },
+    "runner": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/run_exp060_router.py",
+      "bytes": 83606,
+      "sha256": "81bb6fc3d1f207c549ffaa3e77e80df1948fcca47f3496313e72da9ded2b711b"
+    },
+    "verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/verify_exp060_router.py",
+      "bytes": 99788,
+      "sha256": "0002de6dbc77fa73cf1412aa75096c871fb1705dd825bef0844af59bbe0e0d25"
+    },
+    "tests": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/tests/test_exp060_router.py",
+      "bytes": 43241,
+      "sha256": "61d39a5856ed46d5f57812a7b0948fd5ab29cf389b4b7947f61a5d83f716a784"
+    }
+  },
+  "prerequisites": {
+    "exp058_run": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/run.json",
+      "bytes": 12472,
+      "sha256": "4d8ab69cba9e032de0af4a52d0a015d7c71a8474b5fb76892b027ffcc824dee8"
+    },
+    "exp058_summary": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/paired-oof-summary.json",
+      "bytes": 1083,
+      "sha256": "fb6d89f45537b31febcf76afa329d3daadd36aa9ab694cd25b44c0701b6527ae"
+    },
+    "exp058_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/verification.json",
+      "bytes": 2528513,
+      "sha256": "e290a1ba6e873a50def48dcefb4b971601aa3f6e89386d4d920aea360fc2e3c7"
+    },
+    "exp059_run": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/run.json",
+      "bytes": 7123,
+      "sha256": "80b8f5aeeb98e26f5cb30f3d3d0ac04b013fe0b17d32044d37c9fb3cafbd2e9c"
+    },
+    "exp059_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/verification.json",
+      "bytes": 949448,
+      "sha256": "cb9f82a109664025a5f065a12f9416a1b79ae07f5dffe28c4bc03f7965109fac"
+    },
+    "exp059_calibration_parameters": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/calibration-parameters.json",
+      "bytes": 8479,
+      "sha256": "5739b0de0f8f5af717b19d9a52c5c435e6b7b357b9118b285d90547d7f02769a"
+    },
+    "exp059_oracle_summary": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/oracle-summary.json",
+      "bytes": 4743,
+      "sha256": "5f0b08793ccb203160fc7b77553b10c88cca786966fa72b2a003d01a6dbe9667"
+    },
+    "exp060_preflight_config": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/configs/exp-060-router-preflight.json",
+      "bytes": 8150,
+      "sha256": "6cd10fefa6842fb0396259337f8066d68c80bb35f0524b2f4f47fe63c6d620ae"
+    },
+    "exp060_preflight_run": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router-preflight/run.json",
+      "bytes": 7853,
+      "sha256": "27bebfdc41a8a4737a224edb4a573fe9afaaccadae1dec5d0eeb16a439e5e4d0"
+    },
+    "exp060_preflight_contract": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router-preflight/preflight-contract.json",
+      "bytes": 2681,
+      "sha256": "e9b1541501ba9c0731793773bf2e0a24ff7496760354fe7af68fa0a25cee3920"
+    },
+    "exp060_preflight_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router-preflight/verification.json",
+      "bytes": 9537,
+      "sha256": "633b3d613fe6c58a459b3030ef537c1bdc113ee5f12fbb9ae657b2e65a3b1578"
+    }
+  },
+  "input": {
+    "paired_oof": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-paired-oof-production/paired-oof.npz",
+      "bytes": 307755,
+      "sha256": "e8d2efde7ca62b3f09519390a6305d09ba0f3ea1dfbecbe8a11dbe4ffd482bfc"
+    }
+  },
+  "provenance": {
+    "base_git_head": "64fa05571b936516be0b3f9415464adedf6856cc",
+    "train_sha256": "fc2f853b5b8afb78253ca3a96b5093d2fd12ea7063801f57bf138c9d5cf528fc",
+    "fold_manifest_sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8",
+    "source_order_sha256": "c9e4bd1eb2bdbb33c833234754c493b8818aa6c610acaf88659ae74fa94848a3"
+  },
+  "data": {
+    "protocol_id": "DATA-SO-TASK-V1",
+    "split": "train-oof",
+    "rows": 3360,
+    "duplicate_components": 3277,
+    "upstream_seed": 42,
+    "source_order_sha256": "c9e4bd1eb2bdbb33c833234754c493b8818aa6c610acaf88659ae74fa94848a3",
+    "label_order": [
+      "love",
+      "joy",
+      "surprise",
+      "anger",
+      "sadness",
+      "fear"
+    ]
+  },
+  "cross_fitting": {
+    "outer_fold_ids": [0, 1, 2, 3, 4],
+    "outer_router_train_folds": 4,
+    "outer_router_heldout_folds": 1,
+    "nested_threshold_recomputation": true,
+    "nested_router_train_threshold_folds": 3,
+    "outer_heldout_threshold_folds": 4,
+    "reuse_exp058_duplicate_component_partition": true,
+    "restore_exp058_source_order": true,
+    "outer_router_train_single_class_policy": "stop",
+    "outer_heldout_single_class_auc_policy": "pr_auc_and_roc_auc_null"
+  },
+  "thresholds": {
+    "calibrator": "identity_for_m1_and_m3",
+    "grid_start": 0.05,
+    "grid_end": 0.95,
+    "grid_step": 0.01,
+    "selection_order": [
+      "highest_six_label_macro_f1",
+      "lowest_hamming_loss",
+      "closest_to_0_5",
+      "lower_threshold"
+    ],
+    "numeric_tolerance": 1e-12
+  },
+  "target_contract": {
+    "unit": "whole_six_bit_vector",
+    "positive": "m3_row_hamming_loss_strictly_lower_than_m1",
+    "tie_policy": "m1",
+    "gold_is_training_outcome_only": true,
+    "m3_is_training_outcome_only": true,
+    "exp059_oracle_array_used_as_formal_target": false
+  },
+  "feature_contract": {
+    "ordered_features": [
+      "m1_probability_love",
+      "m1_probability_joy",
+      "m1_probability_surprise",
+      "m1_probability_anger",
+      "m1_probability_sadness",
+      "m1_probability_fear",
+      "m1_mean_binary_entropy",
+      "m1_max_binary_entropy",
+      "m1_minimum_threshold_margin",
+      "m1_predicted_cardinality",
+      "m1_highest_probability",
+      "m1_lowest_probability",
+      "character_length",
+      "m1_token_length"
+    ],
+    "feature_count": 14,
+    "scaler": "StandardScaler_fit_inside_outer_router_train",
+    "forbidden_runtime_feature_classes": [
+      "all_m3_values",
+      "gold_or_correctness",
+      "oracle_or_model_disagreement",
+      "sample_component_or_fold_ids",
+      "raw_text",
+      "validation_or_test_statistics"
+    ],
+    "m1_raw_logits_included": false,
+    "m3_token_length_included": false
+  },
+  "router": {
+    "policies": [
+      "m1_only",
+      "m3_only",
+      "m1_max_entropy",
+      "m1_threshold_proximity",
+      "logistic_router"
+    ],
+    "deployable_policy_order": [
+      "m1_max_entropy",
+      "m1_threshold_proximity",
+      "logistic_router"
+    ],
+    "logistic_regression": {
+      "penalty": "l2",
+      "C": 1.0,
+      "class_weight": "balanced",
+      "solver": "liblinear",
+      "max_iter": 1000,
+      "random_state": 42
+    },
+    "hyperparameter_search": false,
+    "cutoff_count_rule": "ceil_target_rate_times_outer_router_train_rows",
+    "cutoff_tie_policy": "route_all_scores_equal_to_cutoff",
+    "random_routing_repetitions": 100,
+    "random_routing_seed": 20260817,
+    "random_routing": {
+      "unit": "duplicate_component",
+      "matched_row_count_contract": "heldout_policy_routed_row_count_per_outer_fold",
+      "algorithm": "seeded_component_permutation_then_zero_one_subset_sum",
+      "closest_count_tie_policy": "lower_row_count_before_overshoot",
+      "seed_sequence": [
+        "base_seed",
+        "policy_index",
+        "rate_index",
+        "outer_fold_id",
+        "repetition_index"
+      ],
+      "candidate_policy": false
+    }
+  },
+  "call_rates": [0.0, 0.05, 0.1, 0.15, 0.2, 0.3, 0.5, 1.0],
+  "gate": {
+    "maximum_actual_qwen_call_rate": 0.2,
+    "minimum_six_label_macro_f1_gain": 0.01,
+    "minimum_five_label_macro_f1_gain": -0.005,
+    "maximum_hamming_loss_increase": 1e-12,
+    "minimum_one_non_surprise_label_f1_gain": 0.005,
+    "candidate_tie_order": [
+      "highest_six_label_macro_f1",
+      "lowest_hamming_loss",
+      "lower_actual_call_rate",
+      "lower_target_call_rate"
+    ],
+    "overall_exact_tie_policy_order": [
+      "m1_max_entropy",
+      "m1_threshold_proximity",
+      "logistic_router"
+    ],
+    "deployable_policy_passes_if_any_of": [
+      "m1_max_entropy",
+      "m1_threshold_proximity",
+      "logistic_router"
+    ],
+    "point_estimate_determines_development_gate": true,
+    "bootstrap_interval_determines_stability_claim": true
+  },
+  "bootstrap": {
+    "unit": "duplicate_component",
+    "repetitions": 2000,
+    "seed": 20260817,
+    "interval": "percentile_95",
+    "selected_points": "one_frozen_candidate_per_deployable_policy",
+    "selection_warning": "No correction for operating-point or policy selection; train-OOF development evidence only."
+  },
+  "risk_coverage": {
+    "methods": ["mean_entropy", "max_entropy", "margin"],
+    "coverages": [1.0, 0.95, 0.9, 0.8, 0.7, 0.6],
+    "mean_entropy": "mean_binary_entropy_of_final_selected_family_probability",
+    "max_entropy": "max_binary_entropy_of_final_selected_family_probability",
+    "margin": "negative_minimum_absolute_distance_to_final_selected_family_nested_threshold",
+    "acceptance_count_rule": "floor_coverage_times_fold_rows_plus_0_5",
+    "acceptance_tie_break": "stable_source_order",
+    "diagnostic_only": true
+  },
+  "artifact_contract": {
+    "float_comparison_tolerance": 1e-12,
+    "public_directory_mode": "0755",
+    "private_directory_mode": "0700",
+    "private_file_mode": "0600",
+    "private_npz": "router-oof.npz",
+    "private_arrays": [
+      "sample_ids",
+      "component_ids",
+      "fold_ids",
+      "gold",
+      "features",
+      "router_targets",
+      "nested_m1_thresholds",
+      "nested_m3_thresholds",
+      "m1_thresholds",
+      "m3_thresholds",
+      "m1_predictions",
+      "m3_predictions",
+      "route_scores",
+      "route_masks",
+      "score_cutoffs",
+      "scaler_mean",
+      "scaler_scale",
+      "router_coef",
+      "router_intercept",
+      "router_n_iter"
+    ],
+    "public_files": [
+      "feature-contract.json",
+      "fold-summary.csv",
+      "router-discrimination.json",
+      "call-rate-performance.csv",
+      "policy-comparisons.csv",
+      "random-routing.csv",
+      "selected-operating-point.json",
+      "bootstrap.json",
+      "routed-risk-coverage.csv",
+      "positive-label-retention.csv",
+      "call-rate-performance.png",
+      "routed-risk-coverage.png",
+      "REPORT.md",
+      "run.json",
+      "frozen-sources"
+    ],
+    "public_row_level_data": false,
+    "forbidden_public_suffixes": [".npy", ".npz", ".parquet", ".jsonl"]
+  },
+  "runtime": {
+    "python_executable": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python",
+    "python_version": "3.10.20",
+    "numpy_version": "2.2.6",
+    "scikit_learn_version": "1.7.2",
+    "scipy_version": "1.15.3",
+    "matplotlib_version": "3.10.7",
+    "mplconfigdir": "/private/tmp/exp060-matplotlib"
+  },
+  "resources": {
+    "formal_wall_seconds": 1800,
+    "verification_wall_seconds": 1800,
+    "formal_peak_memory_gb": 4.0,
+    "peak_memory_gb": 4.0,
+    "api_cost_usd": 0,
+    "gpu_cost_usd": 0,
+    "model_forward_runs": 0
+  },
+  "outputs": {
+    "formal_run_dir": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router",
+    "formal_private_dir": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-060-pre-qwen-router"
+  },
+  "commands": {
+    "run": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/run_exp060_router.py --config projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/configs/exp-060-pre-qwen-router.json --stage run",
+    "verify": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/verify_exp060_router.py --config projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/configs/exp-060-pre-qwen-router.json"
+  },
+  "claim_boundary": "Fully nested DATA-SO-TASK-V1 train-OOF development evidence for one frozen seed-42 M1/M3 pair only; not an independent-test deployment benefit, cross-seed result, general forum result, or emotional-mechanism claim."
+}

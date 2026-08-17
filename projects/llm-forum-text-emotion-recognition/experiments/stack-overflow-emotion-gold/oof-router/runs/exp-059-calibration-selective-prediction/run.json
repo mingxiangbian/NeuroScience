@@ -1,0 +1,154 @@
+{
+  "calibration_performed": true,
+  "claim_boundary": "Fully cross-fitted train-OOF development evidence only; no new test or deployable-router claim.",
+  "completed_at_utc": "2026-08-17T03:03:31.968763+00:00",
+  "component_count": 3277,
+  "experiment_id": "EXP-059",
+  "folds": 5,
+  "frozen_sources": {
+    "config": {
+      "bytes": 6364,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/frozen-sources/config.json",
+      "sha256": "c7da87f3eddd4dd3e196bf80c0426a1791595c55872aa539cbf3797fd0f552fb"
+    },
+    "protocol": {
+      "bytes": 12216,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/frozen-sources/exp-059-calibration-selective-prediction.md",
+      "sha256": "a483b79d5b41f4ffb2f6b27db2dfdd215a525ed77d4dc207e56320dbff5eaddb"
+    },
+    "runner": {
+      "bytes": 55981,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/frozen-sources/run_exp059_calibration.py",
+      "sha256": "271b73837a0632d3c49095ff26974aa2e32d30a4dcc9d83a275fcfa8bee1f972"
+    },
+    "tests": {
+      "bytes": 4678,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/frozen-sources/test_exp059_calibration.py",
+      "sha256": "dd2122ee44526aedb7f0ed67839c375c4023f890bf6de9b012afcc339a1cee51"
+    },
+    "verifier": {
+      "bytes": 49381,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/frozen-sources/verify_exp059_calibration.py",
+      "sha256": "e13791bf47647ec954acac10bab723a8781bca4a03b12aee6ac715a6a4412a3e"
+    }
+  },
+  "git": {
+    "commit": "64fa05571b936516be0b3f9415464adedf6856cc",
+    "dirty": true,
+    "dirty_path_count": 14
+  },
+  "input_before": {
+    "bytes": 307755,
+    "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-paired-oof-production/paired-oof.npz",
+    "sha256": "e8d2efde7ca62b3f09519390a6305d09ba0f3ea1dfbecbe8a11dbe4ffd482bfc"
+  },
+  "input_sha256_after": "e8d2efde7ca62b3f09519390a6305d09ba0f3ea1dfbecbe8a11dbe4ffd482bfc",
+  "model_loading_or_forward_performed": false,
+  "oracle_analysis_performed": true,
+  "performance_metrics_computed": true,
+  "private_output": {
+    "bytes": 943917,
+    "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-059-calibration-selective-prediction/cross-fitted-calibration.npz",
+    "sha256": "47aaa4a8a9a8e45a9ddd1a4ee9f99573ab56b592cf6d921546a2025e36421f27"
+  },
+  "public_outputs": {
+    "abstention_gates": {
+      "bytes": 30390,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/abstention-gates.json",
+      "sha256": "3d854ba4ce74e4b598d2b77aceb7ce168dc9e71bb801db71ff5708726dc88879"
+    },
+    "bootstrap": {
+      "bytes": 1510,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/bootstrap.json",
+      "sha256": "d9b3a8f47870801b14d724532f4b8775c570c9ff88517b58ed9c7a35ac8ffad9"
+    },
+    "calibration_metrics": {
+      "bytes": 1356,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/calibration-metrics.json",
+      "sha256": "b150229ed9ae24f67fb89708acb4aac805d26fb39f82c67dfededaf4062ee1f7"
+    },
+    "calibration_parameters": {
+      "bytes": 8479,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/calibration-parameters.json",
+      "sha256": "5739b0de0f8f5af717b19d9a52c5c435e6b7b357b9118b285d90547d7f02769a"
+    },
+    "classification_metrics": {
+      "bytes": 16882,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/classification-metrics.json",
+      "sha256": "abe70959410952c3e6c97e03bbc2a2cd12d6b2cc05362ac1b2a66097c6d2d9d3"
+    },
+    "label_retention": {
+      "bytes": 10617,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/label-retention.csv",
+      "sha256": "645db7b664810f84c10cfe252aaeb85637809497d62a57170ba482ce7c9920d9"
+    },
+    "oracle_summary": {
+      "bytes": 4743,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/oracle-summary.json",
+      "sha256": "5f0b08793ccb203160fc7b77553b10c88cca786966fa72b2a003d01a6dbe9667"
+    },
+    "random_rejection": {
+      "bytes": 5846,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/random-rejection.csv",
+      "sha256": "1f02a3d0b3171da3eaab8af0d2c3dd31fd861adab9571bd88bb3a33e83963019"
+    },
+    "reliability_bins": {
+      "bytes": 7573,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/reliability-bins.csv",
+      "sha256": "d19e4f0153230410cf26e22a553402ea688471c0d9c46cb9c9a83355564c99c5"
+    },
+    "reliability_figure": {
+      "bytes": 69571,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/reliability-diagram.png",
+      "sha256": "20ebfea71685e6cadfdaf65abd2a5856d4b0a29d47fffa8f086d4510c848c089"
+    },
+    "report": {
+      "bytes": 1716,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/REPORT.md",
+      "sha256": "8f1ada01d9312cc9c88432f6729fefe4bfc16819bcba4abb42b5e39e6a8dbf79"
+    },
+    "risk_coverage": {
+      "bytes": 5076,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/risk-coverage.csv",
+      "sha256": "ea3243b7db87252b1bb4bdbce14b3c2f3984e117d3bfa711ef6d3a3564ff264d"
+    },
+    "risk_coverage_figure": {
+      "bytes": 115217,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/risk-coverage-curve.png",
+      "sha256": "301cd891a8b52151403855a43b676be1d11149ffe7600d1d267eef1ebb97b57a"
+    }
+  },
+  "resources": {
+    "api_cost_usd": 0,
+    "peak_process_rss_gb": 0.143654912,
+    "wall_seconds": 18.722615791950375
+  },
+  "router_training_performed": false,
+  "rows": 3360,
+  "rq_id": "RQ-S3",
+  "runtime": {
+    "dependencies": {
+      "matplotlib": "3.10.7",
+      "numpy": "2.2.6",
+      "python": "3.10.20",
+      "scikit-learn": "1.7.2",
+      "scipy": "1.15.3"
+    },
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python_executable": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python3.10"
+  },
+  "schema_version": "exp-059-formal-run-v1",
+  "selective_prediction_performed": true,
+  "split_access": {
+    "accessed_splits": [
+      "train-oof"
+    ],
+    "test_inputs_accessed": false,
+    "test_labels_accessed": false,
+    "validation_accessed": false
+  },
+  "stage": "cross-fitted-calibration-selective-prediction",
+  "started_at_utc": "2026-08-17T03:03:13.304375+00:00",
+  "status": "CompletedAwaitingVerification",
+  "tier": "Major"
+}

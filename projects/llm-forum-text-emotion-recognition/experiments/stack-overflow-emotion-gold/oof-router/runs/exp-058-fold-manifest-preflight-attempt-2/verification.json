@@ -1,0 +1,698 @@
+{
+  "check_count": 131,
+  "checks": [
+    {
+      "detail": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/run.json",
+      "name": "run.exists",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "run.experiment_id",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "run.stage",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "run.status",
+      "status": "Passed"
+    },
+    {
+      "detail": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/frozen-sources/config.json",
+      "name": "frozen_config.exists",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "config.experiment_id",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "config.stage",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "authorization.no_model_training",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "authorization.no_validation",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "authorization.no_test",
+      "status": "Passed"
+    },
+    {
+      "detail": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/fold-manifest.public.jsonl",
+      "name": "artifact.public_manifest.exists",
+      "status": "Passed"
+    },
+    {
+      "detail": "739200",
+      "name": "artifact.public_manifest.bytes",
+      "status": "Passed"
+    },
+    {
+      "detail": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8",
+      "name": "artifact.public_manifest.sha256",
+      "status": "Passed"
+    },
+    {
+      "detail": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-fold-manifest-preflight-attempt-2/fold-manifest.private.jsonl",
+      "name": "artifact.private_manifest.exists",
+      "status": "Passed"
+    },
+    {
+      "detail": "979748",
+      "name": "artifact.private_manifest.bytes",
+      "status": "Passed"
+    },
+    {
+      "detail": "d518e97c3332f2d59ea3556aecbb3a8cf9253438aee5ba02cd2ab105663862af",
+      "name": "artifact.private_manifest.sha256",
+      "status": "Passed"
+    },
+    {
+      "detail": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/fold-summary.json",
+      "name": "artifact.fold_summary.exists",
+      "status": "Passed"
+    },
+    {
+      "detail": "3202",
+      "name": "artifact.fold_summary.bytes",
+      "status": "Passed"
+    },
+    {
+      "detail": "89b40f26948a5bf44141bdb74e654d7eb0b19161b29d84d9a91ccda409fcf74c",
+      "name": "artifact.fold_summary.sha256",
+      "status": "Passed"
+    },
+    {
+      "detail": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/consumer-contract.json",
+      "name": "artifact.consumer_contract.exists",
+      "status": "Passed"
+    },
+    {
+      "detail": "883",
+      "name": "artifact.consumer_contract.bytes",
+      "status": "Passed"
+    },
+    {
+      "detail": "1dc28550cdc68bc777a20b57498498cd99df29d9cdc2cc07aaf3b56588854601",
+      "name": "artifact.consumer_contract.sha256",
+      "status": "Passed"
+    },
+    {
+      "detail": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/resource-budget.json",
+      "name": "artifact.resource_budget.exists",
+      "status": "Passed"
+    },
+    {
+      "detail": "386",
+      "name": "artifact.resource_budget.bytes",
+      "status": "Passed"
+    },
+    {
+      "detail": "0b547a5eea2156147b001730555b707faf3b27278f676765b2983579a28aa548",
+      "name": "artifact.resource_budget.sha256",
+      "status": "Passed"
+    },
+    {
+      "detail": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/stdout.log",
+      "name": "artifact.stdout.exists",
+      "status": "Passed"
+    },
+    {
+      "detail": "232",
+      "name": "artifact.stdout.bytes",
+      "status": "Passed"
+    },
+    {
+      "detail": "f649c7acfbef561c89d727e83fbf6c764a035b9a631aeee6ddf29645b3b552cd",
+      "name": "artifact.stdout.sha256",
+      "status": "Passed"
+    },
+    {
+      "detail": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/frozen-sources/builder.py",
+      "name": "artifact.frozen_source.builder.exists",
+      "status": "Passed"
+    },
+    {
+      "detail": "25897",
+      "name": "artifact.frozen_source.builder.bytes",
+      "status": "Passed"
+    },
+    {
+      "detail": "49025d1cc3cfbb0156d7b4e714f166e0474ceb243b3e20aaa5c3df37187f034d",
+      "name": "artifact.frozen_source.builder.sha256",
+      "status": "Passed"
+    },
+    {
+      "detail": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/frozen-sources/config.json",
+      "name": "artifact.frozen_source.config.exists",
+      "status": "Passed"
+    },
+    {
+      "detail": "3824",
+      "name": "artifact.frozen_source.config.bytes",
+      "status": "Passed"
+    },
+    {
+      "detail": "5cf0a61fcba667f6ef8373d480c5a749072dc4ab4d3009b31d02c8e1f08b21a4",
+      "name": "artifact.frozen_source.config.sha256",
+      "status": "Passed"
+    },
+    {
+      "detail": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/frozen-sources/correction.md",
+      "name": "artifact.frozen_source.correction.exists",
+      "status": "Passed"
+    },
+    {
+      "detail": "1252",
+      "name": "artifact.frozen_source.correction.bytes",
+      "status": "Passed"
+    },
+    {
+      "detail": "0bb9fb96705b0e53722bba4f204ee52086565ff83deb4e07a59b4a16ed33ffdb",
+      "name": "artifact.frozen_source.correction.sha256",
+      "status": "Passed"
+    },
+    {
+      "detail": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/frozen-sources/protocol.md",
+      "name": "artifact.frozen_source.protocol.exists",
+      "status": "Passed"
+    },
+    {
+      "detail": "8177",
+      "name": "artifact.frozen_source.protocol.bytes",
+      "status": "Passed"
+    },
+    {
+      "detail": "ed1fd6928c458e23710a76985fe4b38960e27c121f56f97561fc8d3edf70d156",
+      "name": "artifact.frozen_source.protocol.sha256",
+      "status": "Passed"
+    },
+    {
+      "detail": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/frozen-sources/tests.py",
+      "name": "artifact.frozen_source.tests.exists",
+      "status": "Passed"
+    },
+    {
+      "detail": "4624",
+      "name": "artifact.frozen_source.tests.bytes",
+      "status": "Passed"
+    },
+    {
+      "detail": "778792da559b9c93dad15c908eed3801e06bb4b98e194e5758dff9dafd289e2e",
+      "name": "artifact.frozen_source.tests.sha256",
+      "status": "Passed"
+    },
+    {
+      "detail": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/frozen-sources/verifier.py",
+      "name": "artifact.frozen_source.verifier.exists",
+      "status": "Passed"
+    },
+    {
+      "detail": "23273",
+      "name": "artifact.frozen_source.verifier.bytes",
+      "status": "Passed"
+    },
+    {
+      "detail": "bf2925d658bf0927ceacef41aba8fe307d2af3bfca1c95f337256a377d18c4ea",
+      "name": "artifact.frozen_source.verifier.sha256",
+      "status": "Passed"
+    },
+    {
+      "detail": "experiments/stack-overflow-emotion-gold/oof-router/build_exp058_fold_manifest.py",
+      "name": "source.builder.exists",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "source.builder.bytes",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "source.builder.sha256",
+      "status": "Passed"
+    },
+    {
+      "detail": "experiments/stack-overflow-emotion-gold/protocols/exp-058-attempt-2-label-vector-schema-correction.md",
+      "name": "source.correction.exists",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "source.correction.bytes",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "source.correction.sha256",
+      "status": "Passed"
+    },
+    {
+      "detail": "experiments/stack-overflow-emotion-gold/protocols/exp-058-paired-m1-m3-oof.md",
+      "name": "source.protocol.exists",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "source.protocol.bytes",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "source.protocol.sha256",
+      "status": "Passed"
+    },
+    {
+      "detail": "experiments/stack-overflow-emotion-gold/oof-router/tests/test_exp058_fold_manifest.py",
+      "name": "source.tests.exists",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "source.tests.bytes",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "source.tests.sha256",
+      "status": "Passed"
+    },
+    {
+      "detail": "experiments/stack-overflow-emotion-gold/oof-router/verify_exp058_fold_manifest.py",
+      "name": "source.verifier.exists",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "source.verifier.bytes",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "source.verifier.sha256",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "no_model_imports.builder",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "no_model_imports.verifier",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "verifier.does_not_import_builder",
+      "status": "Passed"
+    },
+    {
+      "detail": "data/stack-overflow-emotion-gold/derived-private/task-v1/train.jsonl",
+      "name": "train.exists",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "train.bytes",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "train.sha256",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "train.basename",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "run.accessed_splits_train_only",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "run.validation_not_accessed",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "run.test_inputs_not_accessed",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "run.test_labels_not_accessed",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "run.no_forbidden_path_match",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "run.access_allowlist",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "verifier.access_allowlist",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "run.forbidden_paths_not_opened",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "no_model_execution.model_loaded",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "no_model_execution.training_performed",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "no_model_execution.forward_pass_executed",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "no_model_execution.logits_produced",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "no_model_execution.threshold_fitted",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "no_model_execution.oracle_computed",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "no_model_execution.performance_metrics_computed",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "resource.api_cost_zero",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "resource.model_compute_zero",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "resource.wall_within_budget",
+      "status": "Passed"
+    },
+    {
+      "detail": "3360",
+      "name": "train.row_count",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "train.binary_label_schema",
+      "status": "Passed"
+    },
+    {
+      "detail": "3360",
+      "name": "public.row_count",
+      "status": "Passed"
+    },
+    {
+      "detail": "3360",
+      "name": "private.row_count",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "public.exact_schema",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "private.exact_schema",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "public.sorted_by_sample_id",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "train.unique_sample_ids",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "public.unique_sample_ids",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "private.unique_sample_ids",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "public.complete_coverage",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "private.complete_coverage",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "public.identity_and_fold_range",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "private.matches_train_gold",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "component.count",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "component.disjoint",
+      "status": "Passed"
+    },
+    {
+      "detail": "18",
+      "name": "component.conflict_count",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "summary.independent_recompute",
+      "status": "Passed"
+    },
+    {
+      "detail": "672",
+      "name": "fold.0.rows",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "fold.0.all_labels",
+      "status": "Passed"
+    },
+    {
+      "detail": "6",
+      "name": "fold.0.surprise_support",
+      "status": "Passed"
+    },
+    {
+      "detail": "672",
+      "name": "fold.1.rows",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "fold.1.all_labels",
+      "status": "Passed"
+    },
+    {
+      "detail": "6",
+      "name": "fold.1.surprise_support",
+      "status": "Passed"
+    },
+    {
+      "detail": "672",
+      "name": "fold.2.rows",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "fold.2.all_labels",
+      "status": "Passed"
+    },
+    {
+      "detail": "6",
+      "name": "fold.2.surprise_support",
+      "status": "Passed"
+    },
+    {
+      "detail": "672",
+      "name": "fold.3.rows",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "fold.3.all_labels",
+      "status": "Passed"
+    },
+    {
+      "detail": "7",
+      "name": "fold.3.surprise_support",
+      "status": "Passed"
+    },
+    {
+      "detail": "672",
+      "name": "fold.4.rows",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "fold.4.all_labels",
+      "status": "Passed"
+    },
+    {
+      "detail": "6",
+      "name": "fold.4.surprise_support",
+      "status": "Passed"
+    },
+    {
+      "detail": "0.02580645161290321",
+      "name": "summary.label_allocation_error",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "contract.manifest_hash",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "contract.m1_hash",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "contract.m3_hash",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "contract.m1_m3_identical",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "contract.training_not_authorized",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "contract.forbidden_splits",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "contract.label_order",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "privacy.public_no_sensitive_fields",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "privacy.private_file_mode",
+      "status": "Passed"
+    },
+    {
+      "detail": "0o700",
+      "name": "privacy.private_dir_mode",
+      "status": "Passed"
+    },
+    {
+      "detail": "",
+      "name": "privacy.private_gitignored",
+      "status": "Passed"
+    }
+  ],
+  "claim_boundary": "Passing verifies only the shared train-only fold manifest. It does not authorize or verify M1/M3 OOF training, logits, calibration, abstention, oracle gain, routing, validation confirmation, or test evaluation.",
+  "experiment_id": "EXP-058",
+  "failed_count": 0,
+  "independence": {
+    "builder_imported": false,
+    "model_libraries_imported": false,
+    "test_inputs_opened": false,
+    "test_labels_opened": false,
+    "train_recomputed": true,
+    "validation_opened": false
+  },
+  "passed_count": 131,
+  "schema_version": "exp-058-fold-manifest-verification-v1",
+  "stage": "fold-manifest-preflight",
+  "status": "Passed",
+  "verified_artifacts": {
+    "consumer_contract": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/consumer-contract.json",
+      "sha256": "1dc28550cdc68bc777a20b57498498cd99df29d9cdc2cc07aaf3b56588854601"
+    },
+    "fold_summary": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/fold-summary.json",
+      "sha256": "89b40f26948a5bf44141bdb74e654d7eb0b19161b29d84d9a91ccda409fcf74c"
+    },
+    "private_manifest": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-fold-manifest-preflight-attempt-2/fold-manifest.private.jsonl",
+      "sha256": "d518e97c3332f2d59ea3556aecbb3a8cf9253438aee5ba02cd2ab105663862af"
+    },
+    "public_manifest": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/fold-manifest.public.jsonl",
+      "sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8"
+    },
+    "run": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/run.json",
+      "sha256": "ed65be85ce35d82517a9e5ac0cbe585eeead3837a21a325255daeb65cf342ed5"
+    }
+  },
+  "verified_at_utc": "2026-08-16T04:55:57.992670+00:00"
+}

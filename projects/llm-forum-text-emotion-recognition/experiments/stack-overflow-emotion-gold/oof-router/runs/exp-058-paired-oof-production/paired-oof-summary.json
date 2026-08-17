@@ -1,0 +1,33 @@
+{
+  "calibration_performed": false,
+  "claim_boundary": "Paired raw train-OOF logits only; no performance or routing claim.",
+  "experiment_id": "EXP-058",
+  "folds": 5,
+  "m1_finite_logit_values": 20160,
+  "m3_finite_logit_values": 20160,
+  "oracle_analysis_performed": false,
+  "paired_table_private": {
+    "bytes": 307755,
+    "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-paired-oof-production/paired-oof.npz",
+    "sha256": "e8d2efde7ca62b3f09519390a6305d09ba0f3ea1dfbecbe8a11dbe4ffd482bfc"
+  },
+  "performance_metrics_computed": false,
+  "resource_totals": {
+    "m1_wall_seconds": 5865.660161625128,
+    "m3_wall_seconds": 41668.65290841716
+  },
+  "router_training_performed": false,
+  "rows": 3360,
+  "rows_per_fold": {
+    "0": 672,
+    "1": 672,
+    "2": 672,
+    "3": 672,
+    "4": 672
+  },
+  "schema_version": "exp-058-paired-oof-summary-v1",
+  "source_order_sha256": "c9e4bd1eb2bdbb33c833234754c493b8818aa6c610acaf88659ae74fa94848a3",
+  "status": "CompletedAwaitingVerification",
+  "test_accessed": false,
+  "validation_accessed": false
+}

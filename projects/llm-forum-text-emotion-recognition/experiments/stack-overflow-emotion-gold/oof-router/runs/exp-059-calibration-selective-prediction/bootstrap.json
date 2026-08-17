@@ -1,0 +1,57 @@
+{
+  "calibration_deltas": {
+    "m1": {
+      "brier_delta": {
+        "lower_95": -3.5992963330673705e-05,
+        "mean": -2.5368451282074462e-05,
+        "upper_95": -1.5848959623253336e-05
+      },
+      "nll_delta": {
+        "lower_95": -4.493033838277663e-05,
+        "mean": 3.6749655588583674e-05,
+        "upper_95": 0.00011224219468445377
+      }
+    },
+    "m3": {
+      "brier_delta": {
+        "lower_95": 1.997345877666496e-05,
+        "mean": 4.120644938565547e-05,
+        "upper_95": 6.132390830036433e-05
+      },
+      "nll_delta": {
+        "lower_95": 0.0002757242117722936,
+        "mean": 0.00042558700001292695,
+        "upper_95": 0.000574747190813695
+      }
+    }
+  },
+  "component_count": 3277,
+  "oracle_gains": {
+    "five_label_macro_f1": {
+      "lower_95": 0.07507210990334615,
+      "mean": 0.08741126321783049,
+      "upper_95": 0.10058062914490208
+    },
+    "macro_f1": {
+      "lower_95": 0.07784259322561755,
+      "mean": 0.10890255100562843,
+      "upper_95": 0.1423299269955272
+    }
+  },
+  "repetitions": 2000,
+  "seed": 20260817,
+  "selected_abstention_hamming_relative_reduction": {
+    "m1": {
+      "lower_95": 0.16800356106779865,
+      "mean": 0.19993521822167082,
+      "upper_95": 0.2323557601613589
+    },
+    "m3": {
+      "lower_95": 0.2779087671329015,
+      "mean": 0.3167175206405791,
+      "upper_95": 0.3574216462740876
+    }
+  },
+  "selection_warning": "Intervals do not correct for uncertainty-method selection.",
+  "unit": "duplicate_component"
+}

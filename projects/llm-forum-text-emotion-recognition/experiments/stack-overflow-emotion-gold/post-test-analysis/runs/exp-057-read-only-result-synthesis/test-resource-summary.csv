@@ -1,0 +1,5 @@
+family,display_name,backend,mean_per_seed_wall_seconds,shared_feature_seconds,mean_head_seconds,peak_memory_gb_max,parser_valid_rate_mean,truncated_rows_total,api_cost_usd
+m1,RoBERTa encoder,PyTorch_CPU,23.432470680680126,,,,,0,0
+m2,Frozen Qwen + linear head,MLX_Apple_Metal,,467.4400987920817,0.12843436126907667,8.224865568,,0,0
+m3,Qwen Classification LoRA,MLX_Apple_Metal,610.6638567779834,,,8.592560776,,0,0
+m4,Qwen Generative LoRA,MLX_Apple_Metal,1188.4168180696045,,,8.594648516,1.0,0,0

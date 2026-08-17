@@ -1,0 +1,248 @@
+{
+  "authorization": {
+    "basis": "The user requested the next step after verified EXP-059; this registration freezes and checks EXP-060 but does not authorize formal routing results.",
+    "formal_result_computation": false,
+    "formal_router_training": false,
+    "model_loading_or_forward": false,
+    "no_result_preflight": true,
+    "protocol_freeze": true,
+    "raw_text_access": false,
+    "test_access": false,
+    "validation_access": false
+  },
+  "checks": {
+    "failed": 0,
+    "passed": 25,
+    "records": [
+      {
+        "detail": null,
+        "name": "formal_router_training_forbidden",
+        "passed": true
+      },
+      {
+        "detail": null,
+        "name": "formal_result_computation_forbidden",
+        "passed": true
+      },
+      {
+        "detail": null,
+        "name": "validation_access_forbidden",
+        "passed": true
+      },
+      {
+        "detail": null,
+        "name": "test_access_forbidden",
+        "passed": true
+      },
+      {
+        "detail": null,
+        "name": "model_loading_or_forward_forbidden",
+        "passed": true
+      },
+      {
+        "detail": null,
+        "name": "raw_text_access_forbidden",
+        "passed": true
+      },
+      {
+        "detail": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router",
+        "name": "formal_public_output_empty",
+        "passed": true
+      },
+      {
+        "detail": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-060-pre-qwen-router",
+        "name": "formal_private_output_empty",
+        "passed": true
+      },
+      {
+        "detail": null,
+        "name": "paired_oof_header_schema",
+        "passed": true
+      },
+      {
+        "detail": null,
+        "name": "paired_oof_file_mode_0600",
+        "passed": true
+      },
+      {
+        "detail": null,
+        "name": "paired_oof_parent_mode_0700",
+        "passed": true
+      },
+      {
+        "detail": {
+          "m1": "identity",
+          "m3": "identity"
+        },
+        "name": "selected_calibrators_are_identity",
+        "passed": true
+      },
+      {
+        "detail": {
+          "m1": 1.0,
+          "m3": 1.0
+        },
+        "name": "selected_temperatures_are_one",
+        "passed": true
+      },
+      {
+        "detail": [
+          "m1_probability_love",
+          "m1_probability_joy",
+          "m1_probability_surprise",
+          "m1_probability_anger",
+          "m1_probability_sadness",
+          "m1_probability_fear",
+          "m1_mean_binary_entropy",
+          "m1_max_binary_entropy",
+          "m1_minimum_threshold_margin",
+          "m1_predicted_cardinality",
+          "m1_highest_probability",
+          "m1_lowest_probability",
+          "character_length",
+          "m1_token_length"
+        ],
+        "name": "feature_order_exact",
+        "passed": true
+      },
+      {
+        "detail": [],
+        "name": "feature_whitelist_has_no_prohibited_prefix",
+        "passed": true
+      },
+      {
+        "detail": null,
+        "name": "feature_count_14",
+        "passed": true
+      },
+      {
+        "detail": null,
+        "name": "router_c_frozen",
+        "passed": true
+      },
+      {
+        "detail": null,
+        "name": "router_hyperparameter_search_forbidden",
+        "passed": true
+      },
+      {
+        "detail": null,
+        "name": "outer_fold_contract",
+        "passed": true
+      },
+      {
+        "detail": null,
+        "name": "nested_threshold_contract",
+        "passed": true
+      },
+      {
+        "detail": null,
+        "name": "call_rates_frozen",
+        "passed": true
+      },
+      {
+        "detail": null,
+        "name": "bootstrap_contract",
+        "passed": true
+      },
+      {
+        "detail": "2.2.6",
+        "name": "numpy_available",
+        "passed": true
+      },
+      {
+        "detail": "1.7.2",
+        "name": "scikit_learn_available",
+        "passed": true
+      },
+      {
+        "detail": {
+          "returncode": 0,
+          "stderr_tail": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.009s\n\nOK\n",
+          "stdout_tail": ""
+        },
+        "name": "synthetic_contract_tests",
+        "passed": true
+      }
+    ],
+    "total": 25
+  },
+  "claim_boundary": "No-result protocol and environment preflight; no routing evidence.",
+  "command": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/run_exp060_router_preflight.py --config projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/configs/exp-060-router-preflight.json",
+  "cwd": "/Users/phoenix/Assistant/NeuroScience",
+  "environment": {
+    "numpy": "2.2.6",
+    "python": "3.10.20",
+    "scikit-learn": "1.7.2"
+  },
+  "execution_flags": {
+    "bootstrap_computed": false,
+    "model_loaded_or_forward_run": false,
+    "raw_text_accessed": false,
+    "real_features_constructed": false,
+    "real_router_targets_constructed": false,
+    "router_metrics_computed": false,
+    "scaler_or_router_fitted": false,
+    "test_accessed": false,
+    "validation_accessed": false
+  },
+  "experiment_id": "EXP-060",
+  "finished_at": "2026-08-17T03:27:11.172987+00:00",
+  "git": {
+    "commit": "64fa05571b936516be0b3f9415464adedf6856cc",
+    "dirty": true,
+    "dirty_path_count": 16
+  },
+  "input_artifacts": {
+    "exp059_calibration_parameters": {
+      "bytes": 8479,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-059-calibration-selective-prediction/calibration-parameters.json",
+      "sha256": "5739b0de0f8f5af717b19d9a52c5c435e6b7b357b9118b285d90547d7f02769a"
+    },
+    "paired_oof": {
+      "bytes": 307755,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-paired-oof-production/paired-oof.npz",
+      "sha256": "e8d2efde7ca62b3f09519390a6305d09ba0f3ea1dfbecbe8a11dbe4ffd482bfc"
+    }
+  },
+  "outputs": {
+    "contract": {
+      "bytes": 2681,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router-preflight/preflight-contract.json",
+      "sha256": "e9b1541501ba9c0731793773bf2e0a24ff7496760354fe7af68fa0a25cee3920"
+    }
+  },
+  "rq_id": "RQ-S3",
+  "schema_version": "exp-060-preflight-run-v1",
+  "source_artifacts": {
+    "config": {
+      "bytes": 8150,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router-preflight/frozen-sources/exp-060-router-preflight.json",
+      "sha256": "6cd10fefa6842fb0396259337f8066d68c80bb35f0524b2f4f47fe63c6d620ae"
+    },
+    "protocol": {
+      "bytes": 12591,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router-preflight/frozen-sources/exp-060-pre-qwen-deployable-router.md",
+      "sha256": "f93ce3ae9a38e66b6a26de09423a47ea3f63e2da0ec2875cc989d736441061ad"
+    },
+    "runner": {
+      "bytes": 18382,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router-preflight/frozen-sources/run_exp060_router_preflight.py",
+      "sha256": "521748ebe2acfe0e3176c2e2c9fe69d06f4f875cef626dd1b083b88249873898"
+    },
+    "tests": {
+      "bytes": 4556,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router-preflight/frozen-sources/test_exp060_router_preflight.py",
+      "sha256": "bc1b9605865a4583552f99146cda068a86b7df85106e927a0a97e4acbbb21856"
+    },
+    "verifier": {
+      "bytes": 13230,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router-preflight/frozen-sources/verify_exp060_router_preflight.py",
+      "sha256": "b4088faac11471e46e1b5e3e66a5ff54f95715f5790daa9df48759bd7a065046"
+    }
+  },
+  "stage": "no-result-preflight",
+  "started_at": "2026-08-17T03:27:11.068422+00:00",
+  "status": "Completed",
+  "tier": "Major infrastructure preflight"
+}

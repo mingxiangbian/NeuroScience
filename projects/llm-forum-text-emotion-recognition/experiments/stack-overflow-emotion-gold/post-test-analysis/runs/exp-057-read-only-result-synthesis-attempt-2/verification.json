@@ -1,0 +1,3752 @@
+{
+  "analyzer_imported": false,
+  "checks": [
+    {
+      "detail": null,
+      "name": "experiment_id",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "boundary:training_authorized",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "boundary:inference_authorized",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "boundary:private_prediction_access_authorized",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "boundary:test_label_access_authorized",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "boundary:selection_or_tuning_authorized",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run_training_false",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run_inference_false",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run_private_predictions_false",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run_test_labels_false",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run_selection_false",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-three-seed-validation/aggregate.json",
+      "name": "source_public:exp051_aggregate",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-three-seed-validation/aggregate.json",
+      "name": "source_exists:exp051_aggregate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_bytes:exp051_aggregate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_hash:exp051_aggregate",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-three-seed-validation/verification.json",
+      "name": "source_public:exp051_verification",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-three-seed-validation/verification.json",
+      "name": "source_exists:exp051_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_bytes:exp051_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_hash:exp051_verification",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen-three-seed-validation/aggregate.json",
+      "name": "source_public:exp052_aggregate",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen-three-seed-validation/aggregate.json",
+      "name": "source_exists:exp052_aggregate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_bytes:exp052_aggregate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_hash:exp052_aggregate",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen-three-seed-validation/verification.json",
+      "name": "source_public:exp052_verification",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-052-m2-frozen-qwen-three-seed-validation/verification.json",
+      "name": "source_exists:exp052_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_bytes:exp052_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_hash:exp052_verification",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora-three-seed-validation/aggregate.json",
+      "name": "source_public:exp053_aggregate",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora-three-seed-validation/aggregate.json",
+      "name": "source_exists:exp053_aggregate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_bytes:exp053_aggregate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_hash:exp053_aggregate",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora-three-seed-validation/verification.json",
+      "name": "source_public:exp053_verification",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora-three-seed-validation/verification.json",
+      "name": "source_exists:exp053_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_bytes:exp053_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_hash:exp053_verification",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora-three-seed-validation/aggregate.json",
+      "name": "source_public:exp054_aggregate",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora-three-seed-validation/aggregate.json",
+      "name": "source_exists:exp054_aggregate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_bytes:exp054_aggregate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_hash:exp054_aggregate",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora-three-seed-validation/verification.json",
+      "name": "source_public:exp054_verification",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-054-m4-generative-lora-three-seed-validation/verification.json",
+      "name": "source_exists:exp054_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_bytes:exp054_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_hash:exp054_verification",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/error-analysis/runs/exp-055-m1-m3-validation-error-analysis/summary.json",
+      "name": "source_public:exp055_summary",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/error-analysis/runs/exp-055-m1-m3-validation-error-analysis/summary.json",
+      "name": "source_exists:exp055_summary",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_bytes:exp055_summary",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_hash:exp055_summary",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/error-analysis/runs/exp-055-m1-m3-validation-error-analysis/verification-attempt-2.json",
+      "name": "source_public:exp055_verification",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/error-analysis/runs/exp-055-m1-m3-validation-error-analysis/verification-attempt-2.json",
+      "name": "source_exists:exp055_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_bytes:exp055_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_hash:exp055_verification",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/test-gate/runs/exp-056-frozen-test/results.json",
+      "name": "source_public:exp056_results",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/test-gate/runs/exp-056-frozen-test/results.json",
+      "name": "source_exists:exp056_results",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_bytes:exp056_results",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_hash:exp056_results",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/test-gate/runs/exp-056-frozen-test/verification.json",
+      "name": "source_public:exp056_verification",
+      "passed": true
+    },
+    {
+      "detail": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/test-gate/runs/exp-056-frozen-test/verification.json",
+      "name": "source_exists:exp056_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_bytes:exp056_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source_hash:exp056_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "upstream_passed:exp051_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "upstream_no_failures:exp051_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "upstream_passed:exp052_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "upstream_no_failures:exp052_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "upstream_passed:exp053_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "upstream_no_failures:exp053_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "upstream_passed:exp054_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "upstream_no_failures:exp054_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "upstream_passed:exp055_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "upstream_no_failures:exp055_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "upstream_passed:exp056_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "upstream_no_failures:exp056_verification",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "results_hash_frozen",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contract_hash_frozen",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "prediction_before_labels",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "no_post_test_selection",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_rows",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "family_scope",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "unit_scope",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_scope",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_row_scope",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_row_scope",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_row_scope",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_row_scope",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_row_scope",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m1:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m1:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m1:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m1:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m1:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m1:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m1:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m1:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m1:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m1:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m1:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m1:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m1:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m1:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m1:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m1:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m1:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m1:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m1:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m1:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m2:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m2:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m2:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m2:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m2:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m2:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m2:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m2:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m2:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m2:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m2:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m2:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m2:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m2:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m2:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m2:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m2:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m2:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m2:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m2:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m3:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m3:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m3:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m3:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m3:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m3:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m3:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m3:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m3:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m3:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m3:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m3:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m3:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m3:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m3:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m3:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m3:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m3:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m3:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m3:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m4:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m4:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m4:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m4:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m4:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m4:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m4:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m4:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m4:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m4:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m4:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m4:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m4:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m4:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m4:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m4:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m4:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m4:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_mean:m4:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "validation_sd:m4:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m1:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m1:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m1:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m1:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m1:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m1:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m1:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m1:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m1:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m1:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m1:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m1:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m1:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m1:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m1:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m1:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m1:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m1:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m1:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m1:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m1:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m1:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m1:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m1:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m1:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m1:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m1:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m1:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m1:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m1:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m1:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m1:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m1:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m1:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m1:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m1:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m1:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m1:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m1:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m1:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "non_generative_parser_blank:m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m2:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m2:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m2:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m2:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m2:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m2:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m2:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m2:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m2:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m2:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m2:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m2:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m2:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m2:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m2:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m2:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m2:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m2:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m2:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m2:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m2:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m2:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m2:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m2:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m2:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m2:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m2:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m2:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m2:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m2:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m2:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m2:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m2:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m2:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m2:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m2:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m2:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m2:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m2:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m2:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "non_generative_parser_blank:m2",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m3:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m3:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m3:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m3:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m3:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m3:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m3:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m3:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m3:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m3:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m3:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m3:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m3:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m3:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m3:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m3:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m3:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m3:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m3:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m3:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m3:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m3:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m3:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m3:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m3:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m3:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m3:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m3:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m3:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m3:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m3:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m3:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m3:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m3:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m3:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m3:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m3:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m3:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m3:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m3:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "non_generative_parser_blank:m3",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m4:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m4:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m4:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m4:macro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m4:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m4:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m4:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m4:five_label_macro_f1_without_surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m4:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m4:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m4:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m4:micro_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m4:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m4:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m4:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m4:weighted_f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m4:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m4:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m4:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m4:subset_accuracy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m4:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m4:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m4:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m4:hamming_loss",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m4:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m4:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m4:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m4:macro_precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m4:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m4:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m4:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m4:macro_recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m4:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m4:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m4:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m4:empty_prediction_rate",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_mean:m4:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "test_sd:m4:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_mean:m4:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_sd:m4:predicted_label_cardinality_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m4_parser_mean",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "m4_parser_sd",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m1:love",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m1:love",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m1:love",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:love:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:love:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:love:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:love:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:love:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:love:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:love:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:love:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m1:joy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m1:joy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m1:joy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:joy:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:joy:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:joy:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:joy:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:joy:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:joy:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:joy:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:joy:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m1:surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m1:surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m1:surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:surprise:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:surprise:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:surprise:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:surprise:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:surprise:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:surprise:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:surprise:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:surprise:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m1:anger",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m1:anger",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m1:anger",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:anger:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:anger:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:anger:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:anger:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:anger:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:anger:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:anger:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:anger:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m1:sadness",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m1:sadness",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m1:sadness",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:sadness:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:sadness:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:sadness:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:sadness:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:sadness:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:sadness:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:sadness:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:sadness:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m1:fear",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m1:fear",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m1:fear",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:fear:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:fear:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:fear:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:fear:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:fear:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:fear:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m1:fear:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m1:fear:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m2:love",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m2:love",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m2:love",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:love:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:love:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:love:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:love:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:love:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:love:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:love:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:love:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m2:joy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m2:joy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m2:joy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:joy:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:joy:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:joy:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:joy:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:joy:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:joy:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:joy:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:joy:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m2:surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m2:surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m2:surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:surprise:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:surprise:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:surprise:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:surprise:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:surprise:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:surprise:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:surprise:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:surprise:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m2:anger",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m2:anger",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m2:anger",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:anger:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:anger:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:anger:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:anger:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:anger:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:anger:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:anger:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:anger:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m2:sadness",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m2:sadness",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m2:sadness",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:sadness:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:sadness:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:sadness:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:sadness:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:sadness:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:sadness:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:sadness:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:sadness:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m2:fear",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m2:fear",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m2:fear",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:fear:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:fear:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:fear:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:fear:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:fear:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:fear:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m2:fear:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m2:fear:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m3:love",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m3:love",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m3:love",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:love:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:love:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:love:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:love:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:love:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:love:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:love:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:love:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m3:joy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m3:joy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m3:joy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:joy:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:joy:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:joy:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:joy:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:joy:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:joy:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:joy:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:joy:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m3:surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m3:surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m3:surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:surprise:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:surprise:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:surprise:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:surprise:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:surprise:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:surprise:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:surprise:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:surprise:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m3:anger",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m3:anger",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m3:anger",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:anger:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:anger:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:anger:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:anger:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:anger:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:anger:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:anger:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:anger:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m3:sadness",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m3:sadness",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m3:sadness",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:sadness:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:sadness:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:sadness:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:sadness:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:sadness:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:sadness:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:sadness:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:sadness:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m3:fear",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m3:fear",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m3:fear",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:fear:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:fear:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:fear:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:fear:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:fear:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:fear:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m3:fear:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m3:fear:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m4:love",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m4:love",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m4:love",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:love:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:love:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:love:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:love:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:love:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:love:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:love:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:love:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m4:joy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m4:joy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m4:joy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:joy:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:joy:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:joy:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:joy:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:joy:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:joy:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:joy:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:joy:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m4:surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m4:surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m4:surprise",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:surprise:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:surprise:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:surprise:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:surprise:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:surprise:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:surprise:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:surprise:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:surprise:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m4:anger",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m4:anger",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m4:anger",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:anger:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:anger:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:anger:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:anger:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:anger:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:anger:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:anger:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:anger:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m4:sadness",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m4:sadness",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m4:sadness",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:sadness:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:sadness:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:sadness:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:sadness:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:sadness:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:sadness:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:sadness:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:sadness:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_stable:m4:fear",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_cross_family:m4:fear",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "support_csv:m4:fear",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:fear:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:fear:f1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:fear:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:fear:precision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:fear:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:fear:recall",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_mean:m4:fear:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "per_label_sd:m4:fear:predicted_support",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "surprise_support_seven",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_orientation:m2-m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_unit:m2-m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_components:m2-m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_replicates:m2-m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m2-m1:macro_f1_delta",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m2-m1:macro_f1_ci95_lower",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m2-m1:macro_f1_ci95_upper",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m2-m1:five_label_delta",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m2-m1:five_label_ci95_lower",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m2-m1:five_label_ci95_upper",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_orientation:m3-m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_unit:m3-m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_components:m3-m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_replicates:m3-m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m3-m1:macro_f1_delta",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m3-m1:macro_f1_ci95_lower",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m3-m1:macro_f1_ci95_upper",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m3-m1:five_label_delta",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m3-m1:five_label_ci95_lower",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m3-m1:five_label_ci95_upper",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_orientation:m3-m2",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_unit:m3-m2",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_components:m3-m2",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_replicates:m3-m2",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m3-m2:macro_f1_delta",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m3-m2:macro_f1_ci95_lower",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m3-m2:macro_f1_ci95_upper",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m3-m2:five_label_delta",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m3-m2:five_label_ci95_lower",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m3-m2:five_label_ci95_upper",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_orientation:m4-m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_unit:m4-m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_components:m4-m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_replicates:m4-m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m4-m1:macro_f1_delta",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m4-m1:macro_f1_ci95_lower",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m4-m1:macro_f1_ci95_upper",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m4-m1:five_label_delta",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m4-m1:five_label_ci95_lower",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m4-m1:five_label_ci95_upper",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_orientation:m4-m3",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_unit:m4-m3",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_components:m4-m3",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_replicates:m4-m3",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m4-m3:macro_f1_delta",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m4-m3:macro_f1_ci95_lower",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m4-m3:macro_f1_ci95_upper",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m4-m3:five_label_delta",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m4-m3:five_label_ci95_lower",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contrast_value:m4-m3:five_label_ci95_upper",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_backend:m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_wall:m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_shared:m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_head:m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_peak:m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_parser:m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_truncation:m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_api_cost:m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_backend:m2",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_wall:m2",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_shared:m2",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_head:m2",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_peak:m2",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_parser:m2",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_truncation:m2",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_api_cost:m2",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_backend:m3",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_wall:m3",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_shared:m3",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_head:m3",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_peak:m3",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_parser:m3",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_truncation:m3",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_api_cost:m3",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_backend:m4",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_wall:m4",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_shared:m4",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_head:m4",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_peak:m4",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_parser:m4",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_truncation:m4",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "resource_api_cost:m4",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "generalization_macro:m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "generalization_five:m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "generalization_descriptive:m1",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "generalization_macro:m2",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "generalization_five:m2",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "generalization_descriptive:m2",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "generalization_macro:m3",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "generalization_five:m3",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "generalization_descriptive:m3",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "generalization_macro:m4",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "generalization_five:m4",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "generalization_descriptive:m4",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "error_analysis_rows",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "error_analysis_qualitative_rows",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "error_analysis_reviewer",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "router_gate_descriptive",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "claim_count",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "mechanism_claim_false",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "surprise_boundary",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_exists:THESIS-TABLES.md",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_bytes:THESIS-TABLES.md",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_hash:THESIS-TABLES.md",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_exists:frozen-amendment.md",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_bytes:frozen-amendment.md",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_hash:frozen-amendment.md",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_exists:frozen-analyzer.py",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_bytes:frozen-analyzer.py",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_hash:frozen-analyzer.py",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_exists:frozen-config.json",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_bytes:frozen-config.json",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_hash:frozen-config.json",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_exists:frozen-protocol.md",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_bytes:frozen-protocol.md",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_hash:frozen-protocol.md",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_exists:frozen-tests.py",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_bytes:frozen-tests.py",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_hash:frozen-tests.py",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_exists:frozen-verifier.py",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_bytes:frozen-verifier.py",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_hash:frozen-verifier.py",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_exists:result-synthesis.json",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_bytes:result-synthesis.json",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_hash:result-synthesis.json",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_exists:test-contrast-summary.csv",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_bytes:test-contrast-summary.csv",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_hash:test-contrast-summary.csv",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_exists:test-family-summary.csv",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_bytes:test-family-summary.csv",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_hash:test-family-summary.csv",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_exists:test-per-label-summary.csv",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_bytes:test-per-label-summary.csv",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_hash:test-per-label-summary.csv",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_exists:test-resource-summary.csv",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_bytes:test-resource-summary.csv",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_hash:test-resource-summary.csv",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_exists:validation-family-summary.csv",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_bytes:validation-family-summary.csv",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "artifact_hash:validation-family-summary.csv",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_copy:frozen-protocol.md",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_copy:frozen-config.json",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_copy:frozen-analyzer.py",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_copy:frozen-verifier.py",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_copy:frozen-tests.py",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "frozen_copy:frozen-amendment.md",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "public_privacy:validation-family-summary.csv",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "public_privacy:test-family-summary.csv",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "public_privacy:test-per-label-summary.csv",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "public_privacy:test-contrast-summary.csv",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "public_privacy:test-resource-summary.csv",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "public_privacy:result-synthesis.json",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "public_privacy:THESIS-TABLES.md",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "public_privacy:run.json",
+      "passed": true
+    }
+  ],
+  "experiment_id": "EXP-057",
+  "failed_checks": [],
+  "private_predictions_opened": false,
+  "schema_version": "exp-057-read-only-result-synthesis-verification-v1",
+  "sealed_test_label_source_reopened": false,
+  "status": "Passed",
+  "verified_at_utc": "2026-08-16T03:00:27.540062+00:00"
+}
