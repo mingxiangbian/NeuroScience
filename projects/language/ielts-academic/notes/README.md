@@ -11,6 +11,11 @@ These notes capture personal IELTS learning insights by skill. They are not the 
 - `vocabulary/`
 - `grammar/`
 
+## Current Speaking Review
+
+- [IELTS Speaking Part 2 可复习资料库](./speaking/part-2-review-bank.md) - 55 题的成品复习入口。
+- [Part 2 Knowledge Bank](./speaking/part-2-knowledge-bank.md) - 详细事实、来源与边界记录。
+
 ## Frontmatter Contract
 
 ```yaml

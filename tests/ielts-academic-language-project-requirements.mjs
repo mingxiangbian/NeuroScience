@@ -57,6 +57,9 @@ const requiredFiles = [
   "../projects/language/ielts-academic/site/reader-state.js",
   "../projects/language/ielts-academic/site/reader-utils.js",
   "../projects/language/ielts-academic/notes/README.md",
+  "../projects/language/ielts-academic/notes/speaking/2026-may-august-part-2-topic-clusters.md",
+  "../projects/language/ielts-academic/notes/speaking/part-2-knowledge-bank.md",
+  "../projects/language/ielts-academic/notes/speaking/part-2-review-bank.md",
   "../projects/language/ielts-academic/notes/writing/task-2-argument-development.md",
   "../projects/language/ielts-academic/journal/README.md",
   "../projects/language/ielts-academic/journal/entries/2026-07-06-initial-setup.md",
@@ -91,6 +94,8 @@ const executionPlanner = read("../projects/language/ielts-academic/prompts/agent
 const calibration = read("../projects/language/ielts-academic/prompts/calibration-and-validation.md");
 const speaking = read("../projects/language/ielts-academic/prompts/agents/speaking-examiner.md");
 const dryRuns = read("../projects/language/ielts-academic/validation/dry-run-test-cases.md");
+const part2Topics = read("../projects/language/ielts-academic/notes/speaking/2026-may-august-part-2-topic-clusters.md");
+const part2Review = read("../projects/language/ielts-academic/notes/speaking/part-2-review-bank.md");
 const projectIndex = read("../projects/language/ielts-academic/index.html");
 const siteJs = read("../projects/language/ielts-academic/site/ielts-reader.js");
 const renderers = read("../projects/language/ielts-academic/site/reader-renderers.js");
@@ -185,6 +190,19 @@ assert.match(calibration, /LLM-generated band estimate is advisory/);
 assert.match(speaking, /transcript alone cannot verify pronunciation/);
 assert.match(dryRuns, /Fixed-error evidence dry run/);
 assert.match(dryRuns, /activeUnit: null/);
+
+const extractPart2Ids = (text) => [...new Set(text.match(/\b(?:PE|EV|OB|PL)\d{2}\b/g) ?? [])].sort();
+const topicIds = extractPart2Ids(part2Topics);
+const reviewIds = extractPart2Ids(part2Review);
+assert.equal(topicIds.length, 55);
+assert.deepEqual(reviewIds, topicIds);
+assert.equal(part2Review.match(/^## R\d{2} -/gm)?.length, 23);
+assert.match(part2Review, /PE11（应急卡）/);
+assert.match(part2Review, /尚未完成两分钟口述验证/);
+assert.match(part2Review, /persistent internal affective state/);
+assert.match(part2Review, /完整循迹、避障和 PID 最终测试没有完全成功/);
+assert.doesNotMatch(part2Review, /待补|Details to confirm later|Status: missing/i);
+assert.doesNotMatch(part2Topics, /补齐 6 个事实缺口|帮助妹妹选大学/);
 
 assert.match(projectIndex, /data-page="ielts-academic-reader"/);
 assert.match(projectIndex, /id="reader-shell"/);

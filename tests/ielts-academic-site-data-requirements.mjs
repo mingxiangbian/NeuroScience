@@ -111,6 +111,16 @@ for (const error of data.errorLog.errors) {
 assert.equal(data.references.backlinks["note:writing/task-2-argument-development"].some((link) => link.id.startsWith("journal:")), true);
 
 assert.equal(data.notes.every((note) => typeof note.html === "string" && note.html.length > 0), true);
+const part2ReviewNote = data.notes.find((note) => note.id === "speaking/part-2-review-bank");
+assert.ok(part2ReviewNote);
+assert.equal(part2ReviewNote.title, "IELTS Speaking Part 2 可复习资料库");
+assert.match(part2ReviewNote.text, /R23 - 家中最放松的地方/);
+assert.equal(
+  data.references.targets.some(
+    (target) => target.id === "note:speaking/part-2-review-bank" && target.moduleId === "archive",
+  ),
+  true,
+);
 assert.equal(data.promptLibrary.every((prompt) => typeof prompt.html === "string" && prompt.html.length > 0), true);
 assert.equal(data.validation.every((check) => typeof check.html === "string" && check.html.length > 0), true);
 assert.equal(data.promptLibrary.some((prompt) => prompt.id === "prompts/orchestrator"), true);
