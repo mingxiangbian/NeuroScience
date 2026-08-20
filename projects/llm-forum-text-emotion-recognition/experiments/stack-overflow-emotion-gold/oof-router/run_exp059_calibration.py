@@ -10,8 +10,10 @@ import math
 import os
 from pathlib import Path
 import platform
+import re
 import resource
 import shutil
+import stat
 import subprocess
 import time
 from typing import Any, Iterable
@@ -23,6 +25,119 @@ from scipy.optimize import minimize_scalar
 
 EXPERIMENT_ID = "EXP-059"
 RQ_ID = "RQ-S3"
+CONFIG_V2_SCHEMA = "exp-059-calibration-config-v2"
+LEGACY_CONFIG_SCHEMAS = {"exp-059-preflight-config-v1", "exp-059-formal-config-v1"}
+ATTEMPT_RE = re.compile(r"attempt-[1-9][0-9]*\Z")
+REPLICATIONS = {
+    "EXP-061": {"model_seed": 43, "run_id": "exp-061-seed-43-router-replication"},
+    "EXP-062": {"model_seed": 44, "run_id": "exp-062-seed-44-router-replication"},
+}
+CANONICAL_IMPLEMENTATION_PATHS = {
+    "protocol": "experiments/stack-overflow-emotion-gold/protocols/exp-059-calibration-selective-prediction.md",
+    "runner": "experiments/stack-overflow-emotion-gold/oof-router/run_exp059_calibration.py",
+    "verifier": "experiments/stack-overflow-emotion-gold/oof-router/verify_exp059_calibration.py",
+    "tests": "experiments/stack-overflow-emotion-gold/oof-router/tests/test_exp059_calibration.py",
+}
+FROZEN_RESOURCES = {
+    "formal_wall_seconds": 1800,
+    "verification_wall_seconds": 1800,
+    "peak_memory_gb": 4.0,
+    "api_cost_usd": 0,
+}
+OOF_FROZEN_RESOURCES = {
+    "api_cost_usd": 0,
+    "minimum_free_disk_gb": 8.0,
+    "m1_peak_process_memory_gb": 8.0,
+    "m1_total_wall_hours": 4.0,
+    "m3_peak_mlx_memory_gb": 13.0,
+    "m3_per_fold_wall_hours": 4.5,
+    "m3_total_wall_hours": 22.5,
+    "maximum_m1_fold_runs": 5,
+    "maximum_m3_fold_runs": 5,
+}
+OOF_CONFIG_KEYS = {
+    "schema_version", "experiment_id", "rq_id", "tier", "stage", "run_id",
+    "attempt_id", "authorization", "execution", "seed_contract", "data",
+    "implementation", "prerequisites", "outputs", "initialization", "m1", "m3",
+    "resources",
+}
+OOF_FINAL_REQUIRED_CHECKS = {
+    "final.public_allowlist", "final.run_status", "final.identity",
+    "final.summary_identity", "final.selection_absent", "final.summary_record",
+    "final.summary_status", "final.rows", "final.fold_counts", "final.no_metrics",
+    "final.no_calibration", "final.no_oracle", "final.no_router",
+    "final.no_validation", "final.no_test", "final.train_only",
+    "final.run_no_validation", "final.run_no_test_inputs",
+    "final.run_no_test_labels", "final.m1_coverage", "final.m3_coverage",
+    "final.summary_paired_record", "final.paired_schema",
+    "final.paired_source_order", "final.paired_shapes", "final.paired_finite_m1",
+    "final.paired_finite_m3", "final.source_order_digest", "final.m1_wall_budget",
+    "final.m3_wall_budget", "final.private_root_mode", "final.public_privacy",
+} | {
+    f"final.{family}.fold_{fold_id}.{suffix}"
+    for family in ("m1", "m3")
+    for fold_id in range(5)
+    for suffix in ("verification", "identity", "top_binding", "verified_table")
+}
+PREFLIGHT_CORE_KEYS = {
+    "experiment_id", "replication_parent_experiment_id", "run_id", "attempt_id",
+    "model_seed", "seed_contract", "rq_id", "tier", "implementation", "input",
+    "outputs", "data", "cross_fitting", "calibration", "thresholds",
+    "selective_prediction", "oracle", "bootstrap", "resources",
+}
+PREFLIGHT_VERIFICATION_REQUIRED_CHECKS = {
+    "preflight.identity",
+    "preflight.status",
+    "preflight.header_schema",
+    "preflight.public_schema",
+    "preflight.exp058_passed",
+    "preflight.no_values",
+    "preflight.no_metrics",
+    "preflight.no_analysis",
+    "preflight.no_validation",
+    "preflight.no_test_inputs",
+    "preflight.no_test_labels",
+    "preflight.header_only_split",
+    "preflight.input_bound",
+    "preflight.privacy",
+    "preflight.formal_public_absent",
+    "preflight.formal_private_absent",
+    "preflight.oof_prerequisites",
+    "preflight.config",
+    "preflight.no_selection",
+    "preflight.no_completion",
+    "preflight.runtime",
+    "preflight.frozen_sources",
+    "verification.resource.wall_budget",
+    "verification.resource.memory_budget",
+    "verification.resource.api_cost",
+}
+V2_CONFIG_KEYS = {
+    "schema_version",
+    "experiment_id",
+    "replication_parent_experiment_id",
+    "run_id",
+    "attempt_id",
+    "model_seed",
+    "seed_contract",
+    "rq_id",
+    "stage",
+    "tier",
+    "implementation",
+    "prerequisites",
+    "input",
+    "outputs",
+    "data",
+    "cross_fitting",
+    "calibration",
+    "thresholds",
+    "selective_prediction",
+    "oracle",
+    "bootstrap",
+    "authorization",
+    "resources",
+}
+FIGURE_METADATA = {"Software": "EXP-059 deterministic verifier-bound figure"}
 LABEL_ORDER = ("love", "joy", "surprise", "anger", "sadness", "fear")
 FAMILY_ORDER = ("m1", "m3")
 METHOD_ORDER = ("mean_entropy", "max_entropy", "margin")
@@ -45,6 +160,640 @@ PUBLIC_SENSITIVE_KEYS = {
 }
 
 
+def is_v2(config: dict[str, Any]) -> bool:
+    return config.get("schema_version") == CONFIG_V2_SCHEMA
+
+
+def expected_seed_contract(model_seed: int) -> dict[str, int]:
+    return {
+        "model_seed": model_seed,
+        "python_seed": model_seed,
+        "numpy_seed": model_seed,
+        "torch_seed": model_seed,
+        "m1_batch_seed": model_seed,
+        "m3_head_seed": model_seed,
+        "m3_batch_seed": model_seed,
+        "m3_lora_seed": model_seed + 100_000,
+    }
+
+
+def identity_provenance(config: dict[str, Any]) -> dict[str, Any]:
+    if not is_v2(config):
+        return {"experiment_id": EXPERIMENT_ID}
+    return {
+        "experiment_id": EXPERIMENT_ID,
+        "replication_parent_experiment_id": config["replication_parent_experiment_id"],
+        "run_id": config["run_id"],
+        "attempt_id": config["attempt_id"],
+        "model_seed": config["model_seed"],
+        "seed_contract": config["seed_contract"],
+    }
+
+
+def expected_outputs(config: dict[str, Any]) -> dict[str, str]:
+    run_id = config["run_id"]
+    attempt_id = config["attempt_id"]
+    public_namespace = f"experiments/stack-overflow-emotion-gold/oof-router/runs/{run_id}"
+    private_namespace = f"experiments/stack-overflow-emotion-gold/oof-router/private/{run_id}"
+    return {
+        "public_namespace": public_namespace,
+        "public_attempt_dir": f"{public_namespace}/{attempt_id}",
+        "private_namespace": private_namespace,
+        "private_attempt_dir": f"{private_namespace}/{attempt_id}",
+        "selection_record": f"{public_namespace}/selected-attempt.json",
+    }
+
+
+def _assert_no_symlink(value: str) -> None:
+    root = PROJECT_ROOT.resolve()
+    current = root
+    for part in Path(value).parts:
+        current = current / part
+        if os.path.lexists(current) and stat.S_ISLNK(os.lstat(current).st_mode):
+            raise ValueError(f"Symlink path component is forbidden: {current}")
+
+
+def output_paths(config: dict[str, Any]) -> dict[str, Path]:
+    if not is_v2(config):
+        return {
+            "preflight": resolve_project(config["outputs"]["preflight_run_dir"]),
+            "public_calibration": resolve_project(config["outputs"]["public_run_dir"]),
+            "private_calibration": resolve_project(config["outputs"]["private_run_dir"]),
+        }
+    outputs = config["outputs"]
+    public_attempt = resolve_project(outputs["public_attempt_dir"])
+    private_attempt = resolve_project(outputs["private_attempt_dir"])
+    return {
+        "public_namespace": resolve_project(outputs["public_namespace"]),
+        "public_attempt": public_attempt,
+        "private_namespace": resolve_project(outputs["private_namespace"]),
+        "private_attempt": private_attempt,
+        "selection": resolve_project(outputs["selection_record"]),
+        "preflight": public_attempt / "calibration-preflight",
+        "public_calibration": public_attempt / "calibration",
+        "private_calibration": private_attempt / "calibration",
+        "completion": public_attempt / "calibration-complete.json",
+    }
+
+
+def expected_frozen_source_names(config: dict[str, Any]) -> set[str]:
+    names = {"config.json"}
+    names.update(Path(record["path"]).name for record in config["implementation"].values())
+    if len(names) != len(config["implementation"]) + 1:
+        raise ValueError("EXP-059 frozen source basenames must be unique")
+    return names
+
+
+def assert_exact_public_tree(
+    run_dir: Path,
+    config: dict[str, Any],
+    *,
+    stage: str,
+    verified: bool,
+) -> None:
+    if stage == "preflight":
+        allowed_files = {"run.json"}
+    elif stage == "calibration":
+        allowed_files = {
+            "REPORT.md",
+            "abstention-gates.json",
+            "bootstrap.json",
+            "calibration-metrics.json",
+            "calibration-parameters.json",
+            "classification-metrics.json",
+            "label-retention.csv",
+            "random-rejection.csv",
+            "reliability-bins.csv",
+            "reliability-diagram.png",
+            "risk-coverage-curve.png",
+            "risk-coverage.csv",
+            "oracle-summary.json",
+            "run.json",
+        }
+    else:
+        raise ValueError(f"Unknown EXP-059 public stage: {stage}")
+    if verified:
+        allowed_files |= {"verification.json", "VERIFICATION-SUMMARY.md"}
+    run_mode = os.lstat(run_dir).st_mode
+    if stat.S_ISLNK(run_mode) or not stat.S_ISDIR(run_mode):
+        raise ValueError("EXP-059 public run path must be a real directory")
+    entries = {entry.name: entry for entry in os.scandir(run_dir)}
+    if set(entries) != allowed_files | {"frozen-sources"}:
+        raise ValueError(f"Unexpected EXP-059 public artifacts: {sorted(entries)}")
+    for name in allowed_files:
+        mode = os.lstat(entries[name].path).st_mode
+        if stat.S_ISLNK(mode) or not stat.S_ISREG(mode):
+            raise ValueError(f"EXP-059 public artifact must be a regular file: {name}")
+    frozen = entries["frozen-sources"]
+    frozen_mode = os.lstat(frozen.path).st_mode
+    if stat.S_ISLNK(frozen_mode) or not stat.S_ISDIR(frozen_mode):
+        raise ValueError("EXP-059 frozen-sources must be a real directory")
+    frozen_entries = {entry.name: entry for entry in os.scandir(frozen.path)}
+    if set(frozen_entries) != expected_frozen_source_names(config):
+        raise ValueError(f"Unexpected EXP-059 frozen sources: {sorted(frozen_entries)}")
+    for name, entry in frozen_entries.items():
+        mode = os.lstat(entry.path).st_mode
+        if stat.S_ISLNK(mode) or not stat.S_ISREG(mode):
+            raise ValueError(f"EXP-059 frozen source must be a regular file: {name}")
+
+
+def assert_exact_private_tree(private_dir: Path) -> None:
+    directory_mode = os.lstat(private_dir).st_mode
+    if stat.S_ISLNK(directory_mode) or not stat.S_ISDIR(directory_mode):
+        raise ValueError("EXP-059 private calibration path must be a real directory")
+    entries = {entry.name: entry for entry in os.scandir(private_dir)}
+    if set(entries) != {"cross-fitted-calibration.npz"}:
+        raise ValueError(f"Unexpected EXP-059 private artifacts: {sorted(entries)}")
+    file_mode = os.lstat(entries["cross-fitted-calibration.npz"].path).st_mode
+    if stat.S_ISLNK(file_mode) or not stat.S_ISREG(file_mode):
+        raise ValueError("EXP-059 private calibration artifact must be a regular file")
+
+
+def _validate_frozen_analysis_contract(config: dict[str, Any]) -> None:
+    expected_grid = [round(0.05 + index * 0.01, 2) for index in range(91)]
+    if config.get("cross_fitting") != {
+        "fold_ids": [0, 1, 2, 3, 4],
+        "meta_train_folds": 4,
+        "heldout_folds": 1,
+        "reuse_exp058_duplicate_component_partition": True,
+    }:
+        raise ValueError("EXP-059 cross-fitting contract drift")
+    if config.get("calibration") != {
+        "method": "one_scalar_temperature_per_family",
+        "temperature_bounds": [0.05, 20.0],
+        "optimizer_parameter": "log_temperature",
+        "optimizer_tolerance": 1e-12,
+        "optimizer_max_iterations": 1000,
+        "ece_bins": 15,
+        "minimum_nll_improvement": 1e-6,
+        "maximum_brier_worsening": 1e-6,
+    }:
+        raise ValueError("EXP-059 calibration contract drift")
+    thresholds = config.get("thresholds", {})
+    if (
+        thresholds.get("scope") != "one_global_threshold_per_family_pipeline_and_meta_fold"
+        or thresholds.get("grid") != expected_grid
+        or thresholds.get("tie_tolerance") != 1e-12
+        or thresholds.get("selection_order")
+        != ["highest_macro_f1", "lowest_hamming_loss", "closest_to_0_5", "lower_threshold"]
+    ):
+        raise ValueError("EXP-059 threshold contract drift")
+    if config.get("selective_prediction") != {
+        "methods": ["mean_entropy", "max_entropy", "margin"],
+        "coverages": [1.0, 0.95, 0.9, 0.8, 0.7, 0.6],
+        "random_repetitions": 100,
+        "random_seed": 20260817,
+        "gate_minimum_coverage": 0.8,
+        "gate_hamming_relative_reduction": 0.2,
+        "gate_max_five_label_macro_drop": 0.01,
+        "gate_min_non_surprise_retention": 0.5,
+    }:
+        raise ValueError("EXP-059 selective-prediction contract drift")
+    if config.get("bootstrap") != {
+        "unit": "duplicate_component",
+        "repetitions": 2000,
+        "seed": 20260817,
+        "interval": "percentile_95",
+    }:
+        raise ValueError("EXP-059 bootstrap contract drift")
+    if config.get("oracle") != {
+        "selection_unit": "whole_six_bit_vector",
+        "tie_policy": "m1",
+        "minimum_macro_gain": 0.01,
+    }:
+        raise ValueError("EXP-059 oracle contract drift")
+
+
+def validate_v2_config(config: dict[str, Any]) -> None:
+    if set(config) != V2_CONFIG_KEYS:
+        raise ValueError("EXP-059 config-v2 top-level schema drift")
+    parent = config.get("replication_parent_experiment_id")
+    if parent not in REPLICATIONS:
+        raise ValueError("EXP-059 replication parent must be EXP-061 or EXP-062")
+    registration = REPLICATIONS[parent]
+    if config.get("run_id") != registration["run_id"]:
+        raise ValueError("EXP-059 replication run_id drift")
+    attempt_id = config.get("attempt_id")
+    if not isinstance(attempt_id, str) or ATTEMPT_RE.fullmatch(attempt_id) is None:
+        raise ValueError("EXP-059 attempt_id must match attempt-[1-9][0-9]*")
+    model_seed = config.get("model_seed")
+    if model_seed != registration["model_seed"]:
+        raise ValueError("EXP-059 replication model_seed drift")
+    if config.get("seed_contract") != expected_seed_contract(model_seed):
+        raise ValueError("EXP-059 seed contract drift")
+    if config.get("outputs") != expected_outputs(config):
+        raise ValueError("EXP-059 replication output path drift")
+    for value in config["outputs"].values():
+        resolve_project(value)
+        _assert_no_symlink(value)
+    paths = output_paths(config)
+    expected_input = display_path(paths["private_attempt"] / "paired-oof.npz")
+    if set(config.get("input", {})) != {"paired_oof"}:
+        raise ValueError("EXP-059 replication input inventory drift")
+    if config["input"]["paired_oof"].get("path") != expected_input:
+        raise ValueError("EXP-059 paired OOF must come from the same private attempt")
+    if config.get("data") != {
+        "protocol_id": "DATA-SO-TASK-V1",
+        "split": "train-oof",
+        "rows": 3360,
+        "label_order": list(LABEL_ORDER),
+    }:
+        raise ValueError("EXP-059 data contract drift")
+    if set(config.get("implementation", {})) != set(CANONICAL_IMPLEMENTATION_PATHS):
+        raise ValueError("EXP-059 implementation inventory drift")
+    for name, expected_path in CANONICAL_IMPLEMENTATION_PATHS.items():
+        if config["implementation"][name].get("path") != expected_path:
+            raise ValueError(f"EXP-059 canonical implementation path drift: {name}")
+    required = {"oof_run", "oof_verification", "oof_completion"}
+    allowed = required | {"preflight_run", "preflight_verification"}
+    prerequisite_keys = set(config.get("prerequisites", {}))
+    if not required.issubset(prerequisite_keys) or not prerequisite_keys.issubset(allowed):
+        raise ValueError("EXP-059 prerequisite inventory drift")
+    public_attempt = display_path(paths["public_attempt"])
+    required_paths = {
+        "oof_run": f"{public_attempt}/run.json",
+        "oof_verification": f"{public_attempt}/verification.json",
+        "oof_completion": f"{public_attempt}/oof-complete.json",
+    }
+    if "preflight_run" in prerequisite_keys:
+        required_paths["preflight_run"] = f"{public_attempt}/calibration-preflight/run.json"
+    if "preflight_verification" in prerequisite_keys:
+        required_paths["preflight_verification"] = (
+            f"{public_attempt}/calibration-preflight/verification.json"
+        )
+    for name, expected in required_paths.items():
+        if config["prerequisites"][name].get("path") != expected:
+            raise ValueError(f"EXP-059 prerequisite path drift: {name}")
+    formal = "preflight_run" in prerequisite_keys or "preflight_verification" in prerequisite_keys
+    expected_authorization = {
+        "preflight": True,
+        "formal_analysis": formal,
+        "validation_access": False,
+        "test_access": False,
+        "model_loading_or_forward": False,
+        "router_training": False,
+    }
+    expected_stage = (
+        "cross-fitted-calibration-selective-prediction"
+        if formal
+        else "calibration-selective-preflight"
+    )
+    if (prerequisite_keys & {"preflight_run", "preflight_verification"}) not in (
+        set(),
+        {"preflight_run", "preflight_verification"},
+    ):
+        raise ValueError("EXP-059 preflight prerequisite pair is incomplete")
+    if (
+        config.get("tier") != "Major"
+        or config.get("stage") != expected_stage
+        or config.get("authorization") != expected_authorization
+    ):
+        raise ValueError("EXP-059 stage/authorization contract drift")
+    if config.get("resources") != FROZEN_RESOURCES:
+        raise ValueError("EXP-059 frozen resource contract drift")
+    _validate_frozen_analysis_contract(config)
+
+
+def validate_oof_chain(
+    config: dict[str, Any],
+    records: dict[str, Any],
+    oof_run: dict[str, Any],
+    verification: dict[str, Any],
+    completion: dict[str, Any],
+) -> None:
+    oof_config_record = oof_run.get("config")
+    if not isinstance(oof_config_record, dict):
+        raise ValueError("Seed-specific OOF run is missing config provenance")
+    oof_config_path = require_record(oof_config_record)
+    if artifact(oof_config_path) != oof_config_record:
+        raise ValueError("Seed-specific OOF config provenance drift")
+    oof_config = json.loads(oof_config_path.read_text(encoding="utf-8"))
+    data_section = oof_config.get("data")
+    prerequisite_section = oof_config.get("prerequisites")
+    if not isinstance(data_section, dict) or not isinstance(prerequisite_section, dict):
+        raise ValueError("Seed-specific OOF config data/prerequisite schema drift")
+    data_train = data_section.get("train")
+    fold_manifest = prerequisite_section.get("fold_manifest")
+    if not isinstance(data_train, dict) or not isinstance(fold_manifest, dict):
+        raise ValueError("Seed-specific OOF CLI provenance inputs are missing")
+    expected_cli = {
+        "model_seed": config["model_seed"],
+        "run_id": config["run_id"],
+        "output_root": config["outputs"]["public_attempt_dir"],
+        "expected_fold_manifest_sha256": fold_manifest.get("sha256"),
+        "expected_data_manifest_sha256": data_train.get("sha256"),
+    }
+    expected_identity = {
+        "experiment_id": config["replication_parent_experiment_id"],
+        "stage": oof_config.get("stage"),
+        "run_id": config["run_id"],
+        "attempt_id": config["attempt_id"],
+        "model_seed": config["model_seed"],
+        "seed_contract": config["seed_contract"],
+        "config": oof_config_record,
+        "cli_identity": expected_cli,
+    }
+    if (
+        set(oof_config) != OOF_CONFIG_KEYS
+        or oof_config.get("schema_version") != "exp-oof-production-config-v2"
+        or oof_config.get("experiment_id") != config["replication_parent_experiment_id"]
+        or oof_config.get("rq_id") != RQ_ID
+        or oof_config.get("tier") != "Major"
+        or oof_config.get("stage") != "paired-m1-m3-oof-production"
+        or oof_config.get("run_id") != config["run_id"]
+        or oof_config.get("attempt_id") != config["attempt_id"]
+        or oof_config.get("seed_contract") != config["seed_contract"]
+        or oof_config.get("outputs") != config["outputs"]
+        or oof_config.get("resources") != OOF_FROZEN_RESOURCES
+    ):
+        raise ValueError("Seed-specific OOF config contract drift")
+    seed_digest = canonical_digest(config["seed_contract"])
+    if (
+        oof_run.get("schema_version") != "exp-oof-production-run-v2"
+        or oof_run.get("status") != "CompletedAwaitingVerification"
+        or oof_run.get("seed_contract_sha256") != seed_digest
+        or any(oof_run.get(key) != value for key, value in expected_identity.items())
+    ):
+        raise ValueError("Seed-specific OOF run identity drift")
+    verification_keys = {
+        "schema_version", "experiment_id", "stage", "run_id", "attempt_id",
+        "model_seed", "seed_contract", "config", "cli_identity", "scope",
+        "verified_at_utc", "status", "check_count", "passed_count", "failed_count",
+        "checks", "independence", "verified_artifacts", "claim_boundary",
+    }
+    checks = verification.get("checks")
+    if not isinstance(checks, list) or any(
+        not isinstance(row, dict)
+        or set(row) != {"name", "passed", "detail"}
+        or not isinstance(row["name"], str)
+        or row["passed"] is not True
+        for row in checks
+    ):
+        raise ValueError("Seed-specific OOF final verifier check schema drift")
+    check_names = [row["name"] for row in checks]
+    try:
+        verified_at = datetime.fromisoformat(verification["verified_at_utc"])
+    except (KeyError, TypeError, ValueError) as error:
+        raise ValueError("Seed-specific OOF verification timestamp drift") from error
+    if (
+        set(verification) != verification_keys
+        or verification.get("schema_version") != "exp-oof-final-verification-v2"
+        or verification.get("scope") != "final"
+        or verification.get("status") != "Passed"
+        or verification.get("check_count") != len(checks)
+        or verification.get("passed_count") != len(checks)
+        or verification.get("failed_count") != 0
+        or len(check_names) != len(set(check_names))
+        or not OOF_FINAL_REQUIRED_CHECKS.issubset(check_names)
+        or verified_at.tzinfo is None
+        or verification.get("independence")
+        != {
+            "runner_imported": False,
+            "model_libraries_imported": False,
+            "all_fold_tables_recomputed": True,
+            "paired_table_recomputed": True,
+        }
+        or verification.get("claim_boundary")
+        != "Verified paired train OOF logits only; calibration and routing remain separate experiments."
+        or any(verification.get(key) != value for key, value in expected_identity.items())
+    ):
+        raise ValueError("Seed-specific OOF final verifier contract drift")
+    paired = config["input"]["paired_oof"]
+    summary_record = oof_run.get("artifacts", {}).get("paired_oof_summary")
+    expected_summary_path = display_path(
+        output_paths(config)["public_attempt"] / "paired-oof-summary.json"
+    )
+    if (
+        not isinstance(summary_record, dict)
+        or summary_record.get("path") != expected_summary_path
+        or artifact(require_record(summary_record)) != summary_record
+        or oof_run.get("artifacts", {}).get("paired_oof_private") != paired
+    ):
+        raise ValueError("Seed-specific OOF run artifact provenance drift")
+    verified = verification.get("verified_artifacts")
+    if not isinstance(verified, dict) or set(verified) != {
+        "config", "run", "summary", "paired_oof_private", "fold_runs",
+        "fold_verifications",
+    }:
+        raise ValueError("Seed-specific OOF verified artifact inventory drift")
+    if (
+        verified.get("config") != oof_config_record
+        or verified.get("run") != records["oof_run"]
+        or verified.get("summary") != summary_record
+        or verified.get("paired_oof_private") != paired
+    ):
+        raise ValueError("Seed-specific OOF verified artifact provenance drift")
+    for map_name, filename in (
+        ("fold_runs", "run.json"),
+        ("fold_verifications", "verification.json"),
+    ):
+        mapping = verified.get(map_name)
+        if not isinstance(mapping, dict) or set(mapping) != {"m1", "m3"}:
+            raise ValueError(f"Seed-specific OOF {map_name} inventory drift")
+        for family in ("m1", "m3"):
+            if not isinstance(mapping[family], dict) or set(mapping[family]) != {
+                str(index) for index in range(5)
+            }:
+                raise ValueError(f"Seed-specific OOF {map_name}.{family} inventory drift")
+            for fold_id, record in mapping[family].items():
+                expected_path = display_path(
+                    output_paths(config)["public_attempt"]
+                    / f"fold-{fold_id}"
+                    / family
+                    / filename
+                )
+                if (
+                    not isinstance(record, dict)
+                    or record.get("path") != expected_path
+                    or artifact(require_record(record)) != record
+                ):
+                    raise ValueError(f"Seed-specific OOF {map_name}.{family}.{fold_id} drift")
+    completion_artifacts = completion.get("artifacts")
+    expected_completion_artifacts = {
+        "run": records["oof_run"],
+        "summary": summary_record,
+        "final_verification": records["oof_verification"],
+        "paired_oof_private": paired,
+    }
+    completion_keys = {
+        "schema_version", "experiment_id", "stage", "run_id", "attempt_id",
+        "model_seed", "seed_contract", "seed_contract_sha256", "config",
+        "cli_identity", "status", "completed_at_utc", "artifacts", "next_gate",
+        "claim_boundary",
+    }
+    try:
+        completed_at = datetime.fromisoformat(completion["completed_at_utc"])
+    except (KeyError, TypeError, ValueError) as error:
+        raise ValueError("Seed-specific OOF completion timestamp drift") from error
+    if (
+        set(completion) != completion_keys
+        or completion.get("schema_version") != "exp-oof-completion-v2"
+        or completion.get("status") != "Complete"
+        or completion.get("seed_contract_sha256") != seed_digest
+        or completion_artifacts != expected_completion_artifacts
+        or completed_at.tzinfo is None
+        or completion.get("next_gate")
+        != "Seed-specific EXP-059 and identity-nested EXP-060 must pass before namespace selection."
+        or completion.get("claim_boundary")
+        != "Completes one verified train-only paired OOF stage; this is not final pipeline selection."
+        or any(completion.get(key) != value for key, value in expected_identity.items())
+    ):
+        raise ValueError("Seed-specific OOF completion contract drift")
+    for record in iter_records(verified):
+        require_record(record)
+
+
+def validate_oof_prerequisites(config: dict[str, Any]) -> None:
+    if not is_v2(config):
+        return
+    records = config["prerequisites"]
+    oof_run = json.loads(require_record(records["oof_run"]).read_text(encoding="utf-8"))
+    verification = json.loads(
+        require_record(records["oof_verification"]).read_text(encoding="utf-8")
+    )
+    completion = json.loads(
+        require_record(records["oof_completion"]).read_text(encoding="utf-8")
+    )
+    validate_oof_chain(config, records, oof_run, verification, completion)
+
+
+def validate_preflight_verification_document(
+    verification: dict[str, Any],
+    config: dict[str, Any],
+    config_record: dict[str, Any],
+) -> None:
+    expected_keys = {
+        "schema_version",
+        *identity_provenance(config),
+        "rq_id",
+        "scope",
+        "status",
+        "verified_at_utc",
+        "passed_count",
+        "failed_count",
+        "checks",
+        "resources",
+        "config",
+        "verified_artifacts",
+    }
+    if set(verification) != expected_keys:
+        raise ValueError("EXP-059 preflight verification top-level schema drift")
+    try:
+        verified_at = datetime.fromisoformat(verification["verified_at_utc"])
+    except (KeyError, TypeError, ValueError) as error:
+        raise ValueError("EXP-059 preflight verification timestamp drift") from error
+    checks = verification.get("checks")
+    if not isinstance(checks, list) or any(
+        not isinstance(row, dict)
+        or set(row) != {"name", "passed", "detail"}
+        or not isinstance(row["name"], str)
+        or row["passed"] is not True
+        for row in checks
+    ):
+        raise ValueError("EXP-059 preflight verification check schema drift")
+    check_names = [row["name"] for row in checks]
+    resources = verification.get("resources")
+    if (
+        verification.get("schema_version") != "exp-059-verification-v2"
+        or verification.get("rq_id") != RQ_ID
+        or verification.get("scope") != "preflight"
+        or verification.get("status") != "Passed"
+        or verification.get("passed_count") != len(checks)
+        or verification.get("failed_count") != 0
+        or len(check_names) != len(set(check_names))
+        or not PREFLIGHT_VERIFICATION_REQUIRED_CHECKS.issubset(check_names)
+        or verified_at.tzinfo is None
+        or any(
+            verification.get(key) != value
+            for key, value in identity_provenance(config).items()
+        )
+        or verification.get("config") != config_record
+        or not isinstance(resources, dict)
+        or set(resources) != {"wall_seconds", "peak_process_rss_gb", "api_cost_usd"}
+        or not isinstance(resources.get("wall_seconds"), (int, float))
+        or isinstance(resources.get("wall_seconds"), bool)
+        or not math.isfinite(float(resources.get("wall_seconds", math.inf)))
+        or resources.get("wall_seconds", -1) < 0
+        or resources.get("wall_seconds", math.inf)
+        > float(config["resources"]["verification_wall_seconds"])
+        or not isinstance(resources.get("peak_process_rss_gb"), (int, float))
+        or isinstance(resources.get("peak_process_rss_gb"), bool)
+        or not math.isfinite(float(resources.get("peak_process_rss_gb", math.inf)))
+        or resources.get("peak_process_rss_gb", -1) < 0
+        or resources.get("peak_process_rss_gb", math.inf)
+        > float(config["resources"]["peak_memory_gb"])
+        or resources.get("api_cost_usd") != 0
+    ):
+        raise ValueError("EXP-059 preflight verification contract drift")
+    verified = verification.get("verified_artifacts")
+    if (
+        not isinstance(verified, dict)
+        or set(verified) != {"config", "run", "paired_oof"}
+        or verified.get("config") != config_record
+    ):
+        raise ValueError("EXP-059 preflight verified artifact inventory drift")
+    for record in iter_records(verified):
+        require_record(record)
+
+
+def validate_preflight_prerequisites(config: dict[str, Any]) -> None:
+    if not is_v2(config):
+        return
+    records = config["prerequisites"]
+    if not {"preflight_run", "preflight_verification"}.issubset(records):
+        raise ValueError("Formal EXP-059 requires a complete preflight pair")
+    run_path = require_record(records["preflight_run"])
+    run = json.loads(run_path.read_text(encoding="utf-8"))
+    verification = json.loads(
+        require_record(records["preflight_verification"]).read_text(encoding="utf-8")
+    )
+    validate_preflight_verification_document(verification, config, run.get("config"))
+    identity = identity_provenance(config)
+    verified = verification.get("verified_artifacts", {})
+    try:
+        frozen_sources = expected_frozen_source_records(run_path.parent, config, run["config"])
+        frozen_config = json.loads(
+            (run_path.parent / "frozen-sources" / "config.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        validate_v2_config(frozen_config)
+        expected_oof_prerequisites = {
+            name: config["prerequisites"][name]
+            for name in ("oof_run", "oof_verification", "oof_completion")
+        }
+        core_equivalent = all(
+            frozen_config.get(name) == config.get(name) for name in PREFLIGHT_CORE_KEYS
+        )
+    except (KeyError, OSError, TypeError, ValueError):
+        frozen_sources = None
+        frozen_config = None
+        expected_oof_prerequisites = None
+        core_equivalent = False
+    if (
+        run.get("schema_version") != "exp-059-preflight-run-v2"
+        or run.get("status") != "CompletedAwaitingVerification"
+        or any(run.get(key) != value for key, value in identity.items())
+        or run.get("input") != config["input"]["paired_oof"]
+        or verification.get("schema_version") != "exp-059-verification-v2"
+        or verification.get("scope") != "preflight"
+        or verification.get("status") != "Passed"
+        or verification.get("failed_count") != 0
+        or any(verification.get(key) != value for key, value in identity.items())
+        or verification.get("config") != run.get("config")
+        or verified.get("config") != run.get("config")
+        or verified.get("run") != records["preflight_run"]
+        or verified.get("paired_oof") != config["input"]["paired_oof"]
+        or frozen_sources is None
+        or run.get("frozen_sources") != frozen_sources
+        or frozen_config is None
+        or frozen_config.get("schema_version") != CONFIG_V2_SCHEMA
+        or frozen_config.get("prerequisites") != expected_oof_prerequisites
+        or not core_equivalent
+    ):
+        raise ValueError("EXP-059 preflight provenance chain drift")
+
+
 def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
@@ -63,6 +812,9 @@ def canonical_digest(value: Any) -> str:
 
 
 def resolve_project(value: str) -> Path:
+    if Path(value).is_absolute():
+        raise ValueError(f"Project-relative path must not be absolute: {value}")
+    _assert_no_symlink(value)
     path = (PROJECT_ROOT / value).resolve()
     if not path.is_relative_to(PROJECT_ROOT.resolve()):
         raise ValueError(f"Project-relative path escapes project root: {value}")
@@ -144,6 +896,42 @@ def require_record(record: dict[str, Any]) -> Path:
     return path
 
 
+def expected_frozen_source_records(
+    run_dir: Path,
+    config: dict[str, Any],
+    config_record: dict[str, Any],
+) -> dict[str, dict[str, Any]]:
+    frozen_dir = run_dir / "frozen-sources"
+    frozen_mode = os.lstat(frozen_dir).st_mode
+    if stat.S_ISLNK(frozen_mode) or not stat.S_ISDIR(frozen_mode):
+        raise ValueError("EXP-059 frozen-sources must be a real directory")
+    expected_names = expected_frozen_source_names(config)
+    entries = {entry.name: entry for entry in os.scandir(frozen_dir)}
+    if set(entries) != expected_names:
+        raise ValueError("EXP-059 frozen source inventory drift")
+    if any(
+        stat.S_ISLNK(os.lstat(entry.path).st_mode)
+        or not stat.S_ISREG(os.lstat(entry.path).st_mode)
+        for entry in entries.values()
+    ):
+        raise ValueError("EXP-059 frozen sources must be regular files")
+    records = {"config": artifact(frozen_dir / "config.json")}
+    if {
+        key: records["config"][key] for key in ("bytes", "sha256")
+    } != {key: config_record[key] for key in ("bytes", "sha256")}:
+        raise ValueError("EXP-059 frozen config does not bind the recorded config")
+    for name, source_record in config["implementation"].items():
+        source_path = require_record(source_record)
+        frozen_path = frozen_dir / source_path.name
+        frozen_record = artifact(frozen_path)
+        if {
+            key: frozen_record[key] for key in ("bytes", "sha256")
+        } != {key: source_record[key] for key in ("bytes", "sha256")}:
+            raise ValueError(f"EXP-059 frozen implementation drift: {name}")
+        records[name] = frozen_record
+    return records
+
+
 def iter_records(value: Any) -> Iterable[dict[str, Any]]:
     if isinstance(value, dict):
         if {"path", "bytes", "sha256"}.issubset(value):
@@ -156,17 +944,72 @@ def iter_records(value: Any) -> Iterable[dict[str, Any]]:
             yield from iter_records(child)
 
 
+def validate_legacy_archive(config_path: Path, config: dict[str, Any]) -> None:
+    if config.get("schema_version") not in LEGACY_CONFIG_SCHEMAS:
+        raise ValueError("Unsupported EXP-059 config schema")
+    output_key = (
+        "preflight_run_dir"
+        if config["schema_version"] == "exp-059-preflight-config-v1"
+        else "public_run_dir"
+    )
+    run_dir = resolve_project(config["outputs"][output_key])
+    run_path = run_dir / "run.json"
+    verification_path = run_dir / "verification.json"
+    if not run_path.is_file() or not verification_path.is_file():
+        raise PermissionError("Legacy EXP-059 may only be opened as an existing sealed archive")
+    run = json.loads(run_path.read_text(encoding="utf-8"))
+    verification = json.loads(verification_path.read_text(encoding="utf-8"))
+    if (
+        run.get("experiment_id") != EXPERIMENT_ID
+        or run.get("status") != "CompletedAwaitingVerification"
+        or verification.get("experiment_id") != EXPERIMENT_ID
+        or verification.get("status") != "Passed"
+        or verification.get("failed_count") != 0
+    ):
+        raise ValueError("Legacy EXP-059 archive is not sealed and Passed")
+    frozen = run.get("frozen_sources", {})
+    config_record = frozen.get("config")
+    current_config = artifact(config_path)
+    if (
+        not isinstance(config_record, dict)
+        or config_record.get("bytes") != current_config["bytes"]
+        or config_record.get("sha256") != current_config["sha256"]
+        or artifact(require_record(config_record)) != config_record
+    ):
+        raise ValueError("Legacy EXP-059 frozen config provenance drift")
+    for name, source_record in config.get("implementation", {}).items():
+        frozen_record = frozen.get(name)
+        if (
+            not isinstance(frozen_record, dict)
+            or frozen_record.get("bytes") != source_record.get("bytes")
+            or frozen_record.get("sha256") != source_record.get("sha256")
+            or artifact(require_record(frozen_record)) != frozen_record
+        ):
+            raise ValueError(f"Legacy EXP-059 frozen source provenance drift: {name}")
+
+
 def load_config(path: Path) -> dict[str, Any]:
     config = json.loads(path.read_text(encoding="utf-8"))
     if config.get("experiment_id") != EXPERIMENT_ID or config.get("rq_id") != RQ_ID:
         raise ValueError("EXP-059 config identity drift")
+    if is_v2(config):
+        validate_v2_config(config)
     if tuple(config["data"]["label_order"]) != LABEL_ORDER:
         raise ValueError("Label order drift")
-    for section in ("implementation", "prerequisites", "input"):
-        for record in iter_records(config.get(section, {})):
-            require_record(record)
+    if is_v2(config):
+        for section in ("implementation", "prerequisites", "input"):
+            for record in iter_records(config.get(section, {})):
+                require_record(record)
+    else:
+        validate_legacy_archive(path, config)
+        config["_archive_only"] = True
     if config["authorization"]["validation_access"] or config["authorization"]["test_access"]:
         raise ValueError("EXP-059 config must forbid validation and test")
+    if is_v2(config) and (
+        config["authorization"].get("model_loading_or_forward") is not False
+        or config["authorization"].get("router_training") is not False
+    ):
+        raise ValueError("EXP-059 diagnostics may not load models or train a router")
     return config
 
 
@@ -907,7 +1750,7 @@ def make_figures(
     axes[0].set_ylabel("Empirical positive rate")
     axes[1].legend(frameon=False)
     figure.tight_layout()
-    figure.savefig(reliability_path, dpi=160)
+    figure.savefig(reliability_path, dpi=160, metadata=FIGURE_METADATA)
     plt.close(figure)
 
     risk_path = run_dir / "risk-coverage-curve.png"
@@ -945,7 +1788,7 @@ def make_figures(
         axis.grid(alpha=0.2)
     axes[1].legend(frameon=False, fontsize=8)
     figure.tight_layout()
-    figure.savefig(risk_path, dpi=160)
+    figure.savefig(risk_path, dpi=160, metadata=FIGURE_METADATA)
     plt.close(figure)
     return reliability_path, risk_path
 
@@ -957,13 +1800,29 @@ def write_report(
     gates: dict[str, Any],
     oracle: dict[str, Any],
     bootstrap: dict[str, Any],
+    config: dict[str, Any],
 ) -> None:
+    if is_v2(config):
+        seed_scope = (
+            f"the frozen seed-{config['model_seed']} paired train-OOF artifact from "
+            f"{config['replication_parent_experiment_id']}"
+        )
+        claim_scope = f"the frozen seed-{config['model_seed']} pair"
+        router_note = (
+            "Temperature adoption is diagnostic only for this seed; EXP-060 replication "
+            "uses identity probabilities computed directly from raw OOF logits (`T=1`)."
+        )
+    else:
+        seed_scope = "the frozen EXP-058 paired train-OOF artifact"
+        claim_scope = "the frozen seed-42 pair"
+        router_note = ""
     lines = [
         "# EXP-059 Cross-Fitted Calibration And Selective Prediction",
         "",
         "## Scope",
         "",
-        "This report uses only the frozen EXP-058 paired train-OOF artifact. Validation and test were not accessed.",
+        f"This report uses only {seed_scope}. Validation and test were not accessed.",
+        router_note,
         "",
         "## Calibration",
         "",
@@ -1016,12 +1875,23 @@ def write_report(
             "",
             "## Claim Boundary",
             "",
-            "EXP-059 can support claims about the frozen seed-42 pair's cross-fitted calibration and selective-risk ranking. "
+            f"EXP-059 can support claims about {claim_scope}'s cross-fitted calibration and selective-risk ranking. "
             "It does not support a new test result, a three-seed stability claim, deployment benefit, context benefit, or an internal emotion mechanism.",
             "",
         ]
     )
     path.write_text("\n".join(lines), encoding="utf-8")
+
+
+def report_private_identifier_leaks(
+    report_text: str, data: dict[str, np.ndarray]
+) -> list[str]:
+    private_tokens = {
+        str(value)
+        for name in ("sample_ids", "component_ids")
+        for value in data[name].tolist()
+    }
+    return sorted(token for token in private_tokens if token and token in report_text)
 
 
 def validate_loaded_input(data: dict[str, np.ndarray], config: dict[str, Any]) -> None:
@@ -1046,19 +1916,54 @@ def validate_loaded_input(data: dict[str, np.ndarray], config: dict[str, Any]) -
         raise ValueError("Duplicate component crosses folds")
 
 
+def calibration_parameters_document(
+    config: dict[str, Any], family_results: dict[str, dict[str, Any]]
+) -> dict[str, Any]:
+    document: dict[str, Any] = {"families": {}}
+    if is_v2(config):
+        document = {
+            **identity_provenance(config),
+            "router_replication_calibration": {
+                "calibrator": "identity",
+                "temperature": 1.0,
+                "probability_source": "direct_sigmoid_of_raw_oof_logits",
+                "role": "frozen_exp060_replication_only",
+            },
+            "families": {},
+        }
+    for family in FAMILY_ORDER:
+        result = family_results[family]
+        document["families"][family] = {
+            "fold_fits": result["fold_fits"],
+            "full_oof_temperature_fit": result["full_fit"],
+            "selected_calibrator": "temperature" if result["temperature_accepted"] else "identity",
+            "final_temperature": result["final_temperature"],
+            "final_global_threshold": result["final_threshold_selection"],
+        }
+    return document
+
+
 def preflight(config_path: Path, config: dict[str, Any]) -> dict[str, Any]:
-    run_dir = resolve_project(config["outputs"]["preflight_run_dir"])
-    formal_public = resolve_project(config["outputs"]["public_run_dir"])
-    formal_private = resolve_project(config["outputs"]["private_run_dir"])
+    paths = output_paths(config)
+    run_dir = paths["preflight"]
+    formal_public = paths["public_calibration"]
+    formal_private = paths["private_calibration"]
+    if is_v2(config):
+        if os.path.lexists(paths["selection"]) or os.path.lexists(paths["completion"]):
+            raise FileExistsError("A selected or completed attempt blocks EXP-059 preflight")
+        if not paths["public_attempt"].is_dir() or not paths["private_attempt"].is_dir():
+            raise FileNotFoundError("EXP-059 requires existing OOF public/private attempt directories")
+        validate_oof_prerequisites(config)
     if run_dir.exists() or formal_public.exists() or formal_private.exists():
         raise FileExistsError("Refusing to overwrite EXP-059 preflight/formal outputs")
     input_path = require_record(config["input"]["paired_oof"])
     schema = npz_header_schema(input_path)
     if schema != expected_input_schema():
         raise ValueError(f"Paired OOF header schema drift: {schema}")
-    exp058_verification = json.loads(
-        require_record(config["prerequisites"]["exp058_verification"]).read_text(encoding="utf-8")
-    )
+    verification_key = "oof_verification" if is_v2(config) else "exp058_verification"
+    exp058_verification = json.loads(require_record(
+        config["prerequisites"][verification_key]
+    ).read_text(encoding="utf-8"))
     if exp058_verification.get("status") != "Passed" or exp058_verification.get("failed_count") != 0:
         raise ValueError("EXP-058 final verification is not passed")
     versions = dependency_versions()
@@ -1068,7 +1973,7 @@ def preflight(config_path: Path, config: dict[str, Any]) -> dict[str, Any]:
     frozen = freeze_sources(run_dir, config_path, config)
     run = {
         "schema_version": "exp-059-preflight-run-v1",
-        "experiment_id": EXPERIMENT_ID,
+        **identity_provenance(config),
         "rq_id": RQ_ID,
         "tier": "Major",
         "stage": "calibration-selective-preflight",
@@ -1090,22 +1995,43 @@ def preflight(config_path: Path, config: dict[str, Any]) -> dict[str, Any]:
             "test_labels_accessed": False,
         },
     }
+    if is_v2(config):
+        run["schema_version"] = "exp-059-preflight-run-v2"
+        run["config"] = artifact(config_path)
     if public_sensitive_paths(run):
         raise ValueError("Preflight public privacy violation")
     atomic_json(run_dir / "run.json", run)
+    if is_v2(config):
+        assert_exact_public_tree(run_dir, config, stage="preflight", verified=False)
     return run
 
 
 def formal_run(config_path: Path, config: dict[str, Any]) -> dict[str, Any]:
     if not config["authorization"]["formal_analysis"]:
         raise PermissionError("Formal EXP-059 analysis is not authorized")
-    preflight_verification = json.loads(
-        require_record(config["prerequisites"]["preflight_verification"]).read_text(encoding="utf-8")
-    )
-    if preflight_verification.get("status") != "Passed" or preflight_verification.get("failed_count") != 0:
-        raise ValueError("EXP-059 preflight verification is not passed")
-    run_dir = resolve_project(config["outputs"]["public_run_dir"])
-    private_dir = resolve_project(config["outputs"]["private_run_dir"])
+    if is_v2(config) and not {
+        "preflight_run",
+        "preflight_verification",
+    }.issubset(config["prerequisites"]):
+        raise ValueError("Formal EXP-059 v2 requires preflight run and verification")
+    if is_v2(config):
+        validate_preflight_prerequisites(config)
+    else:
+        preflight_verification = json.loads(require_record(
+            config["prerequisites"]["preflight_verification"]
+        ).read_text(encoding="utf-8"))
+        if (
+            preflight_verification.get("status") != "Passed"
+            or preflight_verification.get("failed_count") != 0
+        ):
+            raise ValueError("EXP-059 preflight verification is not passed")
+    paths = output_paths(config)
+    run_dir = paths["public_calibration"]
+    private_dir = paths["private_calibration"]
+    if is_v2(config):
+        if os.path.lexists(paths["selection"]) or os.path.lexists(paths["completion"]):
+            raise FileExistsError("A selected or completed attempt blocks EXP-059 formal analysis")
+        validate_oof_prerequisites(config)
     if run_dir.exists() or private_dir.exists():
         raise FileExistsError("Refusing to overwrite append-only EXP-059 output")
     started_at_utc = utc_now()
@@ -1127,7 +2053,7 @@ def formal_run(config_path: Path, config: dict[str, Any]) -> dict[str, Any]:
     }
     reliability_rows: list[dict[str, Any]] = []
     calibration_public: dict[str, Any] = {"families": {}}
-    parameters_public: dict[str, Any] = {"families": {}}
+    parameters_public = calibration_parameters_document(config, family_results)
     classification_public: dict[str, Any] = {"families": {}}
     selective: dict[str, dict[str, Any]] = {}
     risk_rows: list[dict[str, Any]] = []
@@ -1147,13 +2073,6 @@ def formal_run(config_path: Path, config: dict[str, Any]) -> dict[str, Any]:
             "selected_calibrator": "temperature" if result["temperature_accepted"] else "identity",
             "temperature_accepted": result["temperature_accepted"],
             "final_temperature": result["final_temperature"],
-        }
-        parameters_public["families"][family] = {
-            "fold_fits": result["fold_fits"],
-            "full_oof_temperature_fit": result["full_fit"],
-            "selected_calibrator": "temperature" if result["temperature_accepted"] else "identity",
-            "final_temperature": result["final_temperature"],
-            "final_global_threshold": result["final_threshold_selection"],
         }
         classification_public["families"][family] = result["classification"]
         for pipeline, rows in (
@@ -1228,7 +2147,11 @@ def formal_run(config_path: Path, config: dict[str, Any]) -> dict[str, Any]:
         gates_public,
         oracle_public,
         bootstrap_public,
+        config,
     )
+    report_text = (run_dir / "REPORT.md").read_text(encoding="utf-8")
+    if report_private_identifier_leaks(report_text, data):
+        raise ValueError("EXP-059 report contains a private row identifier")
     input_hash_after = sha256(input_path)
     if input_hash_before != input_hash_after:
         raise ValueError("EXP-058 paired input changed during EXP-059")
@@ -1252,7 +2175,7 @@ def formal_run(config_path: Path, config: dict[str, Any]) -> dict[str, Any]:
     }
     run = {
         "schema_version": "exp-059-formal-run-v1",
-        "experiment_id": EXPERIMENT_ID,
+        **identity_provenance(config),
         "rq_id": RQ_ID,
         "tier": "Major",
         "stage": "cross-fitted-calibration-selective-prediction",
@@ -1292,10 +2215,23 @@ def formal_run(config_path: Path, config: dict[str, Any]) -> dict[str, Any]:
         },
         "claim_boundary": "Fully cross-fitted train-OOF development evidence only; no new test or deployable-router claim.",
     }
+    if is_v2(config):
+        run["schema_version"] = "exp-059-formal-run-v2"
+        run["config"] = artifact(config_path)
+        run["temperature_adoption_role"] = "diagnostic_only"
+        run["router_replication_calibration"] = {
+            "calibrator": "identity",
+            "temperature": 1.0,
+            "probability_source": "direct_sigmoid_of_raw_oof_logits",
+            "role": "frozen_exp060_replication_only",
+        }
     violations = public_sensitive_paths(run)
     if violations:
         raise ValueError(f"Public run privacy violation: {violations}")
     atomic_json(run_dir / "run.json", run)
+    if is_v2(config):
+        assert_exact_public_tree(run_dir, config, stage="calibration", verified=False)
+        assert_exact_private_tree(private_dir)
     return run
 
 
@@ -1310,6 +2246,8 @@ def main() -> None:
     args = parse_args()
     config_path = args.config.resolve()
     config = load_config(config_path)
+    if config.get("_archive_only"):
+        raise PermissionError("Sealed EXP-059 is archive-only; use its frozen sources for audit")
     if args.stage == "preflight":
         result = preflight(config_path, config)
     else:

@@ -27,6 +27,13 @@ from sklearn.preprocessing import StandardScaler
 
 EXPERIMENT_ID = "EXP-060"
 RQ_ID = "RQ-S3"
+LEGACY_CONFIG_SCHEMA = "exp-060-formal-config-v1"
+REPLICATION_CONFIG_SCHEMA = "exp-router-replication-config-v2"
+ATTEMPT_RE = re.compile(r"attempt-[1-9][0-9]*\Z")
+REGISTERED_REPLICATIONS = {
+    "EXP-061": (43, "exp-061-seed-43-router-replication"),
+    "EXP-062": (44, "exp-062-seed-44-router-replication"),
+}
 LABEL_ORDER = ("love", "joy", "surprise", "anger", "sadness", "fear")
 FEATURE_NAMES = (
     "m1_probability_love",
@@ -85,6 +92,19 @@ EXPECTED_PUBLIC_ARTIFACTS = {
     "REPORT.md",
     "run.json",
     "frozen-sources",
+}
+REPLICATION_REQUIRED_PREREQUISITES = {
+    "oof_verification",
+    "exp059_run",
+    "exp059_verification",
+    "exp059_calibration_parameters",
+}
+REPLICATION_INPUT_KEYS = {"paired_oof"}
+REPLICATION_CALIBRATION_CONTRACT = {
+    "calibrator": "identity",
+    "temperature": 1.0,
+    "probability_source": "direct_sigmoid_of_raw_oof_logits",
+    "role": "frozen_exp060_replication_only",
 }
 
 PUBLIC_SENSITIVE_KEYS = {
@@ -228,11 +248,73 @@ def canonical_digest(value: Any) -> str:
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
+def is_replication(config: dict[str, Any]) -> bool:
+    return config.get("schema_version") == REPLICATION_CONFIG_SCHEMA
+
+
+def experiment_id(config: dict[str, Any]) -> str:
+    return str(config.get("experiment_id", EXPERIMENT_ID))
+
+
+def run_id(config: dict[str, Any]) -> str:
+    return str(config["run_id"]) if is_replication(config) else "exp-060-pre-qwen-router"
+
+
+def attempt_id(config: dict[str, Any]) -> str | None:
+    return str(config["attempt_id"]) if is_replication(config) else None
+
+
+def model_seed(config: dict[str, Any]) -> int:
+    if is_replication(config):
+        return int(config["seed_contract"]["model_seed"])
+    return int(config["data"].get("upstream_seed", 42))
+
+
+def seed_contract(config: dict[str, Any]) -> dict[str, int]:
+    seed = model_seed(config)
+    if not is_replication(config):
+        return {
+            "model_seed": seed,
+            "python_seed": seed,
+            "numpy_seed": seed,
+            "torch_seed": seed,
+            "m1_batch_seed": seed,
+            "m3_head_seed": seed,
+            "m3_batch_seed": seed,
+            "m3_lora_seed": seed + 100000,
+        }
+    return {key: int(value) for key, value in config["seed_contract"].items()}
+
+
+def identity_matches(payload: dict[str, Any], config: dict[str, Any]) -> bool:
+    return (
+        payload.get("experiment_id") == experiment_id(config)
+        and payload.get("run_id") == run_id(config)
+        and payload.get("attempt_id") == attempt_id(config)
+        and payload.get("model_seed") == model_seed(config)
+    )
+
+
 def resolve_project(value: str) -> Path:
     path = (PROJECT_ROOT / value).resolve()
     if not path.is_relative_to(PROJECT_ROOT.resolve()):
         raise ValueError(f"Project-relative path escapes project root: {value}")
     return path
+
+
+def resolve_output(value: str) -> Path:
+    relative = Path(str(value))
+    if relative.is_absolute() or not relative.parts or any(part in ("", ".", "..") for part in relative.parts):
+        raise ValueError(f"Output path is not a normalized project-relative path: {value}")
+    cursor = PROJECT_ROOT
+    for part in relative.parts:
+        cursor = cursor / part
+        if os.path.lexists(cursor) and cursor.is_symlink():
+            raise ValueError(f"Output path traverses a symbolic link: {value}")
+    resolved = (PROJECT_ROOT / relative).resolve()
+    if not resolved.is_relative_to(PROJECT_ROOT.resolve()):
+        raise ValueError(f"Output path escapes project root: {value}")
+    return resolved
 
 
 def display_path(path: Path) -> str:
@@ -279,9 +361,9 @@ def require_record(record: dict[str, Any]) -> Path:
 
 def require_canonical_config_path(path: Path) -> Path:
     lexical = Path(os.path.abspath(os.fspath(path)))
-    expected = Path(os.path.abspath(os.fspath(DEFAULT_CONFIG)))
-    if lexical != expected:
-        raise ValueError(f"EXP-060 must use the canonical formal config: {DEFAULT_CONFIG}")
+    configs_dir = (SCRIPT_DIR / "configs").resolve()
+    if lexical.parent != configs_dir:
+        raise ValueError("Router config must be a direct child of the canonical configs directory")
     relative = lexical.relative_to(PROJECT_ROOT)
     candidate = PROJECT_ROOT
     for part in relative.parts:
@@ -291,6 +373,66 @@ def require_canonical_config_path(path: Path) -> Path:
     if not lexical.is_file():
         raise FileNotFoundError(lexical)
     return lexical
+
+
+def expected_replication_outputs(config: dict[str, Any]) -> dict[str, str]:
+    base = display_path(SCRIPT_DIR)
+    identifier = run_id(config)
+    attempt = attempt_id(config)
+    return {
+        "public_namespace": f"{base}/runs/{identifier}",
+        "public_attempt_dir": f"{base}/runs/{identifier}/{attempt}",
+        "private_namespace": f"{base}/private/{identifier}",
+        "private_attempt_dir": f"{base}/private/{identifier}/{attempt}",
+        "selection_record": f"{base}/runs/{identifier}/selected-attempt.json",
+    }
+
+
+def validate_replication_identity(config: dict[str, Any]) -> None:
+    identity = REGISTERED_REPLICATIONS.get(str(config.get("experiment_id")))
+    if identity is None:
+        raise ValueError("Router config-v2 is restricted to registered EXP-061/EXP-062")
+    expected_seed, expected_run_id = identity
+    if config.get("run_id") != expected_run_id:
+        raise ValueError("Replication experiment/run_id identity drift")
+    if not ATTEMPT_RE.fullmatch(str(config.get("attempt_id", ""))):
+        raise ValueError("attempt_id must match attempt-[1-9][0-9]*")
+    expected_seeds = {
+        "model_seed": expected_seed,
+        "python_seed": expected_seed,
+        "numpy_seed": expected_seed,
+        "torch_seed": expected_seed,
+        "m1_batch_seed": expected_seed,
+        "m3_head_seed": expected_seed,
+        "m3_batch_seed": expected_seed,
+        "m3_lora_seed": expected_seed + 100000,
+    }
+    if config.get("seed_contract") != expected_seeds:
+        raise ValueError("Exact replication RNG seed contract drift")
+    if int(config.get("authorization", {}).get("model_seed", -1)) != expected_seed:
+        raise PermissionError("Router authorization model_seed drift")
+    if int(config.get("data", {}).get("upstream_seed", -1)) != expected_seed:
+        raise ValueError("Router data/model_seed binding drift")
+    outputs = expected_replication_outputs(config)
+    if config.get("outputs") != outputs:
+        raise ValueError("Router config-v2 output paths are not canonical")
+    expected_input = f"{outputs['private_attempt_dir']}/paired-oof.npz"
+    if set(config.get("input", {})) != REPLICATION_INPUT_KEYS:
+        raise ValueError("Router config-v2 input inventory drift")
+    if config.get("input", {}).get("paired_oof", {}).get("path") != expected_input:
+        raise ValueError("Router paired OOF must come from the matching private attempt")
+    prerequisites = config.get("prerequisites")
+    if not isinstance(prerequisites, dict) or set(prerequisites) != REPLICATION_REQUIRED_PREREQUISITES:
+        raise ValueError("Router config-v2 prerequisite inventory drift")
+    public_attempt = resolve_output(outputs["public_attempt_dir"])
+    for name in REPLICATION_REQUIRED_PREREQUISITES:
+        record_path = resolve_output(str(prerequisites[name].get("path", "")))
+        if not record_path.is_relative_to(public_attempt):
+            raise ValueError(f"{name} is not inside the matching public attempt")
+
+
+def replication_calibration_contract_matches(payload: dict[str, Any]) -> bool:
+    return payload.get("router_replication_calibration") == REPLICATION_CALIBRATION_CONTRACT
 
 
 def guard_record_paths(config: dict[str, Any]) -> None:
@@ -912,12 +1054,15 @@ def build_expected_state(data: dict[str, np.ndarray], config: dict[str, Any]) ->
     policy_results: dict[str, Any] = {}
     candidate_rows: dict[str, dict[str, Any]] = {}
     for policy in DEPLOYABLE_POLICIES:
-        eligible = [
-            call_lookup[(policy, rate)]
-            for rate in call_rates
-            if call_lookup[(policy, rate)]["actual_call_rate"] <= maximum_rate
-        ]
-        candidate = sorted(eligible, key=candidate_sort_key)[0]
+        if is_replication(config):
+            candidate = call_lookup[(policy, 0.15)]
+        else:
+            eligible = [
+                call_lookup[(policy, rate)]
+                for rate in call_rates
+                if call_lookup[(policy, rate)]["actual_call_rate"] <= maximum_rate
+            ]
+            candidate = sorted(eligible, key=candidate_sort_key)[0]
         gains = {
             "six_label_macro_f1_gain": float(candidate["macro_f1"] - baseline["macro_f1"]),
             "five_label_macro_f1_gain": float(
@@ -932,12 +1077,14 @@ def build_expected_state(data: dict[str, np.ndarray], config: dict[str, Any]) ->
         }
         gains["maximum_non_surprise_label_f1_gain"] = max(non_surprise_gains.values())
         gates = {
+            "maximum_actual_qwen_call_rate": candidate["actual_call_rate"]
+            <= float(config["gate"]["maximum_actual_qwen_call_rate"]) + tolerance,
             "minimum_six_label_macro_f1_gain": gains["six_label_macro_f1_gain"]
             >= float(config["gate"]["minimum_six_label_macro_f1_gain"]) - tolerance,
             "minimum_five_label_macro_f1_gain": gains["five_label_macro_f1_gain"]
             >= float(config["gate"]["minimum_five_label_macro_f1_gain"]) - tolerance,
             "hamming_loss_not_worse": gains["hamming_loss_delta"]
-            <= float(config["gate"]["maximum_hamming_loss_increase"]) + tolerance,
+            <= float(config["gate"]["maximum_hamming_loss_increase"]),
             "minimum_non_surprise_label_f1_gain": gains["maximum_non_surprise_label_f1_gain"]
             >= float(config["gate"]["minimum_one_non_surprise_label_f1_gain"]) - tolerance,
         }
@@ -945,26 +1092,42 @@ def build_expected_state(data: dict[str, np.ndarray], config: dict[str, Any]) ->
         policy_results[policy] = {
             "candidate": candidate_public,
             "gates": gates,
-            "passed": bool(all(gates.values())),
+            "passed": bool(all(gates.values()) and (not is_replication(config) or policy == "logistic_router")),
+            **({
+                "diagnostic_gate_passed": bool(all(gates.values())),
+                "evidence_role": "primary" if policy == "logistic_router" else "descriptive_only",
+            } if is_replication(config) else {}),
         }
         candidate_rows[policy] = candidate
 
-    passing = [policy for policy in DEPLOYABLE_POLICIES if policy_results[policy]["passed"]]
-    selected_policy: str | None = None
-    if passing:
-        precedence = {policy: index for index, policy in enumerate(DEPLOYABLE_POLICIES)}
-        passing.sort(
-            key=lambda policy: (*candidate_sort_key(candidate_rows[policy]), precedence[policy])
-        )
-        selected_policy = passing[0]
+    if is_replication(config):
+        selected_policy: str | None = "logistic_router"
+        overall_decision = "Pass" if policy_results[selected_policy]["passed"] else "Fail"
+    else:
+        passing = [policy for policy in DEPLOYABLE_POLICIES if policy_results[policy]["passed"]]
+        selected_policy = None
+        if passing:
+            precedence = {policy: index for index, policy in enumerate(DEPLOYABLE_POLICIES)}
+            passing.sort(
+                key=lambda policy: (*candidate_sort_key(candidate_rows[policy]), precedence[policy])
+            )
+            selected_policy = passing[0]
+        overall_decision = "Pass" if selected_policy is not None else "Stop router branch"
 
     selected = {
-        "schema_version": "exp-060-selected-operating-point-v1",
-        "experiment_id": EXPERIMENT_ID,
+        "schema_version": "exp-router-selected-operating-point-v2" if is_replication(config) else "exp-060-selected-operating-point-v1",
+        "experiment_id": experiment_id(config),
+        **({
+            "run_id": run_id(config),
+            "attempt_id": attempt_id(config),
+            "model_seed": model_seed(config),
+            "primary_policy": "logistic_router",
+            "primary_nominal_call_rate": 0.15,
+        } if is_replication(config) else {}),
         "baseline": baseline,
         "policies": policy_results,
         "overall": {
-            "decision": "Pass" if selected_policy is not None else "Stop router branch",
+            "decision": overall_decision,
             "selected_policy": selected_policy,
             "selected_candidate": (
                 policy_results[selected_policy]["candidate"] if selected_policy is not None else None
@@ -1247,8 +1410,8 @@ def bootstrap_result(
             },
         }
     return {
-        "schema_version": "exp-060-bootstrap-v1",
-        "experiment_id": EXPERIMENT_ID,
+        "schema_version": "exp-router-bootstrap-v2" if is_replication(config) else "exp-060-bootstrap-v1",
+        "experiment_id": experiment_id(config),
         "repetitions": repetitions,
         "seed": seed,
         "unit": config["bootstrap"]["unit"],
@@ -1266,8 +1429,13 @@ def feature_contract(config: dict[str, Any]) -> dict[str, Any]:
     cross_fitting = config["cross_fitting"]
     target = config["target_contract"]
     return {
-        "schema_version": "exp-060-feature-contract-v1",
-        "experiment_id": EXPERIMENT_ID,
+        "schema_version": "exp-router-feature-contract-v2" if is_replication(config) else "exp-060-feature-contract-v1",
+        "experiment_id": experiment_id(config),
+        **({
+            "run_id": run_id(config),
+            "attempt_id": attempt_id(config),
+            "model_seed": model_seed(config),
+        } if is_replication(config) else {}),
         "label_order": list(LABEL_ORDER),
         "ordered_features": list(FEATURE_NAMES),
         "feature_count": len(FEATURE_NAMES),
@@ -1293,10 +1461,12 @@ def feature_contract(config: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def expected_report(selected: dict[str, Any], bootstrap: dict[str, Any]) -> str:
+def expected_report(
+    selected: dict[str, Any], bootstrap: dict[str, Any], config: dict[str, Any]
+) -> str:
     overall = selected["overall"]
     lines = [
-        "# EXP-060 Pre-Qwen Deployable Router",
+        f"# {experiment_id(config)} Pre-Qwen Deployable Router",
         "",
         f"- Decision: `{overall['decision']}`",
         f"- Selected policy: `{overall['selected_policy']}`",
@@ -1324,21 +1494,29 @@ def expected_report(selected: dict[str, Any], bootstrap: dict[str, Any]) -> str:
             "",
             "## Claim boundary",
             "",
-            "This is train-OOF development evidence for one frozen seed-42 model pair. It is not an ",
-            "independent-test deployment result, a cross-seed claim, or evidence of an emotion mechanism.",
+            (
+                f"This is train-OOF evidence for the frozen seed-{model_seed(config)} model pair. "
+                "It is not an independent-test deployment result, a completed cross-seed claim, or "
+                "evidence of an emotion mechanism."
+                if is_replication(config)
+                else "This is train-OOF development evidence for one frozen seed-42 model pair. It is not an "
+            ),
+            *( [] if is_replication(config) else [
+                "independent-test deployment result, a cross-seed claim, or evidence of an emotion mechanism."
+            ] ),
             "",
         ]
     )
     return "\n".join(lines)
 
 
-def router_discrimination(state: dict[str, Any]) -> dict[str, Any]:
+def router_discrimination(state: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
     target = state["private_arrays"]["router_targets"]
     scores = state["private_arrays"]["route_scores"][2]
     overall = binary_discrimination(target, scores)
     return {
-        "schema_version": "exp-060-router-discrimination-v1",
-        "experiment_id": EXPERIMENT_ID,
+        "schema_version": "exp-router-discrimination-v2" if is_replication(config) else "exp-060-router-discrimination-v1",
+        "experiment_id": experiment_id(config),
         "overall": overall,
         "fold_auc_undefined": {
             "pr_auc": int(sum(row["router_pr_auc"] is None for row in state["fold_rows"])),
@@ -1671,7 +1849,8 @@ def validate_input(checks: Checks, data: dict[str, np.ndarray], config: dict[str
     )
     checks.add(
         "input.source_order",
-        observed_source_order == registered_source_order == EXPECTED_SOURCE_ORDER_SHA256,
+        observed_source_order == registered_source_order
+        and (is_replication(config) or observed_source_order == EXPECTED_SOURCE_ORDER_SHA256),
         {
             "registered_match": observed_source_order == registered_source_order,
             "canonical_match": observed_source_order == EXPECTED_SOURCE_ORDER_SHA256,
@@ -1777,7 +1956,7 @@ def verify_modes(checks: Checks, run_dir: Path, private_dir: Path) -> None:
 
 def write_summary(path: Path, result: dict[str, Any]) -> None:
     lines = [
-        "# EXP-060 Formal Router Verification",
+        f"# {result['experiment_id']} Formal Router Verification",
         "",
         f"- Status: `{result['status']}`",
         f"- Passed checks: `{result['passed_count']}`",
@@ -1802,12 +1981,24 @@ def verify(config_path: Path) -> dict[str, Any]:
     started = time.monotonic()
     config_path = require_canonical_config_path(config_path)
     config = json.loads(config_path.read_text(encoding="utf-8"))
-    if config.get("experiment_id") != EXPERIMENT_ID or config.get("rq_id") != RQ_ID:
-        raise ValueError("EXP-060 formal config identity drift")
+    schema = config.get("schema_version")
+    if schema not in (LEGACY_CONFIG_SCHEMA, REPLICATION_CONFIG_SCHEMA):
+        raise ValueError("Unexpected router config schema")
+    if schema == LEGACY_CONFIG_SCHEMA:
+        if (
+            config_path != DEFAULT_CONFIG.resolve()
+            or config.get("experiment_id") != EXPERIMENT_ID
+            or config.get("rq_id") != RQ_ID
+        ):
+            raise ValueError("EXP-060 formal config identity drift")
+    else:
+        if config.get("rq_id") != RQ_ID:
+            raise ValueError("Replication RQ identity drift")
+        validate_replication_identity(config)
     if tuple(config["data"]["label_order"]) != LABEL_ORDER:
         raise ValueError("EXP-060 label-order drift")
     input_record = config.get("input", {}).get("paired_oof", {})
-    if (
+    if not is_replication(config) and (
         input_record.get("path") != EXPECTED_INPUT_PATH
         or input_record.get("bytes") != EXPECTED_INPUT_BYTES
         or input_record.get("sha256") != EXPECTED_INPUT_SHA256
@@ -1815,16 +2006,25 @@ def verify(config_path: Path) -> dict[str, Any]:
         raise ValueError("EXP-060 paired-OOF input identity drift")
     guard_record_paths(config)
     outputs = config["outputs"]
-    public_value = outputs.get("formal_run_dir", outputs.get("public_run_dir"))
-    private_value = outputs.get("formal_private_dir", outputs.get("private_run_dir"))
-    if public_value != EXPECTED_PUBLIC_RUN_DIR or private_value != EXPECTED_PRIVATE_RUN_DIR:
-        raise ValueError("EXP-060 canonical output-path drift")
-    lexical_run_dir = PROJECT_ROOT / public_value
-    lexical_private_dir = PROJECT_ROOT / private_value
+    if is_replication(config):
+        expected_outputs = expected_replication_outputs(config)
+        public_attempt = resolve_output(expected_outputs["public_attempt_dir"])
+        private_attempt = resolve_output(expected_outputs["private_attempt_dir"])
+        run_dir = public_attempt / "router"
+        private_dir = private_attempt / "router"
+        if os.path.lexists(resolve_output(expected_outputs["selection_record"])):
+            raise FileExistsError("A final pipeline selection already exists")
+    else:
+        public_value = outputs.get("formal_run_dir", outputs.get("public_run_dir"))
+        private_value = outputs.get("formal_private_dir", outputs.get("private_run_dir"))
+        if public_value != EXPECTED_PUBLIC_RUN_DIR or private_value != EXPECTED_PRIVATE_RUN_DIR:
+            raise ValueError("EXP-060 canonical output-path drift")
+        run_dir = resolve_project(public_value)
+        private_dir = resolve_project(private_value)
+    lexical_run_dir = run_dir
+    lexical_private_dir = private_dir
     if lexical_run_dir.is_symlink() or lexical_private_dir.is_symlink():
         raise ValueError("EXP-060 formal output roots must not be symbolic links")
-    run_dir = resolve_project(public_value)
-    private_dir = resolve_project(private_value)
     output_path = run_dir / "verification.json"
     summary_path = run_dir / "VERIFICATION-SUMMARY.md"
     if os.path.lexists(output_path) or os.path.lexists(summary_path):
@@ -1842,9 +2042,17 @@ def verify(config_path: Path) -> dict[str, Any]:
         "max_iter": 1000,
         "random_state": 42,
     }
-    checks.add("config.identity", config.get("experiment_id") == EXPERIMENT_ID)
+    checks.add("config.identity", config.get("experiment_id") == experiment_id(config))
     checks.add("config.rq", config.get("rq_id") == RQ_ID)
-    checks.add("config.filename", config_path.name == DEFAULT_CONFIG.name)
+    checks.add(
+        "config.filename",
+        is_replication(config) or config_path.name == DEFAULT_CONFIG.name,
+    )
+    if is_replication(config):
+        checks.add("config.run_id", config.get("run_id") == run_id(config))
+        checks.add("config.attempt_id", config.get("attempt_id") == attempt_id(config))
+        checks.add("config.model_seed", model_seed(config) in (43, 44))
+        checks.add("config.seed_contract", config.get("seed_contract") == seed_contract(config))
     checks.add("config.tier", str(config.get("tier", "")).startswith("Major"))
     checks.add(
         "config.data",
@@ -1871,7 +2079,11 @@ def verify(config_path: Path) -> dict[str, Any]:
         and float(threshold_settings.get("grid_start", math.nan)) == 0.05
         and float(threshold_settings.get("grid_end", math.nan)) == 0.95
         and float(threshold_settings.get("grid_step", math.nan)) == 0.01
-        and tolerance == 1e-12,
+        and tolerance == 1e-12
+        and (
+            not is_replication(config)
+            or threshold_settings.get("probability_source") == "direct_sigmoid_of_raw_oof_logits"
+        ),
     )
     target_contract = config["target_contract"]
     checks.add(
@@ -1909,6 +2121,16 @@ def verify(config_path: Path) -> dict[str, Any]:
         and config["bootstrap"].get("interval") == "percentile_95",
     )
     checks.add(
+        "config.primary_gate",
+        not is_replication(config)
+        or (
+            config["gate"].get("primary_policy") == "logistic_router"
+            and float(config["gate"].get("primary_nominal_call_rate", -1)) == 0.15
+            and config["gate"].get("replication_pass_rule") == "primary_policy_only"
+            and float(config["gate"].get("maximum_hamming_loss_increase", -1)) == 1e-12
+        ),
+    )
+    checks.add(
         "config.risk_coverage",
         coverage_values(config) == [1.0, 0.95, 0.9, 0.8, 0.7, 0.6],
     )
@@ -1924,63 +2146,114 @@ def verify(config_path: Path) -> dict[str, Any]:
             record_count += 1
         checks.add(f"config.{section}_records_frozen", record_count > 0, {"record_count": record_count})
 
-    exp058_verification_path = find_prerequisite(
-        config, "exp058_verification", "exp058_final_verification"
-    )
-    exp059_verification_path = find_prerequisite(
-        config, "exp059_verification", "exp059_final_verification"
-    )
-    preflight_verification_path = find_prerequisite(
-        config, "exp060_preflight_verification", "preflight_verification"
-    )
-    calibration_path = find_prerequisite(
-        config, "exp059_calibration_parameters", "calibration_parameters"
-    )
-    exp058_verification = json.loads(exp058_verification_path.read_text(encoding="utf-8"))
-    exp059_verification = json.loads(exp059_verification_path.read_text(encoding="utf-8"))
-    preflight_verification = json.loads(preflight_verification_path.read_text(encoding="utf-8"))
-    calibration = json.loads(calibration_path.read_text(encoding="utf-8"))
-    checks.add(
-        "prerequisite.exp058_passed",
-        exp058_verification.get("experiment_id") == "EXP-058"
-        and verification_passed(exp058_verification),
-    )
-    checks.add(
-        "prerequisite.exp059_passed",
-        exp059_verification.get("experiment_id") == "EXP-059"
-        and verification_passed(exp059_verification),
-    )
-    checks.add(
-        "prerequisite.exp060_preflight_passed",
-        preflight_verification.get("experiment_id") == EXPERIMENT_ID
-        and preflight_verification.get("rq_id") == RQ_ID
-        and verification_passed(preflight_verification),
-    )
-    execution_claims = preflight_verification.get("execution_claims", {})
-    checks.add(
-        "prerequisite.exp060_preflight_independent",
-        preflight_verification.get("runner_imported") is False
-        and isinstance(execution_claims, dict)
-        and bool(execution_claims)
-        and not any(bool(value) for value in execution_claims.values()),
-        {"claim_count": len(execution_claims) if isinstance(execution_claims, dict) else 0},
-    )
+    if is_replication(config):
+        oof_verification = json.loads(
+            find_prerequisite(config, "oof_verification").read_text(encoding="utf-8")
+        )
+        exp059_run = json.loads(
+            find_prerequisite(config, "exp059_run").read_text(encoding="utf-8")
+        )
+        exp059_verification = json.loads(
+            find_prerequisite(config, "exp059_verification").read_text(encoding="utf-8")
+        )
+        calibration = json.loads(
+            find_prerequisite(config, "exp059_calibration_parameters").read_text(encoding="utf-8")
+        )
+        checks.add(
+            "prerequisite.oof_passed",
+            verification_passed(oof_verification)
+            and identity_matches(oof_verification, config)
+            and oof_verification.get("verified_artifacts", {}).get("paired_oof_private")
+            == config["input"]["paired_oof"],
+        )
+        checks.add(
+            "prerequisite.exp059_passed",
+            verification_passed(exp059_verification)
+            and identity_matches(exp059_verification, config)
+            and identity_matches(exp059_run, config)
+            and exp059_run.get("status") in {"CompletedAwaitingVerification", "Passed"},
+        )
+        checks.add(
+            "prerequisite.calibration_provenance",
+            all(
+                calibration.get(key) == value
+                for key, value in {
+                    "experiment_id": experiment_id(config),
+                    "run_id": run_id(config),
+                    "attempt_id": attempt_id(config),
+                    "model_seed": model_seed(config),
+                }.items()
+            ),
+        )
+        checks.add(
+            "prerequisite.router_replication_calibration",
+            replication_calibration_contract_matches(calibration),
+        )
+    else:
+        exp058_verification = json.loads(
+            find_prerequisite(config, "exp058_verification", "exp058_final_verification").read_text(encoding="utf-8")
+        )
+        exp059_verification = json.loads(
+            find_prerequisite(config, "exp059_verification", "exp059_final_verification").read_text(encoding="utf-8")
+        )
+        preflight_verification = json.loads(
+            find_prerequisite(config, "exp060_preflight_verification", "preflight_verification").read_text(encoding="utf-8")
+        )
+        calibration = json.loads(
+            find_prerequisite(config, "exp059_calibration_parameters", "calibration_parameters").read_text(encoding="utf-8")
+        )
+        checks.add(
+            "prerequisite.exp058_passed",
+            exp058_verification.get("experiment_id") == "EXP-058"
+            and verification_passed(exp058_verification),
+        )
+        checks.add(
+            "prerequisite.exp059_passed",
+            exp059_verification.get("experiment_id") == "EXP-059"
+            and verification_passed(exp059_verification),
+        )
+        checks.add(
+            "prerequisite.exp060_preflight_passed",
+            preflight_verification.get("experiment_id") == EXPERIMENT_ID
+            and preflight_verification.get("rq_id") == RQ_ID
+            and verification_passed(preflight_verification),
+        )
+        execution_claims = preflight_verification.get("execution_claims", {})
+        checks.add(
+            "prerequisite.exp060_preflight_independent",
+            preflight_verification.get("runner_imported") is False
+            and isinstance(execution_claims, dict)
+            and bool(execution_claims)
+            and not any(bool(value) for value in execution_claims.values()),
+            {"claim_count": len(execution_claims) if isinstance(execution_claims, dict) else 0},
+        )
+    families = calibration.get("families", {})
     selected_calibrators = {
-        family: calibration["families"][family]["selected_calibrator"] for family in ("m1", "m3")
+        family: families.get(family, {}).get("selected_calibrator") for family in ("m1", "m3")
     }
     selected_temperatures = {
-        family: calibration["families"][family]["final_temperature"] for family in ("m1", "m3")
+        family: families.get(family, {}).get("final_temperature") for family in ("m1", "m3")
     }
-    checks.add(
-        "prerequisite.identity_calibration",
-        selected_calibrators == {"m1": "identity", "m3": "identity"},
-        {"identity_count": sum(value == "identity" for value in selected_calibrators.values())},
-    )
-    checks.add(
-        "prerequisite.identity_temperature",
-        selected_temperatures == {"m1": 1.0, "m3": 1.0},
-        {"one_count": sum(float(value) == 1.0 for value in selected_temperatures.values())},
-    )
+    if is_replication(config):
+        diagnostics_valid = all(
+            selected_calibrators[family] in {"identity", "temperature"}
+            and isinstance(selected_temperatures[family], (int, float))
+            and math.isfinite(float(selected_temperatures[family]))
+            and float(selected_temperatures[family]) > 0.0
+            for family in ("m1", "m3")
+        )
+        checks.add("prerequisite.calibration_diagnostics", diagnostics_valid)
+    else:
+        checks.add(
+            "prerequisite.identity_calibration",
+            selected_calibrators == {"m1": "identity", "m3": "identity"},
+            {"identity_count": sum(value == "identity" for value in selected_calibrators.values())},
+        )
+        checks.add(
+            "prerequisite.identity_temperature",
+            selected_temperatures == {"m1": 1.0, "m3": 1.0},
+            {"one_count": sum(float(value) == 1.0 for value in selected_temperatures.values())},
+        )
 
     input_path = require_record(config["input"]["paired_oof"])
     checks.add(
@@ -2019,11 +2292,24 @@ def verify(config_path: Path) -> dict[str, Any]:
             "extra_count": len(actual_public_artifacts - EXPECTED_PUBLIC_ARTIFACTS),
         },
     )
-    checks.add("run.identity", run.get("experiment_id") == EXPERIMENT_ID and run.get("rq_id") == RQ_ID)
-    checks.add("run.schema", run.get("schema_version") == "exp-060-formal-run-v1")
+    checks.add(
+        "run.identity",
+        (
+            identity_matches(run, config)
+            if is_replication(config)
+            else run.get("experiment_id") == EXPERIMENT_ID and run.get("rq_id") == RQ_ID
+        ),
+    )
+    checks.add(
+        "run.schema",
+        run.get("schema_version")
+        == ("exp-router-formal-run-v2" if is_replication(config) else "exp-060-formal-run-v1"),
+    )
     checks.add("run.tier", run.get("tier") == "Major system experiment")
-    checks.add("run.stage", run.get("stage") == "pre-qwen-deployable-router")
+    checks.add("run.stage", run.get("stage") == config.get("stage"))
     checks.add("run.status", run.get("status") == "CompletedAwaitingVerification")
+    if is_replication(config):
+        checks.add("run.config", run.get("config") == artifact(config_path))
     checks.add("run.rows", run.get("rows") == 3360)
     checks.add("run.folds", run.get("folds") == 5)
     checks.add("run.components", run.get("component_count") == 3277)
@@ -2056,7 +2342,11 @@ def verify(config_path: Path) -> dict[str, Any]:
     run_input = run.get("input_before", run.get("input"))
     checks.add("run.input_before", run_input == artifact(input_path))
     checks.add("run.input_after", run.get("input_sha256_after") == input_hash_before)
-    checks.add("run.source_order", run.get("source_order_sha256") == EXPECTED_SOURCE_ORDER_SHA256)
+    checks.add(
+        "run.source_order",
+        run.get("source_order_sha256")
+        == config["data"].get("source_order_sha256", EXPECTED_SOURCE_ORDER_SHA256),
+    )
     expected_run_schema = [
         {
             "array_name": name,
@@ -2105,7 +2395,7 @@ def verify(config_path: Path) -> dict[str, Any]:
         risk_rows, retention_rows = risk_and_retention_rows(state, data, config)
         expected_json = {
             "feature-contract.json": feature_contract(config),
-            "router-discrimination.json": router_discrimination(state),
+            "router-discrimination.json": router_discrimination(state, config),
             "selected-operating-point.json": state["selected"],
             "bootstrap.json": bootstrap_result(state, data, config),
         }
@@ -2137,10 +2427,12 @@ def verify(config_path: Path) -> dict[str, Any]:
     checks.add("public.report.exists", report_path.is_file())
     if report_path.is_file():
         report = report_path.read_text(encoding="utf-8")
-        checks.add("public.report.identity", EXPERIMENT_ID in report)
+        checks.add("public.report.identity", experiment_id(config) in report)
         checks.add("public.report.claim_boundary", "train-OOF" in report and "test" in report)
         if state is not None:
-            report_expected = expected_report(state["selected"], expected_json["bootstrap.json"])
+            report_expected = expected_report(
+                state["selected"], expected_json["bootstrap.json"], config
+            )
             checks.add(
                 "public.report.contents",
                 report == report_expected,
@@ -2315,9 +2607,17 @@ def verify(config_path: Path) -> dict[str, Any]:
     )
 
     result = {
-        "schema_version": "exp-060-formal-verification-v1",
-        "experiment_id": EXPERIMENT_ID,
+        "schema_version": "exp-router-formal-verification-v2" if is_replication(config) else "exp-060-formal-verification-v1",
+        "experiment_id": experiment_id(config),
         "rq_id": RQ_ID,
+        **({
+            "stage": config["stage"],
+            "run_id": run_id(config),
+            "attempt_id": attempt_id(config),
+            "model_seed": model_seed(config),
+            "seed_contract": seed_contract(config),
+            "config": artifact(config_path),
+        } if is_replication(config) else {}),
         "scope": "final",
         "status": "Passed" if not checks.failed else "Failed",
         "runner_imported": False,
@@ -2356,15 +2656,151 @@ def verify(config_path: Path) -> dict[str, Any]:
     return result
 
 
+def replication_primary_gate_result(
+    selected: dict[str, Any], config: dict[str, Any]
+) -> bool:
+    if not is_replication(config):
+        raise PermissionError("Primary replication gate applies only to config-v2")
+    policies = selected.get("policies", {})
+    if not isinstance(policies, dict) or set(policies) != set(DEPLOYABLE_POLICIES):
+        raise ValueError("Replication selected-policy inventory drift")
+    primary = policies.get("logistic_router", {})
+    candidate = primary.get("candidate", {})
+    passed = primary.get("passed")
+    if not isinstance(passed, bool):
+        raise ValueError("Replication primary gate must be boolean")
+    expected_decision = "Pass" if passed else "Fail"
+    overall = selected.get("overall", {})
+    identity_ok = (
+        selected.get("schema_version") == "exp-router-selected-operating-point-v2"
+        and selected.get("experiment_id") == experiment_id(config)
+        and selected.get("run_id") == run_id(config)
+        and selected.get("attempt_id") == attempt_id(config)
+        and selected.get("model_seed") == model_seed(config)
+        and selected.get("primary_policy") == "logistic_router"
+        and float(selected.get("primary_nominal_call_rate", -1)) == 0.15
+    )
+    primary_ok = (
+        primary.get("evidence_role") == "primary"
+        and float(candidate.get("target_call_rate", -1)) == 0.15
+        and all(
+            policies[policy].get("evidence_role") == "descriptive_only"
+            and policies[policy].get("passed") is False
+            for policy in ("m1_max_entropy", "m1_threshold_proximity")
+        )
+    )
+    overall_ok = (
+        overall.get("decision") == expected_decision
+        and overall.get("selected_policy") == "logistic_router"
+        and overall.get("selected_candidate") == candidate
+    )
+    if not identity_ok or not primary_ok or not overall_ok:
+        raise ValueError("Frozen logistic_router@15% primary result drift")
+    return passed
+
+
+def verify_completion(config_path: Path) -> dict[str, Any]:
+    config_path = require_canonical_config_path(config_path)
+    config = json.loads(config_path.read_text(encoding="utf-8"))
+    if not is_replication(config):
+        raise PermissionError("Router completion verification applies only to config-v2")
+    validate_replication_identity(config)
+    outputs = expected_replication_outputs(config)
+    run_dir = resolve_output(outputs["public_attempt_dir"]) / "router"
+    private_dir = resolve_output(outputs["private_attempt_dir"]) / "router"
+    completion_path = run_dir / "router-complete.json"
+    run_path = run_dir / "run.json"
+    verification_path = run_dir / "verification.json"
+    selected_path = run_dir / "selected-operating-point.json"
+    private_path = private_dir / "router-oof.npz"
+    completion = json.loads(completion_path.read_text(encoding="utf-8"))
+    run = json.loads(run_path.read_text(encoding="utf-8"))
+    verification = json.loads(verification_path.read_text(encoding="utf-8"))
+    selected = json.loads(selected_path.read_text(encoding="utf-8"))
+    primary_gate_passed = replication_primary_gate_result(selected, config)
+    expected_decision = "Pass" if primary_gate_passed else "Fail"
+    checks = Checks()
+    checks.add("completion.identity", identity_matches(completion, config))
+    checks.add("completion.schema", completion.get("schema_version") == "exp-router-completion-v2")
+    checks.add("completion.status", completion.get("status") == "Complete")
+    checks.add("completion.decision", completion.get("decision") == expected_decision)
+    checks.add(
+        "completion.primary_gate_passed",
+        completion.get("primary_gate_passed") is primary_gate_passed,
+    )
+    checks.add("completion.public_privacy", not public_sensitive_paths(completion))
+    checks.add(
+        "completion.run_result",
+        run.get("status") == "CompletedAwaitingVerification"
+        and identity_matches(run, config)
+        and run.get("decision") == expected_decision
+        and run.get("public_outputs", {}).get("selected_operating_point_json")
+        == artifact(selected_path),
+    )
+    verified = verification.get("verified_artifacts", {})
+    checks.add(
+        "completion.final_passed",
+        verification.get("status") == "Passed"
+        and int(verification.get("failed_count", -1)) == 0
+        and identity_matches(verification, config)
+        and verified.get("config") == artifact(config_path)
+        and verified.get("run") == artifact(run_path)
+        and verified.get("private_router_oof") == artifact(private_path),
+    )
+    artifacts = completion.get("artifacts", {})
+    expected_artifact_keys = {
+        "config",
+        "run",
+        "selected_operating_point",
+        "final_verification",
+        "private_router_oof",
+    }
+    checks.add("completion.artifact_inventory", set(artifacts) == expected_artifact_keys)
+    checks.add("completion.config", artifacts.get("config") == artifact(config_path))
+    checks.add("completion.run", artifacts.get("run") == artifact(run_path))
+    checks.add(
+        "completion.selected_operating_point",
+        artifacts.get("selected_operating_point") == artifact(selected_path),
+    )
+    checks.add(
+        "completion.verification",
+        artifacts.get("final_verification") == artifact(verification_path),
+    )
+    checks.add(
+        "completion.private_router_oof",
+        artifacts.get("private_router_oof") == artifact(private_path),
+    )
+    checks.add("completion.selection_not_written", not os.path.lexists(resolve_output(outputs["selection_record"])))
+    result = {
+        "schema_version": "exp-router-completion-verification-v2",
+        "experiment_id": experiment_id(config),
+        "stage": config["stage"],
+        "run_id": run_id(config),
+        "attempt_id": attempt_id(config),
+        "model_seed": model_seed(config),
+        "scope": "completion",
+        "verified_at_utc": utc_now(),
+        "status": "Passed" if not checks.failed else "Failed",
+        "passed_count": len(checks.rows) - len(checks.failed),
+        "failed_count": len(checks.failed),
+        "checks": checks.rows,
+        "independence": {"runner_imported": False, "completion_rehashed": True},
+    }
+    if checks.failed:
+        raise RuntimeError(f"Router completion verification failed: {len(checks.failed)} checks")
+    return result
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
+    parser.add_argument("--scope", choices=("final", "completion"), default="final")
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    result = verify(args.config)
+    result = verify(args.config) if args.scope == "final" else verify_completion(args.config)
     print(
         json.dumps(
             {

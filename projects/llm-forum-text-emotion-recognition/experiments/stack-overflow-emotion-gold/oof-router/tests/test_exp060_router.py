@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import ast
+import copy
 import importlib.util
 import inspect
 import json
 from pathlib import Path
+import tempfile
 import unittest
 from unittest import mock
 
@@ -76,6 +78,7 @@ def synthetic_analysis_config() -> dict:
             "grid_start": 0.05,
             "grid_end": 0.95,
             "grid_step": 0.01,
+            "numeric_tolerance": 1e-12,
         },
         "router": {
             "logistic_regression": {
@@ -94,6 +97,55 @@ def synthetic_analysis_config() -> dict:
             "minimum_five_label_macro_f1_gain": -0.005,
             "maximum_hamming_loss_increase": 1e-12,
             "minimum_one_non_surprise_label_f1_gain": 0.005,
+        },
+    }
+
+
+def synthetic_replication_identity_config(experiment_id: str = "EXP-061") -> dict:
+    seed = {"EXP-061": 43, "EXP-062": 44}[experiment_id]
+    run_id = f"exp-{int(experiment_id[-3:]):03d}-seed-{seed}-router-replication"
+    base = "experiments/stack-overflow-emotion-gold/oof-router"
+    public_attempt = f"{base}/runs/{run_id}/attempt-1"
+    private_attempt = f"{base}/private/{run_id}/attempt-1"
+
+    def record(path: str) -> dict:
+        return {"path": path, "bytes": 1, "sha256": "a" * 64}
+
+    return {
+        "schema_version": "exp-router-replication-config-v2",
+        "experiment_id": experiment_id,
+        "rq_id": "RQ-S3",
+        "tier": "Major",
+        "stage": "pre-qwen-router-replication",
+        "run_id": run_id,
+        "attempt_id": "attempt-1",
+        "seed_contract": {
+            "model_seed": seed,
+            "python_seed": seed,
+            "numpy_seed": seed,
+            "torch_seed": seed,
+            "m1_batch_seed": seed,
+            "m3_head_seed": seed,
+            "m3_batch_seed": seed,
+            "m3_lora_seed": seed + 100000,
+        },
+        "authorization": {"model_seed": seed},
+        "data": {"upstream_seed": seed},
+        "outputs": {
+            "public_namespace": f"{base}/runs/{run_id}",
+            "public_attempt_dir": public_attempt,
+            "private_namespace": f"{base}/private/{run_id}",
+            "private_attempt_dir": private_attempt,
+            "selection_record": f"{base}/runs/{run_id}/selected-attempt.json",
+        },
+        "input": {"paired_oof": record(f"{private_attempt}/paired-oof.npz")},
+        "prerequisites": {
+            "oof_verification": record(f"{public_attempt}/verification.json"),
+            "exp059_run": record(f"{public_attempt}/calibration/run.json"),
+            "exp059_verification": record(f"{public_attempt}/calibration/verification.json"),
+            "exp059_calibration_parameters": record(
+                f"{public_attempt}/calibration/calibration-parameters.json"
+            ),
         },
     }
 
@@ -159,9 +211,375 @@ def load_module(name: str, path: Path):
 
 
 runner = load_module("exp060_router_under_test", RUNNER_PATH)
+verifier = load_module("exp060_verifier_under_test", VERIFIER_PATH)
 
 
 class Exp060RouterContractTests(unittest.TestCase):
+    def test_replication_identity_and_attempt_paths_bind_seed_43_and_44(self) -> None:
+        for experiment_id, seed in (("EXP-061", 43), ("EXP-062", 44)):
+            with self.subTest(experiment_id=experiment_id):
+                config = synthetic_replication_identity_config(experiment_id)
+                runner.validate_replication_identity(config)
+                verifier.validate_replication_identity(config)
+                self.assertEqual(runner.model_seed(config), seed)
+                public_router, private_router = runner._output_paths(config)
+                self.assertEqual(public_router.name, "router")
+                self.assertEqual(private_router.name, "router")
+                self.assertEqual(public_router.parent.name, "attempt-1")
+                self.assertEqual(private_router.parent.name, "attempt-1")
+
+    def test_replication_identity_rejects_seed_path_attempt_and_oracle_drift(self) -> None:
+        mutations = []
+        wrong_seed = synthetic_replication_identity_config()
+        wrong_seed["seed_contract"]["model_seed"] = 44
+        mutations.append(wrong_seed)
+        wrong_attempt = synthetic_replication_identity_config()
+        wrong_attempt["attempt_id"] = "attempt-0"
+        mutations.append(wrong_attempt)
+        wrong_input = synthetic_replication_identity_config()
+        wrong_input["input"]["paired_oof"]["path"] = "private/prior-seed/paired-oof.npz"
+        mutations.append(wrong_input)
+        extra_input = synthetic_replication_identity_config()
+        extra_input["input"]["prior_seed_artifact"] = {
+            "path": "prior-seed.npz", "bytes": 1, "sha256": "b" * 64
+        }
+        mutations.append(extra_input)
+        unrelated_prerequisite = synthetic_replication_identity_config()
+        unrelated_prerequisite["prerequisites"]["oof_verification"]["path"] = (
+            "experiments/stack-overflow-emotion-gold/oof-router/runs/"
+            "unrelated-attempt/verification.json"
+        )
+        mutations.append(unrelated_prerequisite)
+        oracle = synthetic_replication_identity_config()
+        oracle["prerequisites"]["exp059_oracle_summary"] = {
+            "path": "oracle.json", "bytes": 1, "sha256": "b" * 64
+        }
+        mutations.append(oracle)
+        for index, config in enumerate(mutations):
+            with self.subTest(index=index):
+                with self.assertRaises((ValueError, PermissionError)):
+                    runner.validate_replication_identity(config)
+                with self.assertRaises((ValueError, PermissionError)):
+                    verifier.validate_replication_identity(config)
+
+    def test_replication_temperature_diagnostic_cannot_change_or_block_identity_router(self) -> None:
+        config = synthetic_replication_identity_config()
+        identity = {
+            "experiment_id": "EXP-061",
+            "run_id": "exp-061-seed-43-router-replication",
+            "attempt_id": "attempt-1",
+            "model_seed": 43,
+        }
+        paired = config["input"]["paired_oof"]
+        oof_verification = {
+            **identity,
+            "status": "Passed",
+            "failed_count": 0,
+            "verified_artifacts": {"paired_oof_private": paired},
+        }
+        exp059_run = {**identity, "status": "CompletedAwaitingVerification"}
+        exp059_verification = {**identity, "status": "Passed", "failed_count": 0}
+        calibration = {
+            **identity,
+            "router_replication_calibration": copy.deepcopy(
+                runner.REPLICATION_CALIBRATION_CONTRACT
+            ),
+            "families": {
+                "m1": {
+                    "selected_calibrator": "temperature",
+                    "final_temperature": 1.25,
+                },
+                "m3": {
+                    "selected_calibrator": "identity",
+                    "final_temperature": 1.0,
+                },
+            },
+        }
+        with mock.patch.object(
+            runner,
+            "_load_frozen_json",
+            side_effect=[
+                oof_verification,
+                exp059_run,
+                exp059_verification,
+                calibration,
+            ],
+        ):
+            runner._validate_upstream_semantics(config)
+        self.assertTrue(runner.replication_calibration_contract_matches(calibration))
+        self.assertTrue(verifier.replication_calibration_contract_matches(calibration))
+
+        drifted = copy.deepcopy(calibration)
+        drifted["router_replication_calibration"]["temperature"] = 1.25
+        self.assertFalse(runner.replication_calibration_contract_matches(drifted))
+        self.assertFalse(verifier.replication_calibration_contract_matches(drifted))
+        with mock.patch.object(
+            runner,
+            "_load_frozen_json",
+            side_effect=[
+                oof_verification,
+                exp059_run,
+                exp059_verification,
+                drifted,
+            ],
+        ), self.assertRaisesRegex(ValueError, "identity-probability contract"):
+            runner._validate_upstream_semantics(config)
+
+    def test_replication_uses_raw_logit_sigmoid_and_only_logistic_at_nominal_15_percent(self) -> None:
+        config = synthetic_analysis_config()
+        config.update({
+            "schema_version": "exp-router-replication-config-v2",
+            "experiment_id": "EXP-061",
+            "run_id": "exp-061-seed-43-router-replication",
+            "attempt_id": "attempt-1",
+            "seed_contract": {"model_seed": 43},
+        })
+        data = synthetic_analysis_data()
+        with mock.patch.object(runner, "stable_sigmoid", wraps=runner.stable_sigmoid) as sigmoid:
+            analysis = runner.analyze_arrays(data, config)
+        self.assertEqual(sigmoid.call_count, 2)
+        np.testing.assert_array_equal(sigmoid.call_args_list[0].args[0], data["m1_logits"])
+        np.testing.assert_array_equal(sigmoid.call_args_list[1].args[0], data["m3_logits"])
+        selected = analysis["selected"]
+        independently_recomputed = verifier.build_expected_state(data, config)
+        self.assertEqual(selected, independently_recomputed["selected"])
+        for name in ("features", "nested_m1_thresholds", "nested_m3_thresholds", "route_scores", "route_masks"):
+            np.testing.assert_allclose(
+                analysis["private_arrays"][name],
+                independently_recomputed["private_arrays"][name],
+            )
+        self.assertEqual(selected["overall"]["selected_policy"], "logistic_router")
+        for policy, record in selected["policies"].items():
+            self.assertEqual(record["candidate"]["target_call_rate"], 0.15)
+            self.assertEqual(record["evidence_role"], "primary" if policy == "logistic_router" else "descriptive_only")
+            if policy != "logistic_router":
+                self.assertFalse(record["passed"])
+
+        failing_config = copy.deepcopy(config)
+        failing_config["gate"]["minimum_six_label_macro_f1_gain"] = 2.0
+        failed = runner.analyze_arrays(data, failing_config)["selected"]
+        independently_failed = verifier.build_expected_state(data, failing_config)["selected"]
+        self.assertEqual(failed, independently_failed)
+        self.assertEqual(failed["overall"]["decision"], "Fail")
+        self.assertEqual(failed["overall"]["selected_policy"], "logistic_router")
+        self.assertEqual(
+            failed["overall"]["selected_candidate"],
+            failed["policies"]["logistic_router"]["candidate"],
+        )
+
+    def test_hamming_gate_uses_exact_one_e_minus_twelve_boundary(self) -> None:
+        baseline = {
+            "macro_f1": 0.5,
+            "five_label_macro_f1": 0.5,
+            "hamming_loss": 0.0,
+            "per_label": {label: {"f1": 0.5} for label in runner.LABEL_ORDER},
+        }
+        candidate = {
+            "actual_call_rate": 0.15,
+            "macro_f1": 0.6,
+            "five_label_macro_f1": 0.6,
+            "hamming_loss": 1e-12,
+            **{f"f1_{label}": 0.6 for label in runner.LABEL_ORDER},
+        }
+        config = synthetic_analysis_config()
+        _, gates, _ = runner._gate_candidate(candidate, baseline, config)
+        self.assertTrue(gates["hamming_loss_not_worse"])
+        candidate["hamming_loss"] = 1.1e-12
+        _, gates, _ = runner._gate_candidate(candidate, baseline, config)
+        self.assertFalse(gates["hamming_loss_not_worse"])
+
+    def test_sealed_exp060_runner_is_archive_only(self) -> None:
+        config = runner.load_config(FORMAL_CONFIG)
+        self.assertTrue(config["_archive_only"])
+        with self.assertRaisesRegex(PermissionError, "archive-only"):
+            runner.formal_run(FORMAL_CONFIG, config)
+        with self.assertRaisesRegex(FileExistsError, "append-only"):
+            verifier.verify(FORMAL_CONFIG)
+
+    def test_replication_completion_binds_primary_vote_without_selecting_attempt(self) -> None:
+        config = synthetic_replication_identity_config()
+        identity = {
+            "experiment_id": "EXP-061",
+            "run_id": "exp-061-seed-43-router-replication",
+            "attempt_id": "attempt-1",
+            "model_seed": 43,
+        }
+        for primary_gate_passed in (True, False):
+            with self.subTest(primary_gate_passed=primary_gate_passed), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                public_attempt = root / "public-attempt"
+                private_attempt = root / "private-attempt"
+                run_dir = public_attempt / "router"
+                private_dir = private_attempt / "router"
+                run_dir.mkdir(parents=True)
+                private_dir.mkdir(parents=True)
+                selection_path = root / "selected-attempt.json"
+                config_path = root / "config.json"
+                config_path.write_text(json.dumps(config), encoding="utf-8")
+                private_path = private_dir / "router-oof.npz"
+                private_path.write_bytes(b"synthetic-private-router")
+
+                decision = "Pass" if primary_gate_passed else "Fail"
+                primary_candidate = {"target_call_rate": 0.15, "macro_f1": 0.6}
+                selected = {
+                    "schema_version": "exp-router-selected-operating-point-v2",
+                    **identity,
+                    "primary_policy": "logistic_router",
+                    "primary_nominal_call_rate": 0.15,
+                    "baseline": {},
+                    "policies": {
+                        "m1_max_entropy": {
+                            "candidate": {"target_call_rate": 0.15},
+                            "passed": False,
+                            "evidence_role": "descriptive_only",
+                        },
+                        "m1_threshold_proximity": {
+                            "candidate": {"target_call_rate": 0.15},
+                            "passed": False,
+                            "evidence_role": "descriptive_only",
+                        },
+                        "logistic_router": {
+                            "candidate": primary_candidate,
+                            "passed": primary_gate_passed,
+                            "evidence_role": "primary",
+                        },
+                    },
+                    "overall": {
+                        "decision": decision,
+                        "selected_policy": "logistic_router",
+                        "selected_candidate": primary_candidate,
+                    },
+                }
+                selected_path = run_dir / "selected-operating-point.json"
+                selected_path.write_text(json.dumps(selected), encoding="utf-8")
+                run = {
+                    **identity,
+                    "status": "CompletedAwaitingVerification",
+                    "decision": decision,
+                    "public_outputs": {
+                        "selected_operating_point_json": runner.artifact(selected_path)
+                    },
+                }
+                run_path = run_dir / "run.json"
+                run_path.write_text(json.dumps(run), encoding="utf-8")
+                verification = {
+                    **identity,
+                    "status": "Passed",
+                    "failed_count": 0,
+                    "verified_artifacts": {
+                        "config": runner.artifact(config_path),
+                        "run": runner.artifact(run_path),
+                        "private_router_oof": runner.artifact(private_path),
+                    },
+                }
+                verification_path = run_dir / "verification.json"
+                verification_path.write_text(json.dumps(verification), encoding="utf-8")
+
+                with (
+                    mock.patch.object(runner, "_output_paths", return_value=(run_dir, private_dir)),
+                    mock.patch.object(
+                        runner,
+                        "_expected_replication_outputs",
+                        return_value={"selection_record": "synthetic-selection"},
+                    ),
+                    mock.patch.object(
+                        runner,
+                        "resolve_output",
+                        side_effect=lambda value: selection_path
+                        if value == "synthetic-selection"
+                        else Path(value),
+                    ),
+                ):
+                    completion = runner.complete_router_attempt(config_path, config)
+                self.assertEqual(completion["decision"], decision)
+                self.assertIs(completion["primary_gate_passed"], primary_gate_passed)
+                self.assertFalse(selection_path.exists())
+
+                verifier_outputs = {
+                    "public_attempt_dir": "synthetic-public-attempt",
+                    "private_attempt_dir": "synthetic-private-attempt",
+                    "selection_record": "synthetic-selection",
+                }
+                resolved = {
+                    "synthetic-public-attempt": public_attempt,
+                    "synthetic-private-attempt": private_attempt,
+                    "synthetic-selection": selection_path,
+                }
+                verifier_patches = (
+                    mock.patch.object(
+                        verifier, "require_canonical_config_path", return_value=config_path
+                    ),
+                    mock.patch.object(verifier, "validate_replication_identity"),
+                    mock.patch.object(
+                        verifier,
+                        "expected_replication_outputs",
+                        return_value=verifier_outputs,
+                    ),
+                    mock.patch.object(
+                        verifier, "resolve_output", side_effect=lambda value: resolved[value]
+                    ),
+                )
+                with verifier_patches[0], verifier_patches[1], verifier_patches[2], verifier_patches[3]:
+                    completion_verification = verifier.verify_completion(config_path)
+                self.assertEqual(completion_verification["status"], "Passed")
+
+                completion_path = run_dir / "router-complete.json"
+                original_completion = completion_path.read_text(encoding="utf-8")
+                original_selected = selected_path.read_text(encoding="utf-8")
+                tamper_cases = {
+                    "decision": (
+                        completion_path,
+                        {
+                            **json.loads(original_completion),
+                            "decision": "Fail" if decision == "Pass" else "Pass",
+                        },
+                    ),
+                    "primary_gate_passed": (
+                        completion_path,
+                        {
+                            **json.loads(original_completion),
+                            "primary_gate_passed": not primary_gate_passed,
+                        },
+                    ),
+                    "selected_operating_point": (
+                        selected_path,
+                        {
+                            **json.loads(original_selected),
+                            "primary_nominal_call_rate": 0.2,
+                        },
+                    ),
+                }
+                for tamper_name, (tamper_path, tampered) in tamper_cases.items():
+                    with self.subTest(
+                        primary_gate_passed=primary_gate_passed,
+                        tamper=tamper_name,
+                    ):
+                        completion_path.write_text(original_completion, encoding="utf-8")
+                        selected_path.write_text(original_selected, encoding="utf-8")
+                        tamper_path.write_text(json.dumps(tampered), encoding="utf-8")
+                        with (
+                            mock.patch.object(
+                                verifier,
+                                "require_canonical_config_path",
+                                return_value=config_path,
+                            ),
+                            mock.patch.object(verifier, "validate_replication_identity"),
+                            mock.patch.object(
+                                verifier,
+                                "expected_replication_outputs",
+                                return_value=verifier_outputs,
+                            ),
+                            mock.patch.object(
+                                verifier,
+                                "resolve_output",
+                                side_effect=lambda value: resolved[value],
+                            ),
+                            self.assertRaises(
+                                (RuntimeError, ValueError),
+                            ),
+                        ):
+                            verifier.verify_completion(config_path)
+
     def test_public_api_signatures_and_feature_order_are_frozen(self) -> None:
         expected_parameters = {
             "stable_sigmoid": ("values",),

@@ -18,6 +18,7 @@ import math
 import os
 from pathlib import Path
 import platform
+import re
 import resource
 import shutil
 import stat
@@ -36,6 +37,13 @@ from sklearn.preprocessing import StandardScaler
 
 EXPERIMENT_ID = "EXP-060"
 RQ_ID = "RQ-S3"
+LEGACY_CONFIG_SCHEMA = "exp-060-formal-config-v1"
+REPLICATION_CONFIG_SCHEMA = "exp-router-replication-config-v2"
+ATTEMPT_RE = re.compile(r"attempt-[1-9][0-9]*\Z")
+REGISTERED_REPLICATIONS = {
+    "EXP-061": (43, "exp-061-seed-43-router-replication"),
+    "EXP-062": (44, "exp-062-seed-44-router-replication"),
+}
 LABEL_ORDER = ("love", "joy", "surprise", "anger", "sadness", "fear")
 FEATURE_NAMES = (
     "m1_probability_love",
@@ -77,6 +85,19 @@ EXPECTED_IMPLEMENTATION_PATHS = {
     "runner": "experiments/stack-overflow-emotion-gold/oof-router/run_exp060_router.py",
     "verifier": "experiments/stack-overflow-emotion-gold/oof-router/verify_exp060_router.py",
     "tests": "experiments/stack-overflow-emotion-gold/oof-router/tests/test_exp060_router.py",
+}
+REPLICATION_REQUIRED_PREREQUISITES = {
+    "oof_verification",
+    "exp059_run",
+    "exp059_verification",
+    "exp059_calibration_parameters",
+}
+REPLICATION_INPUT_KEYS = {"paired_oof"}
+REPLICATION_CALIBRATION_CONTRACT = {
+    "calibrator": "identity",
+    "temperature": 1.0,
+    "probability_source": "direct_sigmoid_of_raw_oof_logits",
+    "role": "frozen_exp060_replication_only",
 }
 PUBLIC_SENSITIVE_KEYS = {
     "sample_id",
@@ -167,11 +188,82 @@ def canonical_digest(value: Any) -> str:
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
+def is_replication(config: dict[str, Any]) -> bool:
+    return config.get("schema_version") == REPLICATION_CONFIG_SCHEMA
+
+
+def experiment_id(config: dict[str, Any]) -> str:
+    return str(config.get("experiment_id", EXPERIMENT_ID))
+
+
+def run_id(config: dict[str, Any]) -> str:
+    return str(config["run_id"]) if is_replication(config) else "exp-060-pre-qwen-router"
+
+
+def attempt_id(config: dict[str, Any]) -> str | None:
+    return str(config["attempt_id"]) if is_replication(config) else None
+
+
+def model_seed(config: dict[str, Any]) -> int:
+    if is_replication(config):
+        return int(config["seed_contract"]["model_seed"])
+    return int(config["data"].get("upstream_seed", 42))
+
+
+def seed_contract(config: dict[str, Any]) -> dict[str, int]:
+    seed = model_seed(config)
+    if not is_replication(config):
+        return {
+            "model_seed": seed,
+            "python_seed": seed,
+            "numpy_seed": seed,
+            "torch_seed": seed,
+            "m1_batch_seed": seed,
+            "m3_head_seed": seed,
+            "m3_batch_seed": seed,
+            "m3_lora_seed": seed + 100000,
+        }
+    return {key: int(value) for key, value in config["seed_contract"].items()}
+
+
+def identity_provenance(config: dict[str, Any]) -> dict[str, Any]:
+    payload: dict[str, Any] = {
+        "experiment_id": experiment_id(config),
+        "rq_id": str(config.get("rq_id", RQ_ID)),
+        "stage": str(config["stage"]),
+    }
+    if is_replication(config):
+        payload.update({
+            "run_id": run_id(config),
+            "attempt_id": attempt_id(config),
+            "model_seed": model_seed(config),
+            "seed_contract": seed_contract(config),
+            "seed_contract_sha256": canonical_digest(seed_contract(config)),
+        })
+    return payload
+
+
 def resolve_project(value: str) -> Path:
     path = (PROJECT_ROOT / value).resolve()
     if not path.is_relative_to(PROJECT_ROOT.resolve()):
         raise ValueError(f"Project-relative path escapes project root: {value}")
     return path
+
+
+def resolve_output(value: str) -> Path:
+    relative = Path(str(value))
+    if relative.is_absolute() or not relative.parts or any(part in ("", ".", "..") for part in relative.parts):
+        raise ValueError(f"Output path is not a normalized project-relative path: {value}")
+    lexical = PROJECT_ROOT / relative
+    cursor = PROJECT_ROOT
+    for part in relative.parts:
+        cursor = cursor / part
+        if os.path.lexists(cursor) and cursor.is_symlink():
+            raise ValueError(f"Output path traverses a symbolic link: {value}")
+    resolved = lexical.resolve()
+    if not resolved.is_relative_to(PROJECT_ROOT.resolve()):
+        raise ValueError(f"Output path escapes project root: {value}")
+    return resolved
 
 
 def display_path(path: Path) -> str:
@@ -646,8 +738,139 @@ def _verification_passed(payload: dict[str, Any], name: str) -> None:
         raise ValueError(f"{name} verification is not Passed")
 
 
+def _identity_matches(payload: dict[str, Any], config: dict[str, Any]) -> bool:
+    return (
+        payload.get("experiment_id") == experiment_id(config)
+        and payload.get("run_id") == run_id(config)
+        and payload.get("attempt_id") == attempt_id(config)
+        and payload.get("model_seed") == model_seed(config)
+    )
+
+
+def _expected_replication_outputs(config: dict[str, Any]) -> dict[str, str]:
+    base = display_path(SCRIPT_DIR)
+    identifier = run_id(config)
+    attempt = attempt_id(config)
+    return {
+        "public_namespace": f"{base}/runs/{identifier}",
+        "public_attempt_dir": f"{base}/runs/{identifier}/{attempt}",
+        "private_namespace": f"{base}/private/{identifier}",
+        "private_attempt_dir": f"{base}/private/{identifier}/{attempt}",
+        "selection_record": f"{base}/runs/{identifier}/selected-attempt.json",
+    }
+
+
+def validate_replication_identity(config: dict[str, Any]) -> None:
+    identity = REGISTERED_REPLICATIONS.get(str(config.get("experiment_id")))
+    if identity is None:
+        raise ValueError("Router config-v2 is restricted to registered EXP-061/EXP-062")
+    expected_seed, expected_run_id = identity
+    if config.get("run_id") != expected_run_id:
+        raise ValueError("Replication experiment/run_id identity drift")
+    if not ATTEMPT_RE.fullmatch(str(config.get("attempt_id", ""))):
+        raise ValueError("attempt_id must match attempt-[1-9][0-9]*")
+    if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", str(config.get("stage", ""))):
+        raise ValueError("Replication stage must be a normalized identifier")
+    expected_seeds = {
+        "model_seed": expected_seed,
+        "python_seed": expected_seed,
+        "numpy_seed": expected_seed,
+        "torch_seed": expected_seed,
+        "m1_batch_seed": expected_seed,
+        "m3_head_seed": expected_seed,
+        "m3_batch_seed": expected_seed,
+        "m3_lora_seed": expected_seed + 100000,
+    }
+    if config.get("seed_contract") != expected_seeds:
+        raise ValueError("Exact replication RNG seed contract drift")
+    if int(config.get("authorization", {}).get("model_seed", -1)) != expected_seed:
+        raise PermissionError("Router authorization model_seed drift")
+    if int(config.get("data", {}).get("upstream_seed", -1)) != expected_seed:
+        raise ValueError("Router data/model_seed binding drift")
+    expected_outputs = _expected_replication_outputs(config)
+    if config.get("outputs") != expected_outputs:
+        raise ValueError("Router config-v2 output paths are not canonical")
+    for value in expected_outputs.values():
+        resolve_output(value)
+    expected_input = f"{expected_outputs['private_attempt_dir']}/paired-oof.npz"
+    if set(config.get("input", {})) != REPLICATION_INPUT_KEYS:
+        raise ValueError("Router config-v2 input inventory drift")
+    if config.get("input", {}).get("paired_oof", {}).get("path") != expected_input:
+        raise ValueError("Router paired OOF must come from the matching private attempt")
+    prerequisites = config.get("prerequisites")
+    if not isinstance(prerequisites, dict) or set(prerequisites) != REPLICATION_REQUIRED_PREREQUISITES:
+        raise ValueError("Router config-v2 prerequisite inventory drift")
+    public_attempt = resolve_output(expected_outputs["public_attempt_dir"])
+    for name in REPLICATION_REQUIRED_PREREQUISITES:
+        record = prerequisites[name]
+        record_path = resolve_output(str(record.get("path", "")))
+        if not record_path.is_relative_to(public_attempt):
+            raise ValueError(f"{name} is not inside the matching public attempt")
+
+
+def replication_calibration_contract_matches(payload: dict[str, Any]) -> bool:
+    return payload.get("router_replication_calibration") == REPLICATION_CALIBRATION_CONTRACT
+
+
+def _validate_legacy_archive(config_path: Path, config: dict[str, Any]) -> None:
+    run_dir = resolve_project(EXPECTED_PUBLIC_RUN_DIR)
+    run_path = run_dir / "run.json"
+    verification_path = run_dir / "verification.json"
+    if not run_path.is_file() or not verification_path.is_file():
+        raise PermissionError("Legacy EXP-060 fallback requires the sealed verified archive")
+    run = json.loads(run_path.read_text(encoding="utf-8"))
+    verification = json.loads(verification_path.read_text(encoding="utf-8"))
+    if (
+        run.get("experiment_id") != EXPERIMENT_ID
+        or run.get("status") != "CompletedAwaitingVerification"
+        or verification.get("experiment_id") != EXPERIMENT_ID
+        or verification.get("status") != "Passed"
+        or int(verification.get("failed_count", -1)) != 0
+    ):
+        raise PermissionError("Legacy EXP-060 archive is not sealed and Passed")
+    frozen = run.get("frozen_sources")
+    if not isinstance(frozen, dict) or set(frozen) != {"config", *config["implementation"]}:
+        raise ValueError("Legacy EXP-060 frozen-source inventory drift")
+    frozen_config = require_record(frozen["config"])
+    if frozen_config.parent != run_dir / "frozen-sources" or sha256(frozen_config) != sha256(config_path):
+        raise ValueError("Legacy EXP-060 frozen config drift")
+    for name, expected in config["implementation"].items():
+        archived = require_record(frozen[name])
+        if (
+            archived.parent != run_dir / "frozen-sources"
+            or int(frozen[name]["bytes"]) != int(expected["bytes"])
+            or frozen[name]["sha256"] != expected["sha256"]
+        ):
+            raise ValueError(f"Legacy EXP-060 frozen source drift: {name}")
+
+
 def _validate_upstream_semantics(config: dict[str, Any]) -> None:
     prerequisites = config["prerequisites"]
+    if is_replication(config):
+        paired_record = config["input"]["paired_oof"]
+        oof = _load_frozen_json(prerequisites["oof_verification"])
+        exp059_run = _load_frozen_json(prerequisites["exp059_run"])
+        exp059 = _load_frozen_json(prerequisites["exp059_verification"])
+        calibration = _load_frozen_json(prerequisites["exp059_calibration_parameters"])
+        _verification_passed(oof, "seed-specific OOF")
+        _verification_passed(exp059, "seed-specific EXP-059")
+        if not _identity_matches(oof, config) or not _identity_matches(exp059, config):
+            raise ValueError("Seed-specific verification identity drift")
+        if not _identity_matches(exp059_run, config) or exp059_run.get("status") not in {
+            "CompletedAwaitingVerification", "Passed"
+        }:
+            raise ValueError("Seed-specific EXP-059 run identity/status drift")
+        verified_oof = oof.get("verified_artifacts", {}).get("paired_oof_private")
+        if verified_oof != paired_record:
+            raise ValueError("Router paired OOF is not the OOF-verifier-bound artifact")
+        for key in ("experiment_id", "run_id", "attempt_id", "model_seed"):
+            expected = identity_provenance(config).get(key)
+            if calibration.get(key) != expected:
+                raise ValueError(f"EXP-059 calibration identity drift: {key}")
+        if not replication_calibration_contract_matches(calibration):
+            raise ValueError("EXP-059 replication identity-probability contract drift")
+        return
+
     exp058 = _load_frozen_json(_record_by_names(
         prerequisites, ("exp058_verification", "exp_058_verification")
     ))
@@ -687,8 +910,16 @@ def _guard_record_paths(config: dict[str, Any]) -> None:
 
 def load_config(path: Path) -> dict[str, Any]:
     config = json.loads(path.read_text(encoding="utf-8"))
-    if config.get("experiment_id") != EXPERIMENT_ID or config.get("rq_id") != RQ_ID:
-        raise ValueError("EXP-060 config identity drift")
+    schema = config.get("schema_version")
+    if schema not in (LEGACY_CONFIG_SCHEMA, REPLICATION_CONFIG_SCHEMA):
+        raise ValueError("Unexpected router config schema")
+    if schema == LEGACY_CONFIG_SCHEMA:
+        if config.get("experiment_id") != EXPERIMENT_ID or config.get("rq_id") != RQ_ID:
+            raise ValueError("EXP-060 config identity drift")
+    else:
+        if config.get("rq_id") != RQ_ID:
+            raise ValueError("Replication RQ identity drift")
+        validate_replication_identity(config)
     authorization = config["authorization"]
     if not authorization.get("formal_router_training") or not authorization.get("formal_result_computation"):
         raise PermissionError("Formal EXP-060 router/result computation is not authorized")
@@ -713,6 +944,10 @@ def load_config(path: Path) -> dict[str, Any]:
         raise ValueError("EXP-060 feature count drift")
     if config["thresholds"]["calibrator"] != "identity_for_m1_and_m3":
         raise ValueError("EXP-060 calibration contract drift")
+    if is_replication(config) and config["thresholds"].get("probability_source") != "direct_sigmoid_of_raw_oof_logits":
+        raise ValueError("Replication probabilities must be recomputed directly from raw OOF logits")
+    if float(config["thresholds"].get("numeric_tolerance", -1)) != 1e-12:
+        raise ValueError("Router numeric tolerance drift")
     if config["target_contract"]["unit"] != "whole_six_bit_vector":
         raise ValueError("EXP-060 target unit drift")
     if config["target_contract"].get("exp059_oracle_array_used_as_formal_target") is not False:
@@ -732,23 +967,41 @@ def load_config(path: Path) -> dict[str, Any]:
         raise ValueError("EXP-060 bootstrap contract drift")
     if int(config["bootstrap"]["seed"]) != 20260817:
         raise ValueError("EXP-060 bootstrap seed drift")
+    if (
+        int(config["router"].get("random_routing_repetitions", -1)) != 100
+        or int(config["router"].get("random_routing_seed", -1)) != 20260817
+    ):
+        raise ValueError("EXP-060 component-aware random-routing contract drift")
+    if float(config["gate"].get("maximum_hamming_loss_increase", -1)) != 1e-12:
+        raise ValueError("EXP-060 Hamming tolerance drift")
+    if is_replication(config) and (
+        config["gate"].get("primary_policy") != "logistic_router"
+        or float(config["gate"].get("primary_nominal_call_rate", -1)) != 0.15
+        or config["gate"].get("replication_pass_rule") != "primary_policy_only"
+    ):
+        raise ValueError("Replication must use only logistic_router at nominal 15% as its primary gate")
     for name, expected_path in EXPECTED_IMPLEMENTATION_PATHS.items():
         if config["implementation"][name].get("path") != expected_path:
             raise ValueError(f"EXP-060 {name} implementation path drift")
     if resolve_project(config["implementation"]["runner"]["path"]) != Path(__file__).resolve():
         raise ValueError("The executing EXP-060 runner is not the frozen runner")
     input_record = _record_by_names(config["input"], ("paired_oof",))
-    if (
-        input_record.get("path") != EXPECTED_INPUT_PATH
-        or int(input_record.get("bytes", -1)) != EXPECTED_INPUT_BYTES
-        or input_record.get("sha256") != EXPECTED_INPUT_SHA256
-    ):
-        raise ValueError("EXP-060 paired-OOF input identity drift")
-    public_value = config["outputs"].get("formal_run_dir", config["outputs"].get("public_run_dir"))
-    private_value = config["outputs"].get("formal_private_dir", config["outputs"].get("private_run_dir"))
-    if public_value != EXPECTED_PUBLIC_RUN_DIR or private_value != EXPECTED_PRIVATE_RUN_DIR:
-        raise ValueError("EXP-060 canonical output-path drift")
+    if not is_replication(config):
+        if (
+            input_record.get("path") != EXPECTED_INPUT_PATH
+            or int(input_record.get("bytes", -1)) != EXPECTED_INPUT_BYTES
+            or input_record.get("sha256") != EXPECTED_INPUT_SHA256
+        ):
+            raise ValueError("EXP-060 paired-OOF input identity drift")
+        public_value = config["outputs"].get("formal_run_dir", config["outputs"].get("public_run_dir"))
+        private_value = config["outputs"].get("formal_private_dir", config["outputs"].get("private_run_dir"))
+        if public_value != EXPECTED_PUBLIC_RUN_DIR or private_value != EXPECTED_PRIVATE_RUN_DIR:
+            raise ValueError("EXP-060 canonical output-path drift")
     _guard_record_paths(config)
+    if not is_replication(config):
+        _validate_legacy_archive(path, config)
+        config["_archive_only"] = True
+        return config
     for section in ("implementation", "prerequisites", "input"):
         for record in iter_records(config.get(section, {})):
             require_record(record)
@@ -780,7 +1033,9 @@ def validate_loaded_input(data: dict[str, np.ndarray], config: dict[str, Any]) -
         raise ValueError("EXP-058 sample IDs are not unique")
     source_hash = canonical_digest(data["sample_ids"].tolist())
     expected_source = config["data"].get("source_order_sha256", EXPECTED_SOURCE_ORDER_SHA256)
-    if source_hash != expected_source or source_hash != EXPECTED_SOURCE_ORDER_SHA256:
+    if source_hash != expected_source or (
+        not is_replication(config) and source_hash != EXPECTED_SOURCE_ORDER_SHA256
+    ):
         raise ValueError("EXP-058 source-order drift")
     if not np.all(np.isin(data["gold"], [0, 1])):
         raise ValueError("Gold matrix is not binary")
@@ -876,6 +1131,10 @@ def _gate_candidate(
         "maximum_non_surprise_label_f1_gain": float(label_gain),
     }
     gates = {
+        "maximum_actual_qwen_call_rate": (
+            float(candidate["actual_call_rate"])
+            <= float(gate["maximum_actual_qwen_call_rate"]) + 1e-12
+        ),
         "minimum_six_label_macro_f1_gain": (
             gains["six_label_macro_f1_gain"] + 1e-12
             >= float(gate["minimum_six_label_macro_f1_gain"])
@@ -885,7 +1144,7 @@ def _gate_candidate(
             >= float(gate["minimum_five_label_macro_f1_gain"])
         ),
         "hamming_loss_not_worse": (
-            gains["hamming_loss_delta"] <= float(gate["maximum_hamming_loss_increase"]) + 1e-12
+            gains["hamming_loss_delta"] <= float(gate["maximum_hamming_loss_increase"])
         ),
         "minimum_non_surprise_label_f1_gain": (
             gains["maximum_non_surprise_label_f1_gain"] + 1e-12
@@ -1114,7 +1373,13 @@ def analyze_arrays(data: dict[str, np.ndarray], config: dict[str, Any]) -> dict[
     selected_internal: dict[str, dict[str, Any]] = {}
     passing: list[tuple[str, dict[str, Any]]] = []
     for policy in POLICY_ORDER:
-        candidate = choose_candidate(policy_internal_rows[policy], maximum_rate)
+        if is_replication(config):
+            candidate = next(
+                row for row in policy_internal_rows[policy]
+                if float(row["target_call_rate"]) == 0.15
+            )
+        else:
+            candidate = choose_candidate(policy_internal_rows[policy], maximum_rate)
         if candidate is None:
             raise RuntimeError(f"No <=20% candidate exists for {policy}")
         gains, gates, passed = _gate_candidate(candidate, baseline_metrics, config)
@@ -1124,20 +1389,46 @@ def analyze_arrays(data: dict[str, np.ndarray], config: dict[str, Any]) -> dict[
             if not key.startswith("_") and key != "six_label_macro_f1"
         }
         public_candidate.update(gains)
-        policy_records[policy] = {"candidate": public_candidate, "gates": gates, "passed": passed}
-        if passed:
+        primary_eligible = not is_replication(config) or policy == "logistic_router"
+        policy_records[policy] = {
+            "candidate": public_candidate,
+            "gates": gates,
+            "passed": bool(passed and primary_eligible),
+            **({
+                "diagnostic_gate_passed": bool(passed),
+                "evidence_role": "primary" if primary_eligible else "descriptive_only",
+            } if is_replication(config) else {}),
+        }
+        if passed and primary_eligible:
             passing.append((policy, candidate))
     precedence = {policy: index for index, policy in enumerate(POLICY_ORDER)}
     passing.sort(key=lambda item: (*_candidate_sort_key(item[1]), precedence[item[0]]))
-    overall_policy = passing[0][0] if passing else None
-    overall_candidate = policy_records[overall_policy]["candidate"] if overall_policy else None
+    if is_replication(config):
+        overall_policy = "logistic_router"
+        overall_candidate = policy_records[overall_policy]["candidate"]
+        overall_decision = "Pass" if policy_records[overall_policy]["passed"] else "Fail"
+    else:
+        overall_policy = passing[0][0] if passing else None
+        overall_candidate = policy_records[overall_policy]["candidate"] if overall_policy else None
+        overall_decision = "Pass" if overall_policy else "Stop router branch"
     selected_public = {
-        "schema_version": "exp-060-selected-operating-point-v1",
-        "experiment_id": EXPERIMENT_ID,
+        "schema_version": (
+            "exp-router-selected-operating-point-v2"
+            if is_replication(config)
+            else "exp-060-selected-operating-point-v1"
+        ),
+        "experiment_id": experiment_id(config),
+        **({
+            "run_id": run_id(config),
+            "attempt_id": attempt_id(config),
+            "model_seed": model_seed(config),
+            "primary_policy": "logistic_router",
+            "primary_nominal_call_rate": 0.15,
+        } if is_replication(config) else {}),
         "baseline": baseline_metrics,
         "policies": policy_records,
         "overall": {
-            "decision": "Pass" if overall_policy else "Stop router branch",
+            "decision": overall_decision,
             "selected_policy": overall_policy,
             "selected_candidate": overall_candidate,
         },
@@ -1174,8 +1465,12 @@ def analyze_arrays(data: dict[str, np.ndarray], config: dict[str, Any]) -> dict[
         router_targets, route_scores[2], (route_scores[2] >= 0.5).astype(np.uint8)
     )
     router_discrimination = {
-        "schema_version": "exp-060-router-discrimination-v1",
-        "experiment_id": EXPERIMENT_ID,
+        "schema_version": (
+            "exp-router-discrimination-v2"
+            if is_replication(config)
+            else "exp-060-router-discrimination-v1"
+        ),
+        "experiment_id": experiment_id(config),
         "overall": overall_router,
         "fold_auc_undefined": {
             "pr_auc": int(sum(row["pr_auc"] is None for row in fold_metrics)),
@@ -1357,8 +1652,8 @@ def bootstrap_selected_candidates(
             },
         }
     return {
-        "schema_version": "exp-060-bootstrap-v1",
-        "experiment_id": EXPERIMENT_ID,
+        "schema_version": "exp-router-bootstrap-v2" if is_replication(config) else "exp-060-bootstrap-v1",
+        "experiment_id": experiment_id(config),
         "repetitions": repetitions,
         "seed": base_seed,
         "unit": "duplicate_component",
@@ -1526,10 +1821,11 @@ def write_report(
     path: Path,
     selected: dict[str, Any],
     bootstrap: dict[str, Any],
+    config: dict[str, Any],
 ) -> None:
     overall = selected["overall"]
     lines = [
-        "# EXP-060 Pre-Qwen Deployable Router",
+        f"# {experiment_id(config)} Pre-Qwen Deployable Router",
         "",
         f"- Decision: `{overall['decision']}`",
         f"- Selected policy: `{overall['selected_policy']}`",
@@ -1556,8 +1852,16 @@ def write_report(
         "",
         "## Claim boundary",
         "",
-        "This is train-OOF development evidence for one frozen seed-42 model pair. It is not an ",
-        "independent-test deployment result, a cross-seed claim, or evidence of an emotion mechanism.",
+        (
+            f"This is train-OOF evidence for the frozen seed-{model_seed(config)} model pair. "
+            "It is not an independent-test deployment result, a completed cross-seed claim, or "
+            "evidence of an emotion mechanism."
+            if is_replication(config)
+            else "This is train-OOF development evidence for one frozen seed-42 model pair. It is not an "
+        ),
+        *( [] if is_replication(config) else [
+            "independent-test deployment result, a cross-seed claim, or evidence of an emotion mechanism."
+        ] ),
         "",
     ])
     path.write_text("\n".join(lines), encoding="utf-8")
@@ -1565,8 +1869,13 @@ def write_report(
 
 def feature_contract(config: dict[str, Any]) -> dict[str, Any]:
     return {
-        "schema_version": "exp-060-feature-contract-v1",
-        "experiment_id": EXPERIMENT_ID,
+        "schema_version": "exp-router-feature-contract-v2" if is_replication(config) else "exp-060-feature-contract-v1",
+        "experiment_id": experiment_id(config),
+        **({
+            "run_id": run_id(config),
+            "attempt_id": attempt_id(config),
+            "model_seed": model_seed(config),
+        } if is_replication(config) else {}),
         "label_order": list(LABEL_ORDER),
         "ordered_features": list(FEATURE_NAMES),
         "feature_count": len(FEATURE_NAMES),
@@ -1641,6 +1950,12 @@ def validate_public_csv_payloads(
 
 
 def _output_paths(config: dict[str, Any]) -> tuple[Path, Path]:
+    if is_replication(config):
+        outputs = _expected_replication_outputs(config)
+        return (
+            resolve_output(outputs["public_attempt_dir"]) / "router",
+            resolve_output(outputs["private_attempt_dir"]) / "router",
+        )
     public_value = config["outputs"].get("formal_run_dir", config["outputs"].get("public_run_dir"))
     private_value = config["outputs"].get(
         "formal_private_dir", config["outputs"].get("private_run_dir")
@@ -1649,9 +1964,22 @@ def _output_paths(config: dict[str, Any]) -> tuple[Path, Path]:
 
 
 def formal_run(config_path: Path, config: dict[str, Any]) -> dict[str, Any]:
+    if config.get("_archive_only"):
+        raise PermissionError("Sealed EXP-060 is archive-only and can never be rerun")
     run_dir, private_dir = _output_paths(config)
     if os.path.lexists(run_dir) or os.path.lexists(private_dir):
         raise FileExistsError("Refusing to overwrite append-only EXP-060 output")
+    if is_replication(config):
+        outputs = _expected_replication_outputs(config)
+        public_attempt = resolve_output(outputs["public_attempt_dir"])
+        private_attempt = resolve_output(outputs["private_attempt_dir"])
+        selection = resolve_output(outputs["selection_record"])
+        if os.path.lexists(selection):
+            raise FileExistsError("A final pipeline selection already exists")
+        if not public_attempt.is_dir() or not private_attempt.is_dir():
+            raise FileNotFoundError("Router requires the matching pre-existing public/private attempt")
+        if stat.S_IMODE(private_attempt.stat().st_mode) != 0o700:
+            raise PermissionError("Private replication attempt must be mode 0700")
     input_record = _record_by_names(config["input"], ("paired_oof",))
     input_path = require_record(input_record)
     if input_path.is_symlink() or stat.S_IMODE(input_path.stat().st_mode) != 0o600:
@@ -1704,8 +2032,8 @@ def formal_run(config_path: Path, config: dict[str, Any]) -> dict[str, Any]:
         public_csv, np.asarray(data["sample_ids"]), np.asarray(data["component_ids"])
     )
 
-    run_dir.mkdir(parents=True, mode=0o755)
-    private_dir.mkdir(parents=True, mode=0o700)
+    run_dir.mkdir(parents=not is_replication(config), mode=0o755)
+    private_dir.mkdir(parents=not is_replication(config), mode=0o700)
     os.chmod(private_dir, 0o700)
     frozen_sources = freeze_sources(run_dir, config_path, config)
     private_path = private_dir / "router-oof.npz"
@@ -1715,7 +2043,7 @@ def formal_run(config_path: Path, config: dict[str, Any]) -> dict[str, Any]:
     for filename, (rows, columns) in public_csv.items():
         atomic_csv(run_dir / filename, rows, columns)
     call_figure, risk_figure = make_figures(run_dir, analysis["call_rows"], risk_rows, config)
-    write_report(run_dir / "REPORT.md", analysis["selected"], bootstrap)
+    write_report(run_dir / "REPORT.md", analysis["selected"], bootstrap, config)
     public_outputs = {
         name.replace("-", "_").replace(".", "_"): artifact(run_dir / name)
         for name in (
@@ -1726,11 +2054,9 @@ def formal_run(config_path: Path, config: dict[str, Any]) -> dict[str, Any]:
         )
     }
     run = {
-        "schema_version": "exp-060-formal-run-v1",
-        "experiment_id": EXPERIMENT_ID,
-        "rq_id": RQ_ID,
+        "schema_version": "exp-router-formal-run-v2" if is_replication(config) else "exp-060-formal-run-v1",
+        **identity_provenance(config),
         "tier": "Major system experiment",
-        "stage": "pre-qwen-deployable-router",
         "status": "CompletedAwaitingVerification",
         "started_at_utc": started_at,
         "completed_at_utc": utc_now(),
@@ -1746,10 +2072,13 @@ def formal_run(config_path: Path, config: dict[str, Any]) -> dict[str, Any]:
             "mplconfigdir_configured": bool(config.get("runtime", {}).get("mplconfigdir")),
         },
         "git": git_metadata(),
+        **({"config": artifact(config_path)} if is_replication(config) else {}),
         "input_before": artifact(input_path),
         "input_sha256_after": input_hash_after,
         "input_schema": public_schema_records(schema),
-        "source_order_sha256": EXPECTED_SOURCE_ORDER_SHA256,
+        "source_order_sha256": config["data"].get(
+            "source_order_sha256", EXPECTED_SOURCE_ORDER_SHA256
+        ),
         "private_output": artifact(private_path),
         "public_outputs": public_outputs,
         "frozen_sources": frozen_sources,
@@ -1790,10 +2119,139 @@ def formal_run(config_path: Path, config: dict[str, Any]) -> dict[str, Any]:
     return run
 
 
+def create_json_once(path: Path, value: Any) -> None:
+    temporary = path.with_name(f".{path.name}.{os.getpid()}.tmp")
+    payload = (
+        json.dumps(value, indent=2, sort_keys=True, ensure_ascii=True, allow_nan=False) + "\n"
+    ).encode("utf-8")
+    descriptor = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o644)
+    try:
+        with os.fdopen(descriptor, "wb") as target:
+            target.write(payload)
+            target.flush()
+            os.fsync(target.fileno())
+        os.link(temporary, path)
+    finally:
+        if temporary.exists():
+            temporary.unlink()
+
+
+def replication_primary_gate_result(
+    selected: dict[str, Any], config: dict[str, Any]
+) -> bool:
+    if not is_replication(config):
+        raise PermissionError("Primary replication gate applies only to config-v2")
+    policies = selected.get("policies", {})
+    if not isinstance(policies, dict) or set(policies) != set(POLICY_ORDER):
+        raise ValueError("Replication selected-policy inventory drift")
+    primary = policies.get("logistic_router", {})
+    candidate = primary.get("candidate", {})
+    passed = primary.get("passed")
+    if not isinstance(passed, bool):
+        raise ValueError("Replication primary gate must be boolean")
+    expected_decision = "Pass" if passed else "Fail"
+    overall = selected.get("overall", {})
+    identity_ok = (
+        selected.get("schema_version") == "exp-router-selected-operating-point-v2"
+        and selected.get("experiment_id") == experiment_id(config)
+        and selected.get("run_id") == run_id(config)
+        and selected.get("attempt_id") == attempt_id(config)
+        and selected.get("model_seed") == model_seed(config)
+        and selected.get("primary_policy") == "logistic_router"
+        and float(selected.get("primary_nominal_call_rate", -1)) == 0.15
+    )
+    primary_ok = (
+        primary.get("evidence_role") == "primary"
+        and float(candidate.get("target_call_rate", -1)) == 0.15
+        and all(
+            policies[policy].get("evidence_role") == "descriptive_only"
+            and policies[policy].get("passed") is False
+            for policy in ("m1_max_entropy", "m1_threshold_proximity")
+        )
+    )
+    overall_ok = (
+        overall.get("decision") == expected_decision
+        and overall.get("selected_policy") == "logistic_router"
+        and overall.get("selected_candidate") == candidate
+    )
+    if not identity_ok or not primary_ok or not overall_ok:
+        raise ValueError("Frozen logistic_router@15% primary result drift")
+    return passed
+
+
+def complete_router_attempt(config_path: Path, config: dict[str, Any]) -> dict[str, Any]:
+    if not is_replication(config):
+        raise PermissionError("Router completion applies only to config-v2 attempts")
+    run_dir, private_dir = _output_paths(config)
+    selection = resolve_output(_expected_replication_outputs(config)["selection_record"])
+    if os.path.lexists(selection):
+        raise FileExistsError("A final pipeline selection already exists")
+    completion_path = run_dir / "router-complete.json"
+    if os.path.lexists(completion_path):
+        raise FileExistsError("Router completion record is immutable")
+    run_path = run_dir / "run.json"
+    verification_path = run_dir / "verification.json"
+    selected_path = run_dir / "selected-operating-point.json"
+    private_path = private_dir / "router-oof.npz"
+    if (
+        not run_path.is_file()
+        or not verification_path.is_file()
+        or not selected_path.is_file()
+        or not private_path.is_file()
+    ):
+        raise FileNotFoundError(
+            "Router completion requires run, selected point, verification, and private router OOF"
+        )
+    run = json.loads(run_path.read_text(encoding="utf-8"))
+    verification = json.loads(verification_path.read_text(encoding="utf-8"))
+    selected = json.loads(selected_path.read_text(encoding="utf-8"))
+    primary_gate_passed = replication_primary_gate_result(selected, config)
+    expected_decision = "Pass" if primary_gate_passed else "Fail"
+    verified = verification.get("verified_artifacts", {})
+    selected_record = run.get("public_outputs", {}).get("selected_operating_point_json")
+    if (
+        run.get("status") != "CompletedAwaitingVerification"
+        or not _identity_matches(run, config)
+        or run.get("decision") != expected_decision
+        or selected_record != artifact(selected_path)
+        or verification.get("status") != "Passed"
+        or int(verification.get("failed_count", -1)) != 0
+        or not _identity_matches(verification, config)
+        or verified.get("config") != artifact(config_path)
+        or verified.get("run") != artifact(run_path)
+        or verified.get("private_router_oof") != artifact(private_path)
+    ):
+        raise RuntimeError("Only a matching Passed router verification can complete this stage")
+    completion = {
+        "schema_version": "exp-router-completion-v2",
+        **identity_provenance(config),
+        "status": "Complete",
+        "completed_at_utc": utc_now(),
+        "decision": expected_decision,
+        "primary_gate_passed": primary_gate_passed,
+        "artifacts": {
+            "config": artifact(config_path),
+            "run": artifact(run_path),
+            "selected_operating_point": artifact(selected_path),
+            "final_verification": artifact(verification_path),
+            "private_router_oof": artifact(private_path),
+        },
+        "next_gate": "Finalizer must bind OOF, EXP-059, and router completion records.",
+        "claim_boundary": (
+            "Completes one verified train-only router stage; this is not namespace selection "
+            "or a completed cross-seed claim."
+        ),
+    }
+    if public_sensitive_paths(completion):
+        raise ValueError("Router completion contains row-level fields")
+    create_json_once(completion_path, completion)
+    return completion
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run frozen EXP-060 pre-Qwen router")
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
-    parser.add_argument("--stage", choices=("run",), default="run")
+    parser.add_argument("--stage", choices=("run", "complete"), default="run")
     return parser.parse_args()
 
 
@@ -1802,10 +2260,16 @@ def main() -> None:
         raise RuntimeError(f"EXP-060 must run from repository root: {REPO_ROOT}")
     args = parse_args()
     config_path = args.config.resolve()
-    if config_path != DEFAULT_CONFIG.resolve():
-        raise ValueError(f"EXP-060 must use the canonical formal config: {DEFAULT_CONFIG}")
+    if config_path.parent != (SCRIPT_DIR / "configs").resolve() or config_path.is_symlink():
+        raise ValueError("Router config must be a regular direct child of the canonical configs directory")
     config = load_config(config_path)
-    result = formal_run(config_path, config)
+    if not is_replication(config) and config_path != DEFAULT_CONFIG.resolve():
+        raise ValueError(f"Legacy EXP-060 must use the canonical formal config: {DEFAULT_CONFIG}")
+    result = (
+        formal_run(config_path, config)
+        if args.stage == "run"
+        else complete_router_attempt(config_path, config)
+    )
     print(json.dumps({"stage": args.stage, "status": result["status"]}, sort_keys=True))
 
 
