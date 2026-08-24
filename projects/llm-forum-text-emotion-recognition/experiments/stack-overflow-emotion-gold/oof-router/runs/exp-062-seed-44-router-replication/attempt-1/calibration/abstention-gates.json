@@ -1,0 +1,795 @@
+{
+  "families": {
+    "m1": {
+      "evaluated_candidates": [
+        {
+          "accepted_rows": 3190,
+          "actual_coverage": 0.9494047619047619,
+          "checks": {
+            "better_than_random": true,
+            "five_label_macro_f1": false,
+            "hamming_relative_reduction": false,
+            "non_surprise_positive_retention": false
+          },
+          "family": "m1",
+          "five_label_macro_f1": 0.6481723274433424,
+          "hamming_relative_reduction": 0.10760024507325433,
+          "hamming_risk": 0.04665621734587252,
+          "macro_f1": 0.5401436062027853,
+          "method": "mean_entropy",
+          "micro_f1": 0.7715528268099259,
+          "minimum_non_surprise_positive_retention": 0.4594594594594595,
+          "qualifies": false,
+          "random_hamming_p5": 0.051567398119122254,
+          "subset_error": 0.21598746081504705,
+          "target_coverage": 0.95
+        },
+        {
+          "accepted_rows": 3025,
+          "actual_coverage": 0.9002976190476191,
+          "checks": {
+            "better_than_random": true,
+            "five_label_macro_f1": false,
+            "hamming_relative_reduction": false,
+            "non_surprise_positive_retention": false
+          },
+          "family": "m1",
+          "five_label_macro_f1": 0.5399551025232793,
+          "hamming_relative_reduction": 0.18116894318377846,
+          "hamming_risk": 0.0428099173553719,
+          "macro_f1": 0.44996258543606604,
+          "method": "mean_entropy",
+          "micro_f1": 0.7801980198019802,
+          "minimum_non_surprise_positive_retention": 0.28378378378378377,
+          "qualifies": false,
+          "random_hamming_p5": 0.05134986225895317,
+          "subset_error": 0.19867768595041324,
+          "target_coverage": 0.9
+        },
+        {
+          "accepted_rows": 2690,
+          "actual_coverage": 0.8005952380952381,
+          "checks": {
+            "better_than_random": true,
+            "five_label_macro_f1": false,
+            "hamming_relative_reduction": true,
+            "non_surprise_positive_retention": false
+          },
+          "family": "m1",
+          "five_label_macro_f1": 0.38827443459966826,
+          "hamming_relative_reduction": 0.3363571594844917,
+          "hamming_risk": 0.03469640644361834,
+          "macro_f1": 0.3235620288330569,
+          "method": "mean_entropy",
+          "micro_f1": 0.8088737201365188,
+          "minimum_non_surprise_positive_retention": 0.20270270270270271,
+          "qualifies": false,
+          "random_hamming_p5": 0.05091697645600991,
+          "subset_error": 0.166542750929368,
+          "target_coverage": 0.8
+        },
+        {
+          "accepted_rows": 3190,
+          "actual_coverage": 0.9494047619047619,
+          "checks": {
+            "better_than_random": true,
+            "five_label_macro_f1": true,
+            "hamming_relative_reduction": false,
+            "non_surprise_positive_retention": true
+          },
+          "family": "m1",
+          "five_label_macro_f1": 0.698320881919131,
+          "hamming_relative_reduction": 0.09460898324341369,
+          "hamming_risk": 0.04733542319749216,
+          "macro_f1": 0.5819340682659425,
+          "method": "max_entropy",
+          "micro_f1": 0.7693482688391039,
+          "minimum_non_surprise_positive_retention": 0.8108108108108109,
+          "qualifies": false,
+          "random_hamming_p5": 0.051567398119122254,
+          "subset_error": 0.2163009404388715,
+          "target_coverage": 0.95
+        },
+        {
+          "accepted_rows": 3025,
+          "actual_coverage": 0.9002976190476191,
+          "checks": {
+            "better_than_random": true,
+            "five_label_macro_f1": true,
+            "hamming_relative_reduction": false,
+            "non_surprise_positive_retention": true
+          },
+          "family": "m1",
+          "five_label_macro_f1": 0.7127340606710698,
+          "hamming_relative_reduction": 0.19276114604732864,
+          "hamming_risk": 0.04220385674931129,
+          "macro_f1": 0.5939450505592249,
+          "method": "max_entropy",
+          "micro_f1": 0.7875762617859123,
+          "minimum_non_surprise_positive_retention": 0.6891891891891891,
+          "qualifies": false,
+          "random_hamming_p5": 0.05134986225895317,
+          "subset_error": 0.19206611570247933,
+          "target_coverage": 0.9
+        },
+        {
+          "accepted_rows": 2690,
+          "actual_coverage": 0.8005952380952381,
+          "checks": {
+            "better_than_random": true,
+            "five_label_macro_f1": true,
+            "hamming_relative_reduction": true,
+            "non_surprise_positive_retention": false
+          },
+          "family": "m1",
+          "five_label_macro_f1": 0.6788629759819947,
+          "hamming_relative_reduction": 0.36953930151026715,
+          "hamming_risk": 0.032961586121437424,
+          "macro_f1": 0.5657191466516623,
+          "method": "max_entropy",
+          "micro_f1": 0.8248847926267281,
+          "minimum_non_surprise_positive_retention": 0.28378378378378377,
+          "qualifies": false,
+          "random_hamming_p5": 0.05091697645600991,
+          "subset_error": 0.14869888475836435,
+          "target_coverage": 0.8
+        },
+        {
+          "accepted_rows": 3190,
+          "actual_coverage": 0.9494047619047619,
+          "checks": {
+            "better_than_random": true,
+            "five_label_macro_f1": true,
+            "hamming_relative_reduction": false,
+            "non_surprise_positive_retention": true
+          },
+          "family": "m1",
+          "five_label_macro_f1": 0.6929997617967811,
+          "hamming_relative_reduction": 0.08761368841196097,
+          "hamming_risk": 0.04770114942528736,
+          "macro_f1": 0.5774998014973176,
+          "method": "margin",
+          "micro_f1": 0.7714643304130163,
+          "minimum_non_surprise_positive_retention": 0.8108108108108109,
+          "qualifies": false,
+          "random_hamming_p5": 0.051567398119122254,
+          "subset_error": 0.21974921630094046,
+          "target_coverage": 0.95
+        },
+        {
+          "accepted_rows": 3025,
+          "actual_coverage": 0.9002976190476191,
+          "checks": {
+            "better_than_random": true,
+            "five_label_macro_f1": true,
+            "hamming_relative_reduction": false,
+            "non_surprise_positive_retention": true
+          },
+          "family": "m1",
+          "five_label_macro_f1": 0.7035691270981468,
+          "hamming_relative_reduction": 0.1664152304483511,
+          "hamming_risk": 0.04358126721763085,
+          "macro_f1": 0.5863076059151223,
+          "method": "margin",
+          "micro_f1": 0.7869647185564234,
+          "minimum_non_surprise_positive_retention": 0.6216216216216216,
+          "qualifies": false,
+          "random_hamming_p5": 0.05134986225895317,
+          "subset_error": 0.20132231404958678,
+          "target_coverage": 0.9
+        },
+        {
+          "accepted_rows": 2690,
+          "actual_coverage": 0.8005952380952381,
+          "checks": {
+            "better_than_random": true,
+            "five_label_macro_f1": true,
+            "hamming_relative_reduction": true,
+            "non_surprise_positive_retention": false
+          },
+          "family": "m1",
+          "five_label_macro_f1": 0.7082100629146652,
+          "hamming_relative_reduction": 0.31028547646423965,
+          "hamming_risk": 0.036059479553903345,
+          "macro_f1": 0.5901750524288877,
+          "method": "margin",
+          "micro_f1": 0.8152380952380953,
+          "minimum_non_surprise_positive_retention": 0.3918918918918919,
+          "qualifies": false,
+          "random_hamming_p5": 0.05091697645600991,
+          "subset_error": 0.16914498141263945,
+          "target_coverage": 0.8
+        }
+      ],
+      "full_coverage_metrics": {
+        "five_label_macro_f1": 0.6884894703360734,
+        "hamming_loss": 0.05228174603174603,
+        "macro_f1": 0.5737412252800612,
+        "micro_f1": 0.754083061129258,
+        "per_label": {
+          "anger": {
+            "f1": 0.8040912667191188,
+            "precision": 0.7825421133231241,
+            "predicted_positive": 653,
+            "recall": 0.8268608414239482,
+            "support": 618
+          },
+          "fear": {
+            "f1": 0.6013986013986014,
+            "precision": 0.6231884057971014,
+            "predicted_positive": 69,
+            "recall": 0.581081081081081,
+            "support": 74
+          },
+          "joy": {
+            "f1": 0.5737931034482758,
+            "precision": 0.5445026178010471,
+            "predicted_positive": 382,
+            "recall": 0.6064139941690962,
+            "support": 343
+          },
+          "love": {
+            "f1": 0.8401114206128134,
+            "precision": 0.8012752391073327,
+            "predicted_positive": 941,
+            "recall": 0.882903981264637,
+            "support": 854
+          },
+          "sadness": {
+            "f1": 0.6230529595015576,
+            "precision": 0.625,
+            "predicted_positive": 160,
+            "recall": 0.6211180124223602,
+            "support": 161
+          },
+          "surprise": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "predicted_positive": 0,
+            "recall": 0.0,
+            "support": 31
+          }
+        },
+        "rows": 3360,
+        "subset_accuracy": 0.7598214285714285,
+        "subset_error": 0.24017857142857146
+      },
+      "full_oof_uncertainty_cutoffs": [
+        {
+          "accepted_rows": 3360,
+          "method": "mean_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.38644731525843223,
+          "target_coverage": 1.0
+        },
+        {
+          "accepted_rows": 3192,
+          "method": "mean_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.2627428754819457,
+          "target_coverage": 0.95
+        },
+        {
+          "accepted_rows": 3024,
+          "method": "mean_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.23636985631737203,
+          "target_coverage": 0.9
+        },
+        {
+          "accepted_rows": 2688,
+          "method": "mean_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.19893149579929206,
+          "target_coverage": 0.8
+        },
+        {
+          "accepted_rows": 2352,
+          "method": "mean_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.15264867302509447,
+          "target_coverage": 0.7
+        },
+        {
+          "accepted_rows": 2016,
+          "method": "mean_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.12830567563959283,
+          "target_coverage": 0.6
+        },
+        {
+          "accepted_rows": 3360,
+          "method": "max_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.6931451392121121,
+          "target_coverage": 1.0
+        },
+        {
+          "accepted_rows": 3192,
+          "method": "max_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.679532095656876,
+          "target_coverage": 0.95
+        },
+        {
+          "accepted_rows": 3024,
+          "method": "max_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.6464327134703575,
+          "target_coverage": 0.9
+        },
+        {
+          "accepted_rows": 2688,
+          "method": "max_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.5054495429837867,
+          "target_coverage": 0.8
+        },
+        {
+          "accepted_rows": 2352,
+          "method": "max_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.3778068990226474,
+          "target_coverage": 0.7
+        },
+        {
+          "accepted_rows": 2016,
+          "method": "max_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.2768930286604516,
+          "target_coverage": 0.6
+        },
+        {
+          "accepted_rows": 3360,
+          "method": "margin",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": -0.00019723559748419106,
+          "target_coverage": 1.0
+        },
+        {
+          "accepted_rows": 3192,
+          "method": "margin",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": -0.04942043458914941,
+          "target_coverage": 0.95
+        },
+        {
+          "accepted_rows": 3024,
+          "method": "margin",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": -0.10635114301768919,
+          "target_coverage": 0.9
+        },
+        {
+          "accepted_rows": 2688,
+          "method": "margin",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": -0.1715867975439808,
+          "target_coverage": 0.8
+        },
+        {
+          "accepted_rows": 2352,
+          "method": "margin",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": -0.20228743482495695,
+          "target_coverage": 0.7
+        },
+        {
+          "accepted_rows": 2016,
+          "method": "margin",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": -0.2137523024433946,
+          "target_coverage": 0.6
+        }
+      ],
+      "passed": false,
+      "selected_operating_point": null
+    },
+    "m3": {
+      "evaluated_candidates": [
+        {
+          "accepted_rows": 3190,
+          "actual_coverage": 0.9494047619047619,
+          "checks": {
+            "better_than_random": true,
+            "five_label_macro_f1": true,
+            "hamming_relative_reduction": false,
+            "non_surprise_positive_retention": true
+          },
+          "family": "m3",
+          "five_label_macro_f1": 0.7255556824803214,
+          "hamming_relative_reduction": 0.13140887548470487,
+          "hamming_risk": 0.045454545454545456,
+          "macro_f1": 0.6462964020669345,
+          "method": "mean_entropy",
+          "micro_f1": 0.7861356932153392,
+          "minimum_non_surprise_positive_retention": 0.8483965014577259,
+          "qualifies": false,
+          "random_hamming_p5": 0.05188087774294671,
+          "subset_error": 0.2266457680250784,
+          "target_coverage": 0.95
+        },
+        {
+          "accepted_rows": 3025,
+          "actual_coverage": 0.9002976190476191,
+          "checks": {
+            "better_than_random": true,
+            "five_label_macro_f1": true,
+            "hamming_relative_reduction": true,
+            "non_surprise_positive_retention": true
+          },
+          "family": "m3",
+          "five_label_macro_f1": 0.7345270985167922,
+          "hamming_relative_reduction": 0.23774548587991068,
+          "hamming_risk": 0.03988980716253444,
+          "macro_f1": 0.6306244339491787,
+          "method": "mean_entropy",
+          "micro_f1": 0.804112554112554,
+          "minimum_non_surprise_positive_retention": 0.6647230320699709,
+          "qualifies": true,
+          "random_hamming_p5": 0.05134435261707989,
+          "subset_error": 0.20066115702479337,
+          "target_coverage": 0.9
+        },
+        {
+          "accepted_rows": 2690,
+          "actual_coverage": 0.8005952380952381,
+          "checks": {
+            "better_than_random": true,
+            "five_label_macro_f1": true,
+            "hamming_relative_reduction": true,
+            "non_surprise_positive_retention": false
+          },
+          "family": "m3",
+          "five_label_macro_f1": 0.7445760575050842,
+          "hamming_relative_reduction": 0.4163110696101059,
+          "hamming_risk": 0.030545229244114003,
+          "macro_f1": 0.6204800479209035,
+          "method": "mean_entropy",
+          "micro_f1": 0.8391517128874388,
+          "minimum_non_surprise_positive_retention": 0.3819241982507289,
+          "qualifies": false,
+          "random_hamming_p5": 0.051109045848822796,
+          "subset_error": 0.1565055762081784,
+          "target_coverage": 0.8
+        },
+        {
+          "accepted_rows": 3190,
+          "actual_coverage": 0.9494047619047619,
+          "checks": {
+            "better_than_random": true,
+            "five_label_macro_f1": true,
+            "hamming_relative_reduction": false,
+            "non_surprise_positive_retention": true
+          },
+          "family": "m3",
+          "five_label_macro_f1": 0.7158198508407334,
+          "hamming_relative_reduction": 0.09646555438351483,
+          "hamming_risk": 0.04728317659352142,
+          "macro_f1": 0.6553400717790426,
+          "method": "max_entropy",
+          "micro_f1": 0.7791066634122529,
+          "minimum_non_surprise_positive_retention": 0.8542274052478134,
+          "qualifies": false,
+          "random_hamming_p5": 0.05188087774294671,
+          "subset_error": 0.23260188087774292,
+          "target_coverage": 0.95
+        },
+        {
+          "accepted_rows": 3025,
+          "actual_coverage": 0.9002976190476191,
+          "checks": {
+            "better_than_random": true,
+            "five_label_macro_f1": true,
+            "hamming_relative_reduction": false,
+            "non_surprise_positive_retention": true
+          },
+          "family": "m3",
+          "five_label_macro_f1": 0.7185299797805058,
+          "hamming_relative_reduction": 0.17457522227879838,
+          "hamming_risk": 0.043195592286501376,
+          "macro_f1": 0.6518052861807245,
+          "method": "max_entropy",
+          "micro_f1": 0.7905982905982907,
+          "minimum_non_surprise_positive_retention": 0.7201166180758017,
+          "qualifies": false,
+          "random_hamming_p5": 0.05134435261707989,
+          "subset_error": 0.21223140495867765,
+          "target_coverage": 0.9
+        },
+        {
+          "accepted_rows": 2690,
+          "actual_coverage": 0.8005952380952381,
+          "checks": {
+            "better_than_random": true,
+            "five_label_macro_f1": true,
+            "hamming_relative_reduction": true,
+            "non_surprise_positive_retention": false
+          },
+          "family": "m3",
+          "five_label_macro_f1": 0.7372696909907381,
+          "hamming_relative_reduction": 0.3878961926742896,
+          "hamming_risk": 0.032032218091697644,
+          "macro_f1": 0.6677247424922816,
+          "method": "max_entropy",
+          "micro_f1": 0.8299901348240709,
+          "minimum_non_surprise_positive_retention": 0.4752186588921283,
+          "qualifies": false,
+          "random_hamming_p5": 0.051109045848822796,
+          "subset_error": 0.1617100371747212,
+          "target_coverage": 0.8
+        },
+        {
+          "accepted_rows": 3190,
+          "actual_coverage": 0.9494047619047619,
+          "checks": {
+            "better_than_random": true,
+            "five_label_macro_f1": true,
+            "hamming_relative_reduction": false,
+            "non_surprise_positive_retention": true
+          },
+          "family": "m3",
+          "five_label_macro_f1": 0.7266180901796306,
+          "hamming_relative_reduction": 0.07350280051701855,
+          "hamming_risk": 0.048484848484848485,
+          "macro_f1": 0.6721817418163588,
+          "method": "margin",
+          "micro_f1": 0.7807183364839319,
+          "minimum_non_surprise_positive_retention": 0.8979591836734694,
+          "qualifies": false,
+          "random_hamming_p5": 0.05188087774294671,
+          "subset_error": 0.23416927899686524,
+          "target_coverage": 0.95
+        },
+        {
+          "accepted_rows": 3025,
+          "actual_coverage": 0.9002976190476191,
+          "checks": {
+            "better_than_random": true,
+            "five_label_macro_f1": true,
+            "hamming_relative_reduction": false,
+            "non_surprise_positive_retention": true
+          },
+          "family": "m3",
+          "five_label_macro_f1": 0.7382410081414376,
+          "hamming_relative_reduction": 0.1493071168383534,
+          "hamming_risk": 0.04451790633608815,
+          "macro_f1": 0.6582115928060368,
+          "method": "margin",
+          "micro_f1": 0.7937723328228689,
+          "minimum_non_surprise_positive_retention": 0.7784256559766763,
+          "qualifies": false,
+          "random_hamming_p5": 0.05134435261707989,
+          "subset_error": 0.21719008264462814,
+          "target_coverage": 0.9
+        },
+        {
+          "accepted_rows": 2690,
+          "actual_coverage": 0.8005952380952381,
+          "checks": {
+            "better_than_random": true,
+            "five_label_macro_f1": true,
+            "hamming_relative_reduction": true,
+            "non_surprise_positive_retention": true
+          },
+          "family": "m3",
+          "five_label_macro_f1": 0.7656386154341219,
+          "hamming_relative_reduction": 0.30028365545552255,
+          "hamming_risk": 0.03661710037174721,
+          "macro_f1": 0.675069216565472,
+          "method": "margin",
+          "micro_f1": 0.8260229614365617,
+          "minimum_non_surprise_positive_retention": 0.5947521865889213,
+          "qualifies": true,
+          "random_hamming_p5": 0.051109045848822796,
+          "subset_error": 0.18141263940520447,
+          "target_coverage": 0.8
+        }
+      ],
+      "full_coverage_metrics": {
+        "five_label_macro_f1": 0.710372070265746,
+        "hamming_loss": 0.05233134920634921,
+        "macro_f1": 0.6576332908780207,
+        "micro_f1": 0.7646665179567254,
+        "per_label": {
+          "anger": {
+            "f1": 0.8018223234624147,
+            "precision": 0.7553648068669528,
+            "predicted_positive": 699,
+            "recall": 0.8543689320388349,
+            "support": 618
+          },
+          "fear": {
+            "f1": 0.6282051282051282,
+            "precision": 0.5975609756097561,
+            "predicted_positive": 82,
+            "recall": 0.6621621621621622,
+            "support": 74
+          },
+          "joy": {
+            "f1": 0.6183844011142061,
+            "precision": 0.592,
+            "predicted_positive": 375,
+            "recall": 0.6472303206997084,
+            "support": 343
+          },
+          "love": {
+            "f1": 0.8347368421052631,
+            "precision": 0.7581261950286807,
+            "predicted_positive": 1046,
+            "recall": 0.9285714285714286,
+            "support": 854
+          },
+          "sadness": {
+            "f1": 0.6687116564417178,
+            "precision": 0.6606060606060606,
+            "predicted_positive": 165,
+            "recall": 0.6770186335403726,
+            "support": 161
+          },
+          "surprise": {
+            "f1": 0.393939393939394,
+            "precision": 0.37142857142857144,
+            "predicted_positive": 35,
+            "recall": 0.41935483870967744,
+            "support": 31
+          }
+        },
+        "rows": 3360,
+        "subset_accuracy": 0.7455357142857143,
+        "subset_error": 0.2544642857142857
+      },
+      "full_oof_uncertainty_cutoffs": [
+        {
+          "accepted_rows": 3360,
+          "method": "mean_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.4491110334066994,
+          "target_coverage": 1.0
+        },
+        {
+          "accepted_rows": 3192,
+          "method": "mean_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.2698740718772344,
+          "target_coverage": 0.95
+        },
+        {
+          "accepted_rows": 3024,
+          "method": "mean_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.24323010910814213,
+          "target_coverage": 0.9
+        },
+        {
+          "accepted_rows": 2688,
+          "method": "mean_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.2057271150215425,
+          "target_coverage": 0.8
+        },
+        {
+          "accepted_rows": 2352,
+          "method": "mean_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.17407163314750862,
+          "target_coverage": 0.7
+        },
+        {
+          "accepted_rows": 2016,
+          "method": "mean_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.14551388765713769,
+          "target_coverage": 0.6
+        },
+        {
+          "accepted_rows": 3360,
+          "method": "max_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.693147023151713,
+          "target_coverage": 1.0
+        },
+        {
+          "accepted_rows": 3192,
+          "method": "max_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.6897345918410762,
+          "target_coverage": 0.95
+        },
+        {
+          "accepted_rows": 3024,
+          "method": "max_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.6761255101086869,
+          "target_coverage": 0.9
+        },
+        {
+          "accepted_rows": 2688,
+          "method": "max_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.626404084626135,
+          "target_coverage": 0.8
+        },
+        {
+          "accepted_rows": 2352,
+          "method": "max_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.5479839079900557,
+          "target_coverage": 0.7
+        },
+        {
+          "accepted_rows": 2016,
+          "method": "max_entropy",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": 0.4392635104671726,
+          "target_coverage": 0.6
+        },
+        {
+          "accepted_rows": 3360,
+          "method": "margin",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": -0.00025809979626992274,
+          "target_coverage": 1.0
+        },
+        {
+          "accepted_rows": 3192,
+          "method": "margin",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": -0.022644857477974067,
+          "target_coverage": 0.95
+        },
+        {
+          "accepted_rows": 3024,
+          "method": "margin",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": -0.04770828207283598,
+          "target_coverage": 0.9
+        },
+        {
+          "accepted_rows": 2688,
+          "method": "margin",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": -0.0948414752102241,
+          "target_coverage": 0.8
+        },
+        {
+          "accepted_rows": 2352,
+          "method": "margin",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": -0.13639265695134062,
+          "target_coverage": 0.7
+        },
+        {
+          "accepted_rows": 2016,
+          "method": "margin",
+          "online_tie_policy": "accept_score_below_cutoff_then_sample_id_order_for_boundary_ties",
+          "score_cutoff": -0.16946732831210592,
+          "target_coverage": 0.6
+        }
+      ],
+      "passed": true,
+      "selected_operating_point": {
+        "accepted_rows": 2690,
+        "actual_coverage": 0.8005952380952381,
+        "checks": {
+          "better_than_random": true,
+          "five_label_macro_f1": true,
+          "hamming_relative_reduction": true,
+          "non_surprise_positive_retention": true
+        },
+        "family": "m3",
+        "five_label_macro_f1": 0.7656386154341219,
+        "hamming_relative_reduction": 0.30028365545552255,
+        "hamming_risk": 0.03661710037174721,
+        "macro_f1": 0.675069216565472,
+        "method": "margin",
+        "micro_f1": 0.8260229614365617,
+        "minimum_non_surprise_positive_retention": 0.5947521865889213,
+        "qualifies": true,
+        "random_hamming_p5": 0.051109045848822796,
+        "subset_error": 0.18141263940520447,
+        "target_coverage": 0.8
+      }
+    }
+  }
+}

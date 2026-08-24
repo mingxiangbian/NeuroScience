@@ -1,0 +1,271 @@
+{
+  "attempt_id": "attempt-1",
+  "authorization": {
+    "formal_analysis": true,
+    "model_loading_or_forward": false,
+    "preflight": true,
+    "router_training": false,
+    "test_access": false,
+    "validation_access": false
+  },
+  "bootstrap": {
+    "interval": "percentile_95",
+    "repetitions": 2000,
+    "seed": 20260817,
+    "unit": "duplicate_component"
+  },
+  "calibration": {
+    "ece_bins": 15,
+    "maximum_brier_worsening": 1e-06,
+    "method": "one_scalar_temperature_per_family",
+    "minimum_nll_improvement": 1e-06,
+    "optimizer_max_iterations": 1000,
+    "optimizer_parameter": "log_temperature",
+    "optimizer_tolerance": 1e-12,
+    "temperature_bounds": [
+      0.05,
+      20.0
+    ]
+  },
+  "cross_fitting": {
+    "fold_ids": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "heldout_folds": 1,
+    "meta_train_folds": 4,
+    "reuse_exp058_duplicate_component_partition": true
+  },
+  "data": {
+    "label_order": [
+      "love",
+      "joy",
+      "surprise",
+      "anger",
+      "sadness",
+      "fear"
+    ],
+    "protocol_id": "DATA-SO-TASK-V1",
+    "rows": 3360,
+    "split": "train-oof"
+  },
+  "experiment_id": "EXP-059",
+  "implementation": {
+    "protocol": {
+      "bytes": 12216,
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-059-calibration-selective-prediction.md",
+      "sha256": "a483b79d5b41f4ffb2f6b27db2dfdd215a525ed77d4dc207e56320dbff5eaddb"
+    },
+    "runner": {
+      "bytes": 97472,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/run_exp059_calibration.py",
+      "sha256": "6ed8974efb2194c5e6b408dd9e6eff3e46995759984ee8f60ab61c7a30e65c58"
+    },
+    "tests": {
+      "bytes": 55389,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/tests/test_exp059_calibration.py",
+      "sha256": "3cae10713382abbf62cc2c00a9364a166b730ec5e8dbdf71d1c10b52741bc11b"
+    },
+    "verifier": {
+      "bytes": 117428,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/verify_exp059_calibration.py",
+      "sha256": "dfedf76fbc9d4729fcc7936f9d95dfd7e9ef90f14dfbed016f36028608f3d33d"
+    }
+  },
+  "input": {
+    "paired_oof": {
+      "bytes": 307716,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-062-seed-44-router-replication/attempt-1/paired-oof.npz",
+      "sha256": "11e1574742acbf46ecb7bcc0c946243d2c21e0e79e10bc8d9c402b4dfd8d1cfd"
+    }
+  },
+  "model_seed": 44,
+  "oracle": {
+    "minimum_macro_gain": 0.01,
+    "selection_unit": "whole_six_bit_vector",
+    "tie_policy": "m1"
+  },
+  "outputs": {
+    "private_attempt_dir": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-062-seed-44-router-replication/attempt-1",
+    "private_namespace": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-062-seed-44-router-replication",
+    "public_attempt_dir": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1",
+    "public_namespace": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication",
+    "selection_record": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/selected-attempt.json"
+  },
+  "prerequisites": {
+    "oof_completion": {
+      "bytes": 2618,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/oof-complete.json",
+      "sha256": "cef88588c48cb06ee7f2c31f980acd89ee78f44802b5e4cad2380ca0e9eaa47b"
+    },
+    "oof_run": {
+      "bytes": 14920,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/run.json",
+      "sha256": "bb50aec60f4aa90d53eb2c63d94b60ed51357155910c863f84d20f8c5c19c2e2"
+    },
+    "oof_verification": {
+      "bytes": 2540245,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/verification.json",
+      "sha256": "5534973e969eefe352bcde57e0ebf363422b76e9ad1bbfa5cbde0e415ff15cac"
+    },
+    "preflight_run": {
+      "bytes": 5071,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/calibration-preflight/run.json",
+      "sha256": "a8965ef84a28262a1cf18c6636c56986ee177c019d1cf9ffdb471a39bd6c1f4f"
+    },
+    "preflight_verification": {
+      "bytes": 6015,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/calibration-preflight/verification.json",
+      "sha256": "43adda0e118af2ba93a6f90fb09a55516e0db1acf6b9858e553b598e5986cd91"
+    }
+  },
+  "replication_parent_experiment_id": "EXP-062",
+  "resources": {
+    "api_cost_usd": 0,
+    "formal_wall_seconds": 1800,
+    "peak_memory_gb": 4.0,
+    "verification_wall_seconds": 1800
+  },
+  "rq_id": "RQ-S3",
+  "run_id": "exp-062-seed-44-router-replication",
+  "schema_version": "exp-059-calibration-config-v2",
+  "seed_contract": {
+    "m1_batch_seed": 44,
+    "m3_batch_seed": 44,
+    "m3_head_seed": 44,
+    "m3_lora_seed": 100044,
+    "model_seed": 44,
+    "numpy_seed": 44,
+    "python_seed": 44,
+    "torch_seed": 44
+  },
+  "selective_prediction": {
+    "coverages": [
+      1.0,
+      0.95,
+      0.9,
+      0.8,
+      0.7,
+      0.6
+    ],
+    "gate_hamming_relative_reduction": 0.2,
+    "gate_max_five_label_macro_drop": 0.01,
+    "gate_min_non_surprise_retention": 0.5,
+    "gate_minimum_coverage": 0.8,
+    "methods": [
+      "mean_entropy",
+      "max_entropy",
+      "margin"
+    ],
+    "random_repetitions": 100,
+    "random_seed": 20260817
+  },
+  "stage": "cross-fitted-calibration-selective-prediction",
+  "thresholds": {
+    "grid": [
+      0.05,
+      0.06,
+      0.07,
+      0.08,
+      0.09,
+      0.1,
+      0.11,
+      0.12,
+      0.13,
+      0.14,
+      0.15,
+      0.16,
+      0.17,
+      0.18,
+      0.19,
+      0.2,
+      0.21,
+      0.22,
+      0.23,
+      0.24,
+      0.25,
+      0.26,
+      0.27,
+      0.28,
+      0.29,
+      0.3,
+      0.31,
+      0.32,
+      0.33,
+      0.34,
+      0.35,
+      0.36,
+      0.37,
+      0.38,
+      0.39,
+      0.4,
+      0.41,
+      0.42,
+      0.43,
+      0.44,
+      0.45,
+      0.46,
+      0.47,
+      0.48,
+      0.49,
+      0.5,
+      0.51,
+      0.52,
+      0.53,
+      0.54,
+      0.55,
+      0.56,
+      0.57,
+      0.58,
+      0.59,
+      0.6,
+      0.61,
+      0.62,
+      0.63,
+      0.64,
+      0.65,
+      0.66,
+      0.67,
+      0.68,
+      0.69,
+      0.7,
+      0.71,
+      0.72,
+      0.73,
+      0.74,
+      0.75,
+      0.76,
+      0.77,
+      0.78,
+      0.79,
+      0.8,
+      0.81,
+      0.82,
+      0.83,
+      0.84,
+      0.85,
+      0.86,
+      0.87,
+      0.88,
+      0.89,
+      0.9,
+      0.91,
+      0.92,
+      0.93,
+      0.94,
+      0.95
+    ],
+    "scope": "one_global_threshold_per_family_pipeline_and_meta_fold",
+    "selection_order": [
+      "highest_macro_f1",
+      "lowest_hamming_loss",
+      "closest_to_0_5",
+      "lower_threshold"
+    ],
+    "tie_tolerance": 1e-12
+  },
+  "tier": "Major"
+}

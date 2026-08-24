@@ -95,9 +95,12 @@ def synthetic_attempt(root: Path, *, experiment_id: str = "EXP-061", passed: boo
     write_json(public_attempt / "oof-complete.json", oof_completion)
 
     calibration_dir = public_attempt / "calibration"
+    private_calibration_dir = private_attempt / "calibration"
     cal_run = calibration_dir / "run.json"
     cal_verification = calibration_dir / "verification.json"
+    cal_verification_summary = calibration_dir / "VERIFICATION-SUMMARY.md"
     cal_parameters = calibration_dir / "calibration-parameters.json"
+    private_calibration = private_calibration_dir / "cross-fitted-calibration.npz"
     calibration_identity = {
         "experiment_id": "EXP-059",
         "replication_parent_experiment_id": experiment_id,
@@ -106,10 +109,54 @@ def synthetic_attempt(root: Path, *, experiment_id: str = "EXP-061", passed: boo
         "model_seed": seed,
         "seed_contract": finalizer.expected_seed_contract(seed),
     }
-    write_json(
-        cal_run, {**calibration_identity, "status": "CompletedAwaitingVerification"}
-    )
     write_json(cal_parameters, {**calibration_identity, "families": {}})
+    public_output_paths = {
+        "calibration_parameters": cal_parameters,
+        "calibration_metrics": calibration_dir / "calibration-metrics.json",
+        "classification_metrics": calibration_dir / "classification-metrics.json",
+        "oracle_summary": calibration_dir / "oracle-summary.json",
+        "abstention_gates": calibration_dir / "abstention-gates.json",
+        "bootstrap": calibration_dir / "bootstrap.json",
+        "reliability_bins": calibration_dir / "reliability-bins.csv",
+        "risk_coverage": calibration_dir / "risk-coverage.csv",
+        "label_retention": calibration_dir / "label-retention.csv",
+        "random_rejection": calibration_dir / "random-rejection.csv",
+        "reliability_figure": calibration_dir / "reliability-diagram.png",
+        "risk_coverage_figure": calibration_dir / "risk-coverage-curve.png",
+        "report": calibration_dir / "REPORT.md",
+    }
+    for name, path in public_output_paths.items():
+        if name != "calibration_parameters":
+            write_payload(path, f"synthetic {name}\n")
+    frozen_source_paths = {
+        "config": calibration_dir / "frozen-sources" / "config.json",
+        "protocol": calibration_dir / "frozen-sources" / "protocol.md",
+        "runner": calibration_dir / "frozen-sources" / "runner.py",
+        "verifier": calibration_dir / "frozen-sources" / "verifier.py",
+        "tests": calibration_dir / "frozen-sources" / "tests.py",
+    }
+    for name, path in frozen_source_paths.items():
+        write_payload(path, f"synthetic frozen {name}\n")
+    write_payload(private_calibration, "synthetic calibration bytes\n")
+    public_outputs = {
+        name: finalizer.artifact(path, root)
+        for name, path in public_output_paths.items()
+    }
+    frozen_sources = {
+        name: finalizer.artifact(path, root)
+        for name, path in frozen_source_paths.items()
+    }
+    write_json(
+        cal_run,
+        {
+            **calibration_identity,
+            "status": "CompletedAwaitingVerification",
+            "config": finalizer.artifact(cal_config, root),
+            "private_output": finalizer.artifact(private_calibration, root),
+            "public_outputs": public_outputs,
+            "frozen_sources": frozen_sources,
+        },
+    )
     write_json(
         cal_verification,
         {
@@ -120,9 +167,14 @@ def synthetic_attempt(root: Path, *, experiment_id: str = "EXP-061", passed: boo
                 "config": finalizer.artifact(cal_config, root),
                 "run": finalizer.artifact(cal_run, root),
                 "calibration_parameters": finalizer.artifact(cal_parameters, root),
+                "paired_oof": finalizer.artifact(paired, root),
+                "private_output": finalizer.artifact(private_calibration, root),
+                "public_outputs": public_outputs,
+                "frozen_sources": frozen_sources,
             },
         },
     )
+    write_payload(cal_verification_summary, "synthetic EXP-059 verification summary\n")
     calibration_completion = {
         "schema_version": "exp-059-calibration-completion-v2",
         **calibration_identity,
@@ -131,7 +183,14 @@ def synthetic_attempt(root: Path, *, experiment_id: str = "EXP-061", passed: boo
             "config": finalizer.artifact(cal_config, root),
             "exp059_run": finalizer.artifact(cal_run, root),
             "exp059_verification": finalizer.artifact(cal_verification, root),
+            "exp059_verification_summary": finalizer.artifact(
+                cal_verification_summary, root
+            ),
             "exp059_calibration_parameters": finalizer.artifact(cal_parameters, root),
+            "paired_oof_private": finalizer.artifact(paired, root),
+            "private_calibration": finalizer.artifact(private_calibration, root),
+            "public_outputs": public_outputs,
+            "frozen_sources": frozen_sources,
         },
     }
     write_json(public_attempt / "calibration-complete.json", calibration_completion)
@@ -256,6 +315,10 @@ class RouterReplicationFinalizerTests(unittest.TestCase):
                 self.assertEqual(selection["primary_gate_passed"], passed)
                 self.assertIn("EXP-063 alone", selection["claim_boundary"])
                 self.assertEqual(set(selection["completions"]), set(finalizer.STAGES))
+                self.assertEqual(
+                    set(selection["stage_artifacts"]["calibration"]),
+                    finalizer.STAGES["calibration"]["artifacts"],
+                )
 
     def test_selection_is_atomic_and_single_use(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -274,6 +337,30 @@ class RouterReplicationFinalizerTests(unittest.TestCase):
             root = Path(temporary)
             script_dir, public_attempt, _private = synthetic_attempt(root)
             (public_attempt / "calibration" / "run.json").write_text("tampered\n")
+            with self.assertRaisesRegex(ValueError, "Artifact record drift"):
+                finalizer.validate_attempt(
+                    "EXP-061", "attempt-1", script_dir=script_dir, project_root=root
+                )
+
+    def test_calibration_completion_exact_inventory_and_nested_hashes_are_enforced(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            script_dir, public_attempt, _private = synthetic_attempt(root)
+            completion_path = public_attempt / "calibration-complete.json"
+            completion = json.loads(completion_path.read_text(encoding="utf-8"))
+            completion["artifacts"].pop("private_calibration")
+            write_json(completion_path, completion)
+            with self.assertRaisesRegex(ValueError, "artifact inventory drift"):
+                finalizer.validate_attempt(
+                    "EXP-061", "attempt-1", script_dir=script_dir, project_root=root
+                )
+
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            script_dir, public_attempt, _private = synthetic_attempt(root)
+            (public_attempt / "calibration" / "calibration-metrics.json").write_text(
+                "tampered\n", encoding="utf-8"
+            )
             with self.assertRaisesRegex(ValueError, "Artifact record drift"):
                 finalizer.validate_attempt(
                     "EXP-061", "attempt-1", script_dir=script_dir, project_root=root

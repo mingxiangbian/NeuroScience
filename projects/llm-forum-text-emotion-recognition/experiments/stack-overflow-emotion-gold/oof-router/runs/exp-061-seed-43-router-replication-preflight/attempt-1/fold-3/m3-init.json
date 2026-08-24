@@ -1,0 +1,50 @@
+{
+  "attempt_id": "attempt-1",
+  "claim_boundary": "Fresh initialization and sample-order digests only; no forward or training.",
+  "completed_at_utc": "2026-08-20T04:35:42.259940+00:00",
+  "execution_claims": {
+    "calibration_performed": false,
+    "heldout_forward_performed": false,
+    "metric_computed": false,
+    "model_loaded": true,
+    "optimizer_created": false,
+    "router_training_performed": false,
+    "row_level_artifact_written": false,
+    "test_accessed": false,
+    "training_performed": false,
+    "validation_accessed": false
+  },
+  "experiment_id": "EXP-061",
+  "fold_id": 3,
+  "formal_attempt_id": "attempt-1",
+  "formal_run_id": "exp-061-seed-43-router-replication",
+  "model_seed": 43,
+  "observed": {
+    "base_asset_manifest_sha256": "26d4fc3b7ce92375d580aeb73f60b2e3df9ee0b845a30e011528894be04c66f4",
+    "fold_manifest_sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8",
+    "m3_base_sentinel_sha256": "7b1e9b2d60fc008377315477fd9cafa3664135220f042fcf98b395787744a800",
+    "m3_batch_order_sha256": "d8234c90ac0db49da9415b533886ab35c3ac74fc23962d8f52f56ebb9e2d1b81",
+    "m3_classifier_head_init_sha256": "079d853fc8644442262d7ff23d99a2822e5b5b9c3fa24e09c55a4ae8ddb802bc",
+    "m3_initialization_state_sha256": "ba95d2a86dcb86b14aecaca3ff1e77f158d3e632369e45f033d39576260748c1",
+    "m3_lora_a_init_sha256": "6316266f1f65a51a3d52b2b00b4d2722f69632e5ec8ae6a5429fce364ddfefc5",
+    "m3_lora_b_init_sha256": "495781728d62eb498f041578c88e730c1d6a48a7aafe9c8a447df742a64a90d0",
+    "m3_lora_b_zero_initialized": true,
+    "m3_lora_combined_init_sha256": "b6b8c3792e452694354a574c6e88bce63ff7acbd1991ba30ceae4df38708f2c7",
+    "m3_rng_state_digest": "5ea184744c588a9e5c7881ef205255b8342f453c996ad84ad623f8bd0f1190f9",
+    "model_seed": 43
+  },
+  "run_id": "exp-061-seed-43-router-replication-preflight",
+  "schema_version": "exp-oof-m3-initialization-v1",
+  "seed_contract": {
+    "m1_batch_seed": 43,
+    "m3_batch_seed": 43,
+    "m3_head_seed": 43,
+    "m3_lora_seed": 100043,
+    "model_seed": 43,
+    "numpy_seed": 43,
+    "python_seed": 43,
+    "torch_seed": 43
+  },
+  "seed_contract_sha256": "af79cc896b7ff2be8b1eb8972fba4c5e937806f7ccb3780143abf016951afe5d",
+  "status": "Passed"
+}

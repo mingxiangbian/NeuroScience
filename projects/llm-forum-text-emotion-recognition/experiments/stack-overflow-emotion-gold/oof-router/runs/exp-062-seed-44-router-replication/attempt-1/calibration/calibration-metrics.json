@@ -1,0 +1,46 @@
+{
+  "families": {
+    "m1": {
+      "final_temperature": 1.0,
+      "identity": {
+        "brier": 0.03792041642568901,
+        "macro_classwise_ece": 0.022177319417524436,
+        "micro_ece": 0.016605902652125436,
+        "nll": 0.1404354227702878
+      },
+      "selected_calibrator": "identity",
+      "temperature_accepted": false,
+      "temperature_cross_fitted": {
+        "brier": 0.03791139770523568,
+        "macro_classwise_ece": 0.022239183110394797,
+        "micro_ece": 0.016758233480470782,
+        "nll": 0.1404509015715755
+      },
+      "temperature_minus_identity": {
+        "brier": -9.018720453328466e-06,
+        "nll": 1.5478801287688304e-05
+      }
+    },
+    "m3": {
+      "final_temperature": 1.1817929332577284,
+      "identity": {
+        "brier": 0.03496145489702372,
+        "macro_classwise_ece": 0.011728169237678816,
+        "micro_ece": 0.010264372800722156,
+        "nll": 0.12587743692566083
+      },
+      "selected_calibrator": "temperature",
+      "temperature_accepted": true,
+      "temperature_cross_fitted": {
+        "brier": 0.03467909519987676,
+        "macro_classwise_ece": 0.01015771291026654,
+        "micro_ece": 0.005500594187769769,
+        "nll": 0.12404742027190552
+      },
+      "temperature_minus_identity": {
+        "brier": -0.0002823596971469611,
+        "nll": -0.0018300166537553175
+      }
+    }
+  }
+}

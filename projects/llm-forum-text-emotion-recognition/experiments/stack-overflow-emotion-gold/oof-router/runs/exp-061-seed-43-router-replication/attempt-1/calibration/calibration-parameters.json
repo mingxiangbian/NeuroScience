@@ -1,0 +1,293 @@
+{
+  "attempt_id": "attempt-1",
+  "experiment_id": "EXP-059",
+  "families": {
+    "m1": {
+      "final_global_threshold": {
+        "hamming_loss": 0.04756944444444444,
+        "macro_f1": 0.5951928312969611,
+        "threshold": 0.46
+      },
+      "final_temperature": 1.0,
+      "fold_fits": [
+        {
+          "fold_id": 0,
+          "heldout_rows": 672,
+          "meta_train_rows": 2688,
+          "raw_threshold_selection": {
+            "hamming_loss": 0.046999007936507936,
+            "macro_f1": 0.5969075419585994,
+            "threshold": 0.46
+          },
+          "temperature_fit": {
+            "at_lower_bound": false,
+            "at_upper_bound": false,
+            "iterations": 33,
+            "objective_nll": 0.13837237492647508,
+            "success": true,
+            "temperature": 0.9960751929921179
+          },
+          "temperature_threshold_selection": {
+            "hamming_loss": 0.046999007936507936,
+            "macro_f1": 0.5969075419585994,
+            "threshold": 0.46
+          }
+        },
+        {
+          "fold_id": 1,
+          "heldout_rows": 672,
+          "meta_train_rows": 2688,
+          "raw_threshold_selection": {
+            "hamming_loss": 0.05202132936507937,
+            "macro_f1": 0.5950797322616126,
+            "threshold": 0.23
+          },
+          "temperature_fit": {
+            "at_lower_bound": false,
+            "at_upper_bound": false,
+            "iterations": 33,
+            "objective_nll": 0.1389299511471656,
+            "success": true,
+            "temperature": 1.0048881507988174
+          },
+          "temperature_threshold_selection": {
+            "hamming_loss": 0.052083333333333336,
+            "macro_f1": 0.5949516526326776,
+            "threshold": 0.23
+          }
+        },
+        {
+          "fold_id": 2,
+          "heldout_rows": 672,
+          "meta_train_rows": 2688,
+          "raw_threshold_selection": {
+            "hamming_loss": 0.04830109126984127,
+            "macro_f1": 0.6023262973536976,
+            "threshold": 0.32
+          },
+          "temperature_fit": {
+            "at_lower_bound": false,
+            "at_upper_bound": false,
+            "iterations": 28,
+            "objective_nll": 0.1353702731239623,
+            "success": true,
+            "temperature": 0.9869982405291056
+          },
+          "temperature_threshold_selection": {
+            "hamming_loss": 0.047061011904761904,
+            "macro_f1": 0.6018180883810975,
+            "threshold": 0.36
+          }
+        },
+        {
+          "fold_id": 3,
+          "heldout_rows": 672,
+          "meta_train_rows": 2688,
+          "raw_threshold_selection": {
+            "hamming_loss": 0.048177083333333336,
+            "macro_f1": 0.5905386965546491,
+            "threshold": 0.46
+          },
+          "temperature_fit": {
+            "at_lower_bound": false,
+            "at_upper_bound": false,
+            "iterations": 32,
+            "objective_nll": 0.1384907417631466,
+            "success": true,
+            "temperature": 0.9944723193530308
+          },
+          "temperature_threshold_selection": {
+            "hamming_loss": 0.048177083333333336,
+            "macro_f1": 0.5905386965546491,
+            "threshold": 0.46
+          }
+        },
+        {
+          "fold_id": 4,
+          "heldout_rows": 672,
+          "meta_train_rows": 2688,
+          "raw_threshold_selection": {
+            "hamming_loss": 0.048549107142857144,
+            "macro_f1": 0.5955392239604269,
+            "threshold": 0.46
+          },
+          "temperature_fit": {
+            "at_lower_bound": false,
+            "at_upper_bound": false,
+            "iterations": 44,
+            "objective_nll": 0.13990302505904306,
+            "success": true,
+            "temperature": 0.9975449964827487
+          },
+          "temperature_threshold_selection": {
+            "hamming_loss": 0.048549107142857144,
+            "macro_f1": 0.5955392239604269,
+            "threshold": 0.46
+          }
+        }
+      ],
+      "full_oof_temperature_fit": {
+        "at_lower_bound": false,
+        "at_upper_bound": false,
+        "iterations": 32,
+        "objective_nll": 0.13821798311833094,
+        "success": true,
+        "temperature": 0.9960445085834401
+      },
+      "selected_calibrator": "identity"
+    },
+    "m3": {
+      "final_global_threshold": {
+        "hamming_loss": 0.0466765873015873,
+        "macro_f1": 0.6298841182101639,
+        "threshold": 0.35
+      },
+      "final_temperature": 1.0757246285815665,
+      "fold_fits": [
+        {
+          "fold_id": 0,
+          "heldout_rows": 672,
+          "meta_train_rows": 2688,
+          "raw_threshold_selection": {
+            "hamming_loss": 0.06665426587301587,
+            "macro_f1": 0.6213903676142071,
+            "threshold": 0.15
+          },
+          "temperature_fit": {
+            "at_lower_bound": false,
+            "at_upper_bound": false,
+            "iterations": 27,
+            "objective_nll": 0.12647608077306252,
+            "success": true,
+            "temperature": 1.0797649347944163
+          },
+          "temperature_threshold_selection": {
+            "hamming_loss": 0.06256200396825397,
+            "macro_f1": 0.6228492407650418,
+            "threshold": 0.19
+          }
+        },
+        {
+          "fold_id": 1,
+          "heldout_rows": 672,
+          "meta_train_rows": 2688,
+          "raw_threshold_selection": {
+            "hamming_loss": 0.06553819444444445,
+            "macro_f1": 0.6185966374273403,
+            "threshold": 0.15
+          },
+          "temperature_fit": {
+            "at_lower_bound": false,
+            "at_upper_bound": false,
+            "iterations": 29,
+            "objective_nll": 0.12215390809934756,
+            "success": true,
+            "temperature": 1.0727926321466128
+          },
+          "temperature_threshold_selection": {
+            "hamming_loss": 0.0662202380952381,
+            "macro_f1": 0.6187706067580444,
+            "threshold": 0.16
+          }
+        },
+        {
+          "fold_id": 2,
+          "heldout_rows": 672,
+          "meta_train_rows": 2688,
+          "raw_threshold_selection": {
+            "hamming_loss": 0.05853174603174603,
+            "macro_f1": 0.6431151778313595,
+            "threshold": 0.18
+          },
+          "temperature_fit": {
+            "at_lower_bound": false,
+            "at_upper_bound": false,
+            "iterations": 35,
+            "objective_nll": 0.12106208919787582,
+            "success": true,
+            "temperature": 1.0566050559637596
+          },
+          "temperature_threshold_selection": {
+            "hamming_loss": 0.05896577380952381,
+            "macro_f1": 0.6420389298269887,
+            "threshold": 0.19
+          }
+        },
+        {
+          "fold_id": 3,
+          "heldout_rows": 672,
+          "meta_train_rows": 2688,
+          "raw_threshold_selection": {
+            "hamming_loss": 0.0480530753968254,
+            "macro_f1": 0.6497670601396289,
+            "threshold": 0.25
+          },
+          "temperature_fit": {
+            "at_lower_bound": false,
+            "at_upper_bound": false,
+            "iterations": 31,
+            "objective_nll": 0.12227675582535968,
+            "success": true,
+            "temperature": 1.091729745626955
+          },
+          "temperature_threshold_selection": {
+            "hamming_loss": 0.04724702380952381,
+            "macro_f1": 0.6498047185638439,
+            "threshold": 0.28
+          }
+        },
+        {
+          "fold_id": 4,
+          "heldout_rows": 672,
+          "meta_train_rows": 2688,
+          "raw_threshold_selection": {
+            "hamming_loss": 0.059337797619047616,
+            "macro_f1": 0.6313312195008584,
+            "threshold": 0.17
+          },
+          "temperature_fit": {
+            "at_lower_bound": false,
+            "at_upper_bound": false,
+            "iterations": 26,
+            "objective_nll": 0.1225683875612123,
+            "success": true,
+            "temperature": 1.077470936215153
+          },
+          "temperature_threshold_selection": {
+            "hamming_loss": 0.05884176587301587,
+            "macro_f1": 0.6332991330542292,
+            "threshold": 0.19
+          }
+        }
+      ],
+      "full_oof_temperature_fit": {
+        "at_lower_bound": false,
+        "at_upper_bound": false,
+        "iterations": 28,
+        "objective_nll": 0.12291734223652935,
+        "success": true,
+        "temperature": 1.0757246285815665
+      },
+      "selected_calibrator": "temperature"
+    }
+  },
+  "model_seed": 43,
+  "replication_parent_experiment_id": "EXP-061",
+  "router_replication_calibration": {
+    "calibrator": "identity",
+    "probability_source": "direct_sigmoid_of_raw_oof_logits",
+    "role": "frozen_exp060_replication_only",
+    "temperature": 1.0
+  },
+  "run_id": "exp-061-seed-43-router-replication",
+  "seed_contract": {
+    "m1_batch_seed": 43,
+    "m3_batch_seed": 43,
+    "m3_head_seed": 43,
+    "m3_lora_seed": 100043,
+    "model_seed": 43,
+    "numpy_seed": 43,
+    "python_seed": 43,
+    "torch_seed": 43
+  }
+}

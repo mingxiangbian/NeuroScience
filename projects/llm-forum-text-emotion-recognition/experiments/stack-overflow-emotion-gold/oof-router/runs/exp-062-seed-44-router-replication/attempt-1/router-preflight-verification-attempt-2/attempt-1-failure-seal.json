@@ -1,0 +1,51 @@
+{
+  "attempt_id": "attempt-1",
+  "canonical_summary_absent": true,
+  "canonical_verification_absent": true,
+  "claim_boundary": "Incident-003 preflight verifier recovery only; namespace-virtualized output is not canonical Attempt-1 verification and does not authorize formal execution.",
+  "exception_type": "NameError",
+  "exit_code": 1,
+  "experiment_id": "EXP-060",
+  "failure_code": "missing_repo_root",
+  "failure_stage": "child_test_preflight",
+  "formal_gate_authorized": false,
+  "incident_id": "003",
+  "model_seed": 44,
+  "original_artifacts": {
+    "config": {
+      "bytes": 13602,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/configs/exp-062-seed-44-router-replication-router-preflight-attempt-1.json",
+      "sha256": "2765265f4c6a62349fc2645a466f116b4c1ca5e675932c21ca510360b991b823"
+    },
+    "contract": {
+      "bytes": 3957,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/router-preflight/preflight-contract.json",
+      "sha256": "2229566b2f718a601caa8146880ee0257a567ac1c68e6e8a8eec831318890369"
+    },
+    "frozen_verifier": {
+      "bytes": 84331,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/router-preflight/frozen-sources/verify_exp060_router_preflight.py",
+      "sha256": "31d985d37940994f8caabcb065a426d92afe710d6ecaed8a22a33511f8ef870c"
+    },
+    "run": {
+      "bytes": 12472,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/router-preflight/run.json",
+      "sha256": "0a230f297fa16c670359c9ad00580add30a556e11dcfa59ce7c3702804960347"
+    }
+  },
+  "replication_parent_experiment_id": "EXP-062",
+  "run_id": "exp-062-seed-44-router-replication",
+  "schema_version": "exp-router-preflight-verification-incident-003-attempt-1-failure-v1",
+  "seed_contract": {
+    "m1_batch_seed": 44,
+    "m3_batch_seed": 44,
+    "m3_head_seed": 44,
+    "m3_lora_seed": 100044,
+    "model_seed": 44,
+    "numpy_seed": 44,
+    "python_seed": 44,
+    "torch_seed": 44
+  },
+  "status": "Failed",
+  "verification_attempt": 1
+}

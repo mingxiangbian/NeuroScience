@@ -1,0 +1,259 @@
+{
+  "attempt_id": "attempt-1",
+  "checks": [
+    {
+      "detail": null,
+      "name": "preflight.identity",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.status",
+      "passed": true
+    },
+    {
+      "detail": {
+        "character_lengths": {
+          "dtype": "int32",
+          "fortran_order": false,
+          "shape": [
+            3360
+          ]
+        },
+        "component_ids": {
+          "dtype": "<U34",
+          "fortran_order": false,
+          "shape": [
+            3360
+          ]
+        },
+        "fold_ids": {
+          "dtype": "int8",
+          "fortran_order": false,
+          "shape": [
+            3360
+          ]
+        },
+        "gold": {
+          "dtype": "uint8",
+          "fortran_order": false,
+          "shape": [
+            3360,
+            6
+          ]
+        },
+        "m1_fold_run_sha256": {
+          "dtype": "<U64",
+          "fortran_order": false,
+          "shape": [
+            3360
+          ]
+        },
+        "m1_logits": {
+          "dtype": "float32",
+          "fortran_order": false,
+          "shape": [
+            3360,
+            6
+          ]
+        },
+        "m1_token_lengths": {
+          "dtype": "int32",
+          "fortran_order": false,
+          "shape": [
+            3360
+          ]
+        },
+        "m3_fold_run_sha256": {
+          "dtype": "<U64",
+          "fortran_order": false,
+          "shape": [
+            3360
+          ]
+        },
+        "m3_logits": {
+          "dtype": "float32",
+          "fortran_order": false,
+          "shape": [
+            3360,
+            6
+          ]
+        },
+        "m3_token_lengths": {
+          "dtype": "int32",
+          "fortran_order": false,
+          "shape": [
+            3360
+          ]
+        },
+        "sample_ids": {
+          "dtype": "<U31",
+          "fortran_order": false,
+          "shape": [
+            3360
+          ]
+        }
+      },
+      "name": "preflight.header_schema",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.public_schema",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.exp058_passed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.no_values",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.no_metrics",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.no_analysis",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.no_validation",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.no_test_inputs",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.no_test_labels",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.header_only_split",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.input_bound",
+      "passed": true
+    },
+    {
+      "detail": [],
+      "name": "preflight.privacy",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.formal_public_absent",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.formal_private_absent",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.oof_prerequisites",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.config",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.no_selection",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.no_completion",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.runtime",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "preflight.frozen_sources",
+      "passed": true
+    },
+    {
+      "detail": 0.057332374854013324,
+      "name": "verification.resource.wall_budget",
+      "passed": true
+    },
+    {
+      "detail": 0.1163264,
+      "name": "verification.resource.memory_budget",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "verification.resource.api_cost",
+      "passed": true
+    }
+  ],
+  "config": {
+    "bytes": 6415,
+    "path": "experiments/stack-overflow-emotion-gold/oof-router/configs/exp-061-seed-43-router-replication-calibration-preflight-attempt-1.json",
+    "sha256": "f46284fe534e8f97499a2f9793c30d94451e318d450edd8277fc4bd4e16b1d77"
+  },
+  "experiment_id": "EXP-059",
+  "failed_count": 0,
+  "model_seed": 43,
+  "passed_count": 25,
+  "replication_parent_experiment_id": "EXP-061",
+  "resources": {
+    "api_cost_usd": 0,
+    "peak_process_rss_gb": 0.1163264,
+    "wall_seconds": 0.057332374854013324
+  },
+  "rq_id": "RQ-S3",
+  "run_id": "exp-061-seed-43-router-replication",
+  "schema_version": "exp-059-verification-v2",
+  "scope": "preflight",
+  "seed_contract": {
+    "m1_batch_seed": 43,
+    "m3_batch_seed": 43,
+    "m3_head_seed": 43,
+    "m3_lora_seed": 100043,
+    "model_seed": 43,
+    "numpy_seed": 43,
+    "python_seed": 43,
+    "torch_seed": 43
+  },
+  "status": "Passed",
+  "verified_artifacts": {
+    "config": {
+      "bytes": 6415,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/configs/exp-061-seed-43-router-replication-calibration-preflight-attempt-1.json",
+      "sha256": "f46284fe534e8f97499a2f9793c30d94451e318d450edd8277fc4bd4e16b1d77"
+    },
+    "paired_oof": {
+      "bytes": 308098,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-061-seed-43-router-replication/attempt-1/paired-oof.npz",
+      "sha256": "b9513696e80aca12e60e719fb109e24f1412781e9996e5ad6b9e0221803bb2e8"
+    },
+    "run": {
+      "bytes": 5071,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/calibration-preflight/run.json",
+      "sha256": "0ffc5f71c62cca444f535367f3ed3c059fbede0ff2e8537e0fc5ed784c79216a"
+    }
+  },
+  "verified_at_utc": "2026-08-21T01:48:05.249864+00:00"
+}

@@ -1,0 +1,126 @@
+{
+  "attempt_id": "attempt-1",
+  "checks": [
+    {
+      "detail": null,
+      "name": "identity.schema",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "identity.experiment",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "inputs.exact_two",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "inputs.seed_order",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "discovery.no_vote",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "synthesis.independent_recompute",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "decision.pass_count",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "decision.result",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "privacy.aggregate_only",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "claims.public_only",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "claims.no_private",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "claims.no_validation_test",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "claims.no_model",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run.status",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run.output",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run.decision",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "run.resources",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "selection.absent",
+      "passed": true
+    }
+  ],
+  "claim_boundary": "The frozen pre-Qwen logistic router replicated across two prospective training seeds on the same DATA-SO-TASK-V1 train data at the meta level; this is not independent-data validation, deployment benefit, latency, forum generality, or an emotion-mechanism claim.",
+  "experiment_id": "EXP-063",
+  "failed_count": 0,
+  "independence": {
+    "decision_recomputed": true,
+    "runner_imported": false,
+    "votes_reconstructed": true
+  },
+  "passed_count": 18,
+  "resources": {
+    "api_cost_usd": 0,
+    "gpu_cost_usd": 0,
+    "model_forward_runs": 0,
+    "peak_process_rss_gb": 0.0339968,
+    "wall_seconds": 0.019130499800667167
+  },
+  "run": {
+    "bytes": 2217,
+    "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-063-router-replication-synthesis/attempt-1/run.json",
+    "sha256": "6dff1e473daa21e0a45fcda02bab0fa2b11869986055f6bebae07406ea8ad61e"
+  },
+  "run_id": "exp-063-router-replication-synthesis",
+  "schema_version": "exp-063-router-replication-verification-v1",
+  "scope": "final",
+  "status": "Passed",
+  "synthesis": {
+    "bytes": 9766,
+    "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-063-router-replication-synthesis/attempt-1/replication-synthesis.json",
+    "sha256": "d6ef1efe63c821cefe97c9ab340e1d05e1dbdf5381b169f67c11523e35af370f"
+  },
+  "verified_at_utc": "2026-08-24T08:40:19.349431+00:00"
+}

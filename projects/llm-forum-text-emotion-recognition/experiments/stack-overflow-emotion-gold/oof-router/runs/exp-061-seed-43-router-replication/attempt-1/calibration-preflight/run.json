@@ -1,0 +1,180 @@
+{
+  "array_values_loaded": false,
+  "attempt_id": "attempt-1",
+  "completed_at_utc": "2026-08-21T01:47:34.274414+00:00",
+  "config": {
+    "bytes": 6415,
+    "path": "experiments/stack-overflow-emotion-gold/oof-router/configs/exp-061-seed-43-router-replication-calibration-preflight-attempt-1.json",
+    "sha256": "f46284fe534e8f97499a2f9793c30d94451e318d450edd8277fc4bd4e16b1d77"
+  },
+  "dependencies": {
+    "matplotlib": "3.10.7",
+    "numpy": "2.2.6",
+    "python": "3.10.20",
+    "scikit-learn": "1.7.2",
+    "scipy": "1.15.3"
+  },
+  "experiment_id": "EXP-059",
+  "formal_analysis_performed": false,
+  "frozen_sources": {
+    "config": {
+      "bytes": 6415,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/calibration-preflight/frozen-sources/config.json",
+      "sha256": "f46284fe534e8f97499a2f9793c30d94451e318d450edd8277fc4bd4e16b1d77"
+    },
+    "protocol": {
+      "bytes": 12216,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/calibration-preflight/frozen-sources/exp-059-calibration-selective-prediction.md",
+      "sha256": "a483b79d5b41f4ffb2f6b27db2dfdd215a525ed77d4dc207e56320dbff5eaddb"
+    },
+    "runner": {
+      "bytes": 97472,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/calibration-preflight/frozen-sources/run_exp059_calibration.py",
+      "sha256": "6ed8974efb2194c5e6b408dd9e6eff3e46995759984ee8f60ab61c7a30e65c58"
+    },
+    "tests": {
+      "bytes": 55389,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/calibration-preflight/frozen-sources/test_exp059_calibration.py",
+      "sha256": "3cae10713382abbf62cc2c00a9364a166b730ec5e8dbdf71d1c10b52741bc11b"
+    },
+    "verifier": {
+      "bytes": 117428,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/calibration-preflight/frozen-sources/verify_exp059_calibration.py",
+      "sha256": "dfedf76fbc9d4729fcc7936f9d95dfd7e9ef90f14dfbed016f36028608f3d33d"
+    }
+  },
+  "git": {
+    "commit": "88cf763c1161aa8afda0f3d0b4ae4bb1c9c93833",
+    "dirty": true,
+    "dirty_path_count": 11
+  },
+  "input": {
+    "bytes": 308098,
+    "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-061-seed-43-router-replication/attempt-1/paired-oof.npz",
+    "sha256": "b9513696e80aca12e60e719fb109e24f1412781e9996e5ad6b9e0221803bb2e8"
+  },
+  "input_schema": [
+    {
+      "array_name": "character_lengths",
+      "dtype": "int32",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "component_ids",
+      "dtype": "<U34",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "fold_ids",
+      "dtype": "int8",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "gold",
+      "dtype": "uint8",
+      "fortran_order": false,
+      "shape": [
+        3360,
+        6
+      ]
+    },
+    {
+      "array_name": "m1_fold_run_sha256",
+      "dtype": "<U64",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "m1_logits",
+      "dtype": "float32",
+      "fortran_order": false,
+      "shape": [
+        3360,
+        6
+      ]
+    },
+    {
+      "array_name": "m1_token_lengths",
+      "dtype": "int32",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "m3_fold_run_sha256",
+      "dtype": "<U64",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "m3_logits",
+      "dtype": "float32",
+      "fortran_order": false,
+      "shape": [
+        3360,
+        6
+      ]
+    },
+    {
+      "array_name": "m3_token_lengths",
+      "dtype": "int32",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "sample_ids",
+      "dtype": "<U31",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    }
+  ],
+  "model_seed": 43,
+  "performance_metrics_computed": false,
+  "replication_parent_experiment_id": "EXP-061",
+  "rq_id": "RQ-S3",
+  "run_id": "exp-061-seed-43-router-replication",
+  "runtime": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python_executable": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python3.10"
+  },
+  "schema_version": "exp-059-preflight-run-v2",
+  "seed_contract": {
+    "m1_batch_seed": 43,
+    "m3_batch_seed": 43,
+    "m3_head_seed": 43,
+    "m3_lora_seed": 100043,
+    "model_seed": 43,
+    "numpy_seed": 43,
+    "python_seed": 43,
+    "torch_seed": 43
+  },
+  "split_access": {
+    "accessed_splits": [
+      "train-oof-header"
+    ],
+    "test_inputs_accessed": false,
+    "test_labels_accessed": false,
+    "validation_accessed": false
+  },
+  "stage": "calibration-selective-preflight",
+  "status": "CompletedAwaitingVerification",
+  "tier": "Major"
+}

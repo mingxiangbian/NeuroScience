@@ -1,0 +1,49 @@
+{
+  "attempt_id": "attempt-1",
+  "claim_boundary": "The frozen pre-Qwen logistic router replicated across two prospective training seeds on the same DATA-SO-TASK-V1 train data at the meta level; this is not independent-data validation, deployment benefit, latency, forum generality, or an emotion-mechanism claim.",
+  "completed_at_utc": "2026-08-24T08:40:13.347123+00:00",
+  "decision": {
+    "eligible_seed_count": 2,
+    "pass_count": 2,
+    "result": "2/2 pass",
+    "system_decision": "promote_same_train_cross_seed_meta_replication"
+  },
+  "experiment_id": "EXP-063",
+  "input_artifacts": {
+    "decision_protocol": {
+      "bytes": 10678,
+      "path": "experiments/stack-overflow-emotion-gold/protocols/dec-so-router-replication-v1.md",
+      "sha256": "473df4428b8e02ea046a014ec0dc6a3ca975182ed8ba38e0101586558a55c4f7"
+    },
+    "seed43_selection": {
+      "bytes": 20248,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/selected-attempt.json",
+      "sha256": "c4dd3ff747c16e2fb2bb2e895cdb5f7a9f753048ad10bc85210e88cff01eafb9"
+    },
+    "seed44_selection": {
+      "bytes": 4126,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/selected-attempt.json",
+      "sha256": "85e6540d1581f9b78bc4e5a374559c2d4b68afe8fb8fba581224af0c9a899796"
+    },
+    "synthesis_protocol": {
+      "bytes": 3478,
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-063-router-replication-synthesis.md",
+      "sha256": "3c81f552995d5fbf17c01f045f3fb97d2a84daff9d68e901c70e9f6f51fe3163"
+    }
+  },
+  "output": {
+    "bytes": 9766,
+    "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-063-router-replication-synthesis/attempt-1/replication-synthesis.json",
+    "sha256": "d6ef1efe63c821cefe97c9ab340e1d05e1dbdf5381b169f67c11523e35af370f"
+  },
+  "resources": {
+    "api_cost_usd": 0,
+    "gpu_cost_usd": 0,
+    "model_forward_runs": 0,
+    "peak_process_rss_gb": 0.033652736,
+    "wall_seconds": 0.020245000021532178
+  },
+  "run_id": "exp-063-router-replication-synthesis",
+  "schema_version": "exp-063-router-replication-run-v1",
+  "status": "CompletedAwaitingVerification"
+}

@@ -1,0 +1,538 @@
+{
+  "families": {
+    "m1": {
+      "raw_cross_fitted_threshold": {
+        "five_label_macro_f1": 0.6884894703360734,
+        "hamming_loss": 0.05228174603174603,
+        "macro_f1": 0.5737412252800612,
+        "micro_f1": 0.754083061129258,
+        "per_label": {
+          "anger": {
+            "f1": 0.8040912667191188,
+            "precision": 0.7825421133231241,
+            "predicted_positive": 653,
+            "recall": 0.8268608414239482,
+            "support": 618
+          },
+          "fear": {
+            "f1": 0.6013986013986014,
+            "precision": 0.6231884057971014,
+            "predicted_positive": 69,
+            "recall": 0.581081081081081,
+            "support": 74
+          },
+          "joy": {
+            "f1": 0.5737931034482758,
+            "precision": 0.5445026178010471,
+            "predicted_positive": 382,
+            "recall": 0.6064139941690962,
+            "support": 343
+          },
+          "love": {
+            "f1": 0.8401114206128134,
+            "precision": 0.8012752391073327,
+            "predicted_positive": 941,
+            "recall": 0.882903981264637,
+            "support": 854
+          },
+          "sadness": {
+            "f1": 0.6230529595015576,
+            "precision": 0.625,
+            "predicted_positive": 160,
+            "recall": 0.6211180124223602,
+            "support": 161
+          },
+          "surprise": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "predicted_positive": 0,
+            "recall": 0.0,
+            "support": 31
+          }
+        },
+        "rows": 3360,
+        "subset_accuracy": 0.7598214285714285,
+        "subset_error": 0.24017857142857146
+      },
+      "raw_fixed_0_5": {
+        "five_label_macro_f1": 0.6950845150983934,
+        "hamming_loss": 0.04826388888888889,
+        "macro_f1": 0.5792370959153278,
+        "micro_f1": 0.7614611424368717,
+        "per_label": {
+          "anger": {
+            "f1": 0.8,
+            "precision": 0.8072487644151565,
+            "predicted_positive": 607,
+            "recall": 0.7928802588996764,
+            "support": 618
+          },
+          "fear": {
+            "f1": 0.6046511627906976,
+            "precision": 0.7090909090909091,
+            "predicted_positive": 55,
+            "recall": 0.527027027027027,
+            "support": 74
+          },
+          "joy": {
+            "f1": 0.5714285714285714,
+            "precision": 0.6038961038961039,
+            "predicted_positive": 308,
+            "recall": 0.5422740524781341,
+            "support": 343
+          },
+          "love": {
+            "f1": 0.8486579097658481,
+            "precision": 0.8283166109253066,
+            "predicted_positive": 897,
+            "recall": 0.870023419203747,
+            "support": 854
+          },
+          "sadness": {
+            "f1": 0.6506849315068494,
+            "precision": 0.7251908396946565,
+            "predicted_positive": 131,
+            "recall": 0.5900621118012422,
+            "support": 161
+          },
+          "surprise": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "predicted_positive": 0,
+            "recall": 0.0,
+            "support": 31
+          }
+        },
+        "rows": 3360,
+        "subset_accuracy": 0.7791666666666667,
+        "subset_error": 0.22083333333333333
+      },
+      "selected_cross_fitted_threshold": {
+        "five_label_macro_f1": 0.6884894703360734,
+        "hamming_loss": 0.05228174603174603,
+        "macro_f1": 0.5737412252800612,
+        "micro_f1": 0.754083061129258,
+        "per_label": {
+          "anger": {
+            "f1": 0.8040912667191188,
+            "precision": 0.7825421133231241,
+            "predicted_positive": 653,
+            "recall": 0.8268608414239482,
+            "support": 618
+          },
+          "fear": {
+            "f1": 0.6013986013986014,
+            "precision": 0.6231884057971014,
+            "predicted_positive": 69,
+            "recall": 0.581081081081081,
+            "support": 74
+          },
+          "joy": {
+            "f1": 0.5737931034482758,
+            "precision": 0.5445026178010471,
+            "predicted_positive": 382,
+            "recall": 0.6064139941690962,
+            "support": 343
+          },
+          "love": {
+            "f1": 0.8401114206128134,
+            "precision": 0.8012752391073327,
+            "predicted_positive": 941,
+            "recall": 0.882903981264637,
+            "support": 854
+          },
+          "sadness": {
+            "f1": 0.6230529595015576,
+            "precision": 0.625,
+            "predicted_positive": 160,
+            "recall": 0.6211180124223602,
+            "support": 161
+          },
+          "surprise": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "predicted_positive": 0,
+            "recall": 0.0,
+            "support": 31
+          }
+        },
+        "rows": 3360,
+        "subset_accuracy": 0.7598214285714285,
+        "subset_error": 0.24017857142857146
+      },
+      "temperature_cross_fitted_threshold": {
+        "five_label_macro_f1": 0.6892717728976219,
+        "hamming_loss": 0.052182539682539685,
+        "macro_f1": 0.5743931440813516,
+        "micro_f1": 0.7545496966868875,
+        "per_label": {
+          "anger": {
+            "f1": 0.8040912667191188,
+            "precision": 0.7825421133231241,
+            "predicted_positive": 653,
+            "recall": 0.8268608414239482,
+            "support": 618
+          },
+          "fear": {
+            "f1": 0.6013986013986014,
+            "precision": 0.6231884057971014,
+            "predicted_positive": 69,
+            "recall": 0.581081081081081,
+            "support": 74
+          },
+          "joy": {
+            "f1": 0.5757575757575758,
+            "precision": 0.5456919060052219,
+            "predicted_positive": 383,
+            "recall": 0.60932944606414,
+            "support": 343
+          },
+          "love": {
+            "f1": 0.8401114206128134,
+            "precision": 0.8012752391073327,
+            "predicted_positive": 941,
+            "recall": 0.882903981264637,
+            "support": 854
+          },
+          "sadness": {
+            "f1": 0.625,
+            "precision": 0.6289308176100629,
+            "predicted_positive": 159,
+            "recall": 0.6211180124223602,
+            "support": 161
+          },
+          "surprise": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "predicted_positive": 0,
+            "recall": 0.0,
+            "support": 31
+          }
+        },
+        "rows": 3360,
+        "subset_accuracy": 0.7601190476190476,
+        "subset_error": 0.23988095238095242
+      },
+      "temperature_fixed_0_5": {
+        "five_label_macro_f1": 0.6950845150983934,
+        "hamming_loss": 0.04826388888888889,
+        "macro_f1": 0.5792370959153278,
+        "micro_f1": 0.7614611424368717,
+        "per_label": {
+          "anger": {
+            "f1": 0.8,
+            "precision": 0.8072487644151565,
+            "predicted_positive": 607,
+            "recall": 0.7928802588996764,
+            "support": 618
+          },
+          "fear": {
+            "f1": 0.6046511627906976,
+            "precision": 0.7090909090909091,
+            "predicted_positive": 55,
+            "recall": 0.527027027027027,
+            "support": 74
+          },
+          "joy": {
+            "f1": 0.5714285714285714,
+            "precision": 0.6038961038961039,
+            "predicted_positive": 308,
+            "recall": 0.5422740524781341,
+            "support": 343
+          },
+          "love": {
+            "f1": 0.8486579097658481,
+            "precision": 0.8283166109253066,
+            "predicted_positive": 897,
+            "recall": 0.870023419203747,
+            "support": 854
+          },
+          "sadness": {
+            "f1": 0.6506849315068494,
+            "precision": 0.7251908396946565,
+            "predicted_positive": 131,
+            "recall": 0.5900621118012422,
+            "support": 161
+          },
+          "surprise": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "predicted_positive": 0,
+            "recall": 0.0,
+            "support": 31
+          }
+        },
+        "rows": 3360,
+        "subset_accuracy": 0.7791666666666667,
+        "subset_error": 0.22083333333333333
+      }
+    },
+    "m3": {
+      "raw_cross_fitted_threshold": {
+        "five_label_macro_f1": 0.7105986856242336,
+        "hamming_loss": 0.05233134920634921,
+        "macro_f1": 0.6578221370100936,
+        "micro_f1": 0.7645614818120956,
+        "per_label": {
+          "anger": {
+            "f1": 0.8018223234624147,
+            "precision": 0.7553648068669528,
+            "predicted_positive": 699,
+            "recall": 0.8543689320388349,
+            "support": 618
+          },
+          "fear": {
+            "f1": 0.6282051282051282,
+            "precision": 0.5975609756097561,
+            "predicted_positive": 82,
+            "recall": 0.6621621621621622,
+            "support": 74
+          },
+          "joy": {
+            "f1": 0.6203059805285118,
+            "precision": 0.5930851063829787,
+            "predicted_positive": 376,
+            "recall": 0.6501457725947521,
+            "support": 343
+          },
+          "love": {
+            "f1": 0.833948339483395,
+            "precision": 0.7583892617449665,
+            "predicted_positive": 1043,
+            "recall": 0.9262295081967213,
+            "support": 854
+          },
+          "sadness": {
+            "f1": 0.6687116564417178,
+            "precision": 0.6606060606060606,
+            "predicted_positive": 165,
+            "recall": 0.6770186335403726,
+            "support": 161
+          },
+          "surprise": {
+            "f1": 0.393939393939394,
+            "precision": 0.37142857142857144,
+            "predicted_positive": 35,
+            "recall": 0.41935483870967744,
+            "support": 31
+          }
+        },
+        "rows": 3360,
+        "subset_accuracy": 0.7458333333333333,
+        "subset_error": 0.25416666666666665
+      },
+      "raw_fixed_0_5": {
+        "five_label_macro_f1": 0.6912719470549568,
+        "hamming_loss": 0.04558531746031746,
+        "macro_f1": 0.6070677078171152,
+        "micro_f1": 0.7586025742054111,
+        "per_label": {
+          "anger": {
+            "f1": 0.8042142230026339,
+            "precision": 0.8790786948176583,
+            "predicted_positive": 521,
+            "recall": 0.7411003236245954,
+            "support": 618
+          },
+          "fear": {
+            "f1": 0.6715328467153284,
+            "precision": 0.7301587301587301,
+            "predicted_positive": 63,
+            "recall": 0.6216216216216216,
+            "support": 74
+          },
+          "joy": {
+            "f1": 0.4497991967871485,
+            "precision": 0.7225806451612903,
+            "predicted_positive": 155,
+            "recall": 0.32653061224489793,
+            "support": 343
+          },
+          "love": {
+            "f1": 0.8519813519813519,
+            "precision": 0.8480278422273781,
+            "predicted_positive": 862,
+            "recall": 0.8559718969555035,
+            "support": 854
+          },
+          "sadness": {
+            "f1": 0.6788321167883211,
+            "precision": 0.8230088495575221,
+            "predicted_positive": 113,
+            "recall": 0.577639751552795,
+            "support": 161
+          },
+          "surprise": {
+            "f1": 0.18604651162790697,
+            "precision": 0.3333333333333333,
+            "predicted_positive": 12,
+            "recall": 0.12903225806451613,
+            "support": 31
+          }
+        },
+        "rows": 3360,
+        "subset_accuracy": 0.775,
+        "subset_error": 0.22499999999999998
+      },
+      "selected_cross_fitted_threshold": {
+        "five_label_macro_f1": 0.710372070265746,
+        "hamming_loss": 0.05233134920634921,
+        "macro_f1": 0.6576332908780207,
+        "micro_f1": 0.7646665179567254,
+        "per_label": {
+          "anger": {
+            "f1": 0.8018223234624147,
+            "precision": 0.7553648068669528,
+            "predicted_positive": 699,
+            "recall": 0.8543689320388349,
+            "support": 618
+          },
+          "fear": {
+            "f1": 0.6282051282051282,
+            "precision": 0.5975609756097561,
+            "predicted_positive": 82,
+            "recall": 0.6621621621621622,
+            "support": 74
+          },
+          "joy": {
+            "f1": 0.6183844011142061,
+            "precision": 0.592,
+            "predicted_positive": 375,
+            "recall": 0.6472303206997084,
+            "support": 343
+          },
+          "love": {
+            "f1": 0.8347368421052631,
+            "precision": 0.7581261950286807,
+            "predicted_positive": 1046,
+            "recall": 0.9285714285714286,
+            "support": 854
+          },
+          "sadness": {
+            "f1": 0.6687116564417178,
+            "precision": 0.6606060606060606,
+            "predicted_positive": 165,
+            "recall": 0.6770186335403726,
+            "support": 161
+          },
+          "surprise": {
+            "f1": 0.393939393939394,
+            "precision": 0.37142857142857144,
+            "predicted_positive": 35,
+            "recall": 0.41935483870967744,
+            "support": 31
+          }
+        },
+        "rows": 3360,
+        "subset_accuracy": 0.7455357142857143,
+        "subset_error": 0.2544642857142857
+      },
+      "temperature_cross_fitted_threshold": {
+        "five_label_macro_f1": 0.710372070265746,
+        "hamming_loss": 0.05233134920634921,
+        "macro_f1": 0.6576332908780207,
+        "micro_f1": 0.7646665179567254,
+        "per_label": {
+          "anger": {
+            "f1": 0.8018223234624147,
+            "precision": 0.7553648068669528,
+            "predicted_positive": 699,
+            "recall": 0.8543689320388349,
+            "support": 618
+          },
+          "fear": {
+            "f1": 0.6282051282051282,
+            "precision": 0.5975609756097561,
+            "predicted_positive": 82,
+            "recall": 0.6621621621621622,
+            "support": 74
+          },
+          "joy": {
+            "f1": 0.6183844011142061,
+            "precision": 0.592,
+            "predicted_positive": 375,
+            "recall": 0.6472303206997084,
+            "support": 343
+          },
+          "love": {
+            "f1": 0.8347368421052631,
+            "precision": 0.7581261950286807,
+            "predicted_positive": 1046,
+            "recall": 0.9285714285714286,
+            "support": 854
+          },
+          "sadness": {
+            "f1": 0.6687116564417178,
+            "precision": 0.6606060606060606,
+            "predicted_positive": 165,
+            "recall": 0.6770186335403726,
+            "support": 161
+          },
+          "surprise": {
+            "f1": 0.393939393939394,
+            "precision": 0.37142857142857144,
+            "predicted_positive": 35,
+            "recall": 0.41935483870967744,
+            "support": 31
+          }
+        },
+        "rows": 3360,
+        "subset_accuracy": 0.7455357142857143,
+        "subset_error": 0.2544642857142857
+      },
+      "temperature_fixed_0_5": {
+        "five_label_macro_f1": 0.6912719470549568,
+        "hamming_loss": 0.04558531746031746,
+        "macro_f1": 0.6070677078171152,
+        "micro_f1": 0.7586025742054111,
+        "per_label": {
+          "anger": {
+            "f1": 0.8042142230026339,
+            "precision": 0.8790786948176583,
+            "predicted_positive": 521,
+            "recall": 0.7411003236245954,
+            "support": 618
+          },
+          "fear": {
+            "f1": 0.6715328467153284,
+            "precision": 0.7301587301587301,
+            "predicted_positive": 63,
+            "recall": 0.6216216216216216,
+            "support": 74
+          },
+          "joy": {
+            "f1": 0.4497991967871485,
+            "precision": 0.7225806451612903,
+            "predicted_positive": 155,
+            "recall": 0.32653061224489793,
+            "support": 343
+          },
+          "love": {
+            "f1": 0.8519813519813519,
+            "precision": 0.8480278422273781,
+            "predicted_positive": 862,
+            "recall": 0.8559718969555035,
+            "support": 854
+          },
+          "sadness": {
+            "f1": 0.6788321167883211,
+            "precision": 0.8230088495575221,
+            "predicted_positive": 113,
+            "recall": 0.577639751552795,
+            "support": 161
+          },
+          "surprise": {
+            "f1": 0.18604651162790697,
+            "precision": 0.3333333333333333,
+            "predicted_positive": 12,
+            "recall": 0.12903225806451613,
+            "support": 31
+          }
+        },
+        "rows": 3360,
+        "subset_accuracy": 0.775,
+        "subset_error": 0.22499999999999998
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "artifacts": {
+    "config": {
+      "bytes": 20500,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/configs/exp-062-seed-44-router-replication-router-formal-attempt-1-incident-003.json",
+      "sha256": "87fec24aefceb18b84fbd8d71da44b68bda84b0c0e09269329d27cb82002ca18"
+    },
+    "final_verification": {
+      "bytes": 1092995,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/router/verification.json",
+      "sha256": "cd913b4d6947bb9bb0e63f22d225e45fc3d7bf1f826e7a5fd99be6c2579868d2"
+    },
+    "private_router_oof": {
+      "bytes": 500662,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-062-seed-44-router-replication/attempt-1/router/router-oof.npz",
+      "sha256": "4840a97b9e6c8a359d71b5f8346debfd4df1c028bc26f2f28f1532c896ce48bf"
+    },
+    "run": {
+      "bytes": 12733,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/router/run.json",
+      "sha256": "a0a95dbd0d44eae600543b5a1935010ddcacaf0308c6ce722be71fcfa64eb535"
+    },
+    "selected_operating_point": {
+      "bytes": 6667,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/router/selected-operating-point.json",
+      "sha256": "2b508c37f8ff8b53d038d4cea11db8191f99fc217d2fe5a13e9c4ca239f8584b"
+    }
+  },
+  "attempt_id": "attempt-1",
+  "claim_boundary": "Completes one verified train-only router stage; this is not namespace selection or a completed cross-seed claim.",
+  "completed_at_utc": "2026-08-24T07:28:18.006387+00:00",
+  "decision": "Pass",
+  "experiment_id": "EXP-062",
+  "model_seed": 44,
+  "next_gate": "Finalizer must bind OOF, EXP-059, and router completion records.",
+  "primary_gate_passed": true,
+  "rq_id": "RQ-S3",
+  "run_id": "exp-062-seed-44-router-replication",
+  "schema_version": "exp-router-completion-v2",
+  "seed_contract": {
+    "m1_batch_seed": 44,
+    "m3_batch_seed": 44,
+    "m3_head_seed": 44,
+    "m3_lora_seed": 100044,
+    "model_seed": 44,
+    "numpy_seed": 44,
+    "python_seed": 44,
+    "torch_seed": 44
+  },
+  "seed_contract_sha256": "c07aee3e4287384ffaf015eb6a73d0121bde39d8294af5d211979fdfdd7212b9",
+  "stage": "pre-qwen-router-replication",
+  "status": "Complete"
+}
