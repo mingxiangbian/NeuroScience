@@ -1,0 +1,101 @@
+{
+  "schema_version": "exp-068-phase-a-synthesis-config-v1",
+  "experiment_id": "EXP-068",
+  "run_id": "exp-068-phase-a-synthesis",
+  "rq_id": "RQ-S3",
+  "tier": "Major",
+  "registered_at": "2026-08-26",
+  "authorization": {
+    "basis": "User requested the next registered Phase A step after EXP-067 attempt-2 stopped.",
+    "scope": "Read-only public-record synthesis and independent verification only",
+    "private_access": false,
+    "test_access": false,
+    "model_access": false
+  },
+  "inputs": {
+    "exp064_completion": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-064-seed42-inference-bundle/bundle-complete.json",
+      "bytes": 1200,
+      "sha256": "5c8ae89a16b650353b21fc0dce8a015e439122a7c7c0ef240ab4e67445639f72",
+      "mode": "0644"
+    },
+    "exp064_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-064-seed42-inference-bundle/verification.json",
+      "bytes": 1919,
+      "sha256": "00e05110b94da20bdda0c156ce4a90b16afaa84c24a1c3ffe96ade5c440a676e",
+      "mode": "0644"
+    },
+    "exp065_completion": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-065-label-free-validation-projection/attempt-2/projection-complete.json",
+      "bytes": 1682,
+      "sha256": "a798d8f7ed74ff199d77f150aff52917f4ba3246222be312d24edec1399ecd01",
+      "mode": "0644"
+    },
+    "exp065_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-065-label-free-validation-projection/attempt-2/verification.json",
+      "bytes": 2345,
+      "sha256": "bc75d1c9668b607d9455809b08a1df8fae1654193d532bd13f8c7f293f73a911",
+      "mode": "0644"
+    },
+    "exp066_completion": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-066-headless-runtime-parity/attempt-2/runtime-complete.json",
+      "bytes": 1475,
+      "sha256": "b039b80a3ba1778d38352fc8ee7c075dc342e17dd127d9acfd1574d99c149408",
+      "mode": "0644"
+    },
+    "exp066_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-066-headless-runtime-parity/attempt-2/verification.json",
+      "bytes": 2476,
+      "sha256": "191507ae69c2a2f0d3f4f7aaf99dca8ee9c3921ade954f503f6e929df946021b",
+      "mode": "0644"
+    },
+    "exp067_attempt1_run": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-067-steady-state-benchmark/run.json",
+      "bytes": 550,
+      "sha256": "75a5d076d9331082a3126492c6dd415d53b05228153ae67b47adb38c12994140",
+      "mode": "0644"
+    },
+    "exp067_attempt2_run": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-067-steady-state-benchmark/attempt-2/run.json",
+      "bytes": 575,
+      "sha256": "137043c387c663f1162d80b29fb7700ecab4c2ae217121fba5942cc8a09a3fb4",
+      "mode": "0644"
+    }
+  },
+  "implementation": {
+    "protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/dec-so-phase-a-inference-v1.md",
+      "bytes": 25885,
+      "sha256": "8baec947857016bad00bb6dae7982a7f20a036a1e3595ee6d3a9faeee96273d7",
+      "mode": "0644"
+    },
+    "runner": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/run_exp068_phase_a_synthesis.py",
+      "bytes": 12347,
+      "sha256": "7bc9dd616f1d25539afaaadded7c32bad4bf9dee2e9ccb6f048cd9b15fca2cce",
+      "mode": "0644"
+    },
+    "verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/verify_exp068_phase_a_synthesis.py",
+      "bytes": 13422,
+      "sha256": "d0d522f2d617056d8e0f9c19a670248db35471e6f8f3a4ff5bd647e9432f8bd6",
+      "mode": "0644"
+    },
+    "tests": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/tests/test_exp068_phase_a_synthesis.py",
+      "bytes": 3056,
+      "sha256": "97e279c763a56d364c04d4add221393108876e98144f98279050e7154bca1c82",
+      "mode": "0644"
+    }
+  },
+  "decision_rules": {
+    "verified_requires": "EXP064-067 complete, EXP066 parity passed, EXP067 efficiency at least Moderate and all gates passed",
+    "research_demo_requires": "core and runtime verified plus completed benchmark that does not pass deployment efficiency gates",
+    "failed_or_incomplete_requires": "bundle/parity failure, privacy failure, or formal benchmark incomplete",
+    "expected_current_state": "Failed or incomplete",
+    "verified_headless_cli_research_demo": true,
+    "deployment_efficiency_claim_supported": false
+  },
+  "output_dir": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-068-phase-a-synthesis",
+  "claim_boundary": "Phase A produced a verified seed-42 headless/CLI research demo, but the preregistered steady-state efficiency benchmark did not complete; therefore no deployment-efficiency, production, independent-test, forum-generalization, or emotion-mechanism claim is supported."
+}

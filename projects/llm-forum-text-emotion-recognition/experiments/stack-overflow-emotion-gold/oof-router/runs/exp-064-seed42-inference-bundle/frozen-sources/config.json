@@ -1,0 +1,164 @@
+{
+  "schema_version": "exp-064-inference-bundle-config-v1",
+  "experiment_id": "EXP-064",
+  "run_id": "exp-064-seed42-inference-bundle",
+  "rq_id": "RQ-S3",
+  "tier": "Major",
+  "model_seed": 42,
+  "registered_at": "2026-08-26",
+  "authorization": {
+    "basis": "User requested the next registered Phase A step and previously authorized direct sequential execution without separate step-by-step approval.",
+    "scope": "EXP-064 config, runner, tests, one-shot full-OOF inference-parameter fit, and independent verification only",
+    "validation_access": false,
+    "test_access": false
+  },
+  "protocol": "DEC-SO-PHASE-A-INFERENCE-V1",
+  "input": {
+    "artifact": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-paired-oof-production/paired-oof.npz",
+      "bytes": 307755,
+      "sha256": "e8d2efde7ca62b3f09519390a6305d09ba0f3ea1dfbecbe8a11dbe4ffd482bfc",
+      "mode": "0600"
+    },
+    "source_order_sha256": "c9e4bd1eb2bdbb33c833234754c493b8818aa6c610acaf88659ae74fa94848a3",
+    "array_schema": {
+      "sample_ids": {"shape": [3360], "dtype": "<U31", "fortran_order": false},
+      "component_ids": {"shape": [3360], "dtype": "<U34", "fortran_order": false},
+      "fold_ids": {"shape": [3360], "dtype": "int8", "fortran_order": false},
+      "gold": {"shape": [3360, 6], "dtype": "uint8", "fortran_order": false},
+      "m1_logits": {"shape": [3360, 6], "dtype": "float32", "fortran_order": false},
+      "m3_logits": {"shape": [3360, 6], "dtype": "float32", "fortran_order": false},
+      "character_lengths": {"shape": [3360], "dtype": "int32", "fortran_order": false},
+      "m1_token_lengths": {"shape": [3360], "dtype": "int32", "fortran_order": false},
+      "m3_token_lengths": {"shape": [3360], "dtype": "int32", "fortran_order": false},
+      "m1_fold_run_sha256": {"shape": [3360], "dtype": "<U64", "fortran_order": false},
+      "m3_fold_run_sha256": {"shape": [3360], "dtype": "<U64", "fortran_order": false}
+    }
+  },
+  "legacy_lineage": {
+    "exp058_run": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/run.json",
+      "bytes": 12472,
+      "sha256": "4d8ab69cba9e032de0af4a52d0a015d7c71a8474b5fb76892b027ffcc824dee8",
+      "mode": "0644"
+    },
+    "exp058_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-paired-oof-production/verification.json",
+      "bytes": 2528513,
+      "sha256": "e290a1ba6e873a50def48dcefb4b971601aa3f6e89386d4d920aea360fc2e3c7",
+      "mode": "0644"
+    },
+    "exp060_run": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router/run.json",
+      "bytes": 9238,
+      "sha256": "dbc34e025972d84dd6fc9feb65f465ffcfa403a032b12c6746ff3720da65ff4a",
+      "mode": "0644"
+    },
+    "exp060_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-060-pre-qwen-router/verification.json",
+      "bytes": 1084141,
+      "sha256": "201d67edba14aaa0f52155bda67507d07f967b38379ed1ad5a6a5724b116d35c",
+      "mode": "0644"
+    }
+  },
+  "implementation": {
+    "protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/dec-so-phase-a-inference-v1.md",
+      "bytes": 25885,
+      "sha256": "8baec947857016bad00bb6dae7982a7f20a036a1e3595ee6d3a9faeee96273d7",
+      "mode": "0644"
+    },
+    "runner": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/run_exp064_inference_bundle.py",
+      "bytes": 32519,
+      "sha256": "9661ff9166c1b17148844202a1230f551bd5440061e9be853982782ea39a533b",
+      "mode": "0644"
+    },
+    "verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/verify_exp064_inference_bundle.py",
+      "bytes": 26794,
+      "sha256": "ac79f064b299ee833b8d3d75d2c4632fc0800ec0623032174373a3fcfcbbc0ff",
+      "mode": "0644"
+    },
+    "tests": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/tests/test_exp064_inference_bundle.py",
+      "bytes": 6623,
+      "sha256": "50341890a79bf76b5a6794989e9df1e31df5eafc992da48ae0b6dbbe061a16df",
+      "mode": "0644"
+    }
+  },
+  "labels": ["love", "joy", "surprise", "anger", "sadness", "fear"],
+  "thresholds": {
+    "calibrator": "identity",
+    "grid_start": 0.05,
+    "grid_end": 0.95,
+    "grid_step": 0.01,
+    "numeric_tolerance": 1e-12,
+    "selection_order": [
+      "highest_six_label_macro_f1",
+      "lowest_hamming_loss",
+      "closest_to_0_5",
+      "lower_threshold"
+    ]
+  },
+  "feature_contract": {
+    "ordered_features": [
+      "m1_probability_love",
+      "m1_probability_joy",
+      "m1_probability_surprise",
+      "m1_probability_anger",
+      "m1_probability_sadness",
+      "m1_probability_fear",
+      "m1_mean_binary_entropy",
+      "m1_max_binary_entropy",
+      "m1_minimum_threshold_margin",
+      "m1_predicted_cardinality",
+      "m1_highest_probability",
+      "m1_lowest_probability",
+      "character_length",
+      "m1_token_length"
+    ],
+    "feature_count": 14,
+    "entropy_clip": [1e-15, 0.999999999999999],
+    "entropy_log": "natural"
+  },
+  "router": {
+    "scaler": "StandardScaler",
+    "logistic_regression": {
+      "penalty": "l2",
+      "C": 1.0,
+      "class_weight": "balanced",
+      "solver": "liblinear",
+      "max_iter": 1000,
+      "random_state": 42
+    },
+    "positive_class": 1,
+    "nominal_call_rate": 0.15,
+    "cutoff_count_rule": "ceil_target_rate_times_rows",
+    "cutoff_comparator": ">="
+  },
+  "serialization": {
+    "numeric_npz": "content-canonical arrays; file hash is this-run lineage identity",
+    "allow_pickle": false,
+    "json": "UTF-8 sorted keys compact separators allow_nan=false terminal newline"
+  },
+  "access": {
+    "paired_train_oof_only": true,
+    "checkpoint_access": false,
+    "raw_text_access": false,
+    "validation_access": false,
+    "test_access": false,
+    "model_forward": false
+  },
+  "outputs": {
+    "public_dir": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-064-seed42-inference-bundle",
+    "private_dir": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-064-seed42-inference-bundle"
+  },
+  "resource_budget": {
+    "maximum_formal_runs": 1,
+    "maximum_wall_minutes": 5,
+    "external_api_cost": 0,
+    "model_forward": false
+  },
+  "claim_boundary": "A seed-42 full-OOF inference artifact only; no same-data performance, independent-test, cross-seed deployment, production, forum-generalization, or emotion-mechanism claim."
+}
