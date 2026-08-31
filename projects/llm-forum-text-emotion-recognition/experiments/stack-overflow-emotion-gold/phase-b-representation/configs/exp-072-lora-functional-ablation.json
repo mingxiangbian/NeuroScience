@@ -1,0 +1,292 @@
+{
+  "schema_version": "exp-072-lora-ablation-config-v1",
+  "experiment_id": "EXP-072",
+  "run_id": "exp-072-lora-functional-ablation",
+  "attempt_id": "formal-attempt-1",
+  "tier": "Major",
+  "rq_id": "RQ-S4.3",
+  "registered_at": "2026-08-30",
+  "method_protocol": {
+    "path": "experiments/stack-overflow-emotion-gold/protocols/exp-072-lora-functional-ablation.md",
+    "bytes": 8813,
+    "mode": "0644",
+    "sha256": "f031552f152499a0dd62835fe5afeafcd6696e8cdc378c4938f49d56db3a494a"
+  },
+  "implementation": {
+    "runner": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/run_exp072_ablation.py",
+      "bytes": 55272,
+      "mode": "0644",
+      "sha256": "76925b079af0294dee5d42bb494f7b2848aa1312d7af3db9391f6cdad2591ad1"
+    },
+    "tests": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/tests/test_exp072_ablation.py",
+      "bytes": 27326,
+      "mode": "0644",
+      "sha256": "a9ca0714d1cb100d694d710ad459e9d6d7f8b4cae456243f88eaccd16dc0c86e"
+    },
+    "scorer": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/score_exp072_ablation.py",
+      "bytes": 16933,
+      "mode": "0644",
+      "sha256": "79a3ae1ff92026a3960167544c85801f7a8fd49cd4ab32e616fcf842b29b4a2a"
+    },
+    "scoring_tests": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/tests/test_exp072_scoring.py",
+      "bytes": 4097,
+      "mode": "0644",
+      "sha256": "160d146bf6848320d0306c55d3b49d6183b8a75f9fb59052d591152700260bd8"
+    },
+    "verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/verify_exp072_ablation.py",
+      "bytes": 42809,
+      "mode": "0644",
+      "sha256": "345b58c5276834269e6e770dd8e506ca54933ccd2eb3edc4d140a6001c93f5e7"
+    },
+    "verifier_tests": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/tests/test_exp072_verifier.py",
+      "bytes": 19947,
+      "mode": "0644",
+      "sha256": "88b3b9b4d8a40d0670d4c746a8f043ed510cbbe7475709954175666556df1f87"
+    }
+  },
+  "parents": {
+    "exp069_completion": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-069-representation-extraction-preflight/attempt-5-verification-recovery/preflight-complete.json",
+      "bytes": 2285,
+      "mode": "0644",
+      "sha256": "794f204c536bb0cfc8609548c75502797c4fc197cc040ac4571a4c70281f6ab4"
+    },
+    "exp070_extraction_completion": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-extraction-verification-attempt-2/extraction-complete.json",
+      "bytes": 2302,
+      "mode": "0644",
+      "sha256": "02755a7985e83e988fa5f0e3e2fbfaa22c7255ca1cfa7a8f2191ea5f222cb5cb"
+    },
+    "exp075_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-075-degenerate-aware-geometry/attempt-1/verification.json",
+      "bytes": 3019,
+      "mode": "0644",
+      "sha256": "0b2d73bd8775881e43f15578296458dfb541c0be1fe50f3eff71070cfd672468"
+    }
+  },
+  "source": {
+    "exp069_config": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/configs/exp-069-representation-extraction-preflight.json",
+      "bytes": 13544,
+      "mode": "0644",
+      "sha256": "a7f7ac209d9d3993c901cbdf92b20b64e3f810fcdd97a50e4e7064411f6597e2"
+    },
+    "exp069_input_manifest": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-069-representation-extraction-preflight/attempt-4-fold-smoke/input-manifest.json",
+      "bytes": 34133,
+      "mode": "0600",
+      "sha256": "7c6fc8546a472265317dcd8af7516bdf837a2db525f5f805b17531e4e590146d"
+    },
+    "exp070_input_contract": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probe-preflight/attempt-1/input-contract-manifest.json",
+      "bytes": 63253,
+      "mode": "0600",
+      "sha256": "9bf597dd1b2a43000c726033ed25f0ead3ed7c89251f093e8b799ff25a954c86"
+    },
+    "exp070_row_contract": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/row-contract.npz",
+      "bytes": 31014,
+      "mode": "0600",
+      "sha256": "f85a250cb2809f1cf5f33f6faf21dccc1eacccae3cbdc8adb839d4ae97f22308"
+    },
+    "helpers": {
+      "exp069": {
+        "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/run_exp069_preflight.py",
+        "bytes": 54903,
+        "mode": "0644",
+        "sha256": "cb2655c61f7ff4e49ed9de47cbd92176e9547273e3e378f7c26ae587b2735bb0"
+      },
+      "exp070": {
+        "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/run_exp070_extraction.py",
+        "bytes": 79878,
+        "mode": "0644",
+        "sha256": "83ab85046490023380ced3d95922791ad9592d5ed2e3ee092085fc86b70c7025"
+      },
+      "selective_json": {
+        "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/verify_exp071_drift.py",
+        "bytes": 121050,
+        "mode": "0644",
+        "sha256": "0a6e0e03a2f14212bc2bf0d3a1ecc3d9cf4eec1ee8a3a9f7b44cd3ca83a0bbd2"
+      }
+    },
+    "thresholds": [
+      {
+        "seed": 42,
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-059-calibration-selective-prediction/cross-fitted-calibration.npz",
+          "bytes": 943917,
+          "mode": "0600",
+          "sha256": "47aaa4a8a9a8e45a9ddd1a4ee9f99573ab56b592cf6d921546a2025e36421f27"
+        },
+        "allowed_members": [
+          "fold_ids",
+          "m3_raw_thresholds"
+        ]
+      },
+      {
+        "seed": 43,
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-061-seed-43-router-replication/attempt-1/calibration/cross-fitted-calibration.npz",
+          "bytes": 945655,
+          "mode": "0600",
+          "sha256": "e53f61344e1b298c2ea2894c02f5a5eec74c6a0cb2b30f90bc97c7c6660ecc37"
+        },
+        "allowed_members": [
+          "fold_ids",
+          "m3_raw_thresholds"
+        ]
+      },
+      {
+        "seed": 44,
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-062-seed-44-router-replication/attempt-1/calibration/cross-fitted-calibration.npz",
+          "bytes": 945472,
+          "mode": "0600",
+          "sha256": "25b6d2702e769d52e555840c93d23e3e8f70ae1cf339e50099a68638c25e6e99"
+        },
+        "allowed_members": [
+          "fold_ids",
+          "m3_raw_thresholds"
+        ]
+      }
+    ]
+  },
+  "method": {
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "folds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "rows": 3360,
+    "heldout_rows": 672,
+    "labels": [
+      "love",
+      "joy",
+      "surprise",
+      "anger",
+      "sadness",
+      "fear"
+    ],
+    "a0_conditions": [
+      "A0"
+    ],
+    "discovery_conditions": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+    ],
+    "replication_conditions": [
+      "A1",
+      "A2",
+      "A3"
+    ],
+    "worker_count": 70,
+    "a0_worker_count": 15,
+    "max_length": 384,
+    "batch_size": 1,
+    "lora_blocks": [
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35
+    ],
+    "lora_modules": [
+      "self_attn.q_proj",
+      "self_attn.k_proj",
+      "self_attn.v_proj",
+      "self_attn.o_proj",
+      "mlp.gate_proj",
+      "mlp.up_proj",
+      "mlp.down_proj"
+    ],
+    "lora_rank": 8,
+    "lora_scale": 20.0,
+    "lora_dropout": 0.0,
+    "replay_dtype": "float32",
+    "replay_atol": 0.00001,
+    "replay_rtol": 0.0,
+    "token_cache": false,
+    "checkpoint_reconstruction": false
+  },
+  "environment": {
+    "python_executable": "/Users/phoenix/miniconda3/envs/phase-a-runtime/bin/python",
+    "python_version": "3.11.15",
+    "architecture": "arm64",
+    "packages": {
+      "numpy": "2.4.6",
+      "mlx": "0.32.0",
+      "mlx_lm": "0.31.3",
+      "safetensors": "0.8.0",
+      "tokenizers": "0.22.2",
+      "transformers": "5.14.1"
+    },
+    "qwen3_source": {
+      "path": "/Users/phoenix/miniconda3/envs/phase-a-runtime/lib/python3.11/site-packages/mlx_lm/models/qwen3.py",
+      "bytes": 7364,
+      "mode": "0644",
+      "sha256": "2284df96ecb669109b281df4534470b18f285aa9a5e41735ad682f601f93c639"
+    },
+    "offline_environment": {
+      "PYTHONNOUSERSITE": "1",
+      "HF_HUB_OFFLINE": "1",
+      "TRANSFORMERS_OFFLINE": "1",
+      "TOKENIZERS_PARALLELISM": "false",
+      "OMP_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    }
+  },
+  "resources": {
+    "max_workers": 70,
+    "max_worker_wall_seconds": 3600,
+    "max_total_wall_seconds": 57600,
+    "max_mlx_bytes": 10000000000,
+    "max_rss_bytes": 17179869184,
+    "max_private_bytes": 1073741824,
+    "min_free_disk_bytes": 10737418240,
+    "max_concurrent_workers": 1,
+    "api_cost_usd": 0
+  },
+  "outputs": {
+    "public_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-072-lora-functional-ablation/formal-attempt-1",
+    "private_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-072-lora-functional-ablation/formal-attempt-1"
+  },
+  "authorization": {
+    "formal_inference_authorized": true,
+    "labels_before_prediction_seal": false,
+    "validation_access": false,
+    "test_access": false,
+    "retraining": false,
+    "calibration": false,
+    "checkpoint_reconstruction": false,
+    "automatic_retry": false,
+    "automatic_resume": false
+  },
+  "claim_boundary": "Same-train outer-heldout inference intervention on jointly trained fold-specific M3. Full original heads and raw cross-fitted thresholds remain fixed. No retraining, calibration, validation/test access, independent-data generalization, deployment-efficiency or human-emotion claim."
+}

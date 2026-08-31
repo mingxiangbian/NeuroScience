@@ -1,0 +1,338 @@
+{
+  "schema_version": "exp-070-layerwise-probe-preflight-config-v1",
+  "experiment_id": "EXP-070",
+  "run_id": "exp-070-layerwise-probe-preflight",
+  "attempt_id": "attempt-1",
+  "rq_id": "RQ-S4.1",
+  "tier": "Major representation experiment",
+  "registered_at": "2026-08-27",
+  "decision": {
+    "path": "experiments/stack-overflow-emotion-gold/protocols/dec-so-phase-b-representation-v1.md",
+    "bytes": 18273,
+    "mode": "0644",
+    "sha256": "35c8cba7516156b56e3845a2d280ffde75bd1c16ad4573abe4c5a9e0396cb448"
+  },
+  "parent_exp069": {
+    "original_config": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/configs/exp-069-representation-extraction-preflight.json",
+      "bytes": 13544,
+      "mode": "0644",
+      "sha256": "a7f7ac209d9d3993c901cbdf92b20b64e3f810fcdd97a50e4e7064411f6597e2"
+    },
+    "attempt4_config": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/configs/exp-069-fold-smoke-attempt-4.json",
+      "bytes": 7905,
+      "mode": "0644",
+      "sha256": "01378257072f38fe6a6c5e5cce580d2ebfde9d111cbef9c6ba523c5c14366cb2"
+    },
+    "recovery_config": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/configs/exp-069-verification-attempt-2.json",
+      "bytes": 4840,
+      "mode": "0644",
+      "sha256": "257bc77974661f5c3ab717da34026484559a165b904e0d703b36ff05b012ffa5"
+    },
+    "attempt4_run": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-069-representation-extraction-preflight/attempt-4-fold-smoke/run.json",
+      "bytes": 1175,
+      "mode": "0644",
+      "sha256": "475f1f7a574dd224b9ae298dea266773d10b9e63bda67e1e3a28c217a29a57c8"
+    },
+    "attempt4_failed_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-069-representation-extraction-preflight/attempt-4-fold-smoke/verification.json",
+      "bytes": 571,
+      "mode": "0644",
+      "sha256": "efa69c7ec2d489620d392f01e072ac7b7f83ead0aae10d38aa731cc2e0e21fbf"
+    },
+    "smoke_manifest": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-069-representation-extraction-preflight/attempt-4-fold-smoke/smoke-manifest.json",
+      "bytes": 43384,
+      "mode": "0600",
+      "sha256": "8e816de5059544e465d7ef31ee5d38860262c8df3d3673b140d7c25d6d7f33a1"
+    },
+    "recovery_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-069-representation-extraction-preflight/attempt-5-verification-recovery/verification.json",
+      "bytes": 3178,
+      "mode": "0644",
+      "sha256": "136805d0637d3cf13b3463804d6630582d2771342d30fd9433fbba9fca5851db"
+    },
+    "completion": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-069-representation-extraction-preflight/attempt-5-verification-recovery/preflight-complete.json",
+      "bytes": 2285,
+      "mode": "0644",
+      "sha256": "794f204c536bb0cfc8609548c75502797c4fc197cc040ac4571a4c70281f6ab4"
+    }
+  },
+  "data": {
+    "protocol_id": "DATA-SO-TASK-V1",
+    "rows": 3360,
+    "components": 3277,
+    "task_manifest": {
+      "path": "data/stack-overflow-emotion-gold/task-v1.manifest.json",
+      "bytes": 2939,
+      "mode": "0644",
+      "sha256": "7847a9382c95391234241e523d629189ebf728f5b4505f0add10ea3779a0bfb3"
+    },
+    "train": {
+      "path": "data/stack-overflow-emotion-gold/derived-private/task-v1/train.jsonl",
+      "bytes": 1372562,
+      "mode": "0600",
+      "sha256": "fc2f853b5b8afb78253ca3a96b5093d2fd12ea7063801f57bf138c9d5cf528fc"
+    },
+    "fold_manifest_public": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/fold-manifest.public.jsonl",
+      "bytes": 739200,
+      "mode": "0644",
+      "sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8"
+    },
+    "fold_manifest_private": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-fold-manifest-preflight-attempt-2/fold-manifest.private.jsonl",
+      "bytes": 979748,
+      "mode": "0600",
+      "sha256": "d518e97c3332f2d59ea3556aecbb3a8cf9253438aee5ba02cd2ab105663862af"
+    },
+    "fold_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/verification.json",
+      "bytes": 18353,
+      "mode": "0644",
+      "sha256": "bbd8617d99174f11fbc1dc4fed71ae0a4a500f4e5b337d8a3d68a3afc5645aa7"
+    }
+  },
+  "privacy": {
+    "gitignore": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/.gitignore",
+      "bytes": 117,
+      "mode": "0644",
+      "sha256": "8a2fd5ed8be5a5e19ff8329903dec22771f42f5f93fa2a9f7ad1f0265019f02d"
+    },
+    "required_rule": "private/"
+  },
+  "environments": {
+    "extractor": {
+      "python_executable": "/Users/phoenix/miniconda3/envs/phase-a-runtime/bin/python",
+      "python_version": "3.11.15",
+      "architecture": "arm64",
+      "packages": {
+        "numpy": "2.4.6",
+        "mlx": "0.32.0",
+        "mlx-lm": "0.31.3",
+        "safetensors": "0.8.0",
+        "tokenizers": "0.22.2",
+        "transformers": "5.14.1"
+      }
+    },
+    "probe": {
+      "python_executable": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python",
+      "python_version": "3.10.20",
+      "architecture": "arm64",
+      "packages": {
+        "numpy": "2.2.6",
+        "scikit-learn": "1.7.2",
+        "scipy": "1.15.3",
+        "joblib": "1.5.3"
+      }
+    }
+  },
+  "representation": {
+    "rows": 3360,
+    "hidden_size": 2560,
+    "dtype": "float32",
+    "layout": "C",
+    "row_order": "DATA_SO_TASK_V1_train_source_order_0_to_3359",
+    "private_row_identity_digests": [
+      "ordinal_sha256",
+      "sample_id_order_sha256",
+      "component_id_order_sha256",
+      "fold_id_order_sha256",
+      "token_id_stream_sha256"
+    ],
+    "seed42_points": ["H-1", "H7", "H15", "H19", "H20", "H27", "H31", "H35", "HF"],
+    "confirmation_points": ["H19", "H27", "HF"],
+    "pre_lora_points": ["H-1", "H7", "H15", "H19"],
+    "transient_pre_lora_points_for_confirmation_seeds": ["H-1", "H7", "H15"],
+    "comparison_dtype": "float32",
+    "pre_lora_rtol": 0.0,
+    "pre_lora_atol": 0.00001,
+    "base_matrices": 1,
+    "m3_matrices": 15,
+    "raw_bytes": 2890137600,
+    "smoke_rows_usable_for_fitting": false
+  },
+  "outer_cv": {
+    "folds": 5,
+    "outer_train_rows": 2688,
+    "outer_heldout_rows": 672,
+    "inner_folds": "remaining_four_frozen_outer_fold_ids",
+    "inner_train_rows": 2016,
+    "inner_heldout_rows": 672,
+    "new_split_generation": false,
+    "same_m3_checkpoint_for_outer_train_and_heldout": true,
+    "scientific_evidence_rows": "outer_heldout_only"
+  },
+  "probe": {
+    "scaler": {"with_mean": true, "with_std": true},
+    "independent_binary_classifiers": 6,
+    "input_cast": "float64",
+    "penalty": "l2",
+    "dual": false,
+    "C": 1.0,
+    "solver": "liblinear",
+    "class_weight": null,
+    "fit_intercept": true,
+    "intercept_scaling": 1.0,
+    "tol": 0.0001,
+    "max_iter": 2000,
+    "random_state": 42,
+    "convergence_failure": "stop"
+  },
+  "threshold": {
+    "grid_start": 0.05,
+    "grid_stop": 0.95,
+    "grid_step": 0.01,
+    "grid_count": 91,
+    "shared_across_labels": true,
+    "prediction_rule": "probability_gte_threshold",
+    "comparison_tolerance": 1e-12,
+    "zero_division": 0,
+    "selection_order": [
+      "highest_five_label_macro_f1",
+      "lowest_six_label_hamming_loss_within_1e-12",
+      "closest_to_0_5",
+      "lower_threshold"
+    ],
+    "outer_heldout_selection_access": false
+  },
+  "metrics": {
+    "primary": "five_label_macro_average_precision",
+    "primary_labels": ["love", "joy", "anger", "sadness", "fear"],
+    "full_label_order": ["love", "joy", "surprise", "anger", "sadness", "fear"],
+    "average_precision_implementation": "sklearn.metrics.average_precision_score",
+    "secondary": [
+      "six_label_macro_ap",
+      "six_label_macro_f1",
+      "five_label_macro_f1",
+      "micro_ap",
+      "micro_f1",
+      "hamming_loss",
+      "subset_accuracy",
+      "per_label_ap",
+      "per_label_f1"
+    ]
+  },
+  "seed_roles": {
+    "discovery_seed": 42,
+    "discovery_points": ["H-1", "H7", "H15", "H19", "H20", "H27", "H31", "H35", "HF"],
+    "prospective_seeds": [43, 44],
+    "confirmation_points": ["H19", "H27", "HF"],
+    "voting_points": ["H27", "HF"],
+    "seed_pass": "both_voting_points_delta_positive_and_bootstrap_lower_gt_zero",
+    "states": {
+      "2": "Representation effect replicated",
+      "1": "Representation effect seed-sensitive",
+      "0": "No replicated representation effect"
+    }
+  },
+  "label_shuffle": {
+    "points": ["H27", "HF"],
+    "seeds": [2026082711, 2026082712, 2026082713],
+    "bit_generator": "PCG64",
+    "seed_sequence": ["shuffle_seed", "outer_fold"],
+    "permute": "complete_six_label_rows_within_outer_train",
+    "outer_heldout_labels_used_for_permutation": false,
+    "inner_threshold_selection": false,
+    "metrics": ["five_label_macro_ap", "six_label_macro_ap", "per_label_ap"],
+    "contrast": "3360_row_OOF_five_label_macro_AP_M3_shuffled_r_minus_Frozen_shuffled_r",
+    "maximum_binary_fits_including_main": 4320,
+    "negative_control_failure": "same_2_of_2_prospective_seed_pass_at_H27_and_HF",
+    "failure_trigger": "any_of_three_shuffle_replicates",
+    "failure_effect": "validity_failure_blocks_all_representation_states"
+  },
+  "bootstrap": {
+    "replicates": 2000,
+    "bit_generator": "PCG64",
+    "seed": 2026082701,
+    "unit": "duplicate_component_within_outer_fold",
+    "paired_plan_shared_across_all_conditions": true,
+    "refit_probe": false,
+    "reselect_threshold": false,
+    "percentiles": [2.5, 97.5],
+    "validity_labels": "all_six_positive_and_negative",
+    "invalid_replicate": "stop_without_redraw"
+  },
+  "resources": {
+    "projected_extraction_hours": 38.044064278744436,
+    "model_workers": 16,
+    "maximum_concurrent_heavy_workers": 1,
+    "worker_wall_hours": 4,
+    "aggregate_model_wall_hours": 64,
+    "worker_peak_mlx_gb": 10.0,
+    "private_disk_budget_bytes": 5368709120,
+    "minimum_free_disk_bytes": 10737418240,
+    "maximum_concurrent_probe_workers": 1,
+    "maximum_binary_probe_fits": 4320,
+    "probe_wall_hours": 12,
+    "probe_peak_rss_gb": 8.0,
+    "api_cost_usd": 0
+  },
+  "authorization": {
+    "no_result_preflight": true,
+    "formal_extraction": false,
+    "model_loading": false,
+    "forward": false,
+    "real_probe_fitting": false,
+    "threshold_selection": false,
+    "bootstrap": false,
+    "performance_metrics": false,
+    "formal_completion": false,
+    "exp071": false
+  },
+  "access": {
+    "public_parent_json": true,
+    "private_manifest_metadata": true,
+    "private_file_identity": true,
+    "npz_headers": true,
+    "npz_array_values": false,
+    "train_file_bytes_hash": true,
+    "train_rows_parse": false,
+    "train_text_values": false,
+    "train_label_values": false,
+    "historical_logit_values": false,
+    "validation": false,
+    "test": false,
+    "gold": false
+  },
+  "outputs": {
+    "public_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probe-preflight/attempt-1",
+    "private_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probe-preflight/attempt-1",
+    "formal_public_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-attempt-1",
+    "formal_private_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-attempt-1",
+    "public_allowlist": ["static.json", "static-verification.json", "no-result-complete.json"],
+    "private_allowlist": ["input-contract-manifest.json"]
+  },
+  "implementation": {
+    "protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-070-layerwise-probe.md",
+      "bytes": 11748,
+      "mode": "0644",
+      "sha256": "d4a481d2846d36651786c3f7458c67ca828c7e4c39463ef41750bbe33422f690"
+    },
+    "runner": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/run_exp070_preflight.py",
+      "bytes": 41542,
+      "mode": "0644",
+      "sha256": "ed5b6b833fbc095a6882cd6e5f0b177a0b31f7cc0dcdc7e36fc1e13ead239735"
+    },
+    "verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/verify_exp070_preflight.py",
+      "bytes": 40707,
+      "mode": "0644",
+      "sha256": "f4d90792de48e618261d9a6ae47eef418bef09aa1059759b33f5e756bd351964"
+    },
+    "tests": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/tests/test_exp070_preflight.py",
+      "bytes": 10314,
+      "mode": "0644",
+      "sha256": "715dba461850c7bd717e9817c0b895d942ff9aa73207ed75813b4126e06912df"
+    }
+  },
+  "claim_boundary": "A train-only no-result readiness check for the frozen EXP-070 layerwise linear-probe method and its EXP-069 parity fixtures; no model load, forward, real probe fit, threshold selection, bootstrap, scientific metric, representation-effect, independent-data or emotion-mechanism claim."
+}

@@ -1,0 +1,191 @@
+{
+  "schema_version": "exp-070-extraction-verification-attempt-2-config-v1",
+  "experiment_id": "EXP-070",
+  "run_id": "exp-070-layerwise-probe-formal-extraction",
+  "source_attempt_id": "formal-attempt-1",
+  "attempt_id": "formal-extraction-verification-attempt-2",
+  "verification_attempt": 2,
+  "registered_at": "2026-08-27",
+  "scope": {
+    "verification_only": true,
+    "model_rerun": false,
+    "worker_rerun": false,
+    "assemble_rerun": false,
+    "source_mutation": false,
+    "probe_consumer": false,
+    "exp071": false
+  },
+  "source_snapshot": {
+    "formal_config": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/configs/exp-070-formal-extraction.json",
+      "bytes": 10567,
+      "mode": "0644",
+      "sha256": "6915903c3f1df1d5407923de28ebced3c40ab96c7db786933b0723301276c29e"
+    },
+    "formal_protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-070-formal-extraction.md",
+      "bytes": 15724,
+      "mode": "0644",
+      "sha256": "1e3c8d3c822b87eeda4bb6f98e9153cce7dafc6085f66401ccd9942db10dda52"
+    },
+    "source_runner": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/run_exp070_extraction.py",
+      "bytes": 79878,
+      "mode": "0644",
+      "sha256": "83ab85046490023380ced3d95922791ad9592d5ed2e3ee092085fc86b70c7025"
+    },
+    "source_verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/verify_exp070_extraction.py",
+      "bytes": 63289,
+      "mode": "0644",
+      "sha256": "36138e8a7877bec15d22da79f8c2aded7d4bcb2eb076297be485a42ac2fa2b99"
+    },
+    "source_tests": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/tests/test_exp070_extraction.py",
+      "bytes": 12874,
+      "mode": "0644",
+      "sha256": "a8855b290ae8bb8d52d88f27c235507695bd4cd5dc40a3944a61ec907ad24d02"
+    }
+  },
+  "incident_evidence": {
+    "base_worker": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/base/worker.json",
+      "bytes": 8866,
+      "mode": "0600",
+      "sha256": "86147b31827fb26974fe6493312de628a6dee0eb910b1f2548721aa43620ffe9"
+    },
+    "base_matrix": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/base/representations.npy",
+      "bytes": 309657728,
+      "mode": "0600",
+      "sha256": "82cf73d08fb7ef0089b1dba24fba0927686423b48d8b66f3dc75d9b6a482ed45"
+    },
+    "fold0_worker": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s42-f0/worker.json",
+      "bytes": 10353,
+      "mode": "0600",
+      "sha256": "f604a563cc85487318c0763e70765bc294c566b99f3082987cb73d5c2daa1dd1"
+    },
+    "fold0_matrix": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s42-f0/representations.npy",
+      "bytes": 309657728,
+      "mode": "0600",
+      "sha256": "4a718afac542ce7cbb24e58d7246b1f98a67b77f2200038e3224f20313154958"
+    },
+    "fold0_head": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-paired-oof-production/fold-0/m3/head.safetensors",
+      "bytes": 61618,
+      "mode": "0600",
+      "sha256": "b4aab6bc6eb5857510c5b21e0e43630f46919263f8590d27dc982ff9eef79efc"
+    },
+    "fold0_heldout": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-paired-oof-production/fold-0/m3/heldout-logits.npz",
+      "bytes": 45479,
+      "mode": "0600",
+      "sha256": "9d36e4021e85587a070889402c504732057ace00dfc9ffc31204906f0703a2e7"
+    },
+    "exp052_runner": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/run_exp052_m2.py",
+      "bytes": 65667,
+      "mode": "0644",
+      "sha256": "9a1991461cee6754fd0407b894e6e2aaf583dc82a048764eebf881c4939a5fb7"
+    },
+    "exp069_runner": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/run_exp069_preflight.py",
+      "bytes": 54903,
+      "mode": "0644",
+      "sha256": "cb2655c61f7ff4e49ed9de47cbd92176e9547273e3e378f7c26ae587b2735bb0"
+    },
+    "m2_metadata": {
+      "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-052-m2-frozen-qwen/seed-42/feature-cache/train/metadata.json",
+      "bytes": 1130,
+      "mode": "0600",
+      "sha256": "ce4b49063f09c49f6200accd5e17fdeffa7660a1330c70afefe28564f3499c0e"
+    },
+    "observed_before_freeze": {
+      "token_digest_values_observed_different": true,
+      "base_token_digest_scheme": "exp069_070_zero_based_ordinal",
+      "legacy_m2_token_digest_scheme": "exp052_one_based_row_position",
+      "fold0_runner_mlx_max_abs": 0.0,
+      "fold0_pre_lora_max_abs": 0.0,
+      "fold0_numpy_float32_max_abs": 0.00001049041748046875,
+      "fold0_numpy_float32_count_gt_atol": 1,
+      "fold0_numpy_float64_max_abs": 0.000002086469194750862,
+      "float64_result_observed_before_rule_freeze": true,
+      "remaining_workers_float64_unobserved_at_freeze": 14
+    }
+  },
+  "future_snapshot": {
+    "source_public_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-extraction-attempt-1",
+    "source_private_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1",
+    "required_public_inventory_before_verification": [
+      "extraction.json",
+      "run-claim.json"
+    ],
+    "required_workers": 16,
+    "required_matrices": 16,
+    "required_status": "CompletedAwaitingVerification",
+    "claim_before_replay": true,
+    "source_unchanged_after_replay": true
+  },
+  "authorization": {
+    "terminal_verification_authorized_when_snapshot_complete": true,
+    "model_loading": false,
+    "forward": false,
+    "training": false,
+    "worker_rerun": false,
+    "assemble_rerun": false,
+    "train_text": false,
+    "train_labels": false,
+    "heldout_gold": false,
+    "validation": false,
+    "test": false,
+    "probe_fitting": false,
+    "threshold_selection": false,
+    "label_shuffle": false,
+    "bootstrap": false,
+    "performance_metrics": false,
+    "exp071": false
+  },
+  "numeric_contract": {
+    "rtol": 0.0,
+    "atol": 0.00001,
+    "runner_metric": "runner_mlx_head_vs_historical_logit_max_abs",
+    "float32_diagnostic": "independent_numpy_float32_saved_hf_head_vs_historical_logit_max_abs",
+    "float64_gate": "independent_numpy_float64_saved_hf_head_vs_historical_logit_max_abs",
+    "float64_formula": "x64_at_w64_transpose_plus_b64_compare_directly_to_reference64",
+    "float64_result_cast_back": false,
+    "cross_worker_token_digest_required": true,
+    "base_legacy_m2_digest_equality_required": false,
+    "no_fallback_dtype_operator_or_tolerance": true
+  },
+  "outputs": {
+    "recovery_public_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-extraction-verification-attempt-2",
+    "allowlist": [
+      "source-snapshot-claim.json",
+      "verification.json",
+      "extraction-complete.json"
+    ]
+  },
+  "implementation": {
+    "protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-070-verification-attempt-2.md",
+      "bytes": 7247,
+      "mode": "0644",
+      "sha256": "ce4e47bd7d8e4f2e091bb49c40d655bd25eafbe900edb0f09e9789a3a652f2fb"
+    },
+    "verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/verify_exp070_extraction_attempt2.py",
+      "bytes": 39067,
+      "mode": "0644",
+      "sha256": "d56adc1df77216b89187e2acb4dfe5e519c502dcf7c00a9f4bfe29a4fa85d2e3"
+    },
+    "tests": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/tests/test_exp070_extraction_attempt2.py",
+      "bytes": 10709,
+      "mode": "0644",
+      "sha256": "d3a8553b2ee18ea4a922270ff76fb9508718e0b59f975286a2369447c545c762"
+    }
+  },
+  "claim_boundary": "A model-free append-only verification recovery for EXP-070 formal extraction that corrects only token-digest scheme comparability and independent affine accumulation dtype; no source mutation, model rerun, probe, classification metric, validation, test, gold, representation-effect or emotion-mechanism claim."
+}

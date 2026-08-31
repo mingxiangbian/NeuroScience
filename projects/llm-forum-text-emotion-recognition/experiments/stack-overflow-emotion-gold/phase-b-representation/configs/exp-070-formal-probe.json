@@ -1,0 +1,1165 @@
+{
+  "schema_version": "exp-070-formal-probe-config-v1",
+  "experiment_id": "EXP-070",
+  "run_id": "exp-070-layerwise-probe-formal-probe",
+  "attempt_id": "formal-probe-attempt-1",
+  "rq_id": "RQ-S4.1",
+  "tier": "Major representation experiment",
+  "registered_at": "2026-08-28",
+  "stage": "formal-probe",
+  "parent_method": {
+    "protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-070-layerwise-probe.md",
+      "bytes": 11748,
+      "mode": "0644",
+      "sha256": "d4a481d2846d36651786c3f7458c67ca828c7e4c39463ef41750bbe33422f690"
+    },
+    "no_result_config": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/configs/exp-070-layerwise-probe-preflight.json",
+      "bytes": 13178,
+      "mode": "0644",
+      "sha256": "5355cd828ca8751c83f531307e6c9e8283bc0f19d92433b868d96abbb2063d1b"
+    }
+  },
+  "preflight": {
+    "config": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/configs/exp-070-formal-probe-preflight.json",
+      "bytes": 30871,
+      "mode": "0644",
+      "sha256": "ae9d729a57eaa759831292fda7fe63584a74ce40d64b9e9652a44708d183f8e5"
+    },
+    "static_run": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-probe-preflight-attempt-1/static.json",
+      "bytes": 1622,
+      "mode": "0644",
+      "sha256": "1f7fc6533666c72cbfe2e4147b4eb3139c1663a1bbf523e3e8f6d41d0449381e"
+    },
+    "static_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-probe-preflight-attempt-1/static-verification.json",
+      "bytes": 2889,
+      "mode": "0644",
+      "sha256": "f49d6c4fe2454e5436016a928000e0658273197a83025bae6b54b5ec374107c8"
+    },
+    "no_result_completion": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-probe-preflight-attempt-1/no-result-complete.json",
+      "bytes": 1987,
+      "mode": "0644",
+      "sha256": "a09bd030ba2ab9157bc2f613bd444991de6f4f3b1b646e02b00bd41d2edc29c9"
+    },
+    "required_statuses": {
+      "static_run": "CompletedAwaitingVerification",
+      "static_verification": "Passed",
+      "no_result_completion": "Complete"
+    },
+    "formal_probe_authorized_by_preflight": true
+  },
+  "source": {
+    "snapshot_sha256": "cdcde7fd617aee9d6189d6a7e87778a6617cdf0a6db658a397928b7e20910bad",
+    "formal_extraction_protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-070-formal-extraction.md",
+      "bytes": 15724,
+      "mode": "0644",
+      "sha256": "1e3c8d3c822b87eeda4bb6f98e9153cce7dafc6085f66401ccd9942db10dda52"
+    },
+    "formal_extraction_config": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/configs/exp-070-formal-extraction.json",
+      "bytes": 10567,
+      "mode": "0644",
+      "sha256": "6915903c3f1df1d5407923de28ebced3c40ab96c7db786933b0723301276c29e"
+    },
+    "formal_extraction_claim": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-extraction-attempt-1/run-claim.json",
+      "bytes": 1544,
+      "mode": "0644",
+      "sha256": "2b2e0c109a084a224ade0ccc3091abc9b33e8176157203c462d706ffa3050a1b"
+    },
+    "formal_extraction_run": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction.json",
+      "bytes": 1596,
+      "mode": "0644",
+      "sha256": "1ad33d4197517993a07e2af7f9fea14d7185e537a52376c1a400c91237793cfe"
+    },
+    "recovery_protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-070-verification-attempt-2.md",
+      "bytes": 7247,
+      "mode": "0644",
+      "sha256": "ce4e47bd7d8e4f2e091bb49c40d655bd25eafbe900edb0f09e9789a3a652f2fb"
+    },
+    "recovery_config": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/configs/exp-070-verification-attempt-2.json",
+      "bytes": 8443,
+      "mode": "0644",
+      "sha256": "3147ffb7d852734b4e283681af783c4181a89981d3c342726f64b3809dc1e4d9"
+    },
+    "recovery_snapshot_claim": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-extraction-verification-attempt-2/source-snapshot-claim.json",
+      "bytes": 1544,
+      "mode": "0644",
+      "sha256": "a2126108644b8221d2ae339f27c9c586aabe528f71d0dd8a95d15fd096977b2e"
+    },
+    "recovery_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-extraction-verification-attempt-2/verification.json",
+      "bytes": 7097,
+      "mode": "0644",
+      "sha256": "21e41625527702a4d8534225692a5d06fbf672add51eb67395af2a6e8803e5f5"
+    },
+    "recovery_completion": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-extraction-verification-attempt-2/extraction-complete.json",
+      "bytes": 2302,
+      "mode": "0644",
+      "sha256": "02755a7985e83e988fa5f0e3e2fbfaa22c7255ca1cfa7a8f2191ea5f222cb5cb"
+    },
+    "private_input_manifest": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/input-manifest.json",
+      "bytes": 5566,
+      "mode": "0600",
+      "sha256": "4bf62c2b37d1f25871470f8f54efd12e04f72c95ce1fbc3c4b91026dbc88f143"
+    },
+    "private_row_contract": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/row-contract.npz",
+      "bytes": 31014,
+      "mode": "0600",
+      "sha256": "f85a250cb2809f1cf5f33f6faf21dccc1eacccae3cbdc8adb839d4ae97f22308"
+    },
+    "private_extraction_manifest": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction-manifest.json",
+      "bytes": 10612,
+      "mode": "0600",
+      "sha256": "ef8092d7c8704199d7f5d8dce0c240418fde62a0b71ff4ba07a9da45c151d347"
+    },
+    "row_identity": {
+      "rows": 3360,
+      "components": 3277,
+      "ordinal_sha256": "1990feb383edb9d51a685bc13538b8e230eb7f86469a808bb8e7887b312e3316",
+      "sample_id_order_sha256": "bba5ac048be9cbe407f039b228f3ed9ef84a00d3d5cacf81d2caf0454ef4c7b0",
+      "component_id_order_sha256": "86c57712a9c03e1b6fbf11c08f7f56e933cee5ff6c4100e46e0b09b3b95a8037",
+      "component_code_sha256": "dbc921a4c0db01e3d70d4abeb6bd024b92984ea6f20f098eb54152f5809b3b8b",
+      "fold_id_order_sha256": "561a902dc639dd9b720fef68b335d608cf512cc8eaa98ac779350919a9e724cc"
+    },
+    "label_source": {
+      "private_fold_manifest": {
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-fold-manifest-preflight-attempt-2/fold-manifest.private.jsonl",
+        "bytes": 979748,
+        "mode": "0600",
+        "sha256": "d518e97c3332f2d59ea3556aecbb3a8cf9253438aee5ba02cd2ab105663862af"
+      },
+      "public_fold_manifest": {
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/fold-manifest.public.jsonl",
+        "bytes": 739200,
+        "mode": "0644",
+        "sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8"
+      },
+      "fold_verification": {
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/verification.json",
+        "bytes": 18353,
+        "mode": "0644",
+        "sha256": "bbd8617d99174f11fbc1dc4fed71ae0a4a500f4e5b337d8a3d68a3afc5645aa7"
+      },
+      "private_fields": [
+        "schema_version",
+        "protocol_id",
+        "experiment_id",
+        "sample_id",
+        "component_id",
+        "fold_id",
+        "labels",
+        "neutral",
+        "label_cardinality"
+      ],
+      "row_order": "file_order_must_match_extraction_row_identity",
+      "train_jsonl_access": false
+    },
+    "matrix_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction",
+    "matrices": [
+      {
+        "worker_id": "base",
+        "kind": "frozen",
+        "seed": null,
+        "fold": null,
+        "shape": [
+          3360,
+          9,
+          2560
+        ],
+        "points": [
+          "H-1",
+          "H7",
+          "H15",
+          "H19",
+          "H20",
+          "H27",
+          "H31",
+          "H35",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/base/representations.npy",
+          "bytes": 309657728,
+          "mode": "0600",
+          "sha256": "82cf73d08fb7ef0089b1dba24fba0927686423b48d8b66f3dc75d9b6a482ed45"
+        }
+      },
+      {
+        "worker_id": "m3-s42-f0",
+        "kind": "m3",
+        "seed": 42,
+        "fold": 0,
+        "shape": [
+          3360,
+          9,
+          2560
+        ],
+        "points": [
+          "H-1",
+          "H7",
+          "H15",
+          "H19",
+          "H20",
+          "H27",
+          "H31",
+          "H35",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s42-f0/representations.npy",
+          "bytes": 309657728,
+          "mode": "0600",
+          "sha256": "4a718afac542ce7cbb24e58d7246b1f98a67b77f2200038e3224f20313154958"
+        }
+      },
+      {
+        "worker_id": "m3-s42-f1",
+        "kind": "m3",
+        "seed": 42,
+        "fold": 1,
+        "shape": [
+          3360,
+          9,
+          2560
+        ],
+        "points": [
+          "H-1",
+          "H7",
+          "H15",
+          "H19",
+          "H20",
+          "H27",
+          "H31",
+          "H35",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s42-f1/representations.npy",
+          "bytes": 309657728,
+          "mode": "0600",
+          "sha256": "058117b855b3efe023c35a6a7a466600113a1201737eee97bbd98abd968b1206"
+        }
+      },
+      {
+        "worker_id": "m3-s42-f2",
+        "kind": "m3",
+        "seed": 42,
+        "fold": 2,
+        "shape": [
+          3360,
+          9,
+          2560
+        ],
+        "points": [
+          "H-1",
+          "H7",
+          "H15",
+          "H19",
+          "H20",
+          "H27",
+          "H31",
+          "H35",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s42-f2/representations.npy",
+          "bytes": 309657728,
+          "mode": "0600",
+          "sha256": "8ff33ea558b2fca1d19b144837b0fb9cf3864287b83eb53866a1d437abeb12de"
+        }
+      },
+      {
+        "worker_id": "m3-s42-f3",
+        "kind": "m3",
+        "seed": 42,
+        "fold": 3,
+        "shape": [
+          3360,
+          9,
+          2560
+        ],
+        "points": [
+          "H-1",
+          "H7",
+          "H15",
+          "H19",
+          "H20",
+          "H27",
+          "H31",
+          "H35",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s42-f3/representations.npy",
+          "bytes": 309657728,
+          "mode": "0600",
+          "sha256": "f74eddd81cbea0b105c0fe65718689db2d86a947ed25ba71de232fec6377ea1a"
+        }
+      },
+      {
+        "worker_id": "m3-s42-f4",
+        "kind": "m3",
+        "seed": 42,
+        "fold": 4,
+        "shape": [
+          3360,
+          9,
+          2560
+        ],
+        "points": [
+          "H-1",
+          "H7",
+          "H15",
+          "H19",
+          "H20",
+          "H27",
+          "H31",
+          "H35",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s42-f4/representations.npy",
+          "bytes": 309657728,
+          "mode": "0600",
+          "sha256": "6c943112de75b264b9dbd77aeaffde5d81f6735781422112e4819602c149c521"
+        }
+      },
+      {
+        "worker_id": "m3-s43-f0",
+        "kind": "m3",
+        "seed": 43,
+        "fold": 0,
+        "shape": [
+          3360,
+          3,
+          2560
+        ],
+        "points": [
+          "H19",
+          "H27",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s43-f0/representations.npy",
+          "bytes": 103219328,
+          "mode": "0600",
+          "sha256": "9715cacb4b3a2858b475441fcaf3e7aeb75925ad4162480ef7577705a4707764"
+        }
+      },
+      {
+        "worker_id": "m3-s43-f1",
+        "kind": "m3",
+        "seed": 43,
+        "fold": 1,
+        "shape": [
+          3360,
+          3,
+          2560
+        ],
+        "points": [
+          "H19",
+          "H27",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s43-f1/representations.npy",
+          "bytes": 103219328,
+          "mode": "0600",
+          "sha256": "c6a4f7fea837540e7c1e950bd9c457d9397afdebef3d6199e2266a113459cd0e"
+        }
+      },
+      {
+        "worker_id": "m3-s43-f2",
+        "kind": "m3",
+        "seed": 43,
+        "fold": 2,
+        "shape": [
+          3360,
+          3,
+          2560
+        ],
+        "points": [
+          "H19",
+          "H27",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s43-f2/representations.npy",
+          "bytes": 103219328,
+          "mode": "0600",
+          "sha256": "6235187558ccb10ff61298e7b415ac7bf830094b1fd4d0280eba5c954842191a"
+        }
+      },
+      {
+        "worker_id": "m3-s43-f3",
+        "kind": "m3",
+        "seed": 43,
+        "fold": 3,
+        "shape": [
+          3360,
+          3,
+          2560
+        ],
+        "points": [
+          "H19",
+          "H27",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s43-f3/representations.npy",
+          "bytes": 103219328,
+          "mode": "0600",
+          "sha256": "4d7592e75e8a81cc18127b4c307916155ae15f1cf3a319eaabbb4ba990da2aa8"
+        }
+      },
+      {
+        "worker_id": "m3-s43-f4",
+        "kind": "m3",
+        "seed": 43,
+        "fold": 4,
+        "shape": [
+          3360,
+          3,
+          2560
+        ],
+        "points": [
+          "H19",
+          "H27",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s43-f4/representations.npy",
+          "bytes": 103219328,
+          "mode": "0600",
+          "sha256": "c895b26ad5ed1dd2a73ebb8d72e24e1b060127aac63bda8df1abef6fd2bf39e1"
+        }
+      },
+      {
+        "worker_id": "m3-s44-f0",
+        "kind": "m3",
+        "seed": 44,
+        "fold": 0,
+        "shape": [
+          3360,
+          3,
+          2560
+        ],
+        "points": [
+          "H19",
+          "H27",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s44-f0/representations.npy",
+          "bytes": 103219328,
+          "mode": "0600",
+          "sha256": "78e1aeb4b88688ff72cc722871d69818e08284b71fdf799827b15a3db5bc277a"
+        }
+      },
+      {
+        "worker_id": "m3-s44-f1",
+        "kind": "m3",
+        "seed": 44,
+        "fold": 1,
+        "shape": [
+          3360,
+          3,
+          2560
+        ],
+        "points": [
+          "H19",
+          "H27",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s44-f1/representations.npy",
+          "bytes": 103219328,
+          "mode": "0600",
+          "sha256": "c4a319c394166dccf542dce70bf9ca87f8d9ea523f1d432ee9d35fbd2e7a42e6"
+        }
+      },
+      {
+        "worker_id": "m3-s44-f2",
+        "kind": "m3",
+        "seed": 44,
+        "fold": 2,
+        "shape": [
+          3360,
+          3,
+          2560
+        ],
+        "points": [
+          "H19",
+          "H27",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s44-f2/representations.npy",
+          "bytes": 103219328,
+          "mode": "0600",
+          "sha256": "c88cfd53c26f2951978a8ae64cdbc76424318045b2e91eee3855dd22163f73e6"
+        }
+      },
+      {
+        "worker_id": "m3-s44-f3",
+        "kind": "m3",
+        "seed": 44,
+        "fold": 3,
+        "shape": [
+          3360,
+          3,
+          2560
+        ],
+        "points": [
+          "H19",
+          "H27",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s44-f3/representations.npy",
+          "bytes": 103219328,
+          "mode": "0600",
+          "sha256": "bd382b22b213c6c9028939c952de441aa4becaf6d985b0e2f6f70c6ec3b3af8e"
+        }
+      },
+      {
+        "worker_id": "m3-s44-f4",
+        "kind": "m3",
+        "seed": 44,
+        "fold": 4,
+        "shape": [
+          3360,
+          3,
+          2560
+        ],
+        "points": [
+          "H19",
+          "H27",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s44-f4/representations.npy",
+          "bytes": 103219328,
+          "mode": "0600",
+          "sha256": "7d01295c455b966c2e35832840655d9c080134d9fdcb6f3906b86058f0c76f00"
+        }
+      }
+    ]
+  },
+  "environment": {
+    "python_executable": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python",
+    "python_version": "3.10.20",
+    "architecture": "arm64",
+    "packages": {
+      "numpy": "2.2.6",
+      "scikit-learn": "1.7.2",
+      "scipy": "1.15.3",
+      "joblib": "1.5.3"
+    },
+    "thread_environment": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1"
+    }
+  },
+  "method": {
+    "labels": {
+      "full_order": [
+        "love",
+        "joy",
+        "surprise",
+        "anger",
+        "sadness",
+        "fear"
+      ],
+      "primary_order": [
+        "love",
+        "joy",
+        "anger",
+        "sadness",
+        "fear"
+      ],
+      "primary_indices": [
+        0,
+        1,
+        3,
+        4,
+        5
+      ],
+      "excluded_from_primary": "surprise",
+      "source_field": "labels",
+      "dtype": "uint8",
+      "negative": 0,
+      "positive": 1
+    },
+    "points": {
+      "seed42": [
+        "H-1",
+        "H7",
+        "H15",
+        "H19",
+        "H20",
+        "H27",
+        "H31",
+        "H35",
+        "HF"
+      ],
+      "confirmation": [
+        "H19",
+        "H27",
+        "HF"
+      ],
+      "voting": [
+        "H27",
+        "HF"
+      ],
+      "main_condition_order": [
+        "frozen:H-1",
+        "frozen:H7",
+        "frozen:H15",
+        "frozen:H19",
+        "frozen:H20",
+        "frozen:H27",
+        "frozen:H31",
+        "frozen:H35",
+        "frozen:HF",
+        "m3-s42:H-1",
+        "m3-s42:H7",
+        "m3-s42:H15",
+        "m3-s42:H19",
+        "m3-s42:H20",
+        "m3-s42:H27",
+        "m3-s42:H31",
+        "m3-s42:H35",
+        "m3-s42:HF",
+        "m3-s43:H19",
+        "m3-s43:H27",
+        "m3-s43:HF",
+        "m3-s44:H19",
+        "m3-s44:H27",
+        "m3-s44:HF"
+      ],
+      "shuffle_condition_order": [
+        "frozen:H27",
+        "frozen:HF",
+        "m3-s42:H27",
+        "m3-s42:HF",
+        "m3-s43:H27",
+        "m3-s43:HF",
+        "m3-s44:H27",
+        "m3-s44:HF"
+      ]
+    },
+    "outer_cv": {
+      "fold_ids": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "rows": 3360,
+      "outer_train_rows": 2688,
+      "outer_heldout_rows": 672,
+      "inner_fold_order": "ascending_remaining_outer_fold_ids",
+      "inner_train_rows": 2016,
+      "inner_heldout_rows": 672,
+      "component_disjoint": true,
+      "new_split_generation": false,
+      "m3_matrix_binding": "outer_fold_not_inner_fold",
+      "scientific_evidence": "concatenated_outer_heldout_only",
+      "concatenation_order": "outer_fold_0_to_4_then_representation_ordinal"
+    },
+    "probe": {
+      "input_dtype": "float64",
+      "source_mmap_mode": "r",
+      "scaler": {
+        "class": "sklearn.preprocessing.StandardScaler",
+        "with_mean": true,
+        "with_std": true,
+        "fit_scope": "current_fit_partition_only"
+      },
+      "classifier": {
+        "class": "sklearn.linear_model.LogisticRegression",
+        "independent_binary_classifiers": 6,
+        "penalty": "l2",
+        "dual": false,
+        "C": 1,
+        "solver": "liblinear",
+        "class_weight": null,
+        "fit_intercept": true,
+        "intercept_scaling": 1,
+        "tol": 0.0001,
+        "max_iter": 2000,
+        "random_state": 42
+      },
+      "failure_conditions": [
+        "single_class_fit_partition",
+        "convergence_warning",
+        "nonfinite_scaler_or_model_value",
+        "nonfinite_probability",
+        "probability_outside_closed_unit_interval",
+        "unexpected_shape",
+        "outer_heldout_row_in_fit_partition"
+      ]
+    },
+    "threshold": {
+      "construction": "numpy.arange(5,96,dtype=int64)/100.0",
+      "dtype": "float64",
+      "start": 0.05,
+      "stop": 0.95,
+      "step": 0.01,
+      "count": 91,
+      "shared_across_labels": true,
+      "prediction_rule": "probability_gte_threshold",
+      "comparison_tolerance": 1e-12,
+      "selection_order": [
+        "highest_five_label_macro_f1",
+        "lowest_six_label_hamming_loss_within_1e-12",
+        "closest_to_0_50",
+        "lower_threshold"
+      ],
+      "outer_heldout_label_access": false
+    },
+    "metrics": {
+      "library": "scikit-learn",
+      "version": "1.7.2",
+      "average_precision": {
+        "function": "sklearn.metrics.average_precision_score",
+        "five_label_macro": {
+          "average": "macro",
+          "labels": "primary_indices"
+        },
+        "six_label_macro": {
+          "average": "macro",
+          "labels": "full_order"
+        },
+        "micro": {
+          "average": "micro",
+          "labels": "full_order"
+        },
+        "per_label": {
+          "average": null,
+          "labels": "full_order"
+        },
+        "input": "float64_probability"
+      },
+      "f1": {
+        "function": "sklearn.metrics.f1_score",
+        "five_label_macro": {
+          "average": "macro",
+          "zero_division": 0,
+          "labels": "primary_indices"
+        },
+        "six_label_macro": {
+          "average": "macro",
+          "zero_division": 0,
+          "labels": "full_order"
+        },
+        "micro": {
+          "average": "micro",
+          "zero_division": 0,
+          "labels": "full_order"
+        },
+        "per_label": {
+          "average": null,
+          "zero_division": 0,
+          "labels": "full_order"
+        },
+        "input": "thresholded_uint8_prediction"
+      },
+      "hamming_loss": {
+        "function": "sklearn.metrics.hamming_loss",
+        "labels": "full_order"
+      },
+      "subset_accuracy": {
+        "function": "sklearn.metrics.accuracy_score",
+        "labels": "full_order"
+      },
+      "primary": "five_label_macro_average_precision",
+      "secondary": [
+        "six_label_macro_ap",
+        "six_label_macro_f1",
+        "five_label_macro_f1",
+        "micro_ap",
+        "micro_f1",
+        "hamming_loss",
+        "subset_accuracy",
+        "per_label_ap",
+        "per_label_f1"
+      ]
+    },
+    "seed_roles": {
+      "discovery_seed": 42,
+      "prospective_seeds": [
+        43,
+        44
+      ],
+      "seed_pass": "H27_and_HF_each_point_delta_gt_0_and_paired_bootstrap_lower_gt_0",
+      "H19_votes": false,
+      "states": {
+        "0": "No replicated representation effect",
+        "1": "Representation effect seed-sensitive",
+        "2": "Representation effect replicated"
+      },
+      "negative_control_state": null,
+      "seed42_descriptive_only": true
+    },
+    "label_shuffle": {
+      "seeds": [
+        2026082711,
+        2026082712,
+        2026082713
+      ],
+      "seed_sequence": [
+        "shuffle_seed",
+        "outer_fold"
+      ],
+      "bit_generator": "PCG64",
+      "generator": "numpy.random.Generator",
+      "permutation_api": "Generator.permutation(2688)",
+      "input_row_order": "ascending_representation_ordinal_within_outer_train",
+      "permutation_dtype_for_digest": "little_endian_int64_C_order",
+      "permute": "complete_six_label_rows_within_outer_train",
+      "same_permutation_for_all_conditions": true,
+      "outer_heldout_labels_used_for_permutation": false,
+      "inner_threshold_selection": false,
+      "metrics": [
+        "five_label_macro_ap",
+        "six_label_macro_ap",
+        "per_label_ap"
+      ],
+      "negative_control_failure": "any_shuffle_seed_where_seed43_and_seed44_both_pass_H27_and_HF",
+      "negative_control_effect": "representation_state_null_and_state_assignment_blocked",
+      "scientific_outcome_not_runner_failure": true
+    },
+    "bootstrap": {
+      "replicates": 2000,
+      "seed": 2026082701,
+      "bit_generator": "PCG64",
+      "generator": "numpy.random.Generator",
+      "traversal": "replicate_0_to_1999_outer_then_fold_0_to_4_inner",
+      "component_order": "unique_component_id_sorted_by_UTF8_bytes_within_fold",
+      "draw_api": "Generator.integers(0,n_components,size=n_components,dtype=int64,endpoint=False)",
+      "unit": "duplicate_component_within_outer_fold",
+      "row_order_within_component": "ascending_representation_ordinal",
+      "selected_component_order": "draw_order_with_duplicates_preserved",
+      "fold_concatenation_order": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "paired_plan_shared_across_all_main_and_control_contrasts": true,
+      "refit_probe": false,
+      "reselect_threshold": false,
+      "percentiles": [
+        2.5,
+        97.5
+      ],
+      "percentile_api": "numpy.percentile(values,[2.5,97.5],method='linear')",
+      "value_dtype": "float64",
+      "round_before_comparison": false,
+      "validity": "all_six_labels_have_positive_and_negative",
+      "invalid_replicate": "terminal_failure_without_discard_or_redraw"
+    },
+    "fit_inventory": {
+      "outer_folds": 5,
+      "main_conditions": 24,
+      "inner_fits_per_condition_outer_fold": 4,
+      "final_fits_per_condition_outer_fold": 1,
+      "labels_per_fit": 6,
+      "main_binary_fits": 3600,
+      "shuffle_seeds": 3,
+      "shuffle_conditions": 8,
+      "shuffle_binary_fits": 720,
+      "total_binary_fits": 4320,
+      "frozen_fit_reuse": "one_frozen_fit_per_layer_outer_fold_reused_across_seed_contrasts",
+      "execution_order": "outer_fold_then_main_conditions_then_inner_folds_then_final_then_shuffle_seeds_then_shuffle_conditions_then_labels"
+    }
+  },
+  "private_probability_artifact": {
+    "writer": "numpy.savez",
+    "compressed": false,
+    "directory_mode": "0700",
+    "file_mode": "0600",
+    "layout": "C",
+    "fold_npz_pattern": "folds/f{fold}.npz",
+    "fold_seal_pattern": "folds/f{fold}.json",
+    "seal_written_last": true,
+    "npz_without_seal": "terminal_orphan_no_same_attempt_resume",
+    "arrays": {
+      "outer_train_ordinals": {
+        "shape": [
+          2688
+        ],
+        "dtype": "<i4"
+      },
+      "outer_heldout_ordinals": {
+        "shape": [
+          672
+        ],
+        "dtype": "<i4"
+      },
+      "main_inner_oof_probability": {
+        "shape": [
+          24,
+          2688,
+          6
+        ],
+        "dtype": "<f8"
+      },
+      "main_outer_heldout_probability": {
+        "shape": [
+          24,
+          672,
+          6
+        ],
+        "dtype": "<f8"
+      },
+      "main_threshold_index": {
+        "shape": [
+          24
+        ],
+        "dtype": "<i2"
+      },
+      "main_n_iter": {
+        "shape": [
+          24,
+          5,
+          6
+        ],
+        "dtype": "<i4"
+      },
+      "shuffle_outer_heldout_probability": {
+        "shape": [
+          3,
+          8,
+          672,
+          6
+        ],
+        "dtype": "<f8"
+      },
+      "shuffle_n_iter": {
+        "shape": [
+          3,
+          8,
+          6
+        ],
+        "dtype": "<i4"
+      }
+    },
+    "forbidden_members": [
+      "labels",
+      "predictions",
+      "sample_ids",
+      "component_ids",
+      "coefficients",
+      "scalers",
+      "representations",
+      "text"
+    ],
+    "probability_range": [
+      0,
+      1
+    ],
+    "all_values_finite": true,
+    "fold_seal_required_fields": [
+      "schema_version",
+      "experiment_id",
+      "run_id",
+      "attempt_id",
+      "outer_fold",
+      "status",
+      "npz",
+      "main_condition_order",
+      "shuffle_condition_order",
+      "inner_fold_order",
+      "source_before",
+      "source_after",
+      "permutation_sha256",
+      "fit_counts",
+      "convergence",
+      "access",
+      "resources"
+    ],
+    "final_verifier": "probability_only_no_refit"
+  },
+  "resources": {
+    "maximum_concurrent_probe_workers": 1,
+    "maximum_binary_probe_fits": 4320,
+    "formal_wall_seconds": 43200,
+    "probe_peak_rss_bytes": 8589934592,
+    "consumer_private_budget_bytes": 536870912,
+    "threads_per_library": 1,
+    "api_cost_usd": 0
+  },
+  "authorization": {
+    "static_preflight": false,
+    "initialize": true,
+    "fit_folds": true,
+    "assemble": true,
+    "source_file_identity": true,
+    "npy_headers": true,
+    "representation_values": true,
+    "label_source_rows": true,
+    "label_values": true,
+    "outer_train_label_use": true,
+    "outer_heldout_label_use_after_fold_seals": true,
+    "probe_fitting": true,
+    "threshold_selection": true,
+    "label_shuffle": true,
+    "bootstrap": true,
+    "performance_metrics": true,
+    "final_verification": true,
+    "formal_completion": true,
+    "model_loading": false,
+    "forward": false,
+    "source_mutation": false,
+    "validation": false,
+    "test": false,
+    "exp071": false
+  },
+  "access": {
+    "public_parent_json": true,
+    "private_parent_metadata": true,
+    "source_file_bytes_hashed": true,
+    "npy_headers_read": true,
+    "representation_array_values_read": true,
+    "representation_mmap_mode": "r",
+    "label_source_file_bytes_hashed": true,
+    "label_source_rows_parsed": true,
+    "label_values_read": true,
+    "label_access_staging": "outer_train_only_during_fit_fold_then_all_labels_during_assemble_after_five_fold_seals",
+    "train_jsonl_accessed": false,
+    "train_text_read": false,
+    "model_loaded": false,
+    "forward_executed": false,
+    "real_probe_fitted": true,
+    "threshold_selected": true,
+    "shuffle_executed": true,
+    "bootstrap_executed": true,
+    "performance_metrics_computed": true,
+    "validation_accessed": false,
+    "test_accessed": false
+  },
+  "outputs": {
+    "preflight_public_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-probe-preflight-attempt-1",
+    "preflight_private_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-probe-preflight-attempt-1",
+    "formal_public_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-probe-attempt-1",
+    "formal_private_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-probe-attempt-1",
+    "preflight_public_success_allowlist": [
+      "static.json",
+      "static-verification.json",
+      "no-result-complete.json"
+    ],
+    "preflight_public_runner_failure_allowlist": [
+      "static.json"
+    ],
+    "preflight_public_verifier_failure_allowlist": [
+      "static.json",
+      "static-verification.json"
+    ],
+    "preflight_private_allowlist": [
+      "input-contract-manifest.json"
+    ],
+    "formal_public_claim_allowlist": [
+      "run-claim.json"
+    ],
+    "formal_public_awaiting_verification_allowlist": [
+      "run-claim.json",
+      "probe.json"
+    ],
+    "formal_public_verified_allowlist": [
+      "run-claim.json",
+      "probe.json",
+      "verification.json"
+    ],
+    "formal_public_success_allowlist": [
+      "run-claim.json",
+      "probe.json",
+      "verification.json",
+      "probe-complete.json"
+    ],
+    "formal_public_runner_failure_allowlist": [
+      "run-claim.json",
+      "failure.json"
+    ],
+    "formal_private_top_level_allowlist": [
+      "input-manifest.json",
+      "folds",
+      "probe-manifest.json"
+    ],
+    "formal_private_fold_allowlist": [
+      "f0.npz",
+      "f0.json",
+      "f1.npz",
+      "f1.json",
+      "f2.npz",
+      "f2.json",
+      "f3.npz",
+      "f3.json",
+      "f4.npz",
+      "f4.json"
+    ],
+    "formal_private_success_allowlist": [
+      "input-manifest.json",
+      "folds/f0.npz",
+      "folds/f0.json",
+      "folds/f1.npz",
+      "folds/f1.json",
+      "folds/f2.npz",
+      "folds/f2.json",
+      "folds/f3.npz",
+      "folds/f3.json",
+      "folds/f4.npz",
+      "folds/f4.json",
+      "probe-manifest.json"
+    ]
+  },
+  "implementation": {
+    "protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-070-formal-probe.md",
+      "bytes": 17832,
+      "mode": "0644",
+      "sha256": "0c4d927e9bded6d914700c587b1125de5af745ad91be92d09ae6a1569c853c29"
+    },
+    "runner": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/run_exp070_probe.py",
+      "bytes": 111545,
+      "mode": "0644",
+      "sha256": "2c35497c9379e38c8ab3b425fee824e2a4b894a92ab2fd45c45a6af6a137cc13"
+    },
+    "verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/verify_exp070_probe.py",
+      "bytes": 114123,
+      "mode": "0644",
+      "sha256": "6f779d6582725744d0d0ef14604c63df63083f6f567b153c984ab3cd32c4bb61"
+    },
+    "tests": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/tests/test_exp070_probe.py",
+      "bytes": 43206,
+      "mode": "0644",
+      "sha256": "635f5942a4d5befe9f72493e54ed25356789481ce3ef0d6cdce0b70e95613349"
+    }
+  },
+  "claim_boundary": "A train-only formal linear-probe consumer for the verified EXP-070 representation caches, with nested component-disjoint outer-heldout probabilities, frozen thresholds, label-shuffle controls, paired duplicate-component bootstrap intervals and independent probability-only verification; no model load, forward, extraction rerun, validation, test, independent-data, causal-representation, emotion-neuron or human-mechanism claim."
+}

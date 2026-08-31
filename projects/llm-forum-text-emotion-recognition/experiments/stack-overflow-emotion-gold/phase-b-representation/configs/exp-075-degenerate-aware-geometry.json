@@ -1,0 +1,66 @@
+{
+  "experiment_id": "EXP-075",
+  "parent_config": {
+    "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/configs/exp-071-representation-drift-formal-attempt-1.json",
+    "bytes": 30400,
+    "mode": "0644",
+    "sha256": "0709c963f88242a706784f92d5033fe08eb46fb752d7e59e96607bc259d0ae35"
+  },
+  "protocol": {
+    "path": "experiments/stack-overflow-emotion-gold/protocols/exp-075-degenerate-aware-geometry.md",
+    "bytes": 6994,
+    "mode": "0644",
+    "sha256": "74acf5193fdcf33d346ec31daa798bb6cd49e776e216c0ff84e09aa86f339f7f"
+  },
+  "implementation": {
+    "runner": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/run_exp075_geometry.py",
+      "bytes": 27114,
+      "mode": "0644",
+      "sha256": "4f901d72345cfbeaddd314f0d793340e799a9b03a5532af36634ded26f23e921"
+    },
+    "verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/verify_exp075_geometry.py",
+      "bytes": 31313,
+      "mode": "0644",
+      "sha256": "8da2cec9483086d629d86933933ca9bf0479dbebb7b8f959ff4c484ba3f47b82"
+    },
+    "tests": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/tests/test_exp075_geometry.py",
+      "bytes": 21894,
+      "mode": "0644",
+      "sha256": "febbdb6f74995acb40be584e2114e5c3ecc4987747a40eb48a1f157ca316fdf0"
+    }
+  },
+  "outputs": {
+    "public_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-075-degenerate-aware-geometry/attempt-1",
+    "private_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-075-degenerate-aware-geometry/attempt-1"
+  },
+  "resources": {
+    "max_wall_seconds": 7200,
+    "max_peak_rss_bytes": 4294967296,
+    "max_private_bytes": 67108864,
+    "min_free_bytes": 1073741824
+  },
+  "environment": {
+    "python_executable": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python",
+    "python_version": "3.10.20",
+    "architecture": "arm64",
+    "packages": {
+      "numpy": "2.2.6"
+    },
+    "thread_environment": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1"
+    }
+  },
+  "method": {
+    "zero_cka_policy": "null_only_exact_zero_centered_variance",
+    "fold_aggregation": "all_five_or_null",
+    "spearman": "fixed_nine_or_null",
+    "post_diagnostic": true
+  }
+}

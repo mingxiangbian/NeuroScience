@@ -1,0 +1,194 @@
+{
+  "schema_version": "exp-070-formal-extraction-config-v1",
+  "experiment_id": "EXP-070",
+  "run_id": "exp-070-layerwise-probe-formal-extraction",
+  "attempt_id": "formal-attempt-1",
+  "rq_id": "RQ-S4.1",
+  "tier": "Major experiment infrastructure stage",
+  "registered_at": "2026-08-27",
+  "method_protocol": {
+    "path": "experiments/stack-overflow-emotion-gold/protocols/exp-070-layerwise-probe.md",
+    "bytes": 11748,
+    "mode": "0644",
+    "sha256": "d4a481d2846d36651786c3f7458c67ca828c7e4c39463ef41750bbe33422f690"
+  },
+  "formal_protocol": {
+    "path": "experiments/stack-overflow-emotion-gold/protocols/exp-070-formal-extraction.md",
+    "bytes": 15724,
+    "mode": "0644",
+    "sha256": "1e3c8d3c822b87eeda4bb6f98e9153cce7dafc6085f66401ccd9942db10dda52"
+  },
+  "parent_no_result": {
+    "config": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/configs/exp-070-layerwise-probe-preflight.json",
+      "bytes": 13178,
+      "mode": "0644",
+      "sha256": "5355cd828ca8751c83f531307e6c9e8283bc0f19d92433b868d96abbb2063d1b"
+    },
+    "run": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probe-preflight/attempt-1/static.json",
+      "bytes": 3016,
+      "mode": "0644",
+      "sha256": "42ad2148afed823df183b87e2b3556ad3719516af97ebe3c2401a741b11dbdff"
+    },
+    "verification": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probe-preflight/attempt-1/static-verification.json",
+      "bytes": 2522,
+      "mode": "0644",
+      "sha256": "9aadc4de6b870da018a0f536bc10bc8bd2879470b1c39ea2eb5f313e9c3804ad"
+    },
+    "completion": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probe-preflight/attempt-1/no-result-complete.json",
+      "bytes": 1883,
+      "mode": "0644",
+      "sha256": "5582d0ac68158c12782b8b1b52c5a403a67714fe99d7763c4e46ff6df1e9807e"
+    },
+    "input_contract": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probe-preflight/attempt-1/input-contract-manifest.json",
+      "bytes": 63253,
+      "mode": "0600",
+      "sha256": "9bf597dd1b2a43000c726033ed25f0ead3ed7c89251f093e8b799ff25a954c86"
+    }
+  },
+  "sources": {
+    "exp069_config": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/configs/exp-069-representation-extraction-preflight.json",
+      "bytes": 13544,
+      "mode": "0644",
+      "sha256": "a7f7ac209d9d3993c901cbdf92b20b64e3f810fcdd97a50e4e7064411f6597e2"
+    },
+    "exp069_input_manifest": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-069-representation-extraction-preflight/attempt-4-fold-smoke/input-manifest.json",
+      "bytes": 34133,
+      "mode": "0600",
+      "sha256": "7c6fc8546a472265317dcd8af7516bdf837a2db525f5f805b17531e4e590146d"
+    },
+    "exp069_runner": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/run_exp069_preflight.py",
+      "bytes": 54903,
+      "mode": "0644",
+      "sha256": "cb2655c61f7ff4e49ed9de47cbd92176e9547273e3e378f7c26ae587b2735bb0"
+    },
+    "gitignore": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/.gitignore",
+      "bytes": 117,
+      "mode": "0644",
+      "sha256": "8a2fd5ed8be5a5e19ff8329903dec22771f42f5f93fa2a9f7ad1f0265019f02d"
+    }
+  },
+  "environment": {
+    "python_executable": "/Users/phoenix/miniconda3/envs/phase-a-runtime/bin/python",
+    "python_version": "3.11.15",
+    "architecture": "arm64",
+    "packages": {
+      "numpy": "2.4.6",
+      "mlx": "0.32.0",
+      "mlx_lm": "0.31.3",
+      "safetensors": "0.8.0",
+      "tokenizers": "0.22.2",
+      "transformers": "5.14.1"
+    },
+    "offline_environment": {
+      "PYTHONNOUSERSITE": "1",
+      "HF_HUB_OFFLINE": "1",
+      "TRANSFORMERS_OFFLINE": "1",
+      "TOKENIZERS_PARALLELISM": "false",
+      "OMP_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    }
+  },
+  "workers": [
+    {"worker_id": "base", "kind": "base", "seed": null, "fold": null, "points": ["H-1", "H7", "H15", "H19", "H20", "H27", "H31", "H35", "HF"], "shape": [3360, 9, 2560], "payload_bytes": 309657600},
+    {"worker_id": "m3-s42-f0", "kind": "m3", "seed": 42, "fold": 0, "points": ["H-1", "H7", "H15", "H19", "H20", "H27", "H31", "H35", "HF"], "shape": [3360, 9, 2560], "payload_bytes": 309657600},
+    {"worker_id": "m3-s42-f1", "kind": "m3", "seed": 42, "fold": 1, "points": ["H-1", "H7", "H15", "H19", "H20", "H27", "H31", "H35", "HF"], "shape": [3360, 9, 2560], "payload_bytes": 309657600},
+    {"worker_id": "m3-s42-f2", "kind": "m3", "seed": 42, "fold": 2, "points": ["H-1", "H7", "H15", "H19", "H20", "H27", "H31", "H35", "HF"], "shape": [3360, 9, 2560], "payload_bytes": 309657600},
+    {"worker_id": "m3-s42-f3", "kind": "m3", "seed": 42, "fold": 3, "points": ["H-1", "H7", "H15", "H19", "H20", "H27", "H31", "H35", "HF"], "shape": [3360, 9, 2560], "payload_bytes": 309657600},
+    {"worker_id": "m3-s42-f4", "kind": "m3", "seed": 42, "fold": 4, "points": ["H-1", "H7", "H15", "H19", "H20", "H27", "H31", "H35", "HF"], "shape": [3360, 9, 2560], "payload_bytes": 309657600},
+    {"worker_id": "m3-s43-f0", "kind": "m3", "seed": 43, "fold": 0, "points": ["H19", "H27", "HF"], "shape": [3360, 3, 2560], "payload_bytes": 103219200},
+    {"worker_id": "m3-s43-f1", "kind": "m3", "seed": 43, "fold": 1, "points": ["H19", "H27", "HF"], "shape": [3360, 3, 2560], "payload_bytes": 103219200},
+    {"worker_id": "m3-s43-f2", "kind": "m3", "seed": 43, "fold": 2, "points": ["H19", "H27", "HF"], "shape": [3360, 3, 2560], "payload_bytes": 103219200},
+    {"worker_id": "m3-s43-f3", "kind": "m3", "seed": 43, "fold": 3, "points": ["H19", "H27", "HF"], "shape": [3360, 3, 2560], "payload_bytes": 103219200},
+    {"worker_id": "m3-s43-f4", "kind": "m3", "seed": 43, "fold": 4, "points": ["H19", "H27", "HF"], "shape": [3360, 3, 2560], "payload_bytes": 103219200},
+    {"worker_id": "m3-s44-f0", "kind": "m3", "seed": 44, "fold": 0, "points": ["H19", "H27", "HF"], "shape": [3360, 3, 2560], "payload_bytes": 103219200},
+    {"worker_id": "m3-s44-f1", "kind": "m3", "seed": 44, "fold": 1, "points": ["H19", "H27", "HF"], "shape": [3360, 3, 2560], "payload_bytes": 103219200},
+    {"worker_id": "m3-s44-f2", "kind": "m3", "seed": 44, "fold": 2, "points": ["H19", "H27", "HF"], "shape": [3360, 3, 2560], "payload_bytes": 103219200},
+    {"worker_id": "m3-s44-f3", "kind": "m3", "seed": 44, "fold": 3, "points": ["H19", "H27", "HF"], "shape": [3360, 3, 2560], "payload_bytes": 103219200},
+    {"worker_id": "m3-s44-f4", "kind": "m3", "seed": 44, "fold": 4, "points": ["H19", "H27", "HF"], "shape": [3360, 3, 2560], "payload_bytes": 103219200}
+  ],
+  "extraction": {
+    "rows": 3360,
+    "hidden_size": 2560,
+    "dtype": "float32",
+    "layout": "C",
+    "all_points": ["H-1", "H7", "H15", "H19", "H20", "H27", "H31", "H35", "HF"],
+    "pre_lora_points": ["H-1", "H7", "H15", "H19"],
+    "transient_confirmation_points": ["H-1", "H7", "H15"],
+    "comparison_dtype": "float32",
+    "rtol": 0.0,
+    "atol": 0.00001,
+    "chunk_rows": 32,
+    "chunks_per_worker": 105,
+    "raw_payload_bytes": 2890137600,
+    "standard_path_sentinel_ordinals": [0, 108, 217, 325, 433, 542, 650, 758, 867, 975, 1084, 1192, 1300, 1409, 1517, 1625, 1734, 1842, 1950, 2059, 2167, 2275, 2384, 2492, 2601, 2709, 2817, 2926, 3034, 3142, 3251, 3359],
+    "resume": {
+      "technical_part_suffix": ".part",
+      "progress_file": "progress.json",
+      "continuous_prefix_only": true,
+      "verify_committed_chunk_digests": true,
+      "sealed_worker_rerun": false
+    }
+  },
+  "resources": {
+    "model_workers": 16,
+    "maximum_concurrent_heavy_workers": 1,
+    "worker_wall_hours": 4,
+    "aggregate_model_wall_hours": 64,
+    "worker_peak_mlx_gb": 10.0,
+    "private_disk_budget_bytes": 5368709120,
+    "minimum_free_disk_bytes": 10737418240,
+    "api_cost_usd": 0
+  },
+  "authorization": {
+    "initialize": true,
+    "formal_extraction": true,
+    "model_loading": true,
+    "forward": true,
+    "train_text": true,
+    "train_label_values": false,
+    "historical_heldout_members": ["sample_ids", "fold_ids", "logits"],
+    "heldout_gold": false,
+    "training": false,
+    "probe_fitting": false,
+    "threshold_selection": false,
+    "label_shuffle": false,
+    "bootstrap": false,
+    "performance_metrics": false,
+    "validation": false,
+    "test": false,
+    "formal_completion": false,
+    "exp071": false
+  },
+  "access_history": {
+    "design_time_train_rows_displayed": 2,
+    "used_for_method_or_result_selection": false,
+    "model_loaded": false,
+    "forward_executed": false,
+    "metrics_computed": false,
+    "validation_accessed": false,
+    "test_accessed": false,
+    "disposition": "recorded_and_excluded_from_scientific_use"
+  },
+  "outputs": {
+    "public_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-extraction-attempt-1",
+    "private_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1",
+    "heavy_lock": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/locks/heavy-research-workload.lock",
+    "public_allowlist": ["run-claim.json", "extraction.json", "extraction-verification.json", "extraction-complete.json", "failure.json"],
+    "private_top_level_allowlist": ["input-manifest.json", "row-contract.npz", "extraction", "extraction-manifest.json"]
+  },
+  "implementation": {
+    "runner": {"path": "experiments/stack-overflow-emotion-gold/phase-b-representation/run_exp070_extraction.py", "bytes": 79878, "mode": "0644", "sha256": "83ab85046490023380ced3d95922791ad9592d5ed2e3ee092085fc86b70c7025"},
+    "verifier": {"path": "experiments/stack-overflow-emotion-gold/phase-b-representation/verify_exp070_extraction.py", "bytes": 63289, "mode": "0644", "sha256": "36138e8a7877bec15d22da79f8c2aded7d4bcb2eb076297be485a42ac2fa2b99"},
+    "tests": {"path": "experiments/stack-overflow-emotion-gold/phase-b-representation/tests/test_exp070_extraction.py", "bytes": 12874, "mode": "0644", "sha256": "a8855b290ae8bb8d52d88f27c235507695bd4cd5dc40a3944a61ec907ad24d02"}
+  },
+  "claim_boundary": "A train-only formal representation-cache extraction for the frozen EXP-070 probe method; no probe fitting, threshold selection, label shuffle, bootstrap, classification metric, representation-effect, independent-data or emotion-mechanism claim."
+}

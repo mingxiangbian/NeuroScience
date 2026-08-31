@@ -113,6 +113,23 @@ RoBERTa 比较。模型分数只能在相同数据集、任务定义、split 和
 
 ## Current State
 
+### 2026-08-31：Phase C 功能交付与稳定性阻塞
+
+已按用户要求暂停 CancerEmo、JIRA 等外部金标泛化，转入
+[话题情绪工作台](forum-topic-emotion-web/README.md)：上传、Stack Overflow Question Cohort、
+冻结 M1/Research/Demo 模式、私有任务存储与来源追溯。实现已落盘，真实有限验收登记为
+[EXP-076](experiments/stack-overflow-emotion-gold/protocols/exp-076-phase-c-local-system.md)。
+最新212/212合成/集成测试通过；四个原有小批jobs、32条预测及Research重放保持通过。
+评论联合字段对照已通过；source attempt3完成46问题、46回答、248评论共340条M1推理，
+独立22/22 Passed。前两次失败保留，数值验收后仅修正公开评论链接，私有数据不变；
+详见 [验收记录](forum-topic-emotion-web/docs/acceptance.md)。
+完整统计、CSV/全文清除与使用材料已补齐，已有5任务372条新视图只读QA通过。
+EXP-077 Soak在40.22秒因critical memory pressure停止：1/36完成，第2Research取消且0回执。
+独立审计Passed但Soak未过，exp077_complete=false、stop-required，不自动重试。
+Python Help Discourse审核、adapter和验证工具完成，EXP-078正式运行因安全前提未满足而未执行。
+系统报告与Final claims ledger保留在模块private/reports，Git-ignored；不能说Phase C全部完成。
+context/C2维持暂停。不将本地工程验收视为外部泛化或对Phase A旧效率结论的修复。
+
 ### 已确认
 
 - 毕设题目、项目类型、导师及导师当前准备要求已经记录。

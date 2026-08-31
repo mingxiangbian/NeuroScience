@@ -2,7 +2,7 @@
 
 ---
 date: 2026-07-23
-last_updated: 2026-08-16
+last_updated: 2026-08-30
 status: active
 next_stage_status: frozen
 tags: [emotion-recognition, forum-text, llm, roadmap]
@@ -72,7 +72,8 @@ six-label rebuild -> duplicate-component-disjoint multi-label split
     |
     +--> conditional context recovery -> three-view control -> optional OOF gate
     +--> conditional model complementarity -> optional encoder-Qwen router
-    +--> optional matched representation analysis -> optional SAE/intervention
+    +--> Phase B matched representation analysis（EXP-070 Complete via verification attempt 2）
+         -> verified state 2; EXP-071 formal analyze Failed, no geometry/state
 ```
 
 TweetEval emotion 的四分类单标签分数只回答 TweetEval 内部的模型比较问题。
@@ -540,7 +541,45 @@ Overflow 原始文本及 SOTorrent 表还受相应 CC BY-SA 条款约束。因�
 | RQ-F4 | 行为上已验证的 Qwen 中，情绪标签和上下文条件是否在不同层呈现稳定的线性可解码信息，post-training/LoRA 是否改变这种结构？ | 将性能结果连接到受控的表征相关性证据；无稳定 probe 结果时如实形成负结果，不阻塞系统论文 | Matched layer-wise probes；label-shuffle/control tasks；可选 SAE、patching/ablation，EXP 编号待登记 | 可选表征分析章节 | 后置扩展；必须在行为模型与分析层/池化规则冻结后启动 |
 | RQ-S1 | 在固定 Stack Overflow 六标签多标签任务上，Encoder、Frozen Qwen linear probe、Qwen Classification LoRA 与 Qwen Generative LoRA 的性能、稳定性和成本有何差异？ | 分离冻结 Qwen 表征可解码性与 classification-style LoRA 适配收益，并对分类式和生成式任务表述作端到端比较；负结果仍能界定 LLM 在真实论坛多标签任务上的边界 | `DATA-SO-TASK-V1`；EXP-050 shared preflight；EXP-051 M1；EXP-052 M2；EXP-053 M3；EXP-054 M4；EXP-055 M1/M3 error analysis；EXP-056 one-time frozen test | 数据与方法章节；四条件主结果表；低频标签和错误分析章节 | 阶段性解决：EXP-056 test 上 M1/M2/M3/M4 Macro-F1=`0.567459 +/- 0.007814`/`0.295226 +/- 0.020587`/`0.613804 +/- 0.025733`/`0.547823 +/- 0.015312`。M3-M2 delta=`+0.318578`，CI 完全高于 0；M3-M1 六标签 delta=`+0.046345` 但 CI 跨 0，五标签 delta=`-0.010735` 且 CI 跨 0，因此 M3 与 encoder 竞争但未证明全面更强。M4-M3 六标签 delta=`-0.065981` 且 CI 完全低于 0；M4 的 subset accuracy 最高，但不能替代主指标。test 已消费，不再用于调参或模型选择；该比较不支持内部机制或 generation 因果主张 |
 | RQ-S2 | 在可验证恢复的 Stack Overflow answer/comment 子集上，真实 question/host-post context 是否比 target-only 和 matched shuffled context 更有助于六标签预测？ | 用三视图配对控制区分真实响应关系与 topic、长度等伪上下文收益；恢复不足或 oracle 无 headroom 也是可封闭负结果 | `DATA-SO-CONTEXT-RECOVERY-V1`；三视图配对评价；conditional OOF context gate，EXP 编号待登记 | 条件性 context 结果与数据恢复附录 | 条件分支；仅在恢复率、有效样本量和 whole-vector oracle 门通过后启动 |
-| RQ-S3 | Encoder 与 Classification LoRA 的错误是否足够互补，使只依赖 pre-Qwen features 的选择性路由在受控调用率下优于单一最佳模型？ | 评价 LLM 作为昂贵二级模型的系统价值；若无实际收益则证明单模型部署更合理 | EXP-055 whole-vector oracle；EXP-058 paired M1/M3 OOF；EXP-059 calibration/selective prediction；EXP-060 pre-Qwen router；risk/coverage/call-rate/cost | 条件性系统实验 | 阶段性解决（Verified Pass）：EXP-060 `logistic_router` 在 nominal 15% / actual `14.9107%`（501 rows）处将六标签 Macro-F1 从 `0.598919` 提高到 `0.639087`（`+0.040168`），五标签 delta=`+0.006097`、Hamming-loss delta=`-0.004365`，并比同 nominal rate 最佳 heuristic 高 `+0.013896` Macro-F1；verifier `4,412/4,412`。六标签 bootstrap gain CI 完全高于 0，但五标签 CI 跨 0。结论只适用于冻结 seed-42 pair 的 train OOF，不是独立 test、跨 seed 或普遍部署证据；EXP-060 不再调参，后续仅演示/论文归档或新数据独立确认 |
+| RQ-S3 | Encoder 与 Classification LoRA 的错误是否足够互补，使只依赖 pre-Qwen features 的选择性路由在受控调用率下优于单一最佳模型？ | 评价 LLM 作为昂贵二级模型的系统价值；若无实际收益则证明单模型部署更合理 | EXP-055；EXP-058 至 EXP-063 router discovery/replication；EXP-064 至 EXP-068 Phase A inference prototype | 条件性系统实验 | 阶段性解决并收口：冻结 router 在 seeds 43/44 获得 `2/2` prospective replication pass。Phase A 完成 numeric bundle、label-free projection、headless parity 与 thin CLI，系统保留为 verified local research demo；EXP-067 两次触发预注册 RSS gate，正式效率 benchmark 未完成。`DEC-SO-PHASE-A-CLOSEOUT-V1` 将生命周期设为 Closed、结果设为 Closed with partial success，同时保留 EXP-068 `Failed or incomplete`。不支持 independent-data、test、deployment-efficiency 或 production claim |
+| RQ-S4 | Classification LoRA 如何改变 Qwen3-4B 中与 Stack Overflow 六标签分类相关的层级表示，最终 M3 又在功能上依赖哪些 LoRA 路径？ | 将 M3-M2 行为差异连接到受控的层级线性可分性、表示漂移和 inference-time ablation；负结果也可界定 last-token linear readout 与稳定模块依赖的解释范围 | EXP-069 extraction/parity preflight；EXP-070 layerwise probes；EXP-071 drift/geometry；EXP-072 functional ablation；optional EXP-073 router bridge；EXP-074 synthesis | 可选表征与功能依赖章节 | Phase B 已登记，EXP-069 Complete。Static verifier 14/14、base attempt-3 verifier 23/23、15/15 fold workers 与 assemble 均完成；模型侧 M2-HF、standard-HF、manual/heldout-logit 与 pre-LoRA parity errors 均为 0，aggregate elapsed 294.04 s、MLX peak 8.51 GB。Attempt-4 final verification 的 metric-contract failure 永久保留；model-free verification attempt 2 拆分 runner manual-vs-standard=`0.0` 与 independent NumPy head replay=`7.62939453125e-06 < 1e-5` 后 25/25 Passed，未重跑模型或修改 source。EXP-070 已冻结 full-train extraction、probe-level component-disjoint cross-fitting、三组 label-shuffle 与 paired component-bootstrap 合同；synthetic tests 15/15、no-result verifier 24/24 Passed。Extraction-only formal consumer tests 11/11 Passed。Frozen base 与 M3 seed 42 / folds 0–4 均完成 3,360 rows x 9 points；六者 runner/model parity 均为 0，MLX peak最高为8.60 GB。Seed-42 folds 的 independent NumPy float32 replay 最大值为 `1.049041748046875e-05`，float64 canonical replay 最大值为 `2.0908623792337266e-06 < 1e-5`。Seeds 43/44 的 5/5 三点 caches 均已完成，persisted H19、transient pre-LoRA records 与 runner replay 均为0。Seed 43/44 的 float64 canonical replay 最大值分别为 `2.409579250794991e-06` 与 `2.3313519861289933e-06`；seed 44 float32 diagnostic 最大值为 `1.239776611328125e-05`，不参与冻结 gate。Frozen assemble 绑定 16 workers、16 matrices 与 2,890,137,600 raw representation bytes；aggregate elapsed 35,955.28 s、MLX peak 8.60 GB。Append-only verification attempt 2 修正原 terminal verifier 的跨口径 token-digest 条件和 float32 累加条件，consumer tests 12/12、terminal checks 28/28 Passed。Runner MLX、float32 diagnostic 与 float64 gate 最大值分别为 `0.0`、`1.239776611328125e-05` 与 `2.409579250794991e-06 < 1e-5`；source snapshot replay 前后不变。Formal extraction 已完成。单独的 formal probe consumer 已冻结，synthetic tests 34/34、no-result static verifier 25/25 Passed；formal config绑定 Passed completion 和全部 source identities。Formal initialize 已完成。`fit-fold 0–4` 各封存 864/864 binary fits，共 4,320 fits；elapsed 分别为 2,119.20、2,096.91、2,121.81、2,139.69 和 2,127.09 s，最大 peak RSS 为 1.554 GB。五个 fold 在各自 `fit-fold` 阶段均未解码 outer-heldout labels；assemble 随后读取 train-only outer-heldout labels并计算 metrics、controls、2,000 次 bootstrap 与 provisional votes，run 状态为 `CompletedAwaitingVerification`。Seeds 43/44 均通过 H27/HF，negative-control failure=False，provisional state=2。Frozen formal verification 尚未执行；静态审计发现 public-privacy substring predicate 对 exact-bound 方法文本 `component-disjoint` 误报。Verifier-only recovery 已冻结，synthetic tests 12/12、no-result static checks 18/18 Passed。Recovery formal verification 44/44 Passed，result digest `8097645d...f88d` 与 assemble 一致，negative-control failure=False，state 2 `Representation effect replicated` 已通过结果身份验证；source snapshot `e8e26dd0...50a8` 未变。Recovery 读取 sealed probabilities 与 train-only labels并重算 thresholds/metrics/bootstrap，但未读取 representation、refit probe、加载模型、执行 forward 或访问 validation/test。Recovery formal completion 完整重放 Passed verification 后写入 terminal completion；`formal_probe_complete=true`、`exp070_complete=true`、`exp071_authorized=false`。EXP-070 已通过 verification attempt 2 完成，最终 state 为 2；结论只支持冻结 train-only outer-heldout linear accessibility，不支持精确 onset、因果表征、独立数据泛化、emotion neuron 或人类情绪机制。EXP-071 仍需另行登记和授权 |
+
+RQ-S4 current update（2026-08-30）：EXP-071 no-result preflight 已通过 Incident 001 attempt 2
+完成，synthetic tests 53/53、independent static verifier 24/24 Passed。Formal initialize 已写入
+run claim 与 private input manifest。Formal analyze 随后在 CKA denominator gate 处 Failed；
+已读取 `ordinal/fold_id` 与部分 representation values，但未读取 AP5 values，也未写出 geometry。
+Source identity 未变，formal verifier 未执行，EXP-071 没有结果或 state。本更新取代上表末尾
+“EXP-071 仍需另行登记和授权”的旧执行状态。
+
+Incident 002 已登记受限 denominator diagnostic，并通过 no-result preflight（synthetic 15/15、
+independent checks 12/12）。Diagnostic 已完成：independent verification 19/19 Passed，completion
+重放通过。已验证首个失败 pair 为 `s42:H-1 / fold 0`，三项 denominator-term 类别均为 `zero`；
+未访问 AP5 或后续 pairs。原 EXP-071 保持 Failed，本次不修改其方法或启动 recovery。
+
+2026-08-30 后续决策：用户确认新 Major
+[`EXP-075`](experiments/stack-overflow-emotion-gold/protocols/exp-075-degenerate-aware-geometry.md)
+复用缓存，允许精确零 centered variance 的 CKA 为 null，并保留五折/九点缺失传播；
+这是 post-diagnostic 方法决策，不改写 EXP-071 Failed。执行依赖改为 EXP-075 Verified
+→ [`EXP-072`](experiments/stack-overflow-emotion-gold/protocols/exp-072-lora-functional-ablation.md)
+→ EXP-074。EXP-072 冻结完整 15 个 A0 replay 与 55 个消融 workers；登记时尚无新结果。
+EXP-073 仍可选，context/C2 仍暂停。
+
+EXP-075 已完成：26/26 synthetic tests、75/75 pairs、20/20 independent verification
+Passed。Pre-LoRA sanity 全部通过；H-1 五折 CKA 均为精确零方差导致的 null，九点
+Spearman 保留 `undefined_cka_input`。其余 70 个 fold-condition CKA 均有定义。
+几何结果不改变 EXP-070 的 representation state，也不恢复 EXP-071 的失败状态。
+EXP-072 已完成 70/70 workers、seal 后评分与 20/20 independent verification，49/49
+synthetic tests 通过。15 个完整 A0 replay 的误差均为 0；正式推理耗时 7.78 小时。
+Seeds43/44 的 Attention-off 相对 MLP-off 五标签 F1 降幅差为 +0.137906/+0.110372，
+满足预指定确认规则；seed42 为 −0.164585，必须保留反向结果。
+
+EXP-074 已通过 12/12 synthetic tests、正式 synthesis 与 independent verification。
+最终状态分别为 `Representation effect replicated` 与
+`Stable Attention-dominant dependency`，后者仅指预指定确认 seeds43/44；不构成三 seed
+一致或普遍模块规律。Phase B 最低实验集完成，EXP-071 Failed、EXP-075 post-diagnostic、
+未定义 CKA/Spearman、可选 EXP-073 未执行和 context/C2 暂停均保留。
+本地阶段报告位于
+[`phase-b-research-report-2026-08-30.md`](experiments/stack-overflow-emotion-gold/phase-b-representation/private/reports/phase-b-research-report-2026-08-30.md)，不上传。
 
 ## Phase 0: Scope and Opening
 
@@ -1392,6 +1431,23 @@ Status: not started
 - 导师可以从仓库或交付包复核核心数字和个人贡献。
 
 ## Stop Conditions
+
+### 2026-08-31 Phase C 当前执行点
+
+用户暂停 CancerEmo/JIRA 等外部 gold 泛化，优先实现本地话题网站。
+[工作台](forum-topic-emotion-web/README.md) 已实现上传、来源适配框架、冻结三模式推理、
+私有任务与结果 UI。EXP-076有限验收已Verified：字段对照3/3、新source340/340、独立22/22 Passed。
+46问题/46回答/248评论来自原Python标签与UTC窗口，M1实际计算338次、缓存命中2次。
+新filter额外请求comment.body以取得Markdown，模型输入规则未改；四个旧smoke只复用结果，
+两次source失败不改写。数值验收后单独修正公开评论链接，私有数据不变；当前212/212tests。
+两权重/日周/类型路由分层/诊断、CSV与全文清除、四份使用材料及私有研究报告已交付；
+已有5任务372条新视图和CSV只读QA通过。
+EXP-077于40.22秒触发critical_memory_pressure，计划36job仅1完成、1取消、34未启动。
+独立verification Passed只是负结果复核一致，exp077_complete=false、soak_gate_passed=false、
+stop-required；没有重试或修改门。不能从全机压力单独归因M3或认定OOM/泄漏。
+EXP-078的Python Help来源审核、adapter和独立工具完成，正式300–400条Research任务因安全前提
+未满足而未执行。Phase C实测尚有此阻塞，不宣称整体完成；后续需先明确资源处理方向。
+外部 gold、context/C2 维持暂停，不把系统演示当作新数据准确率证据。
 
 出现以下情况时停止扩大模型规模，先修复研究设计：
 
