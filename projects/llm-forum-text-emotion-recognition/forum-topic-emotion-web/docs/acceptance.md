@@ -1,5 +1,76 @@
 # Phase C 本地实现验收记录
 
+## 最终收口（2026-09-01）
+
+Phase C.1已`Completed / Verified Pass`。用户确认最终范围后，Phase C以
+`Completed within bounded local research scope`关闭。当前主张、冻结范围、release QA与复现入口见：
+
+- [最终范围决策](../../experiments/stack-overflow-emotion-gold/protocols/dec-phase-c-final-scope-and-closeout-v1.md)
+- [Release acceptance](release-acceptance.md)
+- [复现与离线交付包](reproducibility-package.md)
+- [最终closeout报告](../private/reports/phase-c-final-closeout-2026-09-01.md)
+
+8月31日报告保持历史快照；EXP-077/079/083/085 attempt1失败和EXP-078/080未执行状态不变。
+
+## 最新追加（2026-09-01）：EXP-086 Discourse正式闭环通过
+
+固定Python Help category7前缀采集400条、64 topics、69次匿名公开响应，耗时112.304秒；
+400条均有原生raw hash、来源链接、作者显示名和CC BY-NC-SA3.0记录。排除1条删除/隐藏、
+2条非普通post；0 unavailable、0 unresolved parent。达到item limit，1个topic截断，
+`collection_complete=false`，不是完整线程/时间窗或论坛总体样本。
+
+完整run225.806977秒，M1/M3两阶段各400回执、400最终结果；M1 400、transfer400、
+M3 46/46成功，0 cache/fallback/audit，路由率11.5%。独立verification=Passed、
+exp086_complete=true、safety.gate_passed=true；来源、snapshot、成本、聚合、derived和Dashboard均复算一致。
+
+213系统样本2 warning、0 critical/unknown；最高swap374.571MiB/s，最长连续2段，未触发停止门。
+两推理root exit0，全部3个已见身份消失。它验证一次无gold跨论坛本地服务闭环，不验证accuracy/F1、
+人口总体情绪、SLA或商业许可。结合EXP-085 attempt2，Phase C.1最低目标已完成。
+
+工件：[run](../private/validation/exp-086/attempt-1/run.json)、
+[Passed verification](../private/validation/exp-086/attempt-1/verification.json)。
+run SHA=`273dff4d562237aac247670fc62ec41077ac714d965eab75f4206469e348814b`；
+verification SHA=`1d49e88655b917c3fec275c8e7f1c66594e588f15d2f26b7b677398298bec450`；
+37成员archive SHA=`97ee2c550265d864a6dab2b43928cc956eac57ac9c27397ed4efb3ee21440818`。
+
+## 最新追加（2026-09-01）：EXP-085 attempt 2通过
+
+封存attempt 1后，只修复`kind`参数重名并增加真实JSONL到父回调的组合回归；550/550 tests通过。
+唯一一次attempt 2耗时589.852107秒，9/9逻辑任务、15/15模型阶段、3060/3060最终结果、
+5100/5100阶段回执完整。独立verification=Passed、exp085_complete=true、safety.gate_passed=true。
+
+独立成本为3042 M1、18个任务内duplicate、135/135 M3成功、2040 transfer reuse、0 M3 cache、
+0 audit；三轮Demo各5项预算回退，Research无fallback。6对M3 load和135对forward事件完整闭合。
+557系统样本12 warning、0 critical/unknown；最高swap778.938MiB/s，最长连续高值2，未达停止门。
+全部24个已见root/aux身份消失。RSS和MLX不同口径不相加，本次不支持无压力、SLA或因果修复结论。
+
+工件：[run](../private/validation/exp-085/attempt-2/run.json)、
+[Passed verification](../private/validation/exp-085/attempt-2/verification.json)。
+run SHA=`3ec838fbfbc68867a98496f80ee0eb34c62cb74c2a3b7467a1554ce45f176b1d`；
+verification SHA=`a33ba29be93e631074b07c140a4fdbad9566b4aa9483633ab31497dcd91af13a`；
+33成员冻结代码archive SHA=`56386775dd61226ba3fe7f214c89b3a55cad393bb61ed868b77bc5f6082f0435`。
+Attempt 2通过后当时只推进固定EXP-086无gold闭环；该任务现已完成，但结果仍不能反推跨域准确率。
+
+## 历史记录（2026-09-01）：EXP-085 attempt 1未通过
+
+538项tests与独立代码审查后，完整网站分时路径仅执行一次九任务验收。98.639333秒后
+Stopped/staged_internal_error：M1-only完成340；Research完成340项M1预计算，回放6项后失败。
+完成1/9任务，最终结果346条、阶段回执686条；预计算回执不是额外最终预测。
+冻结代码的无模型复现确定：`_event(self, kind, **fields)`与转发进度payload中的`kind`重名。
+原测试分别覆盖子进程事件与父回调局部，却没有连通这条组合路径；这是新接入代码的测试缺口。
+
+唯一完整verification为Failed/staged_lower_bound_range，exp085_complete=false。
+Research的API报M3attempt=1/transfer=7，但只有6条回放结果，首次M3事件因错误未写入journal；
+独立证据不足以核验该成本声明。不能把没有M3结果写成没有尝试，也不能事后补造事件。
+94次系统采样均normal，两个M1子进程exit0、M3子进程exit−15；全部5个已见进程身份消失，
+清理3.082763秒。只读安全子集复算通过不代表完整verification或九任务运行通过，更不证明旧内存问题解决。
+
+工件：[run](../private/validation/exp-085/attempt-1/run.json)、
+[Failed verification](../private/validation/exp-085/attempt-1/verification.json)。
+本次已停线，未修改冻结代码/配置/模型/旧记录。随后封存本版并修复回调接口，
+增加真实JSONL到父回调的组合回归后另作attempt 2；本段仍保持Failed。
+以下历史验收记录保留原证据边界。
+
 Date：2026-08-30；更新：2026-08-31。EXP-076/077/078，RQ-S3。
 
 ## 结论
@@ -236,3 +307,37 @@ plan SHA=`94df1665d0eebc042820d4b199340f344263898edcc30e922777853d0eadb05c`。
 `private/reports/`，两者Git-ignored。报告明确保留稳定性失败和第二站点阻塞。
 当前只查看已有任务，不再自动执行模型。外部gold、旧context/C2仍暂停；没有训练、
 validation/test访问、stage/commit/push、外部上传或公开部署。
+
+## Phase C.1真实验证补充：仍未通过（2026-08-31）
+
+用户随后要求继续有界运行和Discourse闭环。新协议为EXP-079九任务验收、EXP-080第二来源正式任务
+及EXP-081综合。旧EXP-077和旧报告不变。
+
+EXP-079 attempt1因新观察器将全部Python后代当作并列worker，在0回执时误报并发并取消。
+真实关系为一个service直接worker及其后代，所有pressure正常。原记录和24文件代码/协议归档保留，
+再按correction修正角色分类，全部辅助后代仍受原资源、孤儿和退出检查。273/273合成测试通过。
+
+attempt2随后真实运行62.498333秒：M1-only完成340/340（338计算+2cache），Research取消于6条M1回执，
+后续7任务未启动。59系统样本中1warning/1critical；停止原因critical_memory_pressure。
+含cleanup的最后3交换间隔达到100MiB/s门，thrashing proxy直到取消阶段才成立，不倒写为初始原因。
+Research下一未回执条目应请求M3，但实际尝试/完成和最终峰值未知，不能记0。
+
+完整独立verification为Failed / process_absence_identity。sample36与root退出交叠，一个已见PID
+没有保留当时原始PS行，不能补造absence或defunct状态。后续absence与最终进程退出可确认，
+但不能替代该缺口。单独partial audit核对346回执、已知成本/M1聚合和原始系统计数，不称整体Passed。
+
+EXP-080没有执行正式采集/Research，EXP-081只记录full_operational_completion=false。
+报告：private/reports/phase-c1-bounded-operational-report-2026-08-31.md；工件在private/validation/exp-079/attempt-2。
+当前服务和模型均已停止；需先减少背景内存占用并补齐下一次观测留痕，不自动启动attempt3或降门。
+本阶段没有训练、新gold、context/C2、commit/push或公开部署。
+
+### 同日晚追加：attempt3记录可核验，资源验收仍未通过
+
+用户关闭占用应用后，只读确认9个指定主进程均退出，前检10样本normal、swap I/O为0。
+原代码逐字归档后，仅补齐已见存活进程行留痕；280项tests通过，旧sample36不补写。
+attempt3实际运行61.144110秒：M1完成340，Research6回执后取消，7任务未启动。
+58个系统样本1critical、0warning/unknown，最大swap292.029245MiB/s；高值连续2间隔，未达thrashing定义。
+独立verification=Passed、exp079_complete=false、stop-required。全部已见子进程退出已核验，服务已停。
+这不是9任务稳定验收通过；EXP-080未执行，EXP-081 attempt2只追加目标未完成状态，旧记录不覆盖。
+报告：private/reports/phase-c1-attempt3-reduced-background-report-2026-08-31.md。
+关闭应用本次仍不足以过门；后续需明确Research峰值内存定位或运行环境，不自动重试、降门或换模型。

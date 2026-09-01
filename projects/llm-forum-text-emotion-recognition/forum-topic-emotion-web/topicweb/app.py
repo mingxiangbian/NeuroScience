@@ -43,6 +43,22 @@ def dashboard_cost_scope(dashboard, job):
     """Final child totals replace acknowledged-item costs, never add to them."""
     routing = dashboard.setdefault("routing", {})
     acknowledged = routing.get("cost", {})
+    staged = (job.get("progress") or {}).get("staged_execution")
+    if isinstance(staged, dict):
+        cumulative = staged.get("cumulative_counters")
+        valid = isinstance(cumulative, dict) and all(
+            type(cumulative.get(name)) is int and cumulative[name] >= max(0, acknowledged.get(name, 0))
+            for name in COST_COUNTERS
+        )
+        if valid:
+            routing["cost"] = {name: cumulative[name] for name in COST_COUNTERS}
+        complete = valid and staged.get("cost_complete") is True
+        routing["cost_scope"] = "staged_job_cumulative" if complete else "staged_known_lower_bound"
+        routing["cost_complete"] = complete
+        reuses = staged.get("prelude_transfer_reuses")
+        if type(reuses) is int and reuses >= 0:
+            routing["prelude_transfer_reuses"] = reuses
+        return dashboard
     failure = (job.get("progress") or {}).get("failure_cost") or {}
     cumulative = failure.get("cumulative_counters")
     valid = isinstance(cumulative, dict) and all(
@@ -109,7 +125,7 @@ async def limited_json(request):
 
 def create_app(*, private_dir=None, token=None, start_worker=True, runner_factory=None,
                fetch=None, parser=None, validator=None, aggregator=None,
-               model_status=None, source_status=None):
+               model_status=None, source_status=None, dispatcher_factory=Dispatcher):
     from . import adapters, core
 
     private_dir = private_dir or Path(__file__).resolve().parents[1] / "private"
@@ -131,7 +147,7 @@ def create_app(*, private_dir=None, token=None, start_worker=True, runner_factor
         raise ValueError("source_not_allowed")
     fetch = fetch or configured_fetch
     kwargs = {"runner_factory": runner_factory} if runner_factory else {}
-    dispatcher = Dispatcher(store, aggregator, fetch, **kwargs)
+    dispatcher = dispatcher_factory(store, aggregator, fetch, **kwargs)
 
     @asynccontextmanager
     async def lifespan(app):
@@ -209,6 +225,8 @@ def create_app(*, private_dir=None, token=None, start_worker=True, runner_factor
 
     @app.post("/api/jobs", status_code=202)
     async def create_job(request: Request):
+        if getattr(dispatcher, "blocked_reason", None):
+            raise HTTPException(409, "runtime_safety_stopped")
         payload = await limited_json(request)
         try:
             normalized = validator(payload)
@@ -309,6 +327,8 @@ def create_app(*, private_dir=None, token=None, start_worker=True, runner_factor
     @app.post("/api/jobs/{job_id}/replay", status_code=202)
     async def replay(job_id: str):
         require_job(job_id)
+        if getattr(dispatcher, "blocked_reason", None):
+            raise HTTPException(409, "runtime_safety_stopped")
         try:
             return {"job": store.replay(job_id)}
         except QueueFull:
@@ -324,7 +344,7 @@ def create_app(*, private_dir=None, token=None, start_worker=True, runner_factor
     async def models():
         if model_status:
             return model_status()
-        return {"configured": True, "runtime": "isolated-child", "model_state": "not_loaded_by_api", "dispatcher_running": bool(dispatcher.thread and dispatcher.thread.is_alive()), "current_job": dispatcher.current_job, "weights_loaded_in_api": False, "verified": False}
+        return {"configured": True, "runtime": getattr(dispatcher, "runtime_strategy", "isolated-child"), "model_state": "not_loaded_by_api", "dispatcher_running": bool(dispatcher.thread and dispatcher.thread.is_alive()), "current_job": dispatcher.current_job, "blocked_reason": getattr(dispatcher, "blocked_reason", None), "weights_loaded_in_api": False, "verified": False}
 
     @app.get("/api/sources")
     async def sources():

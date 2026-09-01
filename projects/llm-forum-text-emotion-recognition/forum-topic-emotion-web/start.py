@@ -8,7 +8,7 @@ if __name__ == "__main__":
     os.chdir(root)
     if Path(sys.prefix).resolve() != (root / ".venv").resolve():
         raise SystemExit("请使用本模块 .venv/bin/python start.py，勿在冻结模型环境安装网站依赖。")
-    from topicweb.app import create_app
+    from topicweb.staged_app import create_app
     import uvicorn
     app = create_app()
     print("本地工作台：http://127.0.0.1:8787")

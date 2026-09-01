@@ -33,7 +33,7 @@ async function api(path, options = {}) {
   if (response.status === 401) { setAuth(false); throw new Error("访问令牌无效或会话已过期"); }
   if (!response.ok) {
     const body = await response.json().catch(() => ({}));
-    throw new Error(body.detail || `请求失败 (${response.status})`);
+    throw new Error(body.detail === "runtime_safety_stopped" ? "资源安全门已停止运行器，后续任务不会自动启动。请先检查失败任务的记录。" : body.detail || `请求失败 (${response.status})`);
   }
   return response.status === 204 ? null : response.json();
 }
@@ -106,7 +106,11 @@ function renderDetail(job, data, rows) {
   $("detail-state").textContent = names[job.state] || job.state;
   $("job-meta").textContent = `创建于 ${date(job.created_at)} · 快照 ${job.snapshot_hash ? job.snapshot_hash.slice(0, 12) : "等待采集"} · 全文保留至 ${date(job.raw_expires_at)}`;
   $("job-progress").max = Math.max(1, job.total_items); $("job-progress").value = job.completed_items;
-  $("progress-copy").textContent = `${job.completed_items} / ${job.total_items} 条`;
+  $("progress-copy").textContent = `${job.completed_items} / ${job.total_items} 条最终结果`;
+  const execution = job.progress?.staged_execution;
+  const stages = {waiting_m1_quiet:"等待 M1 前的安静窗口", m1_prepass:"M1 计算", waiting_m3_quiet:"M1 已退出，等待 M3 前的安静窗口", m3_replay:"复用本任务 M1 结果，按需执行 M3", completed:"分阶段计算及退出检查已完成"};
+  $("execution-progress").hidden = !execution;
+  $("execution-progress").textContent = execution ? `${stages[execution.stage] || "分阶段处理中"} · 当前阶段 ${fmt(execution.phase_completed_items)} / ${fmt(execution.phase_total_items)} 条。${execution.stage === "m1_prepass" && job.mode !== "m1_only" ? "最终预测将在后续阶段返回。" : ""}` : "";
   $("job-error").hidden = !job.error_code;
   const stage = job.progress?.source_error?.stage || job.progress?.worker_error?.stage;
   $("job-error").textContent = job.error_code ? `任务停止：${job.error_code}${stage ? `（${stage}）` : ""}。已封存内容保留，不会自动重试。` : "";
@@ -166,8 +170,12 @@ function renderTrend(view, metric, unique) {
 }
 function renderDiagnostics(data) {
   const route = data.routing, costs = route.cost || {}, diagnostics = data.derived?.diagnostics;
-  const scopes = {acknowledged_items_lower_bound:"已回执下界；未完成调用未知", job_cumulative:"任务累计，包含失败尝试", completed_job:"完整任务回执"}, actual = diagnostics?.routing;
+  $("routing-note").textContent = "始终按真实内容与 forward 计数，不随 Unique-text 视图变化。成对分歧只覆盖同时获得两模型决策的子集。" + (route.prelude_transfer_reuses > 0 ? "本分阶段任务的逐条 latency_ms 仅含回放阶段，不含 M1 预计算或安静窗口，不是端到端延迟。" : "");
+  const scopes = {acknowledged_items_lower_bound:"已回执下界；未完成调用未知", job_cumulative:"任务累计，包含失败尝试", completed_job:"完整任务回执", staged_known_lower_bound:"两阶段已知累计下界；未回执调用未知", staged_job_cumulative:"两阶段完整物理调用累计"}, actual = diagnostics?.routing;
   definition($("routing"), [["计算次数口径", scopes[route.cost_scope] || "对象 / forward"], ["请求路由至 M3（回执）", fmt(route.route_requested)], ["实际请求路由比例", actual ? `${pct(actual.actual_rate)}（n=${actual.actual_known_n}）` : "不可用"], ["假设启用路由的触发比例", actual ? `${pct(actual.hypothetical_rate)}（n=${actual.hypothetical_known_n}）` : "不可用"], ["最终采用 M3", actual ? fmt(actual.m3_used) : fmt(route.paths?.m3 || 0)], ["M1 尝试 / 缓存命中", `${fmt(costs.m1_attempts || 0)} / ${fmt(costs.m1_cache_hit || 0)}`], ["M3 尝试 / 成功", `${fmt(costs.m3_attempts || 0)} / ${fmt(costs.m3_succeeded || 0)}`], ["M3 缓存命中", fmt(costs.m3_cache_hit || 0)], ["降级条数 / 回执比例", actual ? `${fmt(actual.fallback_count)} / ${pct(actual.fallback_rate)}` : fmt(Object.values(route.fallbacks).reduce((a, b) => a + b, 0))], ["成对分歧 / 样本数", `${pct(route.paired_disagreement)} / ${fmt(route.paired_n)}`]]);
+  if (Number.isInteger(route.prelude_transfer_reuses)) {
+    const row = el("div"); row.append(el("dt", "跨阶段 M1 结果复用（不计 forward）"), el("dd", fmt(route.prelude_transfer_reuses))); $("routing").append(row);
+  }
   if (!diagnostics) {
     definition($("diagnostics"), [["新增逐条诊断", "到期后不可重算"], ["原封存 M1 二元熵 (nats)", fmt(data.uncertainty.m1_mean_binary_entropy_nats)]]);
     $("cardinality").textContent = ""; $("token-diagnostics").replaceChildren(el("p", "逐条长度记录已清除，无法计算新增 token 诊断。", "empty")); return;

@@ -1,5 +1,310 @@
 # Stack Overflow Phase A 到 Phase B 实验交接
 
+### 最终收口（2026-09-01）：Phase C在有界本地研究范围内关闭
+
+用户确认[最终范围决策](protocols/dec-phase-c-final-scope-and-closeout-v1.md)。Phase C.1 lifecycle=`Closed`、
+outcome=`Verified Pass within registered bounded workload`；Phase C lifecycle=`Closed`、
+outcome=`Completed within bounded local research scope`。最终定级为
+`Verified bounded local research prototype with two-source service portability`。
+
+当前唯一claims入口为
+`forum-topic-emotion-web/private/reports/final-claims-2026-09-01.md`，最终系统收口为
+`forum-topic-emotion-web/private/reports/phase-c-final-closeout-2026-09-01.md`；8月31日报告保留历史快照。
+Release QA为579 tests、node/pip/diff checks Passed；隔离浏览器smoke验证三来源、三模式、取消、
+刷新/重启恢复和1280/720/390无横向溢出，未运行模型或联网。当前runtime与EXP-086 37成员archive
+逐文件0 mismatch。
+
+旧EXP-077/079/083/085 attempt1失败不改，EXP-078/080继续Not executed。外部gold、context/C2、
+长期SLA、多用户、公网部署、商业许可、matched memory-causality、新训练和Router调参改为未来独立范围。
+本次没有训练/旧split访问/新采集/模型运行/上传/commit/stage/push；不要自动重开这些分支。
+
+### 当前终态（2026-09-01）：EXP-086 staged Discourse正式闭环已通过
+
+EXP-085 attempt2完整通过后，已登记`protocols/exp-086-staged-discourse-formal.md`。
+固定来源为discuss.python.org / Python Help category7，query=`max_topics100/max_items400`，
+成功门300–400公开普通post；Research500/audit0/seed42。只用匿名原生raw，不访问gold或登录接口。
+579/579 tests、producer/consumer/backend Approved及只读环境门通过后，唯一一次正式run已完成：
+supervisor PID20897、exec session30557退出0；端口8790，RUN=
+`forum-topic-emotion-web/private/validation/exp-086/attempt-1/`。UTC开始2026-09-01T01:37:18.384458，
+总225.806977秒；来源采集112.304秒，69/69请求均取得公开响应，未重试或换站点。
+
+来源门接受400条、64个topic，创建时间范围UTC 2026-07-11T23:00:09Z至2026-08-31T23:02:22Z；
+400/400来源链接、署名、许可和原生raw hash可追溯。排除1条删除/隐藏、2条非普通post；
+0 unavailable stream ID、0 unresolved parent。达到item_limit，最后1个topic截断，
+`collection_complete=false`；不能写成完整线程、完整时间窗或论坛总体样本。
+
+M1和独立M3两阶段均400/400、exit0；800阶段回执、400最终结果完整。物理成本：400次M1，
+400次transfer reuse，46次M3且46/46成功，0 cache/fallback/audit；M3路由率46/400=11.5%。
+1对load和46对forward事件全部闭合；没有旧M3输入参考适用于Discourse，因此只核冻结数学、
+同任务transfer、schema、成本与阈值，不声称跨域数值parity或准确率。
+
+独立verification=Passed、exp086_complete=true、operational_state=safe-to-continue、
+safety.gate_passed=true。213系统样本：211 normal、2 warning、0 critical/unknown；
+最高swap374.571264MiB/s，最长连续高值2，未达3段停止门。采样parent/child RSS峰值
+97,042,432/1,287,995,392B；回执历史RSS peak1,859,321,856B、MLX peak8,615,445,276B。
+两推理root均exit0，全部3个已见root/aux身份消失，锁和服务已释放。
+
+plan SHA=`09adb1a695b8a4e9a321b6736c0ca8ee021c6219387bb51c1a19e60eddad5ad3`；
+run SHA=`273dff4d562237aac247670fc62ec41077ac714d965eab75f4206469e348814b`；
+verification SHA=`1d49e88655b917c3fec275c8e7f1c66594e588f15d2f26b7b677398298bec450`。
+36个plan源文件和本协议已封存为37成员archive，SHA=
+`97ee2c550265d864a6dab2b43928cc956eac57ac9c27397ed4efb3ee21440818`。
+
+结论：既定Phase C.1最低目标“有界稳定运行＋Discourse正式闭环”已完成。
+该结论只支持本机固定负载和一次无gold跨论坛服务链路，不支持外部准确率、总体情绪、SLA或商业再发布。
+不要重跑或修改EXP-085/086绑定工件。旧EXP-080仍Not executed；CancerEmo等外部gold、context/C2、
+公网部署继续暂停，无训练/旧split访问/commit/stage/push。
+
+### 当前终态（2026-09-01）：EXP-085 attempt 2完整通过，允许进入staged Discourse
+
+用户要求下一步。Attempt 1的32个plan源文件和原协议已在修复前封存为33成员archive，
+SHA=`76664bc9b6d532e2fc0e81a7b169d25d512f32a72380cd5982e4360c9ce49733`。
+只将内部`_event`形参改为positional-only `event_type`，保留payload的`kind`；新增真实JSONL帧
+经`StagedProcessRunner`进入绑定`StagedRunner._phase_progress`并写observer/Store成本的组合回归。
+未改模型、输入、阈值、router、预算、精度或安全门。新协议为
+`protocols/exp-085-staged-website-bounded-acceptance-attempt-2.md`，SHA=
+`93d51d1b5a0b02b626cb27f3b6c4688b799a75fcfabb5244235266c26655b83e`。
+550/550全套、独立consumer/producer Approved及只读环境门通过后，唯一一次attempt2已完成：
+supervisor PID10272、exec session96264退出0；RUN=`forum-topic-emotion-web/private/validation/exp-085/attempt-2/`。
+UTC开始2026-09-01T01:03:52.279398，总589.852107秒；9/9逻辑任务、15/15模型阶段、
+3060/3060最终结果、5100/5100阶段回执完整。三轮M1-only/Research均completed，三轮Demo均
+completed_with_fallback；只有预期15项`m3_budget_exhausted`，无其他fallback。
+
+独立verification=Passed、exp085_complete=true、operational_state=safe-to-continue、
+safety.gate_passed=true。完整成本：3042次M1、18次同阶段重复缓存、135次M3且全部成功、
+2040次跨阶段复用、0次M3 cache、0 audit；282条M3阶段事件闭合为6对load和135对forward。
+全部M1相对原076≤1e-6；历史M3只对ordinal6有082/084参考，其余24个不同M3输入仅由冻结数学、
+当前结果schema与三轮一致性约束，不扩大为旧路径全量parity。
+
+557系统样本：545 normal、12 warning、0 critical/unknown；最高swap 778.938116MiB/s，最长连续高值2，
+未达3段thrashing门。采样current RSS峰值：parent91,111,424B、child2,971,189,248B；回执历史RSS
+peak3,978,166,272B、MLX peak8,528,195,136B。口径不同，不相加；本次通过不是无压力或SLA证据。
+15个推理root均exit0、每阶段fresh安静窗口通过，全部24个已见root/aux身份最终消失，锁已释放。
+
+plan SHA=`fc72df94b88315752c0e896af1636779391b4baeee01757041b5d1134faeb28a`；
+run SHA=`3ec838fbfbc68867a98496f80ee0eb34c62cb74c2a3b7467a1554ce45f176b1d`；
+verification SHA=`a33ba29be93e631074b07c140a4fdbad9566b4aa9483633ab31497dcd91af13a`。
+32个plan源文件和本协议已封存为33成员archive，SHA=
+`56386775dd61226ba3fe7f214c89b3a55cad393bb61ed868b77bc5f6082f0435`。
+不要重跑或修改本次runner/verifier/工件。当前已登记`protocols/exp-086-staged-discourse-formal.md`；
+只有该固定来源任务自身通过后才称Discourse闭环完成。外部gold/context仍暂停，无commit/stage/push。
+
+### 当前终态（2026-09-01）：EXP-085新回调接口错误，运行和完整核验未通过
+
+用户要求下一步，已登记`protocols/exp-085-staged-website-bounded-acceptance.md`。
+新路径Research/Demo先完整M1、退出/消失/安静窗口，再同任务M1回执驱动独立M3；
+完整340输入、三模式、三轮九任务在538项测试和独立Approved后冻结，只执行了一次。
+supervisor PID5279、exec session19771已退出1；入口`.venv/bin/python -B scripts/run_staged_runtime.py run`。
+RUN=`forum-topic-emotion-web/private/validation/exp-085/attempt-1/`；UTC开始2026-08-31T16:31:17.536157，
+耗时98.639333秒，run=Stopped/staged_internal_error。M1-only完成340；Research先完成340项M1，
+回放6项后在第7项首次M3进度回调失败。逻辑任务1/9完成、1失败、7未启动；最终结果346条，
+阶段回执686条，不能把预计算回执重复计成最终结果。没有成功M3预测。
+plan SHA=`9de78c110ef9a078025df831138e5acd63d08a596e7c972d5bd13d52f04aec25`；
+run SHA=`b9965aaa8340212a3e49b3d1290febe962c402aeb3e31de97a10dc336f7d4686`；
+唯一完整verification=Failed/staged_lower_bound_range，exp085_complete=false、stop-required；
+verification SHA=`426c3ba406ca42b13942275b8d87384a8e8e9fa71fc9629739ec6b1a0f75bf2f`。
+不再次调用本次runner/verifier，不修改其绑定文件或回填缺失事件。
+
+根因已通过冻结代码只读与无模型内存fixture复现：`staged_worker.py`的`_event(self, kind, **fields)`
+收到位置参数`staged_progress`，同时`_phase_progress`转发payload的`kind=begin`，触发
+`TypeError: StagedRunner._event() got multiple values for argument 'kind'`。
+两个计数先在内存更新，但事件未写入journal；runtime-events中的staged_progress/failure_cost均0条。
+Research的API成本下界报M1=338、dup=2、M3attempt=1、transfer=7，而原始回执只见6次transfer、
+0个M3结果，且缺少第7次的原始进度事件，故独立consumer拒绝其成本证据边界。不能把0结果写成0尝试，
+也不能用静态推理补造原始事件、修改verifier或把Failed降格为Passed。
+测试缺口：完整API的假M3后端绕过进度wrapper，真实JSONL测试只收集事件而没有接入此回调。
+
+进程/服务均退出：两M1子进程5357/5916 exit0，M3子进程6408 exit−15，辅助5378/5949也消失。
+清理3.082763秒，末样本93覆盖全部5个已见身份；父服务已结束、锁释放。
+94个系统样本均normal，无warning/critical/unknown。只读独立安全子集复算通过，但这不是整体
+verification通过，也没有完成真实M3工作量，不能据此宣布旧内存问题已解决或九任务稳定性成立。
+旧EXP-084的39代码依赖及原协议已在修改生产代码之前封存为40成员archive，逐字节校验，
+`forum-topic-emotion-web/private/validation/exp-084/attempt-1/frozen-code.tar.gz`，
+SHA=`91ed8d8b0d8d8b631c7ad440cc824cd7dde813c0dc6f997bb1b8839dbef751af`。
+后续应使用archive复核旧实现，不将新app/start/UI的正常版本更新误判为旧实验漂移。
+旧bridge/runtime/模型、协议及已封存结果不改；EXP-079仍未通过，Discourse仍未执行。
+生产已补两阶段成本/缓存语义和阶段UI；公共worker在发布失败终态前先清理进程，避免删除窗口。
+本次已按失败即停收尾，没有自动修复、重试或执行Discourse。下一步范围应限于先封存本版代码，
+修正事件helper参数重名，补真实JSONL→`_phase_progress`→日志/成本的组合回归，再登记新尝试；
+不再增加新模型或新机制。原EXP-079/080状态不变，外部gold/context/C2继续暂停，无commit/stage/push。
+
+### 当前步骤（2026-08-31）：EXP-084模型分时驻留原型已完整通过
+
+用户在EXP-083停止后要求下一步。本次新Minor协议为
+`protocols/exp-084-m1-transfer-memory-prototype.md`，不修改生产网站、原模型或任何旧冻结文件。
+流程仍为340项M1完成并退出后处理前7项，但第二进程只复用本次M1概率/token缓存，不再创建M1模型，
+仅按原模型/路由/阈值进行M3计算。源文件hash校验仍可读取M1权重，不能声称不读M1文件或不import Torch。
+成本分列338次M1、2个任务内缓存、7个跨阶段回放和至多1次M3，不把回放计成重复输入或真实forward。
+结果等价与EXP-082比较；082只供独立验证，不能给新模型回填。新fingerprint绑定策略/transfer SHA。
+全部旧资源门不变，单次两个串行进程、347计划回执、180秒（150工作+15清理+15封存余量）。
+438项合成/集成tests及独立安全/语义审查通过后，已执行唯一一次。supervisor97702/session10752
+退出0，M1进程97763与独立M3进程98230都正常exit0；辅助进程97785及全部已见身份均确认消失。
+UTC开始2026-08-31T14:49:28.048493+00:00，总61.795825秒，2/2阶段、347/347回执完整。
+RUN=`forum-topic-emotion-web/private/validation/exp-084/attempt-1/`，已独立verify=Passed，
+diagnostic_completed=true、safety.gate_passed=true；不要重复runner/verifier或修改其绑定文件。
+plan SHA=`24c1c85d7aadb8a77743203972df4652c1204f2f626ec8f2c6182116e731338f`；
+run SHA=`e97540cec9a2cf87bdfe22f99c06a979c50d54603702b260a5a30551ad591d2a`；
+verification SHA=`22e667dd23da182b40e5fbb876999ac7465682275258e10a8663640bf4041bd1`。
+
+本次transfer只来自本次完整M1文件，hash=`c0a2131aaf3aab4e6e570f800009730115c045b32161db547b4fa7e64af6d428`。
+七项回放概率float32逐值等于同次M1回执；与EXP-082的七项功能输出一致，最大概率差0。
+成本为338次真实M1、2个任务内重复缓存、7条跨阶段回放、1次M3，不能将raw cache_hit的2+7称作9个重复输入。
+第二进程就绪时m1_instance_absent=true、m1_backend_calls=0；该proof是ready时点观察，
+结合无M1 load/predict阶段标记、原型禁止调用路径及回执m1_attempts=0描述此次执行，不当作全程heap普查。
+
+48条阶段记录完整闭合，首次forward已结束。MLX累计peak8,528,195,136B，与EXP-082相同。
+阶段历史RSS peak2,142,502,912B，高于EXP-083记录的1,796,702,208B；不能宣称绝对RSS下降。
+RSS和MLX active/cache/peak口径不同，也不能相加当整机物理内存。即使本次资源门通过，
+也不能把去掉第二M1实例单次归因成旧故障根因已经修复。
+
+59系统样本：2warning（index55/56）、0critical、0unknown/invalid。≥100MiB/s仅index56
+结束的一段，269.275804407MiB/s；相邻55/57分别81.025592921/69.007576003MiB/s，最长连续1，
+未达thrashing门。该高值间隔跨加载尾部/adapter/分词/forward入口，不能独占归因一个函数。
+两个安静窗口和全部退出门通过。所有工件0600并Git-ignored，无训练/新gold/上传/commit/push。
+
+结论：同次M1回执驱动的独立M3原型在本次有限序列中功能等价且通过原安全门。
+它尚未集成网站，也未覆盖完整340项Research、Demo或九任务序列；原EXP-079未完成、EXP-080未执行。
+下一步应扩展到完整快照/三模式的分阶段执行与网站任务接口，并先验证成本、回退、取消/删除、
+输入身份和功能等价，再进行新的有界验收；不把本次短原型直接晋升为生产或Phase C完成。
+
+### 当前步骤（2026-08-31）：EXP-083已因连续换页停止，独立审核通过
+
+用户在EXP-082完成后要求继续。已登记
+`protocols/exp-083-m1-prelude-memory-diagnostic.md`：一次有限序列，完整340项M1-only
+正常退出并通过原安静窗口后，再运行相同7项Research阶段诊断。入口保持直接子进程，不同时改HTTP。
+最多两串行进程、347个回执、1次M3，总180秒（工作150、清理15、封存余量15）。
+旧代码/旧协议/旧run均不改；EXP-083使用新driver、薄journal路径适配器和独立verifier。
+370项合成/集成tests、方法审查和执行器安全审查通过。唯一一次已经终态，supervisor PID94093、
+exec session7602已退出1；M1前置child94163正常退出0，Research child94645取消退出−15，
+辅助进程94195/94718及全部已见身份均确认消失。开始UTC2026-08-31T13:59:53.286692+00:00，
+plan SHA=`daf611f054a0f870491651798b2f7bd24fbfb30181c41ea88776df14f18fe559`。
+模块`private/validation/exp-083/attempt-1/`已封存。运行61.583231秒，M1完成340/340
+（338次计算+2缓存），Research6/7回执后取消，合计346/347回执、1/2阶段完成。
+run=Stopped / swap_thrashing；独立verify=Passed，但diagnostic_completed=false、safety=false。
+run SHA=`1b566d0007ae3bbb6bcfa194472c77ab50ab27cd6ebebec4f0373826f488e417`；
+verification SHA=`7276798a09f641f36ba9017af8768cc786c39e4564cd1a5974a3bd7880363a09`。
+不重复启动runner/verifier，不修改任何本次绑定代码、协议或旧工件。
+
+59个系统样本含3warning（index54/55/56）、0critical、0unknown/invalid。
+达到连续高swap门的区间结束index55/56/57，速率605.465578/281.388891/243.585264MiB/s；
+相对run区间分别[57.221111,58.322536]、[58.322536,59.373128]、[59.373128,60.432562]秒。
+第一段完全在base_load，第二段跨加载尾部/adapter求值/分词/首次forward入口，第三段位于
+first_forward已开始且未确认结束的窗口。触发样本57已经normal；这是swap代理门，不是critical或OOM证据。
+
+阶段journal60条完整，无半行或error事件；基座、LoRA、adapter/head和tokenization已有end。
+最后seq59为ordinal6的first_forward begin，未保存end/第七条结果。最后active/peak
+8,074,361,888B、cache4,644B均来自前向入口；取消前向的最终峰值和结果未知，不能写成8.074GB峰值。
+这些已完成加载阶段的MLX读数与EXP-082相同，但不能把跨阶段swap累计量归因一个函数。
+M1前置任务已正常退出且Research前的新10样本安静窗口通过，没有两个推理任务并发；
+Research进程内部仍按原设计保留M1和M3。清理开始t60.474940、R退出t60.619185，
+最后t61.540810的样本确认4个seen keys全部absent；清理耗时1.067092秒。
+
+已返回M1结果与原源快照一致，Research前六条也与EXP-082已返回的M1结果一致（最大差0）；
+没有新的M3结果可比。Research回执成本下界为M1计算6、M3回执成本0，但阶段证明已进入M3，
+不能把0个M3结果回执写成没有调用M3。序列未通过，不是记录审核失败，也不是模型内部异常的确诊。
+EXP-082成功而EXP-083停止只构成这两次观测；时间、系统状态和前序负载未受控，不能单次因果归因。
+后续需要处理加载到首次前向这段的内存/换页压力，不再同条件自动重跑。
+原EXP-079未完成、EXP-080未执行；本次不会自动把短序列通过当作九任务验收或推进Discourse。
+
+### 当前步骤（2026-08-31）：EXP-082单次阶段诊断已完成并独立通过
+
+用户在只读定位后继续要求“下一步”，已登记
+`protocols/exp-082-first-m3-memory-diagnostic.md`。只执行一个推理进程、原快照前七项，
+Research/seed42/audit0/M3预算1；总180秒，工作150秒、清理15秒、监控封存预留15秒。
+新driver直接复用原ProcessRunner和Monitor；新child只观察冻结Python阶段，不改旧runtime/模型。
+child、driver、独立verifier全部324项tests通过，parent安全审查Approved，阶段契约兼容。
+唯一一次已完成：supervisor PID90973、exec session69878已退出0，child PID91040正常退出0；
+辅助进程91074和所有已见身份均已确认退出。没有HTTP服务或后续模型运行。
+UTC开始2026-08-31T13:00:47.750242+00:00；plan SHA
+`896067922d9029e35ccdf1eeb44976bb22fc96a71ce0791424861d16547a5298`。
+模块`private/validation/exp-082/attempt-1/`已封存：run=Completed，7/7回执，耗时26.562390秒，
+7次M1、1次M3均成功；64条阶段记录闭合。parent退出后独立verify=Passed，
+diagnostic_completed=true、safety.gate_passed=true；不要再次运行runner或覆盖verification。
+run SHA=`10125ffc1c22bd020dc75f2c05647464be22ea90f8d509b7e3f7e78eb9d4e952`；
+verification SHA=`0d98fef8a5662bace2299bd7f11f9d17c99f13b14dca4a7c3765f4fe2ea3deb6`。
+
+本次主要观测：base_load完成后MLX active为8,044,936,200B（相对前值增加8,044,936,192B），
+adapter/head求值后8,074,361,888B（增加29,425,688B），first_forward后的累计peak为
+8,528,195,136B（相对前值增加453,833,248B）。forward结束active8,074,361,912B，
+cache491,587,620B。RSS/active/cache/peak口径不同，不能直接相加当物理内存。
+本次MLX记录没有完整基座双份驻留的证据，但不排除未覆盖的分配或重建此前失败的峰值。
+
+25个系统样本：2warning、0critical、0unknown/invalid。≥100MiB/s的swap区间共有3个，
+结束于样本20/21/23，速率196.310898/588.254606/333.476438MiB/s；中间样本22仅4.768115，
+最长连续高值2，未达3间隔thrashing门。warning样本20/21时点分别落在base_load/first_forward，
+但swap速率覆盖相邻采样间隔，不能把整段交换量独占归因于该时点所在函数，也不是精确2秒warning。
+
+结论：原模型在此次七项短诊断中完成首次M3，未复现critical；这不是资源故障已修复。
+本次无前置完整340项M1任务，采用直接child入口并新增trace/fsync，前序负载、系统状态、
+观察开销未受控，不能据此认定这些差异中的某项解释了与079的差别。后续需对齐完整流程的
+运行条件再判断如何处理资源约束；不以本次成功自动重跑九任务或启动Discourse。
+原079attempt3保持资源停止，080未执行；诊断不授权自动整轮重跑或Discourse。
+
+### 最新执行点（2026-08-31晚）：EXP-079 attempt3 再次资源停止，已封存
+
+用户要求关闭占用应用并继续，随后明确确认“已经将占用应用退出”。只读进程核对
+Chrome/QQ/WeChat/Obsidian/Music/Mail/Notes/Messages/Ghostty 主进程均已退出；
+10个系统样本均normal、9间隔swap I/O为0。完整280项tests通过。
+attempt2已逐字归档25文件，SHA见新的
+`protocols/exp-079-reduced-background-attempt-3.md`。仅修复已见存活进程的原始行留痕，
+旧sample36与Failed核验未改。9任务×340条、1800秒及模型/预算/安全门均不变。
+
+attempt3运行61.144110秒，因critical_memory_pressure停止。M1完成340条（338计算+2cache），
+Research仅6条回执后取消，7任务未开始；1/9完成。driver session74242退出1。
+58系统样本1critical，0warning/unknown/invalid；最大swap292.029245MiB/s，连续高值2间隔，
+不满足thrashing proxy。清理1.243173秒，4个已见进程均确认退出；无orphan或并发超限。
+服务85867/session49606在只读确认无活动任务后已正常停止，不要重启封存bench。
+
+随后独立verification为Passed，但exp079_complete=false、stop-required，运行安全门false。
+run SHA=`990efbb28bf91025b6554d3756e2f471a8edd8eac8a1962535cb98384e2a0722`；
+verification SHA=`2f078610f6ff4be0d17fdd047cbca0f6d156425e577ddba34cbe1d30581990ec`。
+这是可复核的停止记录，不是稳定运行通过；旧attempt2 Failed没有修复或晋升。
+`pre-execution.json`记录用户确认和资源前检；新报告为模块
+`private/reports/phase-c1-attempt3-reduced-background-report-2026-08-31.md`。
+080绑定已迁移到079attempt3，原9项tests通过，但安全前提未成立，仍未执行。
+081只追加attempt2，full_operational_completion=false；旧attempt1不覆盖。
+不再同条件自动重跑。下一步需明确Research峰值内存定位或新运行环境，不能直接跳到080。
+无训练、旧gold访问、上传、stage/commit/push。
+
+### 后续只读定位（2026-08-31）：下一项应为单次分阶段内存诊断
+
+用户“下一步”后，本轮只读检查现有工件、实际runtime、已安装库源码及模型文件头，
+没有加载模型、读取tensor值/原文/gold、修改代码或执行新的验收。
+实际`oof-router/runtime_exp066.py`与父attempt2 frozen副本逐字一致，SHA仍为`4cd1c226…e689`；
+attempt3的22项代码依赖和9项封存工件hash再次核对一致。
+
+- 可确认的调用路径：`topicweb/inference_process.py:290–309`先M1再route，首次请求M3时才调用
+  `m3_factory()`。原快照ordinals0–5路由资格均false，ordinal6为true；两次Research只有前6条回执。
+  这支持将排查集中于首个应触发M3的条目处理区间，但没有函数入口事件，不能认定具体加载/前向阶段。
+- M3构造（`runtime_exp066.py:244–321`）先校验小型adapter/head，再调用
+  `mlx_lm.load(base,lazy=False)`、插LoRA并装载其权重。已安装`mlx_lm/utils.py:415–418`
+  在替换权重后求值基座参数。只读Safetensors头部统计：基座398 tensors、4,022,468,096参数，
+  BF16 tensor payload 8,044,936,192 bytes（7.49243GiB）；adapter F32为29,360,128 bytes，
+  head F32为61,464 bytes。这是文件布局规模，不是实测RAM峰值。
+- 已安装MLX0.32.0的`mlx/include/mlx/memory.h:36–40`明确memory limit是图求值的guideline，
+  不是全进程瞬态硬上限。bridge在M3构造返回后才调用guard.check（395–401），结果完成后再检查。
+  因此设置10GB不保证加载期间不会先出现整机critical；它也不证明此次实际超过了10GB。
+  512MiB cache上限只管可回收缓存，不包括活动权重。
+- 未找到完整8GB基座被复制两份或全体转F32的静态证据：MLX Module.update替换array引用，
+  LoRALinear.from_base复用原linear；默认随机初始化是惰性的，不能直接算作另一套已分配权重。
+  classifier调用backbone.model再接六标签head，不计算完整词表logits；cache=None时没有跨请求
+  维护的KV cache。普通临时分配、原生I/O或内部算子峰值仍未观测，不能据此排除所有内存问题。
+- 缺失的关键证据：ready只证明M1就绪；native stdout/stderr被丢弃，M3阶段没有持久化标记。
+  六条回执中的MLX0只属于M3尚未返回结果的前段，不是最终峰值。现有记录不能区分MLX import、
+  基座加载、LoRA装配、tokenization或首次forward；ordinal6也可能仍在M1步骤或结果尚未持久化。
+  两次最后一条已保存回执到critical相隔2.858073s/2.752797s；这不是函数执行时长。
+  不能从整机critical单独归因M3，也不能把尚未持久化的m3_attempts当作0。
+
+官方[MLX memory limit说明](https://ml-explore.github.io/mlx/build/html/python/_autosummary/mlx.core.set_memory_limit.html)
+及[惰性求值说明](https://ml-explore.github.io/mlx/build/html/usage/lazy_evaluation.html)
+与本地源码交叉核对；在线文档为0.32.2，本次实际库仍为0.32.0，未升级。
+
+最小下一步：另行登记一次诊断，最多一个推理进程、原快照前7项（前6个M1前缀及首个路由对象），
+只回答首次M3停在哪个阶段。先保存阶段开始/结束与可取得的MLX active/cache/peak，保留原整机
+pressure/swap、RSS、退出和身份门；不输出原文、tensor值或新科学性能指标。阶段记录先做合成测试，
+诊断仍须有单次预算、独立工件且失败即停；不把它当attempt4整轮重跑，也不因诊断成功自动启动080。
+本轮只确定诊断范围，未创建或执行该模型诊断；未量化、改模型/阈值、调cache或放宽门限。
+
 Date: 2026-08-30
 
 Workspace: `/Users/phoenix/Assistant/NeuroScience`
@@ -815,3 +1120,95 @@ adapter、固定来源UI、run_discourse_validation.py、verify_discourse_valida
 功能和材料已交付，不能宣称完整Phase C实测完成。后续需先确定资源问题的处理方向，
 本轮不自动诊断负载、重试、降低门限或恢复C3。外部gold与旧context/C2暂停；无stage/commit/push、
 公开部署或数据上传，原phase-b heartbeat维持PAUSED，没有新自动化。
+
+### 2026-08-31：用户继续Phase C.1，当前为实现/静态检查
+
+前一轮可公开项目内容已commit/push为880cab3，private报告/数据/模型没有上传。
+用户随后要求继续验证有界稳定运行和Discourse正式闭环，不把原阶段标成全部完成。
+已登记DEC-PHASE-C1与EXP-079/080/081；模型与旧077保持不变，080继承078来源合同但绑定新079。
+EXP-079固定三轮m1_only/research/demo共9job，每job原340条，无新增warmup/cache tail。
+每job前10个normal/no-model/quiet-swap样本，最长60秒；run总1800秒，沿用硬资源门。
+
+当前只检查metadata/空闲状态和编写新脚本，**EXP-079/080正式目录尚未创建，模型未启动**。
+旧077所有绑定hash仍吻合；空闲10样本pressure均1、swapIO0、heavy lock可用。
+原主服务PID62541已经0active检查后正常停止，不能再把它当存活服务；8789/8790留给新隔离服务。
+不要启动第二份主服务或先运行080。三个子agent分工新runner/support、独立079 verifier、080工具；
+必须等待完整synthetic roundtrip与freeze信号后再由root执行新实验。
+
+新文件：scripts/run_bounded_runtime.py、bounded_runtime_support.py、verify_bounded_runtime.py；
+scripts/run_discourse_formal.py、verify_discourse_formal.py；scripts/closeout_bounded_operational.py。
+对应新tests正在完成；已过首批runner/support15项和closeout7项，但不等于全部正式前检查完成。
+静态准备中捕获并修正负路径兼容，不动原生产topicweb/static或旧脚本；新依赖清单显式排除080/081
+非依赖文件。此后继续按最新工具/tests状态恢复，不重头设计。无本轮新commit/push、无外部gold。
+
+### 2026-08-31：EXP-079已启动，先读实际终态，不重复启动
+
+263/263全套合成tests与两套CLI临时DB全链通过，runner/support/consumer及协议已冻结。
+只读兼容审计No findings，22项依赖一致，原340条payload为271,941B、SHA256
+`0ffdb01c64c3d55e8c7c0d9958b4d56921578873cbcc0bb0c54e4467b15a070c`。
+EXP-079隔离服务PID70577、session99661，127.0.0.1:8789；driver session20393已开始。
+输出在模块`private/validation/exp-079/attempt-1/`。run-claim只代表历史启动，当前状态应读
+stdout.log、run.json、samples.jsonl和对应bench job状态。运行期间不改22项依赖或协议，
+不启动第二份服务/driver、不执行080。driver结束后先确认目标job与子进程终态、停70577，
+再运行verify_bounded_runtime.py。只有exp079_complete=true且safe-to-continue才进入080。
+
+EXP-080工具已冻结，9/9专项tests通过，预定8790独立bench：serve→run→只读Dashboard检查
+→停服务→verify_discourse_formal.py。EXP-081综合工具有7tests，不在079/080依赖集。
+本次报告会新建Phase C.1补充，不覆盖原Phase C报告或旧失败。主8787仍停止，不重复启动。
+
+### 2026-08-31：EXP-079 attempt1观察分类误报，正修正attempt2
+
+Driver20393已退出1，service70577已正常停止，无后续任务。attempt1运行19.483361s，
+M1-only job14f50f712d984ec5a9e6a77e16e463bf在0回执时取消，原因concurrent_model_processes。
+sample17实际是70577→70666→70693：一个dispatcher直接推理worker及其Python后代，
+不是两个并列worker；所有19个pressure样本为normal。额外进程的具体库内功能未记录，不推测。
+这属于新observer把全部Python后代视为并列模型的实现错误，不是原EXP-077资源失败复现。
+
+原attempt1独立审核Passed但exp079_complete=false，verification SHA
+38144c1fe5478b5f96cb4c40beac2f9e97b3859052de3d42d8779aeec7405ba3。
+run SHA14afe2403e4c4bab0da79a5052a9646d4531bb7e337571dd260f1f8a1ff95743。
+原22依赖+2协议24文件逐字归档frozen-code.tar.gz，SHA
+b94d95df93cbff30c0f5c0384c7b4160c01296fce171627862500b4be481915a。旧工件不修改。
+
+修正说明为exp-079-observer-correction-attempt-2.md。现在只修测量分类：并发门按service直接
+推理root数，所有Python后代仍保留资源/seen/orphan/absence检查；两个直接root仍停止，
+资源/模型/输入/9任务目标均不改。active新路径exp-079/attempt-2，080依赖转为新终态并绑定
+correction。只因已证实的分类误报允许这一次新尝试，不把真实critical/资源失败当技术错误重跑。
+三个agent正在完成最小修正与原测试；等待freeze后继续，不得提前启动或覆盖attempt1。
+主8787仍停，079 attempt2与080均尚未启动。无新commit/push、无gold/训练或其他数据集。
+
+273/273全套tests通过后，EXP-079 attempt2已启动：service PID71829/session12018，
+driver session13785，仍为8789；输出exp-079/attempt-2。不要再启动第二份进程，不改22项依赖
+或任何绑定协议。终态仍需先停服务再独立verify；只有该attempt2通过全部门才运行080。
+第一轮从M1-only开始；当前进度只读stdout/run与bench metadata，不把run-claim当当前完成状态。
+
+### 2026-08-31最新：attempt2真实资源停止，完整verification Failed，等待资源条件改变
+
+不要继续运行模型。EXP-079 attempt2 driver13785已退出1，service71829/session12018已停；
+精确检查71829/71913/71935/72397/72417均无存活进程。主8787也仍停止，历史数据未删。
+run=Stopped/critical_memory_pressure，elapsed62.498333167s。M1 job
+14fc2780ee944f54ad57b561d022c59b completed340/340、338计算+2cache；Research job
+3e046247ab4a4a349c6e053571a7addd cancelled340/6，只有ordinals0–5的M1回执，下一ordinal6应路由。
+实际未回执尝试/最终MLX峰值未知，不写成0。共1/9计划job完成，7个未启动。
+
+59系统samples独立复算：normal57/warning1/critical1，无unknown/非法间隔。最后3交换间隔
+182.10/189.72/142.38MiB/s；critical在第二个高间隔触发取消，第三个发生在cleanup中才使
+thrashing定义成立。swap delta687669248B。不能把全机压力单独归因模型或声称OOM/泄漏。
+
+原完整verification.json为Failed/process_absence_identity，SHA
+f3ab1b94efbc1333b3f04c5e094658dd7b1d9b84dba35adf7bb7c68887c373c4，不能覆写或宣传Passed。
+唯一缺口sample36（JSONL37行）：seen含71913/71935，absent只列71935，models/orphans空，
+selected_ps只有service；71913的exit0/final_gate落在该采样窗口内，但原PS行没留，不能确认
+comm/defunct状态或补判absent。sample37以及58的后续退出字段自洽，不倒填缺口。
+
+private/validation/audit_phase_c1_stopped.py只读复核346回执、M1聚合/已知成本和系统计数，
+结果attempt2/technical-audit.json为Partial audit only，SHA
+a0743603daafb2528b9e491e095b48a7980cc10e8031496ad64d64551b7e4abd。
+旧/新原始工件及22项冻结依赖不改；没有verification recovery或attempt3模型执行。
+EXP-080目录未创建、没有正式采集/推理。EXP-081/run.json只生成目标未建立的元数据记录，
+full_operational_completion=false、bounded_verification_status=Failed；综合完成不是用户目标完成。
+
+新报告private/reports/phase-c1-bounded-operational-report-2026-08-31.md为0600、Git-ignored；
+旧Phase C报告不覆盖。当前需要用户先减少背景内存占用或明确其他运行环境；下一次需修正
+observer在退出交叠时保留所有已见PID原始行，不能改旧样本取得通过。不得再按相同条件
+直接模型重跑、降低门限或绕过079执行080。无本轮commit/push，外部gold和旧context/C2仍暂停。

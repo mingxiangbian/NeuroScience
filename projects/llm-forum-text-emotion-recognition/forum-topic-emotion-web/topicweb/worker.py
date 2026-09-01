@@ -248,10 +248,22 @@ class Dispatcher:
         job_id = job["id"]
         deadline = time.monotonic() + self.deadline_seconds
         runner = None
+        cleanup_failed = False
         stage = "resource_check"
 
         def cancelled():
             return self.stop_event.is_set() or self.store.cancelled(job_id)
+
+        def close_runner():
+            nonlocal runner, cleanup_failed
+            if runner is not None:
+                owner, runner = runner, None
+                try:
+                    owner.close()
+                except BaseException:
+                    cleanup_failed = True
+                    self.store.transition(job_id, ACTIVE, "cancel_requested", error_code="worker_cleanup_pending")
+                    raise
 
         try:
             if shutil.disk_usage(self.store.private_dir).free < 512 * 1024 * 1024:
@@ -304,7 +316,7 @@ class Dispatcher:
             if hasattr(runner, "finish"):
                 runner.finish()
             else:
-                runner.close()
+                close_runner()
             runner = None
             stage = "aggregation"
             if not self.store.transition(job_id, "inferencing", "aggregating"):
@@ -313,10 +325,12 @@ class Dispatcher:
             terminal = "completed_with_fallback" if any(result.get("fallback") for result in results) else "completed"
             self.store.transition(job_id, "aggregating", terminal, dashboard=dashboard)
         except Revoked:
+            close_runner()
             # Shutdown is a failure, explicit user cancellation remains cancelled.
             if self.stop_event.is_set():
                 self.store.transition(job_id, ACTIVE, "failed", error_code="worker_shutdown")
         except Exception as exc:
+            close_runner()
             current = self.store.get(job_id)
             progress = dict(current["progress"] or {}) if current else {}
             exception_type = type(exc).__name__
@@ -338,6 +352,6 @@ class Dispatcher:
             progress["worker_error"] = {"stage": stage, "exception_type": exception_type, "frames": safe_error_frames(exc)}
             self.store.transition(job_id, ACTIVE, "failed", error_code=code, progress=progress)
         finally:
-            if runner is not None:
-                runner.close()
-            self.store.finish_revocation(job_id)
+            close_runner()
+            if not cleanup_failed:
+                self.store.finish_revocation(job_id)

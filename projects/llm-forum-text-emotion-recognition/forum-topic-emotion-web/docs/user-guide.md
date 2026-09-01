@@ -1,18 +1,22 @@
 # 话题情绪工作台使用手册
 
-日期：2026-08-31。适用于本机 Phase C 网站，不包含外部金标泛化评价。
+日期：2026-09-01。适用于本机 Phase C 网站，不包含外部金标泛化评价。
 
 工作台对一份来源可追溯的文本快照运行冻结模型，展示六类标签的预测分布。它不能确认作者的真实情绪，也不能据此估计整个论坛的情绪或模型准确率。
 
-## 当前使用限制
+## 当前使用边界
 
-2026-08-31 的 EXP-077 在 40.22 秒后因 critical memory pressure 按规则停止。第一个 M1 任务完成 420/420；第二个 Research 任务取消时没有预测回执。独立 verification 为 Passed 表示运行审计正确，**不表示 Soak 通过**：`exp077_complete=false`、`soak_gate_passed=false`、状态为 stop-required。EXP-078 正式运行未继续。
+EXP-085 attempt 2已在当前16 GiB机器上完成固定九任务有界验收；EXP-086随后完成一次400条
+Python Help无gold正式闭环。两者的独立verification与资源门均Passed，但运行仍观察到warning和
+短时高swap。这只支持冻结有限负载，不是长期稳定、生产SLA或任意新负载的保证。
 
-本轮只查看已完成历史，不提交新采集、推理或快照重放。下面的新建任务和模式部分是功能说明，不代表资源安全条件已经恢复。后续执行需要先明确新的安全前提和方向，不能通过再次点击 Research 来试探。
+EXP-077的critical-memory负结果继续有效，EXP-078/080保持Not executed。新任务会启动真实计算，
+不应为演示或试探资源而随意重放。Release QA优先使用封存Dashboard与throwaway无模型任务；
+外部gold、context/C2、公网部署和商业使用均在关闭范围之外。
 
 ## 启动和解锁
 
-当前优先使用已恢复、仅用于查看历史的本机服务，不启动第二个 dispatcher。以下为后续安全前提恢复后的标准启动方式，本轮不据此另开重运行：
+标准启动方式如下；启动API本身不加载模型，也不要启动第二个dispatcher：
 
 ```sh
 cd /Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/forum-topic-emotion-web

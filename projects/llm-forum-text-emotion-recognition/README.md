@@ -113,6 +113,72 @@ RoBERTa 比较。模型分数只能在相同数据集、任务定义、split 和
 
 ## Current State
 
+### 2026-09-01：Phase C在有界本地研究范围内完成收口
+
+用户已确认最终范围修订：Phase C lifecycle为Closed，outcome为
+`Completed within bounded local research scope`；Phase C.1为`Completed / Verified Pass`。
+最终系统定级为“经过验证的有界本地研究原型，并完成两个技术论坛来源的服务链路迁移”。
+外部gold、context/C2、长期SLA、多用户、公网部署和商业再发布移入未来独立范围，
+不是当前Phase C内部尚未完成的实验。
+
+范围决策见[DEC-PHASE-C-FINAL-SCOPE-AND-CLOSEOUT-V1](experiments/stack-overflow-emotion-gold/protocols/dec-phase-c-final-scope-and-closeout-v1.md)；
+当前报告、claims与发布QA入口见[工作台README](forum-topic-emotion-web/README.md)。这项收口不改写
+EXP-077/079/083/085 attempt1的失败，也不把EXP-078/080写成已执行。
+
+### 2026-09-01：Phase C.1最低闭环完成
+
+EXP-085 attempt2已通过固定九任务资源门；随后EXP-086在已审核Python Help公开前缀上完成一次
+400条staged Research任务。来源69次匿名响应，M1/M3阶段各400回执，46次M3全部成功，
+独立来源/成本/聚合/安全核验Passed。全部进程退出，无critical/unknown采样。
+
+这个闭环回答的是“本地系统能否在第二论坛按固定来源合同安全完成一次任务”，没有gold，
+不回答跨域准确率。400条达到item limit且1个topic截断，不能外推论坛总体或完整线程。
+Phase C.1已收尾；随后通过最终范围修订将总体Phase C关闭在有界本地研究范围内。
+CancerEmo等外部gold、旧context/C2和公网部署作为未来独立范围继续暂停。
+完整数字与hash见[HANDOFF](experiments/stack-overflow-emotion-gold/HANDOFF.md)。
+
+### 2026-09-01：EXP-085 attempt 2有界验收通过
+
+Attempt 1的软件回调错误保留为Failed；封存该版本后只改内部参数名并补真实组合回归。
+Attempt 2执行固定三轮九任务：9/9任务、3060最终结果、5100阶段回执完整，独立verification=Passed，
+成本与跨轮一致性复算通过，所有模型进程正常退出。557个系统样本有12个warning、无critical/unknown；
+最高swap较高但仅连续2段，未触发三段停止门。因此只支持当前机器和固定负载的有限有界运行，
+不支持SLA、外部准确率或因果内存修复主张。
+
+通过版本及协议已封存。其后登记的EXP-086已经完成一次已审核`discuss.python.org` Python Help
+公开前缀的匿名、无gold staged Research闭环。旧EXP-080仍未执行，外部gold/context继续暂停。
+详细数字、工件hash和证据边界见[HANDOFF](experiments/stack-overflow-emotion-gold/HANDOFF.md)。
+
+### 2026-09-01：EXP-085 attempt 1网站分时接入失败（历史记录）
+
+新路径已接入完整任务与三模式，538项合成测试及审查后执行唯一一次九任务验收。
+98.639秒后因新增进度回调的`kind`参数重名停止：M1-only完成340，Research的M1预计算完成340，
+回放6项后失败；其余7任务未启动。完整verification=Failed/staged_lower_bound_range，
+原因是首次M3进度事件未写入journal，成本下界不能完整核验。本次没有观察到资源门触发，
+所有进程已退出，但当时未完成M3工作量，不能宣布内存问题已解决。有界运行和Discourse在该尝试终态中仍未完成。
+随后只修复回调接线并补组合回归，另登记attempt 2；本段失败终态保持不变。
+详见[交接与工件哈希](experiments/stack-overflow-emotion-gold/HANDOFF.md)。
+
+### Phase C.1：实际验证仍受阻（2026-08-31）
+
+用户确认退出占用应用后，9个目标应用主进程均不在运行；前检10个样本正常，swap I/O为0。
+EXP-079 attempt3仍在61.144110秒内触发critical pressure：M1完成340条（338计算+2cache），
+Research取得6条回执后取消，整体1/9完成，后续7任务未启动。58个系统样本含1个critical，
+没有warning或unknown；最大swap I/O为292.029MiB/s，连续高值仅2个间隔，未达到thrashing定义。
+完整记录独立审核Passed，但安全门为false、exp079_complete=false、状态为stop-required；
+这不表示资源问题已解决。EXP-080正式闭环仍未执行，旧attempt2的Failed记录保持原样。
+[减载后验证报告](forum-topic-emotion-web/private/reports/phase-c1-attempt3-reduced-background-report-2026-08-31.md)
+保存在Git-ignored私有目录。下面的原Phase C记录与所有旧失败保持不变。
+
+后续EXP-082单次七项阶段诊断已独立通过，首次M3完成、累计MLX peak8.528GB，仍有2个warning样本。
+这不是与旧失败的受控对照，也未补足九任务验收；[阶段结论与边界](evidence-log.md)已追加。
+之后EXP-083加入完整M1前置负载：M1完成340，Research6/7后触发连续高换页停止。
+独立审核确认加载已完成、首次前向未确认返回；终止峰值未知。记录通过不等于资源验收通过，
+需继续处理加载至前向的内存/换页压力，Discourse仍未执行。
+
+最新EXP-084分时驻留原型已通过：同次M1回执转交独立M3进程，347/347完整、七项功能等价、
+本次资源门通过。仍有2个warning，不证明绝对RSS下降或旧故障已因果修复；尚未接入网站或替代九任务验收。
+
 ### 2026-08-31：Phase C 功能交付与稳定性阻塞
 
 已按用户要求暂停 CancerEmo、JIRA 等外部金标泛化，转入

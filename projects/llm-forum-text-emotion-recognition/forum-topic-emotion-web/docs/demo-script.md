@@ -1,12 +1,14 @@
 # Phase C 本地演示脚本
 
-日期：2026-08-31。建议 6–8 分钟，只查看已完成任务，不提交新采集或真实推理。
+日期：2026-09-01。建议 6–8 分钟，只查看封存证据，不提交新采集或真实推理。
 
-这份脚本使用 EXP-076 的 Stack Overflow 来源任务和既有模型 smoke。当前 EXP-077 因 critical memory pressure 按规则停止：独立验证通过的是审计正确性，`exp077_complete=false`、`soak_gate_passed=false`，不是 Soak 成功。EXP-078 正式运行未继续。本演示只查看历史，不开启新的 Research、来源任务或重放。
+这份脚本使用EXP-076的Stack Overflow来源任务、EXP-085 attempt 2的固定九任务Dashboard和
+EXP-086的Python Help封存结果。EXP-077负结果、EXP-078/080未执行状态继续保留。
+本演示不重新采集、推理或重放；第二论坛结果证明服务链路闭环，不证明外域准确率。
 
 ## 演示前检查
 
-1. 使用已恢复、仅用于查看历史的本机服务，不另开 dispatcher。若服务不可用，先展示封存元数据，不在演示中启动新计算。当前资源限制见 [使用手册](/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/forum-topic-emotion-web/docs/user-guide.md)。
+1. 只启动一个loopback服务；若服务不可用，直接展示封存Dashboard和verification，不在演示中启动新计算。当前资源限制见 [使用手册](/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/forum-topic-emotion-web/docs/user-guide.md)。
 2. 在投屏或录屏前完成登录，不展示令牌文件、令牌内容或浏览器开发工具中的认证信息。
 3. 确认下面的已有任务仍在保留期内。页面只列最近 100 个任务；若旧任务未列出或明细已清除，改用封存的元数据说明限制，不为恢复画面重跑模型。
 4. 演示中不点击“创建并开始分析”“重放此快照”“清除全文”或“删除任务”。后两项只说明用途，不能删除正式证据。
@@ -18,6 +20,15 @@
 | M1 对照小批 | `EXP-076 / M1 / 8 authored inputs` | `b73e52ec61e542a4a95ab0ec9dcdfb04` |
 | Demo 降级小批 | `EXP-076 / Demo / M3 budget zero` | `f4cb239b3c1445a299440a3789e7e478` |
 | 既有新进程重放 | `EXP-076 / Research / same snapshot inputs` | `636a25ebe21a41538f29a3a1574a50ab` |
+
+最终答辩的离线证据另外使用：
+
+| 来源 | 封存入口 | 身份 |
+| --- | --- | --- |
+| Stack Overflow固定340条 | `private/validation/exp-085/attempt-2/bench/jobs.sqlite3` | SHA-256 `28ea54d7c3d7eda07db397d843277747613da4c87d7e80269fdbaa17efe3bbf1` |
+| Python Help固定400条 | `private/validation/exp-086/attempt-1/bench/jobs.sqlite3` | SHA-256 `020547643df663f31cdd03fd36104b079de1c4acfe11dcc5bc8b1c77f6233b74` |
+
+两份数据库含私有研究内容，Git-ignored，不上传、不在投屏中显示令牌、用户名或原文。
 
 这些名称和 ID 已与现有数据库核对，不是预设的新任务。两个Research任务同名，列表中较新的是
 重放任务，其replay_of指向原Research ID；下面用“Research小批”和“既有重放”区分。
@@ -69,9 +80,10 @@
 
 ## 结束时的证据表述
 
-> 已完成的 EXP-076 支持本机有限工作负载的采样、推理、统计和展示闭环。独立验证为 22/22 Passed，早期失败仍保留。它不单独支持长期 SLA、外部论坛准确率或人类情绪机制结论；后续运行验证按各自封存结果另行报告。
+> EXP-076支持Stack Overflow有限来源闭环；EXP-085 attempt 2支持当前机器的固定九任务staged有界运行；EXP-086支持一个无gold Python Help来源到结果闭环。三者都不支持长期SLA、Discourse准确率、论坛总体情绪或人类情绪机制结论。
 
-若被问到长期运行，明确补充：本轮 EXP-077 已触发内存安全停止，没有通过 Soak；不能把其审计 verification 的 Passed 简化成运行通过，也不能把已审核的 Python Help 接口说成 EXP-078 已完成。
+若被问到长期运行，明确补充：EXP-077曾触发内存安全停止，没有通过原Soak；EXP-085的固定负载通过
+不回写该失败，也不是长期SLA。EXP-086是独立的新协议，不等价执行或替代EXP-078/080。
 
 本地证据入口：
 
@@ -79,5 +91,7 @@
 - [EXP-076 独立验证](/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/forum-topic-emotion-web/private/validation/exp-076/attempt-3/verification.json)
 - [既有 smoke 元数据](/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/forum-topic-emotion-web/private/validation/exp-076/attempt-1/smoke.json)
 - [公开链接展示核对](/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/forum-topic-emotion-web/private/validation/exp-076/attempt-3/presentation-verification.json)
+- [EXP-085 attempt 2 verification](/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/forum-topic-emotion-web/private/validation/exp-085/attempt-2/verification.json)
+- [EXP-086 verification](/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/forum-topic-emotion-web/private/validation/exp-086/attempt-1/verification.json)
 
 这些工件留在本地 ignored 目录，不随演示上传或重新发布论坛语料。

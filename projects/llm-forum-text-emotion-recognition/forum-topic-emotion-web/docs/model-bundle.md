@@ -1,6 +1,6 @@
 # Phase C 冻结模型包说明
 
-日期：2026-08-31。本文件是现有部署工件的引用说明，不创建新模型包、不复制权重，也不重新运行历史评价。
+日期：2026-09-01。本文件是现有部署工件的引用说明，不创建新模型包、不复制权重，也不重新运行历史评价。
 
 ## 绑定关系
 
@@ -62,4 +62,7 @@ M1/M3 分开缓存，键绑定精确 UTF-8 输入 hash 与运行 fingerprint。f
 
 默认模式行为、失败降级与未知成本见 [使用手册](/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/forum-topic-emotion-web/docs/user-guide.md)。derived 统计和来源链接展示修正不重算模型预测，也不改写父模型工件。
 
-这个绑定说明支持部署可追溯性，不新增准确率、跨 seed 部署、外部论坛泛化、长期服务稳定性或情绪机制结论。当前 EXP-077 已因 critical memory pressure 按规则停止，Soak 门未通过，EXP-078 正式运行未继续。父模型身份门通过不能替代整机内存压力与连续工作负载的安全门；本轮不再启动新 Research 或快照重放。
+这个绑定说明支持部署可追溯性，不新增准确率、跨seed部署、外部论坛预测泛化、长期服务稳定性或
+情绪机制结论。EXP-085 attempt 2已完成固定九任务有界验收，EXP-086已完成一次400条Python Help
+无gold链路；两者都保留warning和高swap口径限制。EXP-077负结果与EXP-078/080未执行状态不变。
+父模型身份门和这两次有限通过都不能替代长期、多用户或生产SLA验证。
