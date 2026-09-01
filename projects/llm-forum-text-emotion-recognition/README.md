@@ -122,7 +122,8 @@ RoBERTa 比较。模型分数只能在相同数据集、任务定义、split 和
 不是当前Phase C内部尚未完成的实验。
 
 范围决策见[DEC-PHASE-C-FINAL-SCOPE-AND-CLOSEOUT-V1](experiments/stack-overflow-emotion-gold/protocols/dec-phase-c-final-scope-and-closeout-v1.md)；
-当前报告、claims与发布QA入口见[工作台README](forum-topic-emotion-web/README.md)。这项收口不改写
+当前报告、claims与发布QA入口见[工作台README](forum-topic-emotion-web/README.md)，
+实验结果、参数和保留边界见[Artifact Index](experiments/stack-overflow-emotion-gold/ARTIFACT-INDEX.md)。这项收口不改写
 EXP-077/079/083/085 attempt1的失败，也不把EXP-078/080写成已执行。
 
 ### 2026-09-01：Phase C.1最低闭环完成
