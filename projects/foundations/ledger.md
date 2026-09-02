@@ -19,7 +19,7 @@
 > 每次 session 结束写三行：做到哪了 / 下一步第一个动作 / 有没有墙。也可以直接告诉 Claude，由它写。
 
 - **做到哪了**：DeepSeek-V4 版本审读第 1 步已通过：能区分发布 checkpoint、相同架构下的参数变化与 inference effort；能说明 benchmark 测到的是 checkpoint 与 Harness、推理预算、评测设置的组合，也能区分“使用模型”与“解释/复现 GA 增量”所需的证据。修正：Flash Preview → 0731 的 architecture 不变，DeepSeek thinking mode 会忽略 sampling 参数，因此二者不是这次比较中的有效混杂因素。
-- **下一步第一个动作**：进入主干阅读第 2 步的第一小段：只读 V4 报告 Abstract、Figure 2 caption 与 §2 开头，分清继承组件、新增组件、直接解决 1M context 成本的组件及其报告指标；暂不读公式。
+- **下一步第一个动作**：按 [DeepSeek-V4 主报告阅读验收清单](../../papers/deepseek-v4/reading-checklist.md) 完成主报告阅读；读完后一次性回答 `Q01–Q12`，再共同检查。DSpark 暂不混入本轮。
 - **有没有墙**：没有。U3 的六行故事骨架原位保留；U7 的 DeepSeek Harness 生产架构对照尚未进行，只是未来候选，不消耗玩耍券。
 
 ## 进行中玩耍单元任务单
