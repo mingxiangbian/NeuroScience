@@ -1,0 +1,102 @@
+{
+  "experiment_id": "EXP-062",
+  "interval": "percentile_95",
+  "overall_selected_policy": "logistic_router",
+  "policy_candidates": {
+    "logistic_router": {
+      "actual_call_rate": 0.15089285714285713,
+      "intervals": {
+        "actual_call_rate": {
+          "lower_95": 0.13889739167060233,
+          "mean": 0.1508094189989922,
+          "point_estimate": 0.15089285714285713,
+          "upper_95": 0.16353942905988597
+        },
+        "five_label_macro_f1_gain": {
+          "lower_95": 0.004808665856032043,
+          "mean": 0.023141193216591183,
+          "point_estimate": 0.023242885385720058,
+          "upper_95": 0.04065365288937413
+        },
+        "hamming_loss_delta": {
+          "lower_95": -0.005598535474821062,
+          "mean": -0.0036569681994899988,
+          "point_estimate": -0.0036706349206349215,
+          "upper_95": -0.0016819469273228246
+        },
+        "macro_f1_gain": {
+          "lower_95": 0.049547736504950604,
+          "mean": 0.08485990172574244,
+          "point_estimate": 0.08603573782143326,
+          "upper_95": 0.11777843120590595
+        }
+      },
+      "target_call_rate": 0.15
+    },
+    "m1_max_entropy": {
+      "actual_call_rate": 0.15029761904761904,
+      "intervals": {
+        "actual_call_rate": {
+          "lower_95": 0.13794058428258177,
+          "mean": 0.1506950097644579,
+          "point_estimate": 0.15029761904761904,
+          "upper_95": 0.1637568606394745
+        },
+        "five_label_macro_f1_gain": {
+          "lower_95": 0.005870311086361011,
+          "mean": 0.025964714832624053,
+          "point_estimate": 0.0262258707146934,
+          "upper_95": 0.04597321335850616
+        },
+        "hamming_loss_delta": {
+          "lower_95": -0.006567279965426356,
+          "mean": -0.004647601303943336,
+          "point_estimate": -0.0046130952380952425,
+          "upper_95": -0.002749107415098846
+        },
+        "macro_f1_gain": {
+          "lower_95": 0.046825639288022976,
+          "mean": 0.08531132654412658,
+          "point_estimate": 0.08568467949628711,
+          "upper_95": 0.12060997222571317
+        }
+      },
+      "target_call_rate": 0.15
+    },
+    "m1_threshold_proximity": {
+      "actual_call_rate": 0.1455357142857143,
+      "intervals": {
+        "actual_call_rate": {
+          "lower_95": 0.13362915017154922,
+          "mean": 0.14585796481859473,
+          "point_estimate": 0.1455357142857143,
+          "upper_95": 0.15809844962914607
+        },
+        "five_label_macro_f1_gain": {
+          "lower_95": 0.014231131742514318,
+          "mean": 0.030496044648716407,
+          "point_estimate": 0.030039504663700534,
+          "upper_95": 0.04763166731103221
+        },
+        "hamming_loss_delta": {
+          "lower_95": -0.004954456172408023,
+          "mean": -0.003142889543020685,
+          "point_estimate": -0.0031250000000000028,
+          "upper_95": -0.001242928128047735
+        },
+        "macro_f1_gain": {
+          "lower_95": 0.02754074669018645,
+          "mean": 0.0584929297210498,
+          "point_estimate": 0.05836625388641692,
+          "upper_95": 0.09084921757755565
+        }
+      },
+      "target_call_rate": 0.15
+    }
+  },
+  "repetitions": 2000,
+  "schema_version": "exp-router-bootstrap-v2",
+  "seed": 20260817,
+  "selection_warning": "Point estimates determine the frozen development gate; intervals only qualify stability. This train-OOF bootstrap is not an independent test.",
+  "unit": "duplicate_component"
+}

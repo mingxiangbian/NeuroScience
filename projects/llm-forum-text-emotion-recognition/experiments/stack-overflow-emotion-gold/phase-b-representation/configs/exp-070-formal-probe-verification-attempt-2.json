@@ -1,0 +1,225 @@
+{
+  "schema_version": "exp-070-formal-probe-verification-attempt-2-config-v1",
+  "experiment_id": "EXP-070",
+  "run_id": "exp-070-layerwise-probe-formal-probe",
+  "source_attempt_id": "formal-probe-attempt-1",
+  "attempt_id": "formal-probe-verification-attempt-2",
+  "verification_attempt": 2,
+  "registered_at": "2026-08-29",
+  "scope": {
+    "verification_only": true,
+    "source_probe_rerun": false,
+    "probe_refit": false,
+    "assemble_rerun": false,
+    "source_mutation": false,
+    "exp071": false
+  },
+  "source_snapshot": {
+    "formal_config": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/configs/exp-070-formal-probe.json",
+      "bytes": 35922,
+      "mode": "0644",
+      "sha256": "16a66d187bc16c46997e0ab7d729848e03a02bcd088139964debc370d6e5067c"
+    },
+    "formal_protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-070-formal-probe.md",
+      "bytes": 17832,
+      "mode": "0644",
+      "sha256": "0c4d927e9bded6d914700c587b1125de5af745ad91be92d09ae6a1569c853c29"
+    },
+    "source_runner": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/run_exp070_probe.py",
+      "bytes": 111545,
+      "mode": "0644",
+      "sha256": "2c35497c9379e38c8ab3b425fee824e2a4b894a92ab2fd45c45a6af6a137cc13"
+    },
+    "source_verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/verify_exp070_probe.py",
+      "bytes": 114123,
+      "mode": "0644",
+      "sha256": "6f779d6582725744d0d0ef14604c63df63083f6f567b153c984ab3cd32c4bb61"
+    },
+    "source_tests": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/tests/test_exp070_probe.py",
+      "bytes": 43206,
+      "mode": "0644",
+      "sha256": "635f5942a4d5befe9f72493e54ed25356789481ce3ef0d6cdce0b70e95613349"
+    },
+    "run_claim": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-probe-attempt-1/run-claim.json",
+      "bytes": 1357,
+      "mode": "0644",
+      "sha256": "e1cac842098da65c04a7e8537d20ca1dc787ecdf3427244caec4b4e447742455"
+    },
+    "probe": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-probe-attempt-1/probe.json",
+      "bytes": 53748,
+      "mode": "0644",
+      "sha256": "977021e97a5c6a69dc6894161f4717b53c2a651919d7a5655f1b9e6ac246f89b"
+    },
+    "input_manifest": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-probe-attempt-1/input-manifest.json",
+      "bytes": 21305,
+      "mode": "0600",
+      "sha256": "7e34c0c1e42ce5850d0116776affd0ea96ec903a5a25aff551cd79ee8a504c7c"
+    },
+    "probe_manifest": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-probe-attempt-1/probe-manifest.json",
+      "bytes": 68146,
+      "mode": "0600",
+      "sha256": "307af86570048752e31c098224fe92e1d78c7e875a70f3818810e13543bc9fe0"
+    },
+    "fold_artifacts": [
+      {
+        "logical_name": "folds/f0.json",
+        "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-probe-attempt-1/folds/f0.json",
+        "bytes": 28661,
+        "mode": "0600",
+        "sha256": "d3f156294fd37f59b4c857a685270ffae8aabdfee0814d3b723c3f126c2ada3a"
+      },
+      {
+        "logical_name": "folds/f0.npz",
+        "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-probe-attempt-1/folds/f0.npz",
+        "bytes": 4664038,
+        "mode": "0600",
+        "sha256": "b1e71ac421f5463005ce5fd7be18084e4a368ca49de8c23dc228fa75d15a380b"
+      },
+      {
+        "logical_name": "folds/f1.json",
+        "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-probe-attempt-1/folds/f1.json",
+        "bytes": 28661,
+        "mode": "0600",
+        "sha256": "465ada0d1f9d65243d3766e888cb2a420f6aa51ce2a2b8569eef56ef5696160e"
+      },
+      {
+        "logical_name": "folds/f1.npz",
+        "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-probe-attempt-1/folds/f1.npz",
+        "bytes": 4664038,
+        "mode": "0600",
+        "sha256": "0c237e0d3192225cf619758b1ebab9e881061e33269875d1930b925c0ffd3c81"
+      },
+      {
+        "logical_name": "folds/f2.json",
+        "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-probe-attempt-1/folds/f2.json",
+        "bytes": 28663,
+        "mode": "0600",
+        "sha256": "b49ac9506c254699bd0a472d51e34103f681a6b2f51ecb354c35847555687224"
+      },
+      {
+        "logical_name": "folds/f2.npz",
+        "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-probe-attempt-1/folds/f2.npz",
+        "bytes": 4664038,
+        "mode": "0600",
+        "sha256": "f2af1c4ff64dad11b338030885d45cfad1233bb4fcd988b1c0f22b87f9b9a614"
+      },
+      {
+        "logical_name": "folds/f3.json",
+        "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-probe-attempt-1/folds/f3.json",
+        "bytes": 28663,
+        "mode": "0600",
+        "sha256": "a0c69fade6ced6613f8ea3f0770ec62c768860cad7da0a5e6331098169f39292"
+      },
+      {
+        "logical_name": "folds/f3.npz",
+        "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-probe-attempt-1/folds/f3.npz",
+        "bytes": 4664038,
+        "mode": "0600",
+        "sha256": "a79210ac75936b10ec73180d96bbebf4dc1a30a1bafb8e071936293d4528faf6"
+      },
+      {
+        "logical_name": "folds/f4.json",
+        "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-probe-attempt-1/folds/f4.json",
+        "bytes": 28662,
+        "mode": "0600",
+        "sha256": "907f2eda0006f3ccf5e4925bff0a3e838cb866f0bdf88dbada9f3adbde577ee3"
+      },
+      {
+        "logical_name": "folds/f4.npz",
+        "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-probe-attempt-1/folds/f4.npz",
+        "bytes": 4664038,
+        "mode": "0600",
+        "sha256": "e8e23151060552f32d4043a2144d6908d687a4108e2d784a2e56966ec6f47b03"
+      }
+    ]
+  },
+  "incident_evidence": {
+    "old_verifier_unexecuted": true,
+    "blocker": "public_privacy_false_positive_on_exact_claim_boundary_component_disjoint",
+    "source_status": "CompletedAwaitingVerification",
+    "source_verification_absent": true,
+    "source_completion_absent": true,
+    "actual_private_data_exposure": false
+  },
+  "privacy_contract": {
+    "exact_json_path": "$.claim_boundary",
+    "exact_claim_boundary_sha256": "70e965af98259a52baeba677988a790097664a96ba9f54f084243b968ec569a0",
+    "allowed_false_positive_token": "component-disjoint",
+    "original_predicate_unchanged": true,
+    "component_id_rejection": true,
+    "sample_id_rejection": true,
+    "private_path_rejection": true,
+    "forbidden_key_rejection": true,
+    "long_list_minimum": 672
+  },
+  "authorization": {
+    "static_preflight": true,
+    "formal_verification": true,
+    "formal_completion": true,
+    "source_file_identity": true,
+    "sealed_probability_values": true,
+    "label_values": true,
+    "threshold_recomputation": true,
+    "metrics_recomputation": true,
+    "bootstrap_recomputation": true,
+    "probe_refit": false,
+    "representation_values": false,
+    "model_loading": false,
+    "forward": false,
+    "source_mutation": false,
+    "validation": false,
+    "test": false,
+    "exp071": false
+  },
+  "resources": {
+    "formal_wall_seconds": 43200,
+    "peak_rss_bytes": 8589934592,
+    "free_disk_bytes": 536870912,
+    "static_test_timeout_seconds": 300
+  },
+  "outputs": {
+    "source_public_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-probe-attempt-1",
+    "source_private_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-probe-attempt-1",
+    "static_public_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-probe-verification-attempt-2-preflight",
+    "recovery_public_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-probe-verification-attempt-2",
+    "static_allowlist": [
+      "static-verification.json",
+      "no-result-complete.json"
+    ],
+    "recovery_allowlist": [
+      "source-snapshot-claim.json",
+      "verification.json",
+      "probe-complete.json"
+    ]
+  },
+  "implementation": {
+    "protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-070-formal-probe-verification-attempt-2.md",
+      "bytes": 9070,
+      "mode": "0644",
+      "sha256": "e908da3625297ddce317fb585b1e8cbc8b46f2c3adeda70b9375f0949f04e187"
+    },
+    "verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/verify_exp070_probe_attempt2.py",
+      "bytes": 62825,
+      "mode": "0644",
+      "sha256": "c6d8def966c2742034f5a287844e1cb6189fb9648468e43bfaa3cc0ec3d4a237"
+    },
+    "tests": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/tests/test_exp070_probe_attempt2.py",
+      "bytes": 39071,
+      "mode": "0644",
+      "sha256": "725cea6f3e8b8545e352585e4563b658b7302ddc264a36544489ba3918ce9532"
+    }
+  },
+  "claim_boundary": "A model-free append-only recovery for EXP-070 formal-probe verification that corrects one exact public-privacy method-token false positive and replays the frozen probability-only verifier; no source mutation, probe refit, model load, forward, validation, test, threshold or tolerance change, EXP-071 authorization, causal-representation, emotion-neuron or human-mechanism claim."
+}

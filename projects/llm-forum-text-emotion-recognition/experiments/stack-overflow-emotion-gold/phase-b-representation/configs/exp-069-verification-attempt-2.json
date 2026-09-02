@@ -1,0 +1,102 @@
+{
+  "schema_version": "exp-069-verification-attempt-2-config-v1",
+  "experiment_id": "EXP-069",
+  "attempt_id": "attempt-5-verification-recovery",
+  "source_attempt_id": "attempt-4-fold-smoke",
+  "registered_at": "2026-08-27",
+  "scope": {
+    "verification_only": true,
+    "model_rerun": false,
+    "assemble_rerun": false,
+    "source_mutation": false,
+    "exp070": false
+  },
+  "source_snapshot": {
+    "config": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/configs/exp-069-fold-smoke-attempt-4.json",
+      "bytes": 7905,
+      "mode": "0644",
+      "sha256": "01378257072f38fe6a6c5e5cce580d2ebfde9d111cbef9c6ba523c5c14366cb2"
+    },
+    "run_claim": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-069-representation-extraction-preflight/attempt-4-fold-smoke/run-claim.json",
+      "bytes": 826,
+      "mode": "0644",
+      "sha256": "8b7039d0e64c4e12d5fd9116caad1d5d39dc000f213e7bc11085e8583666abcd"
+    },
+    "run": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-069-representation-extraction-preflight/attempt-4-fold-smoke/run.json",
+      "bytes": 1175,
+      "mode": "0644",
+      "sha256": "475f1f7a574dd224b9ae298dea266773d10b9e63bda67e1e3a28c217a29a57c8"
+    },
+    "failed_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-069-representation-extraction-preflight/attempt-4-fold-smoke/verification.json",
+      "bytes": 571,
+      "mode": "0644",
+      "sha256": "efa69c7ec2d489620d392f01e072ac7b7f83ead0aae10d38aa731cc2e0e21fbf"
+    },
+    "smoke_manifest": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-069-representation-extraction-preflight/attempt-4-fold-smoke/smoke-manifest.json",
+      "bytes": 43384,
+      "mode": "0600",
+      "sha256": "8e816de5059544e465d7ef31ee5d38860262c8df3d3673b140d7c25d6d7f33a1"
+    }
+  },
+  "frozen_verifiers": {
+    "source_verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/verify_exp069_preflight.py",
+      "bytes": 36300,
+      "mode": "0644",
+      "sha256": "d1870cddfeeedc8c644951d90ddf941472f9d48da117ab8b2507503dc15e7318"
+    },
+    "attempt4_wrapper": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/verify_exp069_fold_smoke_attempt4.py",
+      "bytes": 12452,
+      "mode": "0644",
+      "sha256": "758d88c6e6377a6f14ac2aa8f20e8bf04c2af105ff546368c7650559de7dcdc6"
+    }
+  },
+  "implementation": {
+    "protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-069-verification-attempt-2.md",
+      "bytes": 3351,
+      "mode": "0644",
+      "sha256": "e9bce08785d4e5edb462578c653d5b5be2e4df18540beaef5ca34b43bfd66764"
+    },
+    "verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/verify_exp069_attempt4_verification_attempt2.py",
+      "bytes": 27277,
+      "mode": "0644",
+      "sha256": "b80e55408148bd9c2e8beb48b3fa9bf70271943bf117d58dec677034c5adac80"
+    },
+    "tests": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/tests/test_exp069_attempt4_verification_attempt2.py",
+      "bytes": 4378,
+      "mode": "0644",
+      "sha256": "a01414fd4bca1287efdf77f9577e531b35ef34d472f484e2cdbad2e8296fcc0a"
+    }
+  },
+  "authorization": {
+    "verification_authorized": true,
+    "model_loading_authorized": false,
+    "forward_authorized": false,
+    "training_authorized": false,
+    "performance_metrics_authorized": false,
+    "validation_access": false,
+    "test_access": false,
+    "gold_access": false
+  },
+  "metrics": {
+    "aggregate_equality_atol": 1e-12,
+    "manual_logit_atol": 1e-5,
+    "runner_metric": "runner_manual_vs_standard_logit_max_abs",
+    "independent_metric": "independent_saved_hf_head_vs_manual_logit_max_abs"
+  },
+  "outputs": {
+    "source_public_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-069-representation-extraction-preflight/attempt-4-fold-smoke",
+    "source_private_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-069-representation-extraction-preflight/attempt-4-fold-smoke",
+    "recovery_public_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-069-representation-extraction-preflight/attempt-5-verification-recovery"
+  },
+  "claim_boundary": "A model-free append-only recovery of EXP-069 attempt-4 final verification that separates runner manual-vs-standard logits from independent saved-HF NumPy-head replay under the unchanged frozen tolerances; no model rerun, source mutation, classification-performance, representation-effect, functional-dependency, deployment-efficiency, production, forum-generalization, or emotion-mechanism claim."
+}

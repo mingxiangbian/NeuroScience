@@ -1,0 +1,820 @@
+{
+  "schema_version": "exp-071-denominator-diagnostic-formal-config-v1",
+  "experiment_id": "EXP-071",
+  "diagnostic_id": "EXP-071-DENOMINATOR-DIAGNOSTIC-INCIDENT-002",
+  "rq_id": "RQ-S4.2",
+  "tier": "Minor technical failure diagnostic",
+  "registered_at": "2026-08-30",
+  "method_protocol": {
+    "path": "experiments/stack-overflow-emotion-gold/protocols/exp-071-denominator-diagnostic-incident-002.md",
+    "bytes": 6098,
+    "mode": "0644",
+    "sha256": "43cdf1efa8cea5cf226e3ea6877504200a8433c3d46314f8101e6b7ea129b353"
+  },
+  "implementation": {
+    "runner": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/run_exp071_denominator_diagnostic.py",
+      "bytes": 40677,
+      "mode": "0644",
+      "sha256": "12745fe4063713fd6c56a176afcc4acd1668462c2be7b011a57f35df5b0272b8",
+      "status": "Frozen"
+    },
+    "verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/verify_exp071_denominator_diagnostic.py",
+      "bytes": 53639,
+      "mode": "0644",
+      "sha256": "f9338484e7ec980c328631fe6f0ba14a023b60ba0febe6f03bfe437e9ca411cb",
+      "status": "Frozen"
+    },
+    "tests": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/tests/test_exp071_denominator_diagnostic.py",
+      "bytes": 18164,
+      "mode": "0644",
+      "sha256": "7364f7d9e150c4194d7e0f954f00d8f6ed09afbce57284f642d199982c2b39b1",
+      "status": "Frozen"
+    }
+  },
+  "incident": {
+    "id": "EXP-071-FORMAL-INCIDENT-002",
+    "failed_config": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/configs/exp-071-representation-drift-formal-attempt-1.json",
+      "bytes": 30400,
+      "mode": "0644",
+      "sha256": "0709c963f88242a706784f92d5033fe08eb46fb752d7e59e96607bc259d0ae35"
+    },
+    "run_claim": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-071-representation-drift/formal-attempt-1/run-claim.json",
+      "bytes": 2565,
+      "mode": "0644",
+      "sha256": "763fee43dbc643cb01b9a477a92ebd9a3e339bbe0740948ab055e8caabc7d937"
+    },
+    "failure_artifact": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-071-representation-drift/formal-attempt-1/failure.json",
+      "bytes": 390,
+      "mode": "0644",
+      "sha256": "3900425566334ceeac9c920e547cec252504303ac045a52a3b82820c98789d40"
+    },
+    "input_manifest": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-071-representation-drift/formal-attempt-1/input-manifest.json",
+      "bytes": 5769,
+      "mode": "0600",
+      "sha256": "3e5671aaad9f702d95168a05a5cb3d4d1cf0382550d1ba83196b5792ffe0ec42"
+    },
+    "original_method_protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-071-representation-drift.md",
+      "bytes": 13708,
+      "mode": "0644",
+      "sha256": "7d03bde05da6b83e4db9e0c3396140fba6fd7418a8c678ce4a825e0d9208e099"
+    },
+    "original_method_sha256": "f428523680acd2dd130bb78ac3bcdebbceec2b64ced18730e936323e685cc210",
+    "original_source_contract_sha256": "8f7bc1836021053d0ffd48a620170996ed72475f54c57034ca2591dd515dffcf",
+    "original_source_snapshot_sha256": "df5e9d00c2464462eb541b3416efe4d96c6836efb43d778699392fe3501535d9",
+    "expected_failure": {
+      "schema_version": "exp-071-drift-failure-v1",
+      "experiment_id": "EXP-071",
+      "run_id": "exp-071-representation-drift-formal",
+      "attempt_id": "formal-attempt-1",
+      "stage": "analyze",
+      "status": "Failed",
+      "error_type": "ValueError",
+      "error_sha256": "a31cc7801e29fbcef859a21a55bcf161c6390a6245e497b680fd33f3e1e0df8d",
+      "model_loading_authorized": false,
+      "forward_authorized": false,
+      "source_mutation_authorized": false
+    },
+    "recovery_scope": "technical_denominator_failure_localization_only",
+    "original_attempt_status_preserved": "Failed",
+    "original_attempt_resume_authorized": false,
+    "method_change_authorized": false
+  },
+  "source": {
+    "matrix_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction",
+    "matrices": [
+      {
+        "worker_id": "base",
+        "kind": "frozen",
+        "seed": null,
+        "fold": null,
+        "shape": [
+          3360,
+          9,
+          2560
+        ],
+        "points": [
+          "H-1",
+          "H7",
+          "H15",
+          "H19",
+          "H20",
+          "H27",
+          "H31",
+          "H35",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/base/representations.npy",
+          "bytes": 309657728,
+          "mode": "0600",
+          "sha256": "82cf73d08fb7ef0089b1dba24fba0927686423b48d8b66f3dc75d9b6a482ed45"
+        }
+      },
+      {
+        "worker_id": "m3-s42-f0",
+        "kind": "m3",
+        "seed": 42,
+        "fold": 0,
+        "shape": [
+          3360,
+          9,
+          2560
+        ],
+        "points": [
+          "H-1",
+          "H7",
+          "H15",
+          "H19",
+          "H20",
+          "H27",
+          "H31",
+          "H35",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s42-f0/representations.npy",
+          "bytes": 309657728,
+          "mode": "0600",
+          "sha256": "4a718afac542ce7cbb24e58d7246b1f98a67b77f2200038e3224f20313154958"
+        }
+      },
+      {
+        "worker_id": "m3-s42-f1",
+        "kind": "m3",
+        "seed": 42,
+        "fold": 1,
+        "shape": [
+          3360,
+          9,
+          2560
+        ],
+        "points": [
+          "H-1",
+          "H7",
+          "H15",
+          "H19",
+          "H20",
+          "H27",
+          "H31",
+          "H35",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s42-f1/representations.npy",
+          "bytes": 309657728,
+          "mode": "0600",
+          "sha256": "058117b855b3efe023c35a6a7a466600113a1201737eee97bbd98abd968b1206"
+        }
+      },
+      {
+        "worker_id": "m3-s42-f2",
+        "kind": "m3",
+        "seed": 42,
+        "fold": 2,
+        "shape": [
+          3360,
+          9,
+          2560
+        ],
+        "points": [
+          "H-1",
+          "H7",
+          "H15",
+          "H19",
+          "H20",
+          "H27",
+          "H31",
+          "H35",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s42-f2/representations.npy",
+          "bytes": 309657728,
+          "mode": "0600",
+          "sha256": "8ff33ea558b2fca1d19b144837b0fb9cf3864287b83eb53866a1d437abeb12de"
+        }
+      },
+      {
+        "worker_id": "m3-s42-f3",
+        "kind": "m3",
+        "seed": 42,
+        "fold": 3,
+        "shape": [
+          3360,
+          9,
+          2560
+        ],
+        "points": [
+          "H-1",
+          "H7",
+          "H15",
+          "H19",
+          "H20",
+          "H27",
+          "H31",
+          "H35",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s42-f3/representations.npy",
+          "bytes": 309657728,
+          "mode": "0600",
+          "sha256": "f74eddd81cbea0b105c0fe65718689db2d86a947ed25ba71de232fec6377ea1a"
+        }
+      },
+      {
+        "worker_id": "m3-s42-f4",
+        "kind": "m3",
+        "seed": 42,
+        "fold": 4,
+        "shape": [
+          3360,
+          9,
+          2560
+        ],
+        "points": [
+          "H-1",
+          "H7",
+          "H15",
+          "H19",
+          "H20",
+          "H27",
+          "H31",
+          "H35",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s42-f4/representations.npy",
+          "bytes": 309657728,
+          "mode": "0600",
+          "sha256": "6c943112de75b264b9dbd77aeaffde5d81f6735781422112e4819602c149c521"
+        }
+      },
+      {
+        "worker_id": "m3-s43-f0",
+        "kind": "m3",
+        "seed": 43,
+        "fold": 0,
+        "shape": [
+          3360,
+          3,
+          2560
+        ],
+        "points": [
+          "H19",
+          "H27",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s43-f0/representations.npy",
+          "bytes": 103219328,
+          "mode": "0600",
+          "sha256": "9715cacb4b3a2858b475441fcaf3e7aeb75925ad4162480ef7577705a4707764"
+        }
+      },
+      {
+        "worker_id": "m3-s43-f1",
+        "kind": "m3",
+        "seed": 43,
+        "fold": 1,
+        "shape": [
+          3360,
+          3,
+          2560
+        ],
+        "points": [
+          "H19",
+          "H27",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s43-f1/representations.npy",
+          "bytes": 103219328,
+          "mode": "0600",
+          "sha256": "c6a4f7fea837540e7c1e950bd9c457d9397afdebef3d6199e2266a113459cd0e"
+        }
+      },
+      {
+        "worker_id": "m3-s43-f2",
+        "kind": "m3",
+        "seed": 43,
+        "fold": 2,
+        "shape": [
+          3360,
+          3,
+          2560
+        ],
+        "points": [
+          "H19",
+          "H27",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s43-f2/representations.npy",
+          "bytes": 103219328,
+          "mode": "0600",
+          "sha256": "6235187558ccb10ff61298e7b415ac7bf830094b1fd4d0280eba5c954842191a"
+        }
+      },
+      {
+        "worker_id": "m3-s43-f3",
+        "kind": "m3",
+        "seed": 43,
+        "fold": 3,
+        "shape": [
+          3360,
+          3,
+          2560
+        ],
+        "points": [
+          "H19",
+          "H27",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s43-f3/representations.npy",
+          "bytes": 103219328,
+          "mode": "0600",
+          "sha256": "4d7592e75e8a81cc18127b4c307916155ae15f1cf3a319eaabbb4ba990da2aa8"
+        }
+      },
+      {
+        "worker_id": "m3-s43-f4",
+        "kind": "m3",
+        "seed": 43,
+        "fold": 4,
+        "shape": [
+          3360,
+          3,
+          2560
+        ],
+        "points": [
+          "H19",
+          "H27",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s43-f4/representations.npy",
+          "bytes": 103219328,
+          "mode": "0600",
+          "sha256": "c895b26ad5ed1dd2a73ebb8d72e24e1b060127aac63bda8df1abef6fd2bf39e1"
+        }
+      },
+      {
+        "worker_id": "m3-s44-f0",
+        "kind": "m3",
+        "seed": 44,
+        "fold": 0,
+        "shape": [
+          3360,
+          3,
+          2560
+        ],
+        "points": [
+          "H19",
+          "H27",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s44-f0/representations.npy",
+          "bytes": 103219328,
+          "mode": "0600",
+          "sha256": "78e1aeb4b88688ff72cc722871d69818e08284b71fdf799827b15a3db5bc277a"
+        }
+      },
+      {
+        "worker_id": "m3-s44-f1",
+        "kind": "m3",
+        "seed": 44,
+        "fold": 1,
+        "shape": [
+          3360,
+          3,
+          2560
+        ],
+        "points": [
+          "H19",
+          "H27",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s44-f1/representations.npy",
+          "bytes": 103219328,
+          "mode": "0600",
+          "sha256": "c4a319c394166dccf542dce70bf9ca87f8d9ea523f1d432ee9d35fbd2e7a42e6"
+        }
+      },
+      {
+        "worker_id": "m3-s44-f2",
+        "kind": "m3",
+        "seed": 44,
+        "fold": 2,
+        "shape": [
+          3360,
+          3,
+          2560
+        ],
+        "points": [
+          "H19",
+          "H27",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s44-f2/representations.npy",
+          "bytes": 103219328,
+          "mode": "0600",
+          "sha256": "c88cfd53c26f2951978a8ae64cdbc76424318045b2e91eee3855dd22163f73e6"
+        }
+      },
+      {
+        "worker_id": "m3-s44-f3",
+        "kind": "m3",
+        "seed": 44,
+        "fold": 3,
+        "shape": [
+          3360,
+          3,
+          2560
+        ],
+        "points": [
+          "H19",
+          "H27",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s44-f3/representations.npy",
+          "bytes": 103219328,
+          "mode": "0600",
+          "sha256": "bd382b22b213c6c9028939c952de441aa4becaf6d985b0e2f6f70c6ec3b3af8e"
+        }
+      },
+      {
+        "worker_id": "m3-s44-f4",
+        "kind": "m3",
+        "seed": 44,
+        "fold": 4,
+        "shape": [
+          3360,
+          3,
+          2560
+        ],
+        "points": [
+          "H19",
+          "H27",
+          "HF"
+        ],
+        "artifact": {
+          "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/extraction/m3-s44-f4/representations.npy",
+          "bytes": 103219328,
+          "mode": "0600",
+          "sha256": "7d01295c455b966c2e35832840655d9c080134d9fdcb6f3906b86058f0c76f00"
+        }
+      }
+    ],
+    "row_contract": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-070-layerwise-probes/formal-extraction-attempt-1/row-contract.npz",
+      "bytes": 31014,
+      "mode": "0600",
+      "sha256": "f85a250cb2809f1cf5f33f6faf21dccc1eacccae3cbdc8adb839d4ae97f22308",
+      "allowed_value_members": [
+        "ordinal",
+        "fold_id"
+      ],
+      "forbidden_value_members": [
+        "component_code"
+      ]
+    },
+    "row_identity": {
+      "rows": 3360,
+      "ordinal_sha256": "1990feb383edb9d51a685bc13538b8e230eb7f86469a808bb8e7887b312e3316",
+      "fold_id_order_sha256": "561a902dc639dd9b720fef68b335d608cf512cc8eaa98ac779350919a9e724cc"
+    },
+    "helpers": {
+      "runner": {
+        "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/run_exp071_drift.py",
+        "bytes": 106530,
+        "mode": "0644",
+        "sha256": "d8c9b053652c93f2609910a35388e1fc4548590c5a79d679f246e6e17fed9e3f"
+      },
+      "verifier": {
+        "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/verify_exp071_drift.py",
+        "bytes": 121050,
+        "mode": "0644",
+        "sha256": "0a6e0e03a2f14212bc2bf0d3a1ecc3d9cf4eec1ee8a3a9f7b44cd3ca83a0bbd2"
+      }
+    }
+  },
+  "method": {
+    "purpose": "technical_failure_localization_only",
+    "rows": {
+      "total": 3360,
+      "folds": 5,
+      "heldout_per_fold": 672,
+      "heldout_only": true,
+      "fold_order": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "within_fold_order": "ascending_ordinal"
+    },
+    "condition_order": [
+      "s42:H-1",
+      "s42:H7",
+      "s42:H15",
+      "s42:H19",
+      "s42:H20",
+      "s42:H27",
+      "s42:H31",
+      "s42:H35",
+      "s42:HF",
+      "s43:H19",
+      "s43:H27",
+      "s43:HF",
+      "s44:H19",
+      "s44:H27",
+      "s44:HF"
+    ],
+    "traversal": {
+      "outer": "condition_order",
+      "inner": "fold_order",
+      "maximum_pairs": 75,
+      "pairs_examined": "one_based_including_localized_pair",
+      "stop_after_first_denominator_failure": true,
+      "persist_prior_pair_trace": false
+    },
+    "representation": {
+      "source_dtype": "float32",
+      "calculation_dtype": "float64",
+      "hidden_size": 2560,
+      "memory_map_mode": "r",
+      "writeable": false,
+      "source_order": "C",
+      "slice_order": "C",
+      "slice_shape": [
+        672,
+        2560
+      ],
+      "finite_input_required": true
+    },
+    "denominator": {
+      "centering": "Xc=X-np.mean(X,axis=0,dtype=np.float64); Zc=Z-np.mean(Z,axis=0,dtype=np.float64)",
+      "centered_gram": "K=Xc@Xc.T; L=Zc@Zc.T",
+      "norm_x": "float(np.sum(K*K,dtype=np.float64))",
+      "norm_z": "float(np.sum(L*L,dtype=np.float64))",
+      "denominator": "float(np.sqrt(norm_x*norm_z))",
+      "gate": "norm_x>0 and finite(norm_x) and norm_z>0 and finite(norm_z) and denominator>0 and finite(denominator)",
+      "separate_square_roots": false,
+      "rescaling": false,
+      "epsilon": false,
+      "zscore": false,
+      "warning_policy": "numpy_errstate_may_suppress_overflow_invalid_without_changing_arithmetic"
+    },
+    "classification": {
+      "allowed_categories": [
+        "zero",
+        "finite_positive",
+        "nonfinite"
+      ],
+      "zero_includes_negative_zero": true,
+      "nonfinite_includes": [
+        "nan",
+        "positive_infinity",
+        "negative_infinity"
+      ],
+      "finite_negative_policy": "unexpected_failure",
+      "localized_when": "any_of_norm_x_norm_z_denominator_is_not_finite_positive",
+      "no_failure_after_75_policy": "Failed:failure_not_reproduced",
+      "unexpected_input_or_numeric_error_policy": "Failed_without_localization"
+    },
+    "result_contract": {
+      "localization_keys": [
+        "condition",
+        "fold",
+        "pairs_examined",
+        "norm_x",
+        "norm_z",
+        "denominator"
+      ],
+      "localization_values": "registered_condition_integer_fold_integer_pair_count_and_three_categories_only",
+      "exact_norm_values_persisted": false,
+      "representation_arrays_persisted": false,
+      "row_ordinals_persisted": false,
+      "prior_pair_categories_persisted": false,
+      "public_run_filename": "run.json",
+      "successful_run_status": "CompletedAwaitingVerification",
+      "successful_verification_status": "Passed",
+      "successful_completion_status": "Complete",
+      "original_exp071_status": "Failed",
+      "original_exp071_complete": false,
+      "recovery_authorized_by_diagnostic": false
+    },
+    "forbidden_metrics": [
+      "row_vector_norms",
+      "cosine_distance",
+      "relative_l2_distance",
+      "cka_numerator",
+      "normalized_cka",
+      "max_abs_difference",
+      "ap5",
+      "spearman",
+      "other_drift_metrics"
+    ],
+    "verification_comparison": {
+      "condition_fold_pair_count": "exact",
+      "categories": "exact",
+      "artifact_identities": "exact",
+      "method_and_source_contracts": "exact"
+    },
+    "lifecycle": {
+      "runner_stages": [
+        "static",
+        "initialize",
+        "diagnose"
+      ],
+      "verifier_stages": [
+        "static-verify",
+        "static-complete",
+        "diagnostic-verify",
+        "diagnostic-complete"
+      ],
+      "partial_resume": false,
+      "original_attempt_resume": false
+    },
+    "helper_reuse": {
+      "runner": "source.helpers.runner_safety_helpers_only",
+      "verifier": "source.helpers.verifier_safety_helpers_only",
+      "new_math_independent": true,
+      "verifier_imports_any_runner": false
+    },
+    "snapshot": {
+      "artifact_groups": [
+        "method_protocol",
+        "implementation",
+        "incident",
+        "source"
+      ],
+      "preflight_chain_in_shared_snapshot": false,
+      "original_ap5_probe_files_opened": false
+    }
+  },
+  "environment": {
+    "python_executable": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python",
+    "python_version": "3.10.20",
+    "architecture": "arm64",
+    "packages": {
+      "numpy": "2.2.6"
+    },
+    "thread_environment": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1"
+    }
+  },
+  "resources": {
+    "maximum_concurrent_workers": 1,
+    "runner_wall_seconds": 7200,
+    "verifier_wall_seconds": 7200,
+    "peak_rss_bytes": 4294967296,
+    "private_output_budget_bytes": 8388608,
+    "minimum_free_disk_bytes": 1073741824,
+    "threads_per_library": 1,
+    "api_cost_usd": 0
+  },
+  "run_id": "exp-071-denominator-diagnostic",
+  "attempt_id": "denominator-diagnostic-attempt-1",
+  "stage": "formal-diagnostic",
+  "preflight": {
+    "config": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/configs/exp-071-denominator-diagnostic-preflight.json",
+      "bytes": 24396,
+      "mode": "0644",
+      "sha256": "b3f3542fe21d8b45d039ff301c3f94263a97b243e8b330465c5c8b76f4418a96"
+    },
+    "static_run": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-071-representation-drift/denominator-diagnostic-preflight-attempt-1/static.json",
+      "bytes": 2276,
+      "mode": "0644",
+      "sha256": "1372b19c54a3f67d54a7f89d7783e44d5df3913766b782696c86bbcd7abf3419"
+    },
+    "static_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-071-representation-drift/denominator-diagnostic-preflight-attempt-1/static-verification.json",
+      "bytes": 2951,
+      "mode": "0644",
+      "sha256": "cbf1997678a0518cdcf8ac4c854f13a03ede535ae9433adaa072de9db7da0eb0"
+    },
+    "no_result_completion": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-071-representation-drift/denominator-diagnostic-preflight-attempt-1/no-result-complete.json",
+      "bytes": 1977,
+      "mode": "0644",
+      "sha256": "1549d93821f509810808fbbaff4f221501be8714beca22942e13f007d58c16af"
+    },
+    "required_statuses": {
+      "static_run": "CompletedAwaitingVerification",
+      "static_verification": "Passed",
+      "no_result_completion": "Complete"
+    },
+    "diagnostic_execution_authorized_by_preflight": true
+  },
+  "authorization": {
+    "static_runner_authorized": false,
+    "static_verifier_authorized": false,
+    "diagnostic_initialize_authorized": true,
+    "diagnostic_run_authorized": true,
+    "diagnostic_verification_authorized": true,
+    "diagnostic_completion_authorized": true,
+    "representation_value_access_authorized": true,
+    "row_contract_value_access_authorized": true,
+    "probe_metric_value_access_authorized": false,
+    "model_loading_authorized": false,
+    "forward_authorized": false,
+    "original_attempt_resume_authorized": false,
+    "method_change_authorized": false,
+    "activation_condition": "Passed_static_completion_exact_identities_bound"
+  },
+  "access": {
+    "formal_may_read_after_activation": [
+      "bound_representation_heldout_slices_until_first_denominator_failure",
+      "row_contract_ordinal_and_fold_id_values",
+      "bound_metadata_and_artifact_bytes_for_identity"
+    ],
+    "formal_must_not_read": [
+      "ap5_probe_metrics",
+      "labels",
+      "component_codes",
+      "component_ids",
+      "sample_ids",
+      "probabilities",
+      "predictions",
+      "private_probe_artifacts",
+      "train_text",
+      "raw_text",
+      "model",
+      "adapter",
+      "tokenizer",
+      "forward",
+      "validation",
+      "test",
+      "test_gate",
+      "exp069_smoke_representation_values",
+      "outer_train_representation_values",
+      "other_drift_metrics"
+    ],
+    "formal_model_load": false,
+    "formal_forward": false,
+    "formal_source_mutation": false,
+    "currently_authorized": true
+  },
+  "outputs": {
+    "formal_public_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-071-representation-drift/denominator-diagnostic-attempt-1",
+    "formal_private_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-071-representation-drift/denominator-diagnostic-attempt-1",
+    "public_directory_mode": "0755",
+    "public_file_mode": "0644",
+    "private_directory_mode": "0700",
+    "private_file_mode": "0600",
+    "public_claim_allowlist": [
+      "run-claim.json"
+    ],
+    "public_diagnosed_allowlist": [
+      "run-claim.json",
+      "run.json"
+    ],
+    "public_verified_allowlist": [
+      "run-claim.json",
+      "run.json",
+      "verification.json"
+    ],
+    "public_success_allowlist": [
+      "run-claim.json",
+      "run.json",
+      "verification.json",
+      "diagnostic-complete.json"
+    ],
+    "public_runner_failure_allowlist": [
+      "run-claim.json",
+      "failure.json"
+    ],
+    "private_initialized_allowlist": [
+      "input-manifest.json"
+    ],
+    "private_success_allowlist": [
+      "input-manifest.json",
+      "diagnostic-manifest.json"
+    ],
+    "formal_roots_must_be_fresh": true,
+    "active_config_path": "experiments/stack-overflow-emotion-gold/phase-b-representation/configs/exp-071-denominator-diagnostic-formal-attempt-1.json"
+  },
+  "claim_boundary": "Technical localization of the first original-order pair that fails the frozen CKA denominator gate, reported as categories only. Original EXP-071 formal-attempt-1 remains Failed. This diagnostic supports no geometry, effect-size, onset, causal, generalization or mechanism claim and authorizes no recovery, original-attempt resumption, method change, selection or EXP-072."
+}

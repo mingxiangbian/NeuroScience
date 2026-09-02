@@ -1,0 +1,43 @@
+{
+  "attempt_id": "attempt-1",
+  "execution_claims": {
+    "heldout_forward_performed": false,
+    "metric_computed": false,
+    "optimizer_created": false,
+    "test_accessed": false,
+    "training_performed": false,
+    "validation_accessed": false
+  },
+  "experiment_id": "EXP-062",
+  "fold_id": 3,
+  "formal_runner_imported": false,
+  "independent": true,
+  "matched_runner_observation": true,
+  "model_seed": 44,
+  "observed": {
+    "base_asset_manifest_sha256": "26d4fc3b7ce92375d580aeb73f60b2e3df9ee0b845a30e011528894be04c66f4",
+    "fold_manifest_sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8",
+    "m3_base_sentinel_sha256": "7b1e9b2d60fc008377315477fd9cafa3664135220f042fcf98b395787744a800",
+    "m3_batch_order_sha256": "7e094502d5890acabbc96918627def7f6efb7f83eec91d512947920438782a00",
+    "m3_classifier_head_init_sha256": "e7edad8565112d37829fee405684637afc91c9a004a6cb95c572ce2c513b17bf",
+    "m3_initialization_state_sha256": "9854e27d9abc36318ebe733c85fcd70db36e79de71b1ebe31abc51966c58e197",
+    "m3_lora_a_init_sha256": "97eb1864e94707487ec1db5c08525b8c6b04e0b5528b524e602541ef78e3c2b0",
+    "m3_lora_b_init_sha256": "495781728d62eb498f041578c88e730c1d6a48a7aafe9c8a447df742a64a90d0",
+    "m3_lora_b_zero_initialized": true,
+    "m3_lora_combined_init_sha256": "8b94862166a1e2b3264fdfa6090f08bdc7b15001ccb104d1f2ed6871098e8818",
+    "m3_rng_state_digest": "5e5e33eab23c306bd0d0911013f1de1b4f573338dd1a129d0471d40555c9688d",
+    "model_seed": 44
+  },
+  "preflight_runner_imported": false,
+  "run_id": "exp-062-seed-44-router-replication-preflight",
+  "schema_version": "exp-oof-m3-initialization-verification-v1",
+  "status": "Passed",
+  "verified_artifacts": {
+    "runner_m3_initialization": {
+      "bytes": 2241,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication-preflight/attempt-1/fold-3/m3-init.json",
+      "sha256": "c267a32e779cd8e1a23e1127e5d4a4c28d9e0f5c6d02741281155ebbecedfd8d"
+    }
+  },
+  "verified_at_utc": "2026-08-20T04:39:56.005178+00:00"
+}

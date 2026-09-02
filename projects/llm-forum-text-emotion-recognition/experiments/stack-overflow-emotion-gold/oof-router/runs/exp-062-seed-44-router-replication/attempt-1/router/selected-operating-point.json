@@ -1,0 +1,192 @@
+{
+  "attempt_id": "attempt-1",
+  "baseline": {
+    "five_label_macro_f1": 0.6884894703360734,
+    "hamming_loss": 0.05228174603174603,
+    "macro_f1": 0.5737412252800612,
+    "micro_f1": 0.754083061129258,
+    "per_label": {
+      "anger": {
+        "f1": 0.8040912667191188,
+        "precision": 0.7825421133231241,
+        "predicted_positive": 653,
+        "recall": 0.8268608414239482,
+        "support": 618
+      },
+      "fear": {
+        "f1": 0.6013986013986014,
+        "precision": 0.6231884057971014,
+        "predicted_positive": 69,
+        "recall": 0.581081081081081,
+        "support": 74
+      },
+      "joy": {
+        "f1": 0.5737931034482758,
+        "precision": 0.5445026178010471,
+        "predicted_positive": 382,
+        "recall": 0.6064139941690962,
+        "support": 343
+      },
+      "love": {
+        "f1": 0.8401114206128134,
+        "precision": 0.8012752391073327,
+        "predicted_positive": 941,
+        "recall": 0.882903981264637,
+        "support": 854
+      },
+      "sadness": {
+        "f1": 0.6230529595015576,
+        "precision": 0.625,
+        "predicted_positive": 160,
+        "recall": 0.6211180124223602,
+        "support": 161
+      },
+      "surprise": {
+        "f1": 0.0,
+        "precision": 0.0,
+        "predicted_positive": 0,
+        "recall": 0.0,
+        "support": 31
+      }
+    },
+    "rows": 3360,
+    "subset_accuracy": 0.7598214285714285,
+    "subset_error": 0.24017857142857146
+  },
+  "experiment_id": "EXP-062",
+  "model_seed": 44,
+  "overall": {
+    "decision": "Pass",
+    "selected_candidate": {
+      "actual_call_rate": 0.15089285714285713,
+      "f1_anger": 0.809076682316119,
+      "f1_fear": 0.6394557823129252,
+      "f1_joy": 0.5990783410138248,
+      "f1_love": 0.8422198041349294,
+      "f1_sadness": 0.6688311688311688,
+      "f1_surprise": 0.39999999999999997,
+      "five_label_macro_f1": 0.7117323557217935,
+      "five_label_macro_f1_gain": 0.023242885385720058,
+      "hamming_loss": 0.04861111111111111,
+      "hamming_loss_delta": -0.0036706349206349215,
+      "macro_f1": 0.6597769631014945,
+      "maximum_non_surprise_label_f1_gain": 0.045778209329611186,
+      "micro_f1": 0.7705992509363296,
+      "policy": "logistic_router",
+      "qwen_calls_per_1000": 150.89285714285714,
+      "routed_rows": 507,
+      "six_label_macro_f1_gain": 0.08603573782143326,
+      "subset_accuracy": 0.7744047619047619,
+      "target_call_rate": 0.15
+    },
+    "selected_policy": "logistic_router"
+  },
+  "policies": {
+    "logistic_router": {
+      "candidate": {
+        "actual_call_rate": 0.15089285714285713,
+        "f1_anger": 0.809076682316119,
+        "f1_fear": 0.6394557823129252,
+        "f1_joy": 0.5990783410138248,
+        "f1_love": 0.8422198041349294,
+        "f1_sadness": 0.6688311688311688,
+        "f1_surprise": 0.39999999999999997,
+        "five_label_macro_f1": 0.7117323557217935,
+        "five_label_macro_f1_gain": 0.023242885385720058,
+        "hamming_loss": 0.04861111111111111,
+        "hamming_loss_delta": -0.0036706349206349215,
+        "macro_f1": 0.6597769631014945,
+        "maximum_non_surprise_label_f1_gain": 0.045778209329611186,
+        "micro_f1": 0.7705992509363296,
+        "policy": "logistic_router",
+        "qwen_calls_per_1000": 150.89285714285714,
+        "routed_rows": 507,
+        "six_label_macro_f1_gain": 0.08603573782143326,
+        "subset_accuracy": 0.7744047619047619,
+        "target_call_rate": 0.15
+      },
+      "diagnostic_gate_passed": true,
+      "evidence_role": "primary",
+      "gates": {
+        "hamming_loss_not_worse": true,
+        "maximum_actual_qwen_call_rate": true,
+        "minimum_five_label_macro_f1_gain": true,
+        "minimum_non_surprise_label_f1_gain": true,
+        "minimum_six_label_macro_f1_gain": true
+      },
+      "passed": true
+    },
+    "m1_max_entropy": {
+      "candidate": {
+        "actual_call_rate": 0.15029761904761904,
+        "f1_anger": 0.8069896743447181,
+        "f1_fear": 0.6571428571428571,
+        "f1_joy": 0.5963302752293578,
+        "f1_love": 0.8486187845303867,
+        "f1_sadness": 0.6644951140065146,
+        "f1_surprise": 0.3829787234042554,
+        "five_label_macro_f1": 0.7147153410507668,
+        "five_label_macro_f1_gain": 0.0262258707146934,
+        "hamming_loss": 0.04766865079365079,
+        "hamming_loss_delta": -0.0046130952380952425,
+        "macro_f1": 0.6594259047763483,
+        "maximum_non_surprise_label_f1_gain": 0.05574425574425579,
+        "micro_f1": 0.7721128764524543,
+        "policy": "m1_max_entropy",
+        "qwen_calls_per_1000": 150.29761904761904,
+        "routed_rows": 505,
+        "six_label_macro_f1_gain": 0.08568467949628711,
+        "subset_accuracy": 0.7794642857142857,
+        "target_call_rate": 0.15
+      },
+      "diagnostic_gate_passed": true,
+      "evidence_role": "descriptive_only",
+      "gates": {
+        "hamming_loss_not_worse": true,
+        "maximum_actual_qwen_call_rate": true,
+        "minimum_five_label_macro_f1_gain": true,
+        "minimum_non_surprise_label_f1_gain": true,
+        "minimum_six_label_macro_f1_gain": true
+      },
+      "passed": false
+    },
+    "m1_threshold_proximity": {
+      "candidate": {
+        "actual_call_rate": 0.1455357142857143,
+        "f1_anger": 0.8093385214007782,
+        "f1_fear": 0.6540880503144655,
+        "f1_joy": 0.6089466089466089,
+        "f1_love": 0.8451928299837046,
+        "f1_sadness": 0.6750788643533123,
+        "f1_surprise": 0.19999999999999998,
+        "five_label_macro_f1": 0.718528974999774,
+        "five_label_macro_f1_gain": 0.030039504663700534,
+        "hamming_loss": 0.04915674603174603,
+        "hamming_loss_delta": -0.0031250000000000028,
+        "macro_f1": 0.6321074791664781,
+        "maximum_non_surprise_label_f1_gain": 0.052689448915864134,
+        "micro_f1": 0.7713956170703576,
+        "policy": "m1_threshold_proximity",
+        "qwen_calls_per_1000": 145.5357142857143,
+        "routed_rows": 489,
+        "six_label_macro_f1_gain": 0.05836625388641692,
+        "subset_accuracy": 0.7714285714285715,
+        "target_call_rate": 0.15
+      },
+      "diagnostic_gate_passed": true,
+      "evidence_role": "descriptive_only",
+      "gates": {
+        "hamming_loss_not_worse": true,
+        "maximum_actual_qwen_call_rate": true,
+        "minimum_five_label_macro_f1_gain": true,
+        "minimum_non_surprise_label_f1_gain": true,
+        "minimum_six_label_macro_f1_gain": true
+      },
+      "passed": false
+    }
+  },
+  "primary_nominal_call_rate": 0.15,
+  "primary_policy": "logistic_router",
+  "run_id": "exp-062-seed-44-router-replication",
+  "schema_version": "exp-router-selected-operating-point-v2"
+}

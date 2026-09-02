@@ -1,0 +1,214 @@
+{
+  "artifacts": {
+    "adapter_private": {
+      "bytes": 29384266,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-061-seed-43-router-replication/attempt-1/fold-4/m3/adapters.safetensors",
+      "sha256": "69f8a1e74f1817e1243d767ebf1c9a1d2729ef1e2fa4357bcc5b5b8432f7b0e9"
+    },
+    "batch_orders_private": {
+      "bytes": 21632,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-061-seed-43-router-replication/attempt-1/fold-4/m3/batch-orders.npy",
+      "sha256": "7260935df45cbaed616ac55a36f6491e43e843cdf2c56573c04e8320367d2719"
+    },
+    "checkpoint_provenance_private": {
+      "bytes": 2905,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-061-seed-43-router-replication/attempt-1/fold-4/m3/checkpoint-provenance.json",
+      "sha256": "76ce23432503ba8ff407e7ce5555a4bd78baada07ddd75ff4ad849862967f978"
+    },
+    "evidence_private": {
+      "bytes": 5103,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-061-seed-43-router-replication/attempt-1/fold-4/m3/evidence.json",
+      "sha256": "90b07f571159f015f67162a42fabc89f619b853c1fbe2413d3f5813195186ca4"
+    },
+    "head_private": {
+      "bytes": 61618,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-061-seed-43-router-replication/attempt-1/fold-4/m3/head.safetensors",
+      "sha256": "d412594234f520d81ad9214fb0944b61650fdab83a36f3a24f6620c0a6d861a6"
+    },
+    "heldout_logit_table_private": {
+      "bytes": 45418,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-061-seed-43-router-replication/attempt-1/fold-4/m3/heldout-logits.npz",
+      "sha256": "1f6dfcacfc5d4aada4e253f8bb5704db76af78ef04aa408a84928dce1ba4ce6d"
+    },
+    "history": {
+      "bytes": 290,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/fold-4/m3/history.csv",
+      "sha256": "1261028801c420b16dc9a7ababfa29750d664f048f7ed106585583ffd23e184a"
+    }
+  },
+  "attempt_id": "attempt-1",
+  "claim_boundary": "One train-only M3 OOF fold; no thresholds, predictions, or metrics.",
+  "cli_identity": {
+    "expected_data_manifest_sha256": "fc2f853b5b8afb78253ca3a96b5093d2fd12ea7063801f57bf138c9d5cf528fc",
+    "expected_fold_manifest_sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8",
+    "model_seed": 43,
+    "output_root": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1",
+    "run_id": "exp-061-seed-43-router-replication"
+  },
+  "completed_at_utc": "2026-08-20T20:46:28.805039+00:00",
+  "config": {
+    "bytes": 14907,
+    "path": "experiments/stack-overflow-emotion-gold/oof-router/configs/exp-061-seed-43-router-replication-oof-production-attempt-1.json",
+    "sha256": "f7d67077d689c7c1972076692b1fde7779f500e51ac2665662ef576e8795e84d"
+  },
+  "data": {
+    "component_overlap": 0,
+    "fold_manifest_sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8",
+    "heldout_order_sha256": "beb0af83e2ededd220681c435a9c4a20b67ba02fdbc433faec4ef2e9cb8e970d",
+    "heldout_rows": 672,
+    "label_order": [
+      "love",
+      "joy",
+      "surprise",
+      "anger",
+      "sadness",
+      "fear"
+    ],
+    "protocol_id": "DATA-SO-TASK-V1",
+    "sample_overlap": 0,
+    "training_order_sha256": "7dff4e5c902dbdaa62b7205a5dce3caccd3d690e54324c1fd15418430031492a",
+    "training_rows": 2688
+  },
+  "environment": {
+    "executable": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+    "machine": "arm64",
+    "packages": {
+      "mlx": "0.32.0",
+      "mlx-lm": "0.31.3",
+      "numpy": "2.4.6",
+      "python": "3.11.15",
+      "safetensors": "0.8.0"
+    },
+    "platform": "macOS-26.5.2-arm64-arm-64bit"
+  },
+  "execution_lock": {
+    "acquired_at_utc": "2026-08-20T17:56:26.524201+00:00",
+    "mode": "nonblocking-advisory-exclusive",
+    "owner": {
+      "attempt_id": "attempt-1",
+      "experiment_id": "EXP-061",
+      "fold_id": 4,
+      "model_seed": 43,
+      "pid": 15802,
+      "run_id": "exp-061-seed-43-router-replication",
+      "scope": "m3"
+    },
+    "path": "experiments/stack-overflow-emotion-gold/oof-router/private/locks/heavy-research-workload.lock",
+    "schema_version": "exp-heavy-workload-lock-owner-v1"
+  },
+  "experiment_id": "EXP-061",
+  "family": "m3",
+  "fold_id": 4,
+  "git": {
+    "commit": "88cf763c1161aa8afda0f3d0b4ae4bb1c9c93833",
+    "dirty": true,
+    "dirty_path_count": 10
+  },
+  "heldout_forward": {
+    "finite_logit_values": 4032,
+    "rows": 672
+  },
+  "invocation": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/run_exp058_oof_production.py --config projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/configs/exp-061-seed-43-router-replication-oof-production-attempt-1.json --stage m3 --fold 4 --model-seed 43 --run-id exp-061-seed-43-router-replication --output-root experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1 --expected-fold-manifest-sha256 82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8 --expected-data-manifest-sha256 fc2f853b5b8afb78253ca3a96b5093d2fd12ea7063801f57bf138c9d5cf528fc",
+  "model": {
+    "base_asset_manifest_sha256": "26d4fc3b7ce92375d580aeb73f60b2e3df9ee0b845a30e011528894be04c66f4",
+    "base_sentinel_unchanged": true,
+    "batch_order_sha256": "38002dfa6414f19ca5e0ffefaf96af3ec9d5d9aa28d0ccf1bf6fc3edba186f8b",
+    "head_final_sha256": "0d3f00b718cdeee32482f53145dcb308a873cf4c5114f1a4258e4c9db6690831",
+    "head_initial_sha256": "079d853fc8644442262d7ff23d99a2822e5b5b9c3fa24e09c55a4ae8ddb802bc",
+    "initialization_state_sha256": "ba95d2a86dcb86b14aecaca3ff1e77f158d3e632369e45f033d39576260748c1",
+    "insertion_count": 112,
+    "lora_a_initial_sha256": "6316266f1f65a51a3d52b2b00b4d2722f69632e5ec8ae6a5429fce364ddfefc5",
+    "lora_b_initial_sha256": "495781728d62eb498f041578c88e730c1d6a48a7aafe9c8a447df742a64a90d0",
+    "lora_b_zero_initialized": true,
+    "lora_final_sha256": "6a5ebfe85fa1a69c44851a4ceaba0ac479549ad1147e403c3f3421854f280506",
+    "lora_initial_sha256": "b6b8c3792e452694354a574c6e88bce63ff7acbd1991ba30ceae4df38708f2c7",
+    "lora_parameter_count": 7340032,
+    "model_asset_files_verified": 9,
+    "nonzero_lora_b_tensors": 112,
+    "pooling": "final_layer_last_non_padding_input_token_after_empty_think_wrapper",
+    "precision": "BF16_unquantized",
+    "repo_id": "Qwen/Qwen3-4B",
+    "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "rng_state_digest": "5ea184744c588a9e5c7881ef205255b8342f453c996ad84ad623f8bd0f1190f9",
+    "total_trainable_parameter_count": 7355398,
+    "trainable_whitelist_passed": true,
+    "zero_step_max_abs_logit_difference": 0.0
+  },
+  "model_seed": 43,
+  "performance_metrics_computed": false,
+  "privacy": {
+    "private_artifacts_gitignored": true,
+    "public_raw_text": false,
+    "public_row_identifiers": false
+  },
+  "resources": {
+    "api_cost_usd": 0,
+    "cumulative_family_wall_seconds": 50023.25381620717,
+    "model_load_seconds": 2.232926750089973,
+    "peak_mlx_memory_gb": 8.729562496,
+    "peak_process_rss_gb": 5.066801152,
+    "prior_family_wall_seconds": 39820.948199916165,
+    "tokenization_seconds": 0.8230384588241577,
+    "wall_seconds": 10202.305616291007
+  },
+  "rq_id": "RQ-S3",
+  "run_id": "exp-061-seed-43-router-replication",
+  "schema_version": "exp-oof-fold-run-v2",
+  "seed_contract": {
+    "m1_batch_seed": 43,
+    "m3_batch_seed": 43,
+    "m3_head_seed": 43,
+    "m3_lora_seed": 100043,
+    "model_seed": 43,
+    "numpy_seed": 43,
+    "python_seed": 43,
+    "torch_seed": 43
+  },
+  "seed_contract_sha256": "af79cc896b7ff2be8b1eb8972fba4c5e937806f7ccb3780143abf016951afe5d",
+  "split_access": {
+    "accessed_splits": [
+      "train"
+    ],
+    "test_inputs_accessed": false,
+    "test_labels_accessed": false,
+    "validation_accessed": false
+  },
+  "stage": "paired-m1-m3-oof-production",
+  "started_at_utc": "2026-08-20T17:56:26.531945+00:00",
+  "status": "CompletedAwaitingVerification",
+  "tier": "Major",
+  "training": {
+    "batch_size": 1,
+    "epochs": 2,
+    "gradient_checkpointing": true,
+    "head_optimizer": {
+      "learning_rate": 0.0001,
+      "name": "AdamW",
+      "weight_decay": 0.01
+    },
+    "history": [
+      {
+        "batch_order_sha256": "f4add71ffa2c6a16d9b6824c7da542127870536e47518c64aab5effcaf9c79b1",
+        "epoch": 1,
+        "epoch_seconds": 4696.828000666108,
+        "optimizer_steps": 2688,
+        "train_loss": 0.17079449560250873
+      },
+      {
+        "batch_order_sha256": "a4d639da8e30d15374c7132b302cd0d207f6337fda1e603f7b5107ce977d608e",
+        "epoch": 2,
+        "epoch_seconds": 4862.0427514158655,
+        "optimizer_steps": 5376,
+        "train_loss": 0.10625910602830334
+      }
+    ],
+    "lora_optimizer": {
+      "learning_rate": 1e-05,
+      "name": "AdamW",
+      "weight_decay": 0.01
+    },
+    "loss": "unweighted_binary_cross_entropy_with_logits",
+    "optimizer_steps": 5376
+  },
+  "working_directory": "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition"
+}

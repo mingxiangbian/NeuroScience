@@ -1,0 +1,52 @@
+{
+  "attempt_id": "attempt-1",
+  "claim_boundary": "Incident-003 preflight verifier recovery only; namespace-virtualized output is not canonical Attempt-1 verification and does not authorize formal execution.",
+  "claimed_at_utc": "2026-08-24T04:55:57.166260+00:00",
+  "expected_frozen_sources": {
+    "config": {
+      "bytes": 12000,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/router-preflight-verification-attempt-2/frozen-sources/config.json",
+      "sha256": "f2944fbf9b13d7d41b083425acdf9a9906c9ae392a0b4b970b7e4dde5016043f"
+    },
+    "protocol": {
+      "bytes": 11129,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/router-preflight-verification-attempt-2/frozen-sources/exp-062-exp060-router-preflight-verification-attempt-2-incident-003.md",
+      "sha256": "b56001a7680a0ebca8dac27f3f2ea7a5cdbbc126a7526f40d1a3821591e984f3"
+    },
+    "tests": {
+      "bytes": 43509,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/router-preflight-verification-attempt-2/frozen-sources/test_exp060_router_preflight_attempt2.py",
+      "sha256": "5ccba4bf2eab89e2754cf7b334e1760c9083f38d3c2cc66094745619cf840c7f"
+    },
+    "verifier": {
+      "bytes": 72377,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/router-preflight-verification-attempt-2/frozen-sources/verify_exp060_router_preflight_attempt2.py",
+      "sha256": "b0858368ab2eb5c4c1428c497f36a98735fb59f94c286f090ae82bb55baa3528"
+    }
+  },
+  "experiment_id": "EXP-060",
+  "formal_gate_authorized": false,
+  "incident_config": {
+    "bytes": 12000,
+    "path": "experiments/stack-overflow-emotion-gold/oof-router/configs/exp-062-seed-44-router-replication-router-preflight-verification-attempt-2-incident-003.json",
+    "sha256": "f2944fbf9b13d7d41b083425acdf9a9906c9ae392a0b4b970b7e4dde5016043f"
+  },
+  "incident_id": "003",
+  "model_seed": 44,
+  "replication_parent_experiment_id": "EXP-062",
+  "rq_id": "RQ-S3",
+  "run_id": "exp-062-seed-44-router-replication",
+  "schema_version": "exp-router-preflight-verification-incident-003-attempt-2-claim-v1",
+  "scope": "preflight-recovery",
+  "seed_contract": {
+    "m1_batch_seed": 44,
+    "m3_batch_seed": 44,
+    "m3_head_seed": 44,
+    "m3_lora_seed": 100044,
+    "model_seed": 44,
+    "numpy_seed": 44,
+    "python_seed": 44,
+    "torch_seed": 44
+  },
+  "verification_attempt": 2
+}

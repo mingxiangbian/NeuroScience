@@ -1,0 +1,147 @@
+{
+  "attempt_id": "attempt-1",
+  "checks": {
+    "formal_outputs_absent": true,
+    "manifest_exact": true,
+    "preflight_selection_absent": true,
+    "private_attempt_empty": true,
+    "public_manifest_has_no_row_level_fields": true,
+    "static_sources_unchanged": true
+  },
+  "claim_boundary": "Verified fresh initialization and batch-order identity only; formal training remains separate.",
+  "execution_claims": {
+    "heldout_forward_performed": false,
+    "metric_computed": false,
+    "models_initialized": true,
+    "optimizer_created": false,
+    "test_accessed": false,
+    "training_performed": false,
+    "validation_accessed": false
+  },
+  "experiment_id": "EXP-062",
+  "failed_checks": [],
+  "failed_count": 0,
+  "formal_config_contract": {
+    "copy_rule": "formal initialization.expected_by_fold copies manifest.folds after removing only m3_lora_b_zero_initialized",
+    "cross_seed_gate_required": true,
+    "expected_by_fold_exact_keys": [
+      "model_seed",
+      "base_asset_manifest_sha256",
+      "fold_manifest_sha256",
+      "m1_classifier_init_sha256",
+      "m1_rng_state_digest",
+      "m1_initialization_state_sha256",
+      "m1_batch_order_sha256",
+      "m3_lora_a_init_sha256",
+      "m3_lora_b_init_sha256",
+      "m3_lora_combined_init_sha256",
+      "m3_classifier_head_init_sha256",
+      "m3_base_sentinel_sha256",
+      "m3_rng_state_digest",
+      "m3_initialization_state_sha256",
+      "m3_batch_order_sha256"
+    ],
+    "initialization_exact_keys": [
+      "base_asset_manifest_sha256",
+      "expected_by_fold"
+    ],
+    "prerequisite_records_required": [
+      "prerequisites.initialization_manifest",
+      "prerequisites.initialization_verification",
+      "prerequisites.cross_seed_initialization_verification"
+    ]
+  },
+  "formal_runner_imported": false,
+  "independent": true,
+  "model_seed": 44,
+  "preflight_runner_imported": false,
+  "run_id": "exp-062-seed-44-router-replication",
+  "schema_version": "exp-oof-initialization-preflight-verification-v1",
+  "seed_contract": {
+    "m1_batch_seed": 44,
+    "m3_batch_seed": 44,
+    "m3_head_seed": 44,
+    "m3_lora_seed": 100044,
+    "model_seed": 44,
+    "numpy_seed": 44,
+    "python_seed": 44,
+    "torch_seed": 44
+  },
+  "shared_scientific_contract_sha256": "c86b76ed2a115e10dbc879d0922751880e45e4025e680376ec38bfc803c8439b",
+  "status": "Passed",
+  "verified_artifacts": {
+    "config": {
+      "bytes": 7472,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/configs/exp-062-seed-44-router-replication-preflight-attempt-1.json",
+      "sha256": "44d94d84ba251c2ccc8ebd86fa12d76158609728fb6045924ae0ccd3cf035463"
+    },
+    "initialization_manifest": {
+      "bytes": 8446,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication-preflight/attempt-1/initialization-manifest.json",
+      "sha256": "fe13fa2c87187456951d67700ee748beac088a80f74677baa06cdcb3cea0d516"
+    },
+    "stage_verifications": {
+      "0": {
+        "m1": {
+          "bytes": 1623,
+          "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication-preflight/attempt-1/verification-stages/fold-0/m1-init.json",
+          "sha256": "c7a7c9f8f46d93dfc14d6ed48c81e43ec623049406b503dcecc3c8c435ee3cd4"
+        },
+        "m3": {
+          "bytes": 2065,
+          "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication-preflight/attempt-1/verification-stages/fold-0/m3-init.json",
+          "sha256": "fdf602398d4170a91210e9152bc1f8b595df3a9c4bb26970f1d927d2df99c7d9"
+        }
+      },
+      "1": {
+        "m1": {
+          "bytes": 1623,
+          "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication-preflight/attempt-1/verification-stages/fold-1/m1-init.json",
+          "sha256": "8f77179754c2978c461b2d09cfe49782436c0c097a20762bf7b5342f0a955c7b"
+        },
+        "m3": {
+          "bytes": 2065,
+          "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication-preflight/attempt-1/verification-stages/fold-1/m3-init.json",
+          "sha256": "f1e9d90c969f9d54b40dc07da35bf824a19f663e1b9699270a08d247bd99f820"
+        }
+      },
+      "2": {
+        "m1": {
+          "bytes": 1623,
+          "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication-preflight/attempt-1/verification-stages/fold-2/m1-init.json",
+          "sha256": "fb3a2a4f7f803dd3a5bebab4a71223a0c26e2e44309fdc7e35a44d5a823c596f"
+        },
+        "m3": {
+          "bytes": 2065,
+          "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication-preflight/attempt-1/verification-stages/fold-2/m3-init.json",
+          "sha256": "b1a5711b52dae43ff5831ba190b75a405dfb8fc2713097b6901fa5863946d1ba"
+        }
+      },
+      "3": {
+        "m1": {
+          "bytes": 1623,
+          "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication-preflight/attempt-1/verification-stages/fold-3/m1-init.json",
+          "sha256": "373a51c80e2ee7c11ceb7f66ced9c6090dbe23786d8fb096efcf260954c40649"
+        },
+        "m3": {
+          "bytes": 2065,
+          "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication-preflight/attempt-1/verification-stages/fold-3/m3-init.json",
+          "sha256": "f45f6ae136a0937ef9089f79fd2c7d1fa66b610fd001c33c7bbdd34b07c32762"
+        }
+      },
+      "4": {
+        "m1": {
+          "bytes": 1623,
+          "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication-preflight/attempt-1/verification-stages/fold-4/m1-init.json",
+          "sha256": "a70a90369541d4c8a18320f99aab41ffe5f8f4048729e5f3808a5104eebb65d5"
+        },
+        "m3": {
+          "bytes": 2065,
+          "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication-preflight/attempt-1/verification-stages/fold-4/m3-init.json",
+          "sha256": "6492597758bcbf173eb0eaa791fbbd7d235c3351c15ce70b7c4df19d621e9dd9"
+        }
+      }
+    }
+  },
+  "verified_at_utc": "2026-08-20T04:40:36.177700+00:00"
+}

@@ -1,0 +1,45 @@
+{
+  "attempt_id": "attempt-1",
+  "claim_boundary": "Fresh initialization and sample-order digests only; no forward or training.",
+  "completed_at_utc": "2026-08-20T04:33:20.046587+00:00",
+  "execution_claims": {
+    "calibration_performed": false,
+    "heldout_forward_performed": false,
+    "metric_computed": false,
+    "model_loaded": true,
+    "optimizer_created": false,
+    "router_training_performed": false,
+    "row_level_artifact_written": false,
+    "test_accessed": false,
+    "training_performed": false,
+    "validation_accessed": false
+  },
+  "experiment_id": "EXP-061",
+  "fold_id": 2,
+  "formal_attempt_id": "attempt-1",
+  "formal_run_id": "exp-061-seed-43-router-replication",
+  "model_seed": 43,
+  "observed": {
+    "base_asset_manifest_sha256": "26d4fc3b7ce92375d580aeb73f60b2e3df9ee0b845a30e011528894be04c66f4",
+    "fold_manifest_sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8",
+    "m1_batch_order_sha256": "7f05f36cf618db85d152d50f3bb21760398d94cd9c6b4bb5ab551d2bb3d1ada3",
+    "m1_classifier_init_sha256": "37bb6f0222f147d0828387868b070a8fcf9c866dc5439cff9b7b133347c29fc6",
+    "m1_initialization_state_sha256": "fd0f0d01a53ea0154c0d48a35c7e18cf582dabc2d2b102609d8de62e961f7bfb",
+    "m1_rng_state_digest": "033f637eb696675ade8134f2abc1531f9f94f092d03d434f3cb5124b0801743e",
+    "model_seed": 43
+  },
+  "run_id": "exp-061-seed-43-router-replication-preflight",
+  "schema_version": "exp-oof-m1-initialization-v1",
+  "seed_contract": {
+    "m1_batch_seed": 43,
+    "m3_batch_seed": 43,
+    "m3_head_seed": 43,
+    "m3_lora_seed": 100043,
+    "model_seed": 43,
+    "numpy_seed": 43,
+    "python_seed": 43,
+    "torch_seed": 43
+  },
+  "seed_contract_sha256": "af79cc896b7ff2be8b1eb8972fba4c5e937806f7ccb3780143abf016951afe5d",
+  "status": "Passed"
+}

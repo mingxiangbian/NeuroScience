@@ -1,0 +1,43 @@
+{
+  "attempt_id": "attempt-1",
+  "execution_claims": {
+    "heldout_forward_performed": false,
+    "metric_computed": false,
+    "optimizer_created": false,
+    "test_accessed": false,
+    "training_performed": false,
+    "validation_accessed": false
+  },
+  "experiment_id": "EXP-061",
+  "fold_id": 1,
+  "formal_runner_imported": false,
+  "independent": true,
+  "matched_runner_observation": true,
+  "model_seed": 43,
+  "observed": {
+    "base_asset_manifest_sha256": "26d4fc3b7ce92375d580aeb73f60b2e3df9ee0b845a30e011528894be04c66f4",
+    "fold_manifest_sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8",
+    "m3_base_sentinel_sha256": "7b1e9b2d60fc008377315477fd9cafa3664135220f042fcf98b395787744a800",
+    "m3_batch_order_sha256": "ecae7b322a064dc9f6a552cd8cd9a770cbdc059320639d7349eb26b77ca0d11a",
+    "m3_classifier_head_init_sha256": "079d853fc8644442262d7ff23d99a2822e5b5b9c3fa24e09c55a4ae8ddb802bc",
+    "m3_initialization_state_sha256": "ba95d2a86dcb86b14aecaca3ff1e77f158d3e632369e45f033d39576260748c1",
+    "m3_lora_a_init_sha256": "6316266f1f65a51a3d52b2b00b4d2722f69632e5ec8ae6a5429fce364ddfefc5",
+    "m3_lora_b_init_sha256": "495781728d62eb498f041578c88e730c1d6a48a7aafe9c8a447df742a64a90d0",
+    "m3_lora_b_zero_initialized": true,
+    "m3_lora_combined_init_sha256": "b6b8c3792e452694354a574c6e88bce63ff7acbd1991ba30ceae4df38708f2c7",
+    "m3_rng_state_digest": "5ea184744c588a9e5c7881ef205255b8342f453c996ad84ad623f8bd0f1190f9",
+    "model_seed": 43
+  },
+  "preflight_runner_imported": false,
+  "run_id": "exp-061-seed-43-router-replication-preflight",
+  "schema_version": "exp-oof-m3-initialization-verification-v1",
+  "status": "Passed",
+  "verified_artifacts": {
+    "runner_m3_initialization": {
+      "bytes": 2241,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication-preflight/attempt-1/fold-1/m3-init.json",
+      "sha256": "1fc5692dd38e194d96817807282a66cbfce7133777973c4eeb7378d914b65c23"
+    }
+  },
+  "verified_at_utc": "2026-08-20T04:35:06.744195+00:00"
+}

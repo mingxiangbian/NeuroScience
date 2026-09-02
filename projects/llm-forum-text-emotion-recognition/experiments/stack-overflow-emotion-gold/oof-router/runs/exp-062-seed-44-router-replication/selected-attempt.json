@@ -1,0 +1,91 @@
+{
+  "attempt_id": "attempt-1",
+  "claim_boundary": "Selects the fully verified seed-44 same-train attempt after Incident004; EXP-063 alone may form the prospective cross-seed replication claim.",
+  "completions": {
+    "calibration": {
+      "bytes": 8242,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/calibration-complete.json",
+      "sha256": "f6ef1542f63f9c8f9ef90d92a5f57f356fa5415c3f9467a437de9e9138b6a2f1"
+    },
+    "oof": {
+      "bytes": 2618,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/oof-complete.json",
+      "sha256": "cef88588c48cb06ee7f2c31f980acd89ee78f44802b5e4cad2380ca0e9eaa47b"
+    },
+    "router": {
+      "bytes": 2336,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/router/router-complete.json",
+      "sha256": "6c0b94ce38c33c53d260f62e2d298272eedc5abddcb61e9e3fd8a2a3d234a902"
+    }
+  },
+  "decision": "Pass",
+  "experiment_id": "EXP-062",
+  "formal_governance": {
+    "complete": {
+      "bytes": 1763,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/router-formal-consumer-v4/complete-terminal.json",
+      "sha256": "1719c3b292cde1dfcc8cb4cdc239c25e6074e68ad0d6a482abd2b168ed5ebdf4"
+    },
+    "completion": {
+      "bytes": 1769,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/router-formal-consumer-v4/completion-terminal.json",
+      "sha256": "65a4728578311db445b1973cda5326acd264cc2f16846ab2a7e44f166951dcff"
+    },
+    "final": {
+      "bytes": 1759,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/router-formal-consumer-v4/final-terminal.json",
+      "sha256": "66bafd355468ef13705af18e241392c0c118c793752f0e55f7314cc08744976d"
+    },
+    "run": {
+      "bytes": 1773,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/router-formal-consumer-v4/run-terminal.json",
+      "sha256": "130c564eb5dea8566d969128fc78a41fd2d35364df1895464bf4bc0ce39aca96"
+    }
+  },
+  "incident_004": {
+    "finalizer": {
+      "bytes": 14168,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/finalize_router_replication_incident004.py",
+      "sha256": "6f163ae3fe642f1f25c9574a3c17bdea942551ed2f811bd94bcff690237c9fdb"
+    },
+    "finalizer_tests": {
+      "bytes": 2825,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/tests/test_finalize_router_replication_incident004.py",
+      "sha256": "d34242314c5365c80d5171f9dfc6c85b67ebc140b45f94989d835e529bf0f863"
+    },
+    "protocol": {
+      "bytes": 1642,
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-062-exp060-final-verification-recovery-incident-004.md",
+      "sha256": "b60eba090b114516a474a0503b5ccf15f1b39f0081b8abc13c9a1ec590d551af"
+    },
+    "recovery_tests": {
+      "bytes": 4124,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/tests/test_exp060_router_v5_incident004.py",
+      "sha256": "10ef8fe368798570767304b1a56684e6659adf6d07260a2b0379c39a98bd637f"
+    },
+    "recovery_wrapper": {
+      "bytes": 9580,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/verify_exp060_router_v5_incident004.py",
+      "sha256": "163f60be3c789c0bdfd4148528345f04cda7f48955ca002c7b69533e529da9f8"
+    }
+  },
+  "model_seed": 44,
+  "primary_gate_passed": true,
+  "primary_nominal_call_rate": 0.15,
+  "primary_policy": "logistic_router",
+  "run_id": "exp-062-seed-44-router-replication",
+  "schema_version": "exp-router-replication-selection-incident-004-v1",
+  "seed_contract": {
+    "m1_batch_seed": 44,
+    "m3_batch_seed": 44,
+    "m3_head_seed": 44,
+    "m3_lora_seed": 100044,
+    "model_seed": 44,
+    "numpy_seed": 44,
+    "python_seed": 44,
+    "torch_seed": 44
+  },
+  "selected_at_utc": "2026-08-24T08:33:00.431650+00:00",
+  "status": "Selected",
+  "verification_attempt": 2
+}

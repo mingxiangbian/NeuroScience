@@ -1,0 +1,60 @@
+{
+  "attempt_id": "attempt-1",
+  "calibration_performed": false,
+  "claim_boundary": "Paired raw train-OOF logits only; no performance or routing claim.",
+  "cli_identity": {
+    "expected_data_manifest_sha256": "fc2f853b5b8afb78253ca3a96b5093d2fd12ea7063801f57bf138c9d5cf528fc",
+    "expected_fold_manifest_sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8",
+    "model_seed": 44,
+    "output_root": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1",
+    "run_id": "exp-062-seed-44-router-replication"
+  },
+  "config": {
+    "bytes": 14907,
+    "path": "experiments/stack-overflow-emotion-gold/oof-router/configs/exp-062-seed-44-router-replication-oof-production-attempt-1.json",
+    "sha256": "8f1f2bfc186c0d9b027906c7017e5eb8bdb154cd7fcd2b679951cf0ef50a6256"
+  },
+  "experiment_id": "EXP-062",
+  "folds": 5,
+  "m1_finite_logit_values": 20160,
+  "m3_finite_logit_values": 20160,
+  "model_seed": 44,
+  "oracle_analysis_performed": false,
+  "paired_table_private": {
+    "bytes": 307716,
+    "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-062-seed-44-router-replication/attempt-1/paired-oof.npz",
+    "sha256": "11e1574742acbf46ecb7bcc0c946243d2c21e0e79e10bc8d9c402b4dfd8d1cfd"
+  },
+  "performance_metrics_computed": false,
+  "resource_totals": {
+    "m1_wall_seconds": 6739.006790708052,
+    "m3_wall_seconds": 60247.26738491701
+  },
+  "router_training_performed": false,
+  "rows": 3360,
+  "rows_per_fold": {
+    "0": 672,
+    "1": 672,
+    "2": 672,
+    "3": 672,
+    "4": 672
+  },
+  "run_id": "exp-062-seed-44-router-replication",
+  "schema_version": "exp-paired-oof-summary-v2",
+  "seed_contract": {
+    "m1_batch_seed": 44,
+    "m3_batch_seed": 44,
+    "m3_head_seed": 44,
+    "m3_lora_seed": 100044,
+    "model_seed": 44,
+    "numpy_seed": 44,
+    "python_seed": 44,
+    "torch_seed": 44
+  },
+  "seed_contract_sha256": "c07aee3e4287384ffaf015eb6a73d0121bde39d8294af5d211979fdfdd7212b9",
+  "source_order_sha256": "c9e4bd1eb2bdbb33c833234754c493b8818aa6c610acaf88659ae74fa94848a3",
+  "stage": "paired-m1-m3-oof-production",
+  "status": "CompletedAwaitingVerification",
+  "test_accessed": false,
+  "validation_accessed": false
+}

@@ -1,0 +1,81 @@
+{
+  "experiment_id": "EXP-074",
+  "protocol": {
+    "path": "experiments/stack-overflow-emotion-gold/protocols/exp-074-phase-b-synthesis.md",
+    "bytes": 4013,
+    "mode": "0644",
+    "sha256": "127d3c9a4abe96f734ae41238c4d79f68ac0b7cedc8f9efc36c5819f683eb78e"
+  },
+  "implementation": {
+    "runner": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/run_exp074_synthesis.py",
+      "bytes": 20126,
+      "mode": "0644",
+      "sha256": "f84fac308fdc9f3eea6c6c25efcbfe6ecf8f275ae312bda4025dc3cb741413ca"
+    },
+    "verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/verify_exp074_synthesis.py",
+      "bytes": 23064,
+      "mode": "0644",
+      "sha256": "8c3174dc1dd654bc8ea67f9ee4da739ebd046a165bd4a718cd63bd49b02e788a"
+    },
+    "tests": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/tests/test_exp074_synthesis.py",
+      "bytes": 16212,
+      "mode": "0644",
+      "sha256": "4c5b0a6926b6a30a9f4e0fe729e84776ec1439ca3b4e9b9fbc58a2151fd8ef46"
+    }
+  },
+  "source": {
+    "probe": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-probe-attempt-1/probe.json",
+      "bytes": 53748,
+      "mode": "0644",
+      "sha256": "977021e97a5c6a69dc6894161f4717b53c2a651919d7a5655f1b9e6ac246f89b"
+    },
+    "probe_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-probe-verification-attempt-2/verification.json",
+      "bytes": 5195,
+      "mode": "0644",
+      "sha256": "c39ecb65ccbc706e4a709bacb66d7e292e6d3e379cd0303bc1f1021a12dcf9cf"
+    },
+    "probe_completion": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-070-layerwise-probes/formal-probe-verification-attempt-2/probe-complete.json",
+      "bytes": 2654,
+      "mode": "0644",
+      "sha256": "0e15d164b1539d51d2917001629b9ccd5c89d0569fc863a37d61e2990aad0cd2"
+    },
+    "geometry_run": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-075-degenerate-aware-geometry/attempt-1/run.json",
+      "bytes": 31491,
+      "mode": "0644",
+      "sha256": "51c3ec8d06f522f3a9d9fe8ea3f462b13cd330dc431a1ae5c61ae1063b1cc068"
+    },
+    "geometry_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-075-degenerate-aware-geometry/attempt-1/verification.json",
+      "bytes": 3019,
+      "mode": "0644",
+      "sha256": "0b2d73bd8775881e43f15578296458dfb541c0be1fe50f3eff71070cfd672468"
+    },
+    "ablation_score": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-072-lora-functional-ablation/formal-attempt-1/score.json",
+      "bytes": 19882,
+      "mode": "0644",
+      "sha256": "962993399675405a4ecdf9041f3aa2e044e47e231122c87187f1caed25871591"
+    },
+    "ablation_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-072-lora-functional-ablation/formal-attempt-1/verification.json",
+      "bytes": 2821,
+      "mode": "0644",
+      "sha256": "896c8a913606ce861676e3da2849830f8b664ff06c1bef777934ba5548f9f3c0"
+    }
+  },
+  "outputs": {
+    "public_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-074-phase-b-synthesis/attempt-1"
+  },
+  "resources": {
+    "max_wall_seconds": 3600,
+    "max_peak_rss_bytes": 1073741824,
+    "max_output_bytes": 33554432
+  }
+}

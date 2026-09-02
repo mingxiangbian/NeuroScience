@@ -1,0 +1,81 @@
+{
+  "artifacts": {
+    "run": {
+      "bytes": 2217,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-063-router-replication-synthesis/attempt-1/run.json",
+      "sha256": "6dff1e473daa21e0a45fcda02bab0fa2b11869986055f6bebae07406ea8ad61e"
+    },
+    "summary": {
+      "bytes": 164,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-063-router-replication-synthesis/attempt-1/VERIFICATION-SUMMARY.md",
+      "sha256": "4688c420c2de25d5b8bbaa432d1ae5b971f4e12a5a08f1118668940426d02a1e"
+    },
+    "synthesis": {
+      "bytes": 9766,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-063-router-replication-synthesis/attempt-1/replication-synthesis.json",
+      "sha256": "d6ef1efe63c821cefe97c9ab340e1d05e1dbdf5381b169f67c11523e35af370f"
+    },
+    "verification": {
+      "bytes": 3070,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-063-router-replication-synthesis/attempt-1/verification.json",
+      "sha256": "0523329b1b6466ddacda37ed3069ef01f737f055b262ebdbb20762e4470d1526"
+    }
+  },
+  "attempt_id": "attempt-1",
+  "claim_boundary": "Commits the verified 2/2 same-train cross-seed meta-level replication result; not independent-data validation, deployment benefit, latency, forum generality, or an emotion-mechanism claim.",
+  "decision": {
+    "eligible_seed_count": 2,
+    "pass_count": 2,
+    "result": "2/2 pass",
+    "system_decision": "promote_same_train_cross_seed_meta_replication"
+  },
+  "experiment_id": "EXP-063",
+  "implementation": {
+    "decision_protocol": {
+      "bytes": 10678,
+      "path": "experiments/stack-overflow-emotion-gold/protocols/dec-so-router-replication-v1.md",
+      "sha256": "473df4428b8e02ea046a014ec0dc6a3ca975182ed8ba38e0101586558a55c4f7"
+    },
+    "finalizer": {
+      "bytes": 7838,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/finalize_exp063_router_replication_synthesis.py",
+      "sha256": "12ad2f593c6b216ad38eb52aa53020f82892545ee7dde191a26c148a2e0e41e1"
+    },
+    "runner": {
+      "bytes": 14402,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/run_exp063_router_replication_synthesis.py",
+      "sha256": "359f28bca13d42424b1ed04cdad21f44ce3cd0f94a44f6d073049cef2f0e4197"
+    },
+    "synthesis_protocol": {
+      "bytes": 3478,
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-063-router-replication-synthesis.md",
+      "sha256": "3c81f552995d5fbf17c01f045f3fb97d2a84daff9d68e901c70e9f6f51fe3163"
+    },
+    "tests": {
+      "bytes": 2248,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/tests/test_exp063_router_replication_synthesis.py",
+      "sha256": "1141edb8387b7c71f78032194ccbd30e6ab07c808db2d3fb06cf3c0a416c037a"
+    },
+    "verifier": {
+      "bytes": 18293,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/verify_exp063_router_replication_synthesis.py",
+      "sha256": "2eccab641a1797dc862ef384a53a254296e08cc4c5241f33f94ec88c8c78ff7e"
+    }
+  },
+  "inputs": {
+    "seed43_selection": {
+      "bytes": 20248,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/selected-attempt.json",
+      "sha256": "c4dd3ff747c16e2fb2bb2e895cdb5f7a9f753048ad10bc85210e88cff01eafb9"
+    },
+    "seed44_selection": {
+      "bytes": 4126,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/selected-attempt.json",
+      "sha256": "85e6540d1581f9b78bc4e5a374559c2d4b68afe8fb8fba581224af0c9a899796"
+    }
+  },
+  "run_id": "exp-063-router-replication-synthesis",
+  "schema_version": "exp-063-router-replication-selection-v1",
+  "selected_at_utc": "2026-08-24T08:40:28.309691+00:00",
+  "status": "Selected"
+}

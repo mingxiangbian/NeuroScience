@@ -1,0 +1,44 @@
+{
+  "attempt_id": "attempt-1",
+  "claim_boundary": "Incident-003 preflight verifier recovery only; namespace-virtualized output is not canonical Attempt-1 verification and does not authorize formal execution.",
+  "completed_at_utc": "2026-08-24T04:56:05.854977+00:00",
+  "experiment_id": "EXP-060",
+  "formal_gate_authorized": false,
+  "incident_id": "003",
+  "model_seed": 44,
+  "replication_parent_experiment_id": "EXP-062",
+  "rq_id": "RQ-S3",
+  "run_id": "exp-062-seed-44-router-replication",
+  "schema_version": "exp-router-preflight-verification-incident-003-attempt-2-terminal-v1",
+  "scope": "preflight-recovery",
+  "seed_contract": {
+    "m1_batch_seed": 44,
+    "m3_batch_seed": 44,
+    "m3_head_seed": 44,
+    "m3_lora_seed": 100044,
+    "model_seed": 44,
+    "numpy_seed": 44,
+    "python_seed": 44,
+    "torch_seed": 44
+  },
+  "status": "Complete",
+  "summary": {
+    "bytes": 371,
+    "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/router-preflight-verification-attempt-2/VERIFICATION-SUMMARY.md",
+    "sha256": "0ddb62c223747e143a50e0d92a498ca7ff8198db9f3eac7e8939275351cfc93a"
+  },
+  "terminal_resources": {
+    "api_cost_usd": 0,
+    "gpu_cost_usd": 0,
+    "model_forward_runs": 0,
+    "peak_process_rss_gb": 0.215711744,
+    "wall_seconds": 8.76217474997975
+  },
+  "terminal_state_sha256": "0d2d1ad3e46246613853edc0ec2aabedf695e8f0622194016c20bfa281f778dd",
+  "verification": {
+    "bytes": 26523,
+    "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication/attempt-1/router-preflight-verification-attempt-2/verification.json",
+    "sha256": "982dfed3e3f617b947c2bca23086ad38f819e95b80ae5368c2a4e3faf57afcb7"
+  },
+  "verification_attempt": 2
+}

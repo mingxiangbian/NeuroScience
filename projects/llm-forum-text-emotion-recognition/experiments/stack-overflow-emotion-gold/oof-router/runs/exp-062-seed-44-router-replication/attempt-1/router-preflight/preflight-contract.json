@@ -1,0 +1,177 @@
+{
+  "attempt_id": "attempt-1",
+  "claim_boundary": "Seed-44 no-result router preflight only; no feature matrix, target, fitted router, metric, bootstrap, primary gate, or selection result.",
+  "data_scope": "DATA-SO-TASK-V1 train-OOF header and frozen public records only",
+  "deployable_policy_order": [
+    "m1_max_entropy",
+    "m1_threshold_proximity",
+    "logistic_router"
+  ],
+  "experiment_id": "EXP-060",
+  "feature_count": 14,
+  "formal_result_computation_authorized": false,
+  "formal_router_training_authorized": false,
+  "input_schema": [
+    {
+      "array_name": "character_lengths",
+      "dtype": "int32",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "component_ids",
+      "dtype": "<U34",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "fold_ids",
+      "dtype": "int8",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "gold",
+      "dtype": "uint8",
+      "fortran_order": false,
+      "shape": [
+        3360,
+        6
+      ]
+    },
+    {
+      "array_name": "m1_fold_run_sha256",
+      "dtype": "<U64",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "m1_logits",
+      "dtype": "float32",
+      "fortran_order": false,
+      "shape": [
+        3360,
+        6
+      ]
+    },
+    {
+      "array_name": "m1_token_lengths",
+      "dtype": "int32",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "m3_fold_run_sha256",
+      "dtype": "<U64",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "m3_logits",
+      "dtype": "float32",
+      "fortran_order": false,
+      "shape": [
+        3360,
+        6
+      ]
+    },
+    {
+      "array_name": "m3_token_lengths",
+      "dtype": "int32",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    },
+    {
+      "array_name": "sample_ids",
+      "dtype": "<U31",
+      "fortran_order": false,
+      "shape": [
+        3360
+      ]
+    }
+  ],
+  "model_loading_or_forward": false,
+  "model_seed": 44,
+  "nested_cross_fitting_required": true,
+  "ordered_model_features": [
+    "m1_probability_love",
+    "m1_probability_joy",
+    "m1_probability_surprise",
+    "m1_probability_anger",
+    "m1_probability_sadness",
+    "m1_probability_fear",
+    "m1_mean_binary_entropy",
+    "m1_max_binary_entropy",
+    "m1_minimum_threshold_margin",
+    "m1_predicted_cardinality",
+    "m1_highest_probability",
+    "m1_lowest_probability",
+    "character_length",
+    "m1_token_length"
+  ],
+  "policies": [
+    "m1_only",
+    "m3_only",
+    "m1_max_entropy",
+    "m1_threshold_proximity",
+    "logistic_router"
+  ],
+  "prohibited_runtime_feature_classes": [
+    "m3_",
+    "gold",
+    "oracle",
+    "sample_id",
+    "component_id",
+    "fold_id",
+    "raw_text",
+    "validation",
+    "test"
+  ],
+  "raw_text_access": false,
+  "replication_parent_experiment_id": "EXP-062",
+  "resource_contract": {
+    "api_cost_usd": 0,
+    "gpu_cost_usd": 0,
+    "model_forward_runs": 0,
+    "peak_memory_gb": 2.0,
+    "preflight_wall_seconds": 300,
+    "verification_wall_seconds": 300
+  },
+  "result_bearing": false,
+  "router_replication_calibration": {
+    "calibrator": "identity",
+    "probability_source": "direct_sigmoid_of_raw_oof_logits",
+    "role": "frozen_exp060_replication_only",
+    "temperature": 1.0
+  },
+  "rq_id": "RQ-S3",
+  "run_id": "exp-062-seed-44-router-replication",
+  "schema_version": "exp-router-replication-preflight-contract-v1",
+  "seed_contract": {
+    "m1_batch_seed": 44,
+    "m3_batch_seed": 44,
+    "m3_head_seed": 44,
+    "m3_lora_seed": 100044,
+    "model_seed": 44,
+    "numpy_seed": 44,
+    "python_seed": 44,
+    "torch_seed": 44
+  },
+  "stage": "pre-qwen-router-replication-preflight",
+  "test_access": false,
+  "validation_access": false
+}

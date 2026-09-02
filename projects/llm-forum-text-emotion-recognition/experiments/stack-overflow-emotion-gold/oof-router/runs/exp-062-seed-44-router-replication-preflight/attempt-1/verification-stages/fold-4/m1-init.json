@@ -1,0 +1,38 @@
+{
+  "attempt_id": "attempt-1",
+  "execution_claims": {
+    "heldout_forward_performed": false,
+    "metric_computed": false,
+    "optimizer_created": false,
+    "test_accessed": false,
+    "training_performed": false,
+    "validation_accessed": false
+  },
+  "experiment_id": "EXP-062",
+  "fold_id": 4,
+  "formal_runner_imported": false,
+  "independent": true,
+  "matched_runner_observation": true,
+  "model_seed": 44,
+  "observed": {
+    "base_asset_manifest_sha256": "26d4fc3b7ce92375d580aeb73f60b2e3df9ee0b845a30e011528894be04c66f4",
+    "fold_manifest_sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8",
+    "m1_batch_order_sha256": "a2e53581147fc3892c2e96b58a8f829b93a7dd90fc97d73e7598e13a5e9e51ad",
+    "m1_classifier_init_sha256": "04708b011150c388b4942d3264725765e04fd2fdaf1d005c045d4f69a4872b10",
+    "m1_initialization_state_sha256": "222953673677f7f90bf68fd3077e7750f4220d6d76999d568e3a949f0437202e",
+    "m1_rng_state_digest": "b9b5c7b51dbc67b96d366f3ba29affc838e60522ab69434fc316352011906656",
+    "model_seed": 44
+  },
+  "preflight_runner_imported": false,
+  "run_id": "exp-062-seed-44-router-replication-preflight",
+  "schema_version": "exp-oof-m1-initialization-verification-v1",
+  "status": "Passed",
+  "verified_artifacts": {
+    "runner_m1_initialization": {
+      "bytes": 1799,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication-preflight/attempt-1/fold-4/m1-init.json",
+      "sha256": "9c433f09257c87c30abe40cc562560c0b7736a4caeae1df7c50ec875df53da9b"
+    }
+  },
+  "verified_at_utc": "2026-08-20T04:38:06.829710+00:00"
+}

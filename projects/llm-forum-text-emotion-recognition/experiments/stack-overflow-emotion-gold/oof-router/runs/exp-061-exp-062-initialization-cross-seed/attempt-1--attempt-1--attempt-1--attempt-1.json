@@ -1,0 +1,99 @@
+{
+  "base_asset_manifest_sha256": "26d4fc3b7ce92375d580aeb73f60b2e3df9ee0b845a30e011528894be04c66f4",
+  "checks": {
+    "base_asset_identity_identical": true,
+    "fold_0_seed_sensitive_initialization": true,
+    "fold_1_seed_sensitive_initialization": true,
+    "fold_2_seed_sensitive_initialization": true,
+    "fold_3_seed_sensitive_initialization": true,
+    "fold_4_seed_sensitive_initialization": true,
+    "fold_manifest_identity_identical": true,
+    "registered_seeds_43_44": true,
+    "shared_scientific_contract_identical": true
+  },
+  "claim_boundary": "Cross-seed initialization identity only; no model result or performance claim.",
+  "execution_claims": {
+    "aggregate_only": true,
+    "heldout_forward_performed": false,
+    "metric_computed": false,
+    "model_loaded": false,
+    "test_accessed": false,
+    "training_performed": false,
+    "validation_accessed": false
+  },
+  "failed_checks": [],
+  "failed_count": 0,
+  "fold_manifest_sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8",
+  "members": {
+    "EXP-061": {
+      "formal_attempt_id": "attempt-1",
+      "formal_run_id": "exp-061-seed-43-router-replication",
+      "initialization_manifest": {
+        "bytes": 8446,
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication-preflight/attempt-1/initialization-manifest.json",
+        "sha256": "cb3188b8ca2ded43fc5a95401ee1c94666d91a100f7f3a2aeb627447222f04ac"
+      },
+      "initialization_verification": {
+        "bytes": 6257,
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication-preflight/attempt-1/verification.json",
+        "sha256": "55b7f52f311921b656cbee914ee3db7aa0e1265e15814c9612ca83489d6a2e99"
+      },
+      "model_seed": 43,
+      "preflight_attempt_id": "attempt-1",
+      "preflight_run_id": "exp-061-seed-43-router-replication-preflight"
+    },
+    "EXP-062": {
+      "formal_attempt_id": "attempt-1",
+      "formal_run_id": "exp-062-seed-44-router-replication",
+      "initialization_manifest": {
+        "bytes": 8446,
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication-preflight/attempt-1/initialization-manifest.json",
+        "sha256": "fe13fa2c87187456951d67700ee748beac088a80f74677baa06cdcb3cea0d516"
+      },
+      "initialization_verification": {
+        "bytes": 6257,
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-062-seed-44-router-replication-preflight/attempt-1/verification.json",
+        "sha256": "32ce00ceee1767deebf02f5afb49d93f757d6da919d2a8549a15326a353a925a"
+      },
+      "model_seed": 44,
+      "preflight_attempt_id": "attempt-1",
+      "preflight_run_id": "exp-062-seed-44-router-replication-preflight"
+    }
+  },
+  "per_fold_checks": {
+    "0": {
+      "m1_classifier_differs": true,
+      "m3_classifier_head_differs": true,
+      "m3_lora_a_differs": true,
+      "m3_lora_b_equality_allowed_only_when_zero": true
+    },
+    "1": {
+      "m1_classifier_differs": true,
+      "m3_classifier_head_differs": true,
+      "m3_lora_a_differs": true,
+      "m3_lora_b_equality_allowed_only_when_zero": true
+    },
+    "2": {
+      "m1_classifier_differs": true,
+      "m3_classifier_head_differs": true,
+      "m3_lora_a_differs": true,
+      "m3_lora_b_equality_allowed_only_when_zero": true
+    },
+    "3": {
+      "m1_classifier_differs": true,
+      "m3_classifier_head_differs": true,
+      "m3_lora_a_differs": true,
+      "m3_lora_b_equality_allowed_only_when_zero": true
+    },
+    "4": {
+      "m1_classifier_differs": true,
+      "m3_classifier_head_differs": true,
+      "m3_lora_a_differs": true,
+      "m3_lora_b_equality_allowed_only_when_zero": true
+    }
+  },
+  "schema_version": "exp-oof-cross-seed-initialization-verification-v1",
+  "shared_scientific_contract_sha256": "c86b76ed2a115e10dbc879d0922751880e45e4025e680376ec38bfc803c8439b",
+  "status": "Passed",
+  "verified_at_utc": "2026-08-20T04:41:01.541281+00:00"
+}

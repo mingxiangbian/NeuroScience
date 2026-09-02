@@ -1,0 +1,428 @@
+{
+  "attempt_id": "attempt-1",
+  "authorization": {
+    "independent_verification_recomputation": true,
+    "model_loading_or_forward": false,
+    "private_artifact_mutation": false,
+    "public_mode_metadata_repair": false,
+    "raw_text_access": false,
+    "scientific_analysis_rerun": false,
+    "seed44_execution": false,
+    "test_access": false,
+    "validation_access": false,
+    "verification_attempt": 3
+  },
+  "clerical_overlay": {
+    "after": [
+      "m1_only",
+      "m3_only",
+      "m1_max_entropy",
+      "m1_threshold_proximity",
+      "logistic_router"
+    ],
+    "before": [
+      "m1_max_entropy",
+      "m1_threshold_proximity",
+      "logistic_router"
+    ],
+    "deployable_policy_order_unchanged": [
+      "m1_max_entropy",
+      "m1_threshold_proximity",
+      "logistic_router"
+    ],
+    "json_pointer": "/router/policies",
+    "match_input_sha256": "d74beb9b3dd1140be0215e29e87b71b2a25f332682420a2883af7aa867cd566b",
+    "maximum_changed_nodes": 1,
+    "operation": "replace",
+    "recursive_diff": [
+      {
+        "after": [
+          "m1_only",
+          "m3_only",
+          "m1_max_entropy",
+          "m1_threshold_proximity",
+          "logistic_router"
+        ],
+        "before": [
+          "m1_max_entropy",
+          "m1_threshold_proximity",
+          "logistic_router"
+        ],
+        "path": "$.router.policies"
+      }
+    ]
+  },
+  "commands": {
+    "complete": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/stack-overflow-emotion-gold/oof-router/verify_exp060_router_attempt3.py --scope complete",
+    "completion": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/stack-overflow-emotion-gold/oof-router/verify_exp060_router_attempt3.py --scope completion",
+    "final": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python experiments/stack-overflow-emotion-gold/oof-router/verify_exp060_router_attempt3.py --scope final"
+  },
+  "experiment_id": "EXP-061",
+  "failure_policy": {
+    "append_only": true,
+    "exception_details_recorded": false,
+    "failed_attempt_terminal": true,
+    "json_written_before_summary": true,
+    "retry_same_path": false
+  },
+  "implementation": {
+    "amendment_protocol": {
+      "bytes": 9160,
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-061-exp060-final-verification-attempt-3-incident-002-amendment.md",
+      "sha256": "c91563a4163eaa32213e5961b646393cab85d681a2c9e5f6dee7c8d48747bc91"
+    },
+    "base_verifier": {
+      "bytes": 119887,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/verify_exp060_router.py",
+      "sha256": "920f6565bd378c8f7cfe415a78e505123336602fb228dad95771fcc14e471b15"
+    },
+    "finalizer": {
+      "bytes": 71507,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/finalize_router_replication_attempt3.py",
+      "sha256": "b72bd949465195ce053e2d1fd89390a7304f3061b5a8c6ea72c7355f47a3e9a9"
+    },
+    "finalizer_tests": {
+      "bytes": 19035,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/tests/test_finalize_router_attempt3.py",
+      "sha256": "05da801b910729c544ca289a1090c452263e372b176283d0029bde7c8c685984"
+    },
+    "recovery_tests": {
+      "bytes": 25185,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/tests/test_exp060_router_attempt3.py",
+      "sha256": "fbf64c96da80694f52b4575a0a19d97e5093dcce173b07505295f28385d9a529"
+    },
+    "recovery_verifier": {
+      "bytes": 56663,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/verify_exp060_router_attempt3.py",
+      "sha256": "c34109e18b20645f5b97d679e0f1316722879f2570559f49c63f14a9e531fc0d"
+    }
+  },
+  "incident_id": "002",
+  "lineage": {
+    "attempt_1": {
+      "summary": {
+        "bytes": 1083,
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/VERIFICATION-SUMMARY.md",
+        "sha256": "f783230f779fcb149def1cca1c0b0b8cdce8c659a2dbd0aa6a319c7971b1822e"
+      },
+      "verification": {
+        "bytes": 1090642,
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/verification.json",
+        "sha256": "69057b2f1af3ab2964f6d6a5037d1cc28a9a1c3017d68be44c872a71d44a5d62"
+      }
+    },
+    "attempt_2": {
+      "summary": {
+        "bytes": 330,
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/VERIFICATION-SUMMARY-ATTEMPT-2.md",
+        "sha256": "b09d9042529b8a65523bcad52c876dcedf37be66db6a462aed1b9f7b2fdac987"
+      },
+      "verification": {
+        "bytes": 886,
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/verification-attempt-2.json",
+        "sha256": "b30e48e3dadbd3947fd7101606152084ce4746a711618cdded088518ba2f212b"
+      }
+    },
+    "incident_001": {
+      "amendment_config": {
+        "bytes": 14452,
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/configs/exp-061-seed-43-router-replication-router-verification-attempt-2-amendment.json",
+        "sha256": "58c7d3861a32020081220256e6bbe3d54559c67220dbdbc72d77bc3a83164be2"
+      },
+      "amendment_protocol": {
+        "bytes": 17147,
+        "path": "experiments/stack-overflow-emotion-gold/protocols/exp-061-exp060-final-verification-attempt-2-amendment.md",
+        "sha256": "ea24de2ac3d55528c4b516fc678bd89b3997e77642809c20d102734006e68171"
+      },
+      "finalizer": {
+        "bytes": 66804,
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/finalize_router_replication_attempt.py",
+        "sha256": "deb2f291fea0901f5e60e5a4863b18491a4888d3bcc3a1463642ae8f85a8fbd9"
+      },
+      "finalizer_tests": {
+        "bytes": 41041,
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/tests/test_finalize_router_recovery_attempt.py",
+        "sha256": "ff44dc0c37881a61c7efb1a2f3d82893c49f9030fdfdfa9a19b1520ec73f26cd"
+      },
+      "recovery_tests": {
+        "bytes": 36562,
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/tests/test_exp060_router_attempt2.py",
+        "sha256": "b18b222c8522bea209acfa8aa7d08205adfb32d43dc2734f4aaefcdd1e330084"
+      },
+      "recovery_verifier": {
+        "bytes": 89797,
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/verify_exp060_router_attempt2.py",
+        "sha256": "51bb8c4b1942a626eca826933da597177085abe74c7b68c1aee7bfb3c30cfa5b"
+      }
+    }
+  },
+  "model_seed": 43,
+  "outputs": {
+    "completion": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/router-complete.json",
+    "selection": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/selected-attempt.json",
+    "summary": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/VERIFICATION-SUMMARY-ATTEMPT-3.md",
+    "verification": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/verification-attempt-3.json"
+  },
+  "predecessor_incident_id": "001",
+  "private_invariant": {
+    "artifact_count": 2,
+    "artifacts": [
+      {
+        "bytes": 308098,
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-061-seed-43-router-replication/attempt-1/paired-oof.npz",
+        "sha256": "b9513696e80aca12e60e719fb109e24f1412781e9996e5ad6b9e0221803bb2e8"
+      },
+      {
+        "bytes": 500924,
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-061-seed-43-router-replication/attempt-1/router/router-oof.npz",
+        "sha256": "9c71020d194454e60e384f5f195089d6bced95e45d67e8046cb55b74afeeb755"
+      }
+    ],
+    "modes": [
+      {
+        "expected_mode": "0o700",
+        "matches_expected": true,
+        "observed_mode": "0o700",
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-061-seed-43-router-replication",
+        "type": "directory"
+      },
+      {
+        "expected_mode": "0o700",
+        "matches_expected": true,
+        "observed_mode": "0o700",
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-061-seed-43-router-replication/attempt-1",
+        "type": "directory"
+      },
+      {
+        "expected_mode": "0o600",
+        "matches_expected": true,
+        "observed_mode": "0o600",
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-061-seed-43-router-replication/attempt-1/paired-oof.npz",
+        "type": "file"
+      },
+      {
+        "expected_mode": "0o700",
+        "matches_expected": true,
+        "observed_mode": "0o700",
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-061-seed-43-router-replication/attempt-1/router",
+        "type": "directory"
+      },
+      {
+        "expected_mode": "0o600",
+        "matches_expected": true,
+        "observed_mode": "0o600",
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-061-seed-43-router-replication/attempt-1/router/router-oof.npz",
+        "type": "file"
+      }
+    ],
+    "sha256": "8f75f4f778fc2468e42a58b87568dcb665c289d9e065a418547e6d6035a1d96c"
+  },
+  "public_state": {
+    "content_tree": {
+      "file_count": 21,
+      "sha256": "af957c75cd2b85843d0244fee2cc13fea22d8635b4b7ab5128f5679c6a48be5a"
+    },
+    "content_tree_digest_algorithm": "sha256(canonical-json(sorted(relative_path,bytes,sha256))); exclude exact router-root-relative Attempt-2 JSON/summary, Attempt-3 JSON/summary, and router-complete.json paths",
+    "normalized_manifest": [
+      {
+        "after_mode": "0o755",
+        "before_mode": "0o700",
+        "matches_expected": true,
+        "observed_mode": "0o755",
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router",
+        "type": "directory"
+      },
+      {
+        "after_mode": "0o755",
+        "before_mode": "0o700",
+        "matches_expected": true,
+        "observed_mode": "0o755",
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/frozen-sources",
+        "type": "directory"
+      },
+      {
+        "after_mode": "0o644",
+        "before_mode": "0o600",
+        "bytes": 894,
+        "matches_expected": true,
+        "observed_mode": "0o644",
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/REPORT.md",
+        "sha256": "1b6c7243dd6674e0baa7c438ce96962f358fe62808966a79185b1a2866e514bc",
+        "type": "file"
+      },
+      {
+        "after_mode": "0o644",
+        "before_mode": "0o600",
+        "bytes": 3479,
+        "matches_expected": true,
+        "observed_mode": "0o644",
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/bootstrap.json",
+        "sha256": "99a1466c032b29ce451f626406bb453242afca45a5e3f1e349b261105c373cf9",
+        "type": "file"
+      },
+      {
+        "after_mode": "0o644",
+        "before_mode": "0o600",
+        "bytes": 6936,
+        "matches_expected": true,
+        "observed_mode": "0o644",
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/call-rate-performance.csv",
+        "sha256": "719bd368fc0206d49e6f9266636a8bd790ca84a62909923fb976d62289e869c3",
+        "type": "file"
+      },
+      {
+        "after_mode": "0o644",
+        "before_mode": "0o600",
+        "bytes": 97221,
+        "matches_expected": true,
+        "observed_mode": "0o644",
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/call-rate-performance.png",
+        "sha256": "4856079499c70adeb10dda7144cef218b579fa0f2ed22e0a284e3b1f6c10218b",
+        "type": "file"
+      },
+      {
+        "after_mode": "0o644",
+        "before_mode": "0o600",
+        "bytes": 1553,
+        "matches_expected": true,
+        "observed_mode": "0o644",
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/feature-contract.json",
+        "sha256": "5a0a2771e80609fba70e6084994fab06eb94bf1dbd6c74b8cef62731af8700c7",
+        "type": "file"
+      },
+      {
+        "after_mode": "0o644",
+        "before_mode": "0o600",
+        "bytes": 1165,
+        "matches_expected": true,
+        "observed_mode": "0o644",
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/fold-summary.csv",
+        "sha256": "a75916d110e8b941758481dc890be09d7dc60f3c2ee2d23c5bbbef608696e397",
+        "type": "file"
+      },
+      {
+        "after_mode": "0o644",
+        "before_mode": "0o600",
+        "bytes": 2090,
+        "matches_expected": true,
+        "observed_mode": "0o644",
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/policy-comparisons.csv",
+        "sha256": "e04a03b953520e0a1345490e824d5d6ebf98dcbfa6a322559b700eff516b27e2",
+        "type": "file"
+      },
+      {
+        "after_mode": "0o644",
+        "before_mode": "0o600",
+        "bytes": 20766,
+        "matches_expected": true,
+        "observed_mode": "0o644",
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/positive-label-retention.csv",
+        "sha256": "e84a6b49e631eea524a7692c78383bb8a42233237da00cca492b4158dc15f021",
+        "type": "file"
+      },
+      {
+        "after_mode": "0o644",
+        "before_mode": "0o600",
+        "bytes": 8016,
+        "matches_expected": true,
+        "observed_mode": "0o644",
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/random-routing.csv",
+        "sha256": "c45cef6cb06e5dc820d62642e6b7e0002c60db0388a38436ea3b566739168e3f",
+        "type": "file"
+      },
+      {
+        "after_mode": "0o644",
+        "before_mode": "0o600",
+        "bytes": 8354,
+        "matches_expected": true,
+        "observed_mode": "0o644",
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/routed-risk-coverage.csv",
+        "sha256": "24259b74e03298ebe5c1af9942e35fc1b352b061f57059e714c9842078e79a29",
+        "type": "file"
+      },
+      {
+        "after_mode": "0o644",
+        "before_mode": "0o600",
+        "bytes": 181391,
+        "matches_expected": true,
+        "observed_mode": "0o644",
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/routed-risk-coverage.png",
+        "sha256": "ce1277aecd88757971d17c5185fef495328a36814e3c62bb44abfc6232f26246",
+        "type": "file"
+      },
+      {
+        "after_mode": "0o644",
+        "before_mode": "0o600",
+        "bytes": 586,
+        "matches_expected": true,
+        "observed_mode": "0o644",
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/router-discrimination.json",
+        "sha256": "aa699c4ef3c56e055fce54ed64d82d49b100a60792897646bee0a6fa4135abf2",
+        "type": "file"
+      },
+      {
+        "after_mode": "0o644",
+        "before_mode": "0o600",
+        "bytes": 10497,
+        "matches_expected": true,
+        "observed_mode": "0o644",
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/run.json",
+        "sha256": "199249d6d7a1cc1e8fb2daab43ade9ca63deabc3a25dc8bdf3f1a3370c677884",
+        "type": "file"
+      },
+      {
+        "after_mode": "0o644",
+        "before_mode": "0o600",
+        "bytes": 6669,
+        "matches_expected": true,
+        "observed_mode": "0o644",
+        "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/selected-operating-point.json",
+        "sha256": "8bb32ef80a594a9b8341877efa37d0deb1d54f11650801dfae7bf232d66fa7a7",
+        "type": "file"
+      }
+    ],
+    "path_count": 16
+  },
+  "resource_contract": {
+    "api_cost_usd": 0,
+    "gpu_cost_usd": 0,
+    "mirror_execution_count": 2,
+    "model_forward_runs": 0,
+    "outer_budget_extension": false,
+    "per_mirror_peak_memory_gb": 4.0,
+    "per_mirror_verification_wall_seconds": 1800,
+    "sequential_order": [
+      "mirror_a",
+      "mirror_b"
+    ]
+  },
+  "run_id": "exp-061-seed-43-router-replication",
+  "schema_version": "exp-router-verification-attempt-3-incident-002-config-v1",
+  "target": {
+    "formal_config": {
+      "bytes": 13393,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/configs/exp-061-seed-43-router-replication-router-formal-attempt-1.json",
+      "sha256": "d74beb9b3dd1140be0215e29e87b71b2a25f332682420a2883af7aa867cd566b"
+    },
+    "paired_oof": {
+      "bytes": 308098,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-061-seed-43-router-replication/attempt-1/paired-oof.npz",
+      "sha256": "b9513696e80aca12e60e719fb109e24f1412781e9996e5ad6b9e0221803bb2e8"
+    },
+    "private_router_oof": {
+      "bytes": 500924,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-061-seed-43-router-replication/attempt-1/router/router-oof.npz",
+      "sha256": "9c71020d194454e60e384f5f195089d6bced95e45d67e8046cb55b74afeeb755"
+    },
+    "run": {
+      "bytes": 10497,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/run.json",
+      "sha256": "199249d6d7a1cc1e8fb2daab43ade9ca63deabc3a25dc8bdf3f1a3370c677884"
+    },
+    "selected_operating_point": {
+      "bytes": 6669,
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-061-seed-43-router-replication/attempt-1/router/selected-operating-point.json",
+      "sha256": "8bb32ef80a594a9b8341877efa37d0deb1d54f11650801dfae7bf232d66fa7a7"
+    }
+  }
+}

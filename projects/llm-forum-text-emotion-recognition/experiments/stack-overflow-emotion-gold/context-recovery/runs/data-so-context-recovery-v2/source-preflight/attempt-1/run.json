@@ -1,0 +1,72 @@
+{
+  "schema_version": "data-so-context-recovery-source-preflight-v1",
+  "protocol_id": "DATA-SO-CONTEXT-RECOVERY-V2",
+  "decision_id": "DEC-SO-CONTEXT-RECOVERY-V2",
+  "attempt_id": "attempt-1",
+  "stage": "source-preflight",
+  "status": "Blocked",
+  "recorded_at": "2026-08-24",
+  "gold_source": {
+    "revision": "d6a679f39a198fdb0657a6116d35dd7b92496898",
+    "sha256": "29f667701227fc3f1ffc005c5d5364c30f24476005baac23fff8338dbd2f0179",
+    "bytes": 1537409,
+    "rows": 4800,
+    "platform_identity_fields_present": false
+  },
+  "candidate_external_source": {
+    "name": "Stack Exchange Community Data Dump, Stack Overflow, April 2024",
+    "official_listing": "https://archive.org/download/stackexchange/",
+    "posts_archive": "https://archive.org/download/stackexchange/stackoverflow.com-Posts.7z",
+    "post_history_archive": "https://archive.org/download/stackexchange/stackoverflow.com-PostHistory.7z",
+    "posts_archive_display_size": "21.4G",
+    "post_history_archive_display_size": "35.2G",
+    "posts_uncompressed_bytes": 103933385042,
+    "post_history_uncompressed_bytes": 181564626504,
+    "downloaded": false
+  },
+  "resource_gate": {
+    "available_bytes": 121348616192,
+    "full_extracted_bytes": 285498011546,
+    "full_extracted_plus_20_percent_headroom_bytes": 342597613855,
+    "conservative_archive_extract_headroom_bytes": 415526158541,
+    "full_extraction_fits": false,
+    "streaming_extraction_protocol_frozen": false
+  },
+  "certification_gate": {
+    "required_independent_first_pass_reviewers": 2,
+    "required_adjudicator_if_disagreement": 1,
+    "available_reviewers_registered": 0,
+    "certified_routes_possible_now": false,
+    "deterministic_exact_only_fallback": "Exploratory only; it cannot support the certified main-C2 claim or sealed confirmatory test."
+  },
+  "other_blockers": [
+    "No local Posts or PostHistory dump exists.",
+    "No source-release amendment with archive SHA-256 and retention/deletion plan is frozen.",
+    "Positive minimum actual context-token counts for M1 and M3 are not frozen.",
+    "No context recovery implementation, certification frame, C2 split, donor map, or C2 test seal exists."
+  ],
+  "forbidden_progression": [
+    "download_or_extract_without a passing resource/source amendment",
+    "claim independent precision certification without two human first-pass reviewers",
+    "construct formal C2 while old-C0-test entity recovery is below 100 percent",
+    "train any C2 model before data construction and independent verification pass"
+  ],
+  "next_required_external_inputs": [
+    "A storage location with at least 450 GB free, or an approved streaming-only protocol revision with separately verified resource estimates.",
+    "Two independent human reviewers and one adjudicator-on-demand, or an explicit decision to accept the exploratory exact-only fallback."
+  ],
+  "split_access": {
+    "gold_text_read_for_matching": false,
+    "validation_accessed": false,
+    "test_inputs_accessed": false,
+    "test_labels_accessed": false
+  },
+  "execution": {
+    "download_bytes": 0,
+    "model_training_runs": 0,
+    "model_forward_runs": 0,
+    "api_cost_usd": 0,
+    "gpu_cost_usd": 0
+  },
+  "claim_boundary": "This is a no-result source/resource/readiness preflight. No Stack Overflow context was recovered or certified, no C2 dataset was constructed, and no context ablation was run."
+}

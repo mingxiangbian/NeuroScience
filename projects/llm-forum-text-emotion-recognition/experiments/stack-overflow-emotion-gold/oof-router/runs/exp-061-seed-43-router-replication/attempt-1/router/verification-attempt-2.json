@@ -1,0 +1,31 @@
+{
+  "attempt_id": "attempt-1",
+  "checks": [
+    {
+      "detail": {
+        "code": "deterministic_contract_failure",
+        "stage": "verification_build"
+      },
+      "name": "recovery.attempt2_deterministic_failure",
+      "passed": false
+    }
+  ],
+  "claim_boundary": "Terminal Incident-001 attempt-2 failure seal; no scientific conclusion.",
+  "experiment_id": "EXP-061",
+  "failed_count": 1,
+  "failure": {
+    "code": "deterministic_contract_failure",
+    "exception_details_recorded": false,
+    "sealed": true,
+    "stage": "verification_build"
+  },
+  "model_seed": 43,
+  "passed_count": 0,
+  "run_id": "exp-061-seed-43-router-replication",
+  "runner_imported": false,
+  "schema_version": "exp-router-formal-verification-attempt-2-failure-v1",
+  "scope": "final",
+  "status": "Failed",
+  "verification_attempt": 2,
+  "verified_at_utc": "2026-08-21T04:33:14.290071+00:00"
+}

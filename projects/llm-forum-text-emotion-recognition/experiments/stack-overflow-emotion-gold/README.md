@@ -7,6 +7,105 @@ remain separate Major runs.
 
 Current execution handoff: [`HANDOFF.md`](HANDOFF.md).
 
+Latest update (2026-08-30): EXP-075 completed all 75 geometry comparisons and passed
+20/20 independent checks under the user-approved post-diagnostic rule. H-1 CKA and
+the fixed nine-point Spearman remain undefined; original EXP-071 remains Failed.
+EXP-072 completed all 70 inference workers, sealed scoring and 20/20 independent checks;
+all 15 A0 replays had zero error. EXP-074 synthesis and independent verification passed.
+The Phase B minimum experimental set is complete: representation effect replicated, with
+Attention-dominant dependency in the preregistered confirmation seeds 43/44. Seed 42 showed
+the opposite Attention/MLP direction and remains an explicit counterexample. EXP-073 is optional
+and unexecuted; context/C2 remains paused. The research report is local and Git ignored at
+[`phase-b-research-report-2026-08-30.md`](phase-b-representation/private/reports/phase-b-research-report-2026-08-30.md).
+
+Current phase: the Phase A lifecycle is `Closed`, with closeout outcome
+`Closed with partial success`; the frozen EXP-068 decision remains `Failed or incomplete`. The
+verified seed-42 headless/CLI stack remains a local research demo. The formal efficiency benchmark
+did not complete, so no deployment-efficiency claim is supported. Phase B representation and
+functional-dependency work is registered under `RQ-S4`. EXP-069 is Complete: static verification
+passed 14/14, base attempt 3 passed 23/23, and all 15 fold workers completed with zero recorded
+model-side parity error. Attempt-4 final verification remains append-only Failed because its verifier
+merged two differently defined manual-logit aggregates. Model-free verification attempt 2 separated
+them and passed 25/25: runner manual-vs-standard remained `0.0`, while independent NumPy head
+replay was `7.62939453125e-06`, below the unchanged `1e-5` gate. No model was rerun and no source
+snapshot was modified. EXP-070 then froze the full extraction, nested component-disjoint probe,
+label-shuffle and bootstrap contracts. Its synthetic tests passed 15/15 and its model-free no-result
+preflight verifier passed 24/24. The 32-row EXP-069 smoke remains a parity fixture and cannot train
+the probes. EXP-070 probe fitting sealed all five folds, and assemble produced a private
+`probe-manifest.json` plus public `probe.json`; both remain `CompletedAwaitingVerification`. The
+extraction-only formal consumer has a
+frozen protocol, config, runner and independent verifier; its synthetic tests passed 11/11. Formal
+attempt 1 completed worker extraction at 16/16 and frozen assemble. The append-only source run keeps
+its `CompletedAwaitingVerification` status. Frozen base completed
+3,360 rows x nine points in 2,032.24 seconds, with zero M2-HF and standard-HF error and an 8.24 GB
+MLX peak. M3 seed 42 / fold 0 then
+completed the same shape in 3,289.41 seconds with zero runner and pre-LoRA parity errors and an 8.60
+GB peak. Its model-free float64 head replay was `2.086469194750862e-06`, below the unchanged `1e-5`
+gate. Fold 1 completed in 2,085.12 seconds with the same zero runner/pre-LoRA errors and 8.60 GB
+peak; its float64 replay was `1.5347208552896063e-06`. Fold 2 completed in 2,093.59 seconds; its
+corresponding values were zero and `1.5044781136452912e-06`. Fold 3 completed in 2,578.34 seconds
+with zero runner/pre-LoRA errors; its float64 replay was `1.7814840784780017e-06`. Fold 4 completed
+in 2,151.06 seconds with zero runner/pre-LoRA errors; its float64 replay was
+`2.0908623792337266e-06`. Seed 42 is complete at 5/5 folds. A pre-run audit found two defects in the
+original terminal verifier: an equality check across
+incompatible token-digest encodings and a float32 cross-backend replay at the tolerance edge. A new
+append-only verification-attempt-2 consumer fixes only those verifier rules and passed 12/12 tests.
+Seed 43 / fold 0 completed its three-point cache in
+2,124.92 seconds; persisted H19 and transient parity records were zero, while its float64 replay was
+`1.912518955649034e-06`. Fold 1 completed in 2,380.40 seconds with the same zero parity values and a
+float64 replay of `2.409579250794991e-06`. Fold 2 completed in 2,229.21 seconds; persisted/transient
+parity stayed zero and float64 replay was `2.3480084774263332e-06`. Fold 3 completed in 1,943.42
+seconds with zero parity values and a float64 replay of `2.0202858195261797e-06`. Fold 4 completed
+in 2,258.69 seconds with zero parity values and a float64
+replay of `1.7818263131630374e-06`. Seed 43 is complete at 5/5 folds. Seed 44 folds 0–4 completed in
+2,305.14, 2,300.78, 2,048.08, 2,099.80 and 2,035.08 seconds. All five saved 3,360 rows x three
+points with zero persisted H19, transient pre-LoRA and runner replay error; their maximum float64
+replay was
+`2.3313519861289933e-06 < 1e-5`. The maximum float32 diagnostic was
+`1.239776611328125e-05` and does not gate the frozen recovery verifier. Seed 44 is complete at 5/5,
+so all 16/16 workers are sealed. Frozen assemble bound the 16 matrices in a 10,612-byte private
+manifest (`sha256=ef8092d...51d347`) and a 1,596-byte public `extraction.json`
+(`sha256=1ad33d...93cfe`). Verification attempt 2 then passed 28/28 checks. Runner MLX replay stayed
+at `0.0`; the maximum float32 diagnostic was `1.239776611328125e-05`; the maximum float64 gate was
+`2.409579250794991e-06 < 1e-5`. The source snapshot stayed unchanged, and the completion marks
+formal extraction Complete without authorizing probe fitting or EXP-071. The separate probe consumer
+now has a frozen protocol, runner, probability-only verifier and formal config. Its 34 synthetic tests
+passed, and the no-result static verifier passed 25/25 checks without reading label or representation
+values. Static completion authorized only the frozen formal config. Formal initialize then sealed
+`run-claim.json` and a private input manifest with an empty fold prefix; it read no label or
+representation values. Fold 0 sealed 864 binary fits in 2,119.20 seconds with a 1.507 GB peak RSS.
+Fold 1 sealed another 864 binary fits in 2,096.91 seconds with a 1.554 GB peak RSS. Both folds
+were followed by folds 2–4, which sealed 864 fits each in 2,121.81, 2,139.69 and 2,127.09 seconds;
+their peak RSS values were 1.475, 1.551 and 1.550 GB. All five folds decoded only their outer-train
+labels. Assemble then read the train-only outer-heldout labels and computed the registered aggregate
+metrics, controls, 2,000 bootstrap intervals and provisional seed votes. Seeds 43/44 passed H27/HF,
+and no shuffle seed triggered the negative-control failure.
+The frozen verifier CLI did not run because it mistakes the exact-bound method phrase
+`component-disjoint` for a sensitive component ID. The run remains `CompletedAwaitingVerification`
+under the original verifier. The append-only recovery consumer passed 12 synthetic tests, 18
+no-result static checks and 44 formal verification checks. It reproduced the assemble result digest,
+verified negative-control failure=False and state 2 `Representation effect replicated`, and left the
+source snapshot unchanged. Recovery verification read only the sealed probabilities and train-only
+labels needed to recompute thresholds, metrics and bootstrap; it did not read representations, refit
+the probe, load a model, run forward, or access validation/test. Lifecycle completion remains
+separate from the source run: recovery `formal-complete` replayed the exact Passed verification and
+wrote terminal completion. EXP-070 is Complete via verification attempt 2 with verified state 2.
+EXP-071 is registered and its no-result preflight is Complete via Incident 001 attempt 2: synthetic
+tests passed 53/53 and the independent static verifier passed 24/24 without reading representation,
+row-contract values or probe metrics. Formal initialize then wrote one public `run-claim.json` and
+one private `input-manifest.json`, without reading scientific values. Formal analyze stopped on the
+registered `Zero or non-finite CKA denominator` gate. It read `ordinal/fold_id` and
+some representation values, but stopped before AP5 access or geometry publication. The failed prefix
+contains only the run claim, failure record and private input manifest; source identity remains
+unchanged. Formal verification must not run. The conclusion remains limited to train-only
+outer-heldout linear label accessibility under the frozen pooling and probe contract.
+
+Incident 002 registers a Minor category-only denominator diagnostic. Its no-result preflight passed
+15 synthetic tests and 12 independent checks. The diagnostic is now Complete: independent
+verification passed 19/19 and completion replay matched. The verified first failure is pair 1,
+`s42:H-1 / fold 0`, with all three denominator-term categories `zero`. No AP5/probe files or later
+pairs were accessed. Original EXP-071 remains Failed; the diagnostic does not change its method.
+
 ## Commands
 
 Run from `projects/llm-forum-text-emotion-recognition/` with the bundled
@@ -309,3 +408,20 @@ router-headroom decision, and
 and
 [`oof-router/runs/exp-060-pre-qwen-router/VERIFICATION-SUMMARY.md`](oof-router/runs/exp-060-pre-qwen-router/VERIFICATION-SUMMARY.md)
 for the formal EXP-060 result, claim boundary and independent verification.
+
+## Phase C current handoff — 2026-08-31
+
+The local [topic workspace](../../forum-topic-emotion-web/README.md) preserves all Phase A/B evidence.
+EXP-076 source attempt3 and inherited smoke are Verified; current UI/statistics/CSV controls pass
+212 software tests and read-only QA on 5 existing jobs / 372 results. See its
+[acceptance record](../../forum-topic-emotion-web/docs/acceptance.md).
+
+New EXP-077 stopped after 40.221628s at critical memory pressure: 1 of 36 planned jobs completed,
+the Research job was cancelled before any item receipt, and 34 jobs were not submitted.
+Independent audit Passed, but exp077_complete=false and soak_gate_passed=false; stop-required.
+This does not establish M3 OOM/leakage, a production success rate, or repair EXP-067/068.
+
+Python Help Discourse review, adapter and EXP-078 tools are ready; its formal 300–400-item run was
+not executed because the safe-to-continue prerequisite failed. Reports and the final claims ledger
+remain Git-ignored under module private/reports. External gold and old context/C2 remain paused;
+no training, test access, automatic retry, commit, stage, push or public deployment was performed.

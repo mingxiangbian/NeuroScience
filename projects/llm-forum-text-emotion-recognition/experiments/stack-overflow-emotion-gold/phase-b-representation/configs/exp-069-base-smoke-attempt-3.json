@@ -1,0 +1,158 @@
+{
+  "schema_version": "exp-069-base-smoke-attempt-3-v1",
+  "experiment_id": "EXP-069",
+  "attempt_id": "attempt-3-base-smoke",
+  "rq_id": "RQ-S4",
+  "tier": "Major infrastructure gate",
+  "registered_at": "2026-08-26",
+  "authorization": {
+    "base_smoke_authorized": true,
+    "model_loading_authorized": true,
+    "forward_authorized": true,
+    "fold_smoke_authorized": false,
+    "assemble_authorized": false,
+    "training_authorized": false,
+    "performance_metrics_authorized": false,
+    "validation_access": false,
+    "test_access": false
+  },
+  "parent_failure": {
+    "config": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/configs/exp-069-base-smoke-attempt-2.json",
+      "bytes": 5082,
+      "mode": "0644",
+      "sha256": "5a82ba4a51afa8930394ca1bc0e8ea616add4052591d63ac8f995b9bd3d4001a"
+    },
+    "claim": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-069-representation-extraction-preflight/attempt-2-base-smoke/run-claim.json",
+      "bytes": 1059,
+      "mode": "0644",
+      "sha256": "e15f2eb30f566ce4169b08aba4c84b776b0afd6c2ee71ade9e6d4316f9a3b306"
+    },
+    "run": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-069-representation-extraction-preflight/attempt-2-base-smoke/run.json",
+      "bytes": 506,
+      "mode": "0644",
+      "sha256": "1b50711f654c445c75f485064540fdcf76b873e7251b50a93aebfb91d0f05320"
+    }
+  },
+  "source_consumer": {
+    "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/run_exp069_base_smoke_attempt2.py",
+    "bytes": 19644,
+    "mode": "0644",
+    "sha256": "0aa9e041f212b085cef8fadc653a7bbb73ee6d3ff8fb626742df2b28e2bd2cc9"
+  },
+  "source_verifier": {
+    "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/verify_exp069_base_smoke_attempt2.py",
+    "bytes": 21669,
+    "mode": "0644",
+    "sha256": "8e74ac70fed067731bb23f4bdf1e6a1cc7187871e1ca59ba471df33e97406c1f"
+  },
+  "implementation": {
+    "protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/exp-069-base-smoke-attempt-3-directory-resolution.md",
+      "bytes": 2156,
+      "mode": "0644",
+      "sha256": "468c0da937aceec43aa9be0d3e6477c7c5fdb64c62d07cb920faaa17c8b219b7"
+    },
+    "runner": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/run_exp069_base_smoke_attempt3.py",
+      "bytes": 11671,
+      "mode": "0644",
+      "sha256": "aa76ec892b161a994a17db709aa47446d05e0b3c24ffe19589b594f3ad878e89"
+    },
+    "verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/verify_exp069_base_smoke_attempt3.py",
+      "bytes": 9647,
+      "mode": "0644",
+      "sha256": "b9d7be93b391d247d01ca395ee6cfa4862c08efca13452bb21b02e8d3a789804"
+    },
+    "tests": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/tests/test_exp069_base_smoke_attempt3.py",
+      "bytes": 4113,
+      "mode": "0644",
+      "sha256": "a0b3c30a5288a6b094c3448b9bd6c5b2243b72781ce394ccbf24c28918a40671"
+    }
+  },
+  "environment": {
+    "python_executable": "/Users/phoenix/miniconda3/envs/phase-a-runtime/bin/python",
+    "python_version": "3.11.15",
+    "architecture": "arm64",
+    "packages": {
+      "numpy": "2.4.6",
+      "mlx": "0.32.0",
+      "mlx_lm": "0.31.3",
+      "safetensors": "0.8.0",
+      "tokenizers": "0.22.2",
+      "transformers": "5.14.1"
+    },
+    "qwen3_source": {
+      "path": "/Users/phoenix/miniconda3/envs/phase-a-runtime/lib/python3.11/site-packages/mlx_lm/models/qwen3.py",
+      "bytes": 7364,
+      "mode": "0644",
+      "sha256": "2284df96ecb669109b281df4534470b18f285aa9a5e41735ad682f601f93c639"
+    },
+    "offline_environment": {
+      "PYTHONNOUSERSITE": "1",
+      "HF_HUB_OFFLINE": "1",
+      "TRANSFORMERS_OFFLINE": "1",
+      "TOKENIZERS_PARALLELISM": "false",
+      "OMP_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    }
+  },
+  "parent_static": {
+    "config": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/configs/exp-069-representation-extraction-preflight.json",
+      "bytes": 13544,
+      "mode": "0644",
+      "sha256": "a7f7ac209d9d3993c901cbdf92b20b64e3f810fcdd97a50e4e7064411f6597e2"
+    },
+    "static_run": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-069-representation-extraction-preflight/attempt-1/static.json",
+      "bytes": 1168,
+      "mode": "0644",
+      "sha256": "554b1641049963ecfd20bdb1cdce84552b51de937a0b697c355ca606dba8bc9f"
+    },
+    "static_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-069-representation-extraction-preflight/attempt-1/static-verification.json",
+      "bytes": 1347,
+      "mode": "0644",
+      "sha256": "7bc9601a3546cd48ae9b2c7d4e42bc4e8caf2a0b4134bdc58080b82577d7150d"
+    },
+    "input_manifest": {
+      "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-069-representation-extraction-preflight/attempt-1/input-manifest.json",
+      "bytes": 34133,
+      "mode": "0600",
+      "sha256": "7c6fc8546a472265317dcd8af7516bdf837a2db525f5f805b17531e4e590146d"
+    }
+  },
+  "source_runner": {
+    "path": "experiments/stack-overflow-emotion-gold/phase-b-representation/run_exp069_preflight.py",
+    "bytes": 54903,
+    "mode": "0644",
+    "sha256": "cb2655c61f7ff4e49ed9de47cbd92176e9547273e3e378f7c26ae587b2735bb0"
+  },
+  "smoke": {
+    "points": ["H-1", "H7", "H15", "H19", "H20", "H27", "H31", "H35", "HF"],
+    "rows": 32,
+    "hidden_size": 2560,
+    "comparison_dtype": "float32",
+    "rtol": 0.0,
+    "m2_hf_atol": 0.00001,
+    "standard_hf_atol": 0.00001
+  },
+  "resources": {
+    "wall_minutes": 20,
+    "peak_mlx_gb": 10.0,
+    "model_loads": 1,
+    "forward_rows": 32,
+    "training": false,
+    "api_cost_usd": 0
+  },
+  "outputs": {
+    "public_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/runs/exp-069-representation-extraction-preflight/attempt-3-base-smoke",
+    "private_root": "experiments/stack-overflow-emotion-gold/phase-b-representation/private/exp-069-representation-extraction-preflight/attempt-3-base-smoke"
+  },
+  "claim_boundary": "A 32-row Frozen-Qwen base representation-path smoke bound to EXP-069 attempt-1 static verification and attempt-2 directory-resolution failure; no M3 checkpoint parity, classification-performance, representation-effect, functional-dependency, independent-data, deployment-efficiency, production, forum-generalization, or emotion-mechanism claim."
+}

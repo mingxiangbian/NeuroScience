@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>话题情绪工作台 · Forum Emotion</title>
+  <link rel="stylesheet" href="/app.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到工作区</a>
+  <header class="app-header"><div><span class="wordmark">Forum Emotion</span><span class="edition">话题情绪工作台</span></div><div class="local-mark">本机 · 私有数据 <button id="logout" class="quiet" hidden>锁定</button></div></header>
+  <section id="login-panel" class="login-panel" aria-labelledby="login-title">
+    <p class="eyebrow">LOCAL RESEARCH WORKSPACE</p>
+    <h1 id="login-title">打开工作台</h1>
+    <p>用本机访问令牌解锁。服务只监听回环地址，不连接外部模型 API。</p>
+    <form id="login-form"><label for="token">访问令牌</label><input id="token" type="password" autocomplete="off" required><button type="submit">解锁</button></form>
+    <p class="hint">令牌保存在本模块的 <code>private/access-token</code>，启动命令会提示文件位置。</p>
+  </section>
+  <div id="workspace" class="workspace" hidden>
+    <aside aria-label="分析任务"><div class="aside-heading"><h2>任务</h2><button id="new-task" class="quiet">＋ 新建</button></div><div id="job-list" class="job-list"></div><div class="aside-note"><p>全文 7 天<br>逐条结果 30 天<br>聚合结果 90 天</p><p>可随时删除单个任务。</p></div></aside>
+    <main id="main" tabindex="-1">
+      <section id="new-panel" aria-labelledby="new-title">
+        <p class="eyebrow">NEW ANALYSIS</p><h1 id="new-title">新建话题分析</h1>
+        <p class="lede">冻结模型，对一份可追溯的内容快照作描述性分析。</p>
+        <form id="job-form">
+          <label for="job-name">任务名称</label><input id="job-name" name="name" maxlength="120" placeholder="例如 Python · 8 月第 4 周" required>
+          <div class="form-row"><div><label for="source">内容来源</label><select id="source"><option value="upload">上传 CSV / JSON / JSONL</option><option value="stackexchange">Stack Overflow · 问题队列采样</option><option value="discourse" disabled>Discourse · Python Help</option></select></div><div><label for="mode">推理模式</label><select id="mode"><option value="m1_only">M1 only · RoBERTa</option><option value="research">Research · 冻结路由，无降级</option><option value="demo">Demo · 有预算，可降级到 M1</option></select></div></div>
+          <p id="mode-note" class="hint"></p>
+          <div id="budget-field" hidden><label for="qwen-budget">本任务最多尝试 M3 的次数</label><input id="qwen-budget" type="number" min="0" max="500" value="20"><p class="hint">失败尝试也计入预算；精确输入缓存命中不占次数。缓存只在本任务内复用。</p></div>
+          <fieldset id="upload-fields"><legend>内容文件</legend><label for="upload-file">选择 UTF-8 文件（最多 5 MiB / 500 条）</label><input id="upload-file" type="file" accept=".csv,.json,.jsonl,text/csv,application/json">
+            <div class="form-row"><div><label for="format">格式</label><select id="format"><option value="jsonl">JSONL</option><option value="csv">CSV</option><option value="json">JSON 数组</option></select></div><div><label for="text-column">文本字段</label><input id="text-column" value="text" maxlength="100"></div></div>
+            <label for="upload-content">或直接粘贴</label><textarea id="upload-content" rows="7" spellcheck="false" placeholder='{"text":"Your English forum text","url":"https://…","created_at":"2026-08-23T12:00:00Z"}'></textarea>
+            <p class="hint">只需文本字段。可选 id、url、created_at；时间必须带时区。其他字段（包括标签）不会用于评估。原文不作归一化，缺日期的内容不进入趋势图。</p>
+          </fieldset>
+          <fieldset id="discourse-fields" hidden><legend>Python Discussions · Python Help</legend>
+            <p class="hint">固定来源 <a href="https://discuss.python.org/c/users/7" target="_blank" rel="noopener noreferrer">discuss.python.org / Python Help</a>。按主题创建时间降序取分类前缀，再按帖子序号读取。此入口不运行站内搜索，也不承诺固定日期窗口。</p>
+            <div class="form-row"><div><label for="topic-limit">主题上限</label><input id="topic-limit" type="number" value="100" min="1" max="100"></div><div><label for="discourse-item-limit">帖子上限</label><input id="discourse-item-limit" type="number" value="400" min="1" max="500"></div></div>
+            <p class="hint">实际时间范围、停止原因和来源信息随快照保存。只描述本次采集前缀，不代表全部 Python 社区。</p>
+          </fieldset>
+          <fieldset id="stack-fields" hidden><legend>Stack Overflow 采样窗口</legend>
+            <div class="form-row"><div><label for="tags">标签（多个以分号分隔）</label><input id="tags" value="python" maxlength="200"></div><div><label for="query">补充检索词（可空）</label><input id="query" maxlength="200"></div></div>
+            <div class="form-row"><div><label for="from-date">起始日期 · UTC，包含</label><input id="from-date" type="date"></div><div><label for="to-date">结束日期 · UTC，不包含</label><input id="to-date" type="date"></div></div>
+            <div class="form-row"><div><label for="question-limit">问题上限</label><input id="question-limit" type="number" value="100" min="1" max="100"></div><div><label for="item-limit">总内容上限</label><input id="item-limit" type="number" value="500" min="1" max="500"></div></div>
+            <div class="checks"><label><input id="include-questions" type="checkbox" checked>问题</label><label><input id="include-answers" type="checkbox" checked>回答</label><label><input id="include-comments" type="checkbox" checked>评论</label></div>
+            <p class="hint">先按创建时间升序取窗口内的问题，再取这些问题相关、同窗口内的回答与评论。不是全站事件流；上限、API 配额与停止原因随快照保留。</p>
+          </fieldset>
+          <p class="boundary">结果仅描述这份采样内容中的模型预测，不代表论坛整体情绪或模型在新数据上的准确率。CancerEmo 等外部金标泛化本阶段不执行。</p>
+          <button id="submit-job" type="submit">创建并开始分析</button>
+        </form>
+      </section>
+      <section id="detail-panel" hidden aria-labelledby="detail-title">
+        <div class="detail-heading"><div><p class="eyebrow" id="detail-source"></p><h1 id="detail-title"></h1></div><span class="status" id="detail-state"></span></div>
+        <p id="job-meta" class="hint"></p><div class="progress-line"><progress id="job-progress" max="1" value="0"></progress><span id="progress-copy"></span></div><p id="execution-progress" class="hint" role="status" hidden></p><p id="job-error" class="error" hidden></p>
+        <div class="toolbar"><button id="cancel-job" class="secondary">取消任务</button><button id="replay-job" class="secondary">重放此快照</button><a id="export-job" class="button secondary">导出 JSON</a><a id="export-csv" class="button secondary">逐条 CSV</a><button id="clear-raw-job" class="quiet danger">清除全文</button><button id="delete-job" class="quiet danger">删除任务</button></div>
+        <p class="boundary">预测并非金标。多标签比例可相加超过 100%；neutral 仅表示六个标签均未触发。未完成或失败的内容不计入预测分母。</p>
+        <section aria-labelledby="overview-title"><h2 id="overview-title">本次快照</h2><dl id="summary" class="summary"></dl></section>
+        <section class="analysis-section" aria-labelledby="emotion-title"><h2 id="emotion-title">预测标签分布</h2>
+          <div class="view-controls"><label for="weighting">统计单位<select id="weighting"><option value="object_weighted">内容条数 · Object-weighted</option><option value="normalized_unique_text">规范化文本组 · Unique-text</option></select></label><label for="distribution-metric">比例口径<select id="distribution-metric"><option value="prevalence">标签出现率</option><option value="positive_share">阳性标签构成</option></select></label></div>
+          <p id="view-note" class="hint" aria-live="polite"></p><p id="derived-unavailable" class="boundary" hidden></p><div id="emotion-bars"></div>
+        </section>
+        <section class="analysis-section trend-section" aria-labelledby="trend-title"><div class="section-heading"><h2 id="trend-title">六标签趋势 · UTC</h2><label class="inline-label" for="trend-resolution">时间桶<select id="trend-resolution"><option value="daily">按日</option><option value="weekly">按周 · 周一开始</option></select></label></div><div id="trend"></div><p id="trend-note" class="hint">每个时间桶独立计算所选口径。无日期的内容不进入趋势；没有内容的日期不补零。</p></section>
+        <section class="analysis-section" aria-labelledby="strata-title"><h2 id="strata-title">对象类型与路由分层</h2><div id="object-strata"></div><div id="route-strata"></div><p class="hint">沿用当前权重与比例开关，每层独立计算分母并归组。路由分组来自模型决策，不是随机对照；unknown 表示缺少该决策回执。跨层的唯一组数不能相加当作全局唯一组数。</p></section>
+        <div class="two-columns"><section aria-labelledby="routing-title"><h2 id="routing-title">路由与实际计算</h2><dl id="routing" class="key-values"></dl><p id="routing-note" class="hint">始终按真实内容与 forward 计数，不随 Unique-text 视图变化。成对分歧只覆盖同时获得两模型决策的子集。</p></section><section aria-labelledby="diagnostic-title"><h2 id="diagnostic-title">预测与输入诊断</h2><dl id="diagnostics" class="key-values"></dl><p id="cardinality" class="hint"></p><p class="hint">Cardinality 是每条内容触发的标签数。熵与阈值距描述模型输出，不能解释为外域准确率或正确概率。</p></section></div>
+        <section class="analysis-section" aria-labelledby="tokens-title"><h2 id="tokens-title">Token 长度与截断</h2><div id="token-diagnostics"></div><p class="hint">按有长度记录的成功回执统计，含精确输入缓存命中；不是额外调用次数。M3 仅覆盖实际获得 M3 输出的子集；缺失记录显示为不可用。</p></section>
+        <section aria-labelledby="items-title"><div class="section-heading"><h2 id="items-title">内容与来源</h2><label class="inline-label">筛选标签<select id="label-filter"><option value="all">全部内容</option><option value="neutral">neutral</option><option value="love">love</option><option value="joy">joy</option><option value="surprise">surprise</option><option value="anger">anger</option><option value="sadness">sadness</option><option value="fear">fear</option></select></label></div><div id="items" class="items"></div><p id="items-note" class="hint"></p></section>
+        <details><summary>采样合同与运行边界</summary><pre id="manifest"></pre></details>
+      </section>
+    </main>
+  </div>
+  <p id="notice" class="notice" role="status" aria-live="polite" hidden></p>
+  <dialog id="delete-dialog"><form method="dialog"><h2>删除这个任务？</h2><p>任务及其全文、逐条结果和聚合记录会移除。运行中的计算会先停止。此操作无法撤销。</p><div class="toolbar"><button value="cancel" class="secondary">保留任务</button><button value="confirm" class="danger-button">确认删除</button></div></form></dialog>
+  <dialog id="clear-raw-dialog"><form method="dialog"><h2>清除这个任务的全文？</h2><p>删除原文、来源原始内容和预览，保留元数据、预测及聚合。此后不能重放该快照。系统备份和已导出的副本不在本次清除范围内。</p><div class="toolbar"><button value="cancel" class="secondary">保留全文</button><button value="confirm" class="danger-button">确认清除全文</button></div></form></dialog>
+</body>
+</html>

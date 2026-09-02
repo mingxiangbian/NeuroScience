@@ -1,0 +1,171 @@
+{
+  "five_label_macro_f1_gain_over_m1": 0.11806758468393297,
+  "m1": {
+    "five_label_macro_f1": 0.6884894703360734,
+    "hamming_loss": 0.05228174603174603,
+    "macro_f1": 0.5737412252800612,
+    "micro_f1": 0.754083061129258,
+    "per_label": {
+      "anger": {
+        "f1": 0.8040912667191188,
+        "precision": 0.7825421133231241,
+        "predicted_positive": 653,
+        "recall": 0.8268608414239482,
+        "support": 618
+      },
+      "fear": {
+        "f1": 0.6013986013986014,
+        "precision": 0.6231884057971014,
+        "predicted_positive": 69,
+        "recall": 0.581081081081081,
+        "support": 74
+      },
+      "joy": {
+        "f1": 0.5737931034482758,
+        "precision": 0.5445026178010471,
+        "predicted_positive": 382,
+        "recall": 0.6064139941690962,
+        "support": 343
+      },
+      "love": {
+        "f1": 0.8401114206128134,
+        "precision": 0.8012752391073327,
+        "predicted_positive": 941,
+        "recall": 0.882903981264637,
+        "support": 854
+      },
+      "sadness": {
+        "f1": 0.6230529595015576,
+        "precision": 0.625,
+        "predicted_positive": 160,
+        "recall": 0.6211180124223602,
+        "support": 161
+      },
+      "surprise": {
+        "f1": 0.0,
+        "precision": 0.0,
+        "predicted_positive": 0,
+        "recall": 0.0,
+        "support": 31
+      }
+    },
+    "rows": 3360,
+    "subset_accuracy": 0.7598214285714285,
+    "subset_error": 0.24017857142857146
+  },
+  "m3": {
+    "five_label_macro_f1": 0.710372070265746,
+    "hamming_loss": 0.05233134920634921,
+    "macro_f1": 0.6576332908780207,
+    "micro_f1": 0.7646665179567254,
+    "per_label": {
+      "anger": {
+        "f1": 0.8018223234624147,
+        "precision": 0.7553648068669528,
+        "predicted_positive": 699,
+        "recall": 0.8543689320388349,
+        "support": 618
+      },
+      "fear": {
+        "f1": 0.6282051282051282,
+        "precision": 0.5975609756097561,
+        "predicted_positive": 82,
+        "recall": 0.6621621621621622,
+        "support": 74
+      },
+      "joy": {
+        "f1": 0.6183844011142061,
+        "precision": 0.592,
+        "predicted_positive": 375,
+        "recall": 0.6472303206997084,
+        "support": 343
+      },
+      "love": {
+        "f1": 0.8347368421052631,
+        "precision": 0.7581261950286807,
+        "predicted_positive": 1046,
+        "recall": 0.9285714285714286,
+        "support": 854
+      },
+      "sadness": {
+        "f1": 0.6687116564417178,
+        "precision": 0.6606060606060606,
+        "predicted_positive": 165,
+        "recall": 0.6770186335403726,
+        "support": 161
+      },
+      "surprise": {
+        "f1": 0.393939393939394,
+        "precision": 0.37142857142857144,
+        "predicted_positive": 35,
+        "recall": 0.41935483870967744,
+        "support": 31
+      }
+    },
+    "rows": 3360,
+    "subset_accuracy": 0.7455357142857143,
+    "subset_error": 0.2544642857142857
+  },
+  "m3_selected_rows": 327,
+  "m3_selection_rate": 0.09732142857142857,
+  "macro_f1_gain_over_m1": 0.1856912412048648,
+  "router_headroom_gate": {
+    "claim_boundary": "Non-deployable whole-vector oracle; not a router result.",
+    "minimum_gain": 0.01,
+    "passed": true,
+    "surprise_only_or_low_support_warning": false
+  },
+  "whole_vector_oracle": {
+    "five_label_macro_f1": 0.8065570550200064,
+    "hamming_loss": 0.0339781746031746,
+    "macro_f1": 0.759432466484926,
+    "micro_f1": 0.8393150363593714,
+    "per_label": {
+      "anger": {
+        "f1": 0.8686073957513768,
+        "precision": 0.8453292496171516,
+        "predicted_positive": 653,
+        "recall": 0.8932038834951457,
+        "support": 618
+      },
+      "fear": {
+        "f1": 0.8057553956834532,
+        "precision": 0.8615384615384616,
+        "predicted_positive": 65,
+        "recall": 0.7567567567567568,
+        "support": 74
+      },
+      "joy": {
+        "f1": 0.7272727272727272,
+        "precision": 0.7315634218289085,
+        "predicted_positive": 339,
+        "recall": 0.7230320699708455,
+        "support": 343
+      },
+      "love": {
+        "f1": 0.8868131868131868,
+        "precision": 0.8354037267080745,
+        "predicted_positive": 966,
+        "recall": 0.9449648711943794,
+        "support": 854
+      },
+      "sadness": {
+        "f1": 0.7443365695792881,
+        "precision": 0.777027027027027,
+        "predicted_positive": 148,
+        "recall": 0.7142857142857143,
+        "support": 161
+      },
+      "surprise": {
+        "f1": 0.5238095238095238,
+        "precision": 1.0,
+        "predicted_positive": 11,
+        "recall": 0.3548387096774194,
+        "support": 31
+      }
+    },
+    "rows": 3360,
+    "subset_accuracy": 0.8294642857142858,
+    "subset_error": 0.17053571428571423
+  }
+}

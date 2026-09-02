@@ -1,0 +1,187 @@
+{
+  "schema_version": "exp-065-label-free-projection-config-v2",
+  "experiment_id": "EXP-065",
+  "run_id": "exp-065-label-free-validation-projection",
+  "attempt_id": "attempt-2",
+  "rq_id": "RQ-S3",
+  "tier": "Major",
+  "model_seed": 42,
+  "registered_at": "2026-08-26",
+  "authorization": {
+    "basis": "User continued after the preserved EXP-065 failure; recovery changes only public metadata aliases.",
+    "scope": "EXP-065 attempt-2 materialization and independent verification only",
+    "test_access": false,
+    "model_forward": false
+  },
+  "protocol": "DEC-SO-PHASE-A-INFERENCE-V1",
+  "prerequisite": {
+    "exp064_completion": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-064-seed42-inference-bundle/bundle-complete.json",
+      "bytes": 1200,
+      "sha256": "5c8ae89a16b650353b21fc0dce8a015e439122a7c7c0ef240ab4e67445639f72",
+      "mode": "0644"
+    },
+    "exp064_verification": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-064-seed42-inference-bundle/verification.json",
+      "bytes": 1919,
+      "sha256": "00e05110b94da20bdda0c156ce4a90b16afaa84c24a1c3ffe96ade5c440a676e",
+      "mode": "0644"
+    }
+  },
+  "recovery": {
+    "prior_claim": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-065-label-free-validation-projection/run-claim.json",
+      "bytes": 435,
+      "sha256": "80b9a0d4340029b1bfdd819d8ff27fe04f244a008fd80f54b9bae5758ee4a7d2",
+      "mode": "0644"
+    },
+    "prior_run": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-065-label-free-validation-projection/run.json",
+      "bytes": 511,
+      "sha256": "6be9eaaea889cdc0cb57f55e95e2b88c2ba59c781c47f7cbe7afa1ae521e7edd",
+      "mode": "0644"
+    },
+    "reason": "public_source_alias_privacy_false_positive",
+    "method_changed": false,
+    "data_changed": false
+  },
+  "inputs": {
+    "validation": {
+      "artifact": {
+        "path": "data/stack-overflow-emotion-gold/derived-private/task-v1/validation.jsonl",
+        "bytes": 302088,
+        "sha256": "e83ea51f32c7a1a067f8ed63d499c5540a46542efefdb3afdc7de9937921e4f7",
+        "mode": "0600"
+      },
+      "row_count": 720,
+      "row_keys": [
+        "component_id",
+        "label_cardinality",
+        "labels",
+        "neutral",
+        "protocol_id",
+        "sample_id",
+        "schema_version",
+        "text"
+      ]
+    },
+    "m1_probabilities": {
+      "artifact": {
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-051-m1-roberta-cpu-recovery/seed-42/validation-predictions.npz",
+        "bytes": 108072,
+        "sha256": "ddd0bfb7e4be3336a2e8a1154e45e7866c3ea16d01717c443fb7a18a51c67ef8",
+        "mode": "0600"
+      },
+      "npz_schema": {
+        "probabilities": {"shape": [5, 720, 6], "dtype": "float32", "fortran_order": false},
+        "gold": {"shape": [720, 6], "dtype": "uint8", "fortran_order": false},
+        "fixed_predictions": {"shape": [720, 6], "dtype": "uint8", "fortran_order": false},
+        "shared_threshold_predictions": {"shape": [720, 6], "dtype": "uint8", "fortran_order": false},
+        "sample_ids": {"shape": [720], "dtype": "<U31", "fortran_order": false},
+        "component_ids": {"shape": [720], "dtype": "<U34", "fortran_order": false}
+      }
+    },
+    "m1_selection": {
+      "artifact": {
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-051-m1-roberta-cpu-recovery/seed-42/selection.json",
+        "bytes": 230,
+        "sha256": "a227cc4b2c3585c3af3ac2fcfe49c0793dc69123d247b01f35fd0ad566e120ac",
+        "mode": "0644"
+      },
+      "selected_epoch": 4
+    },
+    "m3_probabilities": {
+      "artifact": {
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/private/exp-053-m3-classification-lora/seed-42/validation-predictions.npz",
+        "bytes": 63493,
+        "sha256": "d10b3179efd4814a4fcb3fbef0e12869649894c0330a766c86922bf1fb43006f",
+        "mode": "0600"
+      },
+      "npz_schema": {
+        "probabilities": {"shape": [2, 720, 6], "dtype": "float32", "fortran_order": false},
+        "gold": {"shape": [720, 6], "dtype": "uint8", "fortran_order": false},
+        "fixed_predictions": {"shape": [720, 6], "dtype": "uint8", "fortran_order": false},
+        "shared_threshold_predictions": {"shape": [720, 6], "dtype": "uint8", "fortran_order": false},
+        "sample_ids": {"shape": [720], "dtype": "<U31", "fortran_order": false},
+        "component_ids": {"shape": [720], "dtype": "<U34", "fortran_order": false}
+      }
+    },
+    "m3_selection": {
+      "artifact": {
+        "path": "experiments/stack-overflow-emotion-gold/model-comparison/runs/exp-053-m3-classification-lora/seed-42/selection.json",
+        "bytes": 230,
+        "sha256": "29181cb31b4a68b94a45543d3459794321efd054b14c6fc3e8a01982a722f4a5",
+        "mode": "0644"
+      },
+      "selected_epoch": 2
+    }
+  },
+  "implementation": {
+    "protocol": {
+      "path": "experiments/stack-overflow-emotion-gold/protocols/dec-so-phase-a-inference-v1.md",
+      "bytes": 25885,
+      "sha256": "8baec947857016bad00bb6dae7982a7f20a036a1e3595ee6d3a9faeee96273d7",
+      "mode": "0644"
+    },
+    "runner": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/run_exp065_label_free_projection.py",
+      "bytes": 29582,
+      "sha256": "8dad7421c7f817948d3184ea8cee7e99fca230576cc1558d3542372174bfb10b",
+      "mode": "0644"
+    },
+    "verifier": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/verify_exp065_label_free_projection.py",
+      "bytes": 28105,
+      "sha256": "6326e9eb02d803fe32938e28352ad8ec51144d27c4994a53f2b503dd3a783a81",
+      "mode": "0644"
+    },
+    "tests": {
+      "path": "experiments/stack-overflow-emotion-gold/oof-router/tests/test_exp065_label_free_projection.py",
+      "bytes": 7957,
+      "sha256": "34d0acc6b579bb6593b7ab7e98a114932f2fe83b80f32d00e1e410951e6b7b6a",
+      "mode": "0644"
+    }
+  },
+  "labels": ["love", "joy", "surprise", "anger", "sadness", "fear"],
+  "projection": {
+    "rows": 720,
+    "fields": ["ordinal", "opaque_component_group", "text"],
+    "encoding": "UTF-8",
+    "json": "sorted keys compact separators allow_nan=false one LF per row terminal LF"
+  },
+  "replay": {
+    "rows": 32,
+    "ordinal_formula": "(2*k*719+31)//62 for k=0..31",
+    "m1_selected_epoch": 4,
+    "m3_selected_epoch": 2,
+    "npz_schema": {
+      "ordinal": {"shape": [32], "dtype": "int16", "fortran_order": false},
+      "m1_probabilities": {"shape": [32, 6], "dtype": "float32", "fortran_order": false},
+      "m3_probabilities": {"shape": [32, 6], "dtype": "float32", "fortran_order": false}
+    },
+    "allow_pickle": false
+  },
+  "access": {
+    "role": "EXP-065 independent data steward",
+    "label_bearing_containers_accessed": true,
+    "label_values_used": false,
+    "label_values_persisted": false,
+    "historical_prediction_values_used": false,
+    "raw_text_persisted_only_in_private_projection": true,
+    "validation_access": true,
+    "test_access": false,
+    "model_or_checkpoint_access": false,
+    "model_forward": false
+  },
+  "outputs": {
+    "public_dir": "experiments/stack-overflow-emotion-gold/oof-router/runs/exp-065-label-free-validation-projection/attempt-2",
+    "private_dir": "experiments/stack-overflow-emotion-gold/oof-router/private/exp-065-label-free-validation-projection/attempt-2"
+  },
+  "resource_budget": {
+    "maximum_formal_runs": 1,
+    "maximum_wall_minutes": 5,
+    "external_api_cost": 0,
+    "model_forward": false
+  },
+  "claim_boundary": "A private label-free validation-text projection and selected-epoch probability replay for runtime parity/latency work only; no classification metric, model-selection, test, deployment-generalization, or emotion-mechanism claim."
+}
