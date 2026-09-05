@@ -1,0 +1,36 @@
+{
+  "schema_version": "sqma-001-verification-incident-v1",
+  "incident_id": "SQMA-001-INCIDENT-002",
+  "registered_at_utc": "2026-09-03T14:17:43Z",
+  "stage": "independent-verification-recovery",
+  "verification_attempt": 2,
+  "status": "FailedBeforeVerificationOutput",
+  "failure_class": "model_directory_inventory_policy",
+  "failure_summary": "All manifest-listed model files passed identity checks, but the M1 snapshot also contains Hugging Face download-cache metadata under .cache/huggingface, which the attempt-2 verifier treated as an unregistered model file.",
+  "recovery_config": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-001-verification-recovery-attempt-2.json",
+    "bytes": 1691,
+    "sha256": "70a1aa81ab18a2e7bfc15043f9e984c89f6620eac555ed373b628d3f5a18b74a"
+  },
+  "recovery_verifier": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/verify_sqma001_recovery_attempt2.py",
+    "bytes": 5021,
+    "sha256": "5005de282422e51611dbafe395bcedb7210fb0db5eb3e19d52822a27ccda6887"
+  },
+  "sealed_run": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-001-strict-base-readiness-preflight/attempt-1/run.json",
+    "bytes": 9655,
+    "sha256": "3121683df838ed15c0aea598f0080be0d35e879f5d7d678cb81e17baf11458db"
+  },
+  "manifest_files_missing": 0,
+  "manifest_file_hash_failures": 0,
+  "m1_extra_prefix": ".cache/huggingface/",
+  "m3_extra_files": 0,
+  "run_mutated": false,
+  "runner_reexecuted": false,
+  "verification_output_written": false,
+  "model_loaded": false,
+  "private_files_opened": false,
+  "private_rows_parsed": false,
+  "recovery_scope": "Reuse the sealed run; permit only regular non-symlink M1 metadata files under the exact .cache/huggingface prefix; continue to require every manifest-listed model file and hash."
+}

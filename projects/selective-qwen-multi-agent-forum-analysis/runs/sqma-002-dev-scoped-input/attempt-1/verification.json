@@ -1,0 +1,100 @@
+{
+  "access": {
+    "agent_calls": 0,
+    "files_written_private": false,
+    "fold0_rows_decoded": 672,
+    "fold1_rows_decoded": 672,
+    "fold2_rows_decoded": 672,
+    "fold3_rows_byte_streamed": 672,
+    "fold3_rows_decoded": 0,
+    "fold4_rows_byte_streamed": 672,
+    "fold4_rows_decoded": 0,
+    "forward_executed": false,
+    "model_loaded": false,
+    "monolithic_private_bytes_streamed": true,
+    "network_accessed": false,
+    "optimizer_executed": false,
+    "private_rows_decoded": 2016,
+    "runner_imported": false,
+    "sealed_private_outputs_read": true,
+    "test_accessed": false,
+    "training_executed": false,
+    "validation_accessed": false
+  },
+  "checks": [
+    "identity_and_authorization",
+    "independent_source_replay",
+    "fold3_fold4_decode_boundary",
+    "exact_private_inventory",
+    "snapshot_schema_and_order",
+    "cross_scope_text_and_value_parity",
+    "consumer_npz_inventory_dtype_shape_and_values",
+    "mode_owner_symlink_and_hardlink",
+    "fit_allowlist",
+    "public_privacy",
+    "resource_and_access_boundary"
+  ],
+  "claim_boundary": "The independent verifier replayed the registered sources, decoded private rows only for public folds 0-2, and verified the nine sealed snapshots. Folds 3-4 private rows were byte-streamed but not decoded. No model, training, forward, Agent, validation, or test access occurred.",
+  "config": {
+    "bytes": 8348,
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-002-dev-scoped-input-materialization.json",
+    "sha256": "c7f1beb92e9fbd854f4e8e38f1885f9a78529d77eb21ee5d22097a86882b98b4"
+  },
+  "experiment_id": "SQMA-002",
+  "folds": {
+    "0": {
+      "components": 658,
+      "rows": 672,
+      "scope_count": 3
+    },
+    "1": {
+      "components": 654,
+      "rows": 672,
+      "scope_count": 3
+    },
+    "2": {
+      "components": 651,
+      "rows": 672,
+      "scope_count": 3
+    }
+  },
+  "formal_training_authorized": false,
+  "next_gate": "register_strict_agent_dev_formal_three_m1_three_m3",
+  "private_manifest": {
+    "bytes": 13327,
+    "logical_name": "private-manifest.json",
+    "mode": "0600",
+    "sha256": "8d6f8c42e1105256b569a03fcb652414df3651a8dc55ebbe2865cf28083ff06b"
+  },
+  "resources": {
+    "critical_memory_events": 0,
+    "model_or_mlx_allocations": 0,
+    "oom_or_kill_events": 0,
+    "orphan_processes_after_exit": 0,
+    "peak_rss_bytes": 53133312,
+    "private_output_bytes": 2286525,
+    "wall_seconds": 0.24424054200062528
+  },
+  "run": {
+    "bytes": 9506,
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-002-dev-scoped-input/attempt-1/run.json",
+    "sha256": "552cb5ce572ec9e4a94498bf1d8d759ea903146f293a703d10425c7d859049b6"
+  },
+  "run_claim": {
+    "bytes": 1562,
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-002-dev-scoped-input/attempt-1/run-claim.json",
+    "sha256": "087f2be13bfbb5fdfd44ee76c698893d6521a25fe063a302e2ae42f8c13739f9"
+  },
+  "schema_version": "sqma-002-verification-v1",
+  "scoped_inputs_verified": true,
+  "started_at_utc": "2026-09-03T15:53:24.242609Z",
+  "status": "Passed",
+  "totals": {
+    "components": 1963,
+    "fold3_output_rows": 0,
+    "fold4_output_rows": 0,
+    "private_artifacts": 9,
+    "rows_per_scope": 2016
+  },
+  "verified_at_utc": "2026-09-03T15:53:24.486860Z"
+}

@@ -1,0 +1,102 @@
+{
+  "schema_version": "sqma-003-capability-gate-incident-v1",
+  "incident_id": "SQMA-003-INCIDENT-002",
+  "experiment_id": "SQMA-003",
+  "attempt_id": "attempt-2",
+  "registered_at_utc": "2026-09-03T18:35:02Z",
+  "stage": "independent-capability-verification",
+  "status": "Failed",
+  "failure_class": "preregistered_capability_format_gate",
+  "failure_summary": "Attempt 2 completed all 144 classifier-free calls but failed the frozen overall schema, per-role schema, and technical-fallback gates. Independent verifier exited 1; no verification or completion artifact was written.",
+  "artifacts": {
+    "config": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-003-classifier-free-agent-preflight-attempt-2.json",
+      "bytes": 10055,
+      "sha256": "ed557234b8c16999ee69ace9e62c34200644fe4a778c379dc60d939d7a5b8795"
+    },
+    "run_claim": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-003-classifier-free-agent-preflight/attempt-2/run-claim.json",
+      "bytes": 469,
+      "sha256": "b10db53dbb8afe55abd3fc77130b7c734a0b607ad72df868a528309fba17cc30"
+    },
+    "run": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-003-classifier-free-agent-preflight/attempt-2/run.json",
+      "bytes": 4024,
+      "sha256": "6a865bd469de9a57fb094f3820a8e4d2791ccb18634510096ef87fc9b1005695"
+    },
+    "incident_protocol": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/protocols/sqma-003-incident-001-and-attempt-2.md",
+      "bytes": 9522,
+      "sha256": "b10c8b0b1131e2f9e30915eb6637066ef9c08c145831fbe448ae1e26993aa2e5"
+    }
+  },
+  "run_terminal": {
+    "run_status": "CompletedAwaitingVerification",
+    "gate_passed": false,
+    "next_gate": "stop_capability_gate_failed",
+    "physical_calls_complete": 144,
+    "physical_calls_planned": 144
+  },
+  "observed_gate": {
+    "raw_schema_valid_rate": 0.8,
+    "per_role_valid_rate": {
+      "evidence_appraisal": 0.9166666666666666,
+      "pragmatics_critic": 0.9583333333333334,
+      "judge": 0.875,
+      "single_agent": 0.625
+    },
+    "technical_fallback_rows": 4,
+    "token_cap_hits": 0,
+    "mean_modal_exact_label_set_agreement": 1.0,
+    "full_tune_projected_wall_seconds": 108565.48860425386
+  },
+  "frozen_gate": {
+    "planned_call_terminal_rate": 1.0,
+    "raw_schema_valid_rate_overall_minimum": 0.98,
+    "raw_schema_valid_rate_per_role_minimum": 0.95,
+    "maximum_locked_S3_technical_fallback_rows": 1,
+    "evidence_exact_substring_rate": 1.0,
+    "out_of_ontology_labels": 0,
+    "maximum_token_cap_hits": 0,
+    "mean_modal_exact_label_set_agreement_minimum": 0.85,
+    "accuracy_scoring": false
+  },
+  "resources": {
+    "wall_seconds": 2414.624071084021,
+    "model_load_seconds": 2.5890174580272287,
+    "mlx_peak_bytes": 8568852560,
+    "peak_rss_bytes": 1910095872,
+    "private_output_bytes": 200437,
+    "resource_gate_passed": true,
+    "stability_gate_passed": true,
+    "full_tune_projection_below_48_hours": true
+  },
+  "access": {
+    "classifier_free": true,
+    "adapter_loaded": false,
+    "classifier_outputs_accessed": false,
+    "fold3_accessed": false,
+    "fold4_accessed": false,
+    "gold_accessed": false,
+    "model_training": false,
+    "network_accessed": false,
+    "validation_accessed": false,
+    "test_accessed": false
+  },
+  "independent_verifier": {
+    "exit_code": 1,
+    "outcome": "capability_gate_failed",
+    "verification_output_written": false,
+    "completion_output_written": false,
+    "verifier_recovery_applicable": false
+  },
+  "decision": {
+    "sqma003_complete": false,
+    "attempt3_authorized": false,
+    "formal_agent_tune_authorized": false,
+    "sqma004_executed": false,
+    "stop_required": true,
+    "next_action": "none_without_new_research_decision"
+  },
+  "claim_boundary": "This is a classifier-free structured-output capability failure, not an accuracy, role-value, external-generalization, or emotion-mechanism result. SQMA-004 and the full Agent-Tune comparison were not executed. Fold 3 remains unavailable for Prompt revision."
+}

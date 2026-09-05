@@ -1,0 +1,83 @@
+{
+  "schema_version": "sqma-d0-classifier-free-amendment-v1",
+  "registered_at": "2026-09-04",
+  "status": "registered_superseding_classifier_assisted_first_comparison",
+  "decision": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/protocols/dec-sqma-classifier-free-v1.md",
+    "bytes": 2991,
+    "sha256": "a19e540f4b17c188ee995ae15a540092feb350c263424be2b67dc8bc6aa10235"
+  },
+  "prompt_bundle": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/prompts/agent-bundle-v1-classifier-free.json",
+    "bytes": 6209,
+    "sha256": "fece44975902c771c9e4f47bc40a625e9564ce8acaefc10197ae36a5fa682183"
+  },
+  "output_schema": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/schemas/agent-output-v2.schema.json",
+    "bytes": 6492,
+    "sha256": "ed91495101ef7c1c05854110b9a8dfb228fa3c9754ea21f79ccc1ab54aa62d7f"
+  },
+  "runtime_validator": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/validate_agent_output_v2.py",
+    "bytes": 13936,
+    "sha256": "4cb30b6d485aae1554996155de6b0743554d250676cbd98dd8cc5942e4255af6",
+    "tests_path": "projects/selective-qwen-multi-agent-forum-analysis/tests/test_validate_agent_output_v2.py",
+    "tests_bytes": 8394,
+    "tests_sha256": "5756b19c4b495a9ad017d0a1d1bb3f869025932d97e4da4faef5e692e10843de"
+  },
+  "model": {
+    "repo_id": "Qwen/Qwen3-4B",
+    "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "format": "MLX_BF16_unquantized",
+    "adapter": null,
+    "enable_thinking": false,
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "top_k": 20,
+    "context_token_cap": 4096,
+    "analysis_text_token_cap": 1024
+  },
+  "information_boundary": {
+    "external_fields": ["analysis_text", "ontology"],
+    "classifier_result": false,
+    "m1_m3_outputs": false,
+    "router_outputs": false,
+    "gold": false,
+    "external_tools": false
+  },
+  "systems": {
+    "S1": "one_classifier_free_single_agent_call",
+    "S2a": "three_classifier_free_single_agent_calls_per_label_majority",
+    "S2b": "first_two_or_three_calls_from_the_same_single_pool_under_S3_token_ceiling",
+    "S3": "evidence_appraisal_then_pragmatics_critic_then_judge"
+  },
+  "failure_policy": {
+    "qwen_repair_calls": 0,
+    "invalid_final_labels": [],
+    "abstain_final_labels": [],
+    "self_consistency_invalid_vote": [],
+    "self_consistency_abstain_vote": [],
+    "even_call_label_tie": "label_absent"
+  },
+  "execution_order": [
+    "SQMA-003_classifier_free_agent_dev_preflight",
+    "independent_Agent_Tune_fold3_materialization",
+    "full_672_row_Agent_Tune_matched_comparison"
+  ],
+  "cancelled_current_stage": {
+    "strict_m1_m3_retraining": true,
+    "reason": "Not required for the classifier-free role-value question.",
+    "SQMA_001_and_002_history_preserved": true
+  },
+  "authorization": {
+    "method_amendment": true,
+    "model_training": false,
+    "adapter_loading": false,
+    "agent_preflight_execution": false,
+    "tune_access": false,
+    "confirm_access": false,
+    "validation_access": false,
+    "test_access": false
+  }
+}
+

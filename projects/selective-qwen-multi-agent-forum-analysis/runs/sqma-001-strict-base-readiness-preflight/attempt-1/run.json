@@ -1,0 +1,260 @@
+{
+  "access": {
+    "agent_calls": 0,
+    "confirm_opened": false,
+    "files_written_private": false,
+    "forward_executed": false,
+    "model_bytes_hashed": true,
+    "model_loaded": false,
+    "network_accessed": false,
+    "private_files_opened": false,
+    "private_rows_parsed": false,
+    "public_fold_metadata_accessed": true,
+    "runtime_metadata_probed": true,
+    "test_accessed": false,
+    "training_executed": false,
+    "tune_accessed": false,
+    "validation_accessed": false
+  },
+  "active_dev_fits": [
+    {
+      "fit_id": "dev-h0",
+      "heldout": {
+        "component_membership_sha256": "18dbb847e2b76786fb69f46dcb52a6c557348a3f3e0f85fcb5634f3059afa5dc",
+        "components": 658,
+        "row_membership_sha256": "c827258b5a04983e6a3275629753dd5d4f941d7f6e17573bebf05708b9dab7c1",
+        "rows": 672,
+        "sample_membership_sha256": "bee1720141a9d6283aea78d8d1b5463b36df7794dafdb4bc6cf79666901b36eb",
+        "sample_order_sha256": "bee1720141a9d6283aea78d8d1b5463b36df7794dafdb4bc6cf79666901b36eb"
+      },
+      "heldout_folds": [
+        0
+      ],
+      "m1_schedule": {
+        "batch_size": 16,
+        "planned_scheduler_epochs": 5,
+        "scheduler_horizon_steps": 420,
+        "selected_stop_epoch": 4,
+        "selected_stop_steps": 336,
+        "steps_per_epoch": 84,
+        "training_rows": 1344,
+        "warmup_steps": 42
+      },
+      "m3_schedule": {
+        "batch_size": 1,
+        "epochs": 2,
+        "optimizer_steps": 2688,
+        "steps_per_epoch": 1344,
+        "training_rows": 1344
+      },
+      "phase": "dev",
+      "train_folds": [
+        1,
+        2
+      ],
+      "training": {
+        "component_membership_sha256": "bf811e257ff74e368f0a59403079d9563659850564c437633f6f6026042c4540",
+        "components": 1305,
+        "row_membership_sha256": "4e2e7fd95e29e0533e6fbda75075b1bed8e17b4cff4351934bb71596f8c71c0e",
+        "rows": 1344,
+        "sample_membership_sha256": "21d1e15a12dc37caa4b3e50c1c030c4177d121fd4f82bd27e7665bf5ff192e0e",
+        "sample_order_sha256": "21d1e15a12dc37caa4b3e50c1c030c4177d121fd4f82bd27e7665bf5ff192e0e"
+      }
+    },
+    {
+      "fit_id": "dev-h1",
+      "heldout": {
+        "component_membership_sha256": "4cb12ca3c60938d74371887e2698c068e7ade8c8070107fd0a66b69accb0eabd",
+        "components": 654,
+        "row_membership_sha256": "5fbe916de4ee482179faf848baee11643d4970c0e1bd19b469245ce3665bb18f",
+        "rows": 672,
+        "sample_membership_sha256": "22dfbeea7a324171b56b43805b899de8c374559008bdc67d3c318a86925066f8",
+        "sample_order_sha256": "22dfbeea7a324171b56b43805b899de8c374559008bdc67d3c318a86925066f8"
+      },
+      "heldout_folds": [
+        1
+      ],
+      "m1_schedule": {
+        "batch_size": 16,
+        "planned_scheduler_epochs": 5,
+        "scheduler_horizon_steps": 420,
+        "selected_stop_epoch": 4,
+        "selected_stop_steps": 336,
+        "steps_per_epoch": 84,
+        "training_rows": 1344,
+        "warmup_steps": 42
+      },
+      "m3_schedule": {
+        "batch_size": 1,
+        "epochs": 2,
+        "optimizer_steps": 2688,
+        "steps_per_epoch": 1344,
+        "training_rows": 1344
+      },
+      "phase": "dev",
+      "train_folds": [
+        0,
+        2
+      ],
+      "training": {
+        "component_membership_sha256": "d8a65d681095c75d270436aced00b2d728593f7d8c67a77213ab908828139e41",
+        "components": 1309,
+        "row_membership_sha256": "f0ae5aa6e5a790e39068ba620268dcfbb25ed024d7fb5015d7a16a7a6493b024",
+        "rows": 1344,
+        "sample_membership_sha256": "886a7cb03eee9eeed9f2cd1827a083557a37a455e26ffce25fdb8b83dc6aff2e",
+        "sample_order_sha256": "886a7cb03eee9eeed9f2cd1827a083557a37a455e26ffce25fdb8b83dc6aff2e"
+      }
+    },
+    {
+      "fit_id": "dev-h2",
+      "heldout": {
+        "component_membership_sha256": "c8836c38a79160f16a9fda19aacee8d7edde8ede4667be7f72a9aa45814f5260",
+        "components": 651,
+        "row_membership_sha256": "1538cebe05c0b0bf8f5a3a7a186ab3e46a70bfb7da20b7229e949018575d5ec9",
+        "rows": 672,
+        "sample_membership_sha256": "9d239194b833f53a39f09d249190bcddd50655b95d677e1d8592a874c7adc8b0",
+        "sample_order_sha256": "9d239194b833f53a39f09d249190bcddd50655b95d677e1d8592a874c7adc8b0"
+      },
+      "heldout_folds": [
+        2
+      ],
+      "m1_schedule": {
+        "batch_size": 16,
+        "planned_scheduler_epochs": 5,
+        "scheduler_horizon_steps": 420,
+        "selected_stop_epoch": 4,
+        "selected_stop_steps": 336,
+        "steps_per_epoch": 84,
+        "training_rows": 1344,
+        "warmup_steps": 42
+      },
+      "m3_schedule": {
+        "batch_size": 1,
+        "epochs": 2,
+        "optimizer_steps": 2688,
+        "steps_per_epoch": 1344,
+        "training_rows": 1344
+      },
+      "phase": "dev",
+      "train_folds": [
+        0,
+        1
+      ],
+      "training": {
+        "component_membership_sha256": "400302db8e8b47dc437e10c351983ff5314718d3ab77fec7c0b1cb860d139930",
+        "components": 1312,
+        "row_membership_sha256": "47b2a5944594a1a7bd40ee954b7f5d835e4fd198f92506d58b0ab3e68960af83",
+        "rows": 1344,
+        "sample_membership_sha256": "40d7ae6262e5fccafb093992bc9748557cbce8e3f6daec1d9c85cb64b49a3797",
+        "sample_order_sha256": "40d7ae6262e5fccafb093992bc9748557cbce8e3f6daec1d9c85cb64b49a3797"
+      }
+    }
+  ],
+  "claim_boundary": "Static Agent-Dev strict-base identities and the three-fit public fold plan were checked without opening private sources, loading models, training, forwarding, calling Agents, or producing strict outputs. Formal training remains unauthorized.",
+  "completed_at_utc": "2026-09-03T14:14:07.454354Z",
+  "config": {
+    "bytes": 10293,
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-001-strict-base-readiness-preflight.json",
+    "sha256": "64b4be6b4b9b05d6d29a525fef256412c9c0917e0132ac6dfa158f9e0e48fba0"
+  },
+  "experiment_id": "SQMA-001",
+  "model_assets": {
+    "m1": {
+      "all_file_hashes_verified": true,
+      "file_count": 7,
+      "framework_imported": false,
+      "manifest_sha256": "b6e508ca9783b9e79e3cfc445f3abc7d2792ac5cfa6f44a9b3cf5d5607cd30b6",
+      "repo_id": "FacebookAI/roberta-base",
+      "revision": "e2da8e2f811d1448a5b465c236feacd80ffbac7b",
+      "total_bytes": 501538643
+    },
+    "m3": {
+      "all_file_hashes_verified": true,
+      "file_count": 9,
+      "framework_imported": false,
+      "manifest_sha256": "da447350d9e43213dacc1202da03b50d7e7114b0a4fe2904ff353240b404a641",
+      "repo_id": "Qwen/Qwen3-4B",
+      "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+      "total_bytes": 8056445038
+    }
+  },
+  "next_gate": "independent_dev_scoped_input_materialization",
+  "public_fold_contract": {
+    "active_folds": {
+      "0": {
+        "component_membership_sha256": "18dbb847e2b76786fb69f46dcb52a6c557348a3f3e0f85fcb5634f3059afa5dc",
+        "components": 658,
+        "row_membership_sha256": "c827258b5a04983e6a3275629753dd5d4f941d7f6e17573bebf05708b9dab7c1",
+        "rows": 672,
+        "sample_membership_sha256": "bee1720141a9d6283aea78d8d1b5463b36df7794dafdb4bc6cf79666901b36eb",
+        "sample_order_sha256": "bee1720141a9d6283aea78d8d1b5463b36df7794dafdb4bc6cf79666901b36eb"
+      },
+      "1": {
+        "component_membership_sha256": "4cb12ca3c60938d74371887e2698c068e7ade8c8070107fd0a66b69accb0eabd",
+        "components": 654,
+        "row_membership_sha256": "5fbe916de4ee482179faf848baee11643d4970c0e1bd19b469245ce3665bb18f",
+        "rows": 672,
+        "sample_membership_sha256": "22dfbeea7a324171b56b43805b899de8c374559008bdc67d3c318a86925066f8",
+        "sample_order_sha256": "22dfbeea7a324171b56b43805b899de8c374559008bdc67d3c318a86925066f8"
+      },
+      "2": {
+        "component_membership_sha256": "c8836c38a79160f16a9fda19aacee8d7edde8ede4667be7f72a9aa45814f5260",
+        "components": 651,
+        "row_membership_sha256": "1538cebe05c0b0bf8f5a3a7a186ab3e46a70bfb7da20b7229e949018575d5ec9",
+        "rows": 672,
+        "sample_membership_sha256": "9d239194b833f53a39f09d249190bcddd50655b95d677e1d8592a874c7adc8b0",
+        "sample_order_sha256": "9d239194b833f53a39f09d249190bcddd50655b95d677e1d8592a874c7adc8b0"
+      }
+    },
+    "components": 3277,
+    "membership_sha256": "9b12df57f94c970176b9668f51bb04690ac4a7680803ab89876ddcb34680ad07",
+    "rows": 3360,
+    "schema_version": "sqma-public-fold-membership-v1"
+  },
+  "resources": {
+    "critical_memory_events": 0,
+    "free_disk_bytes_before": 116735025152,
+    "maximum_peak_rss_bytes": 1073741824,
+    "maximum_wall_seconds": 300,
+    "minimum_free_disk_bytes": 21474836480,
+    "model_or_mlx_allocations": 0,
+    "oom_or_kill_events": 0,
+    "orphan_processes_after_exit": 0,
+    "peak_rss_bytes": 40058880,
+    "public_output_bytes": 9655,
+    "wall_seconds": 3.9287748329807073
+  },
+  "runtimes": {
+    "m1": {
+      "framework_imported": false,
+      "isolated": true,
+      "machine": "arm64",
+      "packages": {
+        "numpy": "2.2.6",
+        "torch": "2.9.1",
+        "transformers": "5.8.0"
+      },
+      "python": "3.10.20",
+      "site_disabled": true
+    },
+    "m3": {
+      "framework_imported": false,
+      "isolated": true,
+      "machine": "arm64",
+      "packages": {
+        "mlx": "0.32.0",
+        "mlx-lm": "0.31.3",
+        "numpy": "2.4.6",
+        "safetensors": "0.8.0",
+        "transformers": "5.14.1"
+      },
+      "python": "3.11.15",
+      "site_disabled": true
+    }
+  },
+  "schema_version": "sqma-001-strict-base-preflight-run-v1",
+  "stage": "strict-base-readiness-preflight",
+  "started_at_utc": "2026-09-03T14:14:03.525583Z",
+  "status": "CompletedAwaitingVerification",
+  "tier": "Minor"
+}

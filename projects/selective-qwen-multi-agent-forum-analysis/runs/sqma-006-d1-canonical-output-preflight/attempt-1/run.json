@@ -1,0 +1,127 @@
+{
+  "access": {
+    "adapter_loaded": false,
+    "classifier_accessed": false,
+    "fold3_accessed": false,
+    "fold4_accessed": false,
+    "gold_accessed": false,
+    "model_loaded": true,
+    "network_accessed": false,
+    "test_accessed": false,
+    "training_executed": false,
+    "validation_accessed": false
+  },
+  "calls": {
+    "S1_reused": true,
+    "SC_reused": true,
+    "by_role": {
+      "critic": 32,
+      "evidence": 32,
+      "judge": 32,
+      "single": 24
+    },
+    "physical": 120
+  },
+  "claim_boundary": "Fresh classifier-free gold-free D1 preflight only; no gold, classifier, adapter, training, held-out folds, validation, test, network, native grammar, or semantic repair.",
+  "completed_at_utc": "2026-09-04T02:39:18.719761Z",
+  "config": {
+    "bytes": 10496,
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-006-d1-canonical-output-preflight.json",
+    "sha256": "4e61ba0985b18c0843bfa17ba2c0bf06988ef9c8efca5af3b2c8d460804dbc65"
+  },
+  "experiment_id": "SQMA-006",
+  "gate": {
+    "canonical_system_output_valid_rate": 0.8958333333333334,
+    "canonical_system_output_valid_rate_per_role": {
+      "critic": 0.9583333333333334,
+      "evidence": 1.0,
+      "judge": 0.625,
+      "single": 1.0
+    },
+    "evidence_exact_substring_rate": 1.0,
+    "full_tune_projected_wall_seconds": 32309.260670306452,
+    "locked_s3_fallback_rows": 9,
+    "mean_modal_exact_label_set_agreement": 0.9583333333333334,
+    "out_of_ontology_labels": 0,
+    "planned_call_terminal_rate": 1.0,
+    "planned_calls_complete": true,
+    "raw_strict_valid_rate_per_role_report_only": {
+      "critic": 0.9583333333333334,
+      "evidence": 1.0,
+      "judge": 0.625,
+      "single": 1.0
+    },
+    "raw_strict_valid_rate_report_only": 0.8958333333333334,
+    "token_cap_hits": 0
+  },
+  "gate_checks": {
+    "agreement": true,
+    "canonical_overall": false,
+    "canonical_per_role": false,
+    "evidence_exact": true,
+    "ontology": true,
+    "planned_calls": true,
+    "projection": true,
+    "s3_fallback": false,
+    "token_hits": true
+  },
+  "gate_passed": false,
+  "model": {
+    "adapter": null,
+    "file_count": 9,
+    "manifest_sha256": "da447350d9e43213dacc1202da03b50d7e7114b0a4fe2904ff353240b404a641",
+    "repo_id": "Qwen/Qwen3-4B",
+    "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "total_bytes": 8056445038
+  },
+  "next_gate": "stop_capability_gate_failed",
+  "outputs": {
+    "calls": {
+      "bytes": 210422,
+      "mode": "0600",
+      "path": "calls.jsonl",
+      "sha256": "b0bb5b041448e7e613e881d258ece9715164f893416b4fd9370b6991ea6764fe"
+    },
+    "private_manifest": {
+      "bytes": 1948,
+      "mode": "0600",
+      "sha256": "b7b34ea9b60faf8e1b8cc475807555f645b9a6e97d6231014d43d6eff1a8d035"
+    },
+    "selection": {
+      "bytes": 8024,
+      "mode": "0600",
+      "path": "selection.json",
+      "sha256": "9ea6a90ea8d8bfb7344233e8ccd16b10a87f5a0a84ac618b46097209e465a281"
+    }
+  },
+  "resources": {
+    "critical_memory_events": 0,
+    "free_disk_bytes_before": 115111059456,
+    "generated_tokens": 3164,
+    "mlx_peak_bytes": 8426063088,
+    "model_load_seconds": 3.900765084021259,
+    "oom_or_kill_events": 0,
+    "orphan_processes_after_exit": 0,
+    "peak_rss_bytes": 1329381376,
+    "private_output_bytes": 220394,
+    "wall_seconds": 525.5847306660144
+  },
+  "run_claim": {
+    "bytes": 669,
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-006-d1-canonical-output-preflight/attempt-1/run-claim.json",
+    "sha256": "0a7ae93c7f855d1f03773014c3dfc657b3d1925c108bdef0137ff6cac8f982db"
+  },
+  "schema_version": "sqma-006-run-v1",
+  "selection": {
+    "components": 32,
+    "locked": 24,
+    "old_top32_excluded": 32,
+    "old_top32_exclusion_sha256": "b8b915d125def67756d790453af93873c70a2b7c968ffc711dbe83d52d1babab",
+    "selection_sha256": "9ea6a90ea8d8bfb7344233e8ccd16b10a87f5a0a84ac618b46097209e465a281",
+    "shakedown": 8
+  },
+  "stage": "d1-fresh-canonical-output-preflight",
+  "started_at_utc": "2026-09-04T02:30:33.020893Z",
+  "status": "CompletedCapabilityGateFailed",
+  "tier": "Minor"
+}

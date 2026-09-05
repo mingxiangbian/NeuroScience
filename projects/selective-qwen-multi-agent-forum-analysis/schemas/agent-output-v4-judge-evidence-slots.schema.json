@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.invalid/selective-qwen-multi-agent-forum-analysis/agent-output-v4-judge-evidence-slots.schema.json",
+  "title": "SQMA Judge V2 fixed six-label evidence slots",
+  "x-sqma-dependencies": {
+    "evidence_schema_ref": "agent-output-v3.schema.json#/$defs/Evidence",
+    "critic_schema_ref": "agent-output-v3.schema.json#/$defs/Critic",
+    "v3_schema_sha256": "dc504700ce81980b426cfc6aa04ae7e780c4a4b72571c7b795e3f14c9a668bb4",
+    "v3_validator_sha256": "0901c046936ca217cb210aec1f48d815d1e64b9f4db88f52c0f93ae8dc1ad07d"
+  },
+  "x-sqma-custom-validation": {
+    "judge_context": {
+      "required_fields": ["analysis_text", "ontology", "evidence", "critic", "allowed_evidence_ids"],
+      "allowed_evidence_ids": "range_len_evidence_spans"
+    },
+    "judge_slots": {
+      "key_order": ["love", "joy", "surprise", "anger", "sadness", "fear"],
+      "exact_keys": true,
+      "reference_type": "integer_not_boolean",
+      "reference_membership": "allowed_evidence_ids",
+      "normalization": "stable_semantics_sort_and_dedupe_within_each_slot",
+      "normalization_event": "one_event_per_slot_whose_reference_sequence_changes",
+      "slot_emptiness_must_not_change": true,
+      "derived_labels": "fixed_label_order_for_nonempty_slots"
+    },
+    "forbidden_repairs": ["delete_unknown_key", "add_missing_key", "map_label_key", "add_reference", "drop_out_of_range_reference", "coerce_reference_type", "change_slot_emptiness"],
+    "accepted_wrappers": ["bare_json_object", "single_exact_json_code_fence"]
+  },
+  "oneOf": [
+    {"$ref": "agent-output-v3.schema.json#/$defs/Evidence"},
+    {"$ref": "agent-output-v3.schema.json#/$defs/Critic"},
+    {"$ref": "#/$defs/JudgeEvidenceSlots"}
+  ],
+  "$defs": {
+    "EvidenceReferenceArray": {
+      "type": "array",
+      "items": {"type": "integer", "minimum": 0}
+    },
+    "JudgeEvidenceSlots": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["love", "joy", "surprise", "anger", "sadness", "fear"],
+      "properties": {
+        "love": {"$ref": "#/$defs/EvidenceReferenceArray"},
+        "joy": {"$ref": "#/$defs/EvidenceReferenceArray"},
+        "surprise": {"$ref": "#/$defs/EvidenceReferenceArray"},
+        "anger": {"$ref": "#/$defs/EvidenceReferenceArray"},
+        "sadness": {"$ref": "#/$defs/EvidenceReferenceArray"},
+        "fear": {"$ref": "#/$defs/EvidenceReferenceArray"}
+      }
+    }
+  }
+}

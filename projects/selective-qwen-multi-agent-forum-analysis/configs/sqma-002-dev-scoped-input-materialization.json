@@ -1,0 +1,184 @@
+{
+  "schema_version": "sqma-002-dev-scoped-input-materialization-v1",
+  "experiment_id": "SQMA-002",
+  "tier": "Major infrastructure",
+  "stage": "dev-scoped-input-materialization",
+  "registered_at": "2026-09-03",
+  "authorization": {
+    "basis": "User instructed: 下一步",
+    "materialization": true,
+    "public_fold_metadata_access": true,
+    "monolithic_private_byte_streaming": true,
+    "decode_private_rows_for_folds": [0, 1, 2],
+    "decode_private_rows_for_fold3": false,
+    "decode_private_rows_for_fold4": false,
+    "write_private_scoped_outputs": true,
+    "model_loading": false,
+    "forward": false,
+    "training": false,
+    "optimizer": false,
+    "agent_calls": false,
+    "network": false,
+    "validation_access": false,
+    "test_access": false,
+    "formal_training": false,
+    "automatic_next_stage": false
+  },
+  "implementation": {
+    "protocol": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/protocols/sqma-002-dev-scoped-input-materialization.md",
+      "bytes": 5332,
+      "sha256": "63df24fe2efe4f4c681a73062ad505f322e51533f301f0eaa5613e4b2a030e80"
+    },
+    "contract": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/scoped_input_contract.py",
+      "bytes": 19203,
+      "sha256": "6d840a7d8b8d611af2421056dc38be399d8427a332c4ef3f44b0a03e0f660586"
+    },
+    "runner": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/run_sqma002_scoped_input.py",
+      "bytes": 44576,
+      "sha256": "a5489237b2ebc688b3df447e732e0256405d42cd9427c9e95437d248d97cbcd3"
+    },
+    "verifier": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/verify_sqma002_scoped_input.py",
+      "bytes": 55015,
+      "sha256": "b3a41645ab1e075715052e999c9a2862948cb8c50d6d2358af2b3a1a5b7e994d"
+    },
+    "contract_tests": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/tests/test_scoped_input_contract.py",
+      "bytes": 7827,
+      "sha256": "9404fbab3c3fb364fae601cb9a5161ddee8a56b9c2d271dca12beb4df54530b2"
+    },
+    "integration_tests": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/tests/test_sqma002_scoped_input.py",
+      "bytes": 6865,
+      "sha256": "64829fe3f70b7a3fa4b338782d85855549e0da86fb7554c0e022446888e65aee"
+    }
+  },
+  "prerequisites": {
+    "d0_static_contract": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/d0-static-contract.json",
+      "bytes": 12086,
+      "sha256": "b0226e0113f34ddacca97d68d1be445ca019edf01175e42ccb0910330aab32ad"
+    },
+    "sqma001_complete": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-001-strict-base-readiness-preflight/attempt-1/complete.json",
+      "bytes": 1701,
+      "sha256": "6a4326b60b7158a666c0808c587232778a9101f1aab2af4466d2e52fe71e5f75"
+    },
+    "public_fold_manifest": {
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/fold-manifest.public.jsonl",
+      "bytes": 739200,
+      "sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8"
+    }
+  },
+  "sources": {
+    "archive_root_env": "NEUROSCIENCE_ARCHIVE_ROOT",
+    "audited_archive_root": "/Users/phoenix/Assistant/NeuroScience",
+    "train": {
+      "relative_path": "projects/llm-forum-text-emotion-recognition/data/stack-overflow-emotion-gold/derived-private/task-v1/train.jsonl",
+      "bytes": 1372562,
+      "sha256": "fc2f853b5b8afb78253ca3a96b5093d2fd12ea7063801f57bf138c9d5cf528fc",
+      "mode": "0600",
+      "rows": 3360
+    },
+    "private_fold_manifest": {
+      "relative_path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-fold-manifest-preflight-attempt-2/fold-manifest.private.jsonl",
+      "bytes": 979748,
+      "sha256": "d518e97c3332f2d59ea3556aecbb3a8cf9253438aee5ba02cd2ab105663862af",
+      "mode": "0600",
+      "rows": 3360
+    },
+    "source_ordinal": "zero_based_train_jsonl_line_index",
+    "input_alignment": "zip_public_train_private_manifest_exact_3360_lines"
+  },
+  "runtime": {
+    "executable": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python",
+    "python": "3.10.20",
+    "machine": "arm64",
+    "packages": {"numpy": "2.2.6"},
+    "model_framework_imports": false,
+    "offline": true
+  },
+  "folds": {
+    "output_folds": [0, 1, 2],
+    "fold3_output_rows": 0,
+    "fold4_output_rows": 0,
+    "expected": {
+      "0": {
+        "rows": 672,
+        "components": 658,
+        "sample_order_sha256": "bee1720141a9d6283aea78d8d1b5463b36df7794dafdb4bc6cf79666901b36eb",
+        "sample_membership_sha256": "bee1720141a9d6283aea78d8d1b5463b36df7794dafdb4bc6cf79666901b36eb",
+        "component_membership_sha256": "18dbb847e2b76786fb69f46dcb52a6c557348a3f3e0f85fcb5634f3059afa5dc",
+        "row_membership_sha256": "c827258b5a04983e6a3275629753dd5d4f941d7f6e17573bebf05708b9dab7c1"
+      },
+      "1": {
+        "rows": 672,
+        "components": 654,
+        "sample_order_sha256": "22dfbeea7a324171b56b43805b899de8c374559008bdc67d3c318a86925066f8",
+        "sample_membership_sha256": "22dfbeea7a324171b56b43805b899de8c374559008bdc67d3c318a86925066f8",
+        "component_membership_sha256": "4cb12ca3c60938d74371887e2698c068e7ade8c8070107fd0a66b69accb0eabd",
+        "row_membership_sha256": "5fbe916de4ee482179faf848baee11643d4970c0e1bd19b469245ce3665bb18f"
+      },
+      "2": {
+        "rows": 672,
+        "components": 651,
+        "sample_order_sha256": "9d239194b833f53a39f09d249190bcddd50655b95d677e1d8592a874c7adc8b0",
+        "sample_membership_sha256": "9d239194b833f53a39f09d249190bcddd50655b95d677e1d8592a874c7adc8b0",
+        "component_membership_sha256": "c8836c38a79160f16a9fda19aacee8d7edde8ede4667be7f72a9aa45814f5260",
+        "row_membership_sha256": "1538cebe05c0b0bf8f5a3a7a186ab3e46a70bfb7da20b7229e949018575d5ec9"
+      }
+    },
+    "total_output_rows": 2016,
+    "total_output_components": 1963
+  },
+  "snapshot_contract": {
+    "scopes": ["train-capable", "gold-free-inference", "consumer-gold"],
+    "rows_per_scope_per_fold": 672,
+    "private_directory_mode": "0700",
+    "private_file_mode": "0600",
+    "source_order_preserved": true,
+    "extra_files_allowed": 0
+  },
+  "fit_bindings": {
+    "dev-h0": {"training_folds": [1, 2], "heldout_inference_fold": 0},
+    "dev-h1": {"training_folds": [0, 2], "heldout_inference_fold": 1},
+    "dev-h2": {"training_folds": [0, 1], "heldout_inference_fold": 2},
+    "consumer_gold_in_producer_allowlist": false,
+    "monolithic_source_in_producer_allowlist": false
+  },
+  "resources": {
+    "maximum_wall_seconds": 300,
+    "maximum_peak_rss_bytes": 1073741824,
+    "maximum_private_output_bytes": 134217728,
+    "maximum_public_output_bytes": 16777216,
+    "minimum_free_disk_bytes": 21474836480,
+    "model_or_mlx_allocations": 0,
+    "critical_memory_events": 0,
+    "oom_or_kill_events": 0,
+    "orphan_processes_after_exit": 0
+  },
+  "outputs": {
+    "public_attempt_dir": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-002-dev-scoped-input/attempt-1",
+    "private_attempt_dir": "projects/selective-qwen-multi-agent-forum-analysis/private/sqma-002-dev-scoped-input/attempt-1",
+    "public_allowed_files": ["run-claim.json", "run.json", "verification.json", "complete.json"],
+    "private_allowed_files": [
+      "fold-0/train-capable.jsonl",
+      "fold-0/gold-free-inference.jsonl",
+      "fold-0/consumer-gold.npz",
+      "fold-1/train-capable.jsonl",
+      "fold-1/gold-free-inference.jsonl",
+      "fold-1/consumer-gold.npz",
+      "fold-2/train-capable.jsonl",
+      "fold-2/gold-free-inference.jsonl",
+      "fold-2/consumer-gold.npz",
+      "private-manifest.json"
+    ]
+  },
+  "commands": {
+    "run": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python projects/selective-qwen-multi-agent-forum-analysis/scripts/run_sqma002_scoped_input.py --config projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-002-dev-scoped-input-materialization.json",
+    "verify": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python projects/selective-qwen-multi-agent-forum-analysis/scripts/verify_sqma002_scoped_input.py --config projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-002-dev-scoped-input-materialization.json"
+  }
+}

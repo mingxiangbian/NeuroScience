@@ -1,0 +1,44 @@
+{
+  "claim_boundary": "An isolated data steward may byte-stream the two registered monolithic private sources and decode only public-fold-selected rows in folds 0-2. No model, training, Agent, validation, test, or fold 3/4 private decoding is authorized.",
+  "claimed_at_utc": "2026-09-03T15:53:10.885337Z",
+  "config": {
+    "bytes": 8348,
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-002-dev-scoped-input-materialization.json",
+    "sha256": "c7f1beb92e9fbd854f4e8e38f1885f9a78529d77eb21ee5d22097a86882b98b4"
+  },
+  "experiment_id": "SQMA-002",
+  "formal_training_authorized": false,
+  "planned_access": {
+    "agent_calls": 0,
+    "decode_private_rows_for_folds": [
+      0,
+      1,
+      2
+    ],
+    "fold3_rows_decoded": 0,
+    "fold4_rows_decoded": 0,
+    "model_loading": false,
+    "monolithic_private_bytes_streamed": true,
+    "network": false,
+    "test_access": false,
+    "training": false,
+    "validation_access": false
+  },
+  "schema_version": "sqma-002-run-claim-v1",
+  "source_identities": {
+    "private_fold_manifest": {
+      "bytes": 979748,
+      "sha256": "d518e97c3332f2d59ea3556aecbb3a8cf9253438aee5ba02cd2ab105663862af"
+    },
+    "private_train": {
+      "bytes": 1372562,
+      "sha256": "fc2f853b5b8afb78253ca3a96b5093d2fd12ea7063801f57bf138c9d5cf528fc"
+    },
+    "public_fold_manifest": {
+      "bytes": 739200,
+      "sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8"
+    }
+  },
+  "stage": "dev-scoped-input-materialization",
+  "status": "ClaimedBeforePrivateAccess"
+}

@@ -1,0 +1,381 @@
+{
+  "schema_version": "sqma-008-dev-c2-locked-acceptance-v1",
+  "experiment_id": "SQMA-008",
+  "tier": "Minor",
+  "stage": "dev-c2-locked-acceptance",
+  "design_status": "FrozenReady",
+  "registered_at": "2026-09-04",
+  "authorization": {
+    "execution_authorized": true,
+    "private_input_access": true,
+    "model_loading": true,
+    "generation": true,
+    "locked_content_visibility": false,
+    "gold_access": false,
+    "classifier_access": false,
+    "adapter_loading": false,
+    "training": false,
+    "validation_access": false,
+    "test_access": false,
+    "fold3_access": false,
+    "fold4_access": false,
+    "network": false,
+    "automatic_next_stage": false
+  },
+  "claim_boundary": {
+    "accuracy_scoring": false,
+    "method_comparison": false,
+    "agent_tune": false,
+    "agent_confirm": false,
+    "external_generalization": false,
+    "locked_contract_acceptance_only": true
+  },
+  "prerequisites": {
+    "sqma002_complete": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-002-dev-scoped-input/attempt-1/complete.json",
+      "bytes": 702,
+      "sha256": "38f2d5cd7c65213e7b1937a45da8ae8a842d579bd83a634a5eed8ae66218d688"
+    },
+    "sqma002_verification": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-002-dev-scoped-input/attempt-1/verification.json",
+      "bytes": 3318,
+      "sha256": "9ba3f6c1161df08a5c76e25f0d5d79f83f3255df52e06375343eead6ceba1635"
+    },
+    "sqma007_config": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-007-dev-c1-visible-judge-shakedown.json",
+      "bytes": 10474,
+      "sha256": "1a3f15c894ac63a44a553ef1b19a7d2215b3c509a1cc1d2cc0e0f272a934edfb"
+    },
+    "sqma007_run": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-007-dev-c1-visible-judge-shakedown/attempt-1/run.json",
+      "bytes": 4068,
+      "sha256": "0b5b6ec6762eebf5f05a81ccccb93599770a931c145665bf1cbb8149c4edb3a3",
+      "required_status": "CompletedAwaitingVerification",
+      "required_gate1_passed": true
+    },
+    "sqma007_verification": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-007-dev-c1-visible-judge-shakedown/attempt-1/verification.json",
+      "bytes": 1815,
+      "sha256": "92591a910bcd0ef0e057c4f8b9da13e3b18e5be19e25482e0375a077f8f6985f",
+      "required_status": "Passed"
+    },
+    "sqma007_complete": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-007-dev-c1-visible-judge-shakedown/attempt-1/complete.json",
+      "bytes": 337,
+      "sha256": "6b739be3bc58545051fdc4488cfbc2a95c26193271ec3943adde30ad2df762b8",
+      "required_status": "Complete",
+      "required_sqma007_complete": true,
+      "required_ordinary_decoding_c1_gate": "Passed",
+      "required_accuracy_scored": false,
+      "required_gold_accessed": false
+    }
+  },
+  "implementation": {
+    "protocol": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/protocols/sqma-008-dev-c2-locked-acceptance.md",
+      "bytes": 8922,
+      "sha256": "ba6f27b0c3e0ff5242db3592dd581984de9b11e90aeba16c151ee18e6a8536b8"
+    },
+    "prompt_bundle": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/prompts/agent-bundle-v4-judge-evidence-slots.json",
+      "bytes": 4673,
+      "sha256": "436a1c40af0888b2b4db5744590ad58fa8ee6472b721c17ac1395dd759e7a52d"
+    },
+    "output_schema": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/schemas/agent-output-v4-judge-evidence-slots.schema.json",
+      "bytes": 2473,
+      "sha256": "58f1edffb92cda43e0e8501f6bff1044c80218d2e4e5e97b50b27a183ecb96e7"
+    },
+    "validator_renderer": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/validate_agent_output_v4.py",
+      "bytes": 6880,
+      "sha256": "80af9cce627a6d3f9c8e3542a811c4b2f0a38dd6a974927cc12a7e285f0ff48e"
+    },
+    "v3_prompt_dependency": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/prompts/agent-bundle-v3-classifier-free.json",
+      "bytes": 5584,
+      "sha256": "e224ea59e140ae60a56084fffcafbd785accf465df6e666345a6a5b91d9b2ff6"
+    },
+    "v3_schema_dependency": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/schemas/agent-output-v3.schema.json",
+      "bytes": 5384,
+      "sha256": "dc504700ce81980b426cfc6aa04ae7e780c4a4b72571c7b795e3f14c9a668bb4"
+    },
+    "v3_validator_dependency": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/validate_agent_output_v3.py",
+      "bytes": 15115,
+      "sha256": "0901c046936ca217cb210aec1f48d815d1e64b9f4db88f52c0f93ae8dc1ad07d"
+    },
+    "validator_tests": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/tests/test_validate_agent_output_v4.py",
+      "bytes": 9366,
+      "sha256": "c5cd512ba9f48335e066438091a051391680998bdb3ab92aeb4cf120eb26ac17"
+    },
+    "runner": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/run_sqma008_dev_c2_locked_acceptance.py",
+      "bytes": 41868,
+      "sha256": "66537928c58f6cb3c527aa61066aa4129cc1829a6af7aa14f6340d0fcabf47be"
+    },
+    "verifier": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/verify_sqma008_dev_c2_locked_acceptance.py",
+      "bytes": 41277,
+      "sha256": "eec2b8224190a1cf6a9764dd4fc8db3c860ea8ce23386248323a3942a72d3e15"
+    },
+    "tests": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/tests/test_sqma008_dev_c2_locked_acceptance.py",
+      "bytes": 16808,
+      "sha256": "6bd5987951a22d4a46805b32ec6a5f84260254079ff164640f72266cc24b06a5"
+    }
+  },
+  "inputs": {
+    "private_root": "projects/selective-qwen-multi-agent-forum-analysis/private/sqma-002-dev-scoped-input/attempt-1",
+    "allowed_fields": [
+      "component_id",
+      "fold_id",
+      "protocol_id",
+      "sample_id",
+      "schema_version",
+      "source_ordinal",
+      "text"
+    ],
+    "forbidden_folds": [3, 4],
+    "forbidden_sources": [
+      "train-capable",
+      "consumer-gold",
+      "M1",
+      "M3",
+      "Router",
+      "validation",
+      "test",
+      "SQMA-003-private",
+      "SQMA-006-private",
+      "SQMA-007-private"
+    ],
+    "gold_free_snapshots": [
+      {
+        "path": "fold-0/gold-free-inference.jsonl",
+        "bytes": 269623,
+        "sha256": "ef1de63a142677472944e4a61e11db4fc39b074782ffd8c7259ebe4cd85a9594",
+        "fold_id": 0,
+        "rows": 672,
+        "components": 658
+      },
+      {
+        "path": "fold-1/gold-free-inference.jsonl",
+        "bytes": 265068,
+        "sha256": "fabe553c907b88ae82d1dfbfca243d19950e0457437cd0f4c3acd43d8b7ec679",
+        "fold_id": 1,
+        "rows": 672,
+        "components": 654
+      },
+      {
+        "path": "fold-2/gold-free-inference.jsonl",
+        "bytes": 271789,
+        "sha256": "5877b9234725b35b99212350e6eaa7c34e908bc1f044034489b34a187d256f0a",
+        "fold_id": 2,
+        "rows": 672,
+        "components": 651
+      }
+    ],
+    "expected_rows": 2016,
+    "expected_unique_components": 1963
+  },
+  "selection": {
+    "unit": "component_id",
+    "row_per_component": "minimum_source_ordinal",
+    "rank": "ascending_tuple_sha256_namespace_pipe_component_id_then_component_id",
+    "sequential_exclusions": [
+      {
+        "experiment_id": "SQMA-003",
+        "namespace": "SQMA-003-agent-dev-random-v1",
+        "components": 32,
+        "pool": "all_representatives"
+      },
+      {
+        "experiment_id": "SQMA-006",
+        "namespace": "SQMA-006-d1-fresh-agent-dev-random-v1",
+        "components": 32,
+        "pool": "remaining_after_previous_exclusions"
+      },
+      {
+        "experiment_id": "SQMA-007",
+        "namespace": "SQMA-007-dev-c1-visible-shakedown-v1",
+        "components": 16,
+        "pool": "remaining_after_previous_exclusions"
+      }
+    ],
+    "excluded_components_total": 80,
+    "prior_private_selection_access": false,
+    "new_namespace": "SQMA-008-dev-c2-locked-acceptance-v1",
+    "components": 24,
+    "selection_ranks": [0, 23],
+    "stratum": "locked_acceptance",
+    "visible_shakedown_rows": 0,
+    "text_gold_classifier_or_model_features_used": false
+  },
+  "frozen_c1_method": {
+    "prompt_schema_backend_and_role_generation_parameters_must_equal_verified_sqma007_c1": true,
+    "allowed_differences": [
+      "experiment_id",
+      "selection_namespace",
+      "selection_components",
+      "acceptance_sample_count",
+      "physical_call_count",
+      "generation_seed_namespace",
+      "resource_and_output_budgets",
+      "output_namespace"
+    ],
+    "runtime_role_ids": ["evidence", "critic", "judge"],
+    "judge_method_name": "JudgeV2_fixed_slots",
+    "model": {
+      "repo_id": "Qwen/Qwen3-4B",
+      "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+      "format": "MLX_BF16_unquantized",
+      "adapter": null
+    },
+    "backend": {
+      "framework": "mlx-lm",
+      "mlx_lm_version": "0.31.3",
+      "mlx_version": "0.32.0",
+      "enable_thinking": false,
+      "external_tools": false,
+      "network": false
+    },
+    "generation": {
+      "analysis_text_token_cap": 1024,
+      "context_token_cap": 4096,
+      "seed_namespace": "SQMA-008-dev-c2-generation-v1",
+      "seed_material": "namespace|system_id|sample_id|role|call_index",
+      "evidence": {
+        "temperature": 0.6,
+        "top_p": 0.95,
+        "top_k": 20,
+        "max_new_tokens": 256
+      },
+      "critic": {
+        "temperature": 0.6,
+        "top_p": 0.95,
+        "top_k": 20,
+        "max_new_tokens": 192
+      },
+      "judge": {
+        "temperature": 0.0,
+        "decoding": "greedy",
+        "max_new_tokens": 128
+      },
+      "additional_generation_or_repair_calls": 0
+    }
+  },
+  "role_context_allowlist": {
+    "evidence": ["analysis_text", "ontology"],
+    "critic": ["analysis_text", "ontology", "evidence"],
+    "judge": [
+      "analysis_text",
+      "ontology",
+      "evidence",
+      "critic",
+      "allowed_evidence_ids"
+    ]
+  },
+  "judge_contract": {
+    "raw_input": "one_bare_json_object",
+    "exact_keys": ["love", "joy", "surprise", "anger", "sadness", "fear"],
+    "raw_object_key_order_required": false,
+    "schema_version_key_allowed": false,
+    "slot_value": "array_of_json_integer_evidence_ids",
+    "allowed_evidence_ids": "list_range_len_validated_or_sentinel_evidence_spans",
+    "derived_labels": "nonempty_slots_in_fixed_label_order",
+    "deterministic_renderer": {
+      "within_slot_sort": true,
+      "within_slot_dedupe": true,
+      "normalization_events_reported": true,
+      "normalization_events_are_semantic_repair": false,
+      "normalization_events_are_contract_errors": false,
+      "normalization_event_zero_required": false
+    },
+    "forbidden_repairs": [
+      "add_missing_key",
+      "delete_extra_key",
+      "map_label_key",
+      "coerce_reference_type",
+      "add_reference_id",
+      "drop_illegal_reference_id",
+      "move_reference_between_slots",
+      "change_slot_emptiness",
+      "text_conditioned_semantic_repair"
+    ]
+  },
+  "call_plan": {
+    "rows": 24,
+    "roles_per_row": ["evidence", "critic", "judge"],
+    "calls_per_row": 3,
+    "physical_calls": 72,
+    "single_calls": 0,
+    "self_consistency_calls": 0,
+    "repair_calls": 0,
+    "all_rows_locked": true
+  },
+  "acceptance_gate": {
+    "terminal_calls_required": 72,
+    "judge_rows": 24,
+    "judge_raw_json_parse_required": 24,
+    "judge_exact_six_key_set_required": 24,
+    "judge_missing_or_extra_key_rows_maximum": 0,
+    "judge_non_array_value_rows_maximum": 0,
+    "judge_non_integer_reference_rows_maximum": 0,
+    "judge_illegal_reference_id_rows_maximum": 0,
+    "judge_rendered_valid_required": 24,
+    "semantic_repair_events_maximum": 0,
+    "normalization_ambiguity_events_maximum": 0,
+    "unhandled_failures_maximum": 0,
+    "contract_errors_maximum": 0,
+    "evidence_validator_valid_rate_minimum": 0.95,
+    "critic_validator_valid_rate_minimum": 0.95,
+    "system_fallback_rows_maximum": 1,
+    "token_cap_hits_maximum": 0,
+    "normalization_events": "report_only_not_zero_gated",
+    "resource_limits": "frozen_from_verified_sqma007_c1_with_72_call_token_cap"
+  },
+  "claim_language": {
+    "passing_claim": "zero_contract_violations_observed_on_the_24_preregistered_dev_c2_locked_components",
+    "population_validity_at_least_0_98": false,
+    "accuracy_claim": false,
+    "role_value_claim": false,
+    "generalization_claim": false
+  },
+  "resources": {
+    "identity_source": "sqma007_verified_config_1a3f15c894ac63a44a553ef1b19a7d2215b3c509a1cc1d2cc0e0f272a934edfb",
+    "maximum_wall_seconds": 7200,
+    "maximum_generated_tokens": 13824,
+    "maximum_process_rss_bytes": 12884901888,
+    "maximum_mlx_peak_bytes": 10000000000,
+    "maximum_private_output_bytes": 268435456,
+    "maximum_public_output_bytes": 16777216,
+    "minimum_free_disk_bytes": 21474836480,
+    "critical_memory_events": 0,
+    "oom_or_kill_events": 0,
+    "orphan_processes_after_exit": 0
+  },
+  "outputs": {
+    "public_attempt_dir": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-008-dev-c2-locked-acceptance/attempt-1",
+    "private_attempt_dir": "projects/selective-qwen-multi-agent-forum-analysis/private/sqma-008-dev-c2-locked-acceptance/attempt-1",
+    "public_allowed_files": ["run-claim.json", "run.json", "verification.json", "complete.json"],
+    "private_allowed_files": ["selection.json", "calls.jsonl", "private-manifest.json"]
+  },
+  "failure_policy": {
+    "failed_status": "Failed",
+    "preserve_partial_or_sealed_artifacts": true,
+    "inspect_locked_row_content_for_same_experiment_revision": false,
+    "automatic_retry": false,
+    "automatic_prompt_revision": false,
+    "automatic_sqma009": false,
+    "automatic_formal_comparison": false,
+    "incident_required": true
+  },
+  "commands": {
+    "run": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python projects/selective-qwen-multi-agent-forum-analysis/scripts/run_sqma008_dev_c2_locked_acceptance.py --config projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-008-dev-c2-locked-acceptance.json",
+    "verify": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python projects/selective-qwen-multi-agent-forum-analysis/scripts/verify_sqma008_dev_c2_locked_acceptance.py --config projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-008-dev-c2-locked-acceptance.json",
+    "verify_static": "python3 projects/selective-qwen-multi-agent-forum-analysis/scripts/verify_sqma008_dev_c2_locked_acceptance.py --config projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-008-dev-c2-locked-acceptance.json --static-only"
+  },
+  "next_gate": "execute_locked_c2"
+}

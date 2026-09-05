@@ -1,0 +1,129 @@
+{
+  "access": {
+    "adapter_loaded": false,
+    "classifier_accessed": false,
+    "fold3_accessed": false,
+    "fold4_accessed": false,
+    "gold_accessed": false,
+    "locked_content_accessed": false,
+    "model_loaded": true,
+    "network_accessed": false,
+    "test_accessed": false,
+    "training_executed": false,
+    "validation_accessed": false,
+    "visible_c1_content_accessed": true
+  },
+  "calls": {
+    "by_role": {
+      "critic": 16,
+      "evidence": 16,
+      "judge": 16
+    },
+    "physical": 48
+  },
+  "completed_at_utc": "2026-09-04T03:45:47.602059Z",
+  "config": {
+    "bytes": 10474,
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-007-dev-c1-visible-judge-shakedown.json",
+    "sha256": "1a3f15c894ac63a44a553ef1b19a7d2215b3c509a1cc1d2cc0e0f272a934edfb"
+  },
+  "experiment_id": "SQMA-007",
+  "failure_policy": {
+    "automatic_next_stage": false,
+    "automatic_prompt_revision": false,
+    "judge_contract_error": "ordinary_decoding_c1_failed",
+    "next_decision": "constrained_decoding_decision"
+  },
+  "gate1": {
+    "critic_canonical_valid_rate_report_only": 1.0,
+    "duplicate_references_removed_report_only": 0,
+    "evidence_canonical_valid_rate_report_only": 1.0,
+    "full_projection_seconds": 10254.885279754992,
+    "judge_allowed_reference_ids": 16,
+    "judge_exact_six_fields": 16,
+    "judge_integer_reference_items": 16,
+    "judge_no_extra_or_missing_keys": 16,
+    "judge_raw_json_parse": 16,
+    "judge_reference_arrays": 16,
+    "judge_rendered_valid": 16,
+    "reference_normalization_events_report_only": 0,
+    "reference_order_normalized_slots_report_only": 0,
+    "semantic_repair_calls": 0,
+    "terminal_calls": 48,
+    "token_cap_hits": 0,
+    "unhandled_failures": 0
+  },
+  "gate1_checks": {
+    "judge_allowed_ids": true,
+    "judge_arrays": true,
+    "judge_exact_fields": true,
+    "judge_integer_refs": true,
+    "judge_keys": true,
+    "judge_raw_json": true,
+    "judge_rendered": true,
+    "no_semantic_repair": true,
+    "no_token_hits": true,
+    "no_unhandled": true,
+    "projection": true,
+    "terminal": true
+  },
+  "gate1_passed": true,
+  "model": {
+    "adapter": null,
+    "file_count": 9,
+    "manifest_sha256": "da447350d9e43213dacc1202da03b50d7e7114b0a4fe2904ff353240b404a641",
+    "repo_id": "Qwen/Qwen3-4B",
+    "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "total_bytes": 8056445038
+  },
+  "next_gate": "independent_c1_verification",
+  "outputs": {
+    "calls": {
+      "bytes": 78029,
+      "mode": "0600",
+      "path": "calls.jsonl",
+      "sha256": "876ad6c9fb5282a90b713e5f67113bfad5eb3667ce6498ddc36883c1212109f5"
+    },
+    "private_manifest": {
+      "bytes": 1723,
+      "mode": "0600",
+      "sha256": "bdaba632deaf7b5731a96685faaa56f4e3be90a9ef806352c7fbbc11462d441e"
+    },
+    "selection": {
+      "bytes": 4353,
+      "mode": "0600",
+      "path": "selection.json",
+      "sha256": "d06f8528a931f3d2c0ad86a2828e6c111f8f0962c5fdb8fbf6792af18ed5191d"
+    }
+  },
+  "resources": {
+    "critical_memory_events": 0,
+    "free_disk_bytes_before": 115633885184,
+    "generated_tokens": 1237,
+    "mlx_peak_bytes": 8426062976,
+    "model_load_seconds": 3.489404125022702,
+    "oom_or_kill_events": 0,
+    "orphan_processes_after_exit": 0,
+    "peak_rss_bytes": 1335656448,
+    "private_output_bytes": 84105,
+    "wall_seconds": 182.34961691702483
+  },
+  "run_claim": {
+    "bytes": 612,
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-007-dev-c1-visible-judge-shakedown/attempt-1/run-claim.json",
+    "sha256": "5afe1ea3ca135ebfdd0070f882dff8987cb294110fe6a755c09580ed3aed0da9"
+  },
+  "schema_version": "sqma-007-run-v1",
+  "selection": {
+    "components": 16,
+    "locked": 0,
+    "old_excluded": 32,
+    "selection_sha256": "d06f8528a931f3d2c0ad86a2828e6c111f8f0962c5fdb8fbf6792af18ed5191d",
+    "sqma006_excluded": 32,
+    "visible_shakedown": 16
+  },
+  "stage": "dev-c1-visible-judge-shakedown",
+  "started_at_utc": "2026-09-04T03:42:45.249093Z",
+  "status": "CompletedAwaitingVerification",
+  "tier": "Minor"
+}

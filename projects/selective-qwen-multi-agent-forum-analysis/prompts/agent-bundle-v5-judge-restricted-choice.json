@@ -1,0 +1,95 @@
+{
+  "schema_version": "sqma-agent-prompt-bundle-v5-judge-restricted-choice",
+  "status": "judge_v3_static_candidate",
+  "language": "English",
+  "frozen_v3_dependencies": {
+    "prompt_path": "prompts/agent-bundle-v3-classifier-free.json",
+    "prompt_bytes": 5584,
+    "prompt_sha256": "e224ea59e140ae60a56084fffcafbd785accf465df6e666345a6a5b91d9b2ff6",
+    "schema_path": "schemas/agent-output-v3.schema.json",
+    "schema_sha256": "dc504700ce81980b426cfc6aa04ae7e780c4a4b72571c7b795e3f14c9a668bb4",
+    "validator_path": "scripts/validate_agent_output_v3.py",
+    "validator_sha256": "0901c046936ca217cb210aec1f48d815d1e64b9f4db88f52c0f93ae8dc1ad07d"
+  },
+  "execution_prompt_source": {
+    "evidence": {"bundle": "prompts/agent-bundle-v3-classifier-free.json", "role": "evidence"},
+    "critic": {"bundle": "prompts/agent-bundle-v3-classifier-free.json", "role": "critic"},
+    "judge": {"bundle": "this_bundle", "role": "judge_restricted_choice"}
+  },
+  "option_token_contract": {
+    "symbols": ["A", "B", "C", "D"],
+    "runtime_token_ids_must_be_recomputed_from_the_hash_pinned_tokenizer": true,
+    "public_or_previous_token_ids_are_not_trusted": true,
+    "mapping": {
+      "A": "NONE",
+      "B": "allowed_evidence_ids[0]",
+      "C": "allowed_evidence_ids[1]",
+      "D": "allowed_evidence_ids[2]"
+    },
+    "unused_symbols_are_masked": true,
+    "runtime_seal_requirements": [
+      "tokenizer.encode(symbol, add_special_tokens=false) returns exactly one token ID",
+      "all four token IDs are unique",
+      "no option token ID is an EOS token ID",
+      "tokenizer.decode([token_id]) equals the original symbol"
+    ]
+  },
+  "judge_restricted_choice": {
+    "visible_fields": ["analysis_text", "ontology", "evidence", "critic", "target_label", "allowed_evidence_ids", "option_mapping"],
+    "target_label_order": ["love", "joy", "surprise", "anger", "sadness", "fear"],
+    "calls_per_label": 1,
+    "calls_per_row": 6,
+    "max_new_tokens": 1,
+    "temperature": 0.0,
+    "system": "Select evidence for exactly one target_label. Return exactly one option symbol and nothing else. A means NONE. B, C, and D refer only to entries present in the current option_mapping. Select an evidence option only when that exact evidence span supports the target_label; otherwise select A."
+  },
+  "runtime_api": {
+    "framework": "mlx-lm",
+    "required_version": "0.31.3",
+    "generate_source_sha256": "270778ad53eaca55a8533d82e6752660fe5d2605c4aa0879b48a50a91f69345f",
+    "sample_utils_source_sha256": "c0ce439f8dbf0d4e6d0f37f728a324f3f72878e6a9123df41be520804c596d67",
+    "function": "stream_generate",
+    "max_tokens": 1,
+    "sampler": "make_sampler(temp=0.0)",
+    "logits_processors_argument": "one_fresh_stateless_mask_processor",
+    "processor_signature": "processor(tokens, logits) -> masked_logits",
+    "processor_uses_tokens_argument": false,
+    "processor_mutable_state": false,
+    "prompt_cache": null,
+    "selected_token_source": "final_generation_response.token",
+    "selected_text_is_not_authoritative": true,
+    "expected_response_count": 1,
+    "expected_generation_tokens": 1,
+    "expected_finish_reason": "length",
+    "eos_is_masked": true,
+    "mlx_0_31_3_internal_unused_next_token_lookahead": true,
+    "logits_processor_may_be_invoked_more_than_once": true,
+    "fresh_processor_is_stateless_across_all_internal_invocations": true,
+    "exact_model_decode_forward_steps_per_label_claimed": false
+  },
+  "assembly": {
+    "label_order": ["love", "joy", "surprise", "anger", "sadness", "fear"],
+    "NONE_result": [],
+    "evidence_result": "single_element_integer_array",
+    "illegal_evidence_id_constructible": false,
+    "derived_labels": "labels_with_nonempty_slots_in_fixed_order",
+    "semantic_repair": false
+  },
+  "token_seal": {
+    "schema_version": "sqma-judge-v3-option-token-seal-v1",
+    "status_before_runtime_probe": "Unresolved",
+    "fields": ["tokenizer_sha256", "chat_template_sha256", "encode_add_special_tokens", "symbols"],
+    "must_be_frozen_before_any_judge_generation": true
+  },
+  "cost_and_fairness": {
+    "judge_model_calls_per_row": 6,
+    "judge_generated_tokens_per_row": 6,
+    "prefill_is_repeated_per_label": true,
+    "generation_token_count_does_not_include_all_internal_lookahead_compute": true,
+    "measured_wall_time_and_peak_resources_are_required": true,
+    "physical_cost_must_be_reported": true,
+    "not_call_matched_to_one_call_judge": true,
+    "cannot_replace_one_call_judge_in_matched_comparison_without_a_six_call_control": true,
+    "claim_boundary": "restricted_output_validity_and_candidate_choice_only"
+  }
+}

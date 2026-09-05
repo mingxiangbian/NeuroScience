@@ -1,0 +1,160 @@
+{
+  "access": {
+    "adapter_loaded": false,
+    "classifier_outputs_accessed": false,
+    "fold3_accessed": false,
+    "fold4_accessed": false,
+    "gold_accessed": false,
+    "model_training": false,
+    "network_accessed": false,
+    "test_accessed": false,
+    "validation_accessed": false
+  },
+  "calls": {
+    "by_role": {
+      "evidence_appraisal": 32,
+      "judge": 32,
+      "pragmatics_critic": 32,
+      "single_agent": 48
+    },
+    "physical": 144
+  },
+  "classifier_free": true,
+  "completed_at_utc": "2026-09-03T18:33:32.672292Z",
+  "config": {
+    "bytes": 10055,
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-003-classifier-free-agent-preflight-attempt-2.json",
+    "sha256": "ed557234b8c16999ee69ace9e62c34200644fe4a778c379dc60d939d7a5b8795"
+  },
+  "experiment_id": "SQMA-003",
+  "gate": {
+    "full_tune_projected_wall_seconds": 108565.48860425386,
+    "mean_modal_exact_label_set_agreement": 1.0,
+    "per_role_valid_rate": {
+      "evidence_appraisal": 0.9166666666666666,
+      "judge": 0.875,
+      "pragmatics_critic": 0.9583333333333334,
+      "single_agent": 0.625
+    },
+    "planned_calls_complete": true,
+    "raw_schema_valid_rate": 0.8,
+    "technical_fallback_rows": 4,
+    "token_cap_hits": 0
+  },
+  "gate_passed": false,
+  "latency_seconds": {
+    "evidence_appraisal": {
+      "max": 16.394556750019547,
+      "mean": 13.487199470087944,
+      "median": 13.132595458009746,
+      "min": 12.840278708026744,
+      "p95": 16.175396459002513
+    },
+    "judge": {
+      "max": 9.270012458029669,
+      "mean": 7.221378351623571,
+      "median": 7.118433333991561,
+      "min": 6.853482874983456,
+      "p95": 7.629104042018298
+    },
+    "pragmatics_critic": {
+      "max": 10.602180999994744,
+      "mean": 9.817732247371168,
+      "median": 9.73435129103018,
+      "min": 9.647864083992317,
+      "p95": 10.071317749971058
+    },
+    "single_agent": {
+      "max": 41.08002100000158,
+      "mean": 29.86052462144168,
+      "median": 29.349376958038192,
+      "min": 28.892205165990163,
+      "p95": 31.788576292048674
+    }
+  },
+  "next_gate": "stop_capability_gate_failed",
+  "resources": {
+    "mlx_peak_bytes": 8568852560,
+    "model_load_seconds": 2.5890174580272287,
+    "peak_rss_bytes": 1910095872,
+    "private_output_bytes": 200437,
+    "wall_seconds": 2414.624071084021
+  },
+  "schema_version": "sqma-003-run-v1",
+  "selection": {
+    "components": 32,
+    "locked": 24,
+    "selection_sha256": "63c6a513fc2cf5301d3c3f11a27b74dfa6487dc0bf6aec6080867313c5b17205",
+    "shakedown": 8
+  },
+  "stage": "classifier-free-agent-dev-preflight",
+  "started_at_utc": "2026-09-03T17:53:17.964859Z",
+  "status": "CompletedAwaitingVerification",
+  "tier": "Minor",
+  "tokens": {
+    "evidence_appraisal": {
+      "generated": {
+        "max": 103.0,
+        "mean": 81.9375,
+        "median": 79.0,
+        "min": 79.0,
+        "p95": 99.0
+      },
+      "prefill": {
+        "max": 710.0,
+        "mean": 631.625,
+        "median": 625.0,
+        "min": 602.0,
+        "p95": 702.0
+      }
+    },
+    "judge": {
+      "generated": {
+        "max": 46.0,
+        "mean": 33.0625,
+        "median": 32.0,
+        "min": 32.0,
+        "p95": 36.0
+      },
+      "prefill": {
+        "max": 822.0,
+        "mean": 723.9375,
+        "median": 717.0,
+        "min": 692.0,
+        "p95": 792.0
+      }
+    },
+    "pragmatics_critic": {
+      "generated": {
+        "max": 56.0,
+        "mean": 53.21875,
+        "median": 53.0,
+        "min": 53.0,
+        "p95": 55.0
+      },
+      "prefill": {
+        "max": 789.0,
+        "mean": 692.71875,
+        "median": 686.0,
+        "min": 661.0,
+        "p95": 761.0
+      }
+    },
+    "single_agent": {
+      "generated": {
+        "max": 269.0,
+        "mean": 187.66666666666666,
+        "median": 182.0,
+        "min": 182.0,
+        "p95": 202.0
+      },
+      "prefill": {
+        "max": 1236.0,
+        "mean": 1183.25,
+        "median": 1177.0,
+        "min": 1154.0,
+        "p95": 1236.0
+      }
+    }
+  }
+}

@@ -1,0 +1,168 @@
+{
+  "schema_version": "sqma-004-agent-tune-input-v1",
+  "experiment_id": "SQMA-004",
+  "tier": "Major infrastructure",
+  "stage": "agent-tune-fold3-input-materialization",
+  "registered_at": "2026-09-04",
+  "authorization": {
+    "basis": "Prepared as the required post-SQMA-003 Agent-Tune input stage; execution remains explicitly withheld.",
+    "design_registered": true,
+    "execution_authorized": false,
+    "model_loading": false,
+    "training": false,
+    "agent_calls": false,
+    "accuracy_scoring": false,
+    "validation_access": false,
+    "test_access": false,
+    "network": false,
+    "automatic_next_stage": false
+  },
+  "planned_access": {
+    "public_fold_metadata_access": true,
+    "monolithic_private_byte_streaming": true,
+    "decode_private_rows_for_folds": [3],
+    "decode_private_rows_for_folds_0_2": false,
+    "decode_private_rows_for_fold4": false,
+    "write_fold3_gold_free_and_consumer_gold": true,
+    "write_train_capable": false,
+    "validation_access": false,
+    "test_access": false,
+    "network": false
+  },
+  "implementation": {
+    "protocol": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/protocols/sqma-004-agent-tune-input.md",
+      "bytes": 5770,
+      "sha256": "ea29a2345d40586bf04c19b4dee33f5b4755c023369ed47ef1938260be931d1d"
+    },
+    "contract": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/scoped_input_contract.py",
+      "bytes": 19203,
+      "sha256": "6d840a7d8b8d611af2421056dc38be399d8427a332c4ef3f44b0a03e0f660586"
+    },
+    "runner": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/run_sqma004_agent_tune_input.py",
+      "bytes": 32540,
+      "sha256": "2311ccdee9e192a30e65ad731d909b52eaa233eba0739b463c36ec82df6f9f83"
+    },
+    "verifier": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/verify_sqma004_agent_tune_input.py",
+      "bytes": 34232,
+      "sha256": "8acf3db1a6e3879e85f5223a9190a37544a88fd64f2cd50292469a63c227161b"
+    },
+    "tests": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/tests/test_sqma004_agent_tune_input.py",
+      "bytes": 8134,
+      "sha256": "fd23eec42f4029d5161b0f58827f64732e851789614e570ca41fb8f2fe85f102"
+    }
+  },
+  "prerequisites": {
+    "classifier_free_amendment": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/d0-classifier-free-amendment-v1.json",
+      "bytes": 3055,
+      "sha256": "13517a4844132e8939bc47b12adb9620e2e5bf0856f5c7dec4754618da443819"
+    },
+    "sqma002_complete": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-002-dev-scoped-input/attempt-1/complete.json",
+      "bytes": 702,
+      "sha256": "38f2d5cd7c65213e7b1937a45da8ae8a842d579bd83a634a5eed8ae66218d688"
+    },
+    "sqma002_verification": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-002-dev-scoped-input/attempt-1/verification.json",
+      "bytes": 3318,
+      "sha256": "9ba3f6c1161df08a5c76e25f0d5d79f83f3255df52e06375343eead6ceba1635"
+    },
+    "sqma003_complete": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-003-classifier-free-agent-preflight/attempt-1/complete.json",
+      "bytes": 0,
+      "sha256": "TO_BE_BOUND_AFTER_SQMA003_PASS"
+    },
+    "public_fold_manifest": {
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/fold-manifest.public.jsonl",
+      "bytes": 739200,
+      "sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8"
+    }
+  },
+  "sqma003_completion_contract": {
+    "schema_version": "sqma-003-complete-v1",
+    "sqma003_complete": true,
+    "agent_preflight_verified": true,
+    "preflight_gate": "Passed",
+    "accuracy_scored": false,
+    "gold_accessed": false,
+    "model_training_executed": false
+  },
+  "sources": {
+    "archive_root_env": "NEUROSCIENCE_ARCHIVE_ROOT",
+    "audited_archive_root": "/Users/phoenix/Assistant/NeuroScience",
+    "train": {
+      "relative_path": "projects/llm-forum-text-emotion-recognition/data/stack-overflow-emotion-gold/derived-private/task-v1/train.jsonl",
+      "bytes": 1372562,
+      "sha256": "fc2f853b5b8afb78253ca3a96b5093d2fd12ea7063801f57bf138c9d5cf528fc",
+      "mode": "0600",
+      "rows": 3360
+    },
+    "private_fold_manifest": {
+      "relative_path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-fold-manifest-preflight-attempt-2/fold-manifest.private.jsonl",
+      "bytes": 979748,
+      "sha256": "d518e97c3332f2d59ea3556aecbb3a8cf9253438aee5ba02cd2ab105663862af",
+      "mode": "0600",
+      "rows": 3360
+    },
+    "source_ordinal": "zero_based_train_jsonl_line_index",
+    "input_alignment": "zip_public_train_private_manifest_exact_3360_lines"
+  },
+  "runtime": {
+    "executable": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python",
+    "python": "3.10.20",
+    "machine": "arm64",
+    "packages": {"numpy": "2.2.6"},
+    "model_framework_imports": false,
+    "offline": true
+  },
+  "fold3": {
+    "rows": 672,
+    "components": 657,
+    "sample_order_sha256": "2537a0cef8c4ea878ea57083d4a76834b1ff963f3f0ca368f99f5744828a3b99",
+    "sample_membership_sha256": "2537a0cef8c4ea878ea57083d4a76834b1ff963f3f0ca368f99f5744828a3b99",
+    "component_membership_sha256": "115f387b4fb5674beffcbe9773b7bd81e8ccee3c814f5a7ef2d20c49e15401fb",
+    "row_membership_sha256": "26b2b67d6a319c54d7b04b7627505acbb08f9017072177961706851e862f836c",
+    "source_ordinal_sha256": "78d64405da2a37e9b4db69c69012e60658544dcc2005be6f0a9e9a262b2c6aba"
+  },
+  "snapshot_contract": {
+    "output_fold": 3,
+    "scopes": ["gold-free-inference", "consumer-gold"],
+    "rows_per_scope": 672,
+    "train_capable_created": false,
+    "fold0_2_output_rows": 0,
+    "fold4_output_rows": 0,
+    "private_directory_mode": "0700",
+    "private_file_mode": "0600",
+    "extra_files_allowed": 0
+  },
+  "resources": {
+    "maximum_wall_seconds": 300,
+    "maximum_peak_rss_bytes": 1073741824,
+    "maximum_private_output_bytes": 67108864,
+    "maximum_public_output_bytes": 16777216,
+    "minimum_free_disk_bytes": 21474836480,
+    "model_or_mlx_allocations": 0,
+    "critical_memory_events": 0,
+    "oom_or_kill_events": 0,
+    "orphan_processes_after_exit": 0
+  },
+  "outputs": {
+    "public_attempt_dir": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-004-agent-tune-input/attempt-1",
+    "private_attempt_dir": "projects/selective-qwen-multi-agent-forum-analysis/private/sqma-004-agent-tune-input/attempt-1",
+    "public_allowed_files": ["run-claim.json", "run.json", "verification.json", "complete.json"],
+    "private_allowed_files": [
+      "fold-3/gold-free-inference.jsonl",
+      "fold-3/consumer-gold.npz",
+      "private-manifest.json"
+    ]
+  },
+  "commands": {
+    "run": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python projects/selective-qwen-multi-agent-forum-analysis/scripts/run_sqma004_agent_tune_input.py --config projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-004-agent-tune-input.json",
+    "verify": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python projects/selective-qwen-multi-agent-forum-analysis/scripts/verify_sqma004_agent_tune_input.py --config projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-004-agent-tune-input.json"
+  }
+}

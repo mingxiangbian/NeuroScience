@@ -1,0 +1,96 @@
+{
+  "schema_version": "sqma-008-locked-acceptance-incident-v1",
+  "incident_id": "SQMA-008-INCIDENT-001",
+  "experiment_id": "SQMA-008",
+  "attempt_id": "attempt-1",
+  "registered_at_utc": "2026-09-04T04:38:52Z",
+  "stage": "dev-c2-locked-acceptance",
+  "status": "Failed",
+  "failure_class": "preregistered_locked_contract_acceptance_gate",
+  "failure_summary": "The producer completed all 72 planned calls, but one of 24 locked Judge outputs contained an illegal evidence reference ID. Judge allowed-ID validity and rendered validity were therefore 23/24, contract_errors was 1, and the zero-tolerance C2 acceptance gate failed. No verification or completion artifact was written.",
+  "artifacts": {
+    "config": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-008-dev-c2-locked-acceptance.json",
+      "bytes": 14639,
+      "sha256": "7ff0d3d8f901617c5fa73d8f48a1b1c0bd67339bca1fa09195fea48bd61f00d8"
+    },
+    "run_claim": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-008-dev-c2-locked-acceptance/attempt-1/run-claim.json",
+      "bytes": 585,
+      "sha256": "27b0d2706846c5ed56b147ac03c14d8f1405fbbcc6b48d27bf750ccacf578a66"
+    },
+    "run": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-008-dev-c2-locked-acceptance/attempt-1/run.json",
+      "bytes": 3236,
+      "sha256": "24dcf9abdef1d5240586b7285bbf22667f8bf23652d83fa68fd39dd602d63852"
+    }
+  },
+  "run_terminal": {
+    "run_status": "Failed",
+    "acceptance_passed": false,
+    "next_gate": "stop_failed_incident_required",
+    "physical_calls_complete": 72,
+    "physical_calls_planned": 72
+  },
+  "observed_acceptance_gate": {
+    "judge_rows": 24,
+    "judge_raw_json_parse": 24,
+    "judge_exact_six_keys": 24,
+    "judge_missing_or_extra_key_rows": 0,
+    "judge_non_array_value_rows": 0,
+    "judge_non_integer_reference_rows": 0,
+    "judge_illegal_reference_id_rows": 1,
+    "judge_allowed_reference_ids": 23,
+    "judge_rendered_valid": 23,
+    "contract_errors": 1,
+    "evidence_validator_valid_rate": 1.0,
+    "critic_validator_valid_rate": 1.0,
+    "system_fallback_rows": 0,
+    "reference_normalization_events_report_only": 0,
+    "duplicate_references_removed_report_only": 0,
+    "reference_order_normalized_slots_report_only": 0,
+    "normalization_ambiguity_events": 0,
+    "semantic_repair_events": 0,
+    "unhandled_failures": 0,
+    "token_cap_hits": 0,
+    "full_projection_seconds": 10031.976929032477
+  },
+  "failed_checks": [
+    "allowed_ids",
+    "rendered",
+    "no_contract_errors"
+  ],
+  "resources": {
+    "wall_seconds": 272.3901891669957,
+    "model_load_seconds": 2.8117340409662575,
+    "generated_tokens": 1900,
+    "mlx_peak_bytes": 8424588888,
+    "peak_rss_bytes": 1373044736,
+    "private_output_bytes": 126496,
+    "critical_memory_events": 0,
+    "oom_or_kill_events": 0,
+    "orphan_processes_after_exit": 0,
+    "full_projection_below_48_hours": true
+  },
+  "access": {
+    "gold_accessed": false,
+    "classifier_accessed": false,
+    "locked_raw_human_accessed": false,
+    "fold3_accessed": false,
+    "fold4_accessed": false
+  },
+  "artifact_outcome": {
+    "verification_output_written": false,
+    "completion_output_written": false
+  },
+  "decision": {
+    "sqma008_complete": false,
+    "ordinary_greedy_c2_accepted": false,
+    "formal_matched_comparison_blocked": true,
+    "inspect_locked_raw_for_revision": false,
+    "revise_prompt_from_locked_output": false,
+    "next_research_decision": "design_and_static_review_judge_v3_constrained_candidate_scorer",
+    "automatic_execution": false
+  },
+  "claim_boundary": "This is one zero-tolerance contract failure on the preregistered 24-component Agent-Dev C2 acceptance set. The aggregate does not identify or expose the locked row, raw output, or illegal ID. It is not an accuracy, role-value, matched-comparison, population-validity, Agent-Tune, Agent-Confirm, or external-generalization result."
+}
