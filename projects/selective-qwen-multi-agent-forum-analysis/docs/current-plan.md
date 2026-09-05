@@ -6,6 +6,8 @@
 
 状态：硬件已由用户确认；方法方案待配置冻结与实验验证。
 
+入口：[项目概览](../README.md) · [当前交接](../HANDOFF.md) · [4B 阶段历史归档](history.md)。
+
 ## 1. 已确定的决定
 
 2026-09-05，用户明确决定使用 **2×NVIDIA RTX PRO 6000 96GB**。按同一主机两张完整 GPU 准备，分别承载强主模型与小模型专家。这是硬件选型记录，不表示已经租用、验机或完成云端部署。
@@ -25,25 +27,7 @@
 
 BF16意味着不额外做4-bit/8-bit权重量化，不是没有经过厂商预训练或后训练。Qwen3.8-27B官方模型卡确认其为带视觉编码器的27B级语言模型，并支持调整thinking；本项目只使用文本输入。官方Agent benchmark可支持将其列为候选，不能代替论坛情绪任务上的验证。[官方模型卡](https://huggingface.co/Qwen/Qwen3.8-27B)
 
-## 2. 目录为什么看起来不见了
-
-首次提交前的只读核对结果如下（整合前快照）：
-
-| 工作区 | 多智能体目录 | 原情绪识别实验目录 |
-| --- | --- | --- |
-| `/Users/phoenix/.codex/worktrees/72d6/NeuroScience`，本任务实际目录 | 存在；整个目录未被Git跟踪 | 存在 |
-| `/Users/phoenix/Assistant/NeuroScience`，主目录 | 不存在 | 存在 |
-| `/Users/phoenix/Assistant/NeuroScience-ielts-reader-reliability`，当前main所在checkout | 不存在 | 存在 |
-
-该次核对时，Git的已跟踪文件列表和全分支日志均无多智能体目录记录。因此，当时目录留在本任务的独立工作区；切回主目录、main或远程仓库时看不到，不能据此判定工件已经丢失。
-
-用户在主目录删除的是 `projects/uestc-fyp-topics-2026-2027/` 的三个选题文件：`application-reasons-en.md`、`shortlist.md`、`topics.md`。初次核对时它们是主checkout中的未提交删除；2026-09-05按用户合并要求单独记入提交 `852406a`，随后纳入项目整合，保持删除。
-
-后续沿用本目录。2026-09-05按用户要求，公开文档、代码、配置和public run通过Git整合到main及主目录的原工作分支；两者保留各自的IELTS状态，不整体切换或覆盖无关文件。本次不push。
-
-private工件仍留在 `/Users/phoenix/.codex/worktrees/72d6/NeuroScience/projects/selective-qwen-multi-agent-forum-analysis/private/`，Git整合不包含这些数据，也不构成private备份。另一个checkout运行旧协议前仍需独立迁移并核验private输入；完成前保留72d6工作区。
-
-## 3. 研究问题与系统目标
+## 2. 研究问题与系统目标
 
 系统面向英语技术论坛文本的多标签情绪分析，保持六标签：`love`、`joy`、`surprise`、`anger`、`sadness`、`fear`；空标签集表示未检出这些情绪。
 
@@ -55,7 +39,7 @@ private工件仍留在 `/Users/phoenix/.codex/worktrees/72d6/NeuroScience/projec
 
 最终系统可以承载话题级汇总、证据展示和成本记录。第一轮先验证样本级方法，网站和报告生成放在方法证据之后。当前不安排CancerEmo等外部金标泛化，也不恢复已暂停的context/C2构建。
 
-## 4. 候选模型与角色
+## 3. 候选模型与角色
 
 以下是待验证的分工，不是对各模型专长的既定结论。
 
@@ -72,7 +56,7 @@ private工件仍留在 `/Users/phoenix/.codex/worktrees/72d6/NeuroScience/projec
 
 原项目的M1、M3及Router不进入新Agent输入。此前[无分类器辅助的决策](../protocols/dec-sqma-classifier-free-v1.md)继续适用；旧分类器仅可作为历史研究背景。
 
-## 5. 选择性协作怎么做
+## 4. 选择性协作怎么做
 
 先比较全量协作是否有收益，再在Agent-Tune上冻结选择性策略。当前建议优先检验“小模型专家先分析，出现分歧或证据不足时再调用27B裁决”。
 
@@ -82,7 +66,7 @@ private工件仍留在 `/Users/phoenix/.codex/worktrees/72d6/NeuroScience/projec
 
 随机触发对照采用相同调用位置，并按component抽样匹配选择性策略的实际activated rows与各模型物理调用数，同时报告token、GPU时间和时延差异。若选择性和随机触发表现相当，就不能声称触发器识别出了更值得协作的样本。
 
-## 6. 必要比较与成本口径
+## 5. 必要比较与成本口径
 
 以下是实验矩阵建议；本文件不替代可执行的冻结配置。
 
@@ -101,7 +85,7 @@ private工件仍留在 `/Users/phoenix/.codex/worktrees/72d6/NeuroScience/projec
 
 没有硬件预算限制，仍然需要成本匹配对照：它决定论文能否区分方法收益与增加计算量的收益。
 
-## 7. 输出、数据与评价
+## 6. 输出、数据与评价
 
 输出沿用固定六标签槽位、原文证据与合法证据ID检查的设计经验。JSON合法和引用存在只证明结构正确，不证明证据与情绪相关。若声称解释质量提高，还需要单独的人工评价标准。
 
@@ -161,4 +145,6 @@ Confirm的历史标签分布与旧模型统计已在原项目使用，不能称�
 5. **选择性阶段与Confirm**：协作有稳定信号时再选择触发策略；所有Confirm比较和预算同时冻结后运行。若协作不优于强基线，保留负结果。
 6. **系统接入与报告**：依据方法结果决定是否接入话题级网站，再评价运行和报告质量。无gold服务闭环不替代预测泛化实验。
 
-首轮记录完成了硬件决定、当前方案汇总和项目位置说明。2026-09-05的后续整合加入Git提交与合并，并保留旧选题删除；没有云端下单、数据上传、模型下载、训练、推理、旧实验重试或模型/checkpoint删除。
+首轮记录完成了硬件决定、当前方案汇总和项目位置说明。2026-09-05的后续整合加入Git提交与合并，并保留旧选题删除；该次整合未运行模型。
+
+2026-09-05随后按用户要求整理入口文档，将旧4B说明归入[历史文档](history.md)，保留冻结工件原路径；另删除旧项目11个模型权重副本，共22.1474 GiB，详见[本地清理与恢复记录](../../llm-forum-text-emotion-recognition/models/local-storage-cleanup-2026-09-05.md)。Qwen4B MLX、所有训练checkpoint、原manifest、数据及SQMA private均保留。新云端模型尚未下载或运行。
