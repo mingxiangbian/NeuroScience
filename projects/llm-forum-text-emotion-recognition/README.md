@@ -10,6 +10,10 @@ papers:
   - ../../papers/llm-forum-text-emotion-recognition/reading-route.md
 ---
 
+## 本地模型存储 · 2026-09-05
+
+按用户要求清理了11个可重新下载或转换的模型权重副本，约22.15 GiB。训练checkpoint、部署模型、数据、实验结果和原manifest均保留。需要重跑旧1.7B或相关encoder实验时，先按[清理清单与恢复说明](models/local-storage-cleanup-2026-09-05.md)补齐对应权重；历史manifest不代表当前本地文件齐全。
+
 ## Project Identity
 
 - English title: Research and Implementation of Emotion Recognition System of Forum Text Based on LLM
