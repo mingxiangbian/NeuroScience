@@ -1,0 +1,43 @@
+{
+  "schema_version": "sqma-001-verification-recovery-v1",
+  "incident_id": "SQMA-001-INCIDENT-001",
+  "verification_attempt": 2,
+  "authorization": {
+    "verification_recovery": true,
+    "reuse_sealed_run": true,
+    "runner_reexecution": false,
+    "run_mutation": false,
+    "model_loading": false,
+    "private_access": false,
+    "training": false,
+    "agent_calls": false,
+    "validation_access": false,
+    "test_access": false,
+    "network": false
+  },
+  "base_config": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-001-strict-base-readiness-preflight.json",
+    "bytes": 10293,
+    "sha256": "64b4be6b4b9b05d6d29a525fef256412c9c0917e0132ac6dfa158f9e0e48fba0"
+  },
+  "sealed_run": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-001-strict-base-readiness-preflight/attempt-1/run.json",
+    "bytes": 9655,
+    "sha256": "3121683df838ed15c0aea598f0080be0d35e879f5d7d678cb81e17baf11458db"
+  },
+  "incident": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/incidents/sqma-001-verification-attempt-1-failure.json",
+    "bytes": 1606,
+    "sha256": "ff4f57548e9e9b8e2dd3113b14354424bfeed07b55b005437e87c40b7ff883c1"
+  },
+  "failed_verifier": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/verify_sqma001_strict_base_preflight.py",
+    "bytes": 22529,
+    "sha256": "2c067fecd668cd261392b06d2addf05de70df0c3293d09d259e04e535971362f"
+  },
+  "recovery_verifier": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/verify_sqma001_recovery_attempt2.py",
+    "bytes": 5021,
+    "sha256": "5005de282422e51611dbafe395bcedb7210fb0db5eb3e19d52822a27ccda6887"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "schema_version": "sqma-001-verification-incident-v1",
+  "incident_id": "SQMA-001-INCIDENT-001",
+  "registered_at_utc": "2026-09-03T14:15:15Z",
+  "stage": "independent-verification",
+  "verification_attempt": 1,
+  "status": "FailedBeforeVerificationOutput",
+  "failure_class": "consumer_dynamic_import_registration",
+  "failure_summary": "Python 3.14 dataclass processing failed because the dynamically loaded strict_base_contract module was not inserted into sys.modules before exec_module.",
+  "base_config": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-001-strict-base-readiness-preflight.json",
+    "bytes": 10293,
+    "sha256": "64b4be6b4b9b05d6d29a525fef256412c9c0917e0132ac6dfa158f9e0e48fba0"
+  },
+  "sealed_run": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-001-strict-base-readiness-preflight/attempt-1/run.json",
+    "bytes": 9655,
+    "sha256": "3121683df838ed15c0aea598f0080be0d35e879f5d7d678cb81e17baf11458db"
+  },
+  "failed_verifier": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/verify_sqma001_strict_base_preflight.py",
+    "bytes": 22529,
+    "sha256": "2c067fecd668cd261392b06d2addf05de70df0c3293d09d259e04e535971362f"
+  },
+  "run_mutated": false,
+  "runner_reexecuted": false,
+  "verification_output_written": false,
+  "model_loaded": false,
+  "private_files_opened": false,
+  "private_rows_parsed": false,
+  "validation_accessed": false,
+  "test_accessed": false,
+  "recovery_scope": "Reuse the sealed run; fix only verifier module registration; do not rerun runner or broaden access."
+}

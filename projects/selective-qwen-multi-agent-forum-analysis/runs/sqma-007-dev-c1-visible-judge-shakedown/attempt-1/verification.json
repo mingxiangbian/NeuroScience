@@ -1,0 +1,53 @@
+{
+  "calls_verified": 48,
+  "config": {
+    "bytes": 10474,
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-007-dev-c1-visible-judge-shakedown.json",
+    "sha256": "1a3f15c894ac63a44a553ef1b19a7d2215b3c509a1cc1d2cc0e0f272a934edfb"
+  },
+  "experiment_id": "SQMA-007",
+  "gate1": {
+    "critic_canonical_valid_rate_report_only": 1.0,
+    "duplicate_references_removed_report_only": 0,
+    "evidence_canonical_valid_rate_report_only": 1.0,
+    "full_projection_seconds": 10254.885279754992,
+    "judge_allowed_reference_ids": 16,
+    "judge_exact_six_fields": 16,
+    "judge_integer_reference_items": 16,
+    "judge_no_extra_or_missing_keys": 16,
+    "judge_raw_json_parse": 16,
+    "judge_reference_arrays": 16,
+    "judge_rendered_valid": 16,
+    "reference_normalization_events_report_only": 0,
+    "reference_order_normalized_slots_report_only": 0,
+    "semantic_repair_calls": 0,
+    "terminal_calls": 48,
+    "token_cap_hits": 0,
+    "unhandled_failures": 0
+  },
+  "gate1_checks": {
+    "judge_allowed_ids": true,
+    "judge_arrays": true,
+    "judge_exact_fields": true,
+    "judge_integer_refs": true,
+    "judge_keys": true,
+    "judge_raw_json": true,
+    "judge_rendered": true,
+    "no_semantic_repair": true,
+    "no_token_hits": true,
+    "no_unhandled": true,
+    "projection": true,
+    "terminal": true
+  },
+  "locked_rows_accessed": 0,
+  "next_gate": "complete_sqma007",
+  "run": {
+    "bytes": 4068,
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-007-dev-c1-visible-judge-shakedown/attempt-1/run.json",
+    "sha256": "0b5b6ec6762eebf5f05a81ccccb93599770a931c145665bf1cbb8149c4edb3a3"
+  },
+  "schema_version": "sqma-007-verification-v1",
+  "status": "Passed",
+  "verified_at_utc": "2026-09-04T03:47:26.030013Z",
+  "visible_rows_verified": 16
+}

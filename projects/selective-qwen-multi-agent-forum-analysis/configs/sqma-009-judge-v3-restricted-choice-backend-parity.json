@@ -1,0 +1,413 @@
+{
+  "schema_version": "sqma-009-judge-v3-restricted-choice-backend-parity-v1",
+  "experiment_id": "SQMA-009",
+  "tier": "Minor",
+  "stage": "judge-v3-restricted-choice-visible-backend-parity",
+  "design_status": "StaticDesignAwaitingImplementation",
+  "registered_at": "2026-09-04",
+  "authorization": {
+    "execution_authorized": false,
+    "private_input_access": false,
+    "c1_private_reuse": false,
+    "visible_c1_content_access": false,
+    "model_loading": false,
+    "token_seal_creation": false,
+    "generation": false,
+    "gold_access": false,
+    "classifier_access": false,
+    "adapter_loading": false,
+    "training": false,
+    "locked_content_access": false,
+    "validation_access": false,
+    "test_access": false,
+    "fold3_access": false,
+    "fold4_access": false,
+    "network": false,
+    "automatic_next_stage": false
+  },
+  "claim_boundary": {
+    "visible_backend_parity_only": true,
+    "accuracy_scoring": false,
+    "method_comparison": false,
+    "sqma008_recovery": false,
+    "locked_acceptance": false,
+    "agent_tune": false,
+    "agent_confirm": false,
+    "external_generalization": false
+  },
+  "prerequisites": {
+    "sqma007_config": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-007-dev-c1-visible-judge-shakedown.json",
+      "bytes": 10474,
+      "sha256": "1a3f15c894ac63a44a553ef1b19a7d2215b3c509a1cc1d2cc0e0f272a934edfb"
+    },
+    "sqma007_run": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-007-dev-c1-visible-judge-shakedown/attempt-1/run.json",
+      "bytes": 4068,
+      "sha256": "0b5b6ec6762eebf5f05a81ccccb93599770a931c145665bf1cbb8149c4edb3a3",
+      "required_status": "CompletedAwaitingVerification",
+      "required_gate1_passed": true,
+      "required_rows": 16,
+      "required_calls": 48
+    },
+    "sqma007_verification": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-007-dev-c1-visible-judge-shakedown/attempt-1/verification.json",
+      "bytes": 1815,
+      "sha256": "92591a910bcd0ef0e057c4f8b9da13e3b18e5be19e25482e0375a077f8f6985f",
+      "required_status": "Passed",
+      "required_locked_rows_accessed": 0
+    },
+    "sqma007_complete": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-007-dev-c1-visible-judge-shakedown/attempt-1/complete.json",
+      "bytes": 337,
+      "sha256": "6b739be3bc58545051fdc4488cfbc2a95c26193271ec3943adde30ad2df762b8",
+      "required_status": "Complete",
+      "required_sqma007_complete": true,
+      "required_ordinary_decoding_c1_gate": "Passed",
+      "required_accuracy_scored": false,
+      "required_gold_accessed": false
+    }
+  },
+  "sealed_c1_private_input": {
+    "base_dir": "projects/selective-qwen-multi-agent-forum-analysis/private/sqma-007-dev-c1-visible-judge-shakedown/attempt-1",
+    "root_mode": "0700",
+    "identity_source": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-007-dev-c1-visible-judge-shakedown/attempt-1/run.json",
+      "sha256": "0b5b6ec6762eebf5f05a81ccccb93599770a931c145665bf1cbb8149c4edb3a3"
+    },
+    "artifacts": {
+      "selection": {
+        "path": "selection.json",
+        "bytes": 4353,
+        "sha256": "d06f8528a931f3d2c0ad86a2828e6c111f8f0962c5fdb8fbf6792af18ed5191d",
+        "mode": "0600"
+      },
+      "calls": {
+        "path": "calls.jsonl",
+        "bytes": 78029,
+        "sha256": "876ad6c9fb5282a90b713e5f67113bfad5eb3667ce6498ddc36883c1212109f5",
+        "mode": "0600"
+      },
+      "private_manifest": {
+        "path": "private-manifest.json",
+        "bytes": 1723,
+        "sha256": "bdaba632deaf7b5731a96685faaa56f4e3be90a9ef806352c7fbbc11462d441e",
+        "mode": "0600"
+      }
+    },
+    "expected_selection_rows": 16,
+    "expected_call_records": 48,
+    "expected_role_counts": {
+      "evidence": 16,
+      "critic": 16,
+      "judge": 16
+    },
+    "consumer_fields": [
+      "selection_identity",
+      "analysis_text",
+      "validated_evidence",
+      "validated_critic"
+    ],
+    "evidence_critic_generation_calls": 0,
+    "prior_judge_output_used": false,
+    "sqma008_private_access": false
+  },
+  "implementation": {
+    "protocol": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/protocols/sqma-009-judge-v3-restricted-choice-backend-parity.md",
+      "bytes": 10014,
+      "sha256": "ca813c481d647fab521ede7eb04c80da8f08bf043e462b31a67efbb9b9f6e889"
+    },
+    "prompt_v5": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/prompts/agent-bundle-v5-judge-restricted-choice.json",
+      "bytes": 4612,
+      "sha256": "1ca13d889314b13509c22d7031a85304f8024a6d14d71201c17c0c04a91cb442"
+    },
+    "schema_v5": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/schemas/agent-output-v5-judge-restricted-choice.schema.json",
+      "bytes": 3593,
+      "sha256": "d1d8ce83a7820e02b8e028b8c03d728dbe46aecd94cf0a690f71868017b66614"
+    },
+    "validator_v5": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/validate_agent_output_v5.py",
+      "bytes": 11286,
+      "sha256": "46afd99290d56471a34f4abf0892427675fd785b62d46f60bbb9a2793bf01dd1"
+    },
+    "validator_tests_v5": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/tests/test_validate_agent_output_v5.py",
+      "bytes": 11065,
+      "sha256": "7c30a92da47404f8d3ecf32d5ed1bf7877c1f2ef8102a62c0aeecec36884223e"
+    },
+    "prompt_v4_lineage": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/prompts/agent-bundle-v4-judge-evidence-slots.json",
+      "bytes": 4673,
+      "sha256": "436a1c40af0888b2b4db5744590ad58fa8ee6472b721c17ac1395dd759e7a52d"
+    },
+    "schema_v4_lineage": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/schemas/agent-output-v4-judge-evidence-slots.schema.json",
+      "bytes": 2473,
+      "sha256": "58f1edffb92cda43e0e8501f6bff1044c80218d2e4e5e97b50b27a183ecb96e7"
+    },
+    "validator_v4_lineage": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/validate_agent_output_v4.py",
+      "bytes": 6880,
+      "sha256": "80af9cce627a6d3f9c8e3542a811c4b2f0a38dd6a974927cc12a7e285f0ff48e"
+    },
+    "validator_tests_v4_lineage": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/tests/test_validate_agent_output_v4.py",
+      "bytes": 9366,
+      "sha256": "c5cd512ba9f48335e066438091a051391680998bdb3ab92aeb4cf120eb26ac17"
+    },
+    "prompt_v3_dependency": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/prompts/agent-bundle-v3-classifier-free.json",
+      "bytes": 5584,
+      "sha256": "e224ea59e140ae60a56084fffcafbd785accf465df6e666345a6a5b91d9b2ff6"
+    },
+    "schema_v3_dependency": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/schemas/agent-output-v3.schema.json",
+      "bytes": 5384,
+      "sha256": "dc504700ce81980b426cfc6aa04ae7e780c4a4b72571c7b795e3f14c9a668bb4"
+    },
+    "validator_v3_dependency": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/validate_agent_output_v3.py",
+      "bytes": 15115,
+      "sha256": "0901c046936ca217cb210aec1f48d815d1e64b9f4db88f52c0f93ae8dc1ad07d"
+    },
+    "runner": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/run_sqma009_judge_v3_restricted_choice_backend_parity.py",
+      "bytes": "PLACEHOLDER_NOT_IMPLEMENTED",
+      "sha256": "PLACEHOLDER_NOT_IMPLEMENTED"
+    },
+    "verifier": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/verify_sqma009_judge_v3_restricted_choice_backend_parity.py",
+      "bytes": "PLACEHOLDER_NOT_IMPLEMENTED",
+      "sha256": "PLACEHOLDER_NOT_IMPLEMENTED"
+    },
+    "tests": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/tests/test_sqma009_judge_v3_restricted_choice_backend_parity.py",
+      "bytes": "PLACEHOLDER_NOT_IMPLEMENTED",
+      "sha256": "PLACEHOLDER_NOT_IMPLEMENTED"
+    }
+  },
+  "model": {
+    "repo_id": "Qwen/Qwen3-4B",
+    "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "format": "MLX_BF16_unquantized",
+    "adapter": null,
+    "audited_archive_root": "/Users/phoenix/Assistant/NeuroScience",
+    "archive_root_env": "NEUROSCIENCE_ARCHIVE_ROOT",
+    "relative_path": "projects/llm-forum-text-emotion-recognition/models/qwen3-4b/mlx-bf16",
+    "manifest_path": "projects/llm-forum-text-emotion-recognition/models/qwen3-4b/manifest.json",
+    "manifest_bytes": 3959,
+    "manifest_sha256": "da447350d9e43213dacc1202da03b50d7e7114b0a4fe2904ff353240b404a641",
+    "file_count": 9,
+    "total_bytes": 8056445038
+  },
+  "runtime": {
+    "executable": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+    "python": "3.11.15",
+    "machine": "arm64",
+    "packages": {
+      "mlx": "0.32.0",
+      "mlx-lm": "0.31.3",
+      "numpy": "2.4.6",
+      "transformers": "5.14.1"
+    },
+    "backend_sources": {
+      "generate_py": {
+        "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm/generate.py",
+        "bytes": 73689,
+        "sha256": "270778ad53eaca55a8533d82e6752660fe5d2605c4aa0879b48a50a91f69345f"
+      },
+      "sample_utils_py": {
+        "path": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/lib/python3.11/site-packages/mlx_lm/sample_utils.py",
+        "bytes": 12888,
+        "sha256": "c0ce439f8dbf0d4e6d0f37f728a324f3f72878e6a9123df41be520804c596d67"
+      }
+    }
+  },
+  "token_seal": {
+    "schema_version": "sqma-judge-v3-option-token-seal-v1",
+    "status": "UnresolvedUntilAuthorizedRuntime",
+    "model_root_relative_files": {
+      "tokenizer_json": {
+        "path": "tokenizer.json",
+        "bytes": 11422650,
+        "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+      },
+      "chat_template": {
+        "path": "chat_template.jinja",
+        "bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      }
+    },
+    "symbols": ["A", "B", "C", "D"],
+    "hardcoded_token_ids": false,
+    "runtime_recompute": {
+      "encode_add_special_tokens": false,
+      "single_integer_token_per_symbol": true,
+      "unique_token_ids": true,
+      "exact_decode_round_trip": true,
+      "none_are_eos": true
+    },
+    "must_be_written_before_generation": true,
+    "private_output": "token-seal.json",
+    "public_output": "sha256_and_pass_fail_only"
+  },
+  "generation": {
+    "namespace": "SQMA-009-judge-v3-restricted-choice-v1",
+    "seed_material": "namespace|sample_id|target_label|call_index",
+    "rows": 16,
+    "target_label_order": ["love", "joy", "surprise", "anger", "sadness", "fear"],
+    "calls_per_row": 6,
+    "physical_calls": 96,
+    "evidence_generation_calls": 0,
+    "critic_generation_calls": 0,
+    "judge_calls": 96,
+    "enable_thinking": false,
+    "temperature": 0.0,
+    "decoding": "greedy",
+    "max_tokens_per_call": 1,
+    "prompt_cache": null,
+    "selected_value_source": "terminal_GenerationResponse.token",
+    "response_text_authoritative": false,
+    "logits_processors": {
+      "processors_per_call": 1,
+      "fresh_instance_per_call": true,
+      "stateless_allowed_token_mask": true,
+      "uses_tokens_argument": false,
+      "mutable_candidate_state": false,
+      "mask_eos": true,
+      "mask_all_non_candidate_tokens": true
+    },
+    "expected_terminal": {
+      "response_count_per_call": 1,
+      "generation_tokens_per_call": 1,
+      "finish_reason": "length",
+      "length_is_expected_not_token_cap_failure": true
+    },
+    "semantic_repair_calls": 0,
+    "external_tool_calls": 0,
+    "network_calls": 0
+  },
+  "option_contract": {
+    "symbols": ["A", "B", "C", "D"],
+    "A": "NONE",
+    "B": "allowed_evidence_ids[0]_when_present",
+    "C": "allowed_evidence_ids[1]_when_present",
+    "D": "allowed_evidence_ids[2]_when_present",
+    "allowed_evidence_ids": "list_range_len_validated_c1_evidence_spans",
+    "maximum_evidence_options": 3,
+    "unused_symbols_masked": true,
+    "candidate_mapping_runtime_recomputed_per_row": true
+  },
+  "role_context_allowlist": {
+    "judge_restricted_choice": [
+      "analysis_text",
+      "ontology",
+      "evidence",
+      "critic",
+      "target_label",
+      "allowed_evidence_ids",
+      "option_mapping"
+    ]
+  },
+  "assembly": {
+    "rows": 16,
+    "label_order": ["love", "joy", "surprise", "anger", "sadness", "fear"],
+    "NONE_result": [],
+    "evidence_result": "one_element_integer_array",
+    "exact_six_slots": true,
+    "derived_labels": "nonempty_slots_in_fixed_order",
+    "prior_judge_v2_output_used": false,
+    "semantic_repair": false,
+    "illegal_evidence_id_constructible": false
+  },
+  "technical_gate": {
+    "c1_public_and_private_lineage_verified_required": true,
+    "token_seal_valid_required": true,
+    "planned_stream_generate_invocations_required": 96,
+    "terminal_calls_required": 96,
+    "response_count_one_required": 96,
+    "generation_tokens_one_required": 96,
+    "total_generated_tokens_required": 96,
+    "finish_reason_length_required": 96,
+    "selected_token_escape_maximum": 0,
+    "selected_eos_token_maximum": 0,
+    "post_mask_dead_end_or_nonfinite_allowed_logits_maximum": 0,
+    "unhandled_failures_maximum": 0,
+    "legal_six_label_assemblies_required": 16,
+    "illegal_evidence_ids_constructed_maximum": 0,
+    "semantic_repair_events_maximum": 0,
+    "resource_limits_required": true
+  },
+  "report_only": {
+    "processor_invocation_count": true,
+    "processor_invocations_per_call_distribution": true,
+    "mlx_vs_python_reference_mask_parity": true,
+    "terminal_token_candidate_assembly_parity": true,
+    "prefill_tokens": true,
+    "generated_tokens": true,
+    "latency_and_wall": true,
+    "peak_resources": true,
+    "internal_unused_next_token_lookahead": true,
+    "processor_invocation_count_is_model_forward_count": false,
+    "formal_projection": false,
+    "accuracy_or_method_score": false,
+    "any_report_only_metric_is_a_pass_gate": false
+  },
+  "resources": {
+    "maximum_physical_calls": 96,
+    "maximum_generated_tokens": 96,
+    "maximum_wall_seconds": 7200,
+    "maximum_process_rss_bytes": 12884901888,
+    "maximum_mlx_peak_bytes": 10000000000,
+    "maximum_private_output_bytes": 268435456,
+    "maximum_public_output_bytes": 16777216,
+    "minimum_free_disk_bytes": 21474836480,
+    "critical_memory_events": 0,
+    "oom_or_kill_events": 0,
+    "orphan_processes_after_exit": 0
+  },
+  "outputs": {
+    "public_attempt_dir": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-009-judge-v3-restricted-choice-backend-parity/attempt-1",
+    "private_attempt_dir": "projects/selective-qwen-multi-agent-forum-analysis/private/sqma-009-judge-v3-restricted-choice-backend-parity/attempt-1",
+    "public_allowed_files": [
+      "run-claim.json",
+      "run.json",
+      "verification.json",
+      "complete.json"
+    ],
+    "private_allowed_files": [
+      "token-seal.json",
+      "calls.jsonl",
+      "assemblies.jsonl",
+      "private-manifest.json"
+    ]
+  },
+  "fairness_boundary": {
+    "judge_v3_method_identity": "six_restricted_single_token_label_calls",
+    "judge_v2_method_identity": "one_free_generation_six_slot_call",
+    "judge_v3_is_judge_v2_recovery": false,
+    "judge_v3_is_call_matched_to_judge_v2": false,
+    "future_six_call_control_required_before_performance_comparison": true,
+    "future_control_in_this_experiment": false
+  },
+  "failure_policy": {
+    "failed_status": "Failed",
+    "preserve_partial_or_sealed_artifacts": true,
+    "automatic_retry": false,
+    "automatic_prompt_revision": false,
+    "automatic_backend_replacement": false,
+    "automatic_sqma010": false,
+    "automatic_locked_acceptance": false,
+    "automatic_formal_comparison": false,
+    "incident_required": true
+  },
+  "commands": {
+    "run": null,
+    "verify": null,
+    "verify_static": null
+  },
+  "next_gate": "implement_runner_verifier_tests_and_static_verify"
+}

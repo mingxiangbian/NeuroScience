@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.invalid/selective-qwen-multi-agent-forum-analysis/agent-output-v5-judge-restricted-choice.schema.json",
+  "title": "SQMA Judge V3 restricted single-token evidence choice",
+  "x-sqma-dependencies": {
+    "evidence_schema_ref": "agent-output-v3.schema.json#/$defs/Evidence",
+    "critic_schema_ref": "agent-output-v3.schema.json#/$defs/Critic",
+    "v3_schema_sha256": "dc504700ce81980b426cfc6aa04ae7e780c4a4b72571c7b795e3f14c9a668bb4",
+    "v3_validator_sha256": "0901c046936ca217cb210aec1f48d815d1e64b9f4db88f52c0f93ae8dc1ad07d"
+  },
+  "x-sqma-runtime-contract": {
+    "option_symbols": ["A", "B", "C", "D"],
+    "runtime_token_ids_are_recomputed_and_sealed": true,
+    "previous_or_public_token_ids_are_not_trusted": true,
+    "option_A": "NONE",
+    "option_B_to_D": "allowed_evidence_ids_in_ascending_order",
+    "maximum_evidence_options": 3,
+    "selection_calls_per_row": 6,
+    "selection_calls_per_label": 1,
+    "generated_tokens_per_call": 1,
+    "stream_generate_invocations_per_label": 1,
+    "internal_unused_next_token_lookahead": true,
+    "exact_decode_forward_steps_per_label_claimed": false,
+    "logits_processor_may_be_invoked_more_than_once": true,
+    "sampler": "greedy",
+    "logits_processor": "fresh_stateless_allowed_token_mask_per_label_call",
+    "decision_source": "GenerationResponse.token_not_text",
+    "expected_finish_reason": "length",
+    "prompt_cache_reuse": false
+  },
+  "oneOf": [
+    {"$ref": "agent-output-v3.schema.json#/$defs/Evidence"},
+    {"$ref": "agent-output-v3.schema.json#/$defs/Critic"},
+    {"$ref": "#/$defs/JudgeRestrictedSlots"}
+  ],
+  "$defs": {
+    "SelectedEvidenceReference": {
+      "type": "array",
+      "items": {"type": "integer", "minimum": 0, "maximum": 2},
+      "maxItems": 1,
+      "uniqueItems": true
+    },
+    "JudgeRestrictedSlots": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["love", "joy", "surprise", "anger", "sadness", "fear"],
+      "properties": {
+        "love": {"$ref": "#/$defs/SelectedEvidenceReference"},
+        "joy": {"$ref": "#/$defs/SelectedEvidenceReference"},
+        "surprise": {"$ref": "#/$defs/SelectedEvidenceReference"},
+        "anger": {"$ref": "#/$defs/SelectedEvidenceReference"},
+        "sadness": {"$ref": "#/$defs/SelectedEvidenceReference"},
+        "fear": {"$ref": "#/$defs/SelectedEvidenceReference"}
+      }
+    },
+    "TokenSealEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["symbol", "token_id"],
+      "properties": {
+        "symbol": {"enum": ["A", "B", "C", "D"]},
+        "token_id": {"type": "integer", "minimum": 0}
+      }
+    },
+    "TokenSeal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "tokenizer_sha256", "chat_template_sha256", "encode_add_special_tokens", "symbols"],
+      "properties": {
+        "schema_version": {"const": "sqma-judge-v3-option-token-seal-v1"},
+        "tokenizer_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "chat_template_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "encode_add_special_tokens": {"const": false},
+        "symbols": {
+          "type": "array",
+          "prefixItems": [
+            {"$ref": "#/$defs/TokenSealEntry"},
+            {"$ref": "#/$defs/TokenSealEntry"},
+            {"$ref": "#/$defs/TokenSealEntry"},
+            {"$ref": "#/$defs/TokenSealEntry"}
+          ],
+          "minItems": 4,
+          "maxItems": 4
+        }
+      }
+    }
+  }
+}

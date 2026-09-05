@@ -1,0 +1,101 @@
+{
+  "acceptance_checks": {
+    "allowed_ids": false,
+    "arrays": true,
+    "critic_valid": true,
+    "evidence_valid": true,
+    "exact_keys": true,
+    "fallback": true,
+    "integer_refs": true,
+    "no_contract_errors": false,
+    "no_key_errors": true,
+    "no_normalization_ambiguity": true,
+    "no_semantic_repair": true,
+    "no_unhandled": true,
+    "projection": true,
+    "raw_parse": true,
+    "rendered": false,
+    "terminal": true,
+    "token_hits": true
+  },
+  "acceptance_gate": {
+    "contract_errors": 1,
+    "critic_validator_valid_rate": 1.0,
+    "duplicate_references_removed_report_only": 0,
+    "evidence_validator_valid_rate": 1.0,
+    "full_projection_seconds": 10031.976929032477,
+    "judge_exact_six_keys": 24,
+    "judge_illegal_reference_id_rows": 1,
+    "judge_missing_or_extra_key_rows": 0,
+    "judge_non_array_value_rows": 0,
+    "judge_non_integer_reference_rows": 0,
+    "judge_raw_json_parse": 24,
+    "judge_rendered_valid": 23,
+    "normalization_ambiguity_events": 0,
+    "reference_normalization_events_report_only": 0,
+    "reference_order_normalized_slots_report_only": 0,
+    "semantic_repair_events": 0,
+    "system_fallback_rows": 0,
+    "terminal_calls": 72,
+    "token_cap_hits": 0,
+    "unhandled_failures": 0
+  },
+  "acceptance_passed": false,
+  "access": {
+    "classifier_accessed": false,
+    "gold_accessed": false,
+    "locked_raw_human_accessed": false
+  },
+  "calls": {
+    "by_role": {
+      "critic": 24,
+      "evidence": 24,
+      "judge": 24
+    },
+    "physical": 72
+  },
+  "experiment_id": "SQMA-008",
+  "identities": {
+    "calls_sha256": "eba1862023efae5913100f4853ae4c30f6ced9e6c2b5b0009063fc84fc9a4b1c",
+    "config": {
+      "bytes": 14639,
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-008-dev-c2-locked-acceptance.json",
+      "sha256": "7ff0d3d8f901617c5fa73d8f48a1b1c0bd67339bca1fa09195fea48bd61f00d8"
+    },
+    "manifest_sha256": "dd1bc141b5ccbb6959dee5b321cc839e05c52e3b5080908f6f19c7b9345e9be0",
+    "model": {
+      "adapter": null,
+      "file_count": 9,
+      "manifest_sha256": "da447350d9e43213dacc1202da03b50d7e7114b0a4fe2904ff353240b404a641",
+      "repo_id": "Qwen/Qwen3-4B",
+      "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+      "total_bytes": 8056445038
+    },
+    "run_claim": {
+      "bytes": 585,
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-008-dev-c2-locked-acceptance/attempt-1/run-claim.json",
+      "sha256": "27b0d2706846c5ed56b147ac03c14d8f1405fbbcc6b48d27bf750ccacf578a66"
+    },
+    "selection_sha256": "e7d8f8f083c9eae795f1a509d2ab1f76a12448fc1023cf34ab3a33cd2533e146"
+  },
+  "next_gate": "stop_failed_incident_required",
+  "resources": {
+    "critical_memory_events": 0,
+    "free_disk_bytes_before": 114530455552,
+    "generated_tokens": 1900,
+    "mlx_peak_bytes": 8424588888,
+    "model_load_seconds": 2.8117340409662575,
+    "oom_or_kill_events": 0,
+    "orphan_processes_after_exit": 0,
+    "peak_rss_bytes": 1373044736,
+    "private_output_bytes": 126496,
+    "wall_seconds": 272.3901891669957
+  },
+  "schema_version": "sqma-008-run-v1",
+  "selection": {
+    "components": 24,
+    "locked": 24,
+    "prior_excluded": 80
+  },
+  "status": "Failed"
+}

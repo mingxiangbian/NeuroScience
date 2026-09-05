@@ -1,0 +1,73 @@
+{
+  "schema_version": "sqma-001-verification-recovery-v2",
+  "verification_attempt": 3,
+  "authorization": {
+    "verification_recovery": true,
+    "reuse_sealed_run": true,
+    "allow_m1_cache_metadata_only": true,
+    "runner_reexecution": false,
+    "run_mutation": false,
+    "model_loading": false,
+    "private_access": false,
+    "training": false,
+    "agent_calls": false,
+    "validation_access": false,
+    "test_access": false,
+    "network": false
+  },
+  "base_config": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-001-strict-base-readiness-preflight.json",
+    "bytes": 10293,
+    "sha256": "64b4be6b4b9b05d6d29a525fef256412c9c0917e0132ac6dfa158f9e0e48fba0"
+  },
+  "sealed_run": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-001-strict-base-readiness-preflight/attempt-1/run.json",
+    "bytes": 9655,
+    "sha256": "3121683df838ed15c0aea598f0080be0d35e879f5d7d678cb81e17baf11458db"
+  },
+  "prior_failures": [
+    {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/incidents/sqma-001-verification-attempt-1-failure.json",
+      "bytes": 1606,
+      "sha256": "ff4f57548e9e9b8e2dd3113b14354424bfeed07b55b005437e87c40b7ff883c1"
+    },
+    {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/incidents/sqma-001-verification-attempt-2-failure.json",
+      "bytes": 1833,
+      "sha256": "626f6b8573a623e437e5aca3fa6dafb8e5cce3b6dbb6bb5ed8b912c6e951903e"
+    }
+  ],
+  "failed_verifier": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/verify_sqma001_strict_base_preflight.py",
+    "bytes": 22529,
+    "sha256": "2c067fecd668cd261392b06d2addf05de70df0c3293d09d259e04e535971362f"
+  },
+  "attempt2_recovery_config": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-001-verification-recovery-attempt-2.json",
+    "bytes": 1691,
+    "sha256": "70a1aa81ab18a2e7bfc15043f9e984c89f6620eac555ed373b628d3f5a18b74a"
+  },
+  "attempt2_recovery_verifier": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/verify_sqma001_recovery_attempt2.py",
+    "bytes": 5021,
+    "sha256": "5005de282422e51611dbafe395bcedb7210fb0db5eb3e19d52822a27ccda6887"
+  },
+  "recovery_verifier": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/verify_sqma001_recovery_attempt3.py",
+    "bytes": 11547,
+    "sha256": "1cfb8bc8fd7fb00270a3eedef715cf608be109c3236d72c140091e21bc691078"
+  },
+  "cache_policy": {
+    "allowed_repo_id": "FacebookAI/roberta-base",
+    "allowed_prefix": ".cache/huggingface/",
+    "inventory_rule": "exact_markers_plus_core_lock_metadata_plus_revision_tree",
+    "maximum_file_bytes": 1048576,
+    "maximum_total_bytes": 10485760,
+    "regular_non_symlink_required": true,
+    "empty_lock_required": true,
+    "metadata_three_line_structure_required": true,
+    "revision_tree_format_version": 1,
+    "manifest_files_still_hash_required": true,
+    "m3_extra_files_allowed": 0
+  }
+}

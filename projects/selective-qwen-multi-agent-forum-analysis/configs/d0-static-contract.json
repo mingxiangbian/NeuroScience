@@ -1,0 +1,325 @@
+{
+  "schema_version": "sqma-d0-static-contract-v1",
+  "registered_at": "2026-09-03",
+  "status": "static_contract_registered_no_execution_authority",
+  "dependency_manifest": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/d0-dependency-manifest.json",
+    "sha256": "09a289ff1439b74fd7de4949848a8198ba37481d5709e354d4bd6367e821443f"
+  },
+  "prompt_bundle": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/prompts/agent-bundle-v0.json",
+    "sha256": "c6ab1396f5639c3710994373b434298002e9810e7cac3e5852b9b4a56611d7b7",
+    "maximum_dev_global_revisions": 1,
+    "tune_prompt_selection_forbidden": true
+  },
+  "output_schema": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/schemas/agent-output-v1.schema.json",
+    "sha256": "3a0c9f55b6edd068be12cee60dfd7e6c2b0d262972dfc7fea36b9e1a3c9ad26b"
+  },
+  "runtime_validator": {
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/validate_agent_output.py",
+    "sha256": "d46403ce8e0d33a9007dc9b357be877b3db10e1816661ade6d365836da3860f4",
+    "tests_path": "projects/selective-qwen-multi-agent-forum-analysis/tests/test_validate_agent_output.py",
+    "tests_sha256": "edf14f814db22ef30192022fcf229b31adf7a79003c05622115b9d6174c9690b"
+  },
+  "model": {
+    "dependency_id": "agent_model",
+    "enable_thinking": false,
+    "adapter": null,
+    "sampling": {
+      "do_sample": true,
+      "temperature": 0.6,
+      "top_p": 0.95,
+      "top_k": 20,
+      "seed_namespace": "SQMA-D0-generation-v1"
+    },
+    "context_token_cap": 4096,
+    "canonical_input": {
+      "field": "analysis_text",
+      "maximum_text_tokens": 1024,
+      "truncation": "right_truncate_once_with_frozen_tokenizer",
+      "shared_by_all_systems": true,
+      "role_specific_truncation": false,
+      "constructed_prompt_over_context_cap": "hard_stop"
+    },
+    "single_resident_heavy_model": true,
+    "network_access": false,
+    "external_tools": false
+  },
+  "roles": {
+    "sequence": ["evidence_appraisal", "pragmatics_critic", "judge"],
+    "normal_calls_per_active_row": 3,
+    "max_new_tokens": {
+      "evidence_appraisal": 256,
+      "pragmatics_critic": 192,
+      "judge": 128,
+      "single_agent": 384
+    },
+    "qwen_repair_calls": 0,
+    "invalid_or_abstain_policy": "s0_fallback",
+    "free_reasoning_output": false,
+    "function_calling": false
+  },
+  "systems": {
+    "S0": "frozen_m1_router_m3_pipeline",
+    "S1": "one_single_agent_call",
+    "S2a": "three_independent_single_agent_calls_call_matched_to_S3",
+    "S2b": "maximum_whole_single_agent_calls_under_S3_total_prefill_plus_generated_ceiling_minimum_two",
+    "S3": "three_role_diverse_calls",
+    "S4": "S3_only_on_frozen_trigger_mask",
+    "S4_random": "component_size_stratified_random_mask_with_exact_activated_row_and_call_match"
+  },
+  "self_consistency": {
+    "aggregation": "per_label_strict_majority",
+    "even_k_tie": "corresponding_S0_label_state",
+    "invalid_call_vote": "S0_label_set",
+    "abstain_call_vote": "S0_label_set",
+    "evidence_selection": "lowest_seed_valid_call_whose_emotions_equal_aggregate_else_empty",
+    "qwen_aggregator": false,
+    "S2a_calls": 3,
+    "S2b_minimum_whole_calls": 2,
+    "S2b_maximum_whole_calls": 3,
+    "S2b_budget": "not_more_than_S3_per_row_total_prefill_plus_generated_ceiling",
+    "S2b_matching_tolerance_fraction": 0.1
+  },
+  "strict_base_production": {
+    "stage_order": [
+      "independent_dev_scoped_input_materialization",
+      "dev_crossfit",
+      "agent_preflight",
+      "tune_scoped_input_materialization",
+      "tune_prediction",
+      "final_development_crossfit"
+    ],
+    "scoped_input_materialization": {
+      "consumer": "independent_data_custodian",
+      "consumer_may_open_full_private_train_and_fold_manifest": true,
+      "training_producer_may_open_full_private_train_or_fold_manifest": false,
+      "first_stage_output_folds": [0, 1, 2],
+      "rows_per_fold": 672,
+      "output_mode": "0600",
+      "output_schema": "sqma-dev-fold-input-v1",
+      "required_row_fields": [
+        "schema_version",
+        "protocol_id",
+        "sample_id",
+        "component_id",
+        "fold_id",
+        "text",
+        "labels",
+        "label_cardinality",
+        "neutral"
+      ],
+      "fold3_or_fold4_rows_in_first_stage_outputs": 0,
+      "snapshot_hash_and_row_order_verification_required": true
+    },
+    "dev_crossfit": {
+      "heldout_folds": [0, 1, 2],
+      "training_folds_per_model": 2,
+      "model_pairs": 3
+    },
+    "first_formal_scope": {
+      "stage": "dev_crossfit",
+      "m1_fits": 3,
+      "m3_fits": 3,
+      "allowed_folds": [0, 1, 2],
+      "tune_or_final_refit_in_same_run": false,
+      "combined_wall_hours": 14.0
+    },
+    "tune_prediction": {
+      "heldout_fold": 3,
+      "training_folds": [0, 1, 2],
+      "model_pairs": 1,
+      "reused_in_final_development_crossfit": true
+    },
+    "final_development_crossfit": {
+      "folds": [0, 1, 2, 3],
+      "additional_model_pairs": 3,
+      "total_model_pairs_including_tune_model": 4
+    },
+    "total_new_m1_fits": 7,
+    "total_new_m3_fits": 7,
+    "future_maximum_only": true,
+    "resource_caps": {
+      "m1_hours_per_fit": 1.0,
+      "m1_family_hours": 7.0,
+      "m3_hours_per_fit": 3.5,
+      "m3_family_hours": 24.5,
+      "combined_wall_hours": 32.0,
+      "mlx_peak_bytes": 10000000000,
+      "process_rss_bytes": 12884901888,
+      "critical_memory_events": 0,
+      "oom_or_kill_events": 0,
+      "swap_write_bytes_per_second_threshold": 104857600,
+      "swap_threshold_consecutive_samples": 3,
+      "resource_sample_interval_seconds": 5,
+      "memory_metrics_not_additive": true
+    },
+    "validation_access": false,
+    "test_access": false,
+    "fold4_access": false
+  },
+  "preflight": {
+    "split": "Agent-Dev",
+    "rows": 32,
+    "unique_components": 32,
+    "strata": {"random": 16, "non_gold_difficult": 16},
+    "shakedown_rows": 8,
+    "locked_verification_rows": 24,
+    "selection_requires_strict_dev_outputs": true,
+    "selection": {
+      "one_row_per_component": "lowest_frozen_row_ordinal",
+      "random_rank": "ascending_sha256_of_SQMA-D0-preflight-random-v1_component_id",
+      "difficult_rank": [
+        "route_requested_desc",
+        "m1_m3_label_disagreement_desc",
+        "m1_entropy_desc",
+        "minimum_threshold_margin_asc",
+        "component_hash_asc"
+      ],
+      "difficult_pool": "remaining_components_after_random_selection",
+      "shakedown_per_stratum": 4,
+      "locked_per_stratum": 12,
+      "gold_features_forbidden": true
+    },
+    "seed_schedule": {
+      "namespace": "SQMA-D0-preflight-generation-v1",
+      "material": "namespace|system_id|sample_id|role_id|call_index",
+      "integer": "first_4_sha256_bytes_big_endian_unsigned"
+    },
+    "call_plan": {
+      "S3_all_rows": 96,
+      "S1_and_S2a_shared_fixed_locked_subset": 24,
+      "S1_is_first_S2a_seed": true,
+      "S2b_provisional_fixed_locked_subset": 24,
+      "S2b_provisional_calls_per_row": 3,
+      "S2b_preflight_purpose": "worst_case_stress_and_token_measurement_not_a_budget_matched_result",
+      "total_maximum_calls": 144
+    },
+    "hard_caps": {
+      "wall_hours": 4.0,
+      "generated_tokens_total": 58368,
+      "private_output_bytes": 536870912,
+      "mlx_peak_bytes": 10000000000,
+      "process_rss_bytes": 12884901888,
+      "critical_memory_events": 0,
+      "oom_or_kill_events": 0,
+      "swap_write_bytes_per_second_threshold": 104857600,
+      "swap_threshold_consecutive_samples": 3,
+      "resource_sample_interval_seconds": 5,
+      "memory_metrics_not_additive": true,
+      "orphan_processes_after_exit": 0
+    },
+    "pass_gate": {
+      "denominator": "locked_verification_only",
+      "locked_system_completion_rate": 1.0,
+      "raw_schema_valid_rate": 1.0,
+      "evidence_exact_substring_rate": 1.0,
+      "out_of_ontology_labels": 0,
+      "technical_fallback_rows": 0,
+      "unhandled_failures": 0,
+      "external_tool_calls": 0,
+      "mean_modal_exact_label_set_agreement_minimum": 0.85
+    },
+    "accuracy_scoring": false,
+    "tune_access": false,
+    "confirm_access": false
+  },
+  "statistics": {
+    "primary_metric": "six_label_macro_f1",
+    "sensitivity_metric": "five_label_macro_f1_without_surprise",
+    "guardrail": "hamming_loss",
+    "hamming_non_inferiority_margin": 0.0025,
+    "six_label_practical_superiority_delta": 0.01,
+    "five_label_sensitivity_floor": -0.005,
+    "call_matched_macro_f1_non_inferiority_margin": -0.005,
+    "bootstrap": {
+      "unit": "duplicate_component_id",
+      "replicates": 2000,
+      "seed": 20260903,
+      "seed_namespace": "SQMA-D0-component-bootstrap-v1",
+      "paired_multiplicities_shared_across_systems": true,
+      "interval": "percentile_95",
+      "zero_division": 0,
+      "zero_positive_replicates_retained": true
+    },
+    "tune_stable_signal_gate": {
+      "rows": 672,
+      "components": 657,
+      "S3_minus_S2b_six_label_point_minimum": 0.01,
+      "S3_minus_S2b_six_label_q05_strictly_greater_than": 0.0,
+      "S3_minus_S2b_five_label_point_minimum": -0.005,
+      "S3_minus_S2b_hamming_q95_maximum": 0.0025,
+      "S3_minus_S2a_six_label_q05_minimum": -0.005,
+      "S3_minus_S2a_hamming_q95_maximum": 0.0025,
+      "all_schema_budget_resource_checks_required": true,
+      "failure_action": "stop_without_confirm_or_selective"
+    },
+    "confirm_rule": "same_frozen_contrasts_and_thresholds_no_post_gold_revision"
+  },
+  "random_activation": {
+    "unit": "duplicate_component_id",
+    "activation_component_consistent": true,
+    "component_score": "maximum_row_gate_score",
+    "component_activation": "component_score_greater_than_or_equal_to_frozen_cutoff",
+    "matching": "same_component_size_multiset_without_replacement",
+    "eligible_pool": "all_Natural_Confirm_components",
+    "overlap_with_S4_allowed_and_reported": true,
+    "tie_break": "ascending_sha256_of_namespace_formal_seed_component_id",
+    "match_actual_activated_rows": true,
+    "match_actual_qwen_calls": true,
+    "token_usage_reported_not_claimed_matched": true,
+    "mask_sealed_before_role_calls": true,
+    "matching_failure_action": "formal_comparison_failed_stop"
+  },
+  "trigger_success_gate": {
+    "S4_minus_S4_random_six_label_point_minimum": 0.005,
+    "S4_minus_S4_random_six_label_q05_strictly_greater_than": 0.0,
+    "S4_minus_S4_random_five_label_point_minimum": -0.005,
+    "S4_minus_S4_random_hamming_q95_maximum": 0.0025,
+    "failure_claim": "role_diverse_may_remain_positive_but_current_trigger_is_negative"
+  },
+  "confirm_access": {
+    "raw_source_npz_contains_gold": true,
+    "producer_may_open_raw_source_npz": false,
+    "required_intermediate": "independently_created_joined_gold_free_snapshot",
+    "snapshot_sources": ["private_train", "private_fold_manifest", "confirm_m1_source", "confirm_m3_source"],
+    "gold_free_fields": [
+      "sample_ids",
+      "component_ids",
+      "fold_ids",
+      "analysis_text",
+      "original_text_sha256",
+      "analysis_text_sha256",
+      "was_truncated",
+      "m1_logits",
+      "m3_logits",
+      "character_lengths",
+      "token_lengths"
+    ],
+    "snapshot_identity_and_order_verification_required": true,
+    "producer_outputs_sealed_before_gold_consumer": true,
+    "post_gold_prompt_or_code_revision": false
+  },
+  "claims": {
+    "human_evidence_relevance_evaluation_in_scope": false,
+    "exact_substring_claim_only": true,
+    "external_generalization_in_scope": false,
+    "maximum_confirmation_claim": "same-source prospective component-heldout confirmation of the newly frozen Agent comparison"
+  },
+  "pending_after_preflight_before_tune": [
+    "formal_per_role_token_caps_if_shakedown_reduces_them",
+    "S2b_whole_call_allocation_under_measured_S3_token_ceiling",
+    "formal_wall_time_and_storage_budget",
+    "formal_generation_seed_schedule_and_run_level_repeat_scope"
+  ],
+  "authorization": {
+    "strict_base_training": false,
+    "agent_model_loading": false,
+    "preflight_execution": false,
+    "tune_access": false,
+    "confirm_access": false,
+    "commit": false,
+    "push": false
+  }
+}

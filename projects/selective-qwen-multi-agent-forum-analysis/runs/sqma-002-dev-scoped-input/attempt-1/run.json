@@ -1,0 +1,271 @@
+{
+  "access": {
+    "agent_calls": 0,
+    "fold0_rows_decoded": 672,
+    "fold1_rows_decoded": 672,
+    "fold2_rows_decoded": 672,
+    "fold3_rows_byte_streamed": 672,
+    "fold3_rows_decoded": 0,
+    "fold4_rows_byte_streamed": 672,
+    "fold4_rows_decoded": 0,
+    "forward_executed": false,
+    "model_loaded": false,
+    "monolithic_private_bytes_streamed": true,
+    "network_accessed": false,
+    "optimizer_executed": false,
+    "private_rows_decoded": 2016,
+    "selected_train_gold_read": true,
+    "selected_train_text_read": true,
+    "test_accessed": false,
+    "training_executed": false,
+    "validation_accessed": false
+  },
+  "claim_boundary": "Folds 0-2 scoped-input artifacts were materialized from the registered sources by an isolated data steward. No model was loaded, no training or Agent call occurred, folds 3-4 private rows were byte-streamed but not decoded, and formal training remains unauthorized.",
+  "completed_at_utc": "2026-09-03T15:53:11.090600Z",
+  "config": {
+    "bytes": 8348,
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-002-dev-scoped-input-materialization.json",
+    "sha256": "c7f1beb92e9fbd854f4e8e38f1885f9a78529d77eb21ee5d22097a86882b98b4"
+  },
+  "experiment_id": "SQMA-002",
+  "formal_training_authorized": false,
+  "next_gate": "independent_scoped_input_verification",
+  "outputs": {
+    "artifacts": [
+      {
+        "bytes": 306308,
+        "components": 658,
+        "logical_name": "fold-0/train-capable.jsonl",
+        "mode": "0600",
+        "rows": 672,
+        "schema_id": "sqma-train-capable-snapshot-v1",
+        "sha256": "5c46f467a2ab1b6c57e134c968e4e37507116e58ed90ebf9c7e88abf8282850c"
+      },
+      {
+        "bytes": 269623,
+        "components": 658,
+        "logical_name": "fold-0/gold-free-inference.jsonl",
+        "mode": "0600",
+        "rows": 672,
+        "schema_id": "sqma-gold-free-inference-snapshot-v1",
+        "sha256": "ef1de63a142677472944e4a61e11db4fc39b074782ffd8c7259ebe4cd85a9594"
+      },
+      {
+        "bytes": 183394,
+        "components": 658,
+        "logical_name": "fold-0/consumer-gold.npz",
+        "mode": "0600",
+        "rows": 672,
+        "schema_id": "sqma-consumer-gold-snapshot-v1",
+        "sha256": "5e48d5c352cc5d1a8df7f626d9a3342baeb71870a94c36afd48864b363c7d72f"
+      },
+      {
+        "bytes": 301754,
+        "components": 654,
+        "logical_name": "fold-1/train-capable.jsonl",
+        "mode": "0600",
+        "rows": 672,
+        "schema_id": "sqma-train-capable-snapshot-v1",
+        "sha256": "144ed2fe33b31c4678fa5c4e50cb7473648d9d16db3b4ef7d79f222d77c83a5d"
+      },
+      {
+        "bytes": 265068,
+        "components": 654,
+        "logical_name": "fold-1/gold-free-inference.jsonl",
+        "mode": "0600",
+        "rows": 672,
+        "schema_id": "sqma-gold-free-inference-snapshot-v1",
+        "sha256": "fabe553c907b88ae82d1dfbfca243d19950e0457437cd0f4c3acd43d8b7ec679"
+      },
+      {
+        "bytes": 183394,
+        "components": 654,
+        "logical_name": "fold-1/consumer-gold.npz",
+        "mode": "0600",
+        "rows": 672,
+        "schema_id": "sqma-consumer-gold-snapshot-v1",
+        "sha256": "f7ac532a65c88b21e32a76c44346332d4f546685b56969029ec08b079bbd4b47"
+      },
+      {
+        "bytes": 308474,
+        "components": 651,
+        "logical_name": "fold-2/train-capable.jsonl",
+        "mode": "0600",
+        "rows": 672,
+        "schema_id": "sqma-train-capable-snapshot-v1",
+        "sha256": "c1c8ec682e7e1f78cc5e3a1dd0ed0f3ff3a0ca6777123c934a13c0ba4e125d9a"
+      },
+      {
+        "bytes": 271789,
+        "components": 651,
+        "logical_name": "fold-2/gold-free-inference.jsonl",
+        "mode": "0600",
+        "rows": 672,
+        "schema_id": "sqma-gold-free-inference-snapshot-v1",
+        "sha256": "5877b9234725b35b99212350e6eaa7c34e908bc1f044034489b34a187d256f0a"
+      },
+      {
+        "bytes": 183394,
+        "components": 651,
+        "logical_name": "fold-2/consumer-gold.npz",
+        "mode": "0600",
+        "rows": 672,
+        "schema_id": "sqma-consumer-gold-snapshot-v1",
+        "sha256": "52eb445eaa026645e9e5a1ca8458c8f634c55ec6208bcf95cb92d9416f1a786d"
+      }
+    ],
+    "fold3_output_rows": 0,
+    "fold4_output_rows": 0,
+    "folds": {
+      "0": {
+        "artifacts": [
+          {
+            "bytes": 306308,
+            "components": 658,
+            "logical_name": "fold-0/train-capable.jsonl",
+            "mode": "0600",
+            "rows": 672,
+            "schema_id": "sqma-train-capable-snapshot-v1",
+            "sha256": "5c46f467a2ab1b6c57e134c968e4e37507116e58ed90ebf9c7e88abf8282850c"
+          },
+          {
+            "bytes": 269623,
+            "components": 658,
+            "logical_name": "fold-0/gold-free-inference.jsonl",
+            "mode": "0600",
+            "rows": 672,
+            "schema_id": "sqma-gold-free-inference-snapshot-v1",
+            "sha256": "ef1de63a142677472944e4a61e11db4fc39b074782ffd8c7259ebe4cd85a9594"
+          },
+          {
+            "bytes": 183394,
+            "components": 658,
+            "logical_name": "fold-0/consumer-gold.npz",
+            "mode": "0600",
+            "rows": 672,
+            "schema_id": "sqma-consumer-gold-snapshot-v1",
+            "sha256": "5e48d5c352cc5d1a8df7f626d9a3342baeb71870a94c36afd48864b363c7d72f"
+          }
+        ],
+        "components": 658,
+        "rows": 672
+      },
+      "1": {
+        "artifacts": [
+          {
+            "bytes": 301754,
+            "components": 654,
+            "logical_name": "fold-1/train-capable.jsonl",
+            "mode": "0600",
+            "rows": 672,
+            "schema_id": "sqma-train-capable-snapshot-v1",
+            "sha256": "144ed2fe33b31c4678fa5c4e50cb7473648d9d16db3b4ef7d79f222d77c83a5d"
+          },
+          {
+            "bytes": 265068,
+            "components": 654,
+            "logical_name": "fold-1/gold-free-inference.jsonl",
+            "mode": "0600",
+            "rows": 672,
+            "schema_id": "sqma-gold-free-inference-snapshot-v1",
+            "sha256": "fabe553c907b88ae82d1dfbfca243d19950e0457437cd0f4c3acd43d8b7ec679"
+          },
+          {
+            "bytes": 183394,
+            "components": 654,
+            "logical_name": "fold-1/consumer-gold.npz",
+            "mode": "0600",
+            "rows": 672,
+            "schema_id": "sqma-consumer-gold-snapshot-v1",
+            "sha256": "f7ac532a65c88b21e32a76c44346332d4f546685b56969029ec08b079bbd4b47"
+          }
+        ],
+        "components": 654,
+        "rows": 672
+      },
+      "2": {
+        "artifacts": [
+          {
+            "bytes": 308474,
+            "components": 651,
+            "logical_name": "fold-2/train-capable.jsonl",
+            "mode": "0600",
+            "rows": 672,
+            "schema_id": "sqma-train-capable-snapshot-v1",
+            "sha256": "c1c8ec682e7e1f78cc5e3a1dd0ed0f3ff3a0ca6777123c934a13c0ba4e125d9a"
+          },
+          {
+            "bytes": 271789,
+            "components": 651,
+            "logical_name": "fold-2/gold-free-inference.jsonl",
+            "mode": "0600",
+            "rows": 672,
+            "schema_id": "sqma-gold-free-inference-snapshot-v1",
+            "sha256": "5877b9234725b35b99212350e6eaa7c34e908bc1f044034489b34a187d256f0a"
+          },
+          {
+            "bytes": 183394,
+            "components": 651,
+            "logical_name": "fold-2/consumer-gold.npz",
+            "mode": "0600",
+            "rows": 672,
+            "schema_id": "sqma-consumer-gold-snapshot-v1",
+            "sha256": "52eb445eaa026645e9e5a1ca8458c8f634c55ec6208bcf95cb92d9416f1a786d"
+          }
+        ],
+        "components": 651,
+        "rows": 672
+      }
+    },
+    "private_manifest": {
+      "bytes": 13327,
+      "logical_name": "private-manifest.json",
+      "mode": "0600",
+      "sha256": "8d6f8c42e1105256b569a03fcb652414df3651a8dc55ebbe2865cf28083ff06b"
+    },
+    "total_output_components": 1963,
+    "total_output_rows_per_scope": 2016
+  },
+  "resources": {
+    "critical_memory_events": 0,
+    "free_disk_bytes_before": 118873268224,
+    "maximum_peak_rss_bytes": 1073741824,
+    "maximum_wall_seconds": 300,
+    "minimum_free_disk_bytes": 21474836480,
+    "model_or_mlx_allocations": 0,
+    "oom_or_kill_events": 0,
+    "orphan_processes_after_exit": 0,
+    "peak_rss_bytes": 45170688,
+    "private_output_bytes": 2286525,
+    "public_output_bytes_before_verification": 11068,
+    "wall_seconds": 0.21675791702000424
+  },
+  "run_claim": {
+    "bytes": 1562,
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-002-dev-scoped-input/attempt-1/run-claim.json",
+    "sha256": "087f2be13bfbb5fdfd44ee76c698893d6521a25fe063a302e2ae42f8c13739f9"
+  },
+  "schema_version": "sqma-002-run-v1",
+  "scoped_inputs_verified": false,
+  "sources": {
+    "private_fold_manifest": {
+      "bytes": 979748,
+      "sha256": "d518e97c3332f2d59ea3556aecbb3a8cf9253438aee5ba02cd2ab105663862af",
+      "sha256_unchanged": true
+    },
+    "private_train": {
+      "bytes": 1372562,
+      "sha256": "fc2f853b5b8afb78253ca3a96b5093d2fd12ea7063801f57bf138c9d5cf528fc",
+      "sha256_unchanged": true
+    },
+    "public_fold_manifest": {
+      "bytes": 739200,
+      "sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8",
+      "sha256_unchanged": true
+    }
+  },
+  "stage": "dev-scoped-input-materialization",
+  "started_at_utc": "2026-09-03T15:53:10.873832Z",
+  "status": "CompletedAwaitingVerification",
+  "tier": "Major infrastructure"
+}

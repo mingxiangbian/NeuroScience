@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.invalid/selective-qwen-multi-agent-forum-analysis/agent-output-v2.schema.json",
+  "title": "Classifier-free Qwen multi-agent output schemas v2",
+  "x-sqma-custom-validation": {
+    "label_arrays": {
+      "canonical_order": ["love", "joy", "surprise", "anger", "sadness", "fear"],
+      "duplicates_forbidden": true
+    },
+    "evidence_spans": {
+      "match": "exact_unicode_codepoint_substring_of_analysis_text",
+      "normalization": "none",
+      "reference_rule": "every_evidence_ref_must_be_less_than_len_evidence_spans"
+    },
+    "critic": {
+      "recommended_and_challenged_emotions_must_be_disjoint": true
+    },
+    "judge": {
+      "decide_labels_nonempty": "at_least_one_valid_evidence_ref_required",
+      "decide_labels_empty": "evidence_refs_must_be_empty",
+      "abstain": "emotions_and_evidence_refs_must_be_empty"
+    },
+    "finalization": {
+      "invalid_output": "empty_label_set",
+      "abstained_output": "empty_label_set"
+    },
+    "information_boundary": {
+      "external_inputs": ["analysis_text", "ontology"],
+      "inter_role_inputs": ["evidence_appraisal", "pragmatics_critic"]
+    }
+  },
+  "oneOf": [
+    {"$ref": "#/$defs/EvidenceAppraisal"},
+    {"$ref": "#/$defs/PragmaticsCritic"},
+    {"$ref": "#/$defs/Judge"},
+    {"$ref": "#/$defs/SingleAgent"}
+  ],
+  "$defs": {
+    "Label": {
+      "type": "string",
+      "enum": ["love", "joy", "surprise", "anger", "sadness", "fear"]
+    },
+    "LabelArray": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/Label"},
+      "maxItems": 6,
+      "uniqueItems": true
+    },
+    "Appraisal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["goal_obstruction", "responsibility", "control", "certainty", "expectation_violation", "loss_or_threat"],
+      "properties": {
+        "goal_obstruction": {"enum": ["present", "absent", "unclear"]},
+        "responsibility": {"enum": ["self", "other", "shared", "situational", "none", "unclear"]},
+        "control": {"enum": ["high", "low", "mixed", "unclear"]},
+        "certainty": {"enum": ["high", "low", "mixed", "unclear"]},
+        "expectation_violation": {"enum": ["present", "absent", "unclear"]},
+        "loss_or_threat": {"enum": ["loss", "threat", "both", "none", "unclear"]}
+      }
+    },
+    "EvidenceAppraisal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "candidate_emotions", "evidence_spans", "expression_type", "insufficient_evidence", "appraisal"],
+      "properties": {
+        "schema_version": {"const": "evidence-appraisal-v2"},
+        "candidate_emotions": {"$ref": "#/$defs/LabelArray"},
+        "evidence_spans": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1, "maxLength": 160},
+          "maxItems": 3,
+          "uniqueItems": true
+        },
+        "expression_type": {"enum": ["explicit", "implicit", "mixed", "none", "unclear"]},
+        "insufficient_evidence": {"type": "boolean"},
+        "appraisal": {"$ref": "#/$defs/Appraisal"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"insufficient_evidence": {"const": true}}},
+          "then": {"properties": {"evidence_spans": {"maxItems": 0}}},
+          "else": {"properties": {"evidence_spans": {"minItems": 1}}}
+        }
+      ]
+    },
+    "PragmaticsCritic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "reading", "negation", "sarcasm", "emotion_evidence", "recommended_emotions", "challenged_emotions", "warning_flags"],
+      "properties": {
+        "schema_version": {"const": "pragmatics-critic-v2"},
+        "reading": {"enum": ["emotion", "technical_stance", "mixed", "unclear"]},
+        "negation": {"enum": ["none", "relevant", "unclear"]},
+        "sarcasm": {"enum": ["unlikely", "possible", "likely", "unclear"]},
+        "emotion_evidence": {"enum": ["sufficient", "weak", "absent", "unclear"]},
+        "recommended_emotions": {"$ref": "#/$defs/LabelArray"},
+        "challenged_emotions": {"$ref": "#/$defs/LabelArray"},
+        "warning_flags": {
+          "type": "array",
+          "items": {"enum": ["ontology_overlap", "weak_emotion_boundary", "implicit_emotion", "stance_emotion_confusion", "sarcasm_or_irony", "negation_scope", "multi_label_underprediction"]},
+          "maxItems": 7,
+          "uniqueItems": true
+        }
+      }
+    },
+    "Judge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "action", "emotions", "evidence_refs", "reason_flags"],
+      "properties": {
+        "schema_version": {"const": "judge-v2"},
+        "action": {"enum": ["decide_labels", "abstain"]},
+        "emotions": {"$ref": "#/$defs/LabelArray"},
+        "evidence_refs": {
+          "type": "array",
+          "items": {"type": "integer", "minimum": 0, "maximum": 2},
+          "maxItems": 3,
+          "uniqueItems": true
+        },
+        "reason_flags": {
+          "type": "array",
+          "items": {"enum": ["evidence_supported", "appraisal_supported", "pragmatics_correction", "role_conflict", "insufficient_evidence", "no_target_emotion"]},
+          "maxItems": 3,
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"action": {"const": "abstain"}}},
+          "then": {"properties": {"emotions": {"maxItems": 0}, "evidence_refs": {"maxItems": 0}}}
+        },
+        {
+          "if": {
+            "properties": {"action": {"const": "decide_labels"}, "emotions": {"minItems": 1}},
+            "required": ["action", "emotions"]
+          },
+          "then": {"properties": {"evidence_refs": {"minItems": 1}}}
+        },
+        {
+          "if": {
+            "properties": {"action": {"const": "decide_labels"}, "emotions": {"maxItems": 0}},
+            "required": ["action", "emotions"]
+          },
+          "then": {"properties": {"evidence_refs": {"maxItems": 0}}}
+        }
+      ]
+    },
+    "SingleAgent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "evidence_appraisal", "pragmatics", "decision"],
+      "properties": {
+        "schema_version": {"const": "single-agent-v2"},
+        "evidence_appraisal": {"$ref": "#/$defs/EvidenceAppraisal"},
+        "pragmatics": {"$ref": "#/$defs/PragmaticsCritic"},
+        "decision": {"$ref": "#/$defs/Judge"}
+      }
+    }
+  }
+}

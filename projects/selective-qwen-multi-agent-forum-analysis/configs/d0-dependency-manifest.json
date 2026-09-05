@@ -1,0 +1,160 @@
+{
+  "schema_version": "sqma-d0-dependency-manifest-v1",
+  "status": "identity_audited_no_execution_authority",
+  "audited_at": "2026-09-03",
+  "source_snapshot_commit": "e70cfcf76744ce8473db1b9744fd258cdbc0c64c",
+  "public_dependencies": [
+    {
+      "id": "task_report",
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/reports/data-so-task-v1.json",
+      "sha256": "e38e90b851925ae7eb9dabca45cbcbe17baaaf3dc017a60c06fe468d79b15124",
+      "git_blob": "a92326dddb208de1797c30fcab3e08e8176e59ec"
+    },
+    {
+      "id": "task_report_verification",
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/reports/data-so-task-v1-verification.json",
+      "sha256": "5156bfd583c13816e6d97eda1de7ba1b9237409036506001c5fcdb717b273cf3",
+      "git_blob": "27dd5a4aa94312ede8e0a84bf7937eaf29aa1d65"
+    },
+    {
+      "id": "shared_model_contract",
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/config.json",
+      "sha256": "d97b7c837b5de4ef014a553fa255ebea4ecdffa848d19715d084bf7ed46177d6",
+      "git_blob": "faa8654bd4736138f0447c8d14cecd00de44809c"
+    },
+    {
+      "id": "frozen_ontology_prompt",
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/prompt-v1.json",
+      "sha256": "0722ff947ba030cdf5b42358c7ba45a4d0d6372ccf0e2be28d131a0c24bdb90d",
+      "git_blob": "99c0a67c4b098b93bc84c54fdf182fe0452b0030"
+    },
+    {
+      "id": "m1_seed42_config",
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/configs/exp-051-m1-roberta-seed-42-cpu-recovery.json",
+      "sha256": "0c2ddbebd66bbd5ee627ecb1d4d3060e387d4f1d4fbcd70860d23ad278bf052d",
+      "git_blob": "b47e3b755987dc6879737daccf4df9607fae5de6"
+    },
+    {
+      "id": "m3_seed42_config",
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/configs/exp-053-m3-seed-42.json",
+      "sha256": "4490d19d24c58b15c857309bf15bd49fe4329b4e3702e6d4714f3432605755fe",
+      "git_blob": "71e18a7d7c1c53321d3aaada3ff8004b60181ad2"
+    },
+    {
+      "id": "m3_seed42_verification_config",
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/configs/exp-053-m3-seed-42-verification-attempt-2.json",
+      "sha256": "1cb071c5187b173128c113dafc73c7289f1da911bcbf8bfe0f86b0a1f1a54cfc",
+      "git_blob": "209f1cd99543785871328e10c66601c8bbc8682c"
+    },
+    {
+      "id": "fold_manifest_public",
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/fold-manifest.public.jsonl",
+      "sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8",
+      "git_blob": "985dd4842a947809ca9524ebfc62c1b14af499bc"
+    },
+    {
+      "id": "fold_summary",
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/fold-summary.json",
+      "sha256": "89b40f26948a5bf44141bdb74e654d7eb0b19161b29d84d9a91ccda409fcf74c",
+      "git_blob": "1d48d0a3084adbbfbb4926dec3399cab5bda2b67"
+    },
+    {
+      "id": "exp058_config",
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/configs/exp-058-oof-production.json",
+      "sha256": "909da4093e1c8a6bb84113e1e7d361c125159b54856a51988b4515eb267363da",
+      "git_blob": "3cac306c3ce9135ca0bc91d174048e5308c95ec4"
+    },
+    {
+      "id": "exp059_config",
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/configs/exp-059-calibration-selective-prediction.json",
+      "sha256": "c7da87f3eddd4dd3e196bf80c0426a1791595c55872aa539cbf3797fd0f552fb",
+      "git_blob": "38c829f7692f71b655bda3696ed6a71058c44439"
+    },
+    {
+      "id": "exp060_config",
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/configs/exp-060-pre-qwen-router.json",
+      "sha256": "397df4b8e3df856893b6c7bab57eaa9664f20fc9a42f41a1f917da9e41361cad",
+      "git_blob": "d4974cdbc72444f73a0e07f69a55bf3101051296"
+    }
+  ],
+  "agent_model": {
+    "repo_id": "Qwen/Qwen3-4B",
+    "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "format": "MLX_BF16_unquantized",
+    "adapter": null,
+    "archive_root_env": "NEUROSCIENCE_ARCHIVE_ROOT",
+    "audited_resolved_path": "/Users/phoenix/Assistant/NeuroScience/projects/llm-forum-text-emotion-recognition/models/qwen3-4b/mlx-bf16",
+    "relative_path": "projects/llm-forum-text-emotion-recognition/models/qwen3-4b/mlx-bf16",
+    "manifest_path": "projects/llm-forum-text-emotion-recognition/models/qwen3-4b/manifest.json",
+    "manifest_sha256": "da447350d9e43213dacc1202da03b50d7e7114b0a4fe2904ff353240b404a641",
+    "file_count": 9,
+    "total_bytes": 8056445038,
+    "all_model_file_hashes_verified": true,
+    "chat_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+    "tokenizer_sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+    "generation_config_sha256": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+    "m3_classification_lora_for_generation_forbidden": true,
+    "m4_generative_lora_for_generation_forbidden": true,
+    "pretraining_overlap_caveat": "Public Stack Overflow overlap in general pretraining is not fully auditable."
+  },
+  "runtime": {
+    "executable": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+    "machine": "arm64",
+    "offline_only": true,
+    "packages": {
+      "python": "3.11.15",
+      "mlx": "0.32.0",
+      "mlx-lm": "0.31.3",
+      "transformers": "5.14.1",
+      "tokenizers": "0.22.2",
+      "safetensors": "0.8.0",
+      "numpy": "2.4.6"
+    },
+    "mlx_qwen3_implementation_path": "mlx_lm/models/qwen3.py",
+    "mlx_qwen3_implementation_sha256": "2284df96ecb669109b281df4534470b18f285aa9a5e41735ad682f601f93c639"
+  },
+  "private_dependencies": {
+    "archive_root_env": "NEUROSCIENCE_ARCHIVE_ROOT",
+    "audited_archive_root": "/Users/phoenix/Assistant/NeuroScience",
+    "current_worktree_binding": "absent_by_design",
+    "train": {
+      "relative_path": "projects/llm-forum-text-emotion-recognition/data/stack-overflow-emotion-gold/derived-private/task-v1/train.jsonl",
+      "bytes": 1372562,
+      "mode": "0600",
+      "sha256": "fc2f853b5b8afb78253ca3a96b5093d2fd12ea7063801f57bf138c9d5cf528fc"
+    },
+    "fold_manifest_private": {
+      "relative_path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-fold-manifest-preflight-attempt-2/fold-manifest.private.jsonl",
+      "bytes": 979748,
+      "mode": "0600",
+      "sha256": "d518e97c3332f2d59ea3556aecbb3a8cf9253438aee5ba02cd2ab105663862af"
+    },
+    "confirm_m1_source": {
+      "relative_path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-paired-oof-production/fold-4/m1/heldout-logits.npz",
+      "bytes": 44927,
+      "mode": "0600",
+      "sha256": "41b77d212670d75bb18fec4cfaf174efdf599c2edde59159188b47deb3f1da76",
+      "contains_gold_field": true,
+      "producer_access": "forbidden"
+    },
+    "confirm_m3_source": {
+      "relative_path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/private/exp-058-paired-oof-production/fold-4/m3/heldout-logits.npz",
+      "bytes": 45323,
+      "mode": "0600",
+      "sha256": "99e0e3c8142ef28202f25c27fdaa9cae169124b8bcc9d0ef618315e258b07ff8",
+      "contains_gold_field": true,
+      "producer_access": "forbidden"
+    },
+    "confirm_source_schema": {
+      "sample_ids": [672],
+      "component_ids": [672],
+      "fold_ids": [672],
+      "gold": [672, 6],
+      "logits": [672, 6],
+      "character_lengths": [672],
+      "token_lengths": [672]
+    },
+    "confirm_heldout_order_sha256": "beb0af83e2ededd220681c435a9c4a20b67ba02fdbc433faec4ef2e9cb8e970d",
+    "confirm_readiness": "blocked_until_independent_gold_free_snapshot_is_sealed"
+  }
+}

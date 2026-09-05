@@ -1,0 +1,106 @@
+{
+  "schema_version": "sqma-006-capability-gate-incident-v1",
+  "incident_id": "SQMA-006-INCIDENT-001",
+  "experiment_id": "SQMA-006",
+  "attempt_id": "attempt-1",
+  "registered_at_utc": "2026-09-04T02:41:38Z",
+  "stage": "d1-fresh-canonical-output-preflight",
+  "status": "Failed",
+  "failure_class": "preregistered_canonical_capability_gate",
+  "failure_summary": "The fresh classifier-free D1 producer completed all 120 planned calls, but the frozen canonical-output gate failed on overall validity, per-role validity, and locked S3 fallback rows. No verification or completion artifact was written, and the formal matched comparison remains blocked.",
+  "artifacts": {
+    "config": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-006-d1-canonical-output-preflight.json",
+      "bytes": 10496,
+      "sha256": "4e61ba0985b18c0843bfa17ba2c0bf06988ef9c8efca5af3b2c8d460804dbc65"
+    },
+    "run_claim": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-006-d1-canonical-output-preflight/attempt-1/run-claim.json",
+      "bytes": 669,
+      "sha256": "0a7ae93c7f855d1f03773014c3dfc657b3d1925c108bdef0137ff6cac8f982db"
+    },
+    "run": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-006-d1-canonical-output-preflight/attempt-1/run.json",
+      "bytes": 4111,
+      "sha256": "86960dc6ea61e7562dee11edf1809ccf9a2eead632a5b31e210d7dced66cd5f5"
+    }
+  },
+  "run_terminal": {
+    "run_status": "CompletedCapabilityGateFailed",
+    "gate_passed": false,
+    "next_gate": "stop_capability_gate_failed",
+    "physical_calls_complete": 120,
+    "physical_calls_planned": 120
+  },
+  "observed_gate": {
+    "canonical_system_output_valid_rate": 0.8958333333333334,
+    "canonical_system_output_valid_rate_per_role": {
+      "evidence": 1.0,
+      "critic": 0.9583333333333334,
+      "judge": 0.625,
+      "single": 1.0
+    },
+    "locked_s3_fallback_rows": 9,
+    "evidence_exact_substring_rate": 1.0,
+    "out_of_ontology_labels": 0,
+    "mean_modal_exact_label_set_agreement": 0.9583333333333334,
+    "token_cap_hits": 0,
+    "full_tune_projected_wall_seconds": 32309.260670306452
+  },
+  "failed_checks": [
+    "canonical_overall",
+    "canonical_per_role",
+    "s3_fallback"
+  ],
+  "shakedown_diagnostics": {
+    "scope": "selection_ranks_0_through_7_only",
+    "reported_errors": [
+      {
+        "role": "critic",
+        "error_code": "json_decode",
+        "count": 2,
+        "calls": 8
+      },
+      {
+        "role": "judge",
+        "error_code": "label_item",
+        "count": 5,
+        "calls": 8
+      }
+    ],
+    "row_text_raw_output_or_gold_used_for_this_incident": false
+  },
+  "resources": {
+    "wall_seconds": 525.5847306660144,
+    "generated_tokens": 3164,
+    "mlx_peak_bytes": 8426063088,
+    "peak_rss_bytes": 1329381376,
+    "private_output_bytes": 220394,
+    "resource_gate_passed": true,
+    "full_tune_projection_below_48_hours": true
+  },
+  "access": {
+    "classifier_free": true,
+    "classifier_outputs_accessed": false,
+    "fold3_accessed": false,
+    "fold4_accessed": false,
+    "gold_accessed": false,
+    "model_training": false,
+    "network_accessed": false,
+    "validation_accessed": false,
+    "test_accessed": false
+  },
+  "artifact_outcome": {
+    "verification_output_written": false,
+    "completion_output_written": false
+  },
+  "decision": {
+    "sqma006_complete": false,
+    "formal_matched_comparison_blocked": true,
+    "sqma007_registered": false,
+    "sqma007_automatic_execution_authorized": false,
+    "stop_required": true,
+    "next_action": "none_without_new_research_decision"
+  },
+  "claim_boundary": "This is a classifier-free structured-output capability failure, not an accuracy, role-value, matched-comparison, selective-routing, external-generalization, or emotion-mechanism result. The shakedown error counts are diagnostics from ranks 0-7 and are not a replacement for the locked gate aggregates."
+}

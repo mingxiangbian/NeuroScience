@@ -1,0 +1,213 @@
+{
+  "schema_version": "sqma-001-strict-base-readiness-preflight-v1",
+  "experiment_id": "SQMA-001",
+  "tier": "Minor",
+  "stage": "strict-base-readiness-preflight",
+  "registered_at": "2026-09-03",
+  "authorization": {
+    "basis": "User instructed: 行，开始下一步",
+    "static_preflight": true,
+    "public_fold_metadata_access": true,
+    "model_asset_hashing": true,
+    "runtime_metadata_probe": true,
+    "private_source_open": false,
+    "private_rows_parsed": false,
+    "model_loading": false,
+    "forward": false,
+    "training": false,
+    "optimizer": false,
+    "heldout_logits": false,
+    "agent_calls": false,
+    "network": false,
+    "tune_access": false,
+    "confirm_access": false,
+    "validation_access": false,
+    "test_access": false,
+    "formal_training": false,
+    "automatic_next_stage": false
+  },
+  "implementation": {
+    "protocol": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/protocols/sqma-001-strict-base-readiness-preflight.md",
+      "bytes": 4453,
+      "sha256": "8f912ba9a1adc95a474f361c29b6a6a97e1d8c44fca17aa2e8594677c3cf7204"
+    },
+    "contract": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/strict_base_contract.py",
+      "bytes": 19153,
+      "sha256": "727ae6dfb724048742e41f181306541b5e0fb37ee3964039685545e9a39f2ed1"
+    },
+    "runner": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/run_sqma001_strict_base_preflight.py",
+      "bytes": 39213,
+      "sha256": "7537b5de13ac23b547795ad9d8d8614ac5c98ae7952496f580445f8a132a2885"
+    },
+    "verifier": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/verify_sqma001_strict_base_preflight.py",
+      "bytes": 22529,
+      "sha256": "2c067fecd668cd261392b06d2addf05de70df0c3293d09d259e04e535971362f"
+    },
+    "contract_tests": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/tests/test_strict_base_contract.py",
+      "bytes": 5639,
+      "sha256": "6a84ee2b0f4c63e7f0904e11747f118fc0eff3a18d4ef94087955199da96f8ac"
+    },
+    "preflight_tests": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/tests/test_sqma001_strict_base_preflight.py",
+      "bytes": 9236,
+      "sha256": "bd40626db0a44c98618b154fed712e7d18e629919aee617580e71e2173f2c1de"
+    }
+  },
+  "prerequisites": {
+    "d0_static_contract": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/d0-static-contract.json",
+      "bytes": 12086,
+      "sha256": "b0226e0113f34ddacca97d68d1be445ca019edf01175e42ccb0910330aab32ad"
+    },
+    "d0_dependency_manifest": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/d0-dependency-manifest.json",
+      "bytes": 8322,
+      "sha256": "09a289ff1439b74fd7de4949848a8198ba37481d5709e354d4bd6367e821443f"
+    },
+    "shared_model_contract": {
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/config.json",
+      "bytes": 6720,
+      "sha256": "d97b7c837b5de4ef014a553fa255ebea4ecdffa848d19715d084bf7ed46177d6"
+    },
+    "public_fold_manifest": {
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/fold-manifest.public.jsonl",
+      "bytes": 739200,
+      "sha256": "82929b1d837ceb9825c5bc39a8fea18f6d0736fca42aad630f3788b1ff8139d8"
+    },
+    "public_fold_summary": {
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/runs/exp-058-fold-manifest-preflight-attempt-2/fold-summary.json",
+      "bytes": 3202,
+      "sha256": "89b40f26948a5bf44141bdb74e654d7eb0b19161b29d84d9a91ccda409fcf74c"
+    },
+    "m1_reference": {
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/run_exp051_m1.py",
+      "bytes": 56760,
+      "sha256": "2d2c65b72a569d2d08a2fe4c3e544af756306bee1cb98cc15dd2052b09bf3ba2"
+    },
+    "qwen_primitives": {
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/run_preflight.py",
+      "bytes": 37104,
+      "sha256": "1a8aaf063be3db0f55e0cb95ae35c9395467cd7c7c0c1596813606ba53956edd"
+    },
+    "m3_reference": {
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/model-comparison/run_exp053_m3_preflight.py",
+      "bytes": 37469,
+      "sha256": "756a3e4a487554148409dffeebaa600ca5857398f6230e82e15bc294f39b44a4"
+    },
+    "historical_oof_runner_reference": {
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/run_exp058_oof_production.py",
+      "bytes": 128527,
+      "sha256": "50613b8b61a77978959390dbe0b47f0e2b2511c076fa58b48a1fc4263e819cc5"
+    },
+    "historical_oof_verifier_reference": {
+      "path": "projects/llm-forum-text-emotion-recognition/experiments/stack-overflow-emotion-gold/oof-router/verify_exp058_oof_production.py",
+      "bytes": 83692,
+      "sha256": "d330e0b0f4ac3b1d63038657a41def4b2a22649b380b8f789698735cd9d167b0"
+    }
+  },
+  "private_source_contract": {
+    "identity_source": "d0_dependency_manifest_strings_only",
+    "train_sha256": "fc2f853b5b8afb78253ca3a96b5093d2fd12ea7063801f57bf138c9d5cf528fc",
+    "fold_manifest_private_sha256": "d518e97c3332f2d59ea3556aecbb3a8cf9253438aee5ba02cd2ab105663862af",
+    "paths_resolved_or_opened": false,
+    "bytes_hashed_by_sqma001": false,
+    "rows_parsed": false,
+    "next_gate": "independent_dev_scoped_input_materialization"
+  },
+  "data": {
+    "protocol_id": "DATA-SO-TASK-V1",
+    "label_order": ["love", "joy", "surprise", "anger", "sadness", "fear"],
+    "public_fold_rows": 3360,
+    "public_fold_components": 3277,
+    "active_fit_ids": ["dev-h0", "dev-h1", "dev-h2"],
+    "full_fit_plan": [
+      {"fit_id": "dev-h0", "phase": "dev", "train_folds": [1, 2], "heldout_folds": [0]},
+      {"fit_id": "dev-h1", "phase": "dev", "train_folds": [0, 2], "heldout_folds": [1]},
+      {"fit_id": "dev-h2", "phase": "dev", "train_folds": [0, 1], "heldout_folds": [2]},
+      {"fit_id": "tune-h3", "phase": "tune", "train_folds": [0, 1, 2], "heldout_folds": [3]},
+      {"fit_id": "final-h0", "phase": "final-development", "train_folds": [1, 2, 3], "heldout_folds": [0]},
+      {"fit_id": "final-h1", "phase": "final-development", "train_folds": [0, 2, 3], "heldout_folds": [1]},
+      {"fit_id": "final-h2", "phase": "final-development", "train_folds": [0, 1, 3], "heldout_folds": [2]}
+    ],
+    "active_expected": {
+      "dev-h0": {"training_rows": 1344, "training_components": 1305, "heldout_rows": 672, "heldout_components": 658},
+      "dev-h1": {"training_rows": 1344, "training_components": 1309, "heldout_rows": 672, "heldout_components": 654},
+      "dev-h2": {"training_rows": 1344, "training_components": 1312, "heldout_rows": 672, "heldout_components": 651}
+    },
+    "future_plan_is_declarative_only": true,
+    "fold4_in_fit_plan": false
+  },
+  "snapshot_contract": {
+    "scopes": ["train-capable", "gold-free-inference", "consumer-gold", "heldout-logits"],
+    "producer_full_source_access": false,
+    "first_stage_output_folds": [0, 1, 2],
+    "fold3_or_fold4_rows_in_first_stage_outputs": 0,
+    "heldout_logits_contains_gold": false,
+    "output_mode": "0600"
+  },
+  "model_assets": {
+    "archive_root_env": "NEUROSCIENCE_ARCHIVE_ROOT",
+    "audited_archive_root": "/Users/phoenix/Assistant/NeuroScience",
+    "m1": {
+      "repo_id": "FacebookAI/roberta-base",
+      "revision": "e2da8e2f811d1448a5b465c236feacd80ffbac7b",
+      "manifest_path": "projects/llm-forum-text-emotion-recognition/models/roberta-base/manifest.json",
+      "manifest_bytes": 1541,
+      "manifest_sha256": "b6e508ca9783b9e79e3cfc445f3abc7d2792ac5cfa6f44a9b3cf5d5607cd30b6",
+      "root_path": "projects/llm-forum-text-emotion-recognition/models/roberta-base/snapshot",
+      "manifest_inventory_key": "files",
+      "file_count": 7,
+      "total_bytes": 501538643
+    },
+    "m3": {
+      "repo_id": "Qwen/Qwen3-4B",
+      "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+      "manifest_path": "projects/llm-forum-text-emotion-recognition/models/qwen3-4b/manifest.json",
+      "manifest_bytes": 3959,
+      "manifest_sha256": "da447350d9e43213dacc1202da03b50d7e7114b0a4fe2904ff353240b404a641",
+      "root_path": "projects/llm-forum-text-emotion-recognition/models/qwen3-4b/mlx-bf16",
+      "manifest_inventory_key": "mlx_bf16.files",
+      "file_count": 9,
+      "total_bytes": 8056445038
+    }
+  },
+  "runtimes": {
+    "m1": {
+      "executable": "/Users/phoenix/miniconda3/envs/emotion-roberta/bin/python",
+      "python": "3.10.20",
+      "machine": "arm64",
+      "packages": {"numpy": "2.2.6", "torch": "2.9.1", "transformers": "5.8.0"}
+    },
+    "m3": {
+      "executable": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+      "python": "3.11.15",
+      "machine": "arm64",
+      "packages": {"mlx": "0.32.0", "mlx-lm": "0.31.3", "numpy": "2.4.6", "safetensors": "0.8.0", "transformers": "5.14.1"}
+    },
+    "probe": "isolated_-I_-S_stdlib_plus_direct_dist_info_no_framework_import"
+  },
+  "resources": {
+    "maximum_wall_seconds": 300,
+    "maximum_peak_rss_bytes": 1073741824,
+    "maximum_public_output_bytes": 16777216,
+    "minimum_free_disk_bytes": 21474836480,
+    "model_or_mlx_allocations": 0,
+    "critical_memory_events": 0,
+    "oom_or_kill_events": 0,
+    "orphan_processes_after_exit": 0
+  },
+  "outputs": {
+    "public_attempt_dir": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-001-strict-base-readiness-preflight/attempt-1",
+    "allowed_files_after_completion": ["run.json", "verification.json", "complete.json"],
+    "private_output_dir": null
+  },
+  "commands": {
+    "run": "python3 projects/selective-qwen-multi-agent-forum-analysis/scripts/run_sqma001_strict_base_preflight.py --config projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-001-strict-base-readiness-preflight.json",
+    "verify": "python3 projects/selective-qwen-multi-agent-forum-analysis/scripts/verify_sqma001_strict_base_preflight.py --config projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-001-strict-base-readiness-preflight.json"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "experiment_id": "SQMA-001",
+  "formal_training_authorized": false,
+  "model_loaded": false,
+  "next_gate": "independent_dev_scoped_input_materialization",
+  "prior_failures": [
+    {
+      "bytes": 1606,
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/incidents/sqma-001-verification-attempt-1-failure.json",
+      "sha256": "ff4f57548e9e9b8e2dd3113b14354424bfeed07b55b005437e87c40b7ff883c1"
+    },
+    {
+      "bytes": 1833,
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/incidents/sqma-001-verification-attempt-2-failure.json",
+      "sha256": "626f6b8573a623e437e5aca3fa6dafb8e5cce3b6dbb6bb5ed8b912c6e951903e"
+    }
+  ],
+  "private_rows_parsed": false,
+  "recovery_config": {
+    "bytes": 2982,
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-001-verification-recovery-attempt-3.json",
+    "sha256": "7d52a95cbf336016b1401a0e064293d8b2ea4b180c71603620ad19c2570a2e1f"
+  },
+  "run": {
+    "bytes": 9655,
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-001-strict-base-readiness-preflight/attempt-1/run.json",
+    "sha256": "3121683df838ed15c0aea598f0080be0d35e879f5d7d678cb81e17baf11458db"
+  },
+  "run_mutated": false,
+  "runner_reexecuted": false,
+  "schema_version": "sqma-001-complete-v1",
+  "sqma001_complete": true,
+  "status": "Complete",
+  "strict_outputs_exist": false,
+  "training_executed": false,
+  "verification": {
+    "bytes": 3394,
+    "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-001-strict-base-readiness-preflight/attempt-1/verification.json",
+    "sha256": "fc2d40d6928f6c1bf75b788086e945fac0fea4546c66e70660920904c1910c48"
+  },
+  "verification_attempt": 3
+}

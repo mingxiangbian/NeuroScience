@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.invalid/selective-qwen-multi-agent-forum-analysis/agent-output-v3.schema.json",
+  "title": "Minimal classifier-free Qwen Agent outputs v3",
+  "x-sqma-custom-validation": {
+    "label_arrays": {
+      "canonical_order": ["love", "joy", "surprise", "anger", "sadness", "fear"],
+      "duplicates_forbidden": true
+    },
+    "evidence_spans": {
+      "match": "exact_unicode_codepoint_substring_of_analysis_text",
+      "normalization": "none"
+    },
+    "critic": {
+      "recommended_and_challenged_emotions_must_be_disjoint": true
+    },
+    "judge": {
+      "reference_rule": "every_evidence_ref_must_be_less_than_len_evidence.evidence_spans"
+    },
+    "canonicalizer": {
+      "accepted_wrappers": ["bare_json_object", "single_exact_json_code_fence"],
+      "allowed_changes": ["remove_single_exact_json_code_fence", "canonical_json_serialization"],
+      "forbidden_changes": ["remove_natural_language_prefix_or_suffix", "key_rewrite", "value_rewrite", "label_reorder", "type_coercion", "semantic_repair"],
+      "multiple_json_objects": "reject"
+    },
+    "information_boundary": {
+      "external_inputs": ["analysis_text", "ontology"],
+      "inter_role_inputs": ["evidence", "critic"]
+    }
+  },
+  "oneOf": [
+    {"$ref": "#/$defs/Evidence"},
+    {"$ref": "#/$defs/Critic"},
+    {"$ref": "#/$defs/Judge"},
+    {"$ref": "#/$defs/Single"}
+  ],
+  "$defs": {
+    "Label": {
+      "type": "string",
+      "enum": ["love", "joy", "surprise", "anger", "sadness", "fear"]
+    },
+    "LabelArray": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/Label"},
+      "maxItems": 6,
+      "uniqueItems": true
+    },
+    "EvidenceSpanArray": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1, "maxLength": 160},
+      "maxItems": 3,
+      "uniqueItems": true
+    },
+    "Evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "candidate_emotions", "evidence_spans", "insufficient_evidence"],
+      "properties": {
+        "schema_version": {"const": "evidence-v3"},
+        "candidate_emotions": {"$ref": "#/$defs/LabelArray"},
+        "evidence_spans": {"$ref": "#/$defs/EvidenceSpanArray"},
+        "insufficient_evidence": {"type": "boolean"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"insufficient_evidence": {"const": true}}, "required": ["insufficient_evidence"]},
+          "then": {
+            "properties": {
+              "candidate_emotions": {"maxItems": 0},
+              "evidence_spans": {"maxItems": 0}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"candidate_emotions": {"minItems": 1}}, "required": ["candidate_emotions"]},
+          "then": {"properties": {"evidence_spans": {"minItems": 1}}}
+        },
+        {
+          "if": {"properties": {"candidate_emotions": {"maxItems": 0}}, "required": ["candidate_emotions"]},
+          "then": {"properties": {"evidence_spans": {"maxItems": 0}}}
+        }
+      ]
+    },
+    "Critic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "recommended_emotions", "challenged_emotions", "warning_flags"],
+      "properties": {
+        "schema_version": {"const": "critic-v3"},
+        "recommended_emotions": {"$ref": "#/$defs/LabelArray"},
+        "challenged_emotions": {"$ref": "#/$defs/LabelArray"},
+        "warning_flags": {
+          "type": "array",
+          "items": {
+            "enum": ["ontology_overlap", "weak_emotion_boundary", "implicit_emotion", "stance_emotion_confusion", "sarcasm_or_irony", "negation_scope", "multi_label_underprediction"]
+          },
+          "maxItems": 7,
+          "uniqueItems": true
+        }
+      }
+    },
+    "Judge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "emotions", "evidence_refs"],
+      "properties": {
+        "schema_version": {"const": "judge-v3"},
+        "emotions": {"$ref": "#/$defs/LabelArray"},
+        "evidence_refs": {
+          "type": "array",
+          "items": {"type": "integer", "minimum": 0, "maximum": 2},
+          "maxItems": 3,
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"emotions": {"minItems": 1}}, "required": ["emotions"]},
+          "then": {"properties": {"evidence_refs": {"minItems": 1}}}
+        },
+        {
+          "if": {"properties": {"emotions": {"maxItems": 0}}, "required": ["emotions"]},
+          "then": {"properties": {"evidence_refs": {"maxItems": 0}}}
+        }
+      ]
+    },
+    "Single": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "emotions", "evidence_spans"],
+      "properties": {
+        "schema_version": {"const": "single-v3"},
+        "emotions": {"$ref": "#/$defs/LabelArray"},
+        "evidence_spans": {"$ref": "#/$defs/EvidenceSpanArray"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"emotions": {"minItems": 1}}, "required": ["emotions"]},
+          "then": {"properties": {"evidence_spans": {"minItems": 1}}}
+        },
+        {
+          "if": {"properties": {"emotions": {"maxItems": 0}}, "required": ["emotions"]},
+          "then": {"properties": {"evidence_spans": {"maxItems": 0}}}
+        }
+      ]
+    }
+  }
+}

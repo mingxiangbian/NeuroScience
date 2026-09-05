@@ -1,0 +1,291 @@
+{
+  "schema_version": "sqma-007-dev-c1-visible-judge-shakedown-v1",
+  "experiment_id": "SQMA-007",
+  "tier": "Minor",
+  "stage": "dev-c1-visible-judge-shakedown",
+  "design_status": "FrozenExecutionReady",
+  "registered_at": "2026-09-04",
+  "authorization": {
+    "execution_authorized": true,
+    "private_input_access": true,
+    "model_loading": true,
+    "generation": true,
+    "visible_c1_content_access": true,
+    "gold_access": false,
+    "classifier_access": false,
+    "adapter_loading": false,
+    "training": false,
+    "locked_content_access": false,
+    "validation_access": false,
+    "test_access": false,
+    "fold3_access": false,
+    "fold4_access": false,
+    "network": false,
+    "automatic_prompt_revision": false,
+    "automatic_next_stage": false
+  },
+  "implementation": {
+    "protocol": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/protocols/sqma-007-dev-c1-visible-judge-shakedown.md",
+      "bytes": 6167,
+      "sha256": "f5431f18b469f9dfa78a0e0762a4c3f4327f73f1ec218eac150fb0e53840a1f8"
+    },
+    "evidence_critic_prompt_v3": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/prompts/agent-bundle-v3-classifier-free.json",
+      "bytes": 5584,
+      "sha256": "e224ea59e140ae60a56084fffcafbd785accf465df6e666345a6a5b91d9b2ff6"
+    },
+    "judge_prompt_v4": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/prompts/agent-bundle-v4-judge-evidence-slots.json",
+      "bytes": 4673,
+      "sha256": "436a1c40af0888b2b4db5744590ad58fa8ee6472b721c17ac1395dd759e7a52d"
+    },
+    "judge_schema_v4": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/schemas/agent-output-v4-judge-evidence-slots.schema.json",
+      "bytes": 2473,
+      "sha256": "58f1edffb92cda43e0e8501f6bff1044c80218d2e4e5e97b50b27a183ecb96e7"
+    },
+    "validator_v4": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/validate_agent_output_v4.py",
+      "bytes": 6880,
+      "sha256": "80af9cce627a6d3f9c8e3542a811c4b2f0a38dd6a974927cc12a7e285f0ff48e",
+      "api": "validate_evidence; validate_critic; judge_contract_result; validate_output; final_labels_or_empty"
+    },
+    "validator_tests_v4": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/tests/test_validate_agent_output_v4.py",
+      "bytes": 9366,
+      "sha256": "c5cd512ba9f48335e066438091a051391680998bdb3ab92aeb4cf120eb26ac17"
+    },
+    "runner": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/run_sqma007_dev_c1_visible_judge_shakedown.py",
+      "bytes": 47061,
+      "sha256": "92853c29f004879ee66fa3099dbbe2b7644ddec96b8934b35d5bd3c6c5502771"
+    },
+    "verifier": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/scripts/verify_sqma007_dev_c1_visible_judge_shakedown.py",
+      "bytes": 35913,
+      "sha256": "bba45f4e0b839ac6bb438a10c401b9ba59ad7e498dc4c1d04aac031a34c63fba"
+    },
+    "tests": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/tests/test_sqma007_dev_c1_visible_judge_shakedown.py",
+      "bytes": 12336,
+      "sha256": "3fd2d9afc7ab561e1d74dbba3614661e01c6afc4e62d8bb44e71ea11e62edc62"
+    }
+  },
+  "prerequisites": {
+    "sqma002_complete": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-002-dev-scoped-input/attempt-1/complete.json",
+      "bytes": 702,
+      "sha256": "38f2d5cd7c65213e7b1937a45da8ae8a842d579bd83a634a5eed8ae66218d688"
+    },
+    "sqma002_verification": {
+      "path": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-002-dev-scoped-input/attempt-1/verification.json",
+      "bytes": 3318,
+      "sha256": "9ba3f6c1161df08a5c76e25f0d5d79f83f3255df52e06375343eead6ceba1635"
+    }
+  },
+  "inputs": {
+    "private_root": "projects/selective-qwen-multi-agent-forum-analysis/private/sqma-002-dev-scoped-input/attempt-1",
+    "allowed_fields": [
+      "component_id",
+      "fold_id",
+      "protocol_id",
+      "sample_id",
+      "schema_version",
+      "source_ordinal",
+      "text"
+    ],
+    "forbidden_folds": [3, 4],
+    "forbidden_sources": [
+      "train-capable",
+      "consumer-gold",
+      "M1",
+      "M3",
+      "Router",
+      "validation",
+      "test",
+      "SQMA-003-private",
+      "SQMA-006-private"
+    ],
+    "gold_free_snapshots": [
+      {
+        "path": "fold-0/gold-free-inference.jsonl",
+        "bytes": 269623,
+        "sha256": "ef1de63a142677472944e4a61e11db4fc39b074782ffd8c7259ebe4cd85a9594",
+        "fold_id": 0,
+        "rows": 672,
+        "components": 658
+      },
+      {
+        "path": "fold-1/gold-free-inference.jsonl",
+        "bytes": 265068,
+        "sha256": "fabe553c907b88ae82d1dfbfca243d19950e0457437cd0f4c3acd43d8b7ec679",
+        "fold_id": 1,
+        "rows": 672,
+        "components": 654
+      },
+      {
+        "path": "fold-2/gold-free-inference.jsonl",
+        "bytes": 271789,
+        "sha256": "5877b9234725b35b99212350e6eaa7c34e908bc1f044034489b34a187d256f0a",
+        "fold_id": 2,
+        "rows": 672,
+        "components": 651
+      }
+    ],
+    "expected_rows": 2016,
+    "expected_unique_components": 1963
+  },
+  "selection": {
+    "unit": "component_id",
+    "row_per_component": "minimum_source_ordinal",
+    "rank": "ascending_sha256_namespace_pipe_component_id",
+    "excluded_namespaces": [
+      "SQMA-003-agent-dev-random-v1",
+      "SQMA-006-d1-fresh-agent-dev-random-v1"
+    ],
+    "excluded_component_counts": [32, 32],
+    "new_namespace": "SQMA-007-dev-c1-visible-shakedown-v1",
+    "components": 16,
+    "stratum": "visible_shakedown",
+    "locked_rows": 0,
+    "text_gold_or_model_features_used": false
+  },
+  "model": {
+    "repo_id": "Qwen/Qwen3-4B",
+    "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "format": "MLX_BF16_unquantized",
+    "adapter": null,
+    "audited_archive_root": "/Users/phoenix/Assistant/NeuroScience",
+    "archive_root_env": "NEUROSCIENCE_ARCHIVE_ROOT",
+    "relative_path": "projects/llm-forum-text-emotion-recognition/models/qwen3-4b/mlx-bf16",
+    "manifest_path": "projects/llm-forum-text-emotion-recognition/models/qwen3-4b/manifest.json",
+    "manifest_bytes": 3959,
+    "manifest_sha256": "da447350d9e43213dacc1202da03b50d7e7114b0a4fe2904ff353240b404a641",
+    "file_count": 9,
+    "total_bytes": 8056445038
+  },
+  "runtime": {
+    "executable": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python",
+    "python": "3.11.15",
+    "machine": "arm64",
+    "packages": {
+      "mlx": "0.32.0",
+      "mlx-lm": "0.31.3",
+      "numpy": "2.4.6",
+      "transformers": "5.14.1"
+    }
+  },
+  "generation": {
+    "analysis_text_token_cap": 1024,
+    "context_token_cap": 4096,
+    "seed_namespace": "SQMA-007-dev-c1-generation-v1",
+    "seed_material": "namespace|system_id|sample_id|role|call_index",
+    "seed_integer": "first_4_sha256_bytes_big_endian_unsigned",
+    "enable_thinking": false,
+    "top_p": 0.95,
+    "top_k": 20,
+    "evidence": {
+      "temperature": 0.6,
+      "max_new_tokens": 256
+    },
+    "critic": {
+      "temperature": 0.6,
+      "max_new_tokens": 192
+    },
+    "judge": {
+      "temperature": 0.0,
+      "decoding": "greedy",
+      "max_new_tokens": 128
+    },
+    "qwen_repair_calls": 0,
+    "semantic_repair_calls": 0
+  },
+  "role_context_allowlist": {
+    "evidence": [
+      "analysis_text",
+      "ontology"
+    ],
+    "critic": [
+      "analysis_text",
+      "ontology",
+      "evidence"
+    ],
+    "judge": [
+      "analysis_text",
+      "ontology",
+      "evidence",
+      "critic",
+      "allowed_evidence_ids"
+    ]
+  },
+  "call_plan": {
+    "rows": 16,
+    "roles_per_row": [
+      "evidence",
+      "critic",
+      "judge"
+    ],
+    "calls_per_row": 3,
+    "physical_calls": 48,
+    "evidence_temperature": 0.6,
+    "critic_temperature": 0.6,
+    "judge_temperature": 0.0,
+    "judge_decoding": "greedy",
+    "locked_calls": 0
+  },
+  "gate1": {
+    "terminal_calls_required": 48,
+    "judge_raw_json_parse_required": 16,
+    "judge_exact_six_fields_required": 16,
+    "judge_no_extra_or_missing_keys_required": 16,
+    "judge_reference_arrays_required": 16,
+    "judge_integer_reference_items_required": 16,
+    "judge_allowed_reference_ids_required": 16,
+    "semantic_repair_calls": 0,
+    "unhandled_failures": 0,
+    "judge_rendered_valid_required": 16,
+    "token_cap_hits": 0,
+    "maximum_full_projection_seconds": 172800.0
+  },
+  "resources": {
+    "maximum_generated_tokens": 9216,
+    "maximum_wall_seconds": 7200,
+    "maximum_full_projection_seconds": 172800,
+    "maximum_process_rss_bytes": 12884901888,
+    "maximum_mlx_peak_bytes": 10000000000,
+    "maximum_private_output_bytes": 268435456,
+    "maximum_public_output_bytes": 16777216,
+    "minimum_free_disk_bytes": 21474836480,
+    "critical_memory_events": 0,
+    "oom_or_kill_events": 0,
+    "orphan_processes_after_exit": 0
+  },
+  "failure_policy": {
+    "judge_contract_error": "ordinary_decoding_c1_failed",
+    "next_decision": "constrained_decoding_decision",
+    "automatic_prompt_revision": false,
+    "automatic_next_stage": false
+  },
+  "outputs": {
+    "public_attempt_dir": "projects/selective-qwen-multi-agent-forum-analysis/runs/sqma-007-dev-c1-visible-judge-shakedown/attempt-1",
+    "private_attempt_dir": "projects/selective-qwen-multi-agent-forum-analysis/private/sqma-007-dev-c1-visible-judge-shakedown/attempt-1",
+    "public_allowed_files": [
+      "run-claim.json",
+      "run.json",
+      "verification.json",
+      "complete.json"
+    ],
+    "private_allowed_files": [
+      "selection.json",
+      "calls.jsonl",
+      "private-manifest.json"
+    ]
+  },
+  "commands": {
+    "run": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python projects/selective-qwen-multi-agent-forum-analysis/scripts/run_sqma007_dev_c1_visible_judge_shakedown.py --config projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-007-dev-c1-visible-judge-shakedown.json",
+    "verify": "/Users/phoenix/miniconda3/envs/emotion-llm-mlx/bin/python projects/selective-qwen-multi-agent-forum-analysis/scripts/verify_sqma007_dev_c1_visible_judge_shakedown.py --config projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-007-dev-c1-visible-judge-shakedown.json",
+    "verify_static": "python3 projects/selective-qwen-multi-agent-forum-analysis/scripts/verify_sqma007_dev_c1_visible_judge_shakedown.py --config projects/selective-qwen-multi-agent-forum-analysis/configs/sqma-007-dev-c1-visible-judge-shakedown.json --static-only"
+  },
+  "next_gate": "execute_visible_c1"
+}
