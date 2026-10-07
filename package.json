@@ -4,16 +4,23 @@
   "scripts": {
     "build:ielts": "node projects/language/ielts-academic/scripts/build-ielts-data.mjs",
     "build:zaji": "node projects/zaji/scripts/build-site.mjs",
+    "minify:site": "node scripts/minify-site.mjs",
     "test:finance": "node projects/finance/scripts/build-roadmap-data.mjs && node tests/finance-learning-reader-requirements.mjs && git diff --exit-code -- projects/finance/roadmap/roadmap-data.json",
     "test:projects": "node tests/projects-requirements.mjs",
     "test:foundations": "node tests/foundations-annotation-model.mjs && node tests/foundations-code-listing-model.mjs && node tests/foundations-knowledge-article-parser.mjs && node tests/foundations-roadmap-markdown-math.mjs && node tests/foundations-knowledge-content-requirements.mjs && node tests/foundations-reader-state-model.mjs && node tests/foundations-roadmap-requirements.mjs && git diff --exit-code -- projects/foundations/roadmap/roadmap-data.json",
     "test:ielts": "node tests/ielts-academic-language-project-requirements.mjs && node tests/ielts-academic-site-data-requirements.mjs && node tests/ielts-build-data-requirements.mjs && node tests/ielts-reader-data-consumption-requirements.mjs",
     "test:zaji": "node projects/zaji/scripts/build-site.mjs --check && node tests/zaji-site-requirements.mjs",
-    "test:all": "npm run test:projects && npm run test:zaji && npm run test:foundations && npm run test:finance && npm run test:ielts"
+    "test:performance": "node tests/homepage-requirements.mjs && node tests/homepage-performance-equivalence.mjs && node tests/paper-reader-requirements.mjs && node tests/paper-reader-atlas-requirements.mjs && node tests/paper-reader-performance.mjs && node tests/directory-rendering-equivalence.mjs && node tests/site-minification.mjs",
+    "test:pages": "node tests/pages-workflow-requirements.mjs",
+    "test:all": "npm run test:projects && npm run test:zaji && npm run test:foundations && npm run test:finance && npm run test:ielts && npm run test:performance && npm run test:pages"
   },
   "dependencies": {
     "highlight.js": "11.11.1",
     "marked": "18.0.5",
     "sanitize-html": "2.17.5"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "htmlparser2": "10.1.0"
   }
 }

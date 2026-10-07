@@ -55,6 +55,9 @@ jobs:
           cp -R index.html .nojekyll assets papers projects _site/
           find _site -name ".DS_Store" -delete
 
+      - name: Minify staged browser assets
+        run: npm run minify:site -- _site
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:

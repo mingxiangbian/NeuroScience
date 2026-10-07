@@ -1,6 +1,7 @@
 const PROJECT_ID = document.body.dataset.projectId ?? "brain-memory-for-ai-agents";
 const SEARCH_DEBOUNCE_MS = 260;
 const SEMANTIC_SCORE_THRESHOLD = 0.42;
+const READING_LOAD_CONCURRENCY = 3;
 const ANNOTATION_STORAGE_PREFIX = "paperReader.annotations.v1";
 
 const DOMAIN_DIMS = [
@@ -43,6 +44,7 @@ const state = {
   selectedLineagePaperId: "yassa-stark-2011-pattern-separation",
   lineageResizeHandler: null,
   allReadings: new Map(),
+  pendingReadings: new Map(),
   searchItems: [],
   activeChunkId: null,
   noteContextKey: null,
@@ -269,39 +271,58 @@ function getSectionTitle(reading, sectionId) {
 
 async function loadReadingPackage(paper) {
   if (state.allReadings.has(paper.id)) return state.allReadings.get(paper.id);
+  if (state.pendingReadings.has(paper.id)) return state.pendingReadings.get(paper.id);
   if (paper.hasReading !== true) {
     state.allReadings.set(paper.id, null);
     return null;
   }
-  try {
-    const [paperData, chunksData, notesData, embeddingsData, figuresData] = await Promise.all([
-      fetchJson(`readings/${paper.id}/paper.json`),
-      fetchJson(`readings/${paper.id}/chunks.json`),
-      fetchJson(`readings/${paper.id}/notes.json`),
-      fetchJson(`readings/${paper.id}/embeddings.json`),
-      fetchJson(`readings/${paper.id}/figures.json`, { optional: true })
-    ]);
-    const reading = {
-      paper,
-      paperData,
-      assetBasePath: `readings/${paper.id}/`,
-      chunks: chunksData.chunks ?? [],
-      notes: new Map((notesData.notes ?? []).map((note) => [note.chunkId, note.note ?? ""])),
-      embeddings: embeddingsData.items ?? [],
-      figures: new Map((figuresData?.figures ?? []).map((figure) => [figure.id, figure]))
-    };
-    state.allReadings.set(paper.id, reading);
-    return reading;
-  } catch (error) {
-    state.allReadings.set(paper.id, null);
-    return null;
-  }
+  const pending = (async () => {
+    try {
+      const [paperData, chunksData, notesData, embeddingsData, figuresData] = await Promise.all([
+        fetchJson(`readings/${paper.id}/paper.json`),
+        fetchJson(`readings/${paper.id}/chunks.json`),
+        fetchJson(`readings/${paper.id}/notes.json`),
+        fetchJson(`readings/${paper.id}/embeddings.json`),
+        fetchJson(`readings/${paper.id}/figures.json`, { optional: true })
+      ]);
+      const reading = {
+        paper,
+        paperData,
+        assetBasePath: `readings/${paper.id}/`,
+        chunks: chunksData.chunks ?? [],
+        notes: new Map((notesData.notes ?? []).map((note) => [note.chunkId, note.note ?? ""])),
+        embeddings: embeddingsData.items ?? [],
+        figures: new Map((figuresData?.figures ?? []).map((figure) => [figure.id, figure]))
+      };
+      state.allReadings.set(paper.id, reading);
+      return reading;
+    } catch (error) {
+      state.allReadings.set(paper.id, null);
+      return null;
+    } finally {
+      state.pendingReadings.delete(paper.id);
+    }
+  })();
+  state.pendingReadings.set(paper.id, pending);
+  return pending;
 }
 
 async function loadAllSearchItems() {
+  const readings = new Array(state.papers.length);
+  let nextIndex = 0;
+  async function loadNextReading() {
+    while (nextIndex < state.papers.length) {
+      const index = nextIndex++;
+      readings[index] = await loadReadingPackage(state.papers[index]);
+    }
+  }
+  await Promise.all(Array.from(
+    { length: Math.min(READING_LOAD_CONCURRENCY, state.papers.length) },
+    loadNextReading
+  ));
   const items = [];
-  for (const paper of state.papers) {
-    const reading = await loadReadingPackage(paper);
+  for (const [index, paper] of state.papers.entries()) {
+    const reading = readings[index];
     if (!reading) continue;
     const chunksById = new Map(reading.chunks.map((chunk) => [chunk.id, chunk]));
     for (const item of reading.embeddings) {
@@ -312,14 +333,18 @@ async function loadAllSearchItems() {
         reading,
         chunk,
         vector: item.vector,
-        searchText: [
-          chunk.sourceText,
-          chunk.zhTranslation,
-          chunk.zhExplanation,
-          chunk.premise,
-          chunk.claim,
-          ...(chunk.evidence ?? [])
-        ].filter(Boolean).join("\n")
+        lexicalFields: [
+          [paper.title, 5],
+          [paper.shortTitle, 5],
+          [getSectionTitle(reading, chunk.sectionId), 4],
+          [chunk.claim, 4],
+          [chunk.premise, 3],
+          [chunk.sourceText, 2],
+          [chunk.zhTranslation, 2],
+          [chunk.zhExplanation, 2],
+          [(chunk.evidence ?? []).join(" "), 3],
+          [(chunk.keywords ?? []).join(" "), 3]
+        ].map(([field, weight]) => [String(field ?? "").toLowerCase(), weight])
       });
     }
   }
@@ -1645,24 +1670,9 @@ function highlightSearchTerms(text, query) {
     .join("");
 }
 
-function getLexicalScore(item, query) {
-  const terms = getSearchTerms(query).map((term) => term.toLowerCase());
-  const sectionTitle = getSectionTitle(item.reading, item.chunk.sectionId);
-  const weightedFields = [
-    [item.paper.title, 5],
-    [item.paper.shortTitle, 5],
-    [sectionTitle, 4],
-    [item.chunk.claim, 4],
-    [item.chunk.premise, 3],
-    [item.chunk.sourceText, 2],
-    [item.chunk.zhTranslation, 2],
-    [item.chunk.zhExplanation, 2],
-    [(item.chunk.evidence ?? []).join(" "), 3],
-    [(item.chunk.keywords ?? []).join(" "), 3]
-  ];
+function getLexicalScore(item, terms) {
   let score = 0;
-  for (const [field, weight] of weightedFields) {
-    const lower = String(field ?? "").toLowerCase();
+  for (const [lower, weight] of item.lexicalFields) {
     for (const term of terms) {
       if (term && lower.includes(term)) score += weight;
     }
@@ -1680,11 +1690,12 @@ function hasSemanticSignal(query) {
 }
 
 function getHybridSearchResults(query) {
+  const terms = getSearchTerms(query).map((term) => term.toLowerCase());
   const queryVector = embedQuery(query);
   const allowSemanticOnly = hasSemanticSignal(query);
   return state.searchItems
     .map((item) => {
-      const lexicalScore = getLexicalScore(item, query);
+      const lexicalScore = getLexicalScore(item, terms);
       const semanticScore = getSemanticScore(item, queryVector);
       const score = lexicalScore * 10 + semanticScore;
       return {

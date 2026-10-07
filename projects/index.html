@@ -570,15 +570,6 @@
         empty: document.getElementById("project-empty"),
       };
 
-      function escapeHtml(value) {
-        return String(value ?? "")
-          .replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;")
-          .replaceAll("'", "&#39;");
-      }
-
       function normalizeProject(record) {
         return {
           title: String(record.title ?? "Untitled project"),
@@ -599,9 +590,9 @@
           card.className = "project-card";
           card.href = project.folder;
           card.setAttribute("data-title-script", getTitleScript(project.title));
-          card.innerHTML = `
-            <h2>${escapeHtml(project.title)}</h2>
-          `;
+          const title = document.createElement("h2");
+          title.textContent = project.title;
+          card.append(title);
           els.grid.append(card);
         }
       }

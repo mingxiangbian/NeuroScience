@@ -1435,8 +1435,7 @@
         return [];
       }
 
-      function scoreSearchRecord(record, normalizedQuery) {
-        const tokens = normalizedQuery.split(" ").filter(Boolean);
+      function scoreSearchRecord(record, normalizedQuery, tokens) {
         if (!tokens.every((token) => record.normalizedSearchText.includes(token))) {
           return 0;
         }
@@ -1521,8 +1520,9 @@
             return;
           }
 
+          const tokens = normalizedQuery.split(" ").filter(Boolean);
           const matches = indexRecords
-            .map((record) => ({ record, score: scoreSearchRecord(record, normalizedQuery) }))
+            .map((record) => ({ record, score: scoreSearchRecord(record, normalizedQuery, tokens) }))
             .filter((item) => item.score > 0)
             .sort((left, right) => right.score - left.score || left.record.title.localeCompare(right.record.title))
             .slice(0, 36)
@@ -2047,17 +2047,23 @@
         return { fragment: group, materials: [material, glowMaterial] };
       }
 
-      function setBrainMaterialOpacity(brainModel, opacityFactor) {
+      function collectBrainMaterials(brainModel) {
+        const materials = [];
         brainModel.traverse((object) => {
           if (!object.isMesh || !object.material) return;
-          const materials = Array.isArray(object.material) ? object.material : [object.material];
-          materials.forEach((material) => {
-            if (material.userData.baseOpacity === undefined) {
-              material.userData.baseOpacity = material.opacity ?? 1;
-            }
-            material.transparent = true;
-            material.opacity = material.userData.baseOpacity * opacityFactor;
-          });
+          if (Array.isArray(object.material)) materials.push(...object.material);
+          else materials.push(object.material);
+        });
+        return materials;
+      }
+
+      function setBrainMaterialOpacity(materials, opacityFactor) {
+        materials.forEach((material) => {
+          if (material.userData.baseOpacity === undefined) {
+            material.userData.baseOpacity = material.opacity ?? 1;
+          }
+          material.transparent = true;
+          material.opacity = material.userData.baseOpacity * opacityFactor;
         });
       }
 
@@ -2065,7 +2071,7 @@
         const group = new THREE.Group();
         const bounds = new THREE.Box3().setFromObject(brainModel);
         const inverseMatrix = new THREE.Matrix4();
-        const surfaceMaterials = [];
+        const brainMaterials = collectBrainMaterials(brainModel);
         const moduleEntries = MODULES.map((module) => {
           const entry = module.type === "surface"
             ? cloneBrainFragment(THREE, brainModel, module, bounds)
@@ -2077,9 +2083,6 @@
           wrapper.visible = false;
           wrapper.add(entry.fragment);
           group.add(wrapper);
-          if (module.type === "surface") {
-            surfaceMaterials.push(...entry.materials);
-          }
           return { module, wrapper, materials: entry.materials };
         });
         const state = {
@@ -2107,11 +2110,11 @@
           getState() {
             return state;
           },
-          update(time, brainRoot, activityFlow) {
+          update(time, brainRoot, activityFlow, viewportLayout) {
             const target = state.expanded ? 1 : 0;
             state.progress += (target - state.progress) * (prefersReducedMotion ? 1 : 0.08);
             const eased = state.progress * state.progress * (3 - 2 * state.progress);
-            const { preset } = getViewportLayout();
+            const { preset } = viewportLayout;
             const baseScale = preset.brainScale;
             const baseY = preset.brainY;
             inverseMatrix.copy(brainRoot.matrixWorld).invert();
@@ -2140,12 +2143,9 @@
               });
             });
 
-            surfaceMaterials.forEach((material) => {
-              material.uniforms.explodeProgress.value = eased;
-            });
             brainRoot.scale.setScalar(baseScale * (1 - eased * preset.expandedBrainScaleReduction));
             brainRoot.position.y = baseY + eased * preset.expandedBrainYShift;
-            setBrainMaterialOpacity(brainModel, 1 - eased * 0.62);
+            setBrainMaterialOpacity(brainMaterials, 1 - eased * 0.62);
             activityFlow.visible = eased < 0.96;
           },
         };
@@ -2894,9 +2894,8 @@
           });
           flowPulses.forEach((item, index) => {
             const t = prefersReducedMotion ? item.phase : (item.phase + time * item.speed) % 1;
-            const point = item.curve.getPointAt(t);
+            item.curve.getPointAt(t, item.marker.position);
             const shimmer = 0.68 + Math.sin(time * 4.6 + index * 1.37) * 0.22;
-            item.marker.position.copy(point);
             item.marker.scale.setScalar(0.62 + shimmer * 0.22);
             item.glow.material.opacity = (prefersReducedMotion ? 0.025 : 0.06) * shimmer;
             item.pulse.material.opacity = (prefersReducedMotion ? 0.16 : 0.34) * shimmer;
@@ -3472,7 +3471,14 @@
         return mesh;
       }
 
-      function sampleCircuitRoutePath(segmentPairs, progress) {
+      function createCircuitRoutePath(segmentPairs) {
+        const lengths = segmentPairs.map(([start, end]) => start.distanceTo(end));
+        const totalLength = lengths.reduce((sum, length) => sum + length, 0);
+        return { segmentPairs, lengths, totalLength };
+      }
+
+      function sampleCircuitRoutePath(path, progress, target) {
+        const { segmentPairs, lengths, totalLength } = path;
         if (!segmentPairs.length) {
           return null;
         }
@@ -3481,10 +3487,8 @@
           return null;
         }
 
-        const lengths = segmentPairs.map(([start, end]) => start.distanceTo(end));
-        const totalLength = lengths.reduce((sum, length) => sum + length, 0);
         if (totalLength <= 0.001) {
-          return segmentPairs[0][0].clone();
+          return target.copy(segmentPairs[0][0]);
         }
 
         let targetDistance = progress * totalLength;
@@ -3492,12 +3496,29 @@
           const length = lengths[index];
           if (targetDistance <= length) {
             const ratio = length <= 0.001 ? 0 : targetDistance / length;
-            return segmentPairs[index][0].clone().lerp(segmentPairs[index][1], ratio);
+            return target.copy(segmentPairs[index][0]).lerp(segmentPairs[index][1], ratio);
           }
           targetDistance -= length;
         }
 
-        return segmentPairs.at(-1)[1].clone();
+        return target.copy(segmentPairs.at(-1)[1]);
+      }
+
+      function circuitRouteInputsMatch(previous, routePoints, connectorSide, pinPoints, displayAvoidanceBox) {
+        if (!previous || previous.connectorSide !== connectorSide) return false;
+        if (previous.routePoints.length !== routePoints.length || previous.pinPoints.length !== pinPoints.length) return false;
+        if (!routePoints.every((point, index) => point.every((value, axis) => Object.is(value, previous.routePoints[index][axis])))) return false;
+        if (!pinPoints.every((point, index) => (
+          Object.is(point.x, previous.pinPoints[index].x)
+          && Object.is(point.y, previous.pinPoints[index].y)
+          && Object.is(point.z, previous.pinPoints[index].z)
+        ))) return false;
+        const previousBox = previous.displayAvoidanceBox;
+        if (!previousBox || !displayAvoidanceBox) return previousBox === displayAvoidanceBox;
+        return Object.is(previousBox.left, displayAvoidanceBox.left)
+          && Object.is(previousBox.right, displayAvoidanceBox.right)
+          && Object.is(previousBox.bottom, displayAvoidanceBox.bottom)
+          && Object.is(previousBox.top, displayAvoidanceBox.top);
       }
 
       function getConnectorOutwardDirection(connectorSide) {
@@ -3597,6 +3618,7 @@
         const nodes = [];
         const terminals = [];
         const particles = [];
+        const sampledPoint = new THREE.Vector3();
         let currentSegmentPairs = [];
         let currentFlowPaths = [];
 
@@ -3697,7 +3719,7 @@
           });
 
           currentSegmentPairs = segmentPairs.map(([start, end]) => [start.clone(), end.clone()]);
-          currentFlowPaths = flowPaths.length ? flowPaths : [currentSegmentPairs];
+          currentFlowPaths = (flowPaths.length ? flowPaths : [currentSegmentPairs]).map(createCircuitRoutePath);
         };
 
         group.userData.setCircuitState = (expanded, selected, time) => {
@@ -3718,7 +3740,7 @@
               ? particle.userData.phase * 0.86
               : (time * 0.22 + particle.userData.phase * flowCycleLength) % flowCycleLength;
             const point = particleOpacity > 0.05 && progress <= 1 && path
-              ? sampleCircuitRoutePath(path, progress)
+              ? sampleCircuitRoutePath(path, progress, sampledPoint)
               : null;
             if (!point || progress > 1) {
               particle.visible = false;
@@ -4164,7 +4186,14 @@
           const connectorSide = getResponsiveConnectorSide(entry.layout, mode);
           const pinPoints = entry.component.userData.getConnectorPinPoints?.() ?? [];
           const displayAvoidanceBox = entry.component.userData.getDisplayAvoidanceBox?.();
+          if (circuitRouteInputsMatch(entry.circuitRouteInputs, routePoints, connectorSide, pinPoints, displayAvoidanceBox)) return;
           entry.route.userData.setCircuitRoute?.(routePoints, connectorSide, pinPoints, displayAvoidanceBox);
+          entry.circuitRouteInputs = {
+            routePoints: routePoints.map((point) => point.slice()),
+            connectorSide,
+            pinPoints: pinPoints.map((point) => point.clone()),
+            displayAvoidanceBox: displayAvoidanceBox ? { ...displayAvoidanceBox } : displayAvoidanceBox,
+          };
         }
 
         const allCoreMaterials = [boardEdgeMaterial, coreLightMaterial, ...inductionField.userData.materials];
@@ -4173,8 +4202,7 @@
           getDisplayTargets() {
             return channels.map((entry) => entry.component);
           },
-          resize() {
-            const layout = getViewportLayout();
+          resize(layout = getViewportLayout()) {
             const { mode, preset } = layout;
             const coreY = CHIP_CORE_Y_BY_LAYOUT[mode];
             group.position.set(0, preset.pedestalY, -1.48);
@@ -4196,12 +4224,12 @@
               syncCircuitRoute(entry, mode);
             });
           },
-          update(time, interactionState) {
+          update(time, interactionState, viewportLayout) {
             const expanded = Boolean(interactionState?.expanded);
             const selected = interactionState?.selected ?? null;
             const previewed = interactionState?.previewed ?? null;
             const activeModule = previewed ?? selected;
-            const mode = getChipLayoutMode();
+            const mode = getChipLayoutMode(viewportLayout);
             const target = expanded ? 1 : 0;
             state.active += (target - state.active) * (prefersReducedMotion ? 1 : 0.075);
             const eased = state.active * state.active * (3 - 2 * state.active);
@@ -4475,8 +4503,8 @@
             view.brain.rotation.y = rotation.y;
             view.camera.position.z = cameraZ;
           },
-          resize() {
-            viewportLayout = getViewportLayout();
+          resize(layout = getViewportLayout()) {
+            viewportLayout = layout;
             const { width, height, mode, preset } = viewportLayout;
             view.camera.aspect = width / height;
             view.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -4536,8 +4564,9 @@
             },
             gpuPedestal.getDisplayTargets(),
           );
-          gpuPedestal.resize();
-          controls.resize();
+          const initialViewportLayout = getViewportLayout();
+          gpuPedestal.resize(initialViewportLayout);
+          controls.resize(initialViewportLayout);
           document.body.classList.add("webgl-ready");
           document.body.classList.remove("fallback-active");
 
@@ -4545,10 +4574,11 @@
 
           function render() {
             const elapsed = clock.getElapsedTime();
+            const viewportLayout = getViewportLayout();
             controls.update();
-            activityFlow.userData.update(elapsed);
-            explodedView.update(elapsed, view.brain, activityFlow);
-            gpuPedestal.update(elapsed, moduleUi.getState());
+            explodedView.update(elapsed, view.brain, activityFlow, viewportLayout);
+            if (activityFlow.visible) activityFlow.userData.update(elapsed);
+            gpuPedestal.update(elapsed, moduleUi.getState(), viewportLayout);
             view.shell.rotation.y += prefersReducedMotion ? 0 : 0.0007;
             view.renderer.render(view.scene, view.camera);
             app = requestAnimationFrame(render);
@@ -4559,8 +4589,9 @@
             if (pendingResizeFrame !== null) return;
             pendingResizeFrame = requestAnimationFrame(() => {
               pendingResizeFrame = null;
-              gpuPedestal.resize();
-              controls.resize();
+              const viewportLayout = getViewportLayout();
+              gpuPedestal.resize(viewportLayout);
+              controls.resize(viewportLayout);
             });
           };
           window.addEventListener("resize", resizeScene, { passive: true });

@@ -28,4 +28,9 @@ assert.doesNotMatch(workflow, /path:\s*\./, "Pages artifact should not publish t
 assert.doesNotMatch(workflow, /uses:\s*actions\/checkout@v4\b/, "Pages workflow should not use checkout v4, which triggers the Node 20 warning");
 assert.doesNotMatch(workflow, /uses:\s*actions\/upload-artifact@v4\b/, "Pages workflow should not directly use upload-artifact v4, which triggers the Node 20 warning");
 assert.doesNotMatch(workflow, /uses:\s*actions\/upload-pages-artifact@v4\b/, "Pages workflow should not use the older Pages artifact wrapper");
-assert.doesNotMatch(workflow, /npm\s+(?:install|ci|run)|pnpm|yarn|vite|\bjekyll\s+(?:build|serve)|bundle\s+exec\s+jekyll/i, "Static Pages deploy should not introduce a build step or package manager dependency");
+assert.match(workflow, /uses:\s*actions\/setup-node@v5[\s\S]*node-version:\s*"24"/, "Pages build should use the pinned Node major");
+assert.match(workflow, /run:\s*npm ci/, "Pages build should install dependencies from the lockfile");
+assert.match(workflow, /run:\s*npm run build:ielts/, "Pages build should retain the IELTS data build");
+assert.match(workflow, /run:\s*npm run test:all/, "Pages build should validate site contracts before staging");
+assert.match(workflow, /name:\s*Prepare Pages artifact[\s\S]*name:\s*Minify staged browser assets\s*\n\s*run:\s*npm run minify:site -- _site[\s\S]*name:\s*Upload Pages artifact/, "Minification must apply only to the staged copy before upload");
+assert.doesNotMatch(workflow, /pnpm|yarn|vite|\bjekyll\s+(?:build|serve)|bundle\s+exec\s+jekyll/i, "Pages should retain the existing static build pipeline");

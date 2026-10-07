@@ -210,7 +210,8 @@ assert.equal(fitCameraZToBounds({
   cameraY: 0.2,
   baseCameraZ: 6.7,
 }), 6.7, "wide screens without overlay pressure should preserve the original hero camera distance");
-assert.match(body, /gpuPedestal\.resize\(\);\s*controls\.resize\(\);/, "display positions should update before camera bounds are measured");
+assert.match(body, /gpuPedestal\.resize\(initialViewportLayout\);\s*controls\.resize\(initialViewportLayout\);/, "initial display positions should update before camera bounds using the same viewport snapshot");
+assert.match(body, /gpuPedestal\.resize\(viewportLayout\);\s*controls\.resize\(viewportLayout\);/, "resized display positions should update before camera bounds using the same viewport snapshot");
 assert.match(body, /window\.visualViewport\?\.addEventListener\("resize", resizeScene/, "visual viewport changes should update the fitted composition");
 assert.match(body, /preserveAspectRatio="xMidYMid meet"/, "fallback mode should fit rather than crop its outer displays");
 assert.match(html, /@media \(orientation: portrait\) and \(max-width: 520px\)[\s\S]*?data-module="association"[\s\S]*?top:\s*38%[\s\S]*?data-module="parietal"[\s\S]*?top:\s*46%[\s\S]*?data-module="temporal"[\s\S]*?top:\s*54%/, "compact portrait labels should stay between the top and bottom display rows");
@@ -324,8 +325,8 @@ assert.match(body, /window\.location\.assign\(moduleTarget\.userData\.moduleUrl\
 assert.match(body, /state\.expanded && state\.selected === button\.dataset\.module[\s\S]*navigateToModuleHomepage\(module\)/, "clicking an already-selected module label should enter that module page");
 assert.doesNotMatch(body, /memory-array|layered-evidence-stack|control-core|uncertainty-gate|ring-buffer|io-port/, "old abstract chip symbols should not remain after switching to display modules");
 assert.match(body, /view\.scene\.add\(gpuPedestal\.group\)/, "GPU pedestal should be added without replacing the brain group");
-assert.match(body, /gpuPedestal\.update\(elapsed, moduleUi\.getState\(\)\)/, "GPU pedestal should follow the existing expanded and selected module state");
-assert.match(body, /gpuPedestal\.resize\(\)/, "GPU pedestal should adapt to viewport size");
+assert.match(body, /gpuPedestal\.update\(elapsed, moduleUi\.getState\(\), viewportLayout\)/, "GPU pedestal should follow the existing interaction state and shared frame viewport");
+assert.match(body, /gpuPedestal\.resize\(viewportLayout\)/, "GPU pedestal should adapt to viewport size");
 assert.match(body, /const MODULES = \[/, "homepage should define the six research modules for the exploded view");
 assert.match(body, /createExplodedResearchModules/, "homepage should build an exploded research-module view");
 assert.match(body, /exploded-research-modules/, "exploded modules should be a named 3D scene layer");
